@@ -6,7 +6,7 @@ const CARD_META = {};
 CARD_META_LIST.forEach(c => CARD_META[c.id] = c);
 const N_CARDS = CARD_META_LIST.length;
 const FACTIONS = [...new Set(CARD_META_LIST.map(c=>c.faction))];
-const FACTION_HUE = {MASTER:255, INFERNAL:0, WIND:172, THUNDER:48, FLAME:14, LEGENDARY:300, 'A+':210};
+const FACTION_HUE = {MASTER:220, INFERNAL:275, WIND:210, THUNDER:48, FLAME:8, LEGENDARY:290, 'A+':32};
 const FACTION_ICON = {};
 FACTIONS.forEach(f => FACTION_ICON[f] = `assets/factions/${f}_icon.svg`);
 const ALL_ICON = 'assets/factions/ALL_icon.svg';
@@ -178,7 +178,10 @@ function renderFactionFilters(){
   wrap.innerHTML = '';
   const mkBtn = (key, label, icon, hue) => {
     const b = document.createElement('button');
-    b.className = 'faction-btn' + (activeFilter===key ? ' active' : '') + (!icon ? ' no-icon' : '');
+    let extra = '';
+    if(key==='LEGENDARY') extra += ' legendary';
+    if(key==='ALL') extra += ' all-mix';
+    b.className = 'faction-btn' + (activeFilter===key ? ' active' : '') + (!icon ? ' no-icon' : '') + extra;
     if(hue!==undefined) b.style.setProperty('--fhue', hue);
     if(icon){
       const img = document.createElement('img');
@@ -565,14 +568,20 @@ document.getElementById('downloadBtn').addEventListener('click', exportPNG);
 async function exportPNG(){
   showToast('Exporting...');
   const scale = 2;
-  const width = 1400;
-  const labelW = 150;
-  const cardW = 78, cardH = 105, cardGap = 7, padX = 14, padY = 10;
+  // Respect current Size slider
+  const cardW = Math.max(40, parseInt(getComputedStyle(document.documentElement).getPropertyValue('--card-w')) || 64);
+  const cardH = Math.round(cardW * 1.35);
+  const cardGap = Math.max(4, Math.round(cardW * 0.1));
+  const padX = Math.max(8, Math.round(cardW * 0.18));
+  const padY = Math.max(6, Math.round(cardW * 0.14));
+  const labelW = Math.max(110, Math.round(cardW * 2.2));
+  const width = Math.max(900, labelW + padX * 2 + (cardW + cardGap) * 12 + 20);
+
   const cardsAreaW = width - labelW - 8;
   const cardsPerLine = Math.max(1, Math.floor((cardsAreaW - padX + cardGap) / (cardW + cardGap)));
 
   const allIds = new Set();
-  state.tiers.forEach(t => (state.assignment[t.id]||[]).forEach(id => allIds.add(id)));
+  state.tiers.forEach(tier => (state.assignment[tier.id]||[]).forEach(id => allIds.add(id)));
   const imgCache = {};
   await Promise.all([...allIds].map(async cid => {
     try {
@@ -582,19 +591,13 @@ async function exportPNG(){
     } catch(e) {}
   }));
 
-  // Preload footer assets (PNG versions for canvas reliability)
-  let footerLeft = null, footerLogo = null, sfLogo = null;
-  try { footerLeft = await loadImage('assets/brand/RankMe_footer_left.png'); } catch(e){}
-  try { footerLogo = await loadImage('assets/brand/Footer_logo.png'); } catch(e){}
-  try { sfLogo = await loadImage('assets/brand/SF_Duel_Tier_logo.png'); } catch(e){}
-
-  const rowHeights = state.tiers.map(t => {
-    const n = (state.assignment[t.id]||[]).length;
+  const rowHeights = state.tiers.map(tier => {
+    const n = (state.assignment[tier.id]||[]).length;
     const lines = Math.max(1, Math.ceil(n / cardsPerLine) || 1);
     return Math.max(padY*2 + cardH, padY*2 + lines * cardH + Math.max(0, lines-1)*cardGap);
   });
-  const padTop = 20;
-  const footH = 88;
+  const padTop = 24;
+  const footH = 96;
   const height = padTop + rowHeights.reduce((a,b)=>a+b, 0) + footH;
 
   const canvas = document.getElementById('exportCanvas');
@@ -603,47 +606,48 @@ async function exportPNG(){
   const ctx = canvas.getContext('2d');
   ctx.setTransform(scale, 0, 0, scale, 0, 0);
 
-  // bg like site
+  // Background + soft glow like site
   ctx.fillStyle = '#0e0c14';
+  ctx.fillRect(0, 0, width, height);
+  const g1 = ctx.createRadialGradient(width*0.18, 0, 0, width*0.18, 0, height*0.55);
+  g1.addColorStop(0, 'rgba(160,120,220,0.14)');
+  g1.addColorStop(1, 'rgba(160,120,220,0)');
+  ctx.fillStyle = g1;
+  ctx.fillRect(0, 0, width, height);
+  const g2 = ctx.createRadialGradient(width*0.85, height*0.12, 0, width*0.85, height*0.12, height*0.4);
+  g2.addColorStop(0, 'rgba(120,160,230,0.09)');
+  g2.addColorStop(1, 'rgba(120,160,230,0)');
+  ctx.fillStyle = g2;
   ctx.fillRect(0, 0, width, height);
 
   let y = padTop;
   for(let i = 0; i < state.tiers.length; i++){
-    const t = state.tiers[i];
+    const tier = state.tiers[i];
     const rh = rowHeights[i];
 
-    // Label block matching site: full height solid-ish gradient, rounded right
-    const c1 = `hsl(${t.hue}, ${t.sat}%, ${Math.min(88, t.light + 4)}%)`;
-    const c2 = `hsl(${t.hue}, ${t.sat}%, ${Math.max(28, t.light - 8)}%)`;
+    const c1 = `hsl(${tier.hue}, ${tier.sat}%, ${Math.min(88, tier.light + 4)}%)`;
+    const c2 = `hsl(${tier.hue}, ${tier.sat}%, ${Math.max(28, tier.light - 8)}%)`;
     const grad = ctx.createLinearGradient(0, y, labelW, y + rh);
     grad.addColorStop(0, c1);
     grad.addColorStop(1, c2);
     ctx.fillStyle = grad;
+    ctx.fillRect(0, y, labelW, rh);
 
-    // Draw rounded rect on right side only (left edge square like the site board)
-    const rr = 0;
-    ctx.beginPath();
-    ctx.rect(0, y, labelW, rh);
-    ctx.fill();
-
-    // Subtle left accent bar like .tier-pill
-    const pillGrad = ctx.createLinearGradient(0, y, 0, y + rh);
-    pillGrad.addColorStop(0, `hsl(${t.hue}, ${t.sat}%, ${Math.min(95, t.light+12)}%)`);
-    pillGrad.addColorStop(1, `hsl(${t.hue}, ${t.sat}%, ${t.light}%)`);
-    ctx.fillStyle = pillGrad;
+    // left pill accent
+    const pill = ctx.createLinearGradient(0, y, 0, y + rh);
+    pill.addColorStop(0, `hsl(${tier.hue}, ${tier.sat}%, ${Math.min(95, tier.light+12)}%)`);
+    pill.addColorStop(1, `hsl(${tier.hue}, ${tier.sat}%, ${tier.light}%)`);
+    ctx.fillStyle = pill;
     ctx.fillRect(0, y, 8, rh);
 
-    // Soft overlay on label like site
-    ctx.fillStyle = `hsla(${t.hue}, ${t.sat}%, ${t.light}%, 0.15)`;
-    ctx.fillRect(8, y, labelW - 8, rh);
-
-    // Text
     ctx.fillStyle = '#ffffff';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    fitAndWrap(ctx, t.name, 8 + (labelW-8)/2, y + rh/2, labelW - 20, 11, 18);
+    fitAndWrap(ctx, tier.name, 8 + (labelW-8)/2, y + rh/2, labelW - 20, 11, Math.min(20, Math.round(cardW*0.28)));
 
-    // Divider line under row
+    ctx.fillStyle = 'rgba(255,255,255,0.02)';
+    ctx.fillRect(labelW, y, width - labelW, rh);
+
     ctx.strokeStyle = 'rgba(255,255,255,0.06)';
     ctx.lineWidth = 1;
     ctx.beginPath();
@@ -651,16 +655,10 @@ async function exportPNG(){
     ctx.lineTo(width, y + rh - 0.5);
     ctx.stroke();
 
-    // Cards area bg
-    ctx.fillStyle = 'rgba(255,255,255,0.015)';
-    ctx.fillRect(labelW, y, width - labelW, rh);
-
-    const ids = state.assignment[t.id] || [];
-    let x = labelW + padX;
-    let cy = y + Math.max(padY, (rh - cardH) / 2);
-    // if multi-line, start from top pad
+    const ids = state.assignment[tier.id] || [];
     const lines = Math.max(1, Math.ceil(ids.length / cardsPerLine));
-    if(lines > 1) cy = y + padY;
+    let x = labelW + padX;
+    let cy = y + (lines > 1 ? padY : Math.max(padY, (rh - cardH) / 2));
     let col = 0;
     for(const cid of ids){
       const img = imgCache[cid];
@@ -679,9 +677,9 @@ async function exportPNG(){
     y += rh;
   }
 
-  // Footer bar
+  // Footer
   const footY = y;
-  ctx.fillStyle = '#0e0c14';
+  ctx.fillStyle = 'rgba(14,12,20,0.95)';
   ctx.fillRect(0, footY, width, footH);
   ctx.strokeStyle = 'rgba(255,255,255,0.08)';
   ctx.beginPath();
@@ -689,37 +687,22 @@ async function exportPNG(){
   ctx.lineTo(width, footY + 0.5);
   ctx.stroke();
 
-  // Left: RankMe_footer_left
-  if(footerLeft){
-    const fh = 48;
-    const fw = fh * (footerLeft.naturalWidth || footerLeft.width) / (footerLeft.naturalHeight || footerLeft.height || 1);
-    ctx.drawImage(footerLeft, 24, footY + (footH - fh) / 2, fw, fh);
-  } else {
-    ctx.fillStyle = '#c4b5e8';
-    ctx.font = '900 20px Montserrat, sans-serif';
-    ctx.textAlign = 'left';
-    ctx.textBaseline = 'middle';
-    ctx.fillText('RANKME.LOL', 28, footY + footH/2 - 8);
-    ctx.fillStyle = '#7a7199';
-    ctx.font = '600 11px Montserrat, sans-serif';
-    ctx.fillText('create tier lists in seconds, drag, drop, share.', 28, footY + footH/2 + 12);
-  }
+  ctx.fillStyle = '#c4b5e8';
+  ctx.font = '900 22px Montserrat, sans-serif';
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('RANKME.LOL', 28, footY + footH/2 - 10);
+  ctx.fillStyle = '#7a7199';
+  ctx.font = '600 12px Montserrat, sans-serif';
+  ctx.fillText('create tier lists in seconds, drag, drop, share.', 28, footY + footH/2 + 14);
 
-  // Right: Footer_logo + SF_Duel_Tier_logo (exclusive)
-  let rx = width - 24;
-  if(sfLogo){
-    const sh = 44;
-    const sw = sh * (sfLogo.naturalWidth || sfLogo.width) / (sfLogo.naturalHeight || sfLogo.height || 1);
-    rx -= sw;
-    ctx.drawImage(sfLogo, rx, footY + (footH - sh) / 2, sw, sh);
-    rx -= 16;
-  }
-  if(footerLogo){
-    const lh = 40;
-    const lw = lh * (footerLogo.naturalWidth || footerLogo.width) / (footerLogo.naturalHeight || footerLogo.height || 1);
-    rx -= lw;
-    ctx.drawImage(footerLogo, rx, footY + (footH - lh) / 2, lw, lh);
-  }
+  ctx.fillStyle = '#a79fc4';
+  ctx.font = '700 14px Montserrat, sans-serif';
+  ctx.textAlign = 'right';
+  ctx.fillText('Street Fighter: Duel', width - 28, footY + footH/2 - 10);
+  ctx.fillStyle = '#6b6288';
+  ctx.font = '600 12px Montserrat, sans-serif';
+  ctx.fillText('Exclusive Tier List', width - 28, footY + footH/2 + 14);
 
   canvas.toBlob(blob => {
     if(!blob){ showToast('Export failed'); return; }

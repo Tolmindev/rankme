@@ -329,7 +329,7 @@ function onCardPointerDown(e){
   document.body.appendChild(floater);
 
   source.classList.add('dragging');
-  source.style.visibility = 'hidden';
+  source.style.display = 'none';
 
   drag = {
     cid, source, pointerId: e.pointerId,
@@ -395,18 +395,22 @@ function onDragMove(e){
     ph.className = 'card placeholder';
     ph.innerHTML = '<img src="'+cardSrc(drag.cid)+'">';
     if(cont.classList.contains('pool')){
-      // pool never reorders - just append, actual order is re-sorted by id on render
       cont.appendChild(ph);
     } else {
-      const children = [...cont.children].filter(c=>!c.classList.contains('placeholder') && c!==drag.source);
+      const children = [...cont.children].filter(c =>
+        c !== drag.source &&
+        !c.classList.contains('placeholder') &&
+        c.style.display !== 'none'
+      );
       let inserted = false;
       for(const child of children){
         const b = child.getBoundingClientRect();
-        const midX = b.left + b.width/2;
-        const midY = b.top + b.height/2;
-        if(e.clientY < b.top - 4) continue;
-        if(e.clientY < b.bottom + 4 && (e.clientY < midY || Math.abs(e.clientY-midY) < b.height*0.6)){
-          if(e.clientX < midX){ cont.insertBefore(ph, child); inserted = true; break; }
+        if(e.clientY < b.top - 6 || e.clientY > b.bottom + 6) continue;
+        const midX = b.left + b.width / 2;
+        if(e.clientX < midX){
+          cont.insertBefore(ph, child);
+          inserted = true;
+          break;
         }
       }
       if(!inserted) cont.appendChild(ph);

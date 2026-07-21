@@ -234,8 +234,14 @@ nav.main a.exclusive{ color: #e79ee0; }
   40%{ opacity:0.7; transform: scale(1.15) rotate(4deg); filter: brightness(1.4) blur(1px); }
   100%{ opacity:0; transform: scale(0.4) rotate(12deg) translateY(-30px); filter: brightness(1.8) blur(6px); }
 }
-.card.placeholder{ opacity:.15; outline:1.5px dashed rgba(255,255,255,.4); background:transparent; }
-.card.placeholder img{ visibility:hidden; }
+.card.placeholder{
+  opacity:1; width:10px !important; min-width:10px; padding:0; margin:0 2px;
+  outline:none; border-radius:6px;
+  background: rgba(200,160,240,0.45);
+  box-shadow: 0 0 10px rgba(180,120,255,0.35);
+  align-self: stretch;
+}
+.card.placeholder img{ display:none; }
 
 /* ---------- Row settings popover ---------- */
 .row-settings{

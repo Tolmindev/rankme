@@ -73,7 +73,7 @@ footer.site{text-align:center; padding:24px; color:var(--text-dim); font-size:.7
 </head>
 <body>
 <header class="site">
-  <a class="brand" href="index.html"><img src="assets/brand/header_logo.svg" alt="RankMe"></a>
+  <a class="brand" href="index.html"><img src="assets/brand/RankMe_logo.svg" alt="RankMe"></a>
   <nav class="main">
     <a href="index.html">Browse</a>
     <a href="create.html" class="active">Create</a>
@@ -116,7 +116,7 @@ document.getElementById('startBlank').onclick = () => {
   const title = document.getElementById('title').value.trim() || 'My tier list';
   try { localStorage.setItem('rankme_draft_title', title); } catch(e){}
   // Generic builder next; for now go to exclusive SF tool as demo
-  location.href = 'sf-duel.html';
+  location.href = 'builder.html';
 };
 </script>
 </body>

@@ -11,7 +11,11 @@ const FACTION_ICON = {};
 FACTIONS.forEach(f => FACTION_ICON[f] = `assets/factions/${f}_icon.svg`);
 const ALL_ICON = 'assets/factions/ALL_icon.svg';
 
-const cardSrc = id => `assets/cards/${CARD_META[id].file}`;
+const cardSrc = id => {
+  if(state.customCards && state.customCards[id]) return state.customCards[id].src;
+  if(CARD_META[id]) return `assets/cards/${CARD_META[id].file}`;
+  return `assets/cards/card_${String(id).padStart(3,'0')}.png`;
+};
 
 const DEFAULT_TIERS = [
   {id:'t1', name:'GOD',            hue:255, sat:55, light:82},
@@ -26,14 +30,30 @@ const DEFAULT_TIERS = [
   {id:'t10',name:'BAD',            hue:100, sat:55, light:82},
 ];
 
+const BLANK_MODE = !!window.RANKME_BLANK;
+const BLANK_TIERS = [
+  {id:'t1', name:'S', hue:0,   sat:70, light:62},
+  {id:'t2', name:'A', hue:28,  sat:65, light:58},
+  {id:'t3', name:'B', hue:48,  sat:55, light:55},
+  {id:'t4', name:'C', hue:140, sat:40, light:50},
+  {id:'t5', name:'D', hue:220, sat:35, light:48},
+];
+
 let state = {
-  tiers: JSON.parse(JSON.stringify(DEFAULT_TIERS)),
+  // Exclusive opens with standard S–D strips; ElDuD hash loads expert layout
+  tiers: JSON.parse(JSON.stringify(BLANK_TIERS)),
   assignment: {},
   pool: [],
-  rowIdSeq: 11,
+  rowIdSeq: 6,
+  customCards: {}, // id -> {src dataURL, name}
 };
 
-function freshPool(){ return Array.from({length:N_CARDS}, (_,i)=>i+1); }
+let customIdSeq = 10000;
+
+function freshPool(){
+  if(BLANK_MODE) return [];
+  return Array.from({length:N_CARDS}, (_,i)=>i+1);
+}
 
 function loadFromHash(){
   const h = location.hash.replace(/^#/,'');
@@ -53,10 +73,18 @@ function loadFromHash(){
 }
 
 function initState(){
-  if(loadFromHash()) return;
+  if(!BLANK_MODE && loadFromHash()) return;
+  if(BLANK_MODE && loadFromHash()) return; // still allow share links for blank
   state.assignment = {};
   state.tiers.forEach(t=> state.assignment[t.id] = []);
   state.pool = freshPool();
+  if(BLANK_MODE){
+    const title = localStorage.getItem('rankme_draft_title');
+    if(title){
+      const el = document.getElementById('listTitle');
+      if(el) el.textContent = title;
+    }
+  }
 }
 
 function lighten(t, delta){
@@ -154,12 +182,25 @@ let activeFilter = 'ALL';
 
 function renderPool(){
   poolEl.innerHTML = '';
-  const visible = activeFilter==='ALL' ? state.pool : state.pool.filter(id=>CARD_META[id].faction===activeFilter);
-  visible.forEach(cid => poolEl.appendChild(makeCard(cid)));
+  // Deduplicate pool just in case
+  state.pool = [...new Set(state.pool.map(Number))].filter(id => id > 0);
+  let visible;
+  if(BLANK_MODE || activeFilter === 'ALL'){
+    visible = state.pool;
+  } else {
+    visible = state.pool.filter(id => {
+      const m = CARD_META[id];
+      return m && m.faction === activeFilter;
+    });
+  }
+  visible.forEach(cid => {
+    try { poolEl.appendChild(makeCard(cid)); } catch(e){ console.warn('card', cid, e); }
+  });
 }
 
 function makeCard(cid){
   const meta = CARD_META[cid];
+  const custom = state.customCards && state.customCards[cid];
   const el = document.createElement('div');
   el.className = 'card';
   el.dataset.cardId = cid;
@@ -167,8 +208,8 @@ function makeCard(cid){
   img.src = cardSrc(cid);
   img.loading = 'lazy';
   img.draggable = false;
-  img.alt = meta ? meta.name : ('Fighter #' + cid);
-  el.title = meta ? meta.name : '';
+  img.alt = custom ? custom.name : (meta ? meta.name : ('Card #' + cid));
+  el.title = custom ? custom.name : (meta ? meta.name : '');
   el.appendChild(img);
   el.addEventListener('pointerdown', onCardPointerDown);
   return el;
@@ -260,7 +301,8 @@ let autoScrollRAF = null;
 
 function onCardPointerDown(e){
   if(e.button !== undefined && e.button !== 0) return;
-  if(drag) return; // ignore extra touches mid-drag
+  if(drag) return;
+  e.preventDefault();
   const source = e.currentTarget;
   const cid = source.dataset.cardId;
   const rect = source.getBoundingClientRect();
@@ -271,10 +313,11 @@ function onCardPointerDown(e){
   floater.style.height = rect.height+'px';
   floater.style.left = rect.left+'px';
   floater.style.top = rect.top+'px';
+  floater.style.transform = 'none';
   document.body.appendChild(floater);
 
   source.classList.add('dragging');
-  source.style.display = 'none';
+  source.style.visibility = 'hidden';
 
   drag = {
     cid, source, pointerId: e.pointerId,
@@ -283,12 +326,15 @@ function onCardPointerDown(e){
     floater,
     startedContainer: source.parentElement,
     lastY: e.clientY,
+    moved: false,
+    startX: e.clientX,
+    startY: e.clientY,
   };
 
+  try { source.setPointerCapture(e.pointerId); } catch(err){}
   window.addEventListener('pointermove', onDragMove);
   window.addEventListener('pointerup', onDragEnd);
   window.addEventListener('pointercancel', onDragEnd);
-  e.preventDefault();
 }
 
 function containerAt(x,y){
@@ -320,8 +366,10 @@ function onDragMove(e){
   drag.lastY = e.clientY;
   if(!autoScrollRAF) autoScrollRAF = requestAnimationFrame(autoScrollTick);
 
+  if(Math.abs(e.clientX - drag.startX) > 3 || Math.abs(e.clientY - drag.startY) > 3) drag.moved = true;
   drag.floater.style.left = (e.clientX - drag.offX)+'px';
   drag.floater.style.top = (e.clientY - drag.offY)+'px';
+  drag.floater.style.transform = 'none';
 
   document.querySelectorAll('.tier-row').forEach(r=>r.classList.remove('drag-over'));
   const cont = containerAt(e.clientX, e.clientY);
@@ -379,62 +427,80 @@ function onDragEnd(e){
   document.querySelectorAll('.tier-row').forEach(r=>r.classList.remove('drag-over'));
   document.querySelectorAll('.portal-slot').forEach(s=>s.classList.remove('drag-over'));
 
-  const cid = parseInt(drag.cid);
+  const cid = parseInt(drag.cid, 10);
   const floater = drag.floater;
-  const targetContainer = drag.targetContainer;
+  let targetContainer = drag.targetContainer;
   const targetPortal = drag.targetPortal || portalAt(e.clientX, e.clientY);
+  const started = drag.startedContainer;
 
-  // Drop on Magic Portal → teleport to that tier
+  // Hit-test again at release point (more reliable than last move)
+  if(!targetContainer){
+    const el = document.elementFromPoint(e.clientX, e.clientY);
+    if(el){
+      const cont = el.closest('.tier-cards, .pool');
+      if(cont) targetContainer = cont;
+    }
+  }
+
+  // Drop on Magic Portal
   if(targetPortal && portalsOn){
     if(drag.placeholder) drag.placeholder.remove();
     const tierId = targetPortal.dataset.tierId;
+    const label = targetPortal.dataset.label || 'tier';
     removeFromAllData(cid);
     if(!state.assignment[tierId]) state.assignment[tierId] = [];
-    state.assignment[tierId].push(cid);
+    if(!state.assignment[tierId].includes(cid)) state.assignment[tierId].push(cid);
+    state.pool = state.pool.filter(id => id !== cid);
     floater.style.transition = 'transform .25s ease, opacity .25s ease';
     floater.style.transform = 'scale(0.3)';
     floater.style.opacity = '0';
     setTimeout(()=>{
-      floater.remove();
+      try { floater.remove(); } catch(err){}
       drag = null;
-      render();
-      showToast('Teleported to ' + (targetPortal.dataset.label || 'tier'));
+      try { render(); renderFactionFilters(); renderPool(); } catch(err){
+        console.error(err); activeFilter = 'ALL'; render();
+      }
+      showToast('Teleported to ' + label);
     }, 260);
     return;
   }
 
-  // Dropped outside any valid container → evaporate + return to pool
+  // No valid drop target → if started from a tier/pool, put back there (no evaporate on click/double-click)
   if(!targetContainer){
     if(drag.placeholder) drag.placeholder.remove();
-    removeFromAllData(cid);
-    state.pool.push(cid);
-    state.pool.sort((a,b)=>a-b);
-
-    floater.classList.add('evaporate');
-    setTimeout(()=>{
-      floater.remove();
-      drag = null;
-      render();
-    }, 420);
+    // restore source visibility without removing from data
+    try { drag.source.style.display = ''; drag.source.style.visibility = ''; drag.source.classList.remove('dragging'); } catch(err){}
+    try { floater.remove(); } catch(err){}
+    drag = null;
+    // full re-render to be safe
+    render();
     return;
   }
 
-  // Normal drop — use placeholder position while it's still in the DOM
+  // Normal drop
   removeFromAllData(cid);
 
   const cont = targetContainer;
   const ids = [...cont.children]
     .filter(c => c !== drag.source)
-    .map(c => c.classList.contains('placeholder') ? cid : parseInt(c.dataset.cardId));
+    .map(c => {
+      if(c.classList.contains('placeholder')) return cid;
+      const id = parseInt(c.dataset.cardId, 10);
+      return Number.isFinite(id) ? id : null;
+    })
+    .filter(id => id !== null);
+
+  if(!ids.includes(cid)) ids.push(cid);
 
   if(cont.classList.contains('pool')){
-    state.pool = ids.sort((a,b)=>a-b);
+    state.pool = [...new Set(ids)].sort((a,b)=>a-b);
   } else {
-    state.assignment[cont.dataset.tierId] = ids;
+    const tid = cont.dataset.tierId;
+    if(tid) state.assignment[tid] = ids;
   }
 
   if(drag.placeholder) drag.placeholder.remove();
-  floater.remove();
+  try { floater.remove(); } catch(err){}
   drag = null;
   render();
 }
@@ -763,22 +829,39 @@ async function exportPNG(){
   ctx.lineTo(width, footY + 0.5);
   ctx.stroke();
 
+  // Left text
   ctx.fillStyle = '#c4b5e8';
-  ctx.font = '900 22px Montserrat, sans-serif';
+  ctx.font = '900 20px Montserrat, sans-serif';
   ctx.textAlign = 'left';
   ctx.textBaseline = 'middle';
   ctx.fillText('RANKME.LOL', 28, footY + footH/2 - 10);
   ctx.fillStyle = '#7a7199';
-  ctx.font = '600 12px Montserrat, sans-serif';
+  ctx.font = '600 11px Montserrat, sans-serif';
   ctx.fillText('create tier lists in seconds, drag, drop, share.', 28, footY + footH/2 + 14);
 
+  // Center Footer_logo
+  try {
+    const flogo = await loadImage('assets/brand/Footer_logo.png');
+    const lh = 44;
+    const lw = lh * (flogo.naturalWidth || flogo.width) / (flogo.naturalHeight || flogo.height || 1);
+    ctx.drawImage(flogo, (width - lw) / 2, footY + (footH - lh) / 2, lw, lh);
+  } catch(e) {
+    try {
+      const flogo = await loadImage('assets/brand/Footer_logo.svg');
+      const lh = 44;
+      const lw = lh * (flogo.naturalWidth || flogo.width || 2) / (flogo.naturalHeight || flogo.height || 1);
+      ctx.drawImage(flogo, (width - lw) / 2, footY + (footH - lh) / 2, lw, lh);
+    } catch(e2) {}
+  }
+
+  // Right text
   ctx.fillStyle = '#a79fc4';
-  ctx.font = '700 14px Montserrat, sans-serif';
+  ctx.font = '700 13px Montserrat, sans-serif';
   ctx.textAlign = 'right';
-  ctx.fillText('Street Fighter: Duel', width - 28, footY + footH/2 - 10);
+  ctx.fillText(BLANK_MODE ? 'RankMe' : 'Street Fighter: Duel', width - 28, footY + footH/2 - 10);
   ctx.fillStyle = '#6b6288';
-  ctx.font = '600 12px Montserrat, sans-serif';
-  ctx.fillText('Exclusive Tier List', width - 28, footY + footH/2 + 14);
+  ctx.font = '600 11px Montserrat, sans-serif';
+  ctx.fillText(BLANK_MODE ? 'Custom Tier List' : 'Exclusive Tier List', width - 28, footY + footH/2 + 14);
 
   canvas.toBlob(blob => {
     if(!blob){ showToast('Export failed'); return; }
@@ -837,7 +920,7 @@ function getCardImage(cid){
   // Try any img currently on page with this src
   const els = document.querySelectorAll('img');
   for(const el of els){
-    if(el.src && (el.src.endsWith(CARD_META[cid].file) || el.getAttribute('src') === src) && el.complete && el.naturalWidth > 0){
+    if(el.complete && el.naturalWidth > 0 && (el.getAttribute('src') === src || (CARD_META[cid] && el.src.endsWith(CARD_META[cid].file)) || (src && el.src.includes(String(cid))))){
       return el;
     }
   }
@@ -880,6 +963,34 @@ document.getElementById('leaveBtn').addEventListener('click', ()=>{
 
 /* ---------------- Init ---------------- */
 initState();
-renderFactionFilters();
+if(BLANK_MODE){
+  const ff = document.getElementById('factionFilters');
+  if(ff) ff.style.display = 'none';
+  const portalBtn = document.getElementById('portalBtn');
+  // portals still useful in blank
+  const upload = document.getElementById('uploadImgs');
+  if(upload){
+    upload.addEventListener('change', async (e)=>{
+      const files = [...(e.target.files||[])];
+      for(const f of files){
+        if(!f.type.startsWith('image/')) continue;
+        const src = await new Promise((res,rej)=>{
+          const r = new FileReader();
+          r.onload = ()=>res(r.result);
+          r.onerror = rej;
+          r.readAsDataURL(f);
+        });
+        const id = customIdSeq++;
+        state.customCards[id] = { src, name: f.name.replace(/\.[^.]+$/, '') };
+        state.pool.push(id);
+      }
+      renderPool();
+      showToast(files.length + ' image(s) added');
+      e.target.value = '';
+    });
+  }
+} else {
+  renderFactionFilters();
+}
 render();
 })();

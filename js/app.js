@@ -228,9 +228,10 @@ function renderPortals(){
     slot.dataset.tierId = tier.id;
     slot.dataset.tierIndex = idx;
     slot.dataset.label = tier.name;
-    const c1 = `hsla(${tier.hue}, ${Math.min(55, tier.sat)}%, ${Math.min(55, tier.light)}%, 0.7)`;
-    const c2 = `hsla(${tier.hue}, ${Math.min(45, tier.sat)}%, ${Math.max(22, tier.light-18)}%, 0.55)`;
+    const c1 = `hsl(${tier.hue}, ${Math.min(60, tier.sat)}%, ${Math.min(58, tier.light)}%)`;
+    const c2 = `hsl(${tier.hue}, ${Math.min(50, tier.sat)}%, ${Math.max(28, tier.light-12)}%)`;
     slot.style.background = `linear-gradient(180deg, ${c1}, ${c2})`;
+    slot.style.setProperty('--glow', `hsla(${tier.hue}, 70%, 60%, 0.65)`);
     bar.appendChild(slot);
   });
 }

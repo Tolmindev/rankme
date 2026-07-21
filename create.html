@@ -73,12 +73,11 @@ footer.site{text-align:center; padding:24px; color:var(--text-dim); font-size:.7
 </head>
 <body>
 <header class="site">
-  <a class="brand" href="home.html"><img src="assets/brand/header_logo.svg" alt="RankMe"></a>
+  <a class="brand" href="index.html"><img src="assets/brand/header_logo.svg" alt="RankMe"></a>
   <nav class="main">
-    <a href="home.html">Browse</a>
-    <a href="index.html" class="exclusive">Exclusive</a>
+    <a href="index.html">Browse</a>
     <a href="create.html" class="active">Create</a>
-    <button class="login-btn">Login</button>
+    <button class="login-btn" id="loginBtn" onclick="location.href='account.html'">Login</button>
   </nav>
 </header>
 
@@ -97,7 +96,6 @@ footer.site{text-align:center; padding:24px; color:var(--text-dim); font-size:.7
 
     <div class="row">
       <button class="btn primary" id="startBlank">Start blank</button>
-      <a class="btn ghost" href="index.html" style="text-decoration:none;display:inline-flex;align-items:center">Open SF Duel template</a>
     </div>
 
     <div class="note">
@@ -116,9 +114,9 @@ document.getElementById('coverFile').onchange = (e) => {
 };
 document.getElementById('startBlank').onclick = () => {
   const title = document.getElementById('title').value.trim() || 'My tier list';
-  // For now open exclusive builder as the working tool; blank custom builder comes with accounts
-  alert('Custom blank builder is next.\nFor now open the SF Duel exclusive page and build there, or wait for the generic builder.\n\nTitle saved locally: ' + title);
   try { localStorage.setItem('rankme_draft_title', title); } catch(e){}
+  // Generic builder next; for now go to exclusive SF tool as demo
+  location.href = 'sf-duel.html';
 };
 </script>
 </body>

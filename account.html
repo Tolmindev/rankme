@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Account - RankMe</title>
+<link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg-0:#0e0c14;--panel:#1a1728;--line:rgba(255,255,255,.08);--text:#f1eefb;--text-dim:#a79fc4;--accent-grad:linear-gradient(120deg,#b79bf0,#e6a9e8,#cdd6f7)}
+*{box-sizing:border-box}body{margin:0;font-family:Montserrat,system-ui,sans-serif;background:radial-gradient(circle at 20% 0,rgba(160,120,220,.15),transparent 45%),var(--bg-0);color:var(--text);min-height:100vh}
+header.site{display:flex;align-items:center;justify-content:space-between;padding:16px 40px;border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(14,12,20,.75);backdrop-filter:blur(14px)}
+.brand img{height:34px} nav.main{display:flex;gap:28px;align-items:center}
+nav.main a{color:var(--text-dim);text-decoration:none;font-weight:700;font-size:.92rem} nav.main a:hover,nav.main a.active{color:var(--text)}
+.login-btn,.btn{padding:8px 20px;border-radius:999px;font-weight:800;font-size:.85rem;border:none;cursor:pointer;background:var(--accent-grad);color:#1a1226}
+.wrap{max-width:720px;margin:40px auto;padding:0 20px 80px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:28px}
+h1{margin:0 0 8px;font-size:1.35rem;font-weight:900}
+.sub{color:var(--text-dim);font-weight:600;font-size:.88rem;margin:0 0 24px;line-height:1.5}
+.profile{display:flex;gap:16px;align-items:center;margin-bottom:24px}
+.avatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#3a2a55,#2a3550);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:1.2rem;color:#c9b4f0}
+.meta b{display:block;font-size:1.05rem}
+.meta span{color:var(--text-dim);font-size:.8rem;font-weight:600}
+.list{border-top:1px solid var(--line);padding-top:18px}
+.list h2{font-size:.85rem;letter-spacing:.4px;text-transform:uppercase;color:var(--text-dim);margin:0 0 12px}
+.empty{color:var(--text-dim);font-weight:600;font-size:.88rem;padding:20px;border:1px dashed var(--line);border-radius:10px;text-align:center}
+.providers{display:flex;flex-direction:column;gap:10px;margin-top:8px}
+.prov{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:12px;border:1px solid var(--line);background:#12101a;cursor:pointer;font-weight:700;font-size:.9rem;color:var(--text);transition:border-color .15s,transform .15s}
+.prov:hover{border-color:rgba(200,160,240,.5);transform:translateY(-1px)}
+.prov .ico{width:28px;height:28px;border-radius:8px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:.9rem}
+.note{margin-top:18px;font-size:.78rem;color:var(--text-dim);font-weight:600;line-height:1.5}
+.ghost{background:transparent;border:1px solid var(--line);color:var(--text);margin-top:16px}
+</style>
+</head>
+<body>
+<header class="site">
+  <a class="brand" href="index.html"><img src="assets/brand/header_logo.svg" alt="RankMe"></a>
+  <nav class="main">
+    <a href="index.html">Browse</a>
+    <a href="create.html">Create</a>
+    <button class="login-btn" id="loginBtn">Login</button>
+  </nav>
+</header>
+<div class="wrap">
+  <div class="card" id="panel">
+    <!-- filled by JS -->
+  </div>
+</div>
+<script>
+const user = (()=>{ try{ return JSON.parse(localStorage.getItem('rankme_user')||'null'); }catch(e){ return null; } })();
+const panel = document.getElementById('panel');
+const loginBtn = document.getElementById('loginBtn');
+
+function render(){
+  if(user){
+    loginBtn.textContent = 'Account';
+    loginBtn.onclick = ()=> location.href='account.html';
+    panel.innerHTML = `
+      <h1>Your cabinet</h1>
+      <p class="sub">Saved collections will live here once Supabase is connected. Demo mode uses local storage only.</p>
+      <div class="profile">
+        <div class="avatar">${(user.name||'U')[0].toUpperCase()}</div>
+        <div class="meta"><b>${user.name||'User'}</b><span>${user.provider||'demo'} · ${user.email||'no email'}</span></div>
+      </div>
+      <div class="list">
+        <h2>My tier lists</h2>
+        <div class="empty">No saved lists yet. Create one and export PNG — cloud save comes with real login.</div>
+      </div>
+      <button class="login-btn ghost" id="logout">Log out</button>`;
+    document.getElementById('logout').onclick = ()=>{
+      localStorage.removeItem('rankme_user');
+      location.href = 'index.html';
+    };
+  } else {
+    loginBtn.textContent = 'Login';
+    panel.innerHTML = `
+      <h1>Login</h1>
+      <p class="sub">Connect an account to save collections on RankMe. Building and PNG export work without login.</p>
+      <div class="providers">
+        <button class="prov" data-p="discord"><span class="ico">D</span> Continue with Discord</button>
+        <button class="prov" data-p="google"><span class="ico">G</span> Continue with Google</button>
+        <button class="prov" data-p="x"><span class="ico">X</span> Continue with X</button>
+      </div>
+      <p class="note">Demo: click any provider to simulate login locally. Real OAuth via Supabase will replace this.</p>`;
+    panel.querySelectorAll('.prov').forEach(b=>{
+      b.onclick = ()=>{
+        const provider = b.dataset.p;
+        const fake = { name: provider==='discord'?'RankMe Pilot':'Player', email: provider+'@demo.rankme.lol', provider };
+        localStorage.setItem('rankme_user', JSON.stringify(fake));
+        location.reload();
+      };
+    });
+  }
+}
+render();
+</script>
+</body>
+</html>

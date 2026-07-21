@@ -135,6 +135,7 @@ function render(){
     boardInner.appendChild(row);
   });
   renderPool();
+  renderPortals();
 }
 
 function fitLabelFont(el, text){
@@ -207,6 +208,49 @@ function moveRow(idx, dir){
   state.tiers[j] = tmp;
   render();
 }
+
+
+/* ---------------- Magic Portals ---------------- */
+let portalsOn = false;
+
+function renderPortals(){
+  const bar = document.getElementById('portalsBar');
+  if(!bar) return;
+  bar.innerHTML = '';
+  if(!portalsOn){
+    bar.hidden = true;
+    return;
+  }
+  bar.hidden = false;
+  state.tiers.forEach((tier, idx) => {
+    const slot = document.createElement('div');
+    slot.className = 'portal-slot';
+    slot.dataset.tierId = tier.id;
+    slot.dataset.tierIndex = idx;
+    slot.dataset.label = tier.name;
+    const c1 = `hsla(${tier.hue}, ${Math.min(55, tier.sat)}%, ${Math.min(55, tier.light)}%, 0.7)`;
+    const c2 = `hsla(${tier.hue}, ${Math.min(45, tier.sat)}%, ${Math.max(22, tier.light-18)}%, 0.55)`;
+    slot.style.background = `linear-gradient(180deg, ${c1}, ${c2})`;
+    bar.appendChild(slot);
+  });
+}
+
+function portalAt(x, y){
+  if(!portalsOn) return null;
+  const slots = document.querySelectorAll('.portal-slot');
+  for(const s of slots){
+    const b = s.getBoundingClientRect();
+    if(x >= b.left && x <= b.right && y >= b.top && y <= b.bottom) return s;
+  }
+  return null;
+}
+
+document.getElementById('portalBtn').addEventListener('click', ()=>{
+  portalsOn = !portalsOn;
+  document.getElementById('portalBtn').classList.toggle('active', portalsOn);
+  renderPortals();
+  showToast(portalsOn ? 'Magic Portals ON' : 'Magic Portals OFF');
+});
 
 /* ---------------- Drag & drop (pointer-based, mouse+touch) ---------------- */
 
@@ -312,6 +356,16 @@ function onDragMove(e){
     drag.targetContainer = null;
     drag.placeholder = null;
   }
+
+  // Portal highlight
+  document.querySelectorAll('.portal-slot').forEach(s=>s.classList.remove('drag-over'));
+  const portal = portalAt(e.clientX, e.clientY);
+  if(portal){
+    portal.classList.add('drag-over');
+    drag.targetPortal = portal;
+  } else {
+    drag.targetPortal = null;
+  }
 }
 
 function onDragEnd(e){
@@ -322,10 +376,31 @@ function onDragEnd(e){
   if(autoScrollRAF){ cancelAnimationFrame(autoScrollRAF); autoScrollRAF=null; }
 
   document.querySelectorAll('.tier-row').forEach(r=>r.classList.remove('drag-over'));
+  document.querySelectorAll('.portal-slot').forEach(s=>s.classList.remove('drag-over'));
 
   const cid = parseInt(drag.cid);
   const floater = drag.floater;
   const targetContainer = drag.targetContainer;
+  const targetPortal = drag.targetPortal || portalAt(e.clientX, e.clientY);
+
+  // Drop on Magic Portal → teleport to that tier
+  if(targetPortal && portalsOn){
+    if(drag.placeholder) drag.placeholder.remove();
+    const tierId = targetPortal.dataset.tierId;
+    removeFromAllData(cid);
+    if(!state.assignment[tierId]) state.assignment[tierId] = [];
+    state.assignment[tierId].push(cid);
+    floater.style.transition = 'transform .25s ease, opacity .25s ease';
+    floater.style.transform = 'scale(0.3)';
+    floater.style.opacity = '0';
+    setTimeout(()=>{
+      floater.remove();
+      drag = null;
+      render();
+      showToast('Teleported to ' + (targetPortal.dataset.label || 'tier'));
+    }, 260);
+    return;
+  }
 
   // Dropped outside any valid container → evaporate + return to pool
   if(!targetContainer){
@@ -568,14 +643,14 @@ document.getElementById('downloadBtn').addEventListener('click', exportPNG);
 async function exportPNG(){
   showToast('Exporting...');
   const scale = 2;
-  // Respect current Size slider
-  const cardW = Math.max(40, parseInt(getComputedStyle(document.documentElement).getPropertyValue('--card-w')) || 64);
+  // Always high-quality export (UI Size only affects on-screen preview)
+  const cardW = 96;
   const cardH = Math.round(cardW * 1.35);
-  const cardGap = Math.max(4, Math.round(cardW * 0.1));
-  const padX = Math.max(8, Math.round(cardW * 0.18));
-  const padY = Math.max(6, Math.round(cardW * 0.14));
-  const labelW = Math.max(110, Math.round(cardW * 2.2));
-  const width = Math.max(900, labelW + padX * 2 + (cardW + cardGap) * 12 + 20);
+  const cardGap = 8;
+  const padX = 14;
+  const padY = 12;
+  const labelW = 160;
+  const width = 1600;
 
   const cardsAreaW = width - labelW - 8;
   const cardsPerLine = Math.max(1, Math.floor((cardsAreaW - padX + cardGap) / (cardW + cardGap)));

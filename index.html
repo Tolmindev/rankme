@@ -277,6 +277,71 @@ nav.main a.exclusive{ color: #e79ee0; }
   max-width:1400px; margin: 16px auto 60px; padding: 18px 24px 30px;
   background: var(--panel); border:1px solid var(--line); border-radius: var(--radius);
 }
+
+.pool-header{
+  display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
+  margin-bottom:12px;
+}
+.faction-filters{ margin-bottom:0; }
+.portals-bar{
+  display:flex; width:100%; height:32px; border-radius:12px; overflow:hidden;
+  margin-bottom:14px; border:1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.03);
+  box-shadow: inset 0 0 16px rgba(0,0,0,0.25);
+}
+.portals-bar[hidden]{ display:none !important; }
+.portal-slot{
+  flex:1; min-width:0; position:relative; cursor:pointer;
+  opacity: 0.55;
+  transition: opacity .2s, filter .2s, box-shadow .2s, transform .15s;
+  border-right:1px solid rgba(255,255,255,0.06);
+}
+.portal-slot:last-child{ border-right:none; }
+.portal-slot:hover{
+  opacity: 0.8;
+  filter: brightness(1.1);
+}
+.portal-slot.drag-over{
+  opacity: 1;
+  filter: brightness(1.35) saturate(1.2);
+  box-shadow:
+    inset 0 0 0 2px rgba(255,255,255,0.45),
+    0 0 18px rgba(220,180,255,0.55),
+    0 0 36px rgba(180,120,255,0.35);
+  z-index:1;
+  transform: scaleY(1.08);
+}
+.portal-slot::after{
+  content:attr(data-label);
+  position:absolute; inset:0;
+  display:flex; align-items:center; justify-content:center;
+  font-size:.52rem; font-weight:800; letter-spacing:.3px;
+  text-transform:uppercase; color:rgba(255,255,255,0.75);
+  text-shadow: 0 1px 3px rgba(0,0,0,0.55);
+  pointer-events:none;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  padding:0 4px;
+}
+.portal-slot.drag-over::after{ color:#fff; opacity:1; }
+.portal-btn{
+  flex-shrink:0;
+  padding:8px 18px; border-radius:999px; font-size:.72rem; font-weight:800;
+  letter-spacing:.6px; cursor:pointer;
+  border:1px solid rgba(200,160,240,0.35);
+  background: #171327; color: var(--text-dim);
+  transition: all .2s;
+}
+.portal-btn:hover{
+  color:#fff; border-color: rgba(200,160,240,0.8);
+  box-shadow: 0 0 16px rgba(180,120,255,0.3);
+}
+.portal-btn.active{
+  color:#1a1226;
+  background: linear-gradient(120deg, #b79bf0, #e6a9e8, #cdd6f7);
+  border-color: transparent;
+  box-shadow: 0 0 22px rgba(190,140,255,0.55);
+}
+
 .faction-filters{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px; }
 .faction-btn{
   --fhue: 220;
@@ -390,11 +455,11 @@ footer.site .fine{ color:var(--text-dim); font-size:.75rem; font-weight:600; }
 <body>
 
 <header class="site">
-  <a class="brand" href="#"><img src="assets/brand/header_logo.svg" alt="RankMe"></a>
+  <a class="brand" href="home.html"><img src="assets/brand/header_logo.svg" alt="RankMe"></a>
   <nav class="main">
-    <svg class="search-ico" viewBox="0 0 24 24" fill="none" stroke="#a79fc4" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-    <a href="#">Browse</a>
-    <a href="#" class="exclusive active">Exclusive</a>
+    <a href="home.html">Browse</a>
+    <a href="index.html" class="exclusive active">Exclusive</a>
+    <a href="create.html">Create</a>
     <button class="login-btn">Login</button>
   </nav>
 </header>
@@ -441,7 +506,11 @@ footer.site .fine{ color:var(--text-dim); font-size:.75rem; font-weight:600; }
 
 
 <div class="pool-wrap">
-  <div class="faction-filters" id="factionFilters"></div>
+  <div class="portals-bar" id="portalsBar" hidden></div>
+  <div class="pool-header">
+    <div class="faction-filters" id="factionFilters"></div>
+    <button class="portal-btn" id="portalBtn" type="button" title="Drop cards into portals to send them to tiers">MAGIC PORTAL</button>
+  </div>
   <div class="pool" id="pool"></div>
 </div>
 

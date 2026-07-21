@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>RankMe - Create tier lists in seconds</title>
+<meta name="description" content="Create tier lists in seconds. Drag, drop, share. Free, no sign-up.">
+<link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-0:#0e0c14; --panel:#1a1728; --panel-2:#1e1a30;
+  --line: rgba(255,255,255,0.08); --text:#f1eefb; --text-dim:#a79fc4;
+  --accent-grad: linear-gradient(120deg,#b79bf0 0%, #e6a9e8 50%, #cdd6f7 100%);
+  --radius: 14px; --radius-sm: 9px; font-size:16px;
+}
+*{ box-sizing:border-box; }
+html,body{ margin:0; padding:0; }
+body{
+  background:
+    radial-gradient(circle at 18% 0%, rgba(160,120,220,0.16), transparent 45%),
+    radial-gradient(circle at 85% 15%, rgba(120,160,230,0.10), transparent 40%),
+    var(--bg-0);
+  color: var(--text); font-family: 'Montserrat', system-ui, sans-serif; min-height:100vh;
+}
+header.site{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:16px 40px; border-bottom:1px solid var(--line);
+  position:sticky; top:0; z-index:50;
+  background:rgba(14,12,20,0.75); backdrop-filter:blur(14px); overflow:visible;
+}
+.brand{ display:flex; align-items:center; text-decoration:none; color:inherit; padding:10px 18px; margin:-10px -18px; overflow:visible; }
+.brand img{ height:34px; display:block; transition:filter .4s, transform .3s; }
+.brand:hover img{
+  transform:scale(1.03);
+  filter: drop-shadow(0 0 3px rgba(230,190,255,1)) drop-shadow(0 0 10px rgba(200,150,255,.9))
+          drop-shadow(0 0 22px rgba(180,120,255,.65)) brightness(1.2);
+}
+nav.main{ display:flex; align-items:center; gap:28px; }
+nav.main a{ color:var(--text-dim); text-decoration:none; font-weight:700; font-size:.92rem; transition:color .15s; }
+nav.main a:hover, nav.main a.active{ color:var(--text); }
+nav.main a.exclusive{ color:#e79ee0; }
+.login-btn{
+  padding:8px 20px; border-radius:999px; font-size:.85rem; font-weight:800;
+  background:var(--accent-grad); color:#1a1226; border:none; cursor:pointer;
+  transition:filter .15s, transform .15s;
+}
+.login-btn:hover{ filter:brightness(1.08); transform:translateY(-1px); }
+
+.page{ max-width:1200px; margin:0 auto; padding:40px 24px 80px; }
+.hero-home{ text-align:center; margin-bottom:48px; }
+.hero-home h1{
+  font-size:clamp(1.8rem, 4vw, 2.6rem); font-weight:900; margin:0 0 12px;
+  background: var(--accent-grad); -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.hero-home p{ color:var(--text-dim); font-weight:600; max-width:520px; margin:0 auto 28px; line-height:1.6; }
+.cta-row{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+.cta{
+  padding:12px 26px; border-radius:999px; font-weight:800; font-size:.9rem; text-decoration:none;
+  transition: transform .15s, filter .15s, box-shadow .15s;
+}
+.cta.primary{ background:var(--accent-grad); color:#1a1226; }
+.cta.primary:hover{ filter:brightness(1.08); transform:translateY(-2px); box-shadow:0 8px 24px rgba(180,120,240,.35); }
+.cta.ghost{ border:1px solid var(--line); color:var(--text); background:rgba(255,255,255,0.03); }
+.cta.ghost:hover{ border-color:rgba(200,160,240,.5); transform:translateY(-2px); }
+
+.section-title{
+  font-size:1.05rem; font-weight:800; letter-spacing:.4px; margin:0 0 18px;
+  display:flex; align-items:center; gap:10px;
+}
+.section-title .badge{
+  font-size:.65rem; padding:4px 10px; border-radius:999px;
+  background:linear-gradient(120deg,rgba(200,160,240,.25),rgba(230,170,220,.2));
+  border:1px solid rgba(200,160,240,.4); color:#e8d4ff; letter-spacing:.5px;
+}
+
+.grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:18px; }
+
+.tl-card{
+  background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
+  overflow:hidden; text-decoration:none; color:inherit;
+  transition: transform .18s, border-color .18s, box-shadow .18s;
+  display:flex; flex-direction:column;
+}
+.tl-card:hover{ transform:translateY(-3px); border-color:rgba(200,160,240,.35); box-shadow:0 12px 32px rgba(0,0,0,.35); }
+.tl-card.exclusive{
+  border-color:rgba(200,160,240,.4);
+  box-shadow: 0 0 0 1px rgba(200,160,240,.15), 0 0 28px rgba(180,120,255,.18);
+  position:relative;
+}
+.tl-card.exclusive::before{
+  content:''; position:absolute; inset:0; pointer-events:none; border-radius:inherit;
+  background: linear-gradient(135deg, rgba(215,180,255,.12), transparent 40%, rgba(180,220,255,.08));
+  mix-blend-mode:screen;
+}
+.tl-card .cover{
+  height:140px; background:linear-gradient(135deg, #2a1f3d, #1a2035);
+  display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;
+}
+.tl-card .cover img{ max-height:90px; max-width:90%; object-fit:contain; filter:drop-shadow(0 6px 16px rgba(0,0,0,.4)); }
+.tl-card .body{ padding:14px 16px 16px; }
+.tl-card .title{ font-weight:800; font-size:.95rem; margin:0 0 4px; }
+.tl-card .meta{ color:var(--text-dim); font-size:.75rem; font-weight:600; }
+.tl-card .tag{
+  position:absolute; top:10px; right:10px;
+  font-size:.6rem; font-weight:800; letter-spacing:.5px; text-transform:uppercase;
+  padding:4px 9px; border-radius:999px;
+  background:linear-gradient(120deg,#b79bf0,#e6a9e8); color:#1a1226;
+}
+
+.empty-state{
+  grid-column:1 / -1; text-align:center; padding:40px 20px;
+  color:var(--text-dim); font-weight:600; font-size:.9rem;
+  border:1px dashed var(--line); border-radius:var(--radius); background:rgba(255,255,255,0.02);
+}
+
+footer.site{
+  max-width:1200px; margin:0 auto; padding:24px; text-align:center;
+  color:var(--text-dim); font-size:.75rem; font-weight:600;
+  border-top:1px solid var(--line);
+}
+
+@media (max-width:720px){
+  header.site{ padding:12px 14px; }
+  .brand img{ height:26px; }
+  nav.main{ gap:12px; }
+  nav.main a{ font-size:.78rem; }
+  .page{ padding:28px 14px 60px; }
+}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <a class="brand" href="home.html"><img src="assets/brand/header_logo.svg" alt="RankMe"></a>
+  <nav class="main">
+    <a href="home.html" class="active">Browse</a>
+    <a href="index.html" class="exclusive">Exclusive</a>
+    <a href="create.html">Create</a>
+    <button class="login-btn">Login</button>
+  </nav>
+</header>
+
+<main class="page">
+  <section class="hero-home">
+    <h1>Create tier lists in seconds</h1>
+    <p>Drag, drop, share. No sign-up required — connect an account only if you want to save your collection.</p>
+    <div class="cta-row">
+      <a class="cta primary" href="create.html">New tier list</a>
+      <a class="cta ghost" href="index.html">Open SF Duel Exclusive</a>
+    </div>
+  </section>
+
+  <h2 class="section-title">Exclusive <span class="badge">OFFICIAL</span></h2>
+  <div class="grid" style="margin-bottom:40px">
+    <a class="tl-card exclusive" href="index.html">
+      <div class="cover">
+        <span class="tag">Exclusive</span>
+        <img src="assets/brand/SF_Duel_Tier_logo.svg" alt="SF Duel">
+      </div>
+      <div class="body">
+        <div class="title">Street Fighter: Duel</div>
+        <div class="meta">Official exclusive · 130 fighters</div>
+      </div>
+    </a>
+  </div>
+
+  <h2 class="section-title">Community</h2>
+  <div class="grid" id="communityGrid">
+    <div class="empty-state">
+      User tier lists will appear here after accounts are connected.<br>
+      For now — create freely without registration and export PNG.
+    </div>
+  </div>
+</main>
+
+<footer class="site">
+  RANKME.LOL — create tier lists in seconds, drag, drop, share.
+</footer>
+
+</body>
+</html>

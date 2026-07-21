@@ -443,38 +443,51 @@ document.getElementById('addRowBtn').addEventListener('click', ()=>{
 /* ---------------- Toolbar: size, reset, share, download ---------------- */
 
 const sizeSlider = document.getElementById('sizeSlider');
+let _sizeDragging = false;
 function setCardSize(px){
-  // Anchor: keep the element under the cursor / board top stable
-  const board = document.getElementById('board');
-  const anchorY = board ? board.getBoundingClientRect().top : 0;
-  const scrollBefore = window.scrollY;
+  // Freeze scroll: pin the toolbar (which sits above the board) in place
+  const pin = document.querySelector('.toolbar') || document.getElementById('board');
+  const pinTop = pin ? pin.getBoundingClientRect().top : 0;
+  const y0 = window.scrollY || document.documentElement.scrollTop;
 
   document.documentElement.style.setProperty('--card-w', px + 'px');
 
-  // Also toggle compact side buttons without full re-render of cards if possible
   document.querySelectorAll('.tier-row').forEach(row=>{
     if(px < 58) row.classList.add('compact-side');
     else row.classList.remove('compact-side');
   });
 
-  // Double rAF so layout finishes, then correct scroll so world moves around us
-  requestAnimationFrame(()=>{
-    requestAnimationFrame(()=>{
-      if(!board) return;
-      const anchorAfter = board.getBoundingClientRect().top;
-      const delta = anchorAfter - anchorY;
-      if(Math.abs(delta) > 0.5){
-        window.scrollTo({ top: scrollBefore + delta, behavior: 'instant' });
-      }
-    });
-  });
+  // Correct immediately + after layout
+  const fix = ()=>{
+    if(!pin) return;
+    const pinTop2 = pin.getBoundingClientRect().top;
+    const delta = pinTop2 - pinTop;
+    if(Math.abs(delta) > 0.5){
+      const target = y0 + delta;
+      window.scrollTo(0, target);
+      // some browsers need documentElement too
+      document.documentElement.scrollTop = target;
+      document.body.scrollTop = target;
+    }
+  };
+  fix();
+  requestAnimationFrame(()=>{ fix(); requestAnimationFrame(fix); });
 }
+sizeSlider.addEventListener('pointerdown', (e)=>{
+  _sizeDragging = true;
+  document.documentElement.style.overflowAnchor = 'none';
+  document.body.style.overflowAnchor = 'none';
+});
+window.addEventListener('pointerup', ()=>{
+  if(_sizeDragging){
+    _sizeDragging = false;
+    document.documentElement.style.overflowAnchor = '';
+    document.body.style.overflowAnchor = '';
+  }
+});
 sizeSlider.addEventListener('input', (e)=>{
   setCardSize(+e.target.value);
 });
-// Prevent scroll chaining / focus jump while dragging slider
-sizeSlider.addEventListener('pointerdown', ()=>{ document.body.style.overflowAnchor = 'none'; });
-sizeSlider.addEventListener('pointerup', ()=>{ document.body.style.overflowAnchor = ''; });
 document.getElementById('sizeResetBtn').addEventListener('click', ()=>{
   sizeSlider.value = 64;
   setCardSize(64);
@@ -554,11 +567,10 @@ async function exportPNG(){
   const scale = 2;
   const width = 1400;
   const labelW = 150;
-  const cardW = 78, cardH = 105, cardGap = 7, padX = 14, padY = 12;
-  const cardsAreaW = width - labelW - 16;
-  const cardsPerLine = Math.max(1, Math.floor((cardsAreaW - padX*2 + cardGap) / (cardW + cardGap)));
+  const cardW = 78, cardH = 105, cardGap = 7, padX = 14, padY = 10;
+  const cardsAreaW = width - labelW - 8;
+  const cardsPerLine = Math.max(1, Math.floor((cardsAreaW - padX + cardGap) / (cardW + cardGap)));
 
-  // Collect and preload all card images (prefer DOM so file:// works)
   const allIds = new Set();
   state.tiers.forEach(t => (state.assignment[t.id]||[]).forEach(id => allIds.add(id)));
   const imgCache = {};
@@ -567,16 +579,22 @@ async function exportPNG(){
       let img = getCardImage(cid);
       if(!img) img = await loadImage(cardSrc(cid));
       if(img && (img.naturalWidth || img.width)) imgCache[cid] = img;
-    } catch(e) { console.warn('card load fail', cid, e); }
+    } catch(e) {}
   }));
+
+  // Preload footer assets (PNG versions for canvas reliability)
+  let footerLeft = null, footerLogo = null, sfLogo = null;
+  try { footerLeft = await loadImage('assets/brand/RankMe_footer_left.png'); } catch(e){}
+  try { footerLogo = await loadImage('assets/brand/Footer_logo.png'); } catch(e){}
+  try { sfLogo = await loadImage('assets/brand/SF_Duel_Tier_logo.png'); } catch(e){}
 
   const rowHeights = state.tiers.map(t => {
     const n = (state.assignment[t.id]||[]).length;
     const lines = Math.max(1, Math.ceil(n / cardsPerLine) || 1);
     return Math.max(padY*2 + cardH, padY*2 + lines * cardH + Math.max(0, lines-1)*cardGap);
   });
-  const padTop = 24;
-  const footH = 90;
+  const padTop = 20;
+  const footH = 88;
   const height = padTop + rowHeights.reduce((a,b)=>a+b, 0) + footH;
 
   const canvas = document.getElementById('exportCanvas');
@@ -585,6 +603,7 @@ async function exportPNG(){
   const ctx = canvas.getContext('2d');
   ctx.setTransform(scale, 0, 0, scale, 0, 0);
 
+  // bg like site
   ctx.fillStyle = '#0e0c14';
   ctx.fillRect(0, 0, width, height);
 
@@ -593,34 +612,55 @@ async function exportPNG(){
     const t = state.tiers[i];
     const rh = rowHeights[i];
 
-    const c1 = `hsl(${t.hue},${t.sat}%,${Math.min(92, t.light+6)}%)`;
-    const c2 = `hsl(${t.hue},${t.sat}%,${t.light}%)`;
-    const grad = ctx.createLinearGradient(0, y, labelW, y);
+    // Label block matching site: full height solid-ish gradient, rounded right
+    const c1 = `hsl(${t.hue}, ${t.sat}%, ${Math.min(88, t.light + 4)}%)`;
+    const c2 = `hsl(${t.hue}, ${t.sat}%, ${Math.max(28, t.light - 8)}%)`;
+    const grad = ctx.createLinearGradient(0, y, labelW, y + rh);
     grad.addColorStop(0, c1);
     grad.addColorStop(1, c2);
     ctx.fillStyle = grad;
-    const rr = 8;
+
+    // Draw rounded rect on right side only (left edge square like the site board)
+    const rr = 0;
     ctx.beginPath();
-    ctx.moveTo(0, y);
-    ctx.lineTo(labelW - rr, y);
-    ctx.quadraticCurveTo(labelW, y, labelW, y + rr);
-    ctx.lineTo(labelW, y + rh - rr);
-    ctx.quadraticCurveTo(labelW, y + rh, labelW - rr, y + rh);
-    ctx.lineTo(0, y + rh);
-    ctx.closePath();
+    ctx.rect(0, y, labelW, rh);
     ctx.fill();
 
-    ctx.fillStyle = '#fff';
+    // Subtle left accent bar like .tier-pill
+    const pillGrad = ctx.createLinearGradient(0, y, 0, y + rh);
+    pillGrad.addColorStop(0, `hsl(${t.hue}, ${t.sat}%, ${Math.min(95, t.light+12)}%)`);
+    pillGrad.addColorStop(1, `hsl(${t.hue}, ${t.sat}%, ${t.light}%)`);
+    ctx.fillStyle = pillGrad;
+    ctx.fillRect(0, y, 8, rh);
+
+    // Soft overlay on label like site
+    ctx.fillStyle = `hsla(${t.hue}, ${t.sat}%, ${t.light}%, 0.15)`;
+    ctx.fillRect(8, y, labelW - 8, rh);
+
+    // Text
+    ctx.fillStyle = '#ffffff';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    fitAndWrap(ctx, t.name, labelW/2, y + rh/2, labelW - 18, 12, 19);
+    fitAndWrap(ctx, t.name, 8 + (labelW-8)/2, y + rh/2, labelW - 20, 11, 18);
 
-    ctx.fillStyle = 'rgba(255,255,255,0.02)';
+    // Divider line under row
+    ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(0, y + rh - 0.5);
+    ctx.lineTo(width, y + rh - 0.5);
+    ctx.stroke();
+
+    // Cards area bg
+    ctx.fillStyle = 'rgba(255,255,255,0.015)';
     ctx.fillRect(labelW, y, width - labelW, rh);
 
     const ids = state.assignment[t.id] || [];
     let x = labelW + padX;
-    let cy = y + padY;
+    let cy = y + Math.max(padY, (rh - cardH) / 2);
+    // if multi-line, start from top pad
+    const lines = Math.max(1, Math.ceil(ids.length / cardsPerLine));
+    if(lines > 1) cy = y + padY;
     let col = 0;
     for(const cid of ids){
       const img = imgCache[cid];
@@ -639,38 +679,54 @@ async function exportPNG(){
     y += rh;
   }
 
-  const footY = y + 16;
-  ctx.strokeStyle = 'rgba(255,255,255,0.07)';
-  ctx.lineWidth = 1;
+  // Footer bar
+  const footY = y;
+  ctx.fillStyle = '#0e0c14';
+  ctx.fillRect(0, footY, width, footH);
+  ctx.strokeStyle = 'rgba(255,255,255,0.08)';
   ctx.beginPath();
-  ctx.moveTo(24, y + 6);
-  ctx.lineTo(width - 24, y + 6);
+  ctx.moveTo(0, footY + 0.5);
+  ctx.lineTo(width, footY + 0.5);
   ctx.stroke();
 
-  ctx.fillStyle = '#c4b5e8';
-  ctx.font = '900 20px Montserrat, sans-serif';
-  ctx.textAlign = 'left';
-  ctx.textBaseline = 'alphabetic';
-  ctx.fillText('RANKME.LOL', 28, footY + 26);
+  // Left: RankMe_footer_left
+  if(footerLeft){
+    const fh = 48;
+    const fw = fh * (footerLeft.naturalWidth || footerLeft.width) / (footerLeft.naturalHeight || footerLeft.height || 1);
+    ctx.drawImage(footerLeft, 24, footY + (footH - fh) / 2, fw, fh);
+  } else {
+    ctx.fillStyle = '#c4b5e8';
+    ctx.font = '900 20px Montserrat, sans-serif';
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('RANKME.LOL', 28, footY + footH/2 - 8);
+    ctx.fillStyle = '#7a7199';
+    ctx.font = '600 11px Montserrat, sans-serif';
+    ctx.fillText('create tier lists in seconds, drag, drop, share.', 28, footY + footH/2 + 12);
+  }
 
-  ctx.fillStyle = '#7a7199';
-  ctx.font = '600 11px Montserrat, sans-serif';
-  ctx.fillText('create tier lists in seconds, drag, drop, share.', 28, footY + 46);
-
-  ctx.fillStyle = '#a79fc4';
-  ctx.font = '700 13px Montserrat, sans-serif';
-  ctx.textAlign = 'right';
-  ctx.fillText('Street Fighter: Duel', width - 28, footY + 26);
-  ctx.fillStyle = '#6b6288';
-  ctx.font = '600 11px Montserrat, sans-serif';
-  ctx.fillText('Exclusive Tier List', width - 28, footY + 46);
+  // Right: Footer_logo + SF_Duel_Tier_logo (exclusive)
+  let rx = width - 24;
+  if(sfLogo){
+    const sh = 44;
+    const sw = sh * (sfLogo.naturalWidth || sfLogo.width) / (sfLogo.naturalHeight || sfLogo.height || 1);
+    rx -= sw;
+    ctx.drawImage(sfLogo, rx, footY + (footH - sh) / 2, sw, sh);
+    rx -= 16;
+  }
+  if(footerLogo){
+    const lh = 40;
+    const lw = lh * (footerLogo.naturalWidth || footerLogo.width) / (footerLogo.naturalHeight || footerLogo.height || 1);
+    rx -= lw;
+    ctx.drawImage(footerLogo, rx, footY + (footH - lh) / 2, lw, lh);
+  }
 
   canvas.toBlob(blob => {
     if(!blob){ showToast('Export failed'); return; }
-    const link = document.createElement('a');
-    link.download = 'rankme-sf-duel-tierlist.png';
-    link.href = URL.createObjectURL(blob);
-    link.click();
+    const a = document.createElement('a');
+    a.download = 'rankme-sf-duel-tierlist.png';
+    a.href = URL.createObjectURL(blob);
+    a.click();
     showToast('PNG downloaded');
   }, 'image/png', 0.95);
 }

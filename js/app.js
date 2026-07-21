@@ -72,6 +72,18 @@ function loadFromHash(){
   }catch(e){ return false; }
 }
 
+function applyHashState(){
+  if(!loadFromHash()) return false;
+  activeFilter = 'ALL';
+  portalsOn = false;
+  const pb = document.getElementById('portalBtn');
+  if(pb) pb.classList.remove('active');
+  render();
+  if(!BLANK_MODE) renderFactionFilters();
+  renderPortals();
+  return true;
+}
+
 function initState(){
   if(!BLANK_MODE && loadFromHash()) return;
   if(BLANK_MODE && loadFromHash()) return; // still allow share links for blank
@@ -993,4 +1005,11 @@ if(BLANK_MODE){
   renderFactionFilters();
 }
 render();
+
+window.addEventListener('hashchange', ()=>{
+  if(location.hash && location.hash.length > 1){
+    applyHashState();
+    showToast('Expert tier list loaded');
+  }
+});
 })();

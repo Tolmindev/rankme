@@ -1016,4 +1016,21 @@ window.addEventListener('hashchange', ()=>{
     showToast('Expert tier list loaded');
   }
 });
+
+// ElDuD (and any expert link): always apply, even if hash is already the same
+document.querySelectorAll('a.expert-name, #eldudLink').forEach(a => {
+  a.addEventListener('click', (e) => {
+    const href = a.getAttribute('href') || '';
+    const hash = href.includes('#') ? href.slice(href.indexOf('#')) : '';
+    if(!hash || hash.length < 2) return;
+    e.preventDefault();
+    if(location.hash === hash){
+      // force re-apply same expert list
+      applyHashState();
+      showToast('Expert tier list loaded');
+    } else {
+      location.hash = hash; // triggers hashchange
+    }
+  });
+});
 })();

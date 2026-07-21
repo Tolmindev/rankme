@@ -208,13 +208,14 @@ nav.main a.exclusive{ color: #e79ee0; }
   100%{ opacity:0; transform: scale(0.4) rotate(12deg) translateY(-30px); filter: brightness(1.8) blur(6px); }
 }
 .card.placeholder{
-  opacity:1; width:10px !important; min-width:10px; padding:0; margin:0 2px;
-  outline:none; border-radius:6px;
-  background: rgba(200,160,240,0.45);
-  box-shadow: 0 0 10px rgba(180,120,255,0.35);
-  align-self: stretch;
+  opacity: 0.45;
+  outline: 2px dashed rgba(200,160,240,0.7);
+  outline-offset: -2px;
+  background: rgba(160,120,220,0.12);
+  box-shadow: 0 0 14px rgba(180,120,255,0.2);
+  border-radius: var(--radius-sm, 9px);
 }
-.card.placeholder img{ display:none; }
+.card.placeholder img{ opacity: 0.35; filter: grayscale(0.3); visibility: visible; }
 
 /* ---------- Row settings popover ---------- */
 .row-settings{

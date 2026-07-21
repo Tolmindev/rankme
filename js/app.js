@@ -22,7 +22,7 @@ const DEFAULT_TIERS = [
   {id:'t6', name:'ASSISTANT',      hue:220, sat:35, light:52},
   {id:'t7', name:'TOWERS',         hue:172, sat:50, light:52},
   {id:'t8', name:'DECENT',         hue:135, sat:38, light:48},
-  {id:'t9', name:'DISSAPOINTED',   hue:110, sat:55, light:70},
+  {id:'t9', name:'DISAPPOINTED',   hue:110, sat:55, light:70},
   {id:'t10',name:'BAD',            hue:100, sat:55, light:82},
 ];
 
@@ -128,17 +128,21 @@ function render(){
     side.querySelector('.up').addEventListener('click', ()=> moveRow(idx,-1));
     side.querySelector('.down').addEventListener('click', ()=> moveRow(idx,1));
 
+    // Compact side controls when cards are small (row too short for vertical stack)
+    const cardPx = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--card-w')) || 64;
+    if(cardPx < 58) row.classList.add('compact-side');
+
     boardInner.appendChild(row);
   });
   renderPool();
 }
 
 function fitLabelFont(el, text){
-  let size = 15;
+  let size = 13;
   el.style.fontSize = size+'px';
-  const maxTries = 12;
+  const maxTries = 10;
   let tries = 0;
-  while(tries < maxTries && (el.scrollHeight > el.clientHeight+2 || el.scrollWidth > el.clientWidth+2) && size > 8){
+  while(tries < maxTries && (el.scrollHeight > el.clientHeight+2 || el.scrollWidth > el.clientWidth+2) && size > 7){
     size -= 1;
     el.style.fontSize = size+'px';
     tries++;
@@ -174,17 +178,22 @@ function renderFactionFilters(){
   wrap.innerHTML = '';
   const mkBtn = (key, label, icon, hue) => {
     const b = document.createElement('button');
-    b.className = 'faction-btn' + (activeFilter===key ? ' active' : '');
+    b.className = 'faction-btn' + (activeFilter===key ? ' active' : '') + (!icon ? ' no-icon' : '');
     if(hue!==undefined) b.style.setProperty('--fhue', hue);
-    const img = document.createElement('img');
-    img.src = icon; img.alt='';
-    b.appendChild(img);
+    if(icon){
+      const img = document.createElement('img');
+      img.src = icon; img.alt='';
+      b.appendChild(img);
+    }
     b.appendChild(document.createTextNode(label));
     b.addEventListener('click', ()=>{ activeFilter = key; renderFactionFilters(); renderPool(); });
     wrap.appendChild(b);
   };
   mkBtn('ALL', 'All', ALL_ICON);
-  FACTIONS.forEach(f => mkBtn(f, f, FACTION_ICON[f] ?? ALL_ICON, FACTION_HUE[f] ?? 220));
+  FACTIONS.forEach(f => {
+    const icon = (f === 'A+') ? null : (FACTION_ICON[f] ?? ALL_ICON);
+    mkBtn(f, f, icon, FACTION_HUE[f] ?? 220);
+  });
 }
 
 function moveRow(idx, dir){
@@ -278,7 +287,7 @@ function onDragMove(e){
     ph.className = 'card placeholder';
     ph.innerHTML = '<img src="'+cardSrc(drag.cid)+'">';
     if(cont.classList.contains('pool')){
-      // pool never reorders — just append, actual order is re-sorted by id on render
+      // pool never reorders - just append, actual order is re-sorted by id on render
       cont.appendChild(ph);
     } else {
       const children = [...cont.children].filter(c=>!c.classList.contains('placeholder') && c!==drag.source);
@@ -312,26 +321,41 @@ function onDragEnd(e){
   document.querySelectorAll('.tier-row').forEach(r=>r.classList.remove('drag-over'));
 
   const cid = parseInt(drag.cid);
-  removeFromAllData(cid);
+  const floater = drag.floater;
+  const targetContainer = drag.targetContainer;
 
-  if(drag.targetContainer){
-    const cont = drag.targetContainer;
-    const ids = [...cont.children].filter(c=>c!==drag.source).map(c => c.classList.contains('placeholder') ? cid : parseInt(c.dataset.cardId));
-    if(cont.classList.contains('pool')){
-      state.pool = ids.sort((a,b)=>a-b);
-    } else {
-      state.assignment[cont.dataset.tierId] = ids;
-    }
-  } else {
-    if(drag.startedContainer.classList.contains('pool')){ state.pool.push(cid); state.pool.sort((a,b)=>a-b); }
-    else {
-      const tid = drag.startedContainer.dataset.tierId;
-      if(state.assignment[tid]) state.assignment[tid].push(cid);
-    }
+  // Dropped outside any valid container → evaporate + return to pool
+  if(!targetContainer){
+    if(drag.placeholder) drag.placeholder.remove();
+    removeFromAllData(cid);
+    state.pool.push(cid);
+    state.pool.sort((a,b)=>a-b);
+
+    floater.classList.add('evaporate');
+    setTimeout(()=>{
+      floater.remove();
+      drag = null;
+      render();
+    }, 420);
+    return;
   }
 
-  drag.floater.remove();
+  // Normal drop — use placeholder position while it's still in the DOM
+  removeFromAllData(cid);
+
+  const cont = targetContainer;
+  const ids = [...cont.children]
+    .filter(c => c !== drag.source)
+    .map(c => c.classList.contains('placeholder') ? cid : parseInt(c.dataset.cardId));
+
+  if(cont.classList.contains('pool')){
+    state.pool = ids.sort((a,b)=>a-b);
+  } else {
+    state.assignment[cont.dataset.tierId] = ids;
+  }
+
   if(drag.placeholder) drag.placeholder.remove();
+  floater.remove();
   drag = null;
   render();
 }
@@ -419,12 +443,41 @@ document.getElementById('addRowBtn').addEventListener('click', ()=>{
 /* ---------------- Toolbar: size, reset, share, download ---------------- */
 
 const sizeSlider = document.getElementById('sizeSlider');
+function setCardSize(px){
+  // Anchor: keep the element under the cursor / board top stable
+  const board = document.getElementById('board');
+  const anchorY = board ? board.getBoundingClientRect().top : 0;
+  const scrollBefore = window.scrollY;
+
+  document.documentElement.style.setProperty('--card-w', px + 'px');
+
+  // Also toggle compact side buttons without full re-render of cards if possible
+  document.querySelectorAll('.tier-row').forEach(row=>{
+    if(px < 58) row.classList.add('compact-side');
+    else row.classList.remove('compact-side');
+  });
+
+  // Double rAF so layout finishes, then correct scroll so world moves around us
+  requestAnimationFrame(()=>{
+    requestAnimationFrame(()=>{
+      if(!board) return;
+      const anchorAfter = board.getBoundingClientRect().top;
+      const delta = anchorAfter - anchorY;
+      if(Math.abs(delta) > 0.5){
+        window.scrollTo({ top: scrollBefore + delta, behavior: 'instant' });
+      }
+    });
+  });
+}
 sizeSlider.addEventListener('input', (e)=>{
-  document.documentElement.style.setProperty('--card-w', e.target.value+'px');
+  setCardSize(+e.target.value);
 });
+// Prevent scroll chaining / focus jump while dragging slider
+sizeSlider.addEventListener('pointerdown', ()=>{ document.body.style.overflowAnchor = 'none'; });
+sizeSlider.addEventListener('pointerup', ()=>{ document.body.style.overflowAnchor = ''; });
 document.getElementById('sizeResetBtn').addEventListener('click', ()=>{
   sizeSlider.value = 64;
-  document.documentElement.style.setProperty('--card-w', '64px');
+  setCardSize(64);
 });
 
 function showConfirm(title, text, onConfirm){
@@ -453,7 +506,7 @@ document.getElementById('clearAllBtn').addEventListener('click', ()=>{
 });
 
 document.getElementById('fillAllBtn').addEventListener('click', ()=>{
-  showConfirm('Fill all rows randomly?', 'Every fighter still in the pool will be dropped into a random row — handy as a starting point before you sort them.', ()=>{
+  showConfirm('Fill all rows randomly?', 'Every fighter still in the pool will be dropped into a random row - handy as a starting point before you sort them.', ()=>{
     const shuffled = [...state.pool].sort(()=>Math.random()-0.5);
     shuffled.forEach(cid=>{
       const t = state.tiers[Math.floor(Math.random()*state.tiers.length)];
@@ -482,7 +535,7 @@ function showToast(msg){
 
 document.getElementById('shareDiscord').addEventListener('click', ()=>{
   const url = buildShareUrl();
-  navigator.clipboard?.writeText(url).then(()=> showToast('Link copied — paste it into Discord'))
+  navigator.clipboard?.writeText(url).then(()=> showToast('Link copied - paste it into Discord'))
     .catch(()=> showToast(url));
 });
 document.getElementById('shareTelegram').addEventListener('click', ()=>{
@@ -497,65 +550,129 @@ document.getElementById('shareX').addEventListener('click', ()=>{
 document.getElementById('downloadBtn').addEventListener('click', exportPNG);
 
 async function exportPNG(){
+  showToast('Exporting...');
   const scale = 2;
-  const width = 1200;
-  const rowH = 110;
-  const padTop = 40;
+  const width = 1400;
+  const labelW = 150;
+  const cardW = 78, cardH = 105, cardGap = 7, padX = 14, padY = 12;
+  const cardsAreaW = width - labelW - 16;
+  const cardsPerLine = Math.max(1, Math.floor((cardsAreaW - padX*2 + cardGap) / (cardW + cardGap)));
+
+  // Collect and preload all card images (prefer DOM so file:// works)
+  const allIds = new Set();
+  state.tiers.forEach(t => (state.assignment[t.id]||[]).forEach(id => allIds.add(id)));
+  const imgCache = {};
+  await Promise.all([...allIds].map(async cid => {
+    try {
+      let img = getCardImage(cid);
+      if(!img) img = await loadImage(cardSrc(cid));
+      if(img && (img.naturalWidth || img.width)) imgCache[cid] = img;
+    } catch(e) { console.warn('card load fail', cid, e); }
+  }));
+
+  const rowHeights = state.tiers.map(t => {
+    const n = (state.assignment[t.id]||[]).length;
+    const lines = Math.max(1, Math.ceil(n / cardsPerLine) || 1);
+    return Math.max(padY*2 + cardH, padY*2 + lines * cardH + Math.max(0, lines-1)*cardGap);
+  });
+  const padTop = 24;
   const footH = 90;
-  const height = padTop + state.tiers.length * rowH + footH;
+  const height = padTop + rowHeights.reduce((a,b)=>a+b, 0) + footH;
 
   const canvas = document.getElementById('exportCanvas');
-  canvas.width = width*scale; canvas.height = height*scale;
+  canvas.width = width * scale;
+  canvas.height = height * scale;
   const ctx = canvas.getContext('2d');
-  ctx.scale(scale,scale);
+  ctx.setTransform(scale, 0, 0, scale, 0, 0);
 
   ctx.fillStyle = '#0e0c14';
-  ctx.fillRect(0,0,width,height);
+  ctx.fillRect(0, 0, width, height);
 
   let y = padTop;
-  for(const t of state.tiers){
-    ctx.fillStyle = `hsl(${t.hue},${t.sat}%,${t.light}%)`;
-    ctx.fillRect(0, y, 130, rowH-2);
+  for(let i = 0; i < state.tiers.length; i++){
+    const t = state.tiers[i];
+    const rh = rowHeights[i];
+
+    const c1 = `hsl(${t.hue},${t.sat}%,${Math.min(92, t.light+6)}%)`;
+    const c2 = `hsl(${t.hue},${t.sat}%,${t.light}%)`;
+    const grad = ctx.createLinearGradient(0, y, labelW, y);
+    grad.addColorStop(0, c1);
+    grad.addColorStop(1, c2);
+    ctx.fillStyle = grad;
+    const rr = 8;
+    ctx.beginPath();
+    ctx.moveTo(0, y);
+    ctx.lineTo(labelW - rr, y);
+    ctx.quadraticCurveTo(labelW, y, labelW, y + rr);
+    ctx.lineTo(labelW, y + rh - rr);
+    ctx.quadraticCurveTo(labelW, y + rh, labelW - rr, y + rh);
+    ctx.lineTo(0, y + rh);
+    ctx.closePath();
+    ctx.fill();
+
     ctx.fillStyle = '#fff';
-    ctx.font = '900 20px Montserrat, sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    fitAndWrap(ctx, t.name, 65, y+rowH/2, 118, 20, 22);
+    fitAndWrap(ctx, t.name, labelW/2, y + rh/2, labelW - 18, 12, 19);
 
-    ctx.fillStyle = 'rgba(255,255,255,0.03)';
-    ctx.fillRect(130, y, width-130, rowH-2);
+    ctx.fillStyle = 'rgba(255,255,255,0.02)';
+    ctx.fillRect(labelW, y, width - labelW, rh);
 
-    const ids = state.assignment[t.id]||[];
-    let x = 140;
+    const ids = state.assignment[t.id] || [];
+    let x = labelW + padX;
+    let cy = y + padY;
+    let col = 0;
     for(const cid of ids){
-      try{
-        const img = await loadImage(cardSrc(cid));
-        const cw = 70, ch = 94;
-        ctx.drawImage(img, x, y+8, cw, ch);
-        x += cw+6;
-        if(x > width-80) break;
-      }catch(e){}
+      const img = imgCache[cid];
+      if(img){
+        try { ctx.drawImage(img, x, cy, cardW, cardH); } catch(e){}
+      }
+      col++;
+      if(col >= cardsPerLine){
+        col = 0;
+        x = labelW + padX;
+        cy += cardH + cardGap;
+      } else {
+        x += cardW + cardGap;
+      }
     }
-    y += rowH;
+    y += rh;
   }
 
-  try{
-    const logo = await loadImage('assets/brand/Footer_logo.svg');
-    const lh = 46, lw = lh * (logo.width/logo.height);
-    ctx.drawImage(logo, 20, y+22, lw, lh);
-  }catch(e){}
-  ctx.fillStyle = '#a79fc4';
-  ctx.font = '700 13px Montserrat, sans-serif';
+  const footY = y + 16;
+  ctx.strokeStyle = 'rgba(255,255,255,0.07)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(24, y + 6);
+  ctx.lineTo(width - 24, y + 6);
+  ctx.stroke();
+
+  ctx.fillStyle = '#c4b5e8';
+  ctx.font = '900 20px Montserrat, sans-serif';
   ctx.textAlign = 'left';
   ctx.textBaseline = 'alphabetic';
-  ctx.fillText('RANKME.LOL — create tier lists in seconds, drag, drop, share.', 90, y+52);
+  ctx.fillText('RANKME.LOL', 28, footY + 26);
 
-  canvas.toBlob(blob=>{
+  ctx.fillStyle = '#7a7199';
+  ctx.font = '600 11px Montserrat, sans-serif';
+  ctx.fillText('create tier lists in seconds, drag, drop, share.', 28, footY + 46);
+
+  ctx.fillStyle = '#a79fc4';
+  ctx.font = '700 13px Montserrat, sans-serif';
+  ctx.textAlign = 'right';
+  ctx.fillText('Street Fighter: Duel', width - 28, footY + 26);
+  ctx.fillStyle = '#6b6288';
+  ctx.font = '600 11px Montserrat, sans-serif';
+  ctx.fillText('Exclusive Tier List', width - 28, footY + 46);
+
+  canvas.toBlob(blob => {
+    if(!blob){ showToast('Export failed'); return; }
     const link = document.createElement('a');
     link.download = 'rankme-sf-duel-tierlist.png';
     link.href = URL.createObjectURL(blob);
     link.click();
-  });
+    showToast('PNG downloaded');
+  }, 'image/png', 0.95);
 }
 
 function fitAndWrap(ctx, text, x, y, maxWidth, minSize, maxSize){
@@ -585,13 +702,31 @@ function wrapLines(ctx, text, maxWidth){
 }
 
 function loadImage(src){
-  return new Promise((res,rej)=>{
+  return new Promise((res, rej)=>{
+    // Prefer already-loaded DOM images (works with file://)
+    const existing = document.querySelector(`img[src="${src}"]`);
+    if(existing && existing.complete && existing.naturalWidth > 0){
+      res(existing);
+      return;
+    }
     const img = new Image();
-    img.crossOrigin = 'anonymous';
     img.onload = ()=>res(img);
-    img.onerror = rej;
+    img.onerror = ()=>rej(new Error('fail '+src));
     img.src = src;
   });
+}
+
+// Build a cache of card images from the page for reliable export
+function getCardImage(cid){
+  const src = cardSrc(cid);
+  // Try any img currently on page with this src
+  const els = document.querySelectorAll('img');
+  for(const el of els){
+    if(el.src && (el.src.endsWith(CARD_META[cid].file) || el.getAttribute('src') === src) && el.complete && el.naturalWidth > 0){
+      return el;
+    }
+  }
+  return null;
 }
 
 /* ---------------- Leave warning ---------------- */
@@ -606,9 +741,15 @@ window.addEventListener('beforeunload', (e)=>{
 
 document.querySelectorAll('nav.main a, .brand').forEach(a=>{
   a.addEventListener('click', (e)=>{
+    const href = a.getAttribute('href') || '#';
+    // Don't show leave modal when staying on the same page
+    if(href === '#' || href === '' || href === location.pathname || href === location.href){
+      e.preventDefault();
+      return;
+    }
     if(hasProgress()){
       e.preventDefault();
-      pendingNav = a.getAttribute('href') || '#';
+      pendingNav = href;
       document.getElementById('leaveModal').classList.add('open');
     }
   });

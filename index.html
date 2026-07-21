@@ -7,10 +7,9 @@
 <meta name="description" content="Create tier lists in seconds. Drag, drop, share. Free, no sign-up.">
 <meta property="og:title" content="Street Fighter: Duel Tier List - RankMe">
 <meta property="og:description" content="Drag, rank, share - build your Street Fighter: Duel tier list on RankMe.">
-<meta property="og:image" content="assets/brand/Export_Picture_For_User.png">
+<meta property="og:image" content="assets/brand/SF_Duel_Tier_logo.svg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
-<link rel="icon" type="image/png" href="assets/brand/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800;900&display=swap" rel="stylesheet">
@@ -89,7 +88,7 @@ nav.main a.exclusive{ color: #e79ee0; }
 
 /* ---------- Hero ---------- */
 .hero{
-  max-width:1400px; margin:0 auto; padding: 48px 24px 16px;
+  max-width:1400px; margin:0 auto; padding: 48px 24px 36px;
   display:flex; align-items:center; gap:40px; flex-wrap:wrap;
 }
 .hero img.title-logo{ width: 420px; max-width:100%; filter: drop-shadow(0 10px 40px rgba(160,110,220,.25)); }
@@ -297,6 +296,16 @@ nav.main a.exclusive{ color: #e79ee0; }
   background: hsl(var(--fhue),55%,28%);
   box-shadow: 0 0 14px hsla(var(--fhue),80%,60%,.4);
 }
+.faction-btn.active.legendary{
+  border-color: #d4b8f0;
+  background: linear-gradient(120deg, rgba(180,150,220,.35), rgba(200,180,230,.2), rgba(230,160,200,.3));
+  box-shadow: 0 0 16px rgba(200,160,240,.45), inset 0 0 12px rgba(255,255,255,.08);
+}
+.faction-btn.active.all-mix{
+  border-color: #c9b4f0;
+  background: linear-gradient(120deg, #5a3a8a, #3a4a7a, #6a3a6a);
+  box-shadow: 0 0 16px rgba(180,140,240,.5);
+}
 .pool{
   display:flex; flex-wrap:wrap; justify-content:center; gap:10px; min-height:120px; padding:14px;
   border-radius: var(--radius-sm);
@@ -312,8 +321,17 @@ nav.main a.exclusive{ color: #e79ee0; }
 .modal h3{ margin:0 0 10px; font-size:1.1rem; }
 .modal p{ color:var(--text-dim); font-size:.88rem; line-height:1.5; margin:0 0 20px; font-weight:600; }
 .modal-actions{ display:flex; gap:10px; justify-content:center; }
-.modal-actions button{ padding:10px 22px; border-radius:999px; border:1px solid var(--line); background:#171327; color:var(--text); cursor:pointer; font-weight:700; font-size:.85rem; }
+.modal-actions button{
+  padding:10px 22px; border-radius:999px; border:1px solid var(--line); background:#171327; color:var(--text);
+  cursor:pointer; font-weight:700; font-size:.85rem;
+  transition: transform .15s, border-color .15s, background .15s, box-shadow .15s, filter .15s;
+}
+.modal-actions button:hover{
+  border-color: rgba(200,160,240,.55); transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(120,80,200,.25); color:#fff;
+}
 .modal-actions button.primary{ background: var(--accent-grad); color:#1a1226; border:none; }
+.modal-actions button.primary:hover{ filter: brightness(1.1); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(180,120,240,.4); }
 
 .toast{
   position:fixed; bottom:26px; left:50%; transform: translateX(-50%) translateY(20px); opacity:0;
@@ -390,6 +408,10 @@ footer.site .fine{ color:var(--text-dim); font-size:.75rem; font-weight:600; }
   </p>
 </section>
 
+<div class="board" id="board">
+  <div class="board-inner" id="boardInner"></div>
+</div>
+
 <div class="toolbar">
   <div class="size-ctrl">
     <span>Size</span>
@@ -417,9 +439,6 @@ footer.site .fine{ color:var(--text-dim); font-size:.75rem; font-weight:600; }
 </div>
 
 
-<div class="board" id="board">
-  <div class="board-inner" id="boardInner"></div>
-</div>
 
 <div class="pool-wrap">
   <div class="faction-filters" id="factionFilters"></div>

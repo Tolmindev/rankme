@@ -845,25 +845,57 @@ document.getElementById('shareX')?.addEventListener('click', ()=> shareLinkOrIma
 
 document.getElementById('downloadBtn')?.addEventListener('click', ()=>exportPNG());
 
-// Remix = deep-copy current exclusive ranking into an editable personal draft
+// Remix = editable copy + option to add own images into the pool
 let remixFlag = false;
+function setRemixUI(on){
+  remixFlag = !!on;
+  const wrap = document.getElementById('remixUploadWrap');
+  if(wrap) wrap.hidden = !on;
+  const rb = document.getElementById('remixBtn');
+  if(rb) rb.classList.toggle('active-remix', on);
+}
+function wireRemixUpload(){
+  const input = document.getElementById('remixUpload');
+  if(!input || input.dataset.bound) return;
+  input.dataset.bound = '1';
+  input.addEventListener('change', async (e)=>{
+    const files = [...(e.target.files||[])];
+    let n = 0;
+    for(const f of files){
+      if(!f.type.startsWith('image/')) continue;
+      const src = await new Promise((res,rej)=>{
+        const r = new FileReader();
+        r.onload = ()=>res(r.result);
+        r.onerror = rej;
+        r.readAsDataURL(f);
+      });
+      const id = customIdSeq++;
+      state.customCards[id] = { src, name: f.name.replace(/\.[^.]+$/,'') };
+      state.pool.push(id);
+      n++;
+    }
+    renderPool();
+    showToast(n + ' custom image(s) added to pool');
+    e.target.value = '';
+  });
+}
 document.getElementById('remixBtn')?.addEventListener('click', ()=>{
   if(BLANK_MODE){
     showToast('Remix is for Exclusive templates');
     return;
   }
-  // Deep clone so further edits don't alias source data
   state.tiers = JSON.parse(JSON.stringify(state.tiers));
   state.assignment = JSON.parse(JSON.stringify(state.assignment));
   const used = new Set();
   Object.values(state.assignment).forEach(arr => arr.forEach(id => used.add(id)));
   state.pool = freshPool().filter(id => !used.has(id));
-  remixFlag = true;
-  window.__rankmeFromCabinet = true; // don't let hash wipe state on nav quirks
+  setRemixUI(true);
+  window.__rankmeFromCabinet = true;
+  wireRemixUpload();
   render();
   if(!BLANK_MODE) renderFactionFilters();
   renderPortals();
-  showToast('Remixed — edit freely, then Save to your account');
+  showToast('Remixed — add your images, edit, then Save');
 });
 
 document.getElementById('saveAccountBtn')?.addEventListener('click', async ()=>{
@@ -1209,6 +1241,7 @@ try{
       Object.values(state.assignment).forEach(arr => arr.forEach(id=>used.add(id)));
       state.pool = freshPool().filter(id=>!used.has(id));
       window.__rankmeFromCabinet = true;
+      setTimeout(()=>{ setRemixUI(true); wireRemixUpload(); }, 0);
     }
   }
 }catch(e){}
@@ -1228,7 +1261,23 @@ try{
       }
     }catch(e){}
   }
+  // Compressed hash shares (z...) need async decode on first load
+  const h = location.hash.replace(/^#/,'');
+  if(h && h[0]==='z' && !window.__rankmeFromCabinet){
+    const ok = await loadFromHashAsync();
+    if(ok){
+      window.__rankmeFromCabinet = true;
+      activeFilter = 'ALL';
+    }
+  }
   initState();
+  // If still only sync-hash (legacy eyJ / r...), ensure rendered
+  if(location.hash && location.hash.length > 2){
+    applyHashState();
+  }
+  render();
+  if(!BLANK_MODE) renderFactionFilters();
+  renderPortals();
 })();
 
 if(BLANK_MODE){

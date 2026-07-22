@@ -82,7 +82,7 @@ nav.main a.exclusive{ color:#e79ee0; }
   border:1px solid rgba(200,160,240,.4); color:#e8d4ff; letter-spacing:.5px;
 }
 
-.grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:18px; }
+.grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(300px, 1fr)); gap:20px; }
 
 .tl-card{
   background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
@@ -92,28 +92,49 @@ nav.main a.exclusive{ color:#e79ee0; }
 }
 .tl-card:hover{ transform:translateY(-3px); border-color:rgba(200,160,240,.35); box-shadow:0 12px 32px rgba(0,0,0,.35); }
 .tl-card.exclusive{
-  border-color:rgba(200,160,240,.4);
-  box-shadow: 0 0 0 1px rgba(200,160,240,.15), 0 0 28px rgba(180,120,255,.18);
+  --rgb: linear-gradient(90deg,#ff6b6b,#f7c948,#7bed9f,#70a1ff,#a29bfe,#ff6b81,#ff6b6b);
+  border: 2px solid transparent;
+  background:
+    linear-gradient(var(--panel), var(--panel)) padding-box,
+    var(--rgb) border-box;
+  background-size: 100% 100%, 300% 100%;
+  background-origin: padding-box, border-box;
+  background-clip: padding-box, border-box;
+  animation: exclusiveRgb 5s linear infinite;
+  box-shadow: 0 0 28px rgba(180,120,255,.22);
   position:relative;
 }
-.tl-card.exclusive::before{
-  content:''; position:absolute; inset:0; pointer-events:none; border-radius:inherit;
-  background: linear-gradient(135deg, rgba(215,180,255,.12), transparent 40%, rgba(180,220,255,.08));
-  mix-blend-mode:screen;
+.tl-card.exclusive:hover{
+  box-shadow: 0 0 36px rgba(180,120,255,.4);
+  filter: brightness(1.03);
+}
+@keyframes exclusiveRgb{
+  0%{ background-position: 0% 50%, 0% 50%; }
+  100%{ background-position: 0% 50%, 200% 50%; }
 }
 .tl-card .cover{
-  height:140px; background:linear-gradient(135deg, #2a1f3d, #1a2035);
+  aspect-ratio: 16 / 9;
+  width:100%;
+  background:linear-gradient(135deg, #2a1f3d, #1a2035);
   display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;
 }
-.tl-card .cover img{ max-height:90px; max-width:90%; object-fit:contain; filter:drop-shadow(0 6px 16px rgba(0,0,0,.4)); }
+.tl-card .cover img.cover-art{
+  width:100%; height:100%; object-fit:cover;
+  filter:none;
+}
+.tl-card .cover img.logo-only{
+  max-height:90px; max-width:90%; object-fit:contain;
+  filter:drop-shadow(0 6px 16px rgba(0,0,0,.4));
+}
 .tl-card .body{ padding:14px 16px 16px; }
 .tl-card .title{ font-weight:800; font-size:.95rem; margin:0 0 4px; }
 .tl-card .meta{ color:var(--text-dim); font-size:.75rem; font-weight:600; }
 .tl-card .tag{
-  position:absolute; top:10px; right:10px;
+  position:absolute; top:10px; right:10px; z-index:2;
   font-size:.6rem; font-weight:800; letter-spacing:.5px; text-transform:uppercase;
   padding:4px 9px; border-radius:999px;
   background:linear-gradient(120deg,#b79bf0,#e6a9e8); color:#1a1226;
+  box-shadow: 0 2px 10px rgba(0,0,0,.35);
 }
 
 .empty-state{
@@ -162,7 +183,7 @@ footer.site{
     <a class="tl-card exclusive" href="sf-duel.html">
       <div class="cover">
         <span class="tag">Exclusive</span>
-        <img src="assets/brand/SF_Duel_Tier_logo.svg" alt="SF Duel">
+        <img class="cover-art" src="assets/brand/SF_Cover_1.webp" alt="Street Fighter: Duel">
       </div>
       <div class="body">
         <div class="title">Street Fighter: Duel</div>

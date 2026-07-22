@@ -9,8 +9,11 @@
 <meta name="description" content="Create tier lists in seconds. Drag, drop, share. Free, no sign-up.">
 <meta property="og:title" content="Street Fighter: Duel Tier List - RankMe">
 <meta property="og:description" content="Drag, rank, share - build your Street Fighter: Duel tier list on RankMe.">
-<meta property="og:image" content="assets/brand/SF_Duel_Tier_logo.svg">
+<meta property="og:image" content="https://rankme.lol/assets/brand/Share_RankMe.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://rankme.lol/assets/brand/Share_RankMe.png">
 <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -272,14 +275,58 @@ nav.main a.exclusive{ color: #e79ee0; }
   max-width:1400px; margin: 0 auto 8px; padding: 0 24px;
   display:flex; align-items:center; gap:10px; flex-wrap:wrap;
 }
-.list-actions .pill-btn{ padding:8px 18px; font-size:.8rem; }
-.like-wrap{ display:inline-flex; align-items:center; gap:6px; margin-left:4px; opacity:.55; }
-.like-btn{
-  width:36px; height:36px; border-radius:50%;
-  border:1px solid var(--line); background:#171327;
-  color:#e8a0c0; font-size:1rem; cursor:not-allowed;
+.list-actions .pill-btn{ padding:8px 18px; font-size:.8rem; cursor:pointer; }
+.list-actions .remix-btn{
+  border-color: rgba(200,160,240,.45);
+  background: linear-gradient(135deg, rgba(120,90,180,.25), rgba(80,60,120,.2));
+  color:#f0e8ff;
 }
-.like-count{ font-size:.8rem; font-weight:700; color:var(--text-dim); }
+.list-actions .remix-btn:hover,
+.list-actions .remix-btn.active-remix{
+  border-color: transparent;
+  background: linear-gradient(120deg,#b79bf0,#e6a9e8);
+  color:#1a1226;
+  box-shadow: 0 0 18px rgba(190,140,255,.45);
+  transform: translateY(-1px);
+}
+.list-actions .save-btn{
+  border:none;
+  background: linear-gradient(120deg,#8f6bd8,#c98fe0,#e6a9e8);
+  color:#1a1226;
+  box-shadow: 0 0 14px rgba(180,140,240,.35);
+}
+.list-actions .save-btn:hover{
+  filter: brightness(1.1);
+  box-shadow: 0 0 22px rgba(200,160,255,.55);
+  transform: translateY(-1px);
+}
+.list-actions .upload-remix{
+  border-color: rgba(120,200,180,.4);
+  color:#b8f0d8;
+  cursor:pointer;
+  display:inline-flex; align-items:center;
+}
+.list-actions .upload-remix:hover{
+  border-color: rgba(120,220,180,.8);
+  box-shadow: 0 0 14px rgba(100,200,160,.3);
+}
+.like-wrap{ display:inline-flex; align-items:center; gap:8px; margin-left:8px; }
+.like-btn{
+  width:42px; height:42px; border-radius:50%;
+  border:1px solid rgba(255,120,160,.25);
+  background: radial-gradient(circle at 35% 30%, rgba(255,160,190,.25), #1a1220 70%);
+  color:#ff6b9d;
+  display:flex; align-items:center; justify-content:center;
+  cursor:not-allowed;
+  box-shadow: 0 0 16px rgba(255,100,150,.25), inset 0 0 12px rgba(255,120,160,.08);
+  transition: transform .2s, box-shadow .2s;
+}
+.like-btn svg{ filter: drop-shadow(0 0 6px rgba(255,100,150,.6)); }
+.like-btn:hover{
+  transform: scale(1.08);
+  box-shadow: 0 0 24px rgba(255,100,150,.45), inset 0 0 14px rgba(255,140,180,.15);
+}
+.like-count{ font-size:.85rem; font-weight:800; color:#e8a0b8; text-shadow: 0 0 10px rgba(255,120,160,.35); }
 
 /* ---------- Toolbar ---------- */
 .toolbar{
@@ -384,18 +431,13 @@ nav.main a.exclusive{ color: #e79ee0; }
   transition: filter .2s, box-shadow .2s;
 }
 .portal-btn:hover{
-  filter: brightness(1.2) saturate(1.15);
-  box-shadow: 0 0 16px rgba(180,140,255,0.4);
+  filter: brightness(1.25) saturate(1.2);
+  box-shadow: 0 0 18px rgba(180,140,255,0.45);
 }
+/* Active: same RGB border, brighter glow — no fill */
 .portal-btn.active{
-  border-color: transparent;
-  background: var(--rgb) padding-box;
-  background-size: 300% 100%;
-  background-origin: padding-box;
-  background-clip: padding-box;
-  animation: portalRgb 5s linear infinite;
-  box-shadow: 0 0 22px rgba(180,140,255,0.55);
-  filter: none;
+  filter: brightness(1.15) saturate(1.25);
+  box-shadow: 0 0 26px rgba(180,140,255,0.65), 0 0 8px rgba(255,150,200,0.35);
 }
 @keyframes portalRgb{
   0%{ background-position: 0% 50%, 0% 50%; }
@@ -548,10 +590,16 @@ footer.site .fine{ color:var(--text-dim); font-size:.75rem; font-weight:600; }
 </section>
 
 <div class="list-actions" id="listActions">
-  <button class="pill-btn" id="remixBtn" type="button" title="Copy this ranking as your editable draft">Remix</button>
-  <button class="pill-btn" id="saveAccountBtn" type="button" title="Save Exclusive ranking to your account">Save</button>
+  <button class="pill-btn remix-btn" id="remixBtn" type="button" title="Copy this ranking as your editable draft">Remix</button>
+  <button class="pill-btn save-btn" id="saveAccountBtn" type="button" title="Save Exclusive ranking to your account">Save</button>
+  <label class="pill-btn upload-remix" id="remixUploadWrap" hidden>
+    <input type="file" id="remixUpload" accept="image/*" multiple hidden>
+    + My images
+  </label>
   <span class="like-wrap" title="Likes coming soon">
-    <button type="button" class="like-btn" id="likeBtn" disabled aria-label="Like">♥</button>
+    <button type="button" class="like-btn" id="likeBtn" disabled aria-label="Like">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+    </button>
     <span class="like-count" id="likeCount">—</span>
   </span>
 </div>

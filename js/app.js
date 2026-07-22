@@ -31,6 +31,8 @@ const DEFAULT_TIERS = [
 ];
 
 const BLANK_MODE = !!window.RANKME_BLANK;
+const EXPERT_PRESETS = {"eldud":{"tiers":[{"id":"t1","name":"GOD","hue":255,"sat":55,"light":82},{"id":"t2","name":"BOSSES META","hue":355,"sat":70,"light":65},{"id":"t3","name":"PVP META","hue":28,"sat":65,"light":62},{"id":"t4","name":"ASSISTANT META","hue":320,"sat":65,"light":65},{"id":"t5","name":"GOOD","hue":268,"sat":50,"light":62},{"id":"t6","name":"ASSISTANT","hue":220,"sat":35,"light":52},{"id":"t7","name":"TOWERS","hue":172,"sat":50,"light":52},{"id":"t8","name":"DECENT","hue":135,"sat":38,"light":48},{"id":"t9","name":"DISAPPOINTED","hue":110,"sat":55,"light":70},{"id":"t10","name":"BAD","hue":100,"sat":55,"light":82}],"assignment":{"t1":[46,41,23,118,115,95,21],"t2":[62,116,30,100,19,6,77,17,42,15,81,13,65],"t3":[83,8,50,39,3,26,7,16,69],"t4":[38,40,24,12,49,34,54,61,4,36,89],"t5":[82,63,105,9,14,70,33,86,106,119,45,72,10,29],"t6":[78,117,92,44,74,104,109,71,108,101,57,58,1,31,73],"t7":[93,97,64,53,94,84,76,67,66,68,52,96,90,88,85,98,80,75],"t8":[47,11,113,35,110,20,59,43,114,111,102,112,123,5,56],"t9":[25,107,37,22,32,103,18,48],"t10":[2,55,28,91,79,87,60]}}};
+
 const BLANK_TIERS = [
   {id:'t1', name:'S', hue:0,   sat:70, light:62},
   {id:'t2', name:'A', hue:28,  sat:65, light:58},
@@ -91,6 +93,31 @@ async function loadFromHashAsync(){
   Object.values(state.assignment).forEach(arr => arr.forEach(id=>used.add(id)));
   state.pool = freshPool().filter(id=>!used.has(id));
   state.rowIdSeq = 1 + Math.max(0,...state.tiers.map(t=>parseInt((t.id||'t0').replace('t',''))||0));
+  return true;
+}
+
+
+function applyExpertPreset(id){
+  const data = EXPERT_PRESETS && EXPERT_PRESETS[String(id).toLowerCase()];
+  if(!data || !data.tiers || !data.assignment) return false;
+  state.tiers = JSON.parse(JSON.stringify(data.tiers));
+  state.assignment = JSON.parse(JSON.stringify(data.assignment));
+  const used = new Set();
+  Object.values(state.assignment).forEach(arr => arr.forEach(x => used.add(x)));
+  state.pool = freshPool().filter(id => !used.has(id));
+  state.rowIdSeq = 1 + Math.max(0, ...state.tiers.map(t => parseInt((t.id||'t0').replace('t',''))||0));
+  window.__rankmeFromCabinet = true;
+  activeFilter = 'ALL';
+  portalsOn = false;
+  const pb = document.getElementById('portalBtn');
+  if(pb) pb.classList.remove('active');
+  // clean URL
+  try{
+    const u = new URL(location.href);
+    u.searchParams.set('e', String(id).toLowerCase());
+    u.hash = '';
+    history.replaceState(null, '', u.pathname + u.search);
+  }catch(e){}
   return true;
 }
 
@@ -206,7 +233,7 @@ function render(){
 
     // Compact side controls when cards are small (row too short for vertical stack)
     const cardPx = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--card-w')) || 64;
-    if(cardPx < 58) row.classList.add('compact-side');
+    if(cardPx < 44) row.classList.add('compact-side');
 
     boardInner.appendChild(row);
   });
@@ -1247,6 +1274,10 @@ try{
 }catch(e){}
 
 (async ()=>{
+  const expertId = new URLSearchParams(location.search).get('e');
+  if(expertId && applyExpertPreset(expertId)){
+    // expert loaded
+  }
   const sc = new URLSearchParams(location.search).get('s');
   if(sc && typeof loadShortLink === 'function'){
     try{
@@ -1322,15 +1353,28 @@ window.addEventListener('hashchange', ()=>{
 document.querySelectorAll('a.expert-name, #eldudLink').forEach(a => {
   a.addEventListener('click', (e) => {
     const href = a.getAttribute('href') || '';
+    try{
+      const u = new URL(href, location.href);
+      const eid = u.searchParams.get('e');
+      if(eid && EXPERT_PRESETS[eid.toLowerCase()]){
+        e.preventDefault();
+        if(applyExpertPreset(eid)){
+          render();
+          if(!BLANK_MODE) renderFactionFilters();
+          renderPortals();
+          showToast('Expert tier list loaded');
+        }
+        return;
+      }
+    }catch(err){}
     const hash = href.includes('#') ? href.slice(href.indexOf('#')) : '';
     if(!hash || hash.length < 2) return;
     e.preventDefault();
     if(location.hash === hash){
-      // force re-apply same expert list
       applyHashState();
       showToast('Expert tier list loaded');
     } else {
-      location.hash = hash; // triggers hashchange
+      location.hash = hash;
     }
   });
 });

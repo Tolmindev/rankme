@@ -567,8 +567,16 @@ footer.site .fine{ color:var(--text-dim); font-size:.75rem; font-weight:600; }
   .board, .toolbar, .pool-wrap, footer.site, .action-bar{ padding-left:14px; padding-right:14px; }
   .tier-label-wrap{ width:64px; min-width:64px; }
   .tier-label{ font-size:.6rem; padding:3px 4px; }
-  .tier-side{ padding:0 4px; gap:2px; }
-  .tier-side button{ width:18px; height:18px; font-size:.65rem; }
+  /* Always vertical side controls on mobile - rows are tall enough */
+  .tier-side,
+  .tier-row.compact-side .tier-side{
+    width:32px; min-width:32px; flex-direction:column;
+    padding:4px 2px; gap:3px;
+  }
+  .tier-side button,
+  .tier-row.compact-side .tier-side button{
+    width:26px; height:24px; font-size:.75rem;
+  }
   :root{ --card-w:48px; }
   .toolbar{ justify-content:center; gap:10px; padding:10px 12px; }
   .toolbar-actions{ order:1; width:100%; justify-content:center; }
@@ -600,7 +608,7 @@ footer.site .fine{ color:var(--text-dim); font-size:.75rem; font-weight:600; }
     <div class="experts-heading">Experts Tiers</div>
     <div class="experts-strip">
     <div class="expert-card">
-      <a class="expert-name" href="sf-duel.html#eyJ0aWVycyI6W3siaWQiOiJ0MSIsIm5hbWUiOiJHT0QiLCJodWUiOjI1NSwic2F0Ijo1NSwibGlnaHQiOjgyfSx7ImlkIjoidDIiLCJuYW1lIjoiQk9TU0VTIE1FVEEiLCJodWUiOjM1NSwic2F0Ijo3MCwibGlnaHQiOjY1fSx7ImlkIjoidDMiLCJuYW1lIjoiUFZQIE1FVEEiLCJodWUiOjI4LCJzYXQiOjY1LCJsaWdodCI6NjJ9LHsiaWQiOiJ0NCIsIm5hbWUiOiJBU1NJU1RBTlQgTUVUQSIsImh1ZSI6MzIwLCJzYXQiOjY1LCJsaWdodCI6NjV9LHsiaWQiOiJ0NSIsIm5hbWUiOiJHT09EIiwiaHVlIjoyNjgsInNhdCI6NTAsImxpZ2h0Ijo2Mn0seyJpZCI6InQ2IiwibmFtZSI6IkFTU0lTVEFOVCIsImh1ZSI6MjIwLCJzYXQiOjM1LCJsaWdodCI6NTJ9LHsiaWQiOiJ0NyIsIm5hbWUiOiJUT1dFUlMiLCJodWUiOjE3Miwic2F0Ijo1MCwibGlnaHQiOjUyfSx7ImlkIjoidDgiLCJuYW1lIjoiREVDRU5UIiwiaHVlIjoxMzUsInNhdCI6MzgsImxpZ2h0Ijo0OH0seyJpZCI6InQ5IiwibmFtZSI6IkRJU0FQUE9JTlRFRCIsImh1ZSI6MTEwLCJzYXQiOjU1LCJsaWdodCI6NzB9LHsiaWQiOiJ0MTAiLCJuYW1lIjoiQkFEIiwiaHVlIjoxMDAsInNhdCI6NTUsImxpZ2h0Ijo4Mn1dLCJhc3NpZ25tZW50Ijp7InQxIjpbNDYsNDEsMjMsMTE4LDExNSw5NSwyMV0sInQyIjpbNjIsMTE2LDMwLDEwMCwxOSw2LDc3LDE3LDQyLDE1LDgxLDEzLDY1XSwidDMiOls4Myw4LDUwLDM5LDMsMjYsNywxNiw2OV0sInQ0IjpbMzgsNDAsMjQsMTIsNDksMzQsNTQsNjEsNCwzNiw4OV0sInQ1IjpbODIsNjMsMTA1LDksMTQsNzAsMzMsODYsMTA2LDExOSw0NSw3MiwxMCwyOV0sInQ2IjpbNzgsMTE3LDkyLDQ0LDc0LDEwNCwxMDksNzEsMTA4LDEwMSw1Nyw1OCwxLDMxLDczXSwidDciOls5Myw5Nyw2NCw1Myw5NCw4NCw3Niw2Nyw2Niw2OCw1Miw5Niw5MCw4OCw4NSw5OCw4MCw3NV0sInQ4IjpbNDcsMTEsMTEzLDM1LDExMCwyMCw1OSw0MywxMTQsMTExLDEwMiwxMTIsMTIzLDUsNTZdLCJ0OSI6WzI1LDEwNywzNywyMiwzMiwxMDMsMTgsNDhdLCJ0MTAiOlsyLDU1LDI4LDkxLDc5LDg3LDYwXX19" id="eldudLink">ElDuD</a>
+      <a class="expert-name" href="sf-duel.html?e=eldud" id="eldudLink">ElDuD</a>
       <a class="expert-yt" href="https://youtube.com/@ElDuD89" target="_blank" rel="noopener" title="YouTube ElDuD">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.5 31.5 0 0 0 0 12a31.5 31.5 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31.5 31.5 0 0 0 24 12a31.5 31.5 0 0 0-.5-5.8zM9.8 15.5v-7l6.2 3.5-6.2 3.5z"/></svg>
       </a>

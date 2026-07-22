@@ -1241,7 +1241,7 @@ try{
       Object.values(state.assignment).forEach(arr => arr.forEach(id=>used.add(id)));
       state.pool = freshPool().filter(id=>!used.has(id));
       window.__rankmeFromCabinet = true;
-      setTimeout(()=>{ setRemixUI(true); wireRemixUpload(); }, 0);
+      // + My images only after explicit Remix
     }
   }
 }catch(e){}

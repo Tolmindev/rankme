@@ -111,7 +111,7 @@ async function renderLogin(){
   navBtn.textContent = 'Login';
   panel.innerHTML = `
     <h1>Login</h1>
-    <p class="sub">Connect an account to save <b>Exclusive</b> rankings (JSON only). Custom image uploads are never stored on our servers.</p>
+    <p class="sub">Login to save <b>Exclusive</b> rankings. Custom images stay in your browser only.</p>
     <div class="providers">
       <button class="prov" data-p="discord">${providerIcon('discord')} Continue with Discord</button>
       <button class="prov" data-p="google">${providerIcon('google')} Continue with Google</button>
@@ -141,7 +141,7 @@ async function renderCabinet(user){
   let listHtml = '<div class="empty">Loading…</div>';
   panel.innerHTML = `
     <h1>Your cabinet</h1>
-    <p class="sub">Saved <b>Exclusive</b> rankings only. Custom image lists stay in your browser - we do not store those files.</p>
+    <p class="sub">Your saved <b>Exclusive</b> rankings. Custom images are not stored on the server.</p>
     <div class="profile">
       <div class="avatar-wrap">
         <div class="holo-ring"></div>

@@ -106,30 +106,45 @@ nav.main a.exclusive{ color: #e79ee0; }
 .experts a:hover{ color:#fff; border-color: rgba(255,255,255,.5); }
 
 
-.experts-block{ margin-top:8px; width:100%; }
+.experts-block{ margin-top:14px; width:100%; max-width:1400px; }
 .experts-heading{
   font-size:.72rem; font-weight:800; letter-spacing:.6px;
-  text-transform:uppercase; color:var(--text-dim); margin:0 0 8px;
+  text-transform:uppercase; color:var(--text-dim); margin:0 0 10px;
+}
+.experts-strip{
+  display:flex; flex-wrap:wrap; align-items:center; gap:10px;
+  padding:12px 14px;
+  border-radius:14px;
+  background: rgba(255,255,255,0.03);
+  border:1px solid rgba(200,160,240,0.14);
 }
 .expert-card{
-  display:inline-flex; align-items:center; gap:12px;
-  padding:10px 12px 10px 16px;
+  display:inline-flex; align-items:center; gap:10px;
+  padding:8px 12px 8px 14px;
   border-radius:12px;
-  background: rgba(255,255,255,0.04);
+  background: rgba(255,255,255,0.05);
   border:1px solid rgba(200,160,240,0.22);
-  box-shadow: 0 0 20px rgba(160,120,220,0.12);
+  box-shadow: 0 0 16px rgba(160,120,220,0.1);
+  transition: border-color .15s, box-shadow .15s, transform .15s;
+}
+.expert-card:hover{
+  border-color: rgba(200,160,240,0.45);
+  box-shadow: 0 0 20px rgba(160,120,220,0.2);
+  transform: translateY(-1px);
 }
 .expert-name{
   font-size:.95rem; font-weight:800; color:#e6a9e8; text-decoration:none;
-  border-bottom:1px solid transparent; transition: color .15s, border-color .15s;
+  border-bottom: none !important;
+  transition: color .15s;
 }
-.expert-name:hover{ color:#fff; border-bottom-color: rgba(255,255,255,.45); }
+.expert-name:hover{ color:#fff; border-bottom: none !important; }
 .expert-yt{
   display:flex; align-items:center; justify-content:center;
   width:34px; height:34px; border-radius:50%;
   background: rgba(255,40,40,0.12); color:#ff6b6b;
   border:1px solid rgba(255,80,80,0.25);
   transition: background .15s, transform .15s, color .15s;
+  text-decoration:none;
 }
 .expert-yt:hover{ background: rgba(255,40,40,0.28); color:#fff; transform: scale(1.06); }
 /* ---------- Tier board ---------- */
@@ -272,9 +287,11 @@ nav.main a.exclusive{ color: #e79ee0; }
 
 /* ---------- List actions (Remix / Save) ---------- */
 .list-actions{
-  max-width:1400px; margin: 0 auto 8px; padding: 0 24px;
-  display:flex; align-items:center; justify-content:flex-end; gap:10px; flex-wrap:wrap;
+  max-width:1400px; margin: 10px auto 10px; padding: 0 24px;
+  display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;
 }
+.list-actions .left-actions{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+.list-actions .right-actions{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-left:auto; }
 .list-actions .pill-btn{ padding:8px 18px; font-size:.8rem; cursor:pointer; }
 .list-actions .remix-btn{
   border-color: rgba(200,160,240,.45);
@@ -574,28 +591,32 @@ footer.site .fine{ color:var(--text-dim); font-size:.75rem; font-weight:600; }
 <section class="hero">
   <img class="title-logo" src="assets/brand/SF_Duel_Tier_logo.svg" alt="Street Fighter Duel Tier List">
   <p class="desc">
-    <b>Street Fighter: Duel</b> is a mobile RPG spin-off set in the Street Fighter universe: collect and
-    upgrade a roster of fighters, battle in real time or auto-battle mode. This is a RankMe exclusive -
-    drag fighters into tiers, customize each row, and share your finished list with one link.
+    <b>Street Fighter: Duel</b> - RankMe exclusive. Drag fighters into tiers, customize rows, share with one link.
   </p>
   <div class="experts-block">
     <div class="experts-heading">Experts Tiers</div>
+    <div class="experts-strip">
     <div class="expert-card">
       <a class="expert-name" href="sf-duel.html#eyJ0aWVycyI6W3siaWQiOiJ0MSIsIm5hbWUiOiJHT0QiLCJodWUiOjI1NSwic2F0Ijo1NSwibGlnaHQiOjgyfSx7ImlkIjoidDIiLCJuYW1lIjoiQk9TU0VTIE1FVEEiLCJodWUiOjM1NSwic2F0Ijo3MCwibGlnaHQiOjY1fSx7ImlkIjoidDMiLCJuYW1lIjoiUFZQIE1FVEEiLCJodWUiOjI4LCJzYXQiOjY1LCJsaWdodCI6NjJ9LHsiaWQiOiJ0NCIsIm5hbWUiOiJBU1NJU1RBTlQgTUVUQSIsImh1ZSI6MzIwLCJzYXQiOjY1LCJsaWdodCI6NjV9LHsiaWQiOiJ0NSIsIm5hbWUiOiJHT09EIiwiaHVlIjoyNjgsInNhdCI6NTAsImxpZ2h0Ijo2Mn0seyJpZCI6InQ2IiwibmFtZSI6IkFTU0lTVEFOVCIsImh1ZSI6MjIwLCJzYXQiOjM1LCJsaWdodCI6NTJ9LHsiaWQiOiJ0NyIsIm5hbWUiOiJUT1dFUlMiLCJodWUiOjE3Miwic2F0Ijo1MCwibGlnaHQiOjUyfSx7ImlkIjoidDgiLCJuYW1lIjoiREVDRU5UIiwiaHVlIjoxMzUsInNhdCI6MzgsImxpZ2h0Ijo0OH0seyJpZCI6InQ5IiwibmFtZSI6IkRJU0FQUE9JTlRFRCIsImh1ZSI6MTEwLCJzYXQiOjU1LCJsaWdodCI6NzB9LHsiaWQiOiJ0MTAiLCJuYW1lIjoiQkFEIiwiaHVlIjoxMDAsInNhdCI6NTUsImxpZ2h0Ijo4Mn1dLCJhc3NpZ25tZW50Ijp7InQxIjpbNDYsNDEsMjMsMTE4LDExNSw5NSwyMV0sInQyIjpbNjIsMTE2LDMwLDEwMCwxOSw2LDc3LDE3LDQyLDE1LDgxLDEzLDY1XSwidDMiOls4Myw4LDUwLDM5LDMsMjYsNywxNiw2OV0sInQ0IjpbMzgsNDAsMjQsMTIsNDksMzQsNTQsNjEsNCwzNiw4OV0sInQ1IjpbODIsNjMsMTA1LDksMTQsNzAsMzMsODYsMTA2LDExOSw0NSw3MiwxMCwyOV0sInQ2IjpbNzgsMTE3LDkyLDQ0LDc0LDEwNCwxMDksNzEsMTA4LDEwMSw1Nyw1OCwxLDMxLDczXSwidDciOls5Myw5Nyw2NCw1Myw5NCw4NCw3Niw2Nyw2Niw2OCw1Miw5Niw5MCw4OCw4NSw5OCw4MCw3NV0sInQ4IjpbNDcsMTEsMTEzLDM1LDExMCwyMCw1OSw0MywxMTQsMTExLDEwMiwxMTIsMTIzLDUsNTZdLCJ0OSI6WzI1LDEwNywzNywyMiwzMiwxMDMsMTgsNDhdLCJ0MTAiOlsyLDU1LDI4LDkxLDc5LDg3LDYwXX19" id="eldudLink">ElDuD</a>
       <a class="expert-yt" href="https://youtube.com/@ElDuD89" target="_blank" rel="noopener" title="YouTube ElDuD">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.5 31.5 0 0 0 0 12a31.5 31.5 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31.5 31.5 0 0 0 24 12a31.5 31.5 0 0 0-.5-5.8zM9.8 15.5v-7l6.2 3.5-6.2 3.5z"/></svg>
       </a>
     </div>
+    </div>
   </div>
 </section>
 
 <div class="list-actions" id="listActions">
-  <label class="pill-btn upload-remix" id="remixUploadWrap" hidden>
-    <input type="file" id="remixUpload" accept="image/*" multiple hidden>
-    + My images
-  </label>
-  <button class="pill-btn remix-btn" id="remixBtn" type="button" title="Copy this ranking as your editable draft">Remix</button>
-  <button class="pill-btn save-btn" id="saveAccountBtn" type="button" title="Save Exclusive ranking to your account">Save</button>
+  <div class="left-actions">
+    <label class="pill-btn upload-remix" id="remixUploadWrap" hidden>
+      <input type="file" id="remixUpload" accept="image/*" multiple hidden>
+      + My images
+    </label>
+  </div>
+  <div class="right-actions">
+    <button class="pill-btn remix-btn" id="remixBtn" type="button" title="Copy this ranking as your editable draft">Remix</button>
+    <button class="pill-btn save-btn" id="saveAccountBtn" type="button" title="Save Exclusive ranking to your account">Save</button>
+  </div>
 </div>
 
 <div class="board" id="board">

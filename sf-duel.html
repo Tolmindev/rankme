@@ -356,47 +356,36 @@ nav.main a.exclusive{ color: #e79ee0; }
 .portal-btn{
   --rgb: linear-gradient(90deg,#ff6b6b,#f7c948,#7bed9f,#70a1ff,#a29bfe,#ff6b81,#ff6b6b);
   flex-shrink:0;
-  position: relative;
   padding:8px 18px; border-radius:999px; font-size:.72rem; font-weight:800;
   letter-spacing:.6px; cursor:pointer;
-  border: none;
-  background: #171327;
   color: #fff;
-  z-index: 0;
-  transition: box-shadow .2s, filter .2s;
-}
-/* RGB border always (seamless loop) */
-.portal-btn::before{
-  content:'';
-  position:absolute; inset:0;
-  border-radius:inherit;
-  padding:2px;
-  background: var(--rgb);
-  background-size: 300% 100%;
+  border: 2px solid transparent;
+  background:
+    linear-gradient(#171327, #171327) padding-box,
+    var(--rgb) border-box;
+  background-size: 100% 100%, 300% 100%;
+  background-origin: padding-box, border-box;
+  background-clip: padding-box, border-box;
   animation: portalRgb 5s linear infinite;
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events:none;
-  z-index:-1;
-}
-.portal-btn:hover::before{
-  filter: brightness(1.35) saturate(1.2);
+  transition: filter .2s, box-shadow .2s;
 }
 .portal-btn:hover{
-  box-shadow: 0 0 16px rgba(180,140,255,0.35);
+  filter: brightness(1.2) saturate(1.15);
+  box-shadow: 0 0 16px rgba(180,140,255,0.4);
 }
-/* Fill RGB only when active */
 .portal-btn.active{
-  background: var(--rgb);
+  border-color: transparent;
+  background: var(--rgb) padding-box;
   background-size: 300% 100%;
+  background-origin: padding-box;
+  background-clip: padding-box;
   animation: portalRgb 5s linear infinite;
-  box-shadow: 0 0 22px rgba(180,140,255,0.5);
+  box-shadow: 0 0 22px rgba(180,140,255,0.55);
+  filter: none;
 }
-.portal-btn.active::before{ opacity:0; }
 @keyframes portalRgb{
-  0%{ background-position: 0% 50%; }
-  100%{ background-position: 200% 50%; }
+  0%{ background-position: 0% 50%, 0% 50%; }
+  100%{ background-position: 0% 50%, 200% 50%; }
 }
 
 .faction-filters{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px; }

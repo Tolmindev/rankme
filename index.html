@@ -97,10 +97,10 @@ nav.main a.exclusive{ color:#e79ee0; }
   background:
     linear-gradient(var(--panel), var(--panel)) padding-box,
     var(--rgb) border-box;
-  background-size: 100% 100%, 300% 100%;
+  background-size: 100% 100%, 200% 100%;
   background-origin: padding-box, border-box;
   background-clip: padding-box, border-box;
-  animation: exclusiveRgb 5s linear infinite;
+  animation: exclusiveRgb 4s linear infinite;
   box-shadow: 0 0 28px rgba(180,120,255,.22);
   position:relative;
 }
@@ -109,8 +109,8 @@ nav.main a.exclusive{ color:#e79ee0; }
   filter: brightness(1.03);
 }
 @keyframes exclusiveRgb{
-  0%{ background-position: 0% 50%, 0% 50%; }
-  100%{ background-position: 0% 50%, 200% 50%; }
+  0%{ background-position: 0 0, 0% 50%; }
+  100%{ background-position: 0 0, 200% 50%; }
 }
 .tl-card .cover{
   aspect-ratio: 16 / 9;

@@ -323,6 +323,9 @@ nav.main a.exclusive{ color: #e79ee0; }
   cursor:pointer;
   display:inline-flex; align-items:center;
 }
+.list-actions .upload-remix[hidden]{
+  display: none !important;
+}
 .list-actions .upload-remix:hover{
   border-color: rgba(120,220,180,.8);
   box-shadow: 0 0 14px rgba(100,200,160,.3);
@@ -441,10 +444,10 @@ nav.main a.exclusive{ color: #e79ee0; }
   background:
     linear-gradient(#171327, #171327) padding-box,
     var(--rgb) border-box;
-  background-size: 100% 100%, 300% 100%;
+  background-size: 100% 100%, 200% 100%;
   background-origin: padding-box, border-box;
   background-clip: padding-box, border-box;
-  animation: portalRgb 5s linear infinite;
+  animation: portalRgb 4s linear infinite;
   transition: filter .2s, box-shadow .2s;
 }
 .portal-btn:hover{
@@ -457,8 +460,8 @@ nav.main a.exclusive{ color: #e79ee0; }
   box-shadow: 0 0 26px rgba(180,140,255,0.65), 0 0 8px rgba(255,150,200,0.35);
 }
 @keyframes portalRgb{
-  0%{ background-position: 0% 50%, 0% 50%; }
-  100%{ background-position: 0% 50%, 200% 50%; }
+  0%{ background-position: 0 0, 0% 50%; }
+  100%{ background-position: 0 0, 200% 50%; }
 }
 
 .faction-filters{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px; }

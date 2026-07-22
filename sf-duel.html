@@ -267,6 +267,20 @@ nav.main a.exclusive{ color: #e79ee0; }
 .rs-btn:hover{ color:var(--text); border-color:rgba(220,150,255,.5); }
 .rs-btn.danger:hover{ color:#ff8080; border-color:rgba(255,100,100,.5); }
 
+/* ---------- List actions (Remix / Save) ---------- */
+.list-actions{
+  max-width:1400px; margin: 0 auto 8px; padding: 0 24px;
+  display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+}
+.list-actions .pill-btn{ padding:8px 18px; font-size:.8rem; }
+.like-wrap{ display:inline-flex; align-items:center; gap:6px; margin-left:4px; opacity:.55; }
+.like-btn{
+  width:36px; height:36px; border-radius:50%;
+  border:1px solid var(--line); background:#171327;
+  color:#e8a0c0; font-size:1rem; cursor:not-allowed;
+}
+.like-count{ font-size:.8rem; font-weight:700; color:var(--text-dim); }
+
 /* ---------- Toolbar ---------- */
 .toolbar{
   max-width:1400px; margin: 8px auto 12px; padding: 12px 24px;
@@ -533,6 +547,15 @@ footer.site .fine{ color:var(--text-dim); font-size:.75rem; font-weight:600; }
   </div>
 </section>
 
+<div class="list-actions" id="listActions">
+  <button class="pill-btn" id="remixBtn" type="button" title="Copy this ranking as your editable draft">Remix</button>
+  <button class="pill-btn" id="saveAccountBtn" type="button" title="Save Exclusive ranking to your account">Save</button>
+  <span class="like-wrap" title="Likes coming soon">
+    <button type="button" class="like-btn" id="likeBtn" disabled aria-label="Like">♥</button>
+    <span class="like-count" id="likeCount">—</span>
+  </span>
+</div>
+
 <div class="board" id="board">
   <div class="board-inner" id="boardInner"></div>
 </div>
@@ -560,8 +583,6 @@ footer.site .fine{ color:var(--text-dim); font-size:.75rem; font-weight:600; }
       <svg viewBox="0 0 24 24"><path d="M18.9 2H22l-7.6 8.7L23.3 22h-7l-5.5-7.2L4.5 22H1.4l8.1-9.3L1 2h7.2l5 6.6L18.9 2Zm-1.2 18h1.7L7.4 4H5.6L17.7 20Z"/></svg>
     </div>
   </div>
-  <button class="pill-btn" id="remixBtn" type="button" title="Copy this ranking as your editable draft">Remix</button>
-  <button class="pill-btn" id="saveAccountBtn" type="button" title="Save Exclusive ranking to your account">Save</button>
   <button class="download-btn" id="downloadBtn">Download PNG</button>
 </div>
 

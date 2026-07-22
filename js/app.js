@@ -58,9 +58,17 @@ function freshPool(){
 function loadFromHash(){
   const h = location.hash.replace(/^#/,'');
   if(!h) return false;
+  // legacy / raw only in sync path; compressed 'z' handled in applyHashStateAsync
+  if(h[0]==='z') return false;
   try{
-    const json = decodeURIComponent(escape(atob(h)));
-    const data = JSON.parse(json);
+    let data;
+    if(h[0]==='r'){
+      let s = h.slice(1).replace(/-/g,'+').replace(/_/g,'/');
+      while(s.length % 4) s += '=';
+      data = JSON.parse(decodeURIComponent(escape(atob(s))));
+    } else {
+      data = JSON.parse(decodeURIComponent(escape(atob(h))));
+    }
     if(!data.tiers || !data.assignment) return false;
     state.tiers = data.tiers;
     state.assignment = data.assignment;
@@ -72,21 +80,49 @@ function loadFromHash(){
   }catch(e){ return false; }
 }
 
+async function loadFromHashAsync(){
+  const h = location.hash.replace(/^#/,'');
+  if(!h) return false;
+  const data = await decodeSharePayload(h);
+  if(!data || !data.tiers || !data.assignment) return false;
+  state.tiers = data.tiers;
+  state.assignment = data.assignment;
+  const used = new Set();
+  Object.values(state.assignment).forEach(arr => arr.forEach(id=>used.add(id)));
+  state.pool = freshPool().filter(id=>!used.has(id));
+  state.rowIdSeq = 1 + Math.max(0,...state.tiers.map(t=>parseInt((t.id||'t0').replace('t',''))||0));
+  return true;
+}
+
 function applyHashState(){
-  if(!loadFromHash()) return false;
-  activeFilter = 'ALL';
-  portalsOn = false;
-  const pb = document.getElementById('portalBtn');
-  if(pb) pb.classList.remove('active');
-  render();
-  if(!BLANK_MODE) renderFactionFilters();
-  renderPortals();
+  // try sync first (legacy), else async compressed
+  if(loadFromHash()){
+    activeFilter = 'ALL';
+    portalsOn = false;
+    const pb = document.getElementById('portalBtn');
+    if(pb) pb.classList.remove('active');
+    render();
+    if(!BLANK_MODE) renderFactionFilters();
+    renderPortals();
+    return true;
+  }
+  loadFromHashAsync().then(ok=>{
+    if(!ok) return;
+    activeFilter = 'ALL';
+    portalsOn = false;
+    const pb = document.getElementById('portalBtn');
+    if(pb) pb.classList.remove('active');
+    render();
+    if(!BLANK_MODE) renderFactionFilters();
+    renderPortals();
+  });
   return true;
 }
 
 function initState(){
+  if(window.__rankmeFromCabinet) return;
   if(!BLANK_MODE && loadFromHash()) return;
-  if(BLANK_MODE && loadFromHash()) return; // still allow share links for blank
+  if(BLANK_MODE && loadFromHash()) return;
   state.assignment = {};
   state.tiers.forEach(t=> state.assignment[t.id] = []);
   state.pool = freshPool();
@@ -692,11 +728,60 @@ document.getElementById('fillAllBtn').addEventListener('click', ()=>{
   });
 });
 
-function buildShareUrl(){
-  const data = { tiers: state.tiers, assignment: state.assignment };
+/* ---- compact share hash (deflate) ---- */
+function b64urlEncode(bytes){
+  let s = '';
+  const arr = bytes instanceof Uint8Array ? bytes : new Uint8Array(bytes);
+  for(let i=0;i<arr.length;i++) s += String.fromCharCode(arr[i]);
+  return btoa(s).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+}
+function b64urlDecode(str){
+  str = str.replace(/-/g,'+').replace(/_/g,'/');
+  while(str.length % 4) str += '=';
+  const bin = atob(str);
+  const out = new Uint8Array(bin.length);
+  for(let i=0;i<bin.length;i++) out[i] = bin.charCodeAt(i);
+  return out;
+}
+async function encodeSharePayload(data){
   const json = JSON.stringify(data);
-  const b64 = btoa(unescape(encodeURIComponent(json)));
-  return location.origin + location.pathname + '#' + b64;
+  try{
+    if(typeof CompressionStream !== 'undefined'){
+      const stream = new Blob([json]).stream().pipeThrough(new CompressionStream('deflate-raw'));
+      const buf = await new Response(stream).arrayBuffer();
+      return 'z' + b64urlEncode(new Uint8Array(buf));
+    }
+  }catch(e){}
+  return 'r' + btoa(unescape(encodeURIComponent(json))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+}
+async function decodeSharePayload(h){
+  if(!h) return null;
+  try{
+    if(h[0]==='z' && typeof DecompressionStream !== 'undefined'){
+      const bytes = b64urlDecode(h.slice(1));
+      const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream('deflate-raw'));
+      const text = await new Response(stream).text();
+      return JSON.parse(text);
+    }
+    if(h[0]==='r'){
+      let s = h.slice(1).replace(/-/g,'+').replace(/_/g,'/');
+      while(s.length % 4) s += '=';
+      return JSON.parse(decodeURIComponent(escape(atob(s))));
+    }
+    // legacy raw base64
+    return JSON.parse(decodeURIComponent(escape(atob(h))));
+  }catch(e){ return null; }
+}
+
+async function buildShareUrl(){
+  const data = { tiers: state.tiers, assignment: state.assignment };
+  const payload = await encodeSharePayload(data);
+  return location.origin + location.pathname + '#' + payload;
+}
+
+function shareCaption(){
+  if(BLANK_MODE) return 'My tier list on RankMe — create yours at rankme.lol';
+  return 'My Street Fighter: Duel tier list on RankMe — rankme.lol';
 }
 
 function showToast(msg){
@@ -707,24 +792,95 @@ function showToast(msg){
   showToast._t = setTimeout(()=>el.classList.remove('show'), 2400);
 }
 
-document.getElementById('shareDiscord').addEventListener('click', ()=>{
-  const url = buildShareUrl();
-  navigator.clipboard?.writeText(url).then(()=> showToast('Link copied - paste it into Discord'))
-    .catch(()=> showToast(url));
-});
-document.getElementById('shareTelegram').addEventListener('click', ()=>{
-  const url = buildShareUrl();
-  window.open(`https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent('My Street Fighter: Duel tier list on RankMe')}`, '_blank');
-});
-document.getElementById('shareX').addEventListener('click', ()=>{
-  const url = buildShareUrl();
-  window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent('My Street Fighter: Duel tier list on RankMe 🥊')}&url=${encodeURIComponent(url)}`, '_blank');
+async function shareLinkOrImage(kind){
+  const caption = shareCaption();
+  // Custom (blank): prefer sharing PNG image + site promo
+  if(BLANK_MODE){
+    try{
+      const blob = await exportPNGBlob();
+      const file = new File([blob], 'rankme-tierlist.png', { type: 'image/png' });
+      if(navigator.canShare && navigator.canShare({ files: [file] })){
+        await navigator.share({
+          files: [file],
+          title: 'RankMe tier list',
+          text: caption + '\nhttps://rankme.lol'
+        });
+        showToast('Shared');
+        return;
+      }
+      // fallback: download image
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'rankme-tierlist.png';
+      a.click();
+      showToast('Image saved — share the PNG + rankme.lol');
+    }catch(e){
+      showToast('Could not share image');
+    }
+    return;
+  }
+  // Exclusive: try Supabase short link, else compressed hash
+  let url = await buildShareUrl();
+  try{
+    if(typeof createShortLink === 'function'){
+      const code = await createShortLink({ tiers: state.tiers, assignment: state.assignment });
+      if(code) url = location.origin + location.pathname + '?s=' + code;
+    }
+  }catch(e){}
+  const text = caption;
+  if(kind === 'discord'){
+    navigator.clipboard?.writeText(url).then(()=> showToast('Link copied'))
+      .catch(()=> showToast(url));
+  } else if(kind === 'telegram'){
+    window.open(`https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`, '_blank');
+  } else if(kind === 'x'){
+    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
+  }
+}
+
+document.getElementById('shareDiscord')?.addEventListener('click', ()=> shareLinkOrImage('discord'));
+document.getElementById('shareTelegram')?.addEventListener('click', ()=> shareLinkOrImage('telegram'));
+document.getElementById('shareX')?.addEventListener('click', ()=> shareLinkOrImage('x'));
+
+document.getElementById('downloadBtn')?.addEventListener('click', ()=>exportPNG());
+
+document.getElementById('saveAccountBtn')?.addEventListener('click', async ()=>{
+  if(BLANK_MODE){
+    showToast('Account save is for Exclusive templates only');
+    return;
+  }
+  try{
+    if(typeof getSessionUser !== 'function'){
+      showToast('Open Account to login first');
+      return;
+    }
+    const user = await getSessionUser();
+    if(!user){
+      showToast('Login required');
+      location.href = 'account.html';
+      return;
+    }
+    const title = (document.querySelector('.hero .desc b')?.textContent || 'SF Duel') + ' list';
+    const payload = { tiers: state.tiers, assignment: state.assignment };
+    await saveExclusiveTierlist({ title, templateId: 'sf-duel', payload });
+    showToast('Saved to your account');
+  }catch(e){
+    console.error(e);
+    showToast(e.message || 'Save failed — check Supabase table');
+  }
 });
 
-document.getElementById('downloadBtn').addEventListener('click', exportPNG);
+async function exportPNGBlob(){
+  // Reuse export pipeline into blob without download
+  return new Promise(async (resolve, reject) => {
+    try{
+      await exportPNG(true, resolve);
+    }catch(e){ reject(e); }
+  });
+}
 
-async function exportPNG(){
-  showToast('Exporting...');
+async function exportPNG(returnBlobOnly, blobCb){
+  if(!returnBlobOnly) showToast('Exporting...');
   const scale = 2;
   // Always high-quality export (UI Size only affects on-screen preview)
   const cardW = 96;
@@ -880,9 +1036,14 @@ async function exportPNG(){
   ctx.fillText(BLANK_MODE ? 'Custom Tier List' : 'Exclusive Tier List', width - 28, footY + footH/2 + 14);
 
   canvas.toBlob(blob => {
-    if(!blob){ showToast('Export failed'); return; }
+    if(!blob){
+      if(blobCb) blobCb(null);
+      else showToast('Export failed');
+      return;
+    }
+    if(returnBlobOnly && blobCb){ blobCb(blob); return; }
     const a = document.createElement('a');
-    a.download = 'rankme-sf-duel-tierlist.png';
+    a.download = BLANK_MODE ? 'rankme-tierlist.png' : 'rankme-sf-duel-tierlist.png';
     a.href = URL.createObjectURL(blob);
     a.click();
     showToast('PNG downloaded');
@@ -978,7 +1139,41 @@ document.getElementById('leaveBtn').addEventListener('click', ()=>{
 });
 
 /* ---------------- Init ---------------- */
-initState();
+// Open from cabinet
+try{
+  const raw = sessionStorage.getItem('rankme_open_payload');
+  if(raw){
+    sessionStorage.removeItem('rankme_open_payload');
+    const data = JSON.parse(raw);
+    if(data.tiers && data.assignment){
+      state.tiers = data.tiers;
+      state.assignment = data.assignment;
+      const used = new Set();
+      Object.values(state.assignment).forEach(arr => arr.forEach(id=>used.add(id)));
+      state.pool = freshPool().filter(id=>!used.has(id));
+      window.__rankmeFromCabinet = true;
+    }
+  }
+}catch(e){}
+
+(async ()=>{
+  const sc = new URLSearchParams(location.search).get('s');
+  if(sc && typeof loadShortLink === 'function'){
+    try{
+      const payload = await loadShortLink(sc);
+      if(payload?.tiers && payload?.assignment){
+        state.tiers = payload.tiers;
+        state.assignment = payload.assignment;
+        const used = new Set();
+        Object.values(state.assignment).forEach(arr => arr.forEach(id=>used.add(id)));
+        state.pool = freshPool().filter(id=>!used.has(id));
+        window.__rankmeFromCabinet = true;
+      }
+    }catch(e){}
+  }
+  initState();
+})();
+
 if(BLANK_MODE){
   const ff = document.getElementById('factionFilters');
   if(ff) ff.style.display = 'none';

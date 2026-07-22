@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
 <title>New tier list - RankMe</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabaseClient.js"></script>
 <meta name="description" content="Create tier lists in seconds. Drag, drop, share. Free, no sign-up.">
 <meta property="og:title" content="New tier list - RankMe">
 <meta property="og:description" content="Drag, rank, share - build your Street Fighter: Duel tier list on RankMe.">
@@ -320,17 +322,7 @@ nav.main a.exclusive{ color: #e79ee0; }
   z-index:2;
   transform: scaleY(1.12);
 }
-.portal-slot::after{
-  content:attr(data-label);
-  position:absolute; inset:0;
-  display:flex; align-items:center; justify-content:center;
-  font-size:.52rem; font-weight:800; letter-spacing:.3px;
-  text-transform:uppercase; color:rgba(255,255,255,0.9);
-  text-shadow: 0 1px 3px rgba(0,0,0,0.55);
-  pointer-events:none;
-  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-  padding:0 4px;
-}
+.portal-slot::after{ content:none !important; display:none !important; }
 .portal-btn{
   flex-shrink:0;
   padding:8px 18px; border-radius:999px; font-size:.72rem; font-weight:800;

@@ -6,30 +6,50 @@
 <title>Account - RankMe</title>
 <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabaseClient.js"></script>
 <style>
 :root{--bg-0:#0e0c14;--panel:#1a1728;--line:rgba(255,255,255,.08);--text:#f1eefb;--text-dim:#a79fc4;--accent-grad:linear-gradient(120deg,#b79bf0,#e6a9e8,#cdd6f7)}
 *{box-sizing:border-box}body{margin:0;font-family:Montserrat,system-ui,sans-serif;background:radial-gradient(circle at 20% 0,rgba(160,120,220,.15),transparent 45%),var(--bg-0);color:var(--text);min-height:100vh}
-header.site{display:flex;align-items:center;justify-content:space-between;padding:16px 40px;border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(14,12,20,.75);backdrop-filter:blur(14px)}
+header.site{display:flex;align-items:center;justify-content:space-between;padding:16px 40px;border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(14,12,20,.75);backdrop-filter:blur(14px);z-index:20}
 .brand img{height:34px} nav.main{display:flex;gap:28px;align-items:center}
-nav.main a{color:var(--text-dim);text-decoration:none;font-weight:700;font-size:.92rem} nav.main a:hover,nav.main a.active{color:var(--text)}
+nav.main a{color:var(--text-dim);text-decoration:none;font-weight:700;font-size:.92rem} nav.main a:hover{color:var(--text)}
 .login-btn,.btn{padding:8px 20px;border-radius:999px;font-weight:800;font-size:.85rem;border:none;cursor:pointer;background:var(--accent-grad);color:#1a1226}
 .wrap{max-width:720px;margin:40px auto;padding:0 20px 80px}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:28px}
 h1{margin:0 0 8px;font-size:1.35rem;font-weight:900}
 .sub{color:var(--text-dim);font-weight:600;font-size:.88rem;margin:0 0 24px;line-height:1.5}
 .profile{display:flex;gap:16px;align-items:center;margin-bottom:24px}
-.avatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#3a2a55,#2a3550);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:1.2rem;color:#c9b4f0}
+.avatar-wrap{position:relative;width:72px;height:72px}
+.avatar{width:72px;height:72px;border-radius:50%;object-fit:cover;background:linear-gradient(135deg,#3a2a55,#2a3550);display:block}
+.avatar-fallback{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#3a2a55,#2a3550);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:1.3rem;color:#c9b4f0}
+.holo-ring{position:absolute;inset:-4px;border-radius:50%;pointer-events:none;
+  background:conic-gradient(from 120deg,#e8d4ff,#b79bf0,#9ec9ff,#e6a9e8,#e8d4ff);
+  opacity:.85;z-index:0;filter:blur(0.2px)}
+.holo-ring::after{content:'';position:absolute;inset:3px;border-radius:50%;background:var(--panel)}
+.avatar-wrap img,.avatar-wrap .avatar-fallback{position:relative;z-index:1}
 .meta b{display:block;font-size:1.05rem}
 .meta span{color:var(--text-dim);font-size:.8rem;font-weight:600}
 .list{border-top:1px solid var(--line);padding-top:18px}
 .list h2{font-size:.85rem;letter-spacing:.4px;text-transform:uppercase;color:var(--text-dim);margin:0 0 12px}
 .empty{color:var(--text-dim);font-weight:600;font-size:.88rem;padding:20px;border:1px dashed var(--line);border-radius:10px;text-align:center}
+.tl-item{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;margin-bottom:8px;background:rgba(255,255,255,.02)}
+.tl-item .t{font-weight:800;font-size:.9rem}
+.tl-item .d{font-size:.72rem;color:var(--text-dim);font-weight:600;margin-top:2px}
+.tl-actions{display:flex;gap:8px}
+.tl-actions button,.tl-actions a{padding:6px 12px;border-radius:999px;font-size:.75rem;font-weight:700;cursor:pointer;text-decoration:none;border:1px solid var(--line);background:#12101a;color:var(--text)}
+.tl-actions a.primary{background:var(--accent-grad);color:#1a1226;border:none}
 .providers{display:flex;flex-direction:column;gap:10px;margin-top:8px}
-.prov{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:12px;border:1px solid var(--line);background:#12101a;cursor:pointer;font-weight:700;font-size:.9rem;color:var(--text);transition:border-color .15s,transform .15s}
+.prov{display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:12px;border:1px solid var(--line);background:#12101a;cursor:pointer;font-weight:700;font-size:.9rem;color:var(--text);transition:border-color .15s,transform .15s}
 .prov:hover{border-color:rgba(200,160,240,.5);transform:translateY(-1px)}
-.prov .ico{width:28px;height:28px;border-radius:8px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:.9rem}
+.prov .ico{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.prov .ico.discord{background:#5865F2}
+.prov .ico.google{background:#fff}
+.prov svg{display:block}
 .note{margin-top:18px;font-size:.78rem;color:var(--text-dim);font-weight:600;line-height:1.5}
 .ghost{background:transparent;border:1px solid var(--line);color:var(--text);margin-top:16px}
+.err{color:#ff8a8a;font-size:.85rem;font-weight:600;margin-top:12px}
+@media(max-width:720px){header.site{padding:12px 14px} .brand img{height:26px} nav.main{gap:12px}}
 </style>
 </head>
 <body>
@@ -38,61 +58,120 @@ h1{margin:0 0 8px;font-size:1.35rem;font-weight:900}
   <nav class="main">
     <a href="index.html">Browse</a>
     <a href="create.html">Create</a>
-    <button class="login-btn" id="loginBtn">Login</button>
+    <button class="login-btn" id="navBtn">Account</button>
   </nav>
 </header>
 <div class="wrap">
-  <div class="card" id="panel">
-    <!-- filled by JS -->
-  </div>
+  <div class="card" id="panel">Loading…</div>
 </div>
 <script>
-const user = (()=>{ try{ return JSON.parse(localStorage.getItem('rankme_user')||'null'); }catch(e){ return null; } })();
 const panel = document.getElementById('panel');
-const loginBtn = document.getElementById('loginBtn');
+const navBtn = document.getElementById('navBtn');
 
-function render(){
-  if(user){
-    loginBtn.textContent = 'Account';
-    loginBtn.onclick = ()=> location.href='account.html';
-    panel.innerHTML = `
-      <h1>Your cabinet</h1>
-      <p class="sub">Saved collections will live here once Supabase is connected. Demo mode uses local storage only.</p>
-      <div class="profile">
-        <div class="avatar">${(user.name||'U')[0].toUpperCase()}</div>
-        <div class="meta"><b>${user.name||'User'}</b><span>${user.provider||'demo'} · ${user.email||'no email'}</span></div>
-      </div>
-      <div class="list">
-        <h2>My tier lists</h2>
-        <div class="empty">No saved lists yet. Create one and export PNG — cloud save comes with real login.</div>
-      </div>
-      <button class="login-btn ghost" id="logout">Log out</button>`;
-    document.getElementById('logout').onclick = ()=>{
-      localStorage.removeItem('rankme_user');
-      location.href = 'index.html';
+function providerIcon(p){
+  if(p==='discord') return `<span class="ico discord"><svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M20 4.4A18 18 0 0 0 15.6 3l-.3.6a15 15 0 0 1 3.8 1.4A16 16 0 0 0 12 3.4 16 16 0 0 0 4.9 5 15 15 0 0 1 8.7 3.6L8.4 3A18 18 0 0 0 4 4.4C1.6 8 1 11.6 1.2 15.1A18 18 0 0 0 6.6 18l.8-1.3a11 11 0 0 1-1.8-.9l.5-.4a13 13 0 0 0 11.8 0l.5.4c-.6.3-1.2.6-1.8.9l.8 1.3a18 18 0 0 0 5.4-2.9C23 11.4 22.1 7.8 20 4.4ZM8.7 13.6c-.8 0-1.5-.8-1.5-1.7s.7-1.7 1.5-1.7 1.5.8 1.5 1.7-.7 1.7-1.5 1.7Zm6.6 0c-.8 0-1.5-.8-1.5-1.7s.7-1.7 1.5-1.7 1.5.8 1.5 1.7-.7 1.7-1.5 1.7Z"/></svg></span>`;
+  return `<span class="ico google"><svg width="20" height="20" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18A10.96 10.96 0 0 0 1 12c0 1.77.42 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg></span>`;
+}
+
+async function renderLogin(){
+  navBtn.textContent = 'Login';
+  panel.innerHTML = `
+    <h1>Login</h1>
+    <p class="sub">Connect an account to save <b>Exclusive</b> rankings (JSON only). Custom image uploads are never stored on our servers.</p>
+    <div class="providers">
+      <button class="prov" data-p="discord">${providerIcon('discord')} Continue with Discord</button>
+      <button class="prov" data-p="google">${providerIcon('google')} Continue with Google</button>
+    </div>
+    <p class="note">Enable Discord &amp; Google under Supabase → Authentication → Providers. Add redirect URL: <code>${location.origin}/**</code></p>
+    <p class="err" id="err" hidden></p>`;
+  panel.querySelectorAll('.prov').forEach(b=>{
+    b.onclick = async ()=>{
+      try{
+        await rankmeSignIn(b.dataset.p);
+      }catch(e){
+        const err = document.getElementById('err');
+        err.hidden = false;
+        err.textContent = e.message || String(e);
+      }
     };
-  } else {
-    loginBtn.textContent = 'Login';
-    panel.innerHTML = `
-      <h1>Login</h1>
-      <p class="sub">Connect an account to save collections on RankMe. Building and PNG export work without login.</p>
-      <div class="providers">
-        <button class="prov" data-p="discord"><span class="ico">D</span> Continue with Discord</button>
-        <button class="prov" data-p="google"><span class="ico">G</span> Continue with Google</button>
-        <button class="prov" data-p="x"><span class="ico">X</span> Continue with X</button>
+  });
+}
+
+async function renderCabinet(user){
+  navBtn.textContent = user.user_metadata?.full_name || user.user_metadata?.name || 'Account';
+  const name = user.user_metadata?.full_name || user.user_metadata?.custom_claims?.global_name || user.user_metadata?.name || user.email || 'User';
+  const avatar = user.user_metadata?.avatar_url || user.user_metadata?.picture || '';
+  const provider = user.app_metadata?.provider || 'oauth';
+
+  let listHtml = '<div class="empty">Loading…</div>';
+  panel.innerHTML = `
+    <h1>Your cabinet</h1>
+    <p class="sub">Saved <b>Exclusive</b> rankings only. Custom image lists stay in your browser — we do not store those files.</p>
+    <div class="profile">
+      <div class="avatar-wrap">
+        <div class="holo-ring"></div>
+        ${avatar ? `<img class="avatar" src="${avatar}" alt="">` : `<div class="avatar-fallback">${(name[0]||'U').toUpperCase()}</div>`}
       </div>
-      <p class="note">Demo: click any provider to simulate login locally. Real OAuth via Supabase will replace this.</p>`;
-    panel.querySelectorAll('.prov').forEach(b=>{
-      b.onclick = ()=>{
-        const provider = b.dataset.p;
-        const fake = { name: provider==='discord'?'RankMe Pilot':'Player', email: provider+'@demo.rankme.lol', provider };
-        localStorage.setItem('rankme_user', JSON.stringify(fake));
-        location.reload();
-      };
-    });
+      <div class="meta"><b>${name}</b><span>${provider}</span></div>
+    </div>
+    <div class="list">
+      <h2>Saved Exclusive lists</h2>
+      <div id="listBox">${listHtml}</div>
+    </div>
+    <button class="login-btn ghost" id="logout">Log out</button>`;
+
+  document.getElementById('logout').onclick = async ()=>{
+    await rankmeSignOut();
+    location.reload();
+  };
+
+  try{
+    const rows = await listMyTierlists();
+    const box = document.getElementById('listBox');
+    if(!rows.length){
+      box.innerHTML = '<div class="empty">No saved Exclusive lists yet. Open SF Duel, rank, press <b>Save</b>.</div>';
+    } else {
+      box.innerHTML = rows.map(r=>{
+        const openHref = (r.template_id === 'sf-duel' || !r.template_id)
+          ? 'sf-duel.html' : (r.template_id + '.html');
+        const when = r.updated_at ? new Date(r.updated_at).toLocaleString() : '';
+        return `<div class="tl-item">
+          <div><div class="t">${r.title||'Untitled'}</div><div class="d">${r.template_id||'exclusive'} · ${when}</div></div>
+          <div class="tl-actions">
+            <a class="primary" href="${openHref}" data-id="${r.id}">Open</a>
+            <button type="button" data-del="${r.id}">Delete</button>
+          </div>
+        </div>`;
+      }).join('');
+      box.querySelectorAll('[data-del]').forEach(btn=>{
+        btn.onclick = async ()=>{
+          if(!confirm('Delete this saved list?')) return;
+          await deleteTierlist(btn.dataset.del);
+          renderCabinet(user);
+        };
+      });
+      // Open with payload via sessionStorage
+      box.querySelectorAll('a.primary').forEach(a=>{
+        a.addEventListener('click', (e)=>{
+          const id = a.getAttribute('data-id');
+          const row = rows.find(x=>String(x.id)===String(id));
+          if(row?.payload){
+            sessionStorage.setItem('rankme_open_payload', JSON.stringify(row.payload));
+          }
+        });
+      });
+    }
+  }catch(e){
+    document.getElementById('listBox').innerHTML = `<div class="empty">Could not load lists. Create table <code>tierlists</code> in Supabase (see SQL below). ${e.message||''}</div>`;
   }
 }
-render();
+
+(async ()=>{
+  await initSupabase();
+  const user = await getSessionUser();
+  if(user) await renderCabinet(user);
+  else await renderLogin();
+})();
 </script>
 </body>
 </html>

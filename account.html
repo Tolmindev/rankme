@@ -9,16 +9,17 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/supabaseClient.js"></script>
 <style>
-:root{--bg-0:#0e0c14;--panel:#1a1728;--line:rgba(255,255,255,.08);--text:#f1eefb;--text-dim:#a79fc4;--accent-grad:linear-gradient(120deg,#b79bf0,#e6a9e8,#cdd6f7)}
-*{box-sizing:border-box}body{margin:0;font-family:Montserrat,system-ui,sans-serif;background:radial-gradient(circle at 20% 0,rgba(160,120,220,.15),transparent 45%),var(--bg-0);color:var(--text);min-height:100vh}
-header.site{display:flex;align-items:center;justify-content:space-between;padding:16px 40px;border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(14,12,20,.75);backdrop-filter:blur(14px);z-index:20}
+:root{--bg-0:#0e0c14;--panel:#161322;--line:rgba(255,255,255,.08);--text:#f4f1fc;--text-dim:#9b94b0;--accent:#c9a8f0;--accent-grad:linear-gradient(120deg,#b79bf0,#e6a9e8,#cdd6f7)}
+*{box-sizing:border-box}body{margin:0;font-family:Montserrat,system-ui,sans-serif;background:radial-gradient(circle at 20% 0,rgba(160,120,220,.12),transparent 50%),var(--bg-0);color:var(--text);min-height:100vh}
+header.site{display:flex;align-items:center;justify-content:space-between;padding:16px 40px;border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(14,12,20,.8);backdrop-filter:blur(14px);z-index:20}
 .brand img{height:34px} nav.main{display:flex;gap:28px;align-items:center}
 nav.main a{color:var(--text-dim);text-decoration:none;font-weight:700;font-size:.92rem} nav.main a:hover{color:var(--text)}
 .login-btn,.btn{padding:8px 20px;border-radius:999px;font-weight:800;font-size:.85rem;border:none;cursor:pointer;background:var(--accent-grad);color:#1a1226}
-.wrap{max-width:720px;margin:40px auto;padding:0 20px 80px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:28px}
-h1{margin:0 0 8px;font-size:1.35rem;font-weight:900}
-.sub{color:var(--text-dim);font-weight:600;font-size:.88rem;margin:0 0 24px;line-height:1.5}
+.wrap{max-width:960px;margin:36px auto;padding:0 24px 80px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:32px 36px}
+h1{margin:0 0 6px;font-size:1.5rem;font-weight:900;color:var(--text)}
+.sub{color:var(--text-dim);font-weight:600;font-size:.9rem;margin:0 0 28px;line-height:1.55}
+.sub b{color:var(--accent);font-weight:800}
 .profile{display:flex;gap:16px;align-items:center;margin-bottom:24px}
 .avatar-wrap{position:relative;width:72px;height:72px}
 .avatar{width:72px;height:72px;border-radius:50%;object-fit:cover;background:linear-gradient(135deg,#3a2a55,#2a3550);display:block}
@@ -101,7 +102,14 @@ async function renderCabinet(user){
   navBtn.textContent = user.user_metadata?.full_name || user.user_metadata?.name || 'Account';
   const name = user.user_metadata?.full_name || user.user_metadata?.custom_claims?.global_name || user.user_metadata?.name || user.email || 'User';
   const avatar = user.user_metadata?.avatar_url || user.user_metadata?.picture || '';
-  const provider = user.app_metadata?.provider || 'oauth';
+  const ids = user.identities || [];
+  let provider = 'oauth';
+  if(ids.length){
+    const sorted = [...ids].sort((a,b)=> new Date(b.last_sign_in_at||0) - new Date(a.last_sign_in_at||0));
+    provider = sorted[0]?.provider || provider;
+  } else {
+    provider = user.app_metadata?.provider || user.app_metadata?.providers?.[0] || provider;
+  }
 
   let listHtml = '<div class="empty">Loading…</div>';
   panel.innerHTML = `

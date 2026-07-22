@@ -333,40 +333,43 @@ nav.main a.exclusive{ color: #e79ee0; }
 .portal-slot{
   flex:1; min-width:0; position:relative; cursor:pointer;
   border-radius:8px;
-  transition: filter .18s, box-shadow .18s, transform .15s;
-  border:1px solid rgba(255,255,255,0.1);
+  transition: filter .18s, box-shadow .18s, transform .15s, background .18s, border-color .18s;
+  border:2px solid rgba(255,255,255,0.22);
+  background: transparent !important;
 }
 .portal-slot:hover{
-  filter: brightness(1.12);
-  box-shadow: 0 0 14px var(--glow, rgba(180,140,240,0.35));
+  border-color: rgba(255,255,255,0.4);
+  box-shadow: 0 0 12px rgba(255,255,255,0.12);
 }
 .portal-slot.drag-over{
-  filter: brightness(1.4) saturate(1.25);
+  border-color: transparent;
+  background: linear-gradient(90deg,#ff6b6b,#f7c948,#7bed9f,#70a1ff,#a29bfe,#ff6b81,#ff6b6b) !important;
+  background-size: 200% 100% !important;
   box-shadow:
-    0 0 12px var(--glow, rgba(200,160,255,0.7)),
-    0 0 28px var(--glow, rgba(180,120,255,0.5)),
-    0 0 48px var(--glow, rgba(160,100,255,0.3));
+    0 0 14px rgba(255,120,180,0.55),
+    0 0 28px rgba(120,180,255,0.4),
+    0 0 42px rgba(180,120,255,0.3);
   z-index:2;
   transform: scaleY(1.12);
+  filter: brightness(1.15) saturate(1.2);
 }
 .portal-slot::after{ content:none !important; display:none !important; }
 .portal-btn{
   flex-shrink:0;
   padding:8px 18px; border-radius:999px; font-size:.72rem; font-weight:800;
   letter-spacing:.6px; cursor:pointer;
-  border:1px solid rgba(200,160,240,0.35);
-  background: #171327; color: var(--text-dim);
+  border:2px solid rgba(255,255,255,0.22);
+  background: transparent; color: var(--text-dim);
   transition: all .2s;
 }
 .portal-btn:hover{
-  color:#fff; border-color: rgba(200,160,240,0.8);
-  box-shadow: 0 0 16px rgba(180,120,255,0.3);
+  color:#fff; border-color: rgba(255,255,255,0.45);
 }
 .portal-btn.active{
   color:#1a1226;
-  background: linear-gradient(120deg, #b79bf0, #e6a9e8, #cdd6f7);
   border-color: transparent;
-  box-shadow: 0 0 22px rgba(190,140,255,0.55);
+  background: linear-gradient(90deg,#ff6b6b,#f7c948,#7bed9f,#70a1ff,#a29bfe,#ff6b81);
+  box-shadow: 0 0 22px rgba(180,140,255,0.45);
 }
 
 .faction-filters{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px; }
@@ -392,6 +395,12 @@ nav.main a.exclusive{ color: #e79ee0; }
   border-color: #d4b8f0;
   background: linear-gradient(120deg, rgba(180,150,220,.35), rgba(200,180,230,.2), rgba(230,160,200,.3));
   box-shadow: 0 0 16px rgba(200,160,240,.45), inset 0 0 12px rgba(255,255,255,.08);
+}
+.faction-btn.active.master{
+  border-color: #c5cdd8;
+  background: linear-gradient(135deg, #4a505c, #2e333c);
+  box-shadow: 0 0 14px rgba(200,210,220,.4);
+  color: #f0f2f5;
 }
 .faction-btn.active.all-mix{
   border-color: #c9b4f0;
@@ -544,7 +553,7 @@ footer.site .fine{ color:var(--text-dim); font-size:.75rem; font-weight:600; }
   <div class="portals-bar" id="portalsBar" hidden></div>
   <div class="pool-header">
     <div class="faction-filters" id="factionFilters"></div>
-    <button class="portal-btn" id="portalBtn" type="button" title="Drop cards into portals to send them to tiers">MAGIC PORTAL</button>
+    <button class="portal-btn" id="portalBtn" type="button" title="Drop cards into portals to teleport them to tiers">TELEPORTATION</button>
   </div>
   <div class="pool" id="pool"></div>
 </div>

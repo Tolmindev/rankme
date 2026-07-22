@@ -6,7 +6,7 @@ const CARD_META = {};
 CARD_META_LIST.forEach(c => CARD_META[c.id] = c);
 const N_CARDS = CARD_META_LIST.length;
 const FACTIONS = [...new Set(CARD_META_LIST.map(c=>c.faction))];
-const FACTION_HUE = {MASTER:220, INFERNAL:275, WIND:210, THUNDER:48, FLAME:8, LEGENDARY:290, 'A+':32};
+const FACTION_HUE = {MASTER:210, INFERNAL:275, WIND:210, THUNDER:48, FLAME:8, LEGENDARY:290, 'A+':32};
 const FACTION_ICON = {};
 FACTIONS.forEach(f => FACTION_ICON[f] = `assets/factions/${f}_icon.svg`);
 const ALL_ICON = 'assets/factions/ALL_icon.svg';
@@ -270,6 +270,7 @@ function renderFactionFilters(){
     const b = document.createElement('button');
     let extra = '';
     if(key==='LEGENDARY') extra += ' legendary';
+    if(key==='MASTER') extra += ' master';
     if(key==='ALL') extra += ' all-mix';
     b.className = 'faction-btn' + (activeFilter===key ? ' active' : '') + (!icon ? ' no-icon' : '') + extra;
     if(hue!==undefined) b.style.setProperty('--fhue', hue);
@@ -339,7 +340,7 @@ document.getElementById('portalBtn').addEventListener('click', ()=>{
   portalsOn = !portalsOn;
   document.getElementById('portalBtn').classList.toggle('active', portalsOn);
   renderPortals();
-  showToast(portalsOn ? 'Magic Portals ON' : 'Magic Portals OFF');
+  showToast(portalsOn ? 'Teleportation ON' : 'Teleportation OFF');
 });
 
 /* ---------------- Drag & drop (pointer-based, mouse+touch) ---------------- */

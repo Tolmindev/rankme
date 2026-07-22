@@ -97,6 +97,35 @@ async function loadFromHashAsync(){
 }
 
 
+
+function sanitizeState(){
+  // Coerce ids to numbers, drop unknowns, ensure each card in at most one tier
+  const seen = new Set();
+  const next = {};
+  (state.tiers||[]).forEach(tier=>{
+    const arr = [];
+    (state.assignment[tier.id]||[]).forEach(cid=>{
+      const id = +cid;
+      if(!id || !CARD_META[id]) return;
+      if(seen.has(id)) return;
+      seen.add(id);
+      arr.push(id);
+    });
+    next[tier.id] = arr;
+  });
+  state.assignment = next;
+  // rebuild pool from leftovers
+  state.pool = [];
+  for(let i=1;i<=N_CARDS;i++){
+    if(!seen.has(i)) state.pool.push(i);
+  }
+  // keep custom cards that are not placed
+  Object.keys(state.customCards||{}).forEach(k=>{
+    const id = +k;
+    if(!seen.has(id) && !state.pool.includes(id)) state.pool.push(id);
+  });
+}
+
 function applyExpertPreset(id){
   const data = EXPERT_PRESETS && EXPERT_PRESETS[String(id).toLowerCase()];
   if(!data || !data.tiers || !data.assignment) return false;
@@ -111,6 +140,7 @@ function applyExpertPreset(id){
   portalsOn = false;
   const pb = document.getElementById('portalBtn');
   if(pb) pb.classList.remove('active');
+  sanitizeState();
   // clean URL
   try{
     const u = new URL(location.href);
@@ -128,6 +158,7 @@ function applyHashState(){
     portalsOn = false;
     const pb = document.getElementById('portalBtn');
     if(pb) pb.classList.remove('active');
+    sanitizeState();
     render();
     if(!BLANK_MODE) renderFactionFilters();
     renderPortals();
@@ -139,6 +170,7 @@ function applyHashState(){
     portalsOn = false;
     const pb = document.getElementById('portalBtn');
     if(pb) pb.classList.remove('active');
+    sanitizeState();
     render();
     if(!BLANK_MODE) renderFactionFilters();
     renderPortals();
@@ -943,6 +975,7 @@ document.getElementById('saveAccountBtn')?.addEventListener('click', async ()=>{
     }
     const base = document.querySelector('.hero .desc b')?.textContent || 'SF Duel';
     const title = remixFlag ? ('Remix · ' + base) : (base + ' list');
+    sanitizeState();
     const payload = { tiers: state.tiers, assignment: state.assignment };
     await saveExclusiveTierlist({ title, templateId: 'sf-duel', payload });
     remixFlag = false;
@@ -963,6 +996,7 @@ async function exportPNGBlob(){
 }
 
 async function exportPNG(returnBlobOnly, blobCb){
+  sanitizeState();
   if(!returnBlobOnly) showToast('Exporting...');
   const scale = 2; // pixel density / quality
   // Layout follows Size slider; scale=2 keeps sharp PNG
@@ -983,10 +1017,11 @@ async function exportPNG(returnBlobOnly, blobCb){
   const imgCache = {};
   await Promise.all([...allIds].map(async cid => {
     try {
-      let img = getCardImage(cid);
-      if(!img) img = await loadImage(cardSrc(cid));
-      if(img && (img.naturalWidth || img.width)) imgCache[cid] = img;
-    } catch(e) {}
+      const custom = state.customCards && state.customCards[cid];
+      const src = custom ? custom.src : cardSrc(cid);
+      const img = await loadImage(src);
+      if(img && (img.naturalWidth || img.width)) imgCache[Number(cid)] = img;
+    } catch(e) { console.warn('export img', cid, e); }
   }));
 
   const rowHeights = state.tiers.map(tier => {
@@ -1059,7 +1094,7 @@ async function exportPNG(returnBlobOnly, blobCb){
     let cy = y + (lines > 1 ? padY : Math.max(padY, (rh - cardH) / 2));
     let col = 0;
     for(const cid of ids){
-      const img = imgCache[cid];
+      const img = imgCache[Number(cid)] || imgCache[cid];
       if(img){
         try { ctx.drawImage(img, x, cy, cardW, cardH); } catch(e){}
       }
@@ -1162,12 +1197,6 @@ function wrapLines(ctx, text, maxWidth){
 
 function loadImage(src){
   return new Promise((res, rej)=>{
-    // Prefer already-loaded DOM images (works with file://)
-    const existing = document.querySelector(`img[src="${src}"]`);
-    if(existing && existing.complete && existing.naturalWidth > 0){
-      res(existing);
-      return;
-    }
     const img = new Image();
     img.onload = ()=>res(img);
     img.onerror = ()=>rej(new Error('fail '+src));
@@ -1175,15 +1204,28 @@ function loadImage(src){
   });
 }
 
-// Build a cache of card images from the page for reliable export
+// Strict match only - never substring match on id (was causing wrong/dupe cards in PNG)
 function getCardImage(cid){
-  const src = cardSrc(cid);
-  // Try any img currently on page with this src
+  const meta = CARD_META[cid];
+  const custom = state.customCards && state.customCards[cid];
+  if(custom && custom.src){
+    const els = document.querySelectorAll('img');
+    for(const el of els){
+      if(el.complete && el.naturalWidth > 0 && el.getAttribute('src') === custom.src) return el;
+    }
+    return null;
+  }
+  if(!meta) return null;
+  const file = meta.file; // e.g. card_046.png
   const els = document.querySelectorAll('img');
   for(const el of els){
-    if(el.complete && el.naturalWidth > 0 && (el.getAttribute('src') === src || (CARD_META[cid] && el.src.endsWith(CARD_META[cid].file)) || (src && el.src.includes(String(cid))))){
-      return el;
-    }
+    if(!el.complete || el.naturalWidth <= 0) continue;
+    const attr = el.getAttribute('src') || '';
+    if(attr === cardSrc(cid) || attr.endsWith('/'+file) || attr.endsWith(file)) return el;
+    try{
+      const u = new URL(el.src, location.href);
+      if(u.pathname.endsWith('/'+file) || u.pathname.endsWith(file)) return el;
+    }catch(e){}
   }
   return null;
 }
@@ -1268,6 +1310,7 @@ try{
       Object.values(state.assignment).forEach(arr => arr.forEach(id=>used.add(id)));
       state.pool = freshPool().filter(id=>!used.has(id));
       window.__rankmeFromCabinet = true;
+      sanitizeState();
       // + My images only after explicit Remix
     }
   }

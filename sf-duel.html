@@ -354,31 +354,49 @@ nav.main a.exclusive{ color: #e79ee0; }
 }
 .portal-slot::after{ content:none !important; display:none !important; }
 .portal-btn{
+  --rgb: linear-gradient(90deg,#ff6b6b,#f7c948,#7bed9f,#70a1ff,#a29bfe,#ff6b81,#ff6b6b);
   flex-shrink:0;
+  position: relative;
   padding:8px 18px; border-radius:999px; font-size:.72rem; font-weight:800;
   letter-spacing:.6px; cursor:pointer;
-  border:2px solid rgba(255,255,255,0.28);
-  background: transparent; color: #fff;
-  transition: all .2s;
+  border: none;
+  background: #171327;
+  color: #fff;
+  z-index: 0;
+  transition: box-shadow .2s, filter .2s;
+}
+/* RGB border always (seamless loop) */
+.portal-btn::before{
+  content:'';
+  position:absolute; inset:0;
+  border-radius:inherit;
+  padding:2px;
+  background: var(--rgb);
+  background-size: 300% 100%;
+  animation: portalRgb 5s linear infinite;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events:none;
+  z-index:-1;
+}
+.portal-btn:hover::before{
+  filter: brightness(1.35) saturate(1.2);
 }
 .portal-btn:hover{
-  color:#fff;
-  border-color: transparent;
-  background: linear-gradient(90deg,#ff6b6b,#f7c948,#7bed9f,#70a1ff,#a29bfe,#ff6b81);
-  background-size: 200% 100%;
-  box-shadow: 0 0 18px rgba(180,140,255,0.4);
+  box-shadow: 0 0 16px rgba(180,140,255,0.35);
 }
+/* Fill RGB only when active */
 .portal-btn.active{
-  color:#fff;
-  border-color: transparent;
-  background: linear-gradient(90deg,#ff6b6b,#f7c948,#7bed9f,#70a1ff,#a29bfe,#ff6b81,#ff6b6b);
-  background-size: 220% 100%;
-  animation: portalRgb 3s linear infinite;
+  background: var(--rgb);
+  background-size: 300% 100%;
+  animation: portalRgb 5s linear infinite;
   box-shadow: 0 0 22px rgba(180,140,255,0.5);
 }
+.portal-btn.active::before{ opacity:0; }
 @keyframes portalRgb{
   0%{ background-position: 0% 50%; }
-  100%{ background-position: 100% 50%; }
+  100%{ background-position: 200% 50%; }
 }
 
 .faction-filters{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px; }
@@ -504,7 +522,7 @@ footer.site .fine{ color:var(--text-dim); font-size:.75rem; font-weight:600; }
   <nav class="main">
     <a href="index.html">Browse</a>
     <a href="create.html">Create</a>
-    <button class="login-btn" id="loginBtn" onclick="location.href='account.html'">Login</button>
+    <button class="login-btn" id="loginBtn" type="button">Login</button>
   </nav>
 </header>
 
@@ -601,12 +619,5 @@ footer.site .fine{ color:var(--text-dim); font-size:.75rem; font-weight:600; }
 <canvas id="exportCanvas" style="display:none"></canvas>
 
 <script src="js/app.js"></script>
-<script>
-try{
-  const u = JSON.parse(localStorage.getItem('rankme_user')||'null');
-  const b = document.getElementById('loginBtn');
-  if(u && b){ b.textContent = u.name || 'Account'; b.onclick=()=>location.href='account.html'; }
-}catch(e){}
-</script>
 </body>
 </html>

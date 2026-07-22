@@ -144,7 +144,7 @@ footer.site{
   <nav class="main">
     <a href="index.html" class="active">Browse</a>
     <a href="create.html">Create</a>
-    <button class="login-btn" id="loginBtn" onclick="location.href='account.html'">Login</button>
+    <button class="login-btn" id="loginBtn" type="button">Login</button>
   </nav>
 </header>
 
@@ -184,12 +184,5 @@ footer.site{
   RANKME.LOL — create tier lists in seconds, drag, drop, share.
 </footer>
 
-<script>
-try{
-  const u = JSON.parse(localStorage.getItem('rankme_user')||'null');
-  const b = document.getElementById('loginBtn');
-  if(u && b){ b.textContent = u.name || 'Account'; }
-}catch(e){}
-</script>
 </body>
 </html>

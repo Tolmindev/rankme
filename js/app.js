@@ -1136,34 +1136,62 @@ function hasProgress(){
 }
 
 let allowLeave = false;
-// Browser dialog only for tab close / refresh (not when our modal already confirmed)
+let pendingNav = '#';
+
+// No native beforeunload when user already confirmed via our modal // for tab close only
 window.addEventListener('beforeunload', (e)=>{
   if(allowLeave || !hasProgress()) return;
+  // Only for real tab close / refresh — in-app nav uses our modal
   e.preventDefault();
   e.returnValue = '';
 });
 
-document.querySelectorAll('nav.main a, .brand').forEach(a=>{
-  a.addEventListener('click', (e)=>{
-    const href = a.getAttribute('href') || '#';
-    if(href === '#' || href === '' || href === location.pathname || href === location.href){
-      e.preventDefault();
+function bindLeaveGuard(el, href){
+  if(!el || el.dataset.leaveBound) return;
+  el.dataset.leaveBound = '1';
+  el.addEventListener('click', (e)=>{
+    const target = href || el.getAttribute('href') || '';
+    if(!target || target === '#' || target.startsWith('javascript')) return;
+    // same page
+    try{
+      const u = new URL(target, location.href);
+      if(u.pathname === location.pathname && u.search === location.search && !u.hash){
+        e.preventDefault();
+        return;
+      }
+    }catch(_){}
+    if(!hasProgress()) return;
+    e.preventDefault();
+    e.stopPropagation();
+    pendingNav = target;
+    document.getElementById('leaveModal')?.classList.add('open');
+  }, true);
+}
+
+document.querySelectorAll('nav.main a, a.brand').forEach(a => bindLeaveGuard(a));
+const loginBtn = document.getElementById('loginBtn');
+if(loginBtn){
+  loginBtn.dataset.navBound = '1';
+  loginBtn.addEventListener('click', (e)=>{
+    if(!hasProgress()){
+      location.href = 'account.html';
       return;
     }
-    if(hasProgress()){
-      e.preventDefault();
-      pendingNav = href;
-      document.getElementById('leaveModal')?.classList.add('open');
-    }
-  });
-});
-let pendingNav = '#';
+    e.preventDefault();
+    e.stopPropagation();
+    pendingNav = 'account.html';
+    document.getElementById('leaveModal')?.classList.add('open');
+  }, true);
+}
+
 document.getElementById('stayBtn')?.addEventListener('click', ()=>{
   document.getElementById('leaveModal')?.classList.remove('open');
 });
 document.getElementById('leaveBtn')?.addEventListener('click', ()=>{
   document.getElementById('leaveModal')?.classList.remove('open');
   allowLeave = true;
+  // detach beforeunload for this navigation
+  window.onbeforeunload = null;
   window.location.href = pendingNav;
 });
 

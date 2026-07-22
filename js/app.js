@@ -845,6 +845,27 @@ document.getElementById('shareX')?.addEventListener('click', ()=> shareLinkOrIma
 
 document.getElementById('downloadBtn')?.addEventListener('click', ()=>exportPNG());
 
+// Remix = deep-copy current exclusive ranking into an editable personal draft
+let remixFlag = false;
+document.getElementById('remixBtn')?.addEventListener('click', ()=>{
+  if(BLANK_MODE){
+    showToast('Remix is for Exclusive templates');
+    return;
+  }
+  // Deep clone so further edits don't alias source data
+  state.tiers = JSON.parse(JSON.stringify(state.tiers));
+  state.assignment = JSON.parse(JSON.stringify(state.assignment));
+  const used = new Set();
+  Object.values(state.assignment).forEach(arr => arr.forEach(id => used.add(id)));
+  state.pool = freshPool().filter(id => !used.has(id));
+  remixFlag = true;
+  window.__rankmeFromCabinet = true; // don't let hash wipe state on nav quirks
+  render();
+  if(!BLANK_MODE) renderFactionFilters();
+  renderPortals();
+  showToast('Remixed — edit freely, then Save to your account');
+});
+
 document.getElementById('saveAccountBtn')?.addEventListener('click', async ()=>{
   if(BLANK_MODE){
     showToast('Account save is for Exclusive templates only');
@@ -861,9 +882,11 @@ document.getElementById('saveAccountBtn')?.addEventListener('click', async ()=>{
       location.href = 'account.html';
       return;
     }
-    const title = (document.querySelector('.hero .desc b')?.textContent || 'SF Duel') + ' list';
+    const base = document.querySelector('.hero .desc b')?.textContent || 'SF Duel';
+    const title = remixFlag ? ('Remix · ' + base) : (base + ' list');
     const payload = { tiers: state.tiers, assignment: state.assignment };
     await saveExclusiveTierlist({ title, templateId: 'sf-duel', payload });
+    remixFlag = false;
     showToast('Saved to your account');
   }catch(e){
     console.error(e);
@@ -882,9 +905,10 @@ async function exportPNGBlob(){
 
 async function exportPNG(returnBlobOnly, blobCb){
   if(!returnBlobOnly) showToast('Exporting...');
-  const scale = 2;
-  // Always high-quality export (UI Size only affects on-screen preview)
-  const cardW = 96;
+  const scale = 2; // pixel density / quality
+  // Layout follows Size slider; scale=2 keeps sharp PNG
+  const uiSize = parseInt(document.getElementById('sizeSlider')?.value || '64', 10);
+  const cardW = Math.round(Math.min(140, Math.max(48, uiSize * 1.15)));
   const cardH = Math.round(cardW * 1.35);
   const cardGap = 8;
   const padX = 14;
@@ -1111,14 +1135,17 @@ function hasProgress(){
   return Object.values(state.assignment).some(arr=>arr.length>0);
 }
 
+let allowLeave = false;
+// Browser dialog only for tab close / refresh (not when our modal already confirmed)
 window.addEventListener('beforeunload', (e)=>{
-  if(hasProgress()){ e.preventDefault(); e.returnValue=''; }
+  if(allowLeave || !hasProgress()) return;
+  e.preventDefault();
+  e.returnValue = '';
 });
 
 document.querySelectorAll('nav.main a, .brand').forEach(a=>{
   a.addEventListener('click', (e)=>{
     const href = a.getAttribute('href') || '#';
-    // Don't show leave modal when staying on the same page
     if(href === '#' || href === '' || href === location.pathname || href === location.href){
       e.preventDefault();
       return;
@@ -1126,16 +1153,17 @@ document.querySelectorAll('nav.main a, .brand').forEach(a=>{
     if(hasProgress()){
       e.preventDefault();
       pendingNav = href;
-      document.getElementById('leaveModal').classList.add('open');
+      document.getElementById('leaveModal')?.classList.add('open');
     }
   });
 });
 let pendingNav = '#';
-document.getElementById('stayBtn').addEventListener('click', ()=>{
-  document.getElementById('leaveModal').classList.remove('open');
+document.getElementById('stayBtn')?.addEventListener('click', ()=>{
+  document.getElementById('leaveModal')?.classList.remove('open');
 });
-document.getElementById('leaveBtn').addEventListener('click', ()=>{
-  document.getElementById('leaveModal').classList.remove('open');
+document.getElementById('leaveBtn')?.addEventListener('click', ()=>{
+  document.getElementById('leaveModal')?.classList.remove('open');
+  allowLeave = true;
   window.location.href = pendingNav;
 });
 

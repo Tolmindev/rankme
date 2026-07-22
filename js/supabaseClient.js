@@ -116,3 +116,22 @@ async function loadShortLink(code) {
   if (error || !data) return null;
   return data.payload;
 }
+
+// Show nickname on Login button across all pages
+(async function updateNavAuth(){
+  try{
+    if(typeof supabase === 'undefined') return;
+    await initSupabase();
+    const user = await getSessionUser();
+    const btn = document.getElementById('loginBtn');
+    if(!btn) return;
+    if(user){
+      const name = user.user_metadata?.full_name || user.user_metadata?.custom_claims?.global_name || user.user_metadata?.name || user.email || 'Account';
+      btn.textContent = String(name).split(' ')[0] || 'Account';
+      btn.onclick = ()=>{ location.href = 'account.html'; };
+    } else {
+      btn.textContent = 'Login';
+      btn.onclick = ()=>{ location.href = 'account.html'; };
+    }
+  }catch(e){}
+})();

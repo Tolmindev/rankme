@@ -100,13 +100,17 @@ async function loadFromHashAsync(){
 
 function sanitizeState(){
   // Coerce ids to numbers, drop unknowns, ensure each card in at most one tier
+  // Custom uploads (state.customCards) are valid even without CARD_META
   const seen = new Set();
   const next = {};
   (state.tiers||[]).forEach(tier=>{
     const arr = [];
     (state.assignment[tier.id]||[]).forEach(cid=>{
       const id = +cid;
-      if(!id || !CARD_META[id]) return;
+      if(!id) return;
+      const isStock = !!CARD_META[id];
+      const isCustom = !!(state.customCards && state.customCards[id]);
+      if(!isStock && !isCustom) return;
       if(seen.has(id)) return;
       seen.add(id);
       arr.push(id);
@@ -114,12 +118,11 @@ function sanitizeState(){
     next[tier.id] = arr;
   });
   state.assignment = next;
-  // rebuild pool from leftovers
+  // rebuild pool: stock leftovers + unplaced custom
   state.pool = [];
   for(let i=1;i<=N_CARDS;i++){
     if(!seen.has(i)) state.pool.push(i);
   }
-  // keep custom cards that are not placed
   Object.keys(state.customCards||{}).forEach(k=>{
     const id = +k;
     if(!seen.has(id) && !state.pool.includes(id)) state.pool.push(id);

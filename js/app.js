@@ -727,6 +727,11 @@ function setCardSize(px){
   const y0 = window.scrollY || document.documentElement.scrollTop;
 
   document.documentElement.style.setProperty('--card-w', px + 'px');
+  if(CARD_SHAPE === 'square'){
+    document.documentElement.style.setProperty('--card-h', px + 'px');
+  } else {
+    document.documentElement.style.removeProperty('--card-h');
+  }
 
   document.querySelectorAll('.tier-row').forEach(row=>{
     if(px < 58) row.classList.add('compact-side');

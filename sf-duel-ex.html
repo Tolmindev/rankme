@@ -3,17 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
-<title>Street Fighter: Duel Tier List - RankMe</title>
+<title>Street Fighter: Duel EX-Move Tier List - RankMe</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/supabaseClient.js"></script>
 <meta name="description" content="Create tier lists in seconds. Drag, drop, share. Free, no sign-up.">
-<meta property="og:title" content="Street Fighter: Duel Tier List - RankMe">
-<meta property="og:description" content="Drag, rank, share - build your Street Fighter: Duel tier list on RankMe.">
-<meta property="og:image" content="https://rankme.lol/assets/brand/Share_RankMe.png">
+<meta property="og:title" content="Street Fighter: Duel EX-Move Tier List - RankMe">
+<meta property="og:description" content="Rank the EX Moves from Street Fighter: Duel. Drag, drop, share on RankMe.">
+<meta property="og:image" content="https://rankme.lol/assets/brand/SFD_EX_Cover.webp">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://rankme.lol/assets/brand/Share_RankMe.png">
+<meta name="twitter:image" content="https://rankme.lol/assets/brand/SFD_EX_Cover.webp">
 <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -586,6 +586,31 @@ footer.site .fine{ color:var(--text-dim); font-size:.75rem; font-weight:600; }
   .pool-wrap{ padding-top:14px; padding-bottom:20px; }
   footer.site{ padding-bottom:40px; }
 }
+
+/* EX-Move: square cards, no portrait frame */
+body.card-square{
+  --card-w: 64px;
+  --card-h: 64px;
+}
+body.card-square .card{
+  border-radius: 12px;
+  background: rgba(255,255,255,0.04);
+  box-shadow: 0 0 0 1px rgba(200,160,240,0.15);
+}
+body.card-square .card img{
+  object-fit: contain;
+  background: rgba(0,0,0,0.25);
+}
+body.card-square .hero img.title-logo.ex-logo{
+  width: min(520px, 92vw);
+  border-radius: 14px;
+  filter: drop-shadow(0 12px 40px rgba(160,110,220,.35));
+}
+body.no-factions .faction-filters{ display:none !important; }
+@media (max-width:720px){
+  body.card-square{ --card-w: 52px; --card-h: 52px; }
+}
+
 </style>
 </head>
 <body>
@@ -600,7 +625,7 @@ footer.site .fine{ color:var(--text-dim); font-size:.75rem; font-weight:600; }
 </header>
 
 <section class="hero">
-  <img class="title-logo" src="assets/brand/SF_Duel_Tier_logo.svg" alt="Street Fighter Duel Tier List">
+  <img class="title-logo ex-logo" src="assets/brand/SFD_EX_Cover.webp" alt="Street Fighter Duel EX-Move">
   <p class="desc">
     <b>Street Fighter: Duel</b> - RankMe exclusive. Drag fighters into tiers, customize rows, share with one link.
   </p>
@@ -702,6 +727,8 @@ footer.site .fine{ color:var(--text-dim); font-size:.75rem; font-weight:600; }
 
 <canvas id="exportCanvas" style="display:none"></canvas>
 
+<script>window.RANKME_TEMPLATE = {"id": "sf-duel-ex", "title": "Street Fighter: Duel EX-Move", "footerLabel": "SF Duel EX-Move", "exportName": "rankme-sf-duel-ex-move.png", "cardShape": "square", "cardPath": "assets/ex-moves/", "noFactions": true, "cards": [{"id": 1, "file": "1_Chains_of_Guilt.png", "name": "Chains of Guilt", "faction": "EX"}, {"id": 2, "file": "2_Natures_Advent.png", "name": "Natures Advent", "faction": "EX"}, {"id": 3, "file": "3_Toxic_Love.png", "name": "Toxic Love", "faction": "EX"}, {"id": 4, "file": "4_Tanuki_Whirl.png", "name": "Tanuki Whirl", "faction": "EX"}, {"id": 5, "file": "5_Crimson_Lotus_Flame.png", "name": "Crimson Lotus Flame", "faction": "EX"}, {"id": 6, "file": "6_Crazy_Potato.png", "name": "Crazy Potato", "faction": "EX"}, {"id": 7, "file": "7_Breath_of_Rage.png", "name": "Breath of Rage", "faction": "EX"}, {"id": 8, "file": "8_Void_Protection.png", "name": "Void Protection", "faction": "EX"}, {"id": 9, "file": "9_Summer_Waves.png", "name": "Summer Waves", "faction": "EX"}, {"id": 10, "file": "10_Zanku_Hodosho.png", "name": "Zanku Hodosho", "faction": "EX"}, {"id": 11, "file": "11_Doomsday_Jubilation.png", "name": "Doomsday Jubilation", "faction": "EX"}, {"id": 12, "file": "12_Deadly_Web.png", "name": "Deadly Web", "faction": "EX"}, {"id": 13, "file": "13_Abyss_of_Desire.png", "name": "Abyss of Desire", "faction": "EX"}, {"id": 14, "file": "14_Yin-Yang_Power.png", "name": "Yin-Yang Power", "faction": "EX"}, {"id": 15, "file": "15_Messatsu_Konhado.png", "name": "Messatsu Konhado", "faction": "EX"}, {"id": 16, "file": "16_Lethal_Radiance.png", "name": "Lethal Radiance", "faction": "EX"}, {"id": 17, "file": "17_Hundred_Kicks_Symphony.png", "name": "Hundred Kicks Symphony", "faction": "EX"}, {"id": 18, "file": "18_Agile_Melody.png", "name": "Agile Melody", "faction": "EX"}, {"id": 19, "file": "19_Bushin_Descends.png", "name": "Bushin Descends", "faction": "EX"}, {"id": 20, "file": "20_Flame_Demon_Descends.png", "name": "Flame Demon Descends", "faction": "EX"}, {"id": 21, "file": "21_Gentle_Wave_Guard.png", "name": "Gentle Wave Guard", "faction": "EX"}, {"id": 22, "file": "22_Vigilante.png", "name": "Vigilante", "faction": "EX"}, {"id": 23, "file": "23_Scarlet_Dragon.png", "name": "Scarlet Dragon", "faction": "EX"}, {"id": 24, "file": "24_He_of_Thousand_Hits.png", "name": "He of Thousand Hits", "faction": "EX"}, {"id": 25, "file": "25_Satsui_no_Iki.png", "name": "Satsui no Iki", "faction": "EX"}, {"id": 26, "file": "26_Saber_Onslaught.png", "name": "Saber Onslaught", "faction": "EX"}, {"id": 27, "file": "27_Daily_Income.png", "name": "Daily Income", "faction": "EX"}, {"id": 28, "file": "28_Above_All.png", "name": "Above All", "faction": "EX"}, {"id": 29, "file": "29_Tears_of_Blood.png", "name": "Tears of Blood", "faction": "EX"}, {"id": 30, "file": "30_Elegant_Follow-Up.png", "name": "Elegant Follow-Up", "faction": "EX"}, {"id": 31, "file": "31_Soul-Draining_Tarot.png", "name": "Soul-Draining Tarot", "faction": "EX"}, {"id": 32, "file": "32_Furious_Roar.png", "name": "Furious Roar", "faction": "EX"}, {"id": 33, "file": "33_Soul_Exterminator.png", "name": "Soul Exterminator", "faction": "EX"}, {"id": 34, "file": "34_Thunder_Blessing.png", "name": "Thunder Blessing", "faction": "EX"}, {"id": 35, "file": "35_Death_Descents.png", "name": "Death Descents", "faction": "EX"}]};
+</script>
 <script src="js/app.js"></script>
 </body>
 </html>

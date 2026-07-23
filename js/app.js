@@ -1123,7 +1123,33 @@ async function exportPNG(returnBlobOnly, blobCb){
     for(const cid of ids){
       const img = imgCache[Number(cid)] || imgCache[cid];
       if(img){
-        try { ctx.drawImage(img, x, cy, cardW, cardH); } catch(e){}
+        try {
+          if(CARD_SHAPE === 'square'){
+            // Match on-screen underlay: dark plate + gold rim + icon
+            const r = Math.max(6, Math.round(cardW * 0.14));
+            ctx.save();
+            // plate
+            ctx.beginPath();
+            if(ctx.roundRect) ctx.roundRect(x, cy, cardW, cardH, r);
+            else { ctx.rect(x, cy, cardW, cardH); }
+            const bg = ctx.createLinearGradient(x, cy, x+cardW, cy+cardH);
+            bg.addColorStop(0, 'rgba(40,32,60,0.95)');
+            bg.addColorStop(1, 'rgba(18,14,28,0.98)');
+            ctx.fillStyle = bg;
+            ctx.fill();
+            // gold rim
+            ctx.strokeStyle = 'rgba(230,200,140,0.75)';
+            ctx.lineWidth = Math.max(1.5, cardW * 0.03);
+            ctx.stroke();
+            // soft glow
+            ctx.shadowColor = 'rgba(200,160,255,0.35)';
+            ctx.shadowBlur = cardW * 0.12;
+            ctx.drawImage(img, x, cy, cardW, cardH);
+            ctx.restore();
+          } else {
+            ctx.drawImage(img, x, cy, cardW, cardH);
+          }
+        } catch(e){}
       }
       col++;
       if(col >= cardsPerLine){

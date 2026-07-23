@@ -586,6 +586,25 @@ footer.site .fine{ color:var(--text-dim); font-size:.75rem; font-weight:600; }
   .pool-wrap{ padding-top:14px; padding-bottom:20px; }
   footer.site{ padding-bottom:40px; }
 }
+
+.hero img.title-logo.cover-card{
+  width: min(480px, 90vw);
+  height: auto;
+  border-radius: 16px;
+  object-fit: cover;
+  border: 2px solid transparent;
+  background:
+    linear-gradient(#1a1728, #1a1728) padding-box,
+    linear-gradient(90deg,#ff6b6b,#f7c948,#7bed9f,#70a1ff,#a29bfe,#ff6b81,#ff6b6b) border-box;
+  background-size: 100% 100%, 200% 100%;
+  animation: exclusiveRgb 5s linear infinite alternate;
+  box-shadow: 0 0 28px rgba(180,120,255,.28);
+  filter: none;
+}
+@keyframes exclusiveRgb{
+  0%{ background-position: 0 0, 0% 50%; }
+  100%{ background-position: 0 0, 100% 50%; }
+}
 </style>
 </head>
 <body>
@@ -600,7 +619,7 @@ footer.site .fine{ color:var(--text-dim); font-size:.75rem; font-weight:600; }
 </header>
 
 <section class="hero">
-  <img class="title-logo" src="assets/brand/SF_Duel_Tier_logo.svg" alt="Street Fighter Duel Tier List">
+  <img class="title-logo cover-card" src="assets/brand/SF_Cover_1.webp" alt="Street Fighter: Duel">
   <p class="desc">
     <b>Street Fighter: Duel</b> - RankMe exclusive. Drag fighters into tiers, customize rows, share with one link.
   </p>

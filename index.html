@@ -38,7 +38,7 @@ header.site{
   background:rgba(14,12,20,0.75); backdrop-filter:blur(14px); overflow:visible;
 }
 .brand{ display:flex; align-items:center; text-decoration:none; color:inherit; padding:10px 18px; margin:-10px -18px; overflow:visible; }
-.brand img{ height:34px; display:block; transition:filter .4s, transform .3s; }
+.brand img{ height:36px; display:block; transition:filter .4s, transform .3s; }
 .brand:hover img{
   transform:scale(1.03);
   filter: drop-shadow(0 0 3px rgba(230,190,255,1)) drop-shadow(0 0 10px rgba(200,150,255,.9))
@@ -151,17 +151,30 @@ footer.site{
 
 @media (max-width:720px){
   header.site{ padding:12px 14px; }
-  .brand img{ height:26px; }
+  .brand img{ height:28px; }
   nav.main{ gap:12px; }
   nav.main a{ font-size:.78rem; }
   .page{ padding:28px 14px 60px; }
+}
+
+/* Epic exclusive: subtle parallax inside cover */
+.tl-card.epic .cover{
+  perspective: 600px;
+}
+.tl-card.epic .cover img.cover-art{
+  transform: scale(1.1) translate3d(0,0,0);
+  transition: transform .15s ease-out;
+  will-change: transform;
+}
+.tl-card.epic:hover .cover img.cover-art{
+  /* base scale kept; JS overrides translate */
 }
 </style>
 </head>
 <body>
 
 <header class="site">
-  <a class="brand" href="index.html"><img src="assets/brand/RankMe_logo.svg" alt="RankMe"></a>
+  <a class="brand" href="index.html"><img src="assets/brand/favicon.svg" alt="RankMe"></a>
   <nav class="main">
     <a href="index.html" class="active">Browse</a>
     <a href="create.html">Create</a>
@@ -180,7 +193,7 @@ footer.site{
 
   <h2 class="section-title">Exclusive <span class="badge">OFFICIAL</span></h2>
   <div class="grid" style="margin-bottom:40px">
-    <a class="tl-card exclusive" href="sf-duel.html">
+    <a class="tl-card exclusive epic" href="sf-duel.html">
       <div class="cover">
         <span class="tag">Exclusive</span>
         <img class="cover-art" src="assets/brand/SF_Cover_1.webp" alt="Street Fighter: Duel">
@@ -215,5 +228,25 @@ footer.site{
   RANKME.LOL - tier lists in seconds
 </footer>
 
+
+<script>
+(function(){
+  function bindParallax(card){
+    const img = card.querySelector('.cover img.cover-art, img.cover-card, img.parallax-img');
+    if(!img) return;
+    const max = 10; // px
+    const onMove = (e)=>{
+      const r = card.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width - 0.5;
+      const py = (e.clientY - r.top) / r.height - 0.5;
+      img.style.transform = 'scale(1.12) translate3d(' + (-px*max*2).toFixed(1) + 'px,' + (-py*max*2).toFixed(1) + 'px,0)';
+    };
+    const onLeave = ()=>{ img.style.transform = 'scale(1.1) translate3d(0,0,0)'; };
+    card.addEventListener('pointermove', onMove);
+    card.addEventListener('pointerleave', onLeave);
+  }
+  document.querySelectorAll('.tl-card.epic, .parallax-host').forEach(bindParallax);
+})();
+</script>
 </body>
 </html>

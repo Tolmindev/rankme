@@ -556,7 +556,7 @@ footer.site .fine{ color:var(--text-dim); font-size:.75rem; font-weight:600; }
 @media (max-width: 720px){
   header.site{ padding:12px 14px; gap:10px; }
   .brand{ padding:4px 6px; margin:-4px -6px; }
-  .brand img{ height:24px; }
+  .brand img{ height:26px; }
   nav.main{ gap:10px; flex-wrap:wrap; justify-content:flex-end; }
   nav.main a{ font-size:.78rem; }
   nav.main .search-ico{ width:16px; height:16px; }
@@ -605,12 +605,40 @@ footer.site .fine{ color:var(--text-dim); font-size:.75rem; font-weight:600; }
   0%{ background-position: 0 0, 0% 50%; }
   100%{ background-position: 0 0, 100% 50%; }
 }
+
+.hero .parallax-host{
+  display:inline-block;
+  max-width:min(480px, 90vw);
+  border-radius:16px;
+  overflow:hidden;
+  border: 2px solid transparent;
+  background:
+    linear-gradient(#1a1728, #1a1728) padding-box,
+    linear-gradient(90deg,#ff6b6b,#f7c948,#7bed9f,#70a1ff,#a29bfe,#ff6b81,#ff6b6b) border-box;
+  background-size: 100% 100%, 200% 100%;
+  animation: exclusiveRgb 5s linear infinite alternate;
+  box-shadow: 0 0 28px rgba(180,120,255,.28);
+  line-height:0;
+}
+.hero .parallax-host img.cover-card{
+  width:100%;
+  height:auto;
+  display:block;
+  border:none;
+  border-radius:0;
+  background:none;
+  animation:none;
+  box-shadow:none;
+  transform: scale(1.1);
+  transition: transform .15s ease-out;
+  will-change: transform;
+}
 </style>
 </head>
 <body>
 
 <header class="site">
-  <a class="brand" href="index.html"><img src="assets/brand/RankMe_logo.svg" alt="RankMe"></a>
+  <a class="brand" href="index.html"><img src="assets/brand/favicon.svg" alt="RankMe"></a>
   <nav class="main">
     <a href="index.html">Browse</a>
     <a href="create.html">Create</a>
@@ -619,7 +647,7 @@ footer.site .fine{ color:var(--text-dim); font-size:.75rem; font-weight:600; }
 </header>
 
 <section class="hero">
-  <img class="title-logo cover-card" src="assets/brand/SF_Cover_1.webp" alt="Street Fighter: Duel">
+  <div class="parallax-host"><img class="title-logo cover-card parallax-img" src="assets/brand/SF_Cover_1.webp" alt="Street Fighter: Duel"></div>
   <p class="desc">
     <b>Street Fighter: Duel</b> - RankMe exclusive. Drag fighters into tiers, customize rows, share with one link.
   </p>
@@ -722,5 +750,25 @@ footer.site .fine{ color:var(--text-dim); font-size:.75rem; font-weight:600; }
 <canvas id="exportCanvas" style="display:none"></canvas>
 
 <script src="js/app.js"></script>
+
+<script>
+(function(){
+  function bindParallax(host){
+    const img = host.querySelector('img');
+    if(!img) return;
+    const max = 12;
+    host.addEventListener('pointermove', (e)=>{
+      const r = host.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width - 0.5;
+      const py = (e.clientY - r.top) / r.height - 0.5;
+      img.style.transform = 'scale(1.14) translate3d(' + (-px*max*2).toFixed(1) + 'px,' + (-py*max*2).toFixed(1) + 'px,0)';
+    });
+    host.addEventListener('pointerleave', ()=>{
+      img.style.transform = 'scale(1.1) translate3d(0,0,0)';
+    });
+  }
+  document.querySelectorAll('.parallax-host').forEach(bindParallax);
+})();
+</script>
 </body>
 </html>

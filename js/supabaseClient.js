@@ -129,8 +129,10 @@ function updateNavAuth(){
       if(user){
         const name = user.user_metadata?.full_name || user.user_metadata?.custom_claims?.global_name || user.user_metadata?.name || user.email || 'Account';
         btn.textContent = String(name).split(' ')[0] || 'Account';
+        btn.classList.add('logged-in');
       } else {
         btn.textContent = 'Account';
+        btn.classList.remove('logged-in');
       }
       btn.onclick = ()=>{ location.href = 'account.html'; };
     }catch(e){}

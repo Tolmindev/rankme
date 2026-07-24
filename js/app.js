@@ -1163,28 +1163,36 @@ async function exportPNG(returnBlobOnly, blobCb){
     y += rh;
   }
 
-  // Footer - gradient bar: RANKME.LOL | logo | title + badge
+  // Footer - epic minimal bar
   const footY = y;
-  const fg = ctx.createLinearGradient(0, footY, width, footY + footH);
-  fg.addColorStop(0, '#2a2438');
-  fg.addColorStop(0.5, '#3a3350');
-  fg.addColorStop(1, '#2a2438');
-  ctx.fillStyle = fg;
-  ctx.fillRect(0, footY, width, footH);
-  // top accent line
-  const lineG = ctx.createLinearGradient(0, footY, width, footY);
-  lineG.addColorStop(0, 'rgba(183,155,240,0)');
-  lineG.addColorStop(0.3, 'rgba(183,155,240,0.55)');
-  lineG.addColorStop(0.7, 'rgba(230,169,232,0.55)');
-  lineG.addColorStop(1, 'rgba(183,155,240,0)');
-  ctx.fillStyle = lineG;
-  ctx.fillRect(0, footY, width, 2);
-
   const midY = footY + footH / 2;
+  // deep base
+  ctx.fillStyle = '#161222';
+  ctx.fillRect(0, footY, width, footH);
+  // soft horizontal brand wash
+  const wash = ctx.createLinearGradient(0, footY, width, footY);
+  wash.addColorStop(0, 'rgba(150,110,230,0.16)');
+  wash.addColorStop(0.5, 'rgba(200,160,240,0.06)');
+  wash.addColorStop(1, 'rgba(130,150,230,0.14)');
+  ctx.fillStyle = wash;
+  ctx.fillRect(0, footY, width, footH);
+  // gentle center bloom
+  const bloom = ctx.createRadialGradient(width/2, midY, 8, width/2, midY, Math.max(120, width*0.22));
+  bloom.addColorStop(0, 'rgba(220,190,255,0.14)');
+  bloom.addColorStop(1, 'rgba(220,190,255,0)');
+  ctx.fillStyle = bloom;
+  ctx.fillRect(0, footY, width, footH);
+  // thin top edge glow
+  const edge = ctx.createLinearGradient(0, footY, width, footY);
+  edge.addColorStop(0, 'rgba(183,155,240,0)');
+  edge.addColorStop(0.5, 'rgba(220,190,255,0.45)');
+  edge.addColorStop(1, 'rgba(183,155,240,0)');
+  ctx.fillStyle = edge;
+  ctx.fillRect(0, footY, width, 1.5);
 
-  // Left: RANKME.LOL bold
-  const titleGrad = ctx.createLinearGradient(28, midY, 220, midY);
-  titleGrad.addColorStop(0, '#e8d4ff');
+  // Left: RANKME.LOL
+  const titleGrad = ctx.createLinearGradient(28, midY, 240, midY);
+  titleGrad.addColorStop(0, '#f0e6ff');
   titleGrad.addColorStop(1, '#c4b5e8');
   ctx.fillStyle = titleGrad;
   ctx.font = '900 22px Montserrat, system-ui, sans-serif';
@@ -1207,34 +1215,33 @@ async function exportPNG(returnBlobOnly, blobCb){
     } catch(e2) {}
   }
 
-  // Right: tier name + exclusive badge
+  // Right: title + exclusive badge
   const rightLabel = BLANK_MODE ? 'Custom Tier List' : (TEMPLATE_FOOTER || TEMPLATE_TITLE || 'RankMe');
-  ctx.font = '800 15px Montserrat, system-ui, sans-serif';
+  ctx.font = '800 14px Montserrat, system-ui, sans-serif';
   ctx.textAlign = 'right';
   ctx.textBaseline = 'middle';
   ctx.fillStyle = '#f0eafc';
-  ctx.fillText(rightLabel, width - 36, midY - (BLANK_MODE ? 0 : 12));
+  ctx.fillText(rightLabel, width - 36, midY - (BLANK_MODE ? 0 : 11));
 
   if(!BLANK_MODE){
     const badge = 'EXCLUSIVE';
     ctx.font = '800 10px Montserrat, system-ui, sans-serif';
-    const bw = ctx.measureText(badge).width + 28;
-    const bh = 22;
+    const bw = ctx.measureText(badge).width + 26;
+    const bh = 20;
     const bx = width - 36 - bw;
-    const by = midY + 6;
-    // pill
+    const by = midY + 5;
     ctx.beginPath();
-    if(ctx.roundRect) ctx.roundRect(bx, by, bw, bh, 11);
-    else { ctx.rect(bx, by, bw, bh); }
-    ctx.strokeStyle = 'rgba(200,170,255,0.7)';
+    if(ctx.roundRect) ctx.roundRect(bx, by, bw, bh, 10);
+    else ctx.rect(bx, by, bw, bh);
+    const badgeStroke = ctx.createLinearGradient(bx, by, bx+bw, by);
+    badgeStroke.addColorStop(0, 'rgba(183,155,240,0.85)');
+    badgeStroke.addColorStop(1, 'rgba(230,169,232,0.85)');
+    ctx.strokeStyle = badgeStroke;
     ctx.lineWidth = 1.5;
     ctx.stroke();
-    const bg = ctx.createLinearGradient(bx, by, bx+bw, by);
-    bg.addColorStop(0, 'rgba(183,155,240,0.15)');
-    bg.addColorStop(1, 'rgba(230,169,232,0.15)');
-    ctx.fillStyle = bg;
+    ctx.fillStyle = 'rgba(180,150,230,0.12)';
     ctx.fill();
-    ctx.fillStyle = '#d4c4f0';
+    ctx.fillStyle = '#e0d4f8';
     ctx.textAlign = 'center';
     ctx.fillText(badge, bx + bw/2, by + bh/2 + 1);
   }

@@ -25,7 +25,7 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      inkscape:zoom="1.0592242"
-     inkscape:cx="564.0921"
+     inkscape:cx="564.56414"
      inkscape:cy="-17.465613"
      inkscape:window-width="2560"
      inkscape:window-height="1369"
@@ -73,17 +73,11 @@
          id="path2391"
          style="fill:url(#linearGradient2393);stroke-width:0.13079"
          d="m 125.30921,240.24981 -12.86925,21.33756 -1.46958,-8.67234 h 2.27375 l 3.54086,-6.13611 -6.6595,1.15943 v -0.0142 l -3.10345,0.5502 -1.97978,0.34448 0.027,0.0227 2.84906,16.81022 h 5.21192 v -2.8e-4 h 2.42527 l 9.75402,-16.17304 9.75431,16.17304 h 5.56888 l -4.3e-4,-4.3e-4 h 2.0703 l 2.84892,-16.81007 0.027,-0.0227 -1.97978,-0.34477 -3.10331,-0.54992 v 0.0142 l -6.65993,-1.15929 3.54143,6.13554 h 2.27375 l -1.47071,8.67503 z m 4.2e-4,17.81883 -4.57289,7.58199 h 9.14565 z" />
-      <text
-         xml:space="preserve"
-         style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:13.447px;font-family:Montserrat;-inkscape-font-specification:'Montserrat Heavy';letter-spacing:0.478191px;writing-mode:lr-tb;direction:ltr;fill:#f9f9f9;fill-opacity:1;stroke-width:0.159397"
-         x="148.08589"
-         y="265.65222"
-         id="text2391"><tspan
-           sodipodi:role="line"
-           id="tspan2391"
-           style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:13.447px;font-family:Montserrat;-inkscape-font-specification:'Montserrat Heavy';fill:#f9f9f9;fill-opacity:1;stroke-width:0.159397"
-           x="148.08589"
-           y="265.65222">RANKME</tspan></text>
+      <path
+         d="m 148.85237,265.65222 v -9.4129 h 4.39717 q 2.16497,0 3.29451,0.95474 1.12955,0.95474 1.12955,2.59527 0,1.08921 -0.52443,1.88258 -0.52443,0.77993 -1.49262,1.19678 -0.95473,0.41686 -2.27254,0.41686 h -2.77008 l 1.41193,-1.30436 v 3.67103 z m 5.63429,0 -2.31288,-3.42898 h 3.36175 l 2.33978,3.42898 z m -2.4608,-3.32141 -1.41193,-1.43883 h 2.56837 q 0.65891,0 0.96819,-0.29583 0.32273,-0.29583 0.32273,-0.80682 0,-0.51099 -0.32273,-0.80682 -0.30928,-0.29583 -0.96819,-0.29583 h -2.56837 l 1.41193,-1.43883 z m 6.30076,3.32141 4.11478,-9.4129 h 3.1197 l 4.11478,9.4129 h -3.28106 l -3.03903,-7.90683 h 1.23713 l -3.03902,7.90683 z m 2.44735,-1.64053 0.80682,-2.28599 h 4.32993 l 0.80682,2.28599 z m 9.89109,1.64053 v -9.4129 h 2.60872 l 4.78713,5.72842 h -1.21023 v -5.72842 h 3.09281 v 9.4129 h -2.60872 l -4.78713,-5.72842 h 1.21023 v 5.72842 z m 14.1269,-2.01705 -0.17481,-3.48277 3.55001,-3.91308 h 3.45588 l -3.98031,4.38372 -1.76156,1.8019 z m -2.83731,2.01705 v -9.4129 h 3.1197 v 9.4129 z m 6.18562,0 -2.77009,-3.65758 2.0574,-2.17842 4.38372,5.836 z m 4.57952,0 v -9.4129 h 2.60871 l 3.76516,6.14528 h -1.37159 l 3.65758,-6.14528 h 2.60872 l 0.0269,9.4129 h -2.89111 l -0.0269,-5.05607 h 0.4572 l -2.50115,4.20891 h -1.39848 l -2.60872,-4.20891 h 0.56477 v 5.05607 z m 13.30663,0 v -9.4129 h 7.65134 v 2.39357 h -4.53164 v 4.62577 h 4.70645 v 2.39356 z m 2.90455,-3.63069 v -2.28599 h 4.19547 v 2.28599 z"
+         id="text2391"
+         style="font-weight:900;font-size:13.447px;font-family:Montserrat;-inkscape-font-specification:'Montserrat Heavy';letter-spacing:0.478191px;fill:#f9f9f9;stroke-width:0.159397"
+         aria-label="RANKME" />
     </g>
   </g>
 </svg>

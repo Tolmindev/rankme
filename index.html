@@ -38,7 +38,7 @@ header.site{
   background:rgba(14,12,20,0.75); backdrop-filter:blur(14px); overflow:visible;
 }
 .brand{ display:flex; align-items:center; text-decoration:none; color:inherit; padding:10px 18px; margin:-10px -18px; overflow:visible; }
-.brand img{ height:36px; display:block; transition:filter .4s, transform .3s; }
+.brand img{ height:34px; display:block; transition:filter .4s, transform .3s; }
 .brand:hover img{
   transform:scale(1.03);
   filter: drop-shadow(0 0 3px rgba(230,190,255,1)) drop-shadow(0 0 10px rgba(200,150,255,.9))
@@ -145,7 +145,7 @@ footer.site .fine{ color:var(--text-dim); font-size:.75rem; font-weight:600; }
 
 @media (max-width:720px){
   header.site{ padding:12px 14px; }
-  .brand img{ height:28px; }
+  .brand img{ height:34px; }
   nav.main{ gap:12px; }
   nav.main a{ font-size:.78rem; }
   .page{ padding:28px 14px 60px; }
@@ -200,38 +200,11 @@ nav.main a.cta-nav:hover{ filter:brightness(1.08); transform:translateY(-1px); c
   100%{ background-position: 0 0, 200% 50%; }
 }
 
-/* Create: soft magic dust */
 nav.main a.cta-nav{
   position: relative;
   overflow: visible;
 }
-nav.main a.cta-nav::before,
-nav.main a.cta-nav::after{
-  content:"";
-  position:absolute;
-  width:5px; height:5px;
-  border-radius:50%;
-  background: rgba(255,255,255,.9);
-  box-shadow: 0 0 6px 2px rgba(230,180,255,.8);
-  pointer-events:none;
-  opacity:0;
-  animation: magicDust 3.8s ease-in-out infinite;
-}
-nav.main a.cta-nav::before{
-  top: 2px; right: 10px;
-  animation-delay: 0s;
-}
-nav.main a.cta-nav::after{
-  top: 8px; right: 22px;
-  width:3px; height:3px;
-  animation-delay: 1.6s;
-}
-@keyframes magicDust{
-  0%{ opacity:0; transform: translate(0,0) scale(.4); }
-  15%{ opacity:.9; }
-  55%{ opacity:.5; transform: translate(10px,-16px) scale(1); }
-  100%{ opacity:0; transform: translate(18px,-28px) scale(.2); }
-}
+
 
 </style>
 </head>

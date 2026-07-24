@@ -1066,18 +1066,14 @@ async function exportPNG(returnBlobOnly, blobCb){
   const ctx = canvas.getContext('2d');
   ctx.setTransform(scale, 0, 0, scale, 0, 0);
 
-  // Background + soft glow like site
+  // Clean dark background (no dual flares)
   ctx.fillStyle = '#0e0c14';
   ctx.fillRect(0, 0, width, height);
-  const g1 = ctx.createRadialGradient(width*0.18, 0, 0, width*0.18, 0, height*0.55);
-  g1.addColorStop(0, 'rgba(160,120,220,0.14)');
+  // single soft vignette from top center
+  const g1 = ctx.createRadialGradient(width*0.5, 0, 0, width*0.5, 0, height*0.45);
+  g1.addColorStop(0, 'rgba(160,120,220,0.08)');
   g1.addColorStop(1, 'rgba(160,120,220,0)');
   ctx.fillStyle = g1;
-  ctx.fillRect(0, 0, width, height);
-  const g2 = ctx.createRadialGradient(width*0.85, height*0.12, 0, width*0.85, height*0.12, height*0.4);
-  g2.addColorStop(0, 'rgba(120,160,230,0.09)');
-  g2.addColorStop(1, 'rgba(120,160,230,0)');
-  ctx.fillStyle = g2;
   ctx.fillRect(0, 0, width, height);
 
   let y = padTop;

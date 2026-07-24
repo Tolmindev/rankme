@@ -40,7 +40,12 @@ nav.main a.cta-nav{
   transition: filter .15s, transform .15s;
 }
 nav.main a.cta-nav:hover{ filter:brightness(1.08); transform:translateY(-1px); color:#1a1226 !important; }
-.login-btn{padding:8px 20px; border-radius:999px; font-size:.85rem; font-weight:800; background:var(--accent-grad); color:#1a1226; border:none; cursor:pointer}
+.login-btn{
+  padding:8px 16px; border-radius:999px; font-size:.85rem; font-weight:800;
+  background: transparent; color: var(--text-dim); border:1px solid var(--line); cursor:pointer;
+  transition: color .15s, border-color .15s, background .15s;
+}
+.login-btn:hover{ color: var(--text); border-color: rgba(200,160,240,.45); background: rgba(255,255,255,0.04); }
 
 .wrap{max-width:560px; margin:48px auto; padding:0 20px 80px}
 .card{
@@ -93,7 +98,7 @@ footer.site{text-align:center; padding:24px; color:var(--text-dim); font-size:.7
   <nav class="main">
     <a href="index.html">Browse</a>
     <a href="create.html" class="active">Create</a>
-    <button class="login-btn" id="loginBtn" type="button">Login</button>
+    <button class="login-btn" id="loginBtn" type="button">Account</button>
   </nav>
 </header>
 

@@ -45,7 +45,12 @@ body{
   -webkit-user-select: none; user-select: none;
 }
 .tier-label, input, textarea, [contenteditable]{ -webkit-user-select: text; user-select: text; }
-h1,h2,h3,.tier-label,.brand-name,.faction-btn,.download-btn,.login-btn{ font-weight:800; }
+h1,h2,h3,.tier-label,.brand-name,.faction-btn,.download-btn,.login-btn{
+  padding:8px 16px; border-radius:999px; font-size:.85rem; font-weight:800;
+  background: transparent; color: var(--text-dim); border:1px solid var(--line); cursor:pointer;
+  transition: color .15s, border-color .15s, background .15s;
+}
+.login-btn:hover{ color: var(--text); border-color: rgba(200,160,240,.45); background: rgba(255,255,255,0.04); }
 
 /* ---------- Header ---------- */
 header.site{

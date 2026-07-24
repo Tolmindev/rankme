@@ -900,7 +900,7 @@ async function shareLinkOrImage(kind){
       a.href = URL.createObjectURL(blob);
       a.download = 'rankme-tierlist.png';
       a.click();
-      showToast('PNG Saved — Ready to Share');
+      showToast('PNG Saved - Ready to Share');
     }catch(e){
       showToast('Could not share image');
     }
@@ -1057,7 +1057,7 @@ async function exportPNG(returnBlobOnly, blobCb){
     return Math.max(padY*2 + cardH, padY*2 + lines * cardH + Math.max(0, lines-1)*cardGap);
   });
   const padTop = 24;
-  const footH = 100;
+  const footH = 72;
   const height = padTop + rowHeights.reduce((a,b)=>a+b, 0) + footH;
 
   const canvas = document.getElementById('exportCanvas');
@@ -1187,7 +1187,7 @@ async function exportPNG(returnBlobOnly, blobCb){
   titleGrad.addColorStop(0, '#e8d4ff');
   titleGrad.addColorStop(1, '#c4b5e8');
   ctx.fillStyle = titleGrad;
-  ctx.font = '900 26px Montserrat, system-ui, sans-serif';
+  ctx.font = '900 22px Montserrat, system-ui, sans-serif';
   ctx.textAlign = 'left';
   ctx.textBaseline = 'middle';
   ctx.fillText('RANKME.LOL', 36, midY);
@@ -1195,13 +1195,13 @@ async function exportPNG(returnBlobOnly, blobCb){
   // Center logo
   try {
     const flogo = await loadImage('assets/brand/Footer_logo.png');
-    const lh = 48;
+    const lh = 36;
     const lw = lh * (flogo.naturalWidth || flogo.width) / (flogo.naturalHeight || flogo.height || 1);
     ctx.drawImage(flogo, (width - lw) / 2, midY - lh / 2, lw, lh);
   } catch(e) {
     try {
       const flogo = await loadImage('assets/brand/Footer_logo.svg');
-      const lh = 48;
+      const lh = 36;
       const lw = lh * (flogo.naturalWidth || flogo.width || 2) / (flogo.naturalHeight || flogo.height || 1);
       ctx.drawImage(flogo, (width - lw) / 2, midY - lh / 2, lw, lh);
     } catch(e2) {}

@@ -48,7 +48,12 @@ body{
   -webkit-user-select: none; user-select: none;
 }
 .tier-label, input, textarea, [contenteditable]{ -webkit-user-select: text; user-select: text; }
-h1,h2,h3,.tier-label,.brand-name,.faction-btn,.download-btn,.login-btn{ font-weight:800; }
+h1,h2,h3,.tier-label,.brand-name,.faction-btn,.download-btn,.login-btn{
+  padding:8px 16px; border-radius:999px; font-size:.85rem; font-weight:800;
+  background: transparent; color: var(--text-dim); border:1px solid var(--line); cursor:pointer;
+  transition: color .15s, border-color .15s, background .15s;
+}
+.login-btn:hover{ color: var(--text); border-color: rgba(200,160,240,.45); background: rgba(255,255,255,0.04); }
 
 /* ---------- Header ---------- */
 header.site{
@@ -649,7 +654,7 @@ footer.site .fine{ color:var(--text-dim); font-size:.75rem; font-weight:600; }
 <section class="hero">
   <div class="parallax-host"><img class="title-logo cover-card parallax-img" src="assets/brand/SF_Cover_1.webp" alt="Street Fighter: Duel"></div>
   <p class="desc">
-    <b>Street Fighter: Duel</b> - Rank every fighter. Drag, drop, customize tiers, and share your ranking with one link.
+    Rank every Street Fighter: Duel fighter. Drag, drop, customize tiers, and share your ranking with one link.
   </p>
   <div class="experts-block">
     <div class="experts-heading">Expert Rankings</div>
@@ -713,7 +718,7 @@ footer.site .fine{ color:var(--text-dim); font-size:.75rem; font-weight:600; }
   <div class="portals-bar" id="portalsBar" hidden></div>
   <div class="pool-header">
     <div class="faction-filters" id="factionFilters"></div>
-    <button class="portal-btn" id="portalBtn" type="button" title="Drop Cards into Portals to Teleport them">TELEPORTATION</button>
+    <button class="portal-btn" id="portalBtn" type="button" title="Drop Cards into Portals">TELEPORTATION</button>
   </div>
   <div class="pool" id="pool"></div>
 </div>

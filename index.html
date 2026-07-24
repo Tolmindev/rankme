@@ -57,11 +57,11 @@ nav.main a.cta-nav{
 }
 nav.main a.cta-nav:hover{ filter:brightness(1.08); transform:translateY(-1px); color:#1a1226 !important; }
 .login-btn{
-  padding:8px 20px; border-radius:999px; font-size:.85rem; font-weight:800;
-  background:var(--accent-grad); color:#1a1226; border:none; cursor:pointer;
-  transition:filter .15s, transform .15s;
+  padding:8px 16px; border-radius:999px; font-size:.85rem; font-weight:800;
+  background: transparent; color: var(--text-dim); border:1px solid var(--line); cursor:pointer;
+  transition: color .15s, border-color .15s, background .15s;
 }
-.login-btn:hover{ filter:brightness(1.08); transform:translateY(-1px); }
+.login-btn:hover{ color: var(--text); border-color: rgba(200,160,240,.45); background: rgba(255,255,255,0.04); }
 
 .page{ max-width:1200px; margin:0 auto; padding:40px 24px 80px; }
 .hero-home{ text-align:center; margin-bottom:48px; }

@@ -130,7 +130,7 @@ function updateNavAuth(){
         const name = user.user_metadata?.full_name || user.user_metadata?.custom_claims?.global_name || user.user_metadata?.name || user.email || 'Account';
         btn.textContent = String(name).split(' ')[0] || 'Account';
       } else {
-        btn.textContent = 'Login';
+        btn.textContent = 'Account';
       }
       btn.onclick = ()=>{ location.href = 'account.html'; };
     }catch(e){}

@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
-<title>RankMe - Create tier lists in seconds</title>
+<title>RankMe - Drag. Rank. Share.</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/supabaseClient.js"></script>
 <meta property="og:title" content="RankMe - The easiest way to create tier lists">
-<meta property="og:description" content="Create beautiful tier lists in seconds. Drag, drop, share. Free offline tool with exclusive templates - no sign-up required.">
+<meta property="og:description" content="No account needed. Build tier lists, export PNGs, and share rankings in seconds.">
 <meta property="og:image" content="https://rankme.lol/assets/brand/Share_RankMe.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="description" content="RankMe is the easiest tier list maker. Drag, drop, share. Free offline tool with exclusive templates.">
+<meta name="description" content="No account needed. Build tier lists, export PNGs, and share rankings in seconds.">
 <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -48,6 +48,14 @@ nav.main{ display:flex; align-items:center; gap:28px; }
 nav.main a{ color:var(--text-dim); text-decoration:none; font-weight:700; font-size:.92rem; transition:color .15s; }
 nav.main a:hover, nav.main a.active{ color:var(--text); }
 nav.main a.exclusive{ color:#e79ee0; }
+nav.main a.cta-nav{
+  padding:8px 18px; border-radius:999px; font-size:.8rem; font-weight:800;
+  background: linear-gradient(120deg,#b79bf0,#e6a9e8); color:#1a1226 !important;
+  border:none; text-decoration:none;
+  box-shadow: 0 4px 16px rgba(180,140,230,.35);
+  transition: filter .15s, transform .15s;
+}
+nav.main a.cta-nav:hover{ filter:brightness(1.08); transform:translateY(-1px); color:#1a1226 !important; }
 .login-btn{
   padding:8px 20px; border-radius:999px; font-size:.85rem; font-weight:800;
   background:var(--accent-grad); color:#1a1226; border:none; cursor:pointer;
@@ -174,17 +182,17 @@ footer.site{
   <a class="brand" href="index.html"><img src="assets/brand/favicon.svg" alt="RankMe"></a>
   <nav class="main">
     <a href="index.html" class="active">Browse</a>
-    <a href="create.html">Create</a>
-    <button class="login-btn" id="loginBtn" type="button">Login</button>
+    <a href="create.html" class="cta-nav">Create</a>
+    <button class="login-btn" id="loginBtn" type="button">Account</button>
   </nav>
 </header>
 
 <main class="page">
   <section class="hero-home">
-    <h1>Create tier lists in seconds</h1>
-    <p>The easiest way to build and share tier lists. Free offline tool - login only to save Exclusive rankings.</p>
+    <h1>Drag. Rank. Share.</h1>
+    <p>No account needed. Build tier lists, export PNGs, and share rankings in seconds.</p>
     <div class="cta-row">
-      <a class="cta primary" href="create.html">New tier list</a>
+      <a class="cta primary" href="create.html">Start Ranking</a>
     </div>
   </section>
 
@@ -222,7 +230,7 @@ footer.site{
 </main>
 
 <footer class="site">
-  RANKME.LOL - tier lists in seconds
+  Create tier lists. Share rankings. No signup required.
 </footer>
 
 

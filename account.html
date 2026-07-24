@@ -140,7 +140,7 @@ async function renderCabinet(user){
 
   let listHtml = '<div class="empty">Loading…</div>';
   panel.innerHTML = `
-    <h1>Your cabinet</h1>
+    <h1>My Rankings</h1>
     <p class="sub">Your saved <b>Exclusive</b> rankings. Custom images are not stored on the server.</p>
     <div class="profile">
       <div class="avatar-wrap">
@@ -164,7 +164,7 @@ async function renderCabinet(user){
     const rows = await listMyTierlists();
     const box = document.getElementById('listBox');
     if(!rows.length){
-      box.innerHTML = '<div class="empty">No saved Exclusive lists yet. Open SF Duel, rank, press <b>Save</b>.</div>';
+      box.innerHTML = '<div class="empty">No saved rankings yet. Open SF Duel, rank, press <b>Save</b>.</div>';
     } else {
       box.innerHTML = rows.map(r=>{
         const openHref = (r.template_id === 'sf-duel' || !r.template_id)

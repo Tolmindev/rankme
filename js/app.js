@@ -798,7 +798,7 @@ document.getElementById('clearAllBtn').addEventListener('click', ()=>{
     state.pool = [...stock, ...customIds.filter(id => !stock.includes(id))];
     history.replaceState(null,'',location.pathname + location.search);
     render();
-    showToast('Tier list cleared');
+    showToast('Tier List Cleared');
   });
 });
 
@@ -811,7 +811,7 @@ document.getElementById('fillAllBtn').addEventListener('click', ()=>{
     });
     state.pool = [];
     render();
-    showToast('Filled all rows randomly');
+    showToast('Rows Filled Randomly');
   });
 });
 
@@ -892,7 +892,7 @@ async function shareLinkOrImage(kind){
           title: 'RankMe tier list',
           text: caption + '\nhttps://rankme.lol'
         });
-        showToast('Shared');
+        showToast('Link Ready');
         return;
       }
       // fallback: download image
@@ -900,7 +900,7 @@ async function shareLinkOrImage(kind){
       a.href = URL.createObjectURL(blob);
       a.download = 'rankme-tierlist.png';
       a.click();
-      showToast('Image saved — share the PNG + rankme.lol');
+      showToast('PNG Saved — Ready to Share');
     }catch(e){
       showToast('Could not share image');
     }
@@ -981,7 +981,7 @@ document.getElementById('remixBtn')?.addEventListener('click', ()=>{
   render();
   if(!BLANK_MODE) renderFactionFilters();
   renderPortals();
-  showToast('Remixed — add your images, edit, then Save');
+  showToast('Remix ready — add images, edit, then Save');
 });
 
 document.getElementById('saveAccountBtn')?.addEventListener('click', async ()=>{
@@ -1006,7 +1006,7 @@ document.getElementById('saveAccountBtn')?.addEventListener('click', async ()=>{
     const payload = { tiers: state.tiers, assignment: state.assignment };
     await saveExclusiveTierlist({ title, templateId: TEMPLATE_ID || 'sf-duel', payload });
     remixFlag = false;
-    showToast('Saved to your account');
+    showToast('Ranking Saved');
   }catch(e){
     console.error(e);
     showToast(e.message || 'Save failed — check Supabase table');
@@ -1024,7 +1024,7 @@ async function exportPNGBlob(){
 
 async function exportPNG(returnBlobOnly, blobCb){
   sanitizeState();
-  if(!returnBlobOnly) showToast('Exporting...');
+  if(!returnBlobOnly) showToast('Generating PNG...');
   const scale = 2; // pixel density / quality
   // Layout follows Size slider; scale=2 keeps sharp PNG
   const uiSize = parseInt(document.getElementById('sizeSlider')?.value || '64', 10);
@@ -1057,7 +1057,7 @@ async function exportPNG(returnBlobOnly, blobCb){
     return Math.max(padY*2 + cardH, padY*2 + lines * cardH + Math.max(0, lines-1)*cardGap);
   });
   const padTop = 24;
-  const footH = 96;
+  const footH = 100;
   const height = padTop + rowHeights.reduce((a,b)=>a+b, 0) + footH;
 
   const canvas = document.getElementById('exportCanvas');
@@ -1163,49 +1163,81 @@ async function exportPNG(returnBlobOnly, blobCb){
     y += rh;
   }
 
-  // Footer
+  // Footer - gradient bar: RANKME.LOL | logo | title + badge
   const footY = y;
-  ctx.fillStyle = 'rgba(14,12,20,0.95)';
+  const fg = ctx.createLinearGradient(0, footY, width, footY + footH);
+  fg.addColorStop(0, '#2a2438');
+  fg.addColorStop(0.5, '#3a3350');
+  fg.addColorStop(1, '#2a2438');
+  ctx.fillStyle = fg;
   ctx.fillRect(0, footY, width, footH);
-  ctx.strokeStyle = 'rgba(255,255,255,0.08)';
-  ctx.beginPath();
-  ctx.moveTo(0, footY + 0.5);
-  ctx.lineTo(width, footY + 0.5);
-  ctx.stroke();
+  // top accent line
+  const lineG = ctx.createLinearGradient(0, footY, width, footY);
+  lineG.addColorStop(0, 'rgba(183,155,240,0)');
+  lineG.addColorStop(0.3, 'rgba(183,155,240,0.55)');
+  lineG.addColorStop(0.7, 'rgba(230,169,232,0.55)');
+  lineG.addColorStop(1, 'rgba(183,155,240,0)');
+  ctx.fillStyle = lineG;
+  ctx.fillRect(0, footY, width, 2);
 
-  // Left text
-  ctx.fillStyle = '#c4b5e8';
-  ctx.font = '900 20px Montserrat, sans-serif';
+  const midY = footY + footH / 2;
+
+  // Left: RANKME.LOL bold
+  const titleGrad = ctx.createLinearGradient(28, midY, 220, midY);
+  titleGrad.addColorStop(0, '#e8d4ff');
+  titleGrad.addColorStop(1, '#c4b5e8');
+  ctx.fillStyle = titleGrad;
+  ctx.font = '900 26px Montserrat, system-ui, sans-serif';
   ctx.textAlign = 'left';
   ctx.textBaseline = 'middle';
-  ctx.fillText('RANKME.LOL', 28, footY + footH/2 - 10);
-  ctx.fillStyle = '#7a7199';
-  ctx.font = '600 11px Montserrat, sans-serif';
-  ctx.fillText('create tier lists in seconds, drag, drop, share.', 28, footY + footH/2 + 14);
+  ctx.fillText('RANKME.LOL', 36, midY);
 
-  // Center Footer_logo
+  // Center logo
   try {
     const flogo = await loadImage('assets/brand/Footer_logo.png');
-    const lh = 44;
+    const lh = 48;
     const lw = lh * (flogo.naturalWidth || flogo.width) / (flogo.naturalHeight || flogo.height || 1);
-    ctx.drawImage(flogo, (width - lw) / 2, footY + (footH - lh) / 2, lw, lh);
+    ctx.drawImage(flogo, (width - lw) / 2, midY - lh / 2, lw, lh);
   } catch(e) {
     try {
       const flogo = await loadImage('assets/brand/Footer_logo.svg');
-      const lh = 44;
+      const lh = 48;
       const lw = lh * (flogo.naturalWidth || flogo.width || 2) / (flogo.naturalHeight || flogo.height || 1);
-      ctx.drawImage(flogo, (width - lw) / 2, footY + (footH - lh) / 2, lw, lh);
+      ctx.drawImage(flogo, (width - lw) / 2, midY - lh / 2, lw, lh);
     } catch(e2) {}
   }
 
-  // Right text
-  ctx.fillStyle = '#a79fc4';
-  ctx.font = '700 13px Montserrat, sans-serif';
+  // Right: tier name + exclusive badge
+  const rightLabel = BLANK_MODE ? 'Custom Tier List' : (TEMPLATE_FOOTER || TEMPLATE_TITLE || 'RankMe');
+  ctx.font = '800 15px Montserrat, system-ui, sans-serif';
   ctx.textAlign = 'right';
-  ctx.fillText(BLANK_MODE ? 'RankMe' : (TEMPLATE_FOOTER || TEMPLATE_TITLE), width - 28, footY + footH/2 - 10);
-  ctx.fillStyle = '#6b6288';
-  ctx.font = '600 11px Montserrat, sans-serif';
-  ctx.fillText(BLANK_MODE ? 'Custom Tier List' : 'Exclusive Tier List', width - 28, footY + footH/2 + 14);
+  ctx.textBaseline = 'middle';
+  ctx.fillStyle = '#f0eafc';
+  ctx.fillText(rightLabel, width - 36, midY - (BLANK_MODE ? 0 : 12));
+
+  if(!BLANK_MODE){
+    const badge = 'EXCLUSIVE';
+    ctx.font = '800 10px Montserrat, system-ui, sans-serif';
+    const bw = ctx.measureText(badge).width + 28;
+    const bh = 22;
+    const bx = width - 36 - bw;
+    const by = midY + 6;
+    // pill
+    ctx.beginPath();
+    if(ctx.roundRect) ctx.roundRect(bx, by, bw, bh, 11);
+    else { ctx.rect(bx, by, bw, bh); }
+    ctx.strokeStyle = 'rgba(200,170,255,0.7)';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+    const bg = ctx.createLinearGradient(bx, by, bx+bw, by);
+    bg.addColorStop(0, 'rgba(183,155,240,0.15)');
+    bg.addColorStop(1, 'rgba(230,169,232,0.15)');
+    ctx.fillStyle = bg;
+    ctx.fill();
+    ctx.fillStyle = '#d4c4f0';
+    ctx.textAlign = 'center';
+    ctx.fillText(badge, bx + bw/2, by + bh/2 + 1);
+  }
 
   canvas.toBlob(blob => {
     if(!blob){

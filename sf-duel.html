@@ -627,20 +627,11 @@ footer.site .fine{ color:var(--text-dim); font-size:.75rem; font-weight:600; }
   border:none;
   border-radius:0;
   background:none;
+  animation:none;
   box-shadow:none;
-  transform: scale(1.1);
+  transform: scale(1.08);
   transition: transform .15s ease-out;
   will-change: transform;
-  animation: epicIdle 5s ease-in-out infinite;
-}
-.hero .parallax-host.is-parallaxing img.cover-card{
-  animation: none;
-}
-@keyframes epicIdle{
-  0%, 100%{ transform: scale(1.1) translate3d(0, 0, 0); }
-  25%{ transform: scale(1.12) translate3d(5px, -4px, 0); }
-  50%{ transform: scale(1.11) translate3d(-4px, 3px, 0); }
-  75%{ transform: scale(1.13) translate3d(3px, 4px, 0); }
 }
 </style>
 </head>
@@ -767,15 +758,13 @@ footer.site .fine{ color:var(--text-dim); font-size:.75rem; font-weight:600; }
     if(!img) return;
     const max = 12;
     host.addEventListener('pointermove', (e)=>{
-      host.classList.add('is-parallaxing');
       const r = host.getBoundingClientRect();
       const px = (e.clientX - r.left) / r.width - 0.5;
       const py = (e.clientY - r.top) / r.height - 0.5;
-      img.style.transform = 'scale(1.14) translate3d(' + (-px*max*2).toFixed(1) + 'px,' + (-py*max*2).toFixed(1) + 'px,0)';
+      img.style.transform = 'scale(1.12) translate3d(' + (-px*max*2).toFixed(1) + 'px,' + (-py*max*2).toFixed(1) + 'px,0)';
     });
     host.addEventListener('pointerleave', ()=>{
-      host.classList.remove('is-parallaxing');
-      img.style.transform = '';
+      img.style.transform = 'scale(1.08) translate3d(0,0,0)';
     });
   }
   document.querySelectorAll('.parallax-host').forEach(bindParallax);

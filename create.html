@@ -32,20 +32,8 @@ nav.main{display:flex; align-items:center; gap:28px}
 nav.main a{color:var(--text-dim); text-decoration:none; font-weight:700; font-size:.92rem}
 nav.main a:hover,nav.main a.active{color:var(--text)}
 nav.main a.exclusive{color:#e79ee0}
-nav.main a.cta-nav{
-  padding:8px 18px; border-radius:999px; font-size:.8rem; font-weight:800;
-  background: linear-gradient(120deg,#b79bf0,#e6a9e8); color:#1a1226 !important;
-  border:none; text-decoration:none;
-  box-shadow: 0 4px 16px rgba(180,140,230,.35);
-  transition: filter .15s, transform .15s;
-}
-nav.main a.cta-nav:hover{ filter:brightness(1.08); transform:translateY(-1px); color:#1a1226 !important; }
-.login-btn{
-  padding:8px 16px; border-radius:999px; font-size:.85rem; font-weight:800;
-  background: transparent; color: var(--text-dim); border:1px solid var(--line); cursor:pointer;
-  transition: color .15s, border-color .15s, background .15s;
-}
-.login-btn:hover{ color: var(--text); border-color: rgba(200,160,240,.45); background: rgba(255,255,255,0.04); }
+
+
 
 .wrap{max-width:560px; margin:48px auto; padding:0 20px 80px}
 .card{
@@ -92,6 +80,25 @@ footer.site{text-align:center; padding:32px 20px 40px; border-top:1px solid var(
 footer.site img.footer-logo{height:56px;display:block}
 footer.site .fine{color:var(--text-dim);font-size:.75rem;font-weight:600}
 @media(max-width:720px){header.site{padding:12px 14px} .brand img{height:26px} nav.main{gap:12px} nav.main a{font-size:.78rem}}
+nav.main a.cta-nav{
+  padding:8px 18px; border-radius:999px; font-size:.8rem; font-weight:800;
+  background: linear-gradient(120deg,#b79bf0,#e6a9e8); color:#1a1226 !important;
+  border:none; text-decoration:none;
+  box-shadow: 0 4px 16px rgba(180,140,230,.35);
+  transition: filter .15s, transform .15s;
+}
+nav.main a.cta-nav:hover{ filter:brightness(1.08); transform:translateY(-1px); color:#1a1226 !important; }
+.login-btn{
+  padding:8px 16px; border-radius:999px; font-size:.85rem; font-weight:800;
+  background: transparent !important; color: var(--text-dim) !important;
+  border:1px solid var(--line) !important; cursor:pointer;
+  box-shadow: none !important;
+  transition: color .15s, border-color .15s, background .15s;
+}
+.login-btn:hover{
+  color: var(--text) !important; border-color: rgba(200,160,240,.45) !important;
+  background: rgba(255,255,255,0.04) !important; filter: none !important;
+}
 </style>
 </head>
 <body>
@@ -99,7 +106,7 @@ footer.site .fine{color:var(--text-dim);font-size:.75rem;font-weight:600}
   <a class="brand" href="index.html"><img src="assets/brand/RankMe_logo.svg" alt="RankMe"></a>
   <nav class="main">
     <a href="index.html">Browse</a>
-    <a href="create.html" class="active">Create</a>
+    <a href="create.html" class="cta-nav">Create</a>
     <button class="login-btn" id="loginBtn" type="button">Account</button>
   </nav>
 </header>

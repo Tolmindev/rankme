@@ -45,12 +45,8 @@ body{
   -webkit-user-select: none; user-select: none;
 }
 .tier-label, input, textarea, [contenteditable]{ -webkit-user-select: text; user-select: text; }
-h1,h2,h3,.tier-label,.brand-name,.faction-btn,.download-btn,.login-btn{
-  padding:8px 16px; border-radius:999px; font-size:.85rem; font-weight:800;
-  background: transparent; color: var(--text-dim); border:1px solid var(--line); cursor:pointer;
-  transition: color .15s, border-color .15s, background .15s;
-}
-.login-btn:hover{ color: var(--text); border-color: rgba(200,160,240,.45); background: rgba(255,255,255,0.04); }
+h1,h2,h3,.tier-label,.brand-name,.faction-btn,.download-btn,
+
 
 /* ---------- Header ---------- */
 header.site{
@@ -86,11 +82,7 @@ nav.main a{ color: var(--text-dim); text-decoration:none; font-weight:700; font-
 nav.main a:hover, nav.main a.active{ color: var(--text); }
 nav.main a.exclusive{ color: #e79ee0; }
 .search-ico{ width:18px;height:18px; opacity:.7; cursor:pointer; }
-.login-btn{
-  padding:8px 20px; border-radius:999px; font-size:.85rem;
-  background: var(--accent-grad); color:#1a1226; border:none; cursor:pointer;
-  letter-spacing:.4px;
-}
+
 
 /* ---------- Hero ---------- */
 .hero{
@@ -437,7 +429,7 @@ footer.site .fine{ color:var(--text-dim); font-size:.75rem; font-weight:600; }
   nav.main{ gap:10px; flex-wrap:wrap; justify-content:flex-end; }
   nav.main a{ font-size:.78rem; }
   nav.main .search-ico{ width:16px; height:16px; }
-  .login-btn{ padding:6px 14px; font-size:.75rem; }
+  
   .hero{ padding: 28px 14px 8px; gap:16px; }
   .hero img.title-logo{ width:240px; }
   .hero .desc{ font-size:.88rem; }
@@ -454,6 +446,25 @@ footer.site .fine{ color:var(--text-dim); font-size:.75rem; font-weight:600; }
   .download-btn{ order:4; width:100%; text-align:center; }
   .pool-wrap{ padding-top:14px; padding-bottom:20px; }
   footer.site{ padding-bottom:40px; }
+}
+nav.main a.cta-nav{
+  padding:8px 18px; border-radius:999px; font-size:.8rem; font-weight:800;
+  background: linear-gradient(120deg,#b79bf0,#e6a9e8); color:#1a1226 !important;
+  border:none; text-decoration:none;
+  box-shadow: 0 4px 16px rgba(180,140,230,.35);
+  transition: filter .15s, transform .15s;
+}
+nav.main a.cta-nav:hover{ filter:brightness(1.08); transform:translateY(-1px); color:#1a1226 !important; }
+.login-btn{
+  padding:8px 16px; border-radius:999px; font-size:.85rem; font-weight:800;
+  background: transparent !important; color: var(--text-dim) !important;
+  border:1px solid var(--line) !important; cursor:pointer;
+  box-shadow: none !important;
+  transition: color .15s, border-color .15s, background .15s;
+}
+.login-btn:hover{
+  color: var(--text) !important; border-color: rgba(200,160,240,.45) !important;
+  background: rgba(255,255,255,0.04) !important; filter: none !important;
 }
 </style>
 </head>

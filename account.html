@@ -14,7 +14,7 @@
 header.site{display:flex;align-items:center;justify-content:space-between;padding:16px 40px;border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(14,12,20,.8);backdrop-filter:blur(14px);z-index:20}
 .brand img{height:34px} nav.main{display:flex;gap:28px;align-items:center}
 nav.main a{color:var(--text-dim);text-decoration:none;font-weight:700;font-size:.92rem} nav.main a:hover{color:var(--text)}
-.login-btn,.btn{padding:8px 20px;border-radius:999px;font-weight:800;font-size:.85rem;border:none;cursor:pointer;background:var(--accent-grad);color:#1a1226}
+.btn{padding:8px 20px;border-radius:999px;font-weight:800;font-size:.85rem;border:none;cursor:pointer;background:var(--accent-grad);color:#1a1226}
 .wrap{max-width:960px;margin:36px auto;padding:0 24px 80px}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:32px 36px}
 h1{margin:0 0 6px;font-size:1.5rem;font-weight:900;color:var(--text)}
@@ -79,6 +79,25 @@ footer.site{
 footer.site img.footer-logo{ height:56px; display:block; }
 footer.site .fine{ color:var(--text-dim); font-size:.75rem; font-weight:600; }
 
+nav.main a.cta-nav{
+  padding:8px 18px; border-radius:999px; font-size:.8rem; font-weight:800;
+  background: linear-gradient(120deg,#b79bf0,#e6a9e8); color:#1a1226 !important;
+  border:none; text-decoration:none;
+  box-shadow: 0 4px 16px rgba(180,140,230,.35);
+  transition: filter .15s, transform .15s;
+}
+nav.main a.cta-nav:hover{ filter:brightness(1.08); transform:translateY(-1px); color:#1a1226 !important; }
+.login-btn{
+  padding:8px 16px; border-radius:999px; font-size:.85rem; font-weight:800;
+  background: transparent !important; color: var(--text-dim) !important;
+  border:1px solid var(--line) !important; cursor:pointer;
+  box-shadow: none !important;
+  transition: color .15s, border-color .15s, background .15s;
+}
+.login-btn:hover{
+  color: var(--text) !important; border-color: rgba(200,160,240,.45) !important;
+  background: rgba(255,255,255,0.04) !important; filter: none !important;
+}
 </style>
 </head>
 <body>

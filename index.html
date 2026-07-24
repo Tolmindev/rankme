@@ -48,20 +48,8 @@ nav.main{ display:flex; align-items:center; gap:28px; }
 nav.main a{ color:var(--text-dim); text-decoration:none; font-weight:700; font-size:.92rem; transition:color .15s; }
 nav.main a:hover, nav.main a.active{ color:var(--text); }
 nav.main a.exclusive{ color:#e79ee0; }
-nav.main a.cta-nav{
-  padding:8px 18px; border-radius:999px; font-size:.8rem; font-weight:800;
-  background: linear-gradient(120deg,#b79bf0,#e6a9e8); color:#1a1226 !important;
-  border:none; text-decoration:none;
-  box-shadow: 0 4px 16px rgba(180,140,230,.35);
-  transition: filter .15s, transform .15s;
-}
-nav.main a.cta-nav:hover{ filter:brightness(1.08); transform:translateY(-1px); color:#1a1226 !important; }
-.login-btn{
-  padding:8px 16px; border-radius:999px; font-size:.85rem; font-weight:800;
-  background: transparent; color: var(--text-dim); border:1px solid var(--line); cursor:pointer;
-  transition: color .15s, border-color .15s, background .15s;
-}
-.login-btn:hover{ color: var(--text); border-color: rgba(200,160,240,.45); background: rgba(255,255,255,0.04); }
+
+
 
 .page{ max-width:1200px; margin:0 auto; padding:40px 24px 80px; }
 .hero-home{ text-align:center; margin-bottom:48px; }
@@ -171,6 +159,25 @@ footer.site .fine{ color:var(--text-dim); font-size:.75rem; font-weight:600; }
   transform: scale(1.08) translate3d(0,0,0);
   transition: transform .15s ease-out;
   will-change: transform;
+}
+nav.main a.cta-nav{
+  padding:8px 18px; border-radius:999px; font-size:.8rem; font-weight:800;
+  background: linear-gradient(120deg,#b79bf0,#e6a9e8); color:#1a1226 !important;
+  border:none; text-decoration:none;
+  box-shadow: 0 4px 16px rgba(180,140,230,.35);
+  transition: filter .15s, transform .15s;
+}
+nav.main a.cta-nav:hover{ filter:brightness(1.08); transform:translateY(-1px); color:#1a1226 !important; }
+.login-btn{
+  padding:8px 16px; border-radius:999px; font-size:.85rem; font-weight:800;
+  background: transparent !important; color: var(--text-dim) !important;
+  border:1px solid var(--line) !important; cursor:pointer;
+  box-shadow: none !important;
+  transition: color .15s, border-color .15s, background .15s;
+}
+.login-btn:hover{
+  color: var(--text) !important; border-color: rgba(200,160,240,.45) !important;
+  background: rgba(255,255,255,0.04) !important; filter: none !important;
 }
 </style>
 </head>

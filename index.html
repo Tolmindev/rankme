@@ -157,7 +157,7 @@ footer.site{
   .page{ padding:28px 14px 60px; }
 }
 
-/* Epic exclusive: subtle parallax inside cover */
+/* Epic exclusive: idle float (mobile-visible) + pointer parallax (desktop) */
 .tl-card.epic .cover{
   perspective: 600px;
 }
@@ -165,9 +165,16 @@ footer.site{
   transform: scale(1.1) translate3d(0,0,0);
   transition: transform .15s ease-out;
   will-change: transform;
+  animation: epicIdle 5s ease-in-out infinite;
 }
-.tl-card.epic:hover .cover img.cover-art{
-  /* base scale kept; JS overrides translate */
+.tl-card.epic.is-parallaxing .cover img.cover-art{
+  animation: none; /* pointer takes over */
+}
+@keyframes epicIdle{
+  0%, 100%{ transform: scale(1.1) translate3d(0, 0, 0); }
+  25%{ transform: scale(1.12) translate3d(4px, -3px, 0); }
+  50%{ transform: scale(1.11) translate3d(-3px, 2px, 0); }
+  75%{ transform: scale(1.13) translate3d(2px, 3px, 0); }
 }
 </style>
 </head>
@@ -234,14 +241,18 @@ footer.site{
   function bindParallax(card){
     const img = card.querySelector('.cover img.cover-art, img.cover-card, img.parallax-img');
     if(!img) return;
-    const max = 10; // px
+    const max = 10;
     const onMove = (e)=>{
+      card.classList.add('is-parallaxing');
       const r = card.getBoundingClientRect();
       const px = (e.clientX - r.left) / r.width - 0.5;
       const py = (e.clientY - r.top) / r.height - 0.5;
       img.style.transform = 'scale(1.12) translate3d(' + (-px*max*2).toFixed(1) + 'px,' + (-py*max*2).toFixed(1) + 'px,0)';
     };
-    const onLeave = ()=>{ img.style.transform = 'scale(1.1) translate3d(0,0,0)'; };
+    const onLeave = ()=>{
+      card.classList.remove('is-parallaxing');
+      img.style.transform = '';
+    };
     card.addEventListener('pointermove', onMove);
     card.addEventListener('pointerleave', onLeave);
   }

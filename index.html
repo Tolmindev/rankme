@@ -151,11 +151,9 @@ nav.main a.cta-nav:hover{ filter:brightness(1.08); transform:translateY(-1px); c
   border:1px dashed var(--line); border-radius:var(--radius); background:rgba(255,255,255,0.02);
 }
 
-footer.site{
-  max-width:1200px; margin:0 auto; padding:24px; text-align:center;
-  color:var(--text-dim); font-size:.75rem; font-weight:600;
-  border-top:1px solid var(--line);
-}
+footer.site{ text-align:center; padding:32px 20px 40px; border-top:1px solid var(--line); display:flex; flex-direction:column; align-items:center; gap:12px; }
+footer.site img.footer-logo{ height:56px; display:block; }
+footer.site .fine{ color:var(--text-dim); font-size:.75rem; font-weight:600; }
 
 @media (max-width:720px){
   header.site{ padding:12px 14px; }
@@ -179,7 +177,7 @@ footer.site{
 <body>
 
 <header class="site">
-  <a class="brand" href="index.html"><img src="assets/brand/favicon.svg" alt="RankMe"></a>
+  <a class="brand" href="index.html"><img src="assets/brand/RankMe_logo.svg" alt="RankMe"></a>
   <nav class="main">
     <a href="index.html" class="active">Browse</a>
     <a href="create.html" class="cta-nav">Create</a>
@@ -230,7 +228,8 @@ footer.site{
 </main>
 
 <footer class="site">
-  Create tier lists. Share rankings. No signup required.
+  <img class="footer-logo" src="assets/brand/Footer_logo.svg" alt="RankMe">
+  <span class="fine">Create tier lists. Share rankings. No signup required.</span>
 </footer>
 
 

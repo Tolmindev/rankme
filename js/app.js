@@ -882,12 +882,17 @@ async function decodeSharePayload(h){
 async function buildShareUrl(){
   const data = { tiers: state.tiers, assignment: state.assignment };
   const payload = await encodeSharePayload(data);
-  return location.origin + location.pathname + '#' + payload;
+  // Keep ?t=template so shared links open the correct exclusive
+  let q = location.search || '';
+  if(!/[?&]t=/.test(q) && TEMPLATE_ID && TEMPLATE_ID !== 'blank'){
+    q = '?t=' + encodeURIComponent(TEMPLATE_ID);
+  }
+  return location.origin + location.pathname + q + '#' + payload;
 }
 
 function shareCaption(){
   if(BLANK_MODE) return 'My tier list on RankMe - create yours at rankme.lol';
-  return 'My Street Fighter: Duel tier list on RankMe — rankme.lol';
+  return 'My ' + TEMPLATE_TITLE + ' tier list on RankMe - rankme.lol';
 }
 
 function showToast(msg){

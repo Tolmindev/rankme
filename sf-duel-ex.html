@@ -731,51 +731,10 @@ nav.main a.cta-nav:hover{ filter:brightness(1.08); transform:translateY(-1px); c
   0%{ background-position: 0 0, 0% 50%; }
   100%{ background-position: 0 0, 200% 50%; }
 }
-
-
-  100%{ opacity:0; transform: translate(18px,-28px) scale(.2); }
-}
-
-
-
 @keyframes exclusiveRgb{ 0%{background-position:0 0,0% 50%} 100%{background-position:0 0,100% 50%} }
 
 
 
-@media (max-width: 720px){
-  .hero{
-    flex-direction: column !important;
-    align-items: center !important;
-    text-align: center !important;
-    justify-content: center !important;
-  }
-  .hero .desc{
-    margin-left: auto !important;
-    margin-right: auto !important;
-    text-align: center !important;
-    max-width: 100%;
-  }
-  
-
-
-.hero img.title-logo.cover-card,
-.hero img.title-logo.ex-logo{
-  width: min(480px, 90vw);
-  height: auto;
-  border-radius: 16px;
-  border: 2px solid transparent;
-  background:
-    linear-gradient(#1a1728, #1a1728) padding-box,
-    linear-gradient(90deg,#ff6b6b,#f7c948,#7bed9f,#70a1ff,#a29bfe,#ff6b81,#ff6b6b) border-box;
-  background-size: 100% 100%, 200% 100%;
-  animation: exclusiveRgb 5s linear infinite alternate;
-  box-shadow: 0 0 28px rgba(180,120,255,.28);
-  filter: none;
-}
-@keyframes exclusiveRgb{
-  0%{ background-position: 0 0, 0% 50%; }
-  100%{ background-position: 0 0, 100% 50%; }
-}
 
 
 
@@ -784,23 +743,8 @@ nav.main a.cta-nav:hover{ filter:brightness(1.08); transform:translateY(-1px); c
 
 
 
-@media (max-width: 720px){
-  .hero{
-    flex-direction: column !important;
-    align-items: stretch !important;
-    padding: 24px 16px 16px !important;
-  }
-  .hero img.title-logo{
-    display: block !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    margin: 0 auto !important;
-  }
-  .hero .desc{ text-align: center !important; max-width: 100% !important; }
-  footer.site{ padding: 20px 16px 28px !important; }
-  footer.site img.footer-logo{ height: 40px !important; }
-  footer.site .fine{ font-size: .7rem !important; text-align: center; }
-}
+
+
 
 
 /* Clear frame when holding a card */
@@ -830,6 +774,33 @@ body.theme-gold .card.floating{
 @media (max-width: 720px){
   footer.site{ padding: 24px 16px 28px !important; }
   footer.site img.footer-logo{ height: 40px !important; }
+}
+
+@media (max-width: 720px){
+  .hero{
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    padding: 20px 16px 8px;
+    gap: 12px;
+  }
+  .hero img.title-logo{
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+  }
+  .hero .desc{
+    text-align: center;
+    max-width: 100%;
+    margin: 0;
+  }
+  .list-actions{
+    margin: 4px auto 8px;
+    padding: 0 16px;
+  }
+  footer.site{ padding: 20px 16px 28px; }
+  footer.site img.footer-logo{ height: 40px; }
 }
 
 </style>

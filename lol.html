@@ -92,6 +92,47 @@ nav.main a.exclusive{ color: #e79ee0; }
   max-width:1400px; margin:0 auto; padding: 48px 24px 36px;
   display:flex; align-items:center; gap:40px; flex-wrap:wrap;
 }
+@media (max-width: 720px){
+  .hero{
+    flex-direction: column;
+    align-items: stretch;
+    padding: 24px 16px 16px;
+    gap: 14px;
+  }
+  .hero .parallax-host{
+    width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .hero .desc{
+    text-align: center;
+    max-width: 100%;
+  }
+  .experts-block{
+    width: 100%;
+    max-width: 100%;
+  }
+  .experts-strip{ justify-content: center; }
+  .list-actions{
+    justify-content: center;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .list-actions .right-actions{ margin-left: 0; }
+  footer.site{
+    padding: 20px 16px 28px !important;
+  }
+  footer.site img.footer-logo{
+    height: 40px !important;
+  }
+  footer.site .fine{
+    font-size: .7rem !important;
+    padding: 0 8px;
+    line-height: 1.4;
+    text-align: center;
+  }
+}
 .hero img.title-logo{ width: 420px; max-width:100%; height:auto; object-fit:contain; display:block; filter: drop-shadow(0 10px 40px rgba(160,110,220,.25)); }
 .hero .desc{ max-width: 520px; color: var(--text-dim); font-size:.95rem; line-height:1.65; font-weight:600; }
 .hero .desc b{ color: var(--text); }
@@ -780,10 +821,13 @@ body.theme-gold .faction-btn img{
   object-fit: contain;
 }
 .hero .parallax-host{
-  display:inline-block;
-  max-width:min(480px, 90vw);
-  border-radius:16px;
-  overflow:hidden;
+  display: block;
+  width: 100%;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 16px;
+  overflow: hidden;
   border: 2px solid transparent;
   background:
     linear-gradient(#1a1728, #1a1728) padding-box,
@@ -791,7 +835,7 @@ body.theme-gold .faction-btn img{
   background-size: 100% 100%, 200% 100%;
   animation: exclusiveRgb 5s linear infinite alternate;
   box-shadow: 0 0 28px rgba(180,120,255,.28);
-  line-height:0;
+  line-height: 0;
 }
 @keyframes exclusiveRgb{
   0%{ background-position: 0 0, 0% 50%; }
@@ -818,55 +862,6 @@ body.theme-gold .faction-btn img{
 
 
 
-/* Mobile hero — equal left/right gaps */
-@media (max-width: 720px){
-  .hero{
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    box-sizing: border-box !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    margin: 0 !important;
-    padding: 24px 16px 12px !important;
-  }
-  .hero .parallax-host{
-    display: block !important;
-    box-sizing: border-box !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    margin: 0 !important;
-  }
-  .hero .parallax-host img,
-  .hero img.title-logo{
-    display: block !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    height: auto !important;
-    margin: 0 !important;
-  }
-  .hero .desc{
-    box-sizing: border-box !important;
-    width: 100% !important;
-    margin: 12px 0 0 !important;
-    text-align: center !important;
-  }
-  .experts-block{
-    width: 100% !important;
-    max-width: 100% !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-  }
-  .experts-strip{
-    justify-content: center !important;
-  }
-  .list-actions{
-    justify-content: center !important;
-  }
-  .list-actions .right-actions{
-    margin-left: 0 !important;
-  }
-}
 
 </style>
 </head>

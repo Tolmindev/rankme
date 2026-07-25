@@ -782,54 +782,24 @@ nav.main a.cta-nav:hover{ filter:brightness(1.08); transform:translateY(-1px); c
 
 
 
-/* Mobile hero — equal left/right gaps */
+
+
 @media (max-width: 720px){
   .hero{
-    display: flex !important;
     flex-direction: column !important;
-    align-items: center !important;
-    box-sizing: border-box !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    margin: 0 !important;
-    padding: 24px 16px 12px !important;
+    align-items: stretch !important;
+    padding: 24px 16px 16px !important;
   }
-  .hero .parallax-host{
-    display: block !important;
-    box-sizing: border-box !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    margin: 0 !important;
-  }
-  .hero .parallax-host img,
   .hero img.title-logo{
     display: block !important;
     width: 100% !important;
     max-width: 100% !important;
-    height: auto !important;
-    margin: 0 !important;
+    margin: 0 auto !important;
   }
-  .hero .desc{
-    box-sizing: border-box !important;
-    width: 100% !important;
-    margin: 12px 0 0 !important;
-    text-align: center !important;
-  }
-  .experts-block{
-    width: 100% !important;
-    max-width: 100% !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-  }
-  .experts-strip{
-    justify-content: center !important;
-  }
-  .list-actions{
-    justify-content: center !important;
-  }
-  .list-actions .right-actions{
-    margin-left: 0 !important;
-  }
+  .hero .desc{ text-align: center !important; max-width: 100% !important; }
+  footer.site{ padding: 20px 16px 28px !important; }
+  footer.site img.footer-logo{ height: 40px !important; }
+  footer.site .fine{ font-size: .7rem !important; text-align: center; }
 }
 
 </style>

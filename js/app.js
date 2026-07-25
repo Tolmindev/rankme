@@ -457,9 +457,9 @@ function portalAt(x, y){
   return null;
 }
 
-document.getElementById('portalBtn').addEventListener('click', ()=>{
+document.getElementById('portalBtn')?.addEventListener('click', ()=>{
   portalsOn = !portalsOn;
-  document.getElementById('portalBtn').classList.toggle('active', portalsOn);
+  document.getElementById('portalBtn')?.classList.toggle('active', portalsOn);
   renderPortals();
   showToast(portalsOn ? 'Teleportation ON' : 'Teleportation OFF');
 });
@@ -752,7 +752,7 @@ function outsideClose(e){
   }
 }
 
-document.getElementById('addRowBtn').addEventListener('click', ()=>{
+document.getElementById('addRowBtn')?.addEventListener('click', ()=>{
   const id = 't'+(state.rowIdSeq++);
   state.tiers.push({id, name:'NEW ROW', hue:200, sat:50, light:60});
   state.assignment[id] = [];
@@ -773,11 +773,16 @@ function setCardSize(px){
     document.documentElement.style.removeProperty('--card-h');
   }
 }
-sizeSlider.addEventListener('pointerdown', (e)=>{
-  _sizeDragging = true;
-  document.documentElement.style.overflowAnchor = 'none';
-  document.body.style.overflowAnchor = 'none';
-});
+if(sizeSlider){
+  sizeSlider.addEventListener('pointerdown', ()=>{
+    _sizeDragging = true;
+    document.documentElement.style.overflowAnchor = 'none';
+    document.body.style.overflowAnchor = 'none';
+  });
+  sizeSlider.addEventListener('input', (e)=>{
+    setCardSize(+e.target.value);
+  });
+}
 window.addEventListener('pointerup', ()=>{
   if(_sizeDragging){
     _sizeDragging = false;
@@ -785,33 +790,42 @@ window.addEventListener('pointerup', ()=>{
     document.body.style.overflowAnchor = '';
   }
 });
-sizeSlider.addEventListener('input', (e)=>{
-  setCardSize(+e.target.value);
-});
-document.getElementById('sizeResetBtn').addEventListener('click', ()=>{
-  sizeSlider.value = 64;
+document.getElementById('sizeResetBtn')?.addEventListener('click', ()=>{
+  if(sizeSlider) sizeSlider.value = 64;
   setCardSize(64);
 });
 
 function showConfirm(title, text, onConfirm){
   const modal = document.getElementById('confirmModal');
-  document.getElementById('confirmTitle').textContent = title;
-  document.getElementById('confirmText').textContent = text;
-  modal.classList.add('open');
+  const titleEl = document.getElementById('confirmTitle');
+  const textEl = document.getElementById('confirmText');
   const ok = document.getElementById('confirmOk');
   const cancel = document.getElementById('confirmCancel');
-  const cleanup = ()=>{ modal.classList.remove('open'); ok.removeEventListener('click', onOk); cancel.removeEventListener('click', onCancel); };
+  // Fallback: no modal in DOM → run action directly
+  if(!modal || !ok){
+    if(typeof onConfirm === 'function') onConfirm();
+    return;
+  }
+  if(titleEl) titleEl.textContent = title;
+  if(textEl) textEl.textContent = text;
+  modal.classList.add('open', 'show');
+  modal.style.display = 'flex';
+  const cleanup = ()=>{
+    modal.classList.remove('open', 'show');
+    modal.style.display = '';
+    ok.removeEventListener('click', onOk);
+    if(cancel) cancel.removeEventListener('click', onCancel);
+  };
   const onOk = ()=>{ cleanup(); onConfirm(); };
   const onCancel = ()=> cleanup();
   ok.addEventListener('click', onOk);
-  cancel.addEventListener('click', onCancel);
+  if(cancel) cancel.addEventListener('click', onCancel);
 }
 
-document.getElementById('clearAllBtn').addEventListener('click', ()=>{
+document.getElementById('clearAllBtn')?.addEventListener('click', ()=>{
   showConfirm('Clear the whole tier list?', 'Everything on the rows goes back to the pool. This can\'t be undone.', ()=>{
     state.assignment = {};
     state.tiers.forEach(t=>state.assignment[t.id]=[]);
-    // Stock cards + custom uploads both return to pool
     const stock = freshPool();
     const customIds = Object.keys(state.customCards||{}).map(Number).filter(Boolean);
     state.pool = [...stock, ...customIds.filter(id => !stock.includes(id))];
@@ -821,7 +835,7 @@ document.getElementById('clearAllBtn').addEventListener('click', ()=>{
   });
 });
 
-document.getElementById('fillAllBtn').addEventListener('click', ()=>{
+document.getElementById('fillAllBtn')?.addEventListener('click', ()=>{
   showConfirm('Fill all rows randomly?', 'Every fighter still in the pool will be dropped into a random row - handy as a starting point before you sort them.', ()=>{
     const shuffled = [...state.pool].sort(()=>Math.random()-0.5);
     shuffled.forEach(cid=>{

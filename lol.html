@@ -92,15 +92,8 @@ nav.main a.exclusive{ color: #e79ee0; }
   max-width:1400px; margin:0 auto; padding: 48px 24px 24px;
   display:flex; align-items:center; gap:40px; flex-wrap:wrap;
 }
-.hero .desc{ flex: 1 1 280px; }
-@media (max-width: 720px){
-  .hero{
-    flex-direction: column;
-    align-items: stretch;
-    padding: 24px 16px 16px;
-    gap: 14px;
-  }
-  .hero .parallax-host{
+.hero .desc{ flex: 1 1 280px; max-width: 520px; color: var(--text-dim); font-size:.95rem; line-height:1.65; font-weight:600; }
+.hero .parallax-host{
   display: block;
   width: min(480px, 100%);
   max-width: 480px;
@@ -115,6 +108,20 @@ nav.main a.exclusive{ color: #e79ee0; }
   animation: exclusiveRgb 5s linear infinite alternate;
   box-shadow: 0 0 28px rgba(180,120,255,.28);
   line-height: 0;
+}
+.hero .parallax-host img{
+  width: 100%;
+  height: auto;
+  display: block;
+  border: none !important;
+  border-radius: 0 !important;
+  background: none !important;
+  animation: none !important;
+  box-shadow: none !important;
+  transform: scale(1.08);
+  transition: transform .15s ease-out;
+  will-change: transform;
+  pointer-events: none;
 }
 .hero img.title-logo{ width: 420px; max-width:100%; height:auto; object-fit:contain; display:block; filter: drop-shadow(0 10px 40px rgba(160,110,220,.25)); }
 .hero .desc{ max-width: 520px; color: var(--text-dim); font-size:.95rem; line-height:1.65; font-weight:600; }
@@ -758,7 +765,7 @@ nav.main a.cta-nav:hover{ filter:brightness(1.08); transform:translateY(-1px); c
 
 
   100%{ opacity:0; transform: translate(18px,-28px) scale(.2); }
-}
+
 
 
 

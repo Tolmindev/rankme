@@ -813,26 +813,37 @@ body.theme-gold .faction-btn img{
 }
 
 
+
+/* Mobile: cover always centered */
 @media (max-width: 720px){
   .hero{
     flex-direction: column !important;
     align-items: center !important;
+    justify-content: flex-start !important;
     text-align: center !important;
-    justify-content: center !important;
+  }
+  .hero .parallax-host{
+    display: block !important;
+    width: min(480px, 92vw) !important;
+    max-width: 92vw !important;
+    margin: 0 auto !important;
+    align-self: center !important;
+  }
+  .hero img.title-logo,
+  .hero img.title-logo.cover-card,
+  .hero img.title-logo.ex-logo{
+    display: block !important;
+    width: min(480px, 92vw) !important;
+    max-width: 92vw !important;
+    margin: 0 auto !important;
+    align-self: center !important;
   }
   .hero .desc{
+    width: 100%;
+    max-width: 520px;
     margin-left: auto !important;
     margin-right: auto !important;
     text-align: center !important;
-    max-width: 100%;
-  }
-  .hero .parallax-host,
-  .hero img.title-logo{
-    margin-left: auto !important;
-    margin-right: auto !important;
-  }
-  .experts-block, .experts-strip, .list-actions{
-    justify-content: center;
   }
 }
 

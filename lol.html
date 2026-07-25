@@ -50,7 +50,6 @@ body{
 .tier-label, input, textarea, [contenteditable]{ -webkit-user-select: text; user-select: text; }
 h1,h2,h3,.tier-label,.brand-name,.faction-btn,.download-btn,.login-btn{ font-weight:800; }
 
-
 /* ---------- Header ---------- */
 header.site{
   display:flex; align-items:center; justify-content:space-between;
@@ -86,46 +85,8 @@ nav.main a:hover, nav.main a.active{ color: var(--text); }
 nav.main a.exclusive{ color: #e79ee0; }
 .search-ico{ width:18px;height:18px; opacity:.7; cursor:pointer; }
 
-
 /* ---------- Hero ---------- */
-.hero{
-  max-width:1400px; margin:0 auto; padding: 48px 24px 24px;
-  display:flex; align-items:center; gap:40px; flex-wrap:wrap;
-}
-.hero .desc{ flex: 1 1 280px; max-width: 520px; color: var(--text-dim); font-size:.95rem; line-height:1.65; font-weight:600; }
-.hero .parallax-host{
-  display: block;
-  width: 420px;
-  max-width: 480px;
-  flex: 0 1 auto;
-  border-radius: 16px;
-  overflow: hidden;
-  border: 2px solid transparent;
-  background:
-    linear-gradient(#1a1728, #1a1728) padding-box,
-    linear-gradient(90deg,#ff6b6b,#f7c948,#7bed9f,#70a1ff,#a29bfe,#ff6b81,#ff6b6b) border-box;
-  background-size: 100% 100%, 200% 100%;
-  animation: exclusiveRgb 5s linear infinite alternate;
-  box-shadow: 0 0 28px rgba(180,120,255,.28);
-  line-height: 0;
-}
-.hero .parallax-host img{
-  width: 100%;
-  height: auto;
-  display: block;
-  border: none !important;
-  border-radius: 0 !important;
-  background: none !important;
-  animation: none !important;
-  box-shadow: none !important;
-  transform: scale(1.08);
-  transition: transform .15s ease-out;
-  will-change: transform;
-  pointer-events: none;
-}
-.hero img.title-logo{ width: 420px; max-width:100%; height:auto; object-fit:contain; display:block; filter: drop-shadow(0 10px 40px rgba(160,110,220,.25)); }
-.hero .desc{ max-width: 520px; color: var(--text-dim); font-size:.95rem; line-height:1.65; font-weight:600; }
-.hero .desc b{ color: var(--text); }
+
 .experts{ margin:0; font-size:.88rem; font-weight:700; color:var(--text-dim); }
 .experts a{
   color:#e6a9e8; text-decoration:none; border-bottom:1px solid rgba(230,169,232,.4);
@@ -133,8 +94,6 @@ nav.main a.exclusive{ color: #e79ee0; }
 }
 .experts a:hover{ color:#fff; border-color: rgba(255,255,255,.5); }
 
-
-.experts-block{ margin-top:14px; width:100%; max-width:1400px; }
 .experts-heading{
   font-size:.72rem; font-weight:800; letter-spacing:.6px;
   text-transform:uppercase; color:var(--text-dim); margin:0 0 10px;
@@ -632,9 +591,9 @@ footer.site .fine{ color:var(--text-dim); font-size:.75rem; font-weight:600; }
   nav.main a{ font-size:.78rem; }
   nav.main .search-ico{ width:16px; height:16px; }
   
-  .hero{ padding: 28px 14px 8px; gap:16px; }
-  .hero img.title-logo{ width:240px; }
-  .hero .desc{ font-size:.88rem; }
+  
+  
+  
   .board, .toolbar, .pool-wrap, footer.site, .action-bar{ padding-left:14px; padding-right:14px; }
   .tier-label-wrap{ width:64px; min-width:64px; }
   .tier-label{ font-size:.6rem; padding:3px 4px; }
@@ -763,12 +722,7 @@ nav.main a.cta-nav:hover{ filter:brightness(1.08); transform:translateY(-1px); c
   100%{ background-position: 0 0, 200% 50%; }
 }
 
-
   100%{ opacity:0; transform: translate(18px,-28px) scale(.2); }
-
-
-
-
 
 /* LoL — brand accents, tight cards, RGB cover */
 body.theme-gold{
@@ -815,28 +769,6 @@ body.theme-gold .faction-btn img{
   0%{ background-position: 0 0, 0% 50%; }
   100%{ background-position: 0 0, 100% 50%; }
 }
-.hero .parallax-host img{
-  width:100%;
-  height:auto;
-  display:block;
-  border:none !important;
-  border-radius:0 !important;
-  background:none !important;
-  animation:none !important;
-  box-shadow:none !important;
-  transform: scale(1.08);
-  transition: transform .15s ease-out;
-  will-change: transform;
-  pointer-events: none;
-}
-
-
-
-
-
-
-
-
 
 /* Clear frame when holding a card */
 .card:hover{
@@ -861,33 +793,100 @@ body.theme-gold .card.floating{
     0 14px 40px rgba(180,120,230,0.5) !important;
 }
 
-
 @media (max-width: 720px){
   footer.site{ padding: 24px 16px 28px !important; }
   footer.site img.footer-logo{ height: 40px !important; }
 }
 
-
+/* ===== Hero (aligned to EX-Move) ===== */
+.hero{
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 48px 24px 36px;
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+.hero .parallax-host{
+  display: block;
+  width: 420px;
+  max-width: 100%;
+  flex: 0 0 auto;
+  border-radius: 16px;
+  overflow: hidden;
+  line-height: 0;
+  border: 2px solid transparent;
+  background:
+    linear-gradient(#1a1728, #1a1728) padding-box,
+    linear-gradient(90deg,#ff6b6b,#f7c948,#7bed9f,#70a1ff,#a29bfe,#ff6b81,#ff6b6b) border-box;
+  background-size: 100% 100%, 200% 100%;
+  animation: exclusiveRgb 5s linear infinite alternate;
+  box-shadow: 0 0 28px rgba(180,120,255,.28);
+}
+.hero .parallax-host img,
+.hero .parallax-host img.title-logo,
+.hero .parallax-host img.cover-card{
+  width: 100% !important;
+  max-width: none !important;
+  height: auto !important;
+  display: block !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background: none !important;
+  animation: none !important;
+  filter: none !important;
+  transform: scale(1.08);
+  transition: transform .15s ease-out;
+  will-change: transform;
+  pointer-events: none;
+}
+.hero img.title-logo{
+  width: 420px;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+.hero .desc{
+  flex: 1 1 280px;
+  max-width: 520px;
+  color: var(--text-dim);
+  font-size: .95rem;
+  line-height: 1.65;
+  font-weight: 600;
+  margin: 0;
+}
+.hero .desc b{ color: var(--text); }
+.experts-block{
+  flex: 0 0 100%;
+  width: 100%;
+  max-width: 100%;
+  margin-top: 8px;
+}
+@keyframes exclusiveRgb{
+  0%{ background-position: 0 0, 0% 50%; }
+  100%{ background-position: 0 0, 100% 50%; }
+}
 @media (max-width: 720px){
   .hero{
-    flex-direction: column !important;
-    align-items: stretch !important;
-    padding: 24px 16px 16px !important;
-    gap: 14px !important;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 24px 16px 16px;
+    gap: 14px;
   }
   .hero .parallax-host{
-    width: 100% !important;
-    max-width: 100% !important;
+    width: 100%;
+    max-width: 100%;
   }
   .hero .desc{
-    text-align: center !important;
-    max-width: 100% !important;
-    flex: none !important;
+    text-align: center;
+    max-width: 100%;
+    flex: none;
   }
-  .experts-block{ order: 3; }
-  .list-actions{ padding-left: 16px; padding-right: 16px; }
 }
-
+/* ===== end Hero ===== */
 </style>
 </head>
 <body>

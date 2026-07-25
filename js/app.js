@@ -4,6 +4,7 @@
 /* ---- Template override (EX-Move etc.) ---- */
 const TMPL = window.RANKME_TEMPLATE || null;
 const CARD_SHAPE = (TMPL && TMPL.cardShape) || 'portrait';
+const CARD_ASPECT = (TMPL && TMPL.cardAspect) || (CARD_SHAPE === 'square' ? 1 : 1.35);
 const CARD_PATH = (TMPL && TMPL.cardPath) || 'assets/cards/';
 const NO_FACTIONS = !!(TMPL && TMPL.noFactions);
 const TEMPLATE_ID = (TMPL && TMPL.id) || (window.RANKME_BLANK ? 'blank' : 'sf-duel');
@@ -728,38 +729,14 @@ document.getElementById('addRowBtn').addEventListener('click', ()=>{
 const sizeSlider = document.getElementById('sizeSlider');
 let _sizeDragging = false;
 function setCardSize(px){
-  // Freeze scroll: pin the toolbar (which sits above the board) in place
-  const pin = document.querySelector('.toolbar') || document.getElementById('board');
-  const pinTop = pin ? pin.getBoundingClientRect().top : 0;
-  const y0 = window.scrollY || document.documentElement.scrollTop;
-
   document.documentElement.style.setProperty('--card-w', px + 'px');
   if(CARD_SHAPE === 'square'){
     document.documentElement.style.setProperty('--card-h', px + 'px');
+  } else if(CARD_ASPECT && Number(CARD_ASPECT) !== 1.35){
+    document.documentElement.style.setProperty('--card-h', Math.round(px * CARD_ASPECT) + 'px');
   } else {
     document.documentElement.style.removeProperty('--card-h');
   }
-
-  document.querySelectorAll('.tier-row').forEach(row=>{
-    if(px < 58) row.classList.add('compact-side');
-    else row.classList.remove('compact-side');
-  });
-
-  // Correct immediately + after layout
-  const fix = ()=>{
-    if(!pin) return;
-    const pinTop2 = pin.getBoundingClientRect().top;
-    const delta = pinTop2 - pinTop;
-    if(Math.abs(delta) > 0.5){
-      const target = y0 + delta;
-      window.scrollTo(0, target);
-      // some browsers need documentElement too
-      document.documentElement.scrollTop = target;
-      document.body.scrollTop = target;
-    }
-  };
-  fix();
-  requestAnimationFrame(()=>{ fix(); requestAnimationFrame(fix); });
 }
 sizeSlider.addEventListener('pointerdown', (e)=>{
   _sizeDragging = true;
@@ -1036,7 +1013,7 @@ async function exportPNG(returnBlobOnly, blobCb){
   // Layout follows Size slider; scale=2 keeps sharp PNG
   const uiSize = parseInt(document.getElementById('sizeSlider')?.value || '64', 10);
   const cardW = Math.round(Math.min(140, Math.max(48, uiSize * 1.15)));
-  const cardH = Math.round(cardW * (CARD_SHAPE === 'square' ? 1 : 1.35));
+  const cardH = Math.round(cardW * (CARD_SHAPE === 'square' ? 1 : (CARD_ASPECT || 1.35)));
   const cardGap = 8;
   const padX = 14;
   const padY = 12;
@@ -1132,31 +1109,44 @@ async function exportPNG(returnBlobOnly, blobCb){
           ctx.beginPath();
           if(ctx.roundRect) ctx.roundRect(x, cy, cardW, cardH, r);
           else ctx.rect(x, cy, cardW, cardH);
-          if(CARD_SHAPE === 'square'){
-            // EX: solid dark plate + gold rim
+          if(CARD_SHAPE === 'square' || THEME_GOLD){
             const bg = ctx.createLinearGradient(x, cy, x+cardW, cy+cardH);
-            bg.addColorStop(0, 'rgba(40,32,60,0.95)');
-            bg.addColorStop(1, 'rgba(18,14,28,0.98)');
+            if(THEME_GOLD){
+              bg.addColorStop(0, 'rgba(40,34,18,0.95)');
+              bg.addColorStop(1, 'rgba(18,14,10,0.98)');
+            } else {
+              bg.addColorStop(0, 'rgba(40,32,60,0.95)');
+              bg.addColorStop(1, 'rgba(18,14,28,0.98)');
+            }
             ctx.fillStyle = bg;
             ctx.fill();
-            ctx.strokeStyle = THEME_GOLD ? 'rgba(220,175,60,0.95)' : 'rgba(230,200,140,0.75)';
+            ctx.strokeStyle = THEME_GOLD ? 'rgba(212,175,55,0.95)' : 'rgba(230,200,140,0.75)';
             ctx.lineWidth = Math.max(1.8, cardW * 0.035);
             ctx.stroke();
             if(THEME_GOLD){
-              ctx.strokeStyle = 'rgba(255,230,140,0.35)';
+              ctx.strokeStyle = 'rgba(255,230,140,0.4)';
               ctx.lineWidth = Math.max(1, cardW * 0.015);
               ctx.stroke();
             }
-            ctx.shadowColor = THEME_GOLD ? 'rgba(220,180,60,0.4)' : 'rgba(200,160,255,0.35)';
+            ctx.shadowColor = THEME_GOLD ? 'rgba(212,175,55,0.4)' : 'rgba(200,160,255,0.35)';
             ctx.shadowBlur = cardW * 0.12;
           } else {
-            // SF Duel: same soft translucent plate as on site (no border)
             ctx.fillStyle = 'rgba(255,255,255,0.045)';
             ctx.fill();
           }
-          // clip card art to rounded plate
           ctx.clip();
-          ctx.drawImage(img, x, cy, cardW, cardH);
+          if(THEME_GOLD){
+            // contain: keep champion proportions
+            const iw = img.naturalWidth || img.width;
+            const ih = img.naturalHeight || img.height;
+            const scale = Math.min(cardW / iw, cardH / ih);
+            const dw = iw * scale, dh = ih * scale;
+            const dx = x + (cardW - dw) / 2;
+            const dy = cy + (cardH - dh) / 2;
+            ctx.drawImage(img, dx, dy, dw, dh);
+          } else {
+            ctx.drawImage(img, x, cy, cardW, cardH);
+          }
           ctx.restore();
         } catch(e){}
       }

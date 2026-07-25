@@ -513,8 +513,8 @@ nav.main a.exclusive{ color: #e79ee0; }
   text-transform:uppercase; transition: all .15s;
 }
 .faction-btn img{
-  width:18px; height:18px; border-radius:50%; object-fit:cover;
-  background: rgba(255,255,255,0.06); flex-shrink:0;
+  width:18px; height:18px; object-fit:contain;
+  border-radius:0; background:transparent; display:block;
 }
 .faction-btn.no-icon{ padding-left:14px; }
 .faction-btn:hover{ color:var(--text); }
@@ -740,6 +740,30 @@ nav.main a.cta-nav:hover{ filter:brightness(1.08); transform:translateY(-1px); c
 
 @keyframes exclusiveRgb{ 0%{background-position:0 0,0% 50%} 100%{background-position:0 0,100% 50%} }
 
+
+
+@media (max-width: 720px){
+  .hero{
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    justify-content: center !important;
+  }
+  .hero .desc{
+    margin-left: auto !important;
+    margin-right: auto !important;
+    text-align: center !important;
+    max-width: 100%;
+  }
+  .hero .parallax-host,
+  .hero img.title-logo{
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  .experts-block, .experts-strip, .list-actions{
+    justify-content: center;
+  }
+}
 
 </style>
 </head>

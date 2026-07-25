@@ -513,8 +513,8 @@ nav.main a.exclusive{ color: #e79ee0; }
   text-transform:uppercase; transition: all .15s;
 }
 .faction-btn img{
-  width:18px; height:18px; border-radius:50%; object-fit:cover;
-  background: rgba(255,255,255,0.06); flex-shrink:0;
+  width:18px; height:18px; object-fit:contain;
+  border-radius:0; background:transparent; display:block;
 }
 .faction-btn.no-icon{ padding-left:14px; }
 .faction-btn:hover{ color:var(--text); }
@@ -780,11 +780,10 @@ body.theme-gold .faction-btn img{
   object-fit: contain;
 }
 .hero .parallax-host{
-  display: inline-block;
-  max-width: min(480px, 90vw);
-  border-radius: 16px;
-  overflow: hidden;
-  line-height: 0;
+  display:inline-block;
+  max-width:min(480px, 90vw);
+  border-radius:16px;
+  overflow:hidden;
   border: 2px solid transparent;
   background:
     linear-gradient(#1a1728, #1a1728) padding-box,
@@ -792,24 +791,49 @@ body.theme-gold .faction-btn img{
   background-size: 100% 100%, 200% 100%;
   animation: exclusiveRgb 5s linear infinite alternate;
   box-shadow: 0 0 28px rgba(180,120,255,.28);
+  line-height:0;
 }
 @keyframes exclusiveRgb{
   0%{ background-position: 0 0, 0% 50%; }
   100%{ background-position: 0 0, 100% 50%; }
 }
 .hero .parallax-host img{
-  width: 100%;
-  height: auto;
-  display: block;
-  border: none !important;
-  border-radius: 0 !important;
-  background: none !important;
-  animation: none !important;
-  box-shadow: none !important;
-  transform: scale(1.06);
-  transition: transform .12s ease-out;
+  width:100%;
+  height:auto;
+  display:block;
+  border:none !important;
+  border-radius:0 !important;
+  background:none !important;
+  animation:none !important;
+  box-shadow:none !important;
+  transform: scale(1.08);
+  transition: transform .15s ease-out;
   will-change: transform;
   pointer-events: none;
+}
+
+
+@media (max-width: 720px){
+  .hero{
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    justify-content: center !important;
+  }
+  .hero .desc{
+    margin-left: auto !important;
+    margin-right: auto !important;
+    text-align: center !important;
+    max-width: 100%;
+  }
+  .hero .parallax-host,
+  .hero img.title-logo{
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  .experts-block, .experts-strip, .list-actions{
+    justify-content: center;
+  }
 }
 
 </style>
@@ -923,26 +947,15 @@ body.theme-gold .faction-btn img{
   function bindParallax(host){
     const img = host.querySelector('img');
     if(!img) return;
-    let raf = 0, tx = 0, ty = 0, cx = 0, cy = 0;
-    const max = 8;
-    function tick(){
-      cx += (tx - cx) * 0.12;
-      cy += (ty - cy) * 0.12;
-      img.style.transform = 'scale(1.06) translate3d(' + cx.toFixed(2) + 'px,' + cy.toFixed(2) + 'px,0)';
-      if(Math.abs(tx-cx)>0.05 || Math.abs(ty-cy)>0.05) raf = requestAnimationFrame(tick);
-      else raf = 0;
-    }
+    const max = 12;
     host.addEventListener('pointermove', (e)=>{
       const r = host.getBoundingClientRect();
       const px = (e.clientX - r.left) / r.width - 0.5;
       const py = (e.clientY - r.top) / r.height - 0.5;
-      tx = -px * max * 2;
-      ty = -py * max * 2;
-      if(!raf) raf = requestAnimationFrame(tick);
+      img.style.transform = 'scale(1.12) translate3d(' + (-px*max*2).toFixed(1) + 'px,' + (-py*max*2).toFixed(1) + 'px,0)';
     });
     host.addEventListener('pointerleave', ()=>{
-      tx = 0; ty = 0;
-      if(!raf) raf = requestAnimationFrame(tick);
+      img.style.transform = 'scale(1.08) translate3d(0,0,0)';
     });
   }
   document.querySelectorAll('.parallax-host').forEach(bindParallax);

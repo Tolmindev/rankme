@@ -311,21 +311,53 @@ function fitLabelFont(el, text){
 
 let activeFilter = 'ALL';
 
-function renderPool(){
-  poolEl.innerHTML = '';
-  // Deduplicate pool just in case
-  state.pool = [...new Set(state.pool.map(Number))].filter(id => id > 0);
-  let visible;
-  if(BLANK_MODE || activeFilter === 'ALL'){
-    visible = state.pool;
-  } else {
-    visible = state.pool.filter(id => {
-      const m = CARD_META[id];
-      return m && (Array.isArray(m.roles) ? m.roles.includes(activeFilter) : m.faction === activeFilter);
-    });
+function cardMatchesFilter(id, filter){
+  if(!filter || filter === 'ALL') return true;
+  const m = CARD_META[id];
+  if(!m) return false;
+  if(Array.isArray(m.roles) && m.roles.length){
+    return m.roles.some(r => String(r).toLowerCase() === String(filter).toLowerCase());
   }
-  visible.forEach(cid => {
-    try { poolEl.appendChild(makeCard(cid)); } catch(e){ console.warn('card', cid, e); }
+  return String(m.faction || '').toLowerCase() === String(filter).toLowerCase();
+}
+
+function renderPool(){
+  if(!poolEl) return;
+  state.pool = [...new Set(state.pool.map(Number))].filter(id => id > 0);
+
+  // Index current DOM cards once
+  const existing = new Map();
+  Array.from(poolEl.querySelectorAll('.card')).forEach(el => {
+    const id = Number(el.dataset.cardId);
+    if(id) existing.set(id, el);
+  });
+
+  // Drop DOM cards that left the pool entirely (moved to a tier)
+  const poolSet = new Set(state.pool);
+  existing.forEach((el, id) => {
+    if(!poolSet.has(id)){
+      el.remove();
+      existing.delete(id);
+    }
+  });
+
+  // Ensure every pool card exists in DOM (create once, keep forever while in pool)
+  state.pool.forEach(cid => {
+    if(!existing.has(cid)){
+      try {
+        const el = makeCard(cid);
+        existing.set(cid, el);
+        poolEl.appendChild(el);
+      } catch(e){ console.warn('card', cid, e); }
+    }
+  });
+
+  // Filter = show/hide only (never destroy images — fixes vanish on role toggle)
+  state.pool.forEach(cid => {
+    const el = existing.get(cid);
+    if(!el) return;
+    const show = cardMatchesFilter(cid, activeFilter);
+    el.style.display = show ? '' : 'none';
   });
 }
 
@@ -337,9 +369,12 @@ function makeCard(cid){
   el.dataset.cardId = cid;
   const img = document.createElement('img');
   img.src = cardSrc(cid);
-  img.loading = 'lazy';
+  // eager: filter toggles must not cancel loads (lazy + innerHTML wipe caused vanishing cards)
+  img.loading = 'eager';
+  img.decoding = 'async';
   img.draggable = false;
-  img.alt = custom ? custom.name : (meta ? meta.name : ('Card #' + cid));
+  img.alt = '';
+  img.onerror = function(){ this.onerror = null; this.style.opacity = '0.35'; };
   el.title = custom ? custom.name : (meta ? meta.name : '');
   el.appendChild(img);
   el.addEventListener('pointerdown', onCardPointerDown);

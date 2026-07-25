@@ -393,7 +393,13 @@ function renderFactionFilters(){
     if(key==='LEGENDARY') extra += ' legendary';
     if(key==='MASTER') extra += ' master';
     if(key==='ALL') extra += ' all-mix';
+    if(key==='FLAME') extra += ' flame';
+    if(key==='THUNDER') extra += ' thunder';
+    if(key==='WIND') extra += ' wind';
+    if(key==='INFERNAL') extra += ' infernal';
+    if(key==='A+') extra += ' aplus';
     b.className = 'faction-btn' + (activeFilter===key ? ' active' : '') + (!icon ? ' no-icon' : '') + extra;
+    b.dataset.f = key;
     if(hue!==undefined) b.style.setProperty('--fhue', hue);
     if(icon){
       const img = document.createElement('img');
@@ -712,12 +718,19 @@ function openRowSettings(tierId, anchorBtn){
   const positionPop = ()=>{
     const r = anchorBtn.getBoundingClientRect();
     const pw = 260;
+    const ph = pop.offsetHeight || 160;
     let left = r.left - pw - 12;
-    if(left < 8) left = r.right + 12;
-    let top = r.top + r.height/2 - 90;
-    top = Math.max(8, Math.min(top, window.innerHeight - 190));
-    pop.style.left = left+'px';
-    pop.style.top = top+'px';
+    if(left < 8) left = Math.min(r.right + 12, window.innerWidth - pw - 8);
+    let top = r.top + r.height / 2 - ph / 2;
+    top = Math.max(8, Math.min(top, window.innerHeight - ph - 8));
+    // Inline fixed — never depend on stylesheet position/transform
+    pop.style.position = 'fixed';
+    pop.style.transform = 'none';
+    pop.style.right = 'auto';
+    pop.style.bottom = 'auto';
+    pop.style.left = left + 'px';
+    pop.style.top = top + 'px';
+    pop.style.zIndex = '400';
   };
   positionPop();
   openPopover = pop;

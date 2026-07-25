@@ -352,9 +352,34 @@ nav.main a.cta-nav:hover{ filter:brightness(1.08); transform:translateY(-1px); c
   background: rgba(160,120,220,0.12);
 }
 
+/* EX / square — rounded tile under each icon (as in reference) */
 body.card-square{ --card-h: var(--card-w); }
-body.card-square .card{ border-radius: 12px; }
-body.card-square .card img{ object-fit: contain; background: #12101a; }
+body.card-square .card{
+  border-radius: 10px;
+  background: rgba(18, 14, 28, 0.95);
+  border: 1px solid rgba(255,255,255,0.09);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+  overflow: hidden;
+}
+body.card-square .card img{
+  object-fit: contain;
+  background: transparent;
+  border-radius: 0;
+  padding: 4px;
+  box-sizing: border-box;
+}
+body.card-square .card:hover{
+  filter: brightness(1.06);
+  border-color: rgba(200,160,240,0.4);
+  box-shadow: 0 0 14px rgba(160,120,220,0.28);
+}
+body.card-square .card.floating,
+body.card-square .card.dragging{
+  border-color: rgba(245,230,255,0.95);
+  box-shadow:
+    0 0 0 2px rgba(200,150,255,0.8),
+    0 12px 36px rgba(160,100,230,0.55) !important;
+}
 
 /* Toolbar */
 .toolbar{
@@ -402,9 +427,17 @@ body.card-square .card img{ object-fit: contain; background: #12101a; }
 }
 .download-btn:hover{ filter:brightness(1.08); transform:translateY(-1px); }
 
-/* Pool + filters */
+/* Pool + filters — one panel (teleport + cards together) */
 .pool-wrap{ max-width:1400px; margin: 0 auto; padding: 16px 24px 40px; }
-.pool-header{ display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:14px; }
+.pool-panel{
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background-color: rgba(255,255,255,0.02);
+  background-image: radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 18px 18px;
+  padding: 12px 14px 14px;
+}
+.pool-header{ display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:12px; }
 .faction-filters{ display:flex; flex-wrap:wrap; gap:8px; flex:1; }
 .faction-btn{
   display:inline-flex; align-items:center; gap:6px;
@@ -445,6 +478,7 @@ body.no-factions .faction-filters{ display:none !important; }
   display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px; padding:10px;
   border-radius:12px; background:rgba(255,255,255,0.03); border:1px solid var(--line);
 }
+.portals-bar[hidden]{ display: none !important; margin:0; padding:0; border:none; }
 .portal-slot{
   flex:1; min-width:72px; min-height:52px; border-radius:10px;
   border: 2px solid transparent;
@@ -464,11 +498,10 @@ body.no-factions .faction-filters{ display:none !important; }
 
 .pool{
   display:flex; flex-wrap:wrap; justify-content:center; gap:10px;
-  min-height:120px; padding:14px;
-  border-radius: var(--radius-sm);
-  background-image: radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px);
-  background-size: 18px 18px;
-  border:1px solid var(--line);
+  min-height:80px; padding:4px 2px 2px;
+  border: none;
+  background: transparent;
+  border-radius: 0;
 }
 
 /* Footer */

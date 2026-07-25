@@ -485,7 +485,8 @@ footer.site .fine{ color:var(--text-dim); font-size:.75rem; font-weight:600; }
   position:fixed; inset:0; background:rgba(6,4,10,.72); backdrop-filter: blur(6px);
   display:none; align-items:center; justify-content:center; z-index:400;
 }
-.modal-back.show{ display:flex; }
+.modal-back.show,
+.modal-back.open{ display:flex; }
 .modal{
   background: var(--panel); border:1px solid var(--line); border-radius:16px;
   padding:24px; width:min(360px, 92vw); text-align:center;
@@ -514,9 +515,9 @@ footer.site .fine{ color:var(--text-dim); font-size:.75rem; font-weight:600; }
 
 /* Row settings popover */
 .row-settings{
-  position:absolute; right:44px; top:50%; transform:translateY(-50%);
+  position:fixed;
   background: var(--panel-2); border:1px solid var(--line); border-radius:12px;
-  padding:16px; width:260px; box-shadow: 0 20px 60px rgba(0,0,0,.55); z-index:30;
+  padding:16px; width:260px; box-shadow: 0 20px 60px rgba(0,0,0,.55); z-index:300;
 }
 .row-settings label{ font-size:.72rem; color:var(--text-dim); text-transform:uppercase; letter-spacing:.5px; display:block; margin-bottom:6px; }
 .hue-slider{

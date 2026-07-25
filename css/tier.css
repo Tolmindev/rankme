@@ -307,13 +307,14 @@ nav.main a.cta-nav:hover{ filter:brightness(1.08); transform:translateY(-1px); c
 .pill-btn.danger{ color:#ffb3b3; border-color: rgba(255,110,110,.3); }
 .pill-btn.danger:hover{ background: rgba(255,90,90,.12); border-color: rgba(255,110,110,.7); transform: translateY(-1px); }
 
-/* Cards */
+/* Cards — SF portrait: soft plate; art carries hex frame */
 .card{
   width: var(--card-w); height: var(--card-h);
   border-radius: 10px; overflow:hidden; cursor: grab; position:relative;
   transition: transform .15s ease, filter .15s ease, box-shadow .15s ease;
   touch-action:none; -webkit-user-select:none; user-select:none;
-  background: rgba(255,255,255,0.035);
+  background: rgba(12, 10, 20, 0.65);
+  border: 1px solid rgba(255,255,255,0.06);
 }
 .card img{ width:100%; height:100%; object-fit:cover; display:block; pointer-events:none; }
 .card:hover{
@@ -448,11 +449,50 @@ body.card-square .card.dragging{
 }
 .faction-btn img{ width:16px; height:16px; object-fit:contain; border-radius:50%; }
 .faction-btn:hover{ color:var(--text); border-color:rgba(200,160,240,.45); }
+/* default active */
 .faction-btn.active{
   color:#fff;
   border-color: transparent;
   background: linear-gradient(120deg,#8f6bd8,#c98fe0);
   box-shadow: 0 0 16px rgba(180,140,255,.35);
+}
+.faction-btn.active.all-mix{
+  background: linear-gradient(120deg,#b79bf0,#e6a9e8,#cdd6f7);
+  box-shadow: 0 0 18px rgba(180,140,255,.45);
+}
+.faction-btn.active.master{
+  color:#f2f4f8;
+  background: linear-gradient(120deg,#8e96a8,#d0d5e0 50%,#9aa3b5);
+  box-shadow: 0 0 16px rgba(190,200,220,.45);
+}
+.faction-btn.active.infernal{
+  background: linear-gradient(120deg,#6b3fa0,#9b5fd4);
+  box-shadow: 0 0 16px rgba(140,80,220,.5);
+}
+.faction-btn.active.wind{
+  background: linear-gradient(120deg,#2f6fad,#5a9fd4);
+  box-shadow: 0 0 16px rgba(70,140,220,.45);
+}
+.faction-btn.active.thunder{
+  color:#1a1520;
+  background: linear-gradient(120deg,#c9a020,#f0d060);
+  box-shadow: 0 0 16px rgba(230,180,40,.45);
+}
+.faction-btn.active.flame{
+  background: linear-gradient(120deg,#c02818,#e84830);
+  box-shadow: 0 0 16px rgba(220,50,30,.5);
+}
+.faction-btn.active.legendary{
+  color:#1a1226;
+  background: linear-gradient(120deg,#c9a8f0,#f0e6ff 40%,#d4b8f0 70%,#e6a9e8);
+  background-size: 200% 100%;
+  animation: exclusiveRgb 4s linear infinite alternate;
+  box-shadow: 0 0 20px rgba(200,160,255,.55);
+}
+.faction-btn.active.aplus{
+  color:#1a1520;
+  background: linear-gradient(120deg,#e08818,#f5c040);
+  box-shadow: 0 0 16px rgba(240,160,40,.45);
 }
 .faction-btn.no-icon{ padding-left:14px; padding-right:14px; }
 body.no-factions .faction-filters{ display:none !important; }

@@ -738,42 +738,80 @@ nav.main a.cta-nav:hover{ filter:brightness(1.08); transform:translateY(-1px); c
 
 
 
-/* LoL: natural proportions + gold UI */
+
+/* LoL — brand accents, tight cards, RGB cover */
 body.theme-gold{
-  --card-h: calc(var(--card-w) * 1.13);
+  --card-h: calc(var(--card-w) * 1.15);
 }
 body.theme-gold .card{
   width: var(--card-w);
   height: var(--card-h);
   border-radius: 10px;
-  background: rgba(28,24,14,0.7);
-  box-shadow: inset 0 0 0 1.5px rgba(212,175,55,0.65);
   overflow: hidden;
+  background: #12101a;
+  box-shadow: inset 0 0 0 1.5px rgba(201,168,240,0.55);
+  padding: 0;
 }
 body.theme-gold .card img{
-  object-fit: contain;
-  object-position: center bottom;
-  background: linear-gradient(180deg, #1a1620, #12101a);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+  background: none;
 }
 body.theme-gold .card:hover{
-  box-shadow: inset 0 0 0 2px rgba(232,196,80,0.95), 0 8px 26px rgba(212,175,55,0.35);
+  box-shadow: inset 0 0 0 2px rgba(220,180,255,0.9), 0 8px 26px rgba(180,120,230,0.4);
   filter: brightness(1.08);
 }
 body.theme-gold .faction-btn.active,
 body.theme-gold .faction-btn.active.legendary,
 body.theme-gold .faction-btn.active.master,
 body.theme-gold .faction-btn.active.all-mix{
-  color: #f0e0a8 !important;
-  border-color: rgba(212,175,55,0.75) !important;
-  background: rgba(212,175,55,0.12) !important;
-  box-shadow: 0 0 14px rgba(212,175,55,0.4) !important;
+  color: #f0eafc !important;
+  border-color: rgba(201,168,240,0.7) !important;
+  background: rgba(201,168,240,0.14) !important;
+  box-shadow: 0 0 14px rgba(180,130,230,0.4) !important;
 }
 body.theme-gold .faction-btn img{
   filter: none !important;
   border-radius: 0 !important;
-  width: 20px; height: 20px;
+  width: 18px; height: 18px;
   object-fit: contain;
 }
+.hero .parallax-host{
+  display: inline-block;
+  max-width: min(480px, 90vw);
+  border-radius: 16px;
+  overflow: hidden;
+  line-height: 0;
+  border: 2px solid transparent;
+  background:
+    linear-gradient(#1a1728, #1a1728) padding-box,
+    linear-gradient(90deg,#ff6b6b,#f7c948,#7bed9f,#70a1ff,#a29bfe,#ff6b81,#ff6b6b) border-box;
+  background-size: 100% 100%, 200% 100%;
+  animation: exclusiveRgb 5s linear infinite alternate;
+  box-shadow: 0 0 28px rgba(180,120,255,.28);
+}
+@keyframes exclusiveRgb{
+  0%{ background-position: 0 0, 0% 50%; }
+  100%{ background-position: 0 0, 100% 50%; }
+}
+.hero .parallax-host img{
+  width: 100%;
+  height: auto;
+  display: block;
+  border: none !important;
+  border-radius: 0 !important;
+  background: none !important;
+  animation: none !important;
+  box-shadow: none !important;
+  transform: scale(1.06);
+  transition: transform .12s ease-out;
+  will-change: transform;
+  pointer-events: none;
+}
+
 </style>
 </head>
 <body>
@@ -885,15 +923,26 @@ body.theme-gold .faction-btn img{
   function bindParallax(host){
     const img = host.querySelector('img');
     if(!img) return;
-    const max = 12;
+    let raf = 0, tx = 0, ty = 0, cx = 0, cy = 0;
+    const max = 8;
+    function tick(){
+      cx += (tx - cx) * 0.12;
+      cy += (ty - cy) * 0.12;
+      img.style.transform = 'scale(1.06) translate3d(' + cx.toFixed(2) + 'px,' + cy.toFixed(2) + 'px,0)';
+      if(Math.abs(tx-cx)>0.05 || Math.abs(ty-cy)>0.05) raf = requestAnimationFrame(tick);
+      else raf = 0;
+    }
     host.addEventListener('pointermove', (e)=>{
       const r = host.getBoundingClientRect();
       const px = (e.clientX - r.left) / r.width - 0.5;
       const py = (e.clientY - r.top) / r.height - 0.5;
-      img.style.transform = 'scale(1.12) translate3d(' + (-px*max*2).toFixed(1) + 'px,' + (-py*max*2).toFixed(1) + 'px,0)';
+      tx = -px * max * 2;
+      ty = -py * max * 2;
+      if(!raf) raf = requestAnimationFrame(tick);
     });
     host.addEventListener('pointerleave', ()=>{
-      img.style.transform = 'scale(1.08) translate3d(0,0,0)';
+      tx = 0; ty = 0;
+      if(!raf) raf = requestAnimationFrame(tick);
     });
   }
   document.querySelectorAll('.parallax-host').forEach(bindParallax);

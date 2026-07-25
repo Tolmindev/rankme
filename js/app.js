@@ -1111,42 +1111,23 @@ async function exportPNG(returnBlobOnly, blobCb){
           else ctx.rect(x, cy, cardW, cardH);
           if(CARD_SHAPE === 'square' || THEME_GOLD){
             const bg = ctx.createLinearGradient(x, cy, x+cardW, cy+cardH);
-            if(THEME_GOLD){
-              bg.addColorStop(0, 'rgba(40,34,18,0.95)');
-              bg.addColorStop(1, 'rgba(18,14,10,0.98)');
-            } else {
-              bg.addColorStop(0, 'rgba(40,32,60,0.95)');
-              bg.addColorStop(1, 'rgba(18,14,28,0.98)');
-            }
+            bg.addColorStop(0, 'rgba(40,32,60,0.95)');
+            bg.addColorStop(1, 'rgba(18,14,28,0.98)');
             ctx.fillStyle = bg;
             ctx.fill();
-            ctx.strokeStyle = THEME_GOLD ? 'rgba(212,175,55,0.95)' : 'rgba(230,200,140,0.75)';
-            ctx.lineWidth = Math.max(1.8, cardW * 0.035);
+            // brand violet rim
+            ctx.strokeStyle = THEME_GOLD ? 'rgba(201,168,240,0.85)' : 'rgba(230,200,140,0.75)';
+            ctx.lineWidth = Math.max(1.5, cardW * 0.03);
             ctx.stroke();
-            if(THEME_GOLD){
-              ctx.strokeStyle = 'rgba(255,230,140,0.4)';
-              ctx.lineWidth = Math.max(1, cardW * 0.015);
-              ctx.stroke();
-            }
-            ctx.shadowColor = THEME_GOLD ? 'rgba(212,175,55,0.4)' : 'rgba(200,160,255,0.35)';
-            ctx.shadowBlur = cardW * 0.12;
+            ctx.shadowColor = 'rgba(180,130,230,0.35)';
+            ctx.shadowBlur = cardW * 0.1;
           } else {
             ctx.fillStyle = 'rgba(255,255,255,0.045)';
             ctx.fill();
           }
           ctx.clip();
-          if(THEME_GOLD){
-            // contain: keep champion proportions
-            const iw = img.naturalWidth || img.width;
-            const ih = img.naturalHeight || img.height;
-            const scale = Math.min(cardW / iw, cardH / ih);
-            const dw = iw * scale, dh = ih * scale;
-            const dx = x + (cardW - dw) / 2;
-            const dy = cy + (cardH - dh) / 2;
-            ctx.drawImage(img, dx, dy, dw, dh);
-          } else {
-            ctx.drawImage(img, x, cy, cardW, cardH);
-          }
+          // cover fills frame — no empty letterbox
+          ctx.drawImage(img, x, cy, cardW, cardH);
           ctx.restore();
         } catch(e){}
       }

@@ -180,7 +180,6 @@ document.getElementById('coverFile').onchange = (e) => {
 document.getElementById('startBlank').onclick = () => {
   const title = document.getElementById('title').value.trim() || 'My tier list';
   try { localStorage.setItem('rankme_draft_title', title); } catch(e){}
-  // Generic builder next; for now go to exclusive SF tool as demo
   location.href = 'builder.html';
 };
 </script>

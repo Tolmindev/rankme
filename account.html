@@ -10,12 +10,12 @@
 <script src="js/supabaseClient.js"></script>
 <style>
 :root{--bg-0:#0e0c14;--panel:#161322;--line:rgba(255,255,255,.08);--text:#f4f1fc;--text-dim:#9b94b0;--accent:#c9a8f0;--accent-grad:linear-gradient(120deg,#b79bf0,#e6a9e8,#cdd6f7)}
-*{box-sizing:border-box}body{margin:0;font-family:Montserrat,system-ui,sans-serif;background:radial-gradient(circle at 20% 0,rgba(160,120,220,.12),transparent 50%),var(--bg-0);color:var(--text);min-height:100vh}
+*{box-sizing:border-box}body{margin:0;font-family:Montserrat,system-ui,sans-serif;background:radial-gradient(circle at 20% 0,rgba(160,120,220,.12),transparent 50%),var(--bg-0);color:var(--text);min-height:100vh;display:flex;flex-direction:column}
 header.site{display:flex;align-items:center;justify-content:space-between;padding:16px 40px;border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(14,12,20,.8);backdrop-filter:blur(14px);z-index:20}
 .brand img{height:34px} nav.main{display:flex;gap:28px;align-items:center}
 nav.main a{color:var(--text-dim);text-decoration:none;font-weight:700;font-size:.92rem} nav.main a:hover{color:var(--text)}
 .btn{padding:8px 20px;border-radius:999px;font-weight:800;font-size:.85rem;border:none;cursor:pointer;background:var(--accent-grad);color:#1a1226}
-.wrap{max-width:960px;margin:36px auto;padding:0 24px 80px}
+.wrap{max-width:960px;margin:36px auto;padding:0 24px 40px}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:32px 36px}
 h1{margin:0 0 6px;font-size:1.5rem;font-weight:900;color:var(--text)}
 .sub{color:var(--text-dim);font-weight:600;font-size:.9rem;margin:0 0 28px;line-height:1.55}
@@ -72,7 +72,7 @@ h1{margin:0 0 6px;font-size:1.5rem;font-weight:900;color:var(--text)}
 .modal button.primary{background:var(--accent-grad);color:#1a1226;border:none}
 
 footer.site{
-  text-align:center; padding:32px 20px 40px;
+  text-align:center; margin-top:auto; padding:28px 20px 32px; margin-top:24px;
   border-top:1px solid var(--line);
   display:flex; flex-direction:column; align-items:center; gap:12px;
 }

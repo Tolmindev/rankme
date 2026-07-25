@@ -23,7 +23,14 @@
   --radius: 14px; --radius-sm: 9px; font-size:16px;
 }
 *{ box-sizing:border-box; }
-html,body{ margin:0; padding:0; }
+html,body{
+  background:
+    radial-gradient(circle at 18% 0%, rgba(160,120,220,0.16), transparent 45%),
+    radial-gradient(circle at 85% 15%, rgba(120,160,230,0.10), transparent 40%),
+    var(--bg-0);
+  color: var(--text); font-family: 'Montserrat', system-ui, sans-serif;
+  min-height:100vh;
+}
 body{
   background:
     radial-gradient(circle at 18% 0%, rgba(160,120,220,0.16), transparent 45%),
@@ -51,7 +58,7 @@ nav.main a.exclusive{ color:#e79ee0; }
 
 
 
-.page{ max-width:1200px; margin:0 auto; padding:40px 24px 80px; }
+.page{ flex:1; max-width:1200px; margin:0 auto; padding:40px 24px 40px; }
 .hero-home{ text-align:center; margin-bottom:48px; }
 .hero-home h1{
   font-size:clamp(1.8rem, 4vw, 2.6rem); font-weight:900; margin:0 0 12px;
@@ -139,7 +146,7 @@ nav.main a.exclusive{ color:#e79ee0; }
   border:1px dashed var(--line); border-radius:var(--radius); background:rgba(255,255,255,0.02);
 }
 
-footer.site{ text-align:center; padding:32px 20px 40px; border-top:1px solid var(--line); display:flex; flex-direction:column; align-items:center; gap:12px; }
+footer.site{ text-align:center; margin-top:auto; padding:28px 20px 32px; margin-top:24px; border-top:1px solid var(--line); display:flex; flex-direction:column; align-items:center; gap:12px; }
 footer.site img.footer-logo{ height:56px; display:block; }
 footer.site .fine{ color:var(--text-dim); font-size:.75rem; font-weight:600; }
 
@@ -250,6 +257,18 @@ nav.main a.cta-nav{
         <div class="meta">Official exclusive · 35 EX skills</div>
       </div>
     </a>
+
+    <a class="tl-card exclusive" href="lol.html">
+      <div class="cover">
+        <span class="tag">EXCLUSIVE</span>
+        <img class="cover-art" src="assets/brand/LoL_Cover.webp" alt="League of Legends">
+      </div>
+      <div class="body">
+        <div class="title">League of Legends</div>
+        <div class="meta">Official exclusive · 173 champions</div>
+      </div>
+    </a>
+
   </div>
 
   <h2 class="section-title">Community</h2>

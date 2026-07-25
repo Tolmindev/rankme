@@ -362,6 +362,9 @@ body.card-square .card img{ object-fit: contain; background: #12101a; }
   display:flex; align-items:center; gap:16px; flex-wrap:wrap;
   background: var(--panel); border:1px solid var(--line); border-radius: var(--radius);
 }
+.toolbar-actions{
+  display:flex; align-items:center; gap:8px; flex-wrap:wrap; flex-shrink:0;
+}
 .size-ctrl{ display:flex; align-items:center; gap:10px; color:var(--text-dim); font-size:.8rem; font-weight:700; }
 .size-ctrl input[type=range]{
   -webkit-appearance:none; appearance:none; width:120px; height:6px; border-radius:999px;
@@ -558,6 +561,7 @@ footer.site .fine{ color:var(--text-dim); font-size:.75rem; font-weight:600; }
   .list-actions{ margin: 6px auto 8px !important; padding: 0 14px !important; }
   .board, .toolbar, .pool-wrap{ padding-left:14px; padding-right:14px; }
   .toolbar{ justify-content:center; gap:10px; padding:10px 12px; }
+  .toolbar-actions{ width:100%; justify-content:center; }
   .share-group{ margin-left:0; }
   footer.site{ padding: 20px 16px 28px; }
   footer.site img.footer-logo{ height: 40px; }

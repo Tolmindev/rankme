@@ -472,11 +472,36 @@ let autoScrollRAF = null;
 function onCardPointerDown(e){
   if(e.button !== undefined && e.button !== 0) return;
   if(drag) return;
-  e.preventDefault();
+  // Don't preventDefault yet — wait until real drag starts (keeps click/scroll clean on mobile)
   const source = e.currentTarget;
   const cid = source.dataset.cardId;
   const rect = source.getBoundingClientRect();
 
+  drag = {
+    cid, source, pointerId: e.pointerId,
+    offX: e.clientX - rect.left,
+    offY: e.clientY - rect.top,
+    floater: null,
+    startedContainer: source.parentElement,
+    lastY: e.clientY,
+    moved: false,
+    active: false, // becomes true after movement threshold
+    startX: e.clientX,
+    startY: e.clientY,
+    startRect: rect,
+  };
+
+  try { source.setPointerCapture(e.pointerId); } catch(err){}
+  window.addEventListener('pointermove', onDragMove);
+  window.addEventListener('pointerup', onDragEnd);
+  window.addEventListener('pointercancel', onDragEnd);
+}
+
+function beginDragVisual(){
+  if(!drag || drag.active) return;
+  drag.active = true;
+  const source = drag.source;
+  const rect = drag.startRect || source.getBoundingClientRect();
   const floater = source.cloneNode(true);
   floater.classList.add('floating');
   floater.style.width = rect.width+'px';
@@ -484,27 +509,12 @@ function onCardPointerDown(e){
   floater.style.left = rect.left+'px';
   floater.style.top = rect.top+'px';
   floater.style.transform = 'none';
+  floater.style.pointerEvents = 'none';
   document.body.appendChild(floater);
-
+  drag.floater = floater;
   source.classList.add('dragging');
-  source.style.display = 'none';
-
-  drag = {
-    cid, source, pointerId: e.pointerId,
-    offX: e.clientX - rect.left,
-    offY: e.clientY - rect.top,
-    floater,
-    startedContainer: source.parentElement,
-    lastY: e.clientY,
-    moved: false,
-    startX: e.clientX,
-    startY: e.clientY,
-  };
-
-  try { source.setPointerCapture(e.pointerId); } catch(err){}
-  window.addEventListener('pointermove', onDragMove);
-  window.addEventListener('pointerup', onDragEnd);
-  window.addEventListener('pointercancel', onDragEnd);
+  source.style.opacity = '0.25';
+  source.style.pointerEvents = 'none';
 }
 
 function containerAt(x,y){
@@ -534,9 +544,20 @@ function autoScrollTick(){
 function onDragMove(e){
   if(!drag || e.pointerId !== drag.pointerId) return;
   drag.lastY = e.clientY;
+
+  const dx = Math.abs(e.clientX - drag.startX);
+  const dy = Math.abs(e.clientY - drag.startY);
+  // Threshold ~10px: tap/click does NOT dim the card
+  if(!drag.active){
+    if(dx < 10 && dy < 10) return;
+    drag.moved = true;
+    try { e.preventDefault(); } catch(err){}
+    beginDragVisual();
+  }
+
+  if(!drag.floater) return;
   if(!autoScrollRAF) autoScrollRAF = requestAnimationFrame(autoScrollTick);
 
-  if(Math.abs(e.clientX - drag.startX) > 3 || Math.abs(e.clientY - drag.startY) > 3) drag.moved = true;
   drag.floater.style.left = (e.clientX - drag.offX)+'px';
   drag.floater.style.top = (e.clientY - drag.offY)+'px';
   drag.floater.style.transform = 'none';
@@ -591,6 +612,17 @@ function onDragMove(e){
   }
 }
 
+function cleanupDragSource(source){
+  if(!source) return;
+  try {
+    source.classList.remove('dragging');
+    source.style.display = '';
+    source.style.visibility = '';
+    source.style.opacity = '';
+    source.style.pointerEvents = '';
+  } catch(err){}
+}
+
 function onDragEnd(e){
   if(!drag || (e.pointerId!==undefined && e.pointerId !== drag.pointerId)) return;
   window.removeEventListener('pointermove', onDragMove);
@@ -600,11 +632,20 @@ function onDragEnd(e){
 
   document.querySelectorAll('.tier-row').forEach(r=>r.classList.remove('drag-over'));
   document.querySelectorAll('.portal-slot').forEach(s=>s.classList.remove('drag-over'));
+  document.querySelectorAll('.card.placeholder').forEach(p=>p.remove());
+
+  // Pure tap / no real drag started → restore and exit (fixes dim cards on mobile)
+  if(!drag.active){
+    cleanupDragSource(drag.source);
+    try { if(drag.floater) drag.floater.remove(); } catch(err){}
+    drag = null;
+    return;
+  }
 
   const cid = parseInt(drag.cid, 10);
   const floater = drag.floater;
   let targetContainer = drag.targetContainer;
-  const targetPortal = drag.targetPortal || portalAt(e.clientX, e.clientY);
+  const targetPortal = drag.targetPortal || (typeof portalAt === 'function' ? portalAt(e.clientX, e.clientY) : null);
   const started = drag.startedContainer;
 
   // Hit-test again at release point (more reliable than last move)
@@ -619,6 +660,7 @@ function onDragEnd(e){
   // Drop on Magic Portal
   if(targetPortal && portalsOn){
     if(drag.placeholder) drag.placeholder.remove();
+    cleanupDragSource(drag.source);
     const tierId = targetPortal.dataset.tierId;
     const label = targetPortal.dataset.label || 'tier';
     removeFromAllData(cid);
@@ -639,14 +681,12 @@ function onDragEnd(e){
     return;
   }
 
-  // No valid drop target → if started from a tier/pool, put back there (no evaporate on click/double-click)
+  // No valid drop target → put back (no evaporate on failed drop)
   if(!targetContainer){
     if(drag.placeholder) drag.placeholder.remove();
-    // restore source visibility without removing from data
-    try { drag.source.style.display = ''; drag.source.style.visibility = ''; drag.source.classList.remove('dragging'); } catch(err){}
-    try { floater.remove(); } catch(err){}
+    cleanupDragSource(drag.source);
+    try { if(floater) floater.remove(); } catch(err){}
     drag = null;
-    // full re-render to be safe
     render();
     return;
   }
@@ -674,7 +714,8 @@ function onDragEnd(e){
   }
 
   if(drag.placeholder) drag.placeholder.remove();
-  try { floater.remove(); } catch(err){}
+  cleanupDragSource(drag.source);
+  try { if(floater) floater.remove(); } catch(err){}
   drag = null;
   render();
 }

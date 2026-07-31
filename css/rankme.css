@@ -941,6 +941,8 @@ body.theme-gold .faction-btn img{ filter: none !important; border-radius: 0 !imp
 }
 .tl-actions button.danger:hover{ background:rgba(255,80,80,.12); box-shadow:0 0 12px rgba(255,80,80,.25); }
 .tl-actions a.share, .tl-actions button.share{
+  border-color: rgba(200,160,240,.45);
+  color: #e8d4ff;
   border-color:rgba(200,160,240,.35);
 }
 .tl-actions a.share:hover, .tl-actions button.share:hover{
@@ -998,12 +1000,12 @@ body.theme-gold .faction-btn img{ filter: none !important; border-radius: 0 !imp
 
 /* ========== PROFILE / AVATAR ========== */
 .profile{
-  display:flex; align-items:center; gap:16px;
-  margin:18px 0 22px; padding:12px 0;
+  display:flex; align-items:center; gap:14px;
+  margin:18px 0 22px; padding:4px 0;
 }
 .avatar-wrap{
   position:relative;
-  width:56px; height:56px; flex-shrink:0;
+  width:52px; height:52px; flex-shrink:0;
 }
 .avatar-wrap .holo-ring{
   position:absolute; inset:-3px; border-radius:50%;
@@ -1015,25 +1017,48 @@ body.theme-gold .faction-btn img{ filter: none !important; border-radius: 0 !imp
 .avatar-wrap .avatar,
 .avatar-wrap .avatar-fallback{
   position:relative; z-index:1;
-  width:56px; height:56px; border-radius:50% !important;
+  width:52px; height:52px; border-radius:50% !important;
   object-fit:cover; display:block;
   background:#1a1728; border:2px solid #12101a;
   box-sizing:border-box;
 }
 .avatar-wrap .avatar-fallback{
   display:flex; align-items:center; justify-content:center;
-  font-weight:900; font-size:1.2rem; color:#e8d4ff;
+  font-weight:900; font-size:1.15rem; color:#e8d4ff;
 }
 .profile .meta{
-  display:flex; flex-direction:column; align-items:flex-start; gap:4px;
-  min-width:0;
+  display:flex; flex-direction:column; justify-content:center;
+  align-items:flex-start; gap:2px;
+  min-width:0; line-height:1.25;
 }
 .profile .meta b{
-  font-size:1rem; font-weight:800; color:var(--text);
-  line-height:1.2;
+  font-size:.95rem; font-weight:800; color:var(--text);
+  line-height:1.25; margin:0;
 }
 .profile .meta span{
-  font-size:.78rem; font-weight:700; color:var(--text-dim);
+  font-size:.75rem; font-weight:700; color:var(--text-dim);
   text-transform:capitalize; letter-spacing:.02em;
-  margin:0; padding:0;
+  margin:0; padding:0; line-height:1.2;
+}
+
+#delModal .modal-actions{
+  display:flex; gap:10px; justify-content:flex-end; margin-top:18px;
+}
+#delModal .modal-actions button{
+  padding:10px 18px; border-radius:999px; font-weight:800; font-size:.85rem;
+  cursor:pointer; border:1px solid rgba(200,160,240,.35);
+  background:rgba(30,26,48,.95); color:var(--text); font-family:inherit;
+  transition: filter .15s, box-shadow .15s, border-color .15s;
+}
+#delModal .modal-actions button.primary{
+  background: linear-gradient(135deg,#c4a0f0,#9b7ad8);
+  border-color:transparent; color:#1a1028;
+}
+#delModal .modal-actions button.danger{
+  border-color: rgba(255,100,120,.45); color:#ffb0bc;
+  background: rgba(40,16,24,.9);
+}
+#delModal .modal-actions button:hover{
+  filter:brightness(1.08);
+  box-shadow:0 0 14px rgba(180,120,255,.3);
 }

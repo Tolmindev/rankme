@@ -126,8 +126,9 @@ function goToAccount(){
   try{
     window.allowLeave = true;
     sessionStorage.setItem('rankme_nav_ok', '1');
+    sessionStorage.removeItem('rankme_login_return');
     if(typeof hasProgress === 'function' && hasProgress() && typeof stashDraftBeforeLogin === 'function'){
-      stashDraftBeforeLogin();
+      stashDraftBeforeLogin({ needReturn: false });
     }
   }catch(e){}
   location.assign(new URL('account.html', location.href).href);

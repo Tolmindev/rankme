@@ -1066,10 +1066,17 @@ document.getElementById('remixBtn')?.addEventListener('click', ()=>{
   showToast('Remix ready');
 });
 
-function stashDraftBeforeLogin(){
+/** @param {{needReturn?: boolean}} opts needReturn=true only when redirecting to login/OAuth */
+function stashDraftBeforeLogin(opts){
   try{
     sanitizeState();
-    sessionStorage.setItem('rankme_login_return', location.href);
+    const needReturn = !!(opts && opts.needReturn);
+    if(needReturn){
+      sessionStorage.setItem('rankme_login_return', location.href);
+    } else {
+      // Opening Account while already logged in — do NOT bounce back from account.html
+      sessionStorage.removeItem('rankme_login_return');
+    }
     sessionStorage.setItem('rankme_draft_payload', JSON.stringify({
       tiers: state.tiers,
       assignment: state.assignment,
@@ -1123,7 +1130,7 @@ document.getElementById('saveAccountBtn')?.addEventListener('click', async ()=>{
     }
     const user = await getSessionUser();
     if(!user){
-      stashDraftBeforeLogin();
+      stashDraftBeforeLogin({ needReturn: true });
       showToast('Sign in to save — your ranking is kept');
       setAllowLeave(true);
       location.href = 'account.html';
@@ -1479,11 +1486,13 @@ window.addEventListener('beforeunload', rankmeBeforeUnload);
 function navigateToAccount(){
   setAllowLeave(true);
   try{
+    // Keep ranking in session for later, but never auto-bounce from Account
     if(typeof hasProgress === 'function' && hasProgress() && typeof stashDraftBeforeLogin === 'function'){
-      stashDraftBeforeLogin();
+      stashDraftBeforeLogin({ needReturn: false });
+    } else {
+      sessionStorage.removeItem('rankme_login_return');
     }
   }catch(_){}
-  // hard navigation
   window.location.assign(new URL('account.html', location.href).href);
 }
 window.navigateToAccount = navigateToAccount;

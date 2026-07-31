@@ -1,9 +1,12 @@
 /* RankMe boot — resolve template id, load templates/{id}.json, then app.js */
 (function () {
   function fail(msg) {
+    try { document.body.classList.remove('booting'); } catch (e) {}
     const status = document.getElementById('bootStatus');
     if (status) {
       status.className = 'boot-error';
+      status.hidden = false;
+      status.removeAttribute('hidden');
       status.innerHTML =
         (msg || 'Failed to load') +
         '<br><br><a href="index.html" style="color:#e6a9e8">Back to RankMe</a>';
@@ -137,11 +140,16 @@
   }
 
   function showApp() {
-    if (status) status.remove();
-    document.body.classList.remove('booting');
+    try { document.body.classList.remove('booting'); } catch (e) {}
+    if (status) {
+      status.remove();
+    }
     ['heroSection', 'listActions', 'board', 'toolbar', 'poolWrap'].forEach((hid) => {
       const el = document.getElementById(hid);
-      if (el) el.hidden = false;
+      if (el) {
+        el.hidden = false;
+        el.removeAttribute('hidden');
+      }
     });
   }
 

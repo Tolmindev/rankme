@@ -6,128 +6,10 @@
 <title>Account - RankMe</title>
 <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/rankme.css">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/supabaseClient.js"></script>
-<style>
-:root{--bg-0:#0e0c14;--panel:#161322;--line:rgba(255,255,255,.08);--text:#f4f1fc;--text-dim:#9b94b0;--accent:#c9a8f0;--accent-grad:linear-gradient(120deg,#b79bf0,#e6a9e8,#cdd6f7)}
-*{box-sizing:border-box}body{margin:0;font-family:Montserrat,system-ui,sans-serif;background:radial-gradient(circle at 20% 0,rgba(160,120,220,.12),transparent 50%),var(--bg-0);color:var(--text);min-height:100vh;display:flex;flex-direction:column}
-header.site{display:flex;align-items:center;justify-content:space-between;padding:16px 40px;border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(14,12,20,.8);backdrop-filter:blur(14px);z-index:20}
-.brand img{height:34px} nav.main{display:flex;gap:28px;align-items:center}
-nav.main a{color:var(--text-dim);text-decoration:none;font-weight:700;font-size:.92rem} nav.main a:hover{color:var(--text)}
-.btn{padding:8px 20px;border-radius:999px;font-weight:800;font-size:.85rem;border:none;cursor:pointer;background:var(--accent-grad);color:#1a1226}
-.wrap{max-width:960px;margin:36px auto;padding:0 24px 40px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:32px 36px}
-h1{margin:0 0 6px;font-size:1.5rem;font-weight:900;color:var(--text)}
-.sub{color:var(--text-dim);font-weight:600;font-size:.9rem;margin:0 0 28px;line-height:1.55}
-.sub b{color:var(--accent);font-weight:800}
-.profile{display:flex;gap:16px;align-items:center;margin-bottom:24px}
-.avatar-wrap{position:relative;width:72px;height:72px}
-.avatar{width:72px;height:72px;border-radius:50%;object-fit:cover;background:linear-gradient(135deg,#3a2a55,#2a3550);display:block}
-.avatar-fallback{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#3a2a55,#2a3550);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:1.3rem;color:#c9b4f0}
-.holo-ring{position:absolute;inset:-4px;border-radius:50%;pointer-events:none;
-  background:conic-gradient(from 120deg,#e8d4ff,#b79bf0,#9ec9ff,#e6a9e8,#e8d4ff);
-  opacity:.85;z-index:0;filter:blur(0.2px)}
-.holo-ring::after{content:'';position:absolute;inset:3px;border-radius:50%;background:var(--panel)}
-.avatar-wrap img,.avatar-wrap .avatar-fallback{position:relative;z-index:1}
-.meta b{display:block;font-size:1.05rem}
-.meta span{color:var(--text-dim);font-size:.8rem;font-weight:600}
-.list{border-top:1px solid var(--line);padding-top:18px}
-.list h2{font-size:.85rem;letter-spacing:.4px;text-transform:uppercase;color:var(--text-dim);margin:0 0 12px}
-.empty{color:var(--text-dim);font-weight:600;font-size:.88rem;padding:20px;border:1px dashed var(--line);border-radius:10px;text-align:center}
-.tl-item{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;margin-bottom:8px;background:rgba(255,255,255,.02)}
-.tl-item .t{font-weight:800;font-size:.9rem}
-.tl-item .d{font-size:.72rem;color:var(--text-dim);font-weight:600;margin-top:2px}
-.tl-actions{display:flex;gap:8px;flex-shrink:0;flex-wrap:wrap}
-@media(max-width:520px){
-  .tl-item{flex-direction:column;align-items:stretch;gap:10px}
-  .tl-actions{width:100%;justify-content:flex-start}
-  .tl-actions button,.tl-actions a{flex:1;text-align:center;min-height:36px;display:inline-flex;align-items:center;justify-content:center}
-  .card{padding:22px 18px}
-}
-.tl-actions button,.tl-actions a{padding:6px 12px;border-radius:999px;font-size:.75rem;font-weight:700;cursor:pointer;text-decoration:none;border:1px solid var(--line);background:#12101a;color:var(--text)}
-.tl-actions a.primary{background:var(--accent-grad);color:#1a1226;border:none}
-.tl-actions a.primary:hover{filter:brightness(1.1);box-shadow:0 0 14px rgba(190,140,255,.45)}
-.tl-actions button[data-share]:hover{border-color:rgba(200,160,240,.6);box-shadow:0 0 12px rgba(180,140,240,.25)}
-.tl-actions button[data-del]:hover{color:#ffb3b3;border-color:rgba(255,110,110,.7);background:rgba(255,90,90,.12)}
-.providers{display:flex;flex-direction:column;gap:10px;margin-top:8px}
-.prov{display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:12px;border:1px solid var(--line);background:#12101a;cursor:pointer;font-weight:700;font-size:.9rem;color:var(--text);transition:border-color .15s,transform .15s}
-.prov:hover{border-color:rgba(200,160,240,.5);transform:translateY(-1px)}
-.prov .ico{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.prov .ico.discord{background:#5865F2}
-.prov .ico.google{background:#fff}
-.prov svg{display:block}
-.note{margin-top:18px;font-size:.78rem;color:var(--text-dim);font-weight:600;line-height:1.5}
-.ghost{background:transparent;border:1px solid var(--line);color:var(--text);margin-top:16px}
-.err{color:#ff8a8a;font-size:.85rem;font-weight:600;margin-top:12px}
-@media(max-width:720px){header.site{padding:12px 14px} .brand img{height:26px} nav.main{gap:12px}}
 
-.modal-back{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:200;padding:20px}
-.modal-back.open{display:flex}
-.modal{background:#1a1728;border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:22px 24px;max-width:360px;width:100%}
-.modal h3{margin:0 0 8px;font-size:1.05rem}
-.modal p{margin:0 0 18px;color:var(--text-dim);font-size:.85rem;font-weight:600;line-height:1.45}
-.modal .row{display:flex;gap:10px;justify-content:flex-end}
-.modal button{padding:8px 16px;border-radius:999px;font-weight:800;font-size:.8rem;cursor:pointer;border:1px solid var(--line);background:#12101a;color:var(--text)}
-.modal button.danger{background:rgba(255,90,90,.15);border-color:rgba(255,110,110,.5);color:#ffb3b3}
-.modal button.primary{background:var(--accent-grad);color:#1a1226;border:none}
-
-footer.site{text-align:center;margin-top:auto;flex-shrink:0;padding:28px 20px 32px;border-top:1px solid var(--line);display:flex;flex-direction:column;align-items:center;gap:12px}
-footer.site img.footer-logo{ height:56px; display:block; }
-footer.site .fine{ color:var(--text-dim); font-size:.75rem; font-weight:600; }
-
-nav.main a.cta-nav{
-  padding:8px 18px; border-radius:999px; font-size:.8rem; font-weight:800;
-  background: linear-gradient(120deg,#b79bf0,#e6a9e8); color:#1a1226 !important;
-  border:none; text-decoration:none;
-  box-shadow: 0 4px 16px rgba(180,140,230,.35);
-  transition: filter .15s, transform .15s;
-}
-nav.main a.cta-nav:hover{ filter:brightness(1.08); transform:translateY(-1px); color:#1a1226 !important; }
-.login-btn{
-  padding:8px 16px; border-radius:999px; font-size:.85rem; font-weight:800;
-  background: transparent !important; color: var(--text-dim) !important;
-  border:1px solid var(--line) !important; cursor:pointer;
-  box-shadow: none !important;
-  transition: color .15s, border-color .15s, background .15s;
-}
-.login-btn:hover{
-  color: var(--text) !important; border-color: rgba(200,160,240,.45) !important;
-  background: rgba(255,255,255,0.04) !important; filter: none !important;
-}
-
-/* Logged-in: brand shimmer border */
-.login-btn.logged-in{
-  position: relative;
-  border: 1px solid transparent !important;
-  background:
-    linear-gradient(#12101a, #12101a) padding-box,
-    linear-gradient(90deg,#b79bf0,#e6a9e8,#cdd6f7,#b79bf0,#e6a9e8) border-box !important;
-  background-size: 100% 100%, 220% 100% !important;
-  animation: accountShimmer 4s linear infinite;
-  color: var(--text) !important;
-}
-.login-btn.logged-in:hover{
-  filter: brightness(1.08);
-  box-shadow: 0 0 16px rgba(190,150,255,.35) !important;
-}
-@keyframes accountShimmer{
-  0%{ background-position: 0 0, 0% 50%; }
-  100%{ background-position: 0 0, 200% 50%; }
-}
-
-nav.main a.cta-nav{
-  position: relative;
-  overflow: visible;
-}
-
-
-
-@media (max-width: 720px){
-  footer.site{ padding: 24px 16px 28px !important; }
-  footer.site img.footer-logo{ height: 40px !important; }
-}
-
-</style>
 </head>
 <body>
 <header class="site">
@@ -139,7 +21,7 @@ nav.main a.cta-nav{
   </nav>
 </header>
 <div class="wrap">
-  <div class="card" id="panel">Loading…</div>
+  <div class="panel-card" id="panel">Loading…</div>
 </div>
 <script>
 const panel = document.getElementById('panel');
@@ -226,8 +108,8 @@ async function renderCabinet(user){
       box.innerHTML = '<div class="empty">No saved rankings yet.</div>';
     } else {
       box.innerHTML = rows.map(r=>{
-        const openHref = (r.template_id === 'sf-duel' || !r.template_id)
-          ? 'sf-duel.html' : (r.template_id + '.html');
+        const tid = r.template_id || 'sf-duel';
+        const openHref = 'tier.html?t=' + encodeURIComponent(tid);
         const when = r.updated_at ? new Date(r.updated_at).toLocaleString() : '';
         return `<div class="tl-item">
           <div><div class="t">${r.title||'Untitled'}</div><div class="d">${r.template_id||'exclusive'} · ${when}</div></div>
@@ -259,15 +141,15 @@ async function renderCabinet(user){
           const row = rows.find(x=>String(x.id)===String(btn.dataset.share));
           if(!row?.payload) return;
           try{
-            let url = location.origin + '/sf-duel.html';
+            let url = location.origin + '/tier.html?t=sf-duel';
             if(typeof createShortLink === 'function'){
               const code = await createShortLink(row.payload);
-              if(code) url = location.origin + '/sf-duel.html?s=' + code;
+              if(code) url = location.origin + '/tier.html?t=sf-duel?s=' + code;
             }
             if(!url.includes('?s=')){
               const json = JSON.stringify(row.payload);
               let hash = 'r' + btoa(unescape(encodeURIComponent(json))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
-              url = location.origin + '/sf-duel.html#' + hash;
+              url = location.origin + '/tier.html?t=sf-duel#' + hash;
             }
             await navigator.clipboard.writeText(url);
             btn.textContent = 'Copied!';
@@ -296,8 +178,20 @@ async function renderCabinet(user){
 (async ()=>{
   await initSupabase();
   const user = await getSessionUser();
-  if(user) await renderCabinet(user);
-  else await renderLogin();
+  if(user){
+    // Came from Save / ranking page with a stashed draft → return there
+    try{
+      const ret = sessionStorage.getItem('rankme_login_return');
+      const draft = sessionStorage.getItem('rankme_draft_payload');
+      if(ret && draft){
+        location.href = ret;
+        return;
+      }
+    }catch(e){}
+    await renderCabinet(user);
+  } else {
+    await renderLogin();
+  }
 })();
 </script>
 
@@ -311,9 +205,8 @@ async function renderCabinet(user){
     </div>
   </div>
 </div>
-<footer class="site">
-  <img class="footer-logo" src="assets/brand/Footer_logo.svg" alt="RankMe">
-  <span class="fine">Create tier lists. Share rankings. No signup required.</span>
-</footer>
+<footer id="site-footer" class="site"></footer>
+<script src="js/footer.js" defer></script>
+
 </body>
 </html>

@@ -1,0 +1,39 @@
+{
+  "exclusives": [
+    {
+      "id": "sf-duel",
+      "title": "Street Fighter: Duel",
+      "cover": "assets/brand/SF_Cover_1.webp",
+      "href": "tier.html?t=sf-duel",
+      "tags": [
+        "games",
+        "fighting",
+        "mobile"
+      ],
+      "parallax": true
+    },
+    {
+      "id": "sf-duel-ex",
+      "title": "Street Fighter: Duel EX-Move",
+      "cover": "assets/brand/SFD_EX_Cover.webp",
+      "href": "tier.html?t=sf-duel-ex",
+      "tags": [
+        "games",
+        "fighting",
+        "mobile"
+      ],
+      "parallax": false
+    },
+    {
+      "id": "lol",
+      "title": "League of Legends",
+      "cover": "assets/brand/LoL_Cover.webp",
+      "href": "tier.html?t=lol",
+      "tags": [
+        "games",
+        "moba"
+      ],
+      "parallax": true
+    }
+  ]
+}

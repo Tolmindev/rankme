@@ -15,211 +15,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800;900&display=swap" rel="stylesheet">
-<style>
-:root{
-  --bg-0:#0e0c14; --panel:#1a1728; --panel-2:#1e1a30;
-  --line: rgba(255,255,255,0.08); --text:#f1eefb; --text-dim:#a79fc4;
-  --accent-grad: linear-gradient(120deg,#b79bf0 0%, #e6a9e8 50%, #cdd6f7 100%);
-  --radius: 14px; --radius-sm: 9px; font-size:16px;
-}
-*{ box-sizing:border-box; }
-html, body{ margin:0; padding:0; }
-body{
-  background:
-    radial-gradient(circle at 18% 0%, rgba(160,120,220,0.16), transparent 45%),
-    radial-gradient(circle at 85% 15%, rgba(120,160,230,0.10), transparent 40%),
-    var(--bg-0);
-  color: var(--text);
-  font-family: 'Montserrat', system-ui, sans-serif;
-  min-height: 100vh;
-}
-header.site{
-  display:flex; align-items:center; justify-content:space-between;
-  padding:16px 40px; border-bottom:1px solid var(--line);
-  position:sticky; top:0; z-index:50;
-  background:rgba(14,12,20,0.75); backdrop-filter:blur(14px); overflow:visible;
-}
-.brand{ display:flex; align-items:center; text-decoration:none; color:inherit; padding:10px 18px; margin:-10px -18px; overflow:visible; }
-.brand img{ height:34px; display:block; transition:filter .4s, transform .3s; }
-.brand:hover img{
-  transform:scale(1.03);
-  filter: drop-shadow(0 0 3px rgba(230,190,255,1)) drop-shadow(0 0 10px rgba(200,150,255,.9))
-          drop-shadow(0 0 22px rgba(180,120,255,.65)) brightness(1.2);
-}
-nav.main{ display:flex; align-items:center; gap:28px; }
-nav.main a{ color:var(--text-dim); text-decoration:none; font-weight:700; font-size:.92rem; transition:color .15s; }
-nav.main a:hover, nav.main a.active{ color:var(--text); }
-nav.main a.exclusive{ color:#e79ee0; }
+<link rel="stylesheet" href="css/rankme.css">
 
-
-
-.page{ flex:1; max-width:1200px; margin:0 auto; padding:40px 24px 40px; }
-.hero-home{ text-align:center; margin-bottom:48px; }
-.hero-home h1{
-  font-size:clamp(1.8rem, 4vw, 2.6rem); font-weight:900; margin:0 0 12px;
-  background: var(--accent-grad); -webkit-background-clip:text; background-clip:text; color:transparent;
-}
-.hero-home p{ color:var(--text-dim); font-weight:600; max-width:520px; margin:0 auto 28px; line-height:1.6; }
-.cta-row{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
-.cta{
-  padding:12px 26px; border-radius:999px; font-weight:800; font-size:.9rem; text-decoration:none;
-  transition: transform .15s, filter .15s, box-shadow .15s;
-}
-.cta.primary{ background:var(--accent-grad); color:#1a1226; }
-.cta.primary:hover{ filter:brightness(1.08); transform:translateY(-2px); box-shadow:0 8px 24px rgba(180,120,240,.35); }
-.cta.ghost{ border:1px solid var(--line); color:var(--text); background:rgba(255,255,255,0.03); }
-.cta.ghost:hover{ border-color:rgba(200,160,240,.5); transform:translateY(-2px); }
-
-.section-title{
-  font-size:1.05rem; font-weight:800; letter-spacing:.4px; margin:0 0 18px;
-  display:flex; align-items:center; gap:10px;
-}
-.section-title .badge{
-  font-size:.65rem; padding:4px 10px; border-radius:999px;
-  background:linear-gradient(120deg,rgba(200,160,240,.25),rgba(230,170,220,.2));
-  border:1px solid rgba(200,160,240,.4); color:#e8d4ff; letter-spacing:.5px;
-}
-
-.grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(300px, 1fr)); gap:20px; }
-
-.tl-card{
-  background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
-  overflow:hidden; text-decoration:none; color:inherit;
-  transition: transform .18s, border-color .18s, box-shadow .18s;
-  display:flex; flex-direction:column;
-}
-.tl-card:hover{ transform:translateY(-3px); border-color:rgba(200,160,240,.35); box-shadow:0 12px 32px rgba(0,0,0,.35); }
-.tl-card.exclusive{
-  --rgb: linear-gradient(90deg,#ff6b6b,#f7c948,#7bed9f,#70a1ff,#a29bfe,#ff6b81,#ff6b6b);
-  border: 2px solid transparent;
-  background:
-    linear-gradient(var(--panel), var(--panel)) padding-box,
-    var(--rgb) border-box;
-  background-size: 100% 100%, 200% 100%;
-  background-origin: padding-box, border-box;
-  background-clip: padding-box, border-box;
-  animation: exclusiveRgb 5s linear infinite alternate;
-  box-shadow: 0 0 28px rgba(180,120,255,.22);
-  position:relative;
-}
-.tl-card.exclusive:hover{
-  box-shadow: 0 0 36px rgba(180,120,255,.4);
-  filter: brightness(1.03);
-}
-@keyframes exclusiveRgb{
-  0%{ background-position: 0 0, 0% 50%; }
-  100%{ background-position: 0 0, 100% 50%; }
-}
-.tl-card .cover{
-  aspect-ratio: 16 / 9;
-  width:100%;
-  background:linear-gradient(135deg, #2a1f3d, #1a2035);
-  display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;
-}
-.tl-card .cover img.cover-art{
-  width:100%; height:100%; object-fit:cover;
-  filter:none;
-}
-.tl-card .cover img.logo-only{
-  max-height:90px; max-width:90%; object-fit:contain;
-  filter:drop-shadow(0 6px 16px rgba(0,0,0,.4));
-}
-.tl-card .body{ padding:14px 16px 16px; }
-.tl-card .title{ font-weight:800; font-size:.95rem; margin:0 0 4px; }
-.tl-card .meta{ color:var(--text-dim); font-size:.75rem; font-weight:600; }
-.tl-card .tag{
-  position:absolute; top:10px; right:10px; z-index:2;
-  font-size:.6rem; font-weight:800; letter-spacing:.5px; text-transform:uppercase;
-  padding:4px 9px; border-radius:999px;
-  background:linear-gradient(120deg,#b79bf0,#e6a9e8); color:#1a1226;
-  box-shadow: 0 2px 10px rgba(0,0,0,.35);
-}
-
-.empty-state{
-  grid-column:1 / -1; text-align:center; padding:40px 20px;
-  color:var(--text-dim); font-weight:600; font-size:.9rem;
-  border:1px dashed var(--line); border-radius:var(--radius); background:rgba(255,255,255,0.02);
-}
-
-footer.site{ text-align:center; margin-top:48px; padding:28px 20px 32px; border-top:1px solid var(--line); display:flex; flex-direction:column; align-items:center; gap:12px; background: transparent; }
-footer.site img.footer-logo{ height:56px; display:block; }
-footer.site .fine{ color:var(--text-dim); font-size:.75rem; font-weight:600; }
-
-@media (max-width:720px){
-  footer.site{ padding: 20px 16px 28px; }
-  footer.site img.footer-logo{ height: 40px; }
-  footer.site .fine{ font-size: .7rem; line-height: 1.4; }
-
-  header.site{ padding:12px 14px; }
-  .brand img{ height:34px; }
-  nav.main{ gap:12px; }
-  nav.main a{ font-size:.78rem; }
-  .page{ padding:28px 14px 60px; }
-}
-
-/* Epic exclusive: pointer parallax only */
-.tl-card.epic .cover{
-  perspective: 600px;
-}
-.tl-card.epic .cover img.cover-art{
-  transform: scale(1.08) translate3d(0,0,0);
-  transition: transform .15s ease-out;
-  will-change: transform;
-}
-nav.main a.cta-nav{
-  padding:8px 18px; border-radius:999px; font-size:.8rem; font-weight:800;
-  background: linear-gradient(120deg,#b79bf0,#e6a9e8); color:#1a1226 !important;
-  border:none; text-decoration:none;
-  box-shadow: 0 4px 16px rgba(180,140,230,.35);
-  transition: filter .15s, transform .15s;
-}
-nav.main a.cta-nav:hover{ filter:brightness(1.08); transform:translateY(-1px); color:#1a1226 !important; }
-.login-btn{
-  padding:8px 16px; border-radius:999px; font-size:.85rem; font-weight:800;
-  background: transparent !important; color: var(--text-dim) !important;
-  border:1px solid var(--line) !important; cursor:pointer;
-  box-shadow: none !important;
-  transition: color .15s, border-color .15s, background .15s;
-}
-.login-btn:hover{
-  color: var(--text) !important; border-color: rgba(200,160,240,.45) !important;
-  background: rgba(255,255,255,0.04) !important; filter: none !important;
-}
-
-/* Logged-in: brand shimmer border */
-.login-btn.logged-in{
-  position: relative;
-  border: 1px solid transparent !important;
-  background:
-    linear-gradient(#12101a, #12101a) padding-box,
-    linear-gradient(90deg,#b79bf0,#e6a9e8,#cdd6f7,#b79bf0,#e6a9e8) border-box !important;
-  background-size: 100% 100%, 220% 100% !important;
-  animation: accountShimmer 4s linear infinite;
-  color: var(--text) !important;
-}
-.login-btn.logged-in:hover{
-  filter: brightness(1.08);
-  box-shadow: 0 0 16px rgba(190,150,255,.35) !important;
-}
-@keyframes accountShimmer{
-  0%{ background-position: 0 0, 0% 50%; }
-  100%{ background-position: 0 0, 200% 50%; }
-}
-
-nav.main a.cta-nav{
-  position: relative;
-  overflow: visible;
-}
-
-
-
-@media (max-width: 720px){
-  footer.site{ padding: 24px 16px 28px; margin-top: 32px; }
-  footer.site img.footer-logo{ height: 40px; }
-  footer.site .fine{ font-size: .7rem; line-height: 1.4; }
-}
-
-</style>
 </head>
 <body>
 
@@ -243,7 +40,7 @@ nav.main a.cta-nav{
 
   <h2 class="section-title">Exclusive</h2>
   <div class="grid" style="margin-bottom:40px">
-    <a class="tl-card exclusive epic" href="sf-duel.html">
+    <a class="tl-card exclusive epic" href="tier.html?t=sf-duel">
       <div class="cover">
         <span class="tag">Exclusive</span>
         <img class="cover-art" src="assets/brand/SF_Cover_1.webp" alt="Street Fighter: Duel">
@@ -253,7 +50,7 @@ nav.main a.cta-nav{
         <div class="meta">Exclusive · 130 fighters</div>
       </div>
     </a>
-    <a class="tl-card exclusive" href="sf-duel-ex.html">
+    <a class="tl-card exclusive" href="tier.html?t=sf-duel-ex">
       <div class="cover">
         <span class="tag">Exclusive</span>
         <img class="cover-art" src="assets/brand/SFD_EX_Cover.webp" alt="Street Fighter: Duel EX-Move">
@@ -264,7 +61,7 @@ nav.main a.cta-nav{
       </div>
     </a>
 
-    <a class="tl-card exclusive epic" href="lol.html">
+    <a class="tl-card exclusive epic" href="tier.html?t=lol">
       <div class="cover">
         <span class="tag">EXCLUSIVE</span>
         <img class="cover-art" src="assets/brand/LoL_Cover.webp" alt="League of Legends">
@@ -286,14 +83,23 @@ nav.main a.cta-nav{
   </div>
 </main>
 
-<footer class="site">
-  <img class="footer-logo" src="assets/brand/Footer_logo.svg" alt="RankMe">
-  <span class="fine">Create tier lists. Share rankings. No signup required.</span>
-</footer>
+<footer id="site-footer" class="site"></footer>
+<script src="js/footer.js" defer></script>
+
 
 
 <script>
 (function(){
+  // Ensure template id survives if server strips query from tier.html
+  document.querySelectorAll('a.tl-card[href*="tier.html"]').forEach(function(a){
+    a.addEventListener('click', function(){
+      try {
+        var u = new URL(a.href, location.href);
+        var t = u.searchParams.get('t');
+        if (t) sessionStorage.setItem('rankme_t', t);
+      } catch (e) {}
+    });
+  });
   function bindParallax(card){
     const img = card.querySelector('.cover img.cover-art, img.cover-card, img.parallax-img');
     if(!img) return;

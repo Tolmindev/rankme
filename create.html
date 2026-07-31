@@ -8,131 +8,8 @@
 <script src="js/supabaseClient.js"></script>
 <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800;900&display=swap" rel="stylesheet">
-<style>
-:root{
-  --bg-0:#0e0c14; --panel:#1a1728; --line:rgba(255,255,255,0.08);
-  --text:#f1eefb; --text-dim:#a79fc4;
-  --accent-grad:linear-gradient(120deg,#b79bf0 0%,#e6a9e8 50%,#cdd6f7 100%);
-  --radius:14px;
-}
-*{box-sizing:border-box} html,body{margin:0;padding:0}
-body{
-  background: radial-gradient(circle at 18% 0%,rgba(160,120,220,.16),transparent 45%),
-              radial-gradient(circle at 85% 15%,rgba(120,160,230,.1),transparent 40%), var(--bg-0);
-  color:var(--text); font-family:Montserrat,system-ui,sans-serif; min-height:100vh;
-}
-header.site{
-  display:flex; align-items:center; justify-content:space-between;
-  padding:16px 40px; border-bottom:1px solid var(--line);
-  position:sticky; top:0; z-index:50; background:rgba(14,12,20,.75); backdrop-filter:blur(14px);
-}
-.brand img{ height:34px; display:block; transition:filter .35s}
-.brand:hover img{filter:drop-shadow(0 0 10px rgba(200,150,255,.9)) brightness(1.15)}
-nav.main{display:flex; align-items:center; gap:28px}
-nav.main a{color:var(--text-dim); text-decoration:none; font-weight:700; font-size:.92rem}
-nav.main a:hover,nav.main a.active{color:var(--text)}
-nav.main a.exclusive{color:#e79ee0}
+<link rel="stylesheet" href="css/rankme.css">
 
-
-
-.wrap{flex:1;max-width:560px; margin:48px auto; padding:0 20px 80px}
-.card{
-  background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
-  padding:28px 28px 24px;
-}
-h1{margin:0 0 8px; font-size:1.4rem; font-weight:900}
-.sub{color:var(--text-dim); font-weight:600; font-size:.88rem; margin:0 0 24px; line-height:1.5}
-label{display:block; font-size:.72rem; font-weight:800; letter-spacing:.4px; text-transform:uppercase; color:var(--text-dim); margin:0 0 8px}
-input[type=text], textarea{
-  width:100%; padding:12px 14px; border-radius:10px;
-  border:1px solid rgba(200,160,240,.22);
-  background:#14121f; color:var(--text); font-family:inherit; font-weight:600; font-size:.9rem;
-  margin-bottom:18px; outline:none;
-  transition:border-color .15s, box-shadow .15s;
-}
-input[type=text]:focus, textarea:focus{
-  border-color:rgba(200,160,240,.65);
-  box-shadow:0 0 0 3px rgba(180,140,240,.12);
-}
-input[type=text]::placeholder{color:#6e6688}
-.cover-drop{
-  border:1px dashed rgba(200,160,240,.35); border-radius:12px; padding:28px 16px;
-  text-align:center; color:var(--text-dim); font-weight:600; font-size:.85rem;
-  margin-bottom:18px; cursor:pointer; transition:border-color .15s, background .15s;
-  background:rgba(255,255,255,0.02);
-}
-.cover-drop:hover{border-color:rgba(200,160,240,.7); background:rgba(180,120,255,0.06)}
-.hint{font-size:.75rem; color:var(--text-dim); font-weight:600; margin:-8px 0 18px}
-.row{display:flex; gap:12px; flex-wrap:wrap}
-.btn{
-  padding:12px 24px; border-radius:999px; font-weight:800; font-size:.88rem; cursor:pointer; border:none;
-  transition:transform .15s, filter .15s, box-shadow .15s;
-}
-.btn.primary{background:var(--accent-grad); color:#1a1226}
-.btn.primary:hover{filter:brightness(1.08); transform:translateY(-1px); box-shadow:0 8px 22px rgba(180,120,240,.35)}
-.btn.ghost{background:transparent; border:1px solid var(--line); color:var(--text)}
-.btn.ghost:hover{border-color:rgba(200,160,240,.5)}
-.note{
-  margin-top:20px; padding:14px 16px; border-radius:10px; font-size:.8rem; font-weight:600;
-  background:rgba(180,120,255,0.08); border:1px solid rgba(200,160,240,0.2); color:var(--text-dim); line-height:1.5;
-}
-footer.site{text-align:center;margin-top:auto;flex-shrink:0;padding:28px 20px 32px;border-top:1px solid var(--line);display:flex;flex-direction:column;align-items:center;gap:12px}
-footer.site img.footer-logo{height:56px;display:block}
-footer.site .fine{color:var(--text-dim);font-size:.75rem;font-weight:600}
-@media(max-width:720px){header.site{padding:12px 14px} .brand img{height:26px} nav.main{gap:12px} nav.main a{font-size:.78rem}}
-nav.main a.cta-nav{
-  padding:8px 18px; border-radius:999px; font-size:.8rem; font-weight:800;
-  background: linear-gradient(120deg,#b79bf0,#e6a9e8); color:#1a1226 !important;
-  border:none; text-decoration:none;
-  box-shadow: 0 4px 16px rgba(180,140,230,.35);
-  transition: filter .15s, transform .15s;
-}
-nav.main a.cta-nav:hover{ filter:brightness(1.08); transform:translateY(-1px); color:#1a1226 !important; }
-.login-btn{
-  padding:8px 16px; border-radius:999px; font-size:.85rem; font-weight:800;
-  background: transparent !important; color: var(--text-dim) !important;
-  border:1px solid var(--line) !important; cursor:pointer;
-  box-shadow: none !important;
-  transition: color .15s, border-color .15s, background .15s;
-}
-.login-btn:hover{
-  color: var(--text) !important; border-color: rgba(200,160,240,.45) !important;
-  background: rgba(255,255,255,0.04) !important; filter: none !important;
-}
-
-/* Logged-in: brand shimmer border */
-.login-btn.logged-in{
-  position: relative;
-  border: 1px solid transparent !important;
-  background:
-    linear-gradient(#12101a, #12101a) padding-box,
-    linear-gradient(90deg,#b79bf0,#e6a9e8,#cdd6f7,#b79bf0,#e6a9e8) border-box !important;
-  background-size: 100% 100%, 220% 100% !important;
-  animation: accountShimmer 4s linear infinite;
-  color: var(--text) !important;
-}
-.login-btn.logged-in:hover{
-  filter: brightness(1.08);
-  box-shadow: 0 0 16px rgba(190,150,255,.35) !important;
-}
-@keyframes accountShimmer{
-  0%{ background-position: 0 0, 0% 50%; }
-  100%{ background-position: 0 0, 200% 50%; }
-}
-
-nav.main a.cta-nav{
-  position: relative;
-  overflow: visible;
-}
-
-
-
-@media (max-width: 720px){
-  footer.site{ padding: 24px 16px 28px !important; }
-  footer.site img.footer-logo{ height: 40px !important; }
-}
-
-</style>
 </head>
 <body>
 <header class="site">
@@ -144,8 +21,8 @@ nav.main a.cta-nav{
   </nav>
 </header>
 
-<div class="wrap">
-  <div class="card">
+<div class="wrap narrow">
+  <div class="panel-card">
     <h1>New tier list</h1>
     <p class="sub">Build offline, export PNG anytime. No account needed.</p>
 
@@ -167,19 +44,36 @@ nav.main a.cta-nav{
   </div>
 </div>
 
-<footer class="site">
-  <img class="footer-logo" src="assets/brand/Footer_logo.svg" alt="RankMe">
-  <span class="fine">Create tier lists. Share rankings. No signup required.</span>
-</footer>
+<footer id="site-footer" class="site"></footer>
+<script src="js/footer.js" defer></script>
+
 <script>
+let coverDataUrl = null;
 document.getElementById('coverDrop').onclick = () => document.getElementById('coverFile').click();
 document.getElementById('coverFile').onchange = (e) => {
-  const f = e.target.files?.[0];
-  if(f) document.getElementById('coverDrop').textContent = f.name;
+  const f = e.target.files && e.target.files[0];
+  if (!f) return;
+  const drop = document.getElementById('coverDrop');
+  const reader = new FileReader();
+  reader.onload = () => {
+    coverDataUrl = reader.result;
+    drop.innerHTML = '';
+    const img = document.createElement('img');
+    img.src = coverDataUrl;
+    img.alt = f.name;
+    img.style.cssText = 'max-width:100%;max-height:160px;border-radius:10px;display:block;margin:0 auto';
+    drop.appendChild(img);
+  };
+  reader.readAsDataURL(f);
 };
 document.getElementById('startBlank').onclick = () => {
   const title = document.getElementById('title').value.trim() || 'My tier list';
-  try { localStorage.setItem('rankme_draft_title', title); } catch(e){}
+  try {
+    sessionStorage.setItem('rankme_blank_title', title);
+    localStorage.setItem('rankme_draft_title', title);
+    if (coverDataUrl) sessionStorage.setItem('rankme_blank_cover', coverDataUrl);
+    else sessionStorage.removeItem('rankme_blank_cover');
+  } catch (e) {}
   location.href = 'builder.html';
 };
 </script>

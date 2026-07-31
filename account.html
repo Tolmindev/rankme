@@ -116,8 +116,8 @@ async function renderCabinet(user){
           <div><div class="t">${r.title||'Untitled'}</div><div class="d">${r.template_id||'exclusive'} · ${when}</div></div>
           <div class="tl-actions">
             <a class="primary" href="${openHref}" data-id="${r.id}">Open</a>
-            <button type="button" data-share="${r.id}">Share</button>
-            <button type="button" data-del="${r.id}">Delete</button>
+            <button type="button" class="share" data-share="${r.id}">Share</button>
+            <button type="button" class="danger" data-del="${r.id}">Delete</button>
           </div>
         </div>`;
       }).join('');
@@ -142,15 +142,16 @@ async function renderCabinet(user){
           const row = rows.find(x=>String(x.id)===String(btn.dataset.share));
           if(!row?.payload) return;
           try{
-            let url = location.origin + '/tier.html?t=sf-duel';
+            const tid = encodeURIComponent(row.template_id || 'sf-duel');
+            let url = location.origin + '/tier.html?t=' + tid;
             if(typeof createShortLink === 'function'){
               const code = await createShortLink(row.payload);
-              if(code) url = location.origin + '/tier.html?t=sf-duel?s=' + code;
+              if(code) url = location.origin + '/tier.html?t=' + tid + '&s=' + code;
             }
-            if(!url.includes('?s=')){
+            if(url.indexOf('&s=') < 0 && url.indexOf('?s=') < 0){
               const json = JSON.stringify(row.payload);
               let hash = 'r' + btoa(unescape(encodeURIComponent(json))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
-              url = location.origin + '/tier.html?t=sf-duel#' + hash;
+              url = location.origin + '/tier.html?t=' + tid + '#' + hash;
             }
             await navigator.clipboard.writeText(url);
             btn.textContent = 'Copied!';
@@ -200,8 +201,8 @@ async function renderCabinet(user){
   <div class="modal">
     <h3>Delete this list?</h3>
     <p>This cannot be undone.</p>
-    <div class="row">
-      <button type="button" id="delCancel">Cancel</button>
+    <div class="modal-actions">
+      <button type="button" class="primary" id="delCancel">Cancel</button>
       <button type="button" class="danger" id="delOk">Delete</button>
     </div>
   </div>

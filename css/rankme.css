@@ -1000,45 +1000,77 @@ body.theme-gold .faction-btn img{ filter: none !important; border-radius: 0 !imp
 
 /* ========== PROFILE / AVATAR ========== */
 .profile{
-  display:flex; align-items:center; gap:14px;
-  margin:18px 0 22px; padding:4px 0;
+  display:flex !important;
+  flex-direction:row !important;
+  align-items:center !important;
+  gap:14px !important;
+  margin:18px 0 22px !important;
+  padding:0 !important;
 }
-.avatar-wrap{
+.profile .avatar-wrap{
   position:relative;
-  width:52px; height:52px; flex-shrink:0;
+  width:56px; height:56px;
+  flex:0 0 56px;
+  margin:0 !important;
 }
-.avatar-wrap .holo-ring{
+.profile .avatar-wrap .holo-ring{
   position:absolute; inset:-3px; border-radius:50%;
   background: linear-gradient(135deg,#b79bf0,#e6a9e8,#cdd6f7,#b79bf0);
-  opacity:.85; z-index:0;
+  background-size:200% 100%;
+  opacity:.9; z-index:0;
   animation: accountShimmer 4s linear infinite;
-  background-size: 200% 100%;
+  pointer-events:none;
 }
-.avatar-wrap .avatar,
-.avatar-wrap .avatar-fallback{
+.profile .avatar-wrap .avatar,
+.profile .avatar-wrap .avatar-fallback{
   position:relative; z-index:1;
-  width:52px; height:52px; border-radius:50% !important;
-  object-fit:cover; display:block;
-  background:#1a1728; border:2px solid #12101a;
+  width:56px !important; height:56px !important;
+  border-radius:50% !important;
+  object-fit:cover !important;
+  display:block !important;
+  background:#1a1728;
+  border:2px solid #12101a;
   box-sizing:border-box;
+  margin:0 !important;
 }
-.avatar-wrap .avatar-fallback{
-  display:flex; align-items:center; justify-content:center;
+.profile .avatar-wrap .avatar-fallback{
+  display:flex !important; align-items:center; justify-content:center;
   font-weight:900; font-size:1.15rem; color:#e8d4ff;
 }
-.profile .meta{
-  display:flex; flex-direction:column; justify-content:center;
-  align-items:flex-start; gap:2px;
-  min-width:0; line-height:1.25;
+/* Override .wrap .meta margin that breaks vertical center */
+.profile .meta,
+.wrap .profile .meta{
+  display:flex !important;
+  flex-direction:column !important;
+  justify-content:center !important;
+  align-items:flex-start !important;
+  gap:3px !important;
+  margin:0 !important;
+  padding:0 !important;
+  min-width:0;
+  line-height:1.2 !important;
+  color:inherit !important;
+  font-size:inherit !important;
 }
 .profile .meta b{
-  font-size:.95rem; font-weight:800; color:var(--text);
-  line-height:1.25; margin:0;
+  display:block;
+  font-size:.95rem !important;
+  font-weight:800 !important;
+  color:var(--text) !important;
+  line-height:1.2 !important;
+  margin:0 !important;
+  padding:0 !important;
 }
 .profile .meta span{
-  font-size:.75rem; font-weight:700; color:var(--text-dim);
-  text-transform:capitalize; letter-spacing:.02em;
-  margin:0; padding:0; line-height:1.2;
+  display:block;
+  font-size:.72rem !important;
+  font-weight:700 !important;
+  color:var(--text-dim) !important;
+  text-transform:none !important;
+  letter-spacing:.04em;
+  margin:0 !important;
+  padding:0 !important;
+  line-height:1.2 !important;
 }
 
 #delModal .modal-actions{

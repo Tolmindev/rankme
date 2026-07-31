@@ -117,6 +117,18 @@ async function loadShortLink(code) {
   return data.payload;
 }
 
+/** Navigate to account — stash draft, allow leave, never blocked by beforeunload */
+function goToAccount(){
+  try{
+    if(typeof window.allowLeave !== 'undefined') window.allowLeave = true;
+    if(typeof hasProgress === 'function' && hasProgress() && typeof stashDraftBeforeLogin === 'function'){
+      stashDraftBeforeLogin();
+    }
+  }catch(e){}
+  try{ window.onbeforeunload = null; }catch(e){}
+  location.href = 'account.html';
+}
+
 // Show nickname on Login button across all pages (wait for DOM)
 function updateNavAuth(){
   return (async function(){
@@ -124,7 +136,7 @@ function updateNavAuth(){
       if(typeof supabase === 'undefined') return;
       await initSupabase();
       const user = await getSessionUser();
-      const btn = document.getElementById('loginBtn');
+      const btn = document.getElementById('loginBtn') || document.getElementById('navBtn');
       if(!btn) return;
       if(user){
         const name = user.user_metadata?.full_name || user.user_metadata?.custom_claims?.global_name || user.user_metadata?.name || user.email || 'Account';
@@ -134,7 +146,15 @@ function updateNavAuth(){
         btn.textContent = 'Account';
         btn.classList.remove('logged-in');
       }
-      btn.onclick = ()=>{ location.href = 'account.html'; };
+      // single reliable handler — do not use onclick overwrite wars with app.js
+      if(!btn.dataset.accountNav){
+        btn.dataset.accountNav = '1';
+        btn.addEventListener('click', (e)=>{
+          e.preventDefault();
+          e.stopPropagation();
+          goToAccount();
+        }, true);
+      }
     }catch(e){}
   })();
 }

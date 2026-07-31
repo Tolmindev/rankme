@@ -1125,7 +1125,7 @@ document.getElementById('saveAccountBtn')?.addEventListener('click', async ()=>{
     if(!user){
       stashDraftBeforeLogin();
       showToast('Sign in to save — your ranking is kept');
-      allowLeave = true;
+      setAllowLeave(true);
       location.href = 'account.html';
       return;
     }
@@ -1454,12 +1454,17 @@ function hasProgress(){
 }
 
 let allowLeave = false;
+window.allowLeave = false; // exposed for goToAccount / supabaseClient
 let pendingNav = '#';
 
-// No native beforeunload when user already confirmed via our modal // for tab close only
+function setAllowLeave(v){
+  allowLeave = !!v;
+  window.allowLeave = allowLeave;
+}
+
+// Tab close / refresh only — in-app nav must call setAllowLeave(true) first
 window.addEventListener('beforeunload', (e)=>{
-  if(allowLeave || !hasProgress()) return;
-  // Only for real tab close / refresh — in-app nav uses our modal
+  if(allowLeave || window.allowLeave || !hasProgress()) return;
   e.preventDefault();
   e.returnValue = '';
 });
@@ -1488,15 +1493,14 @@ function bindLeaveGuard(el, href){
 
 document.querySelectorAll('nav.main a, a.brand').forEach(a => bindLeaveGuard(a));
 const loginBtn = document.getElementById('loginBtn');
-if(loginBtn){
+if(loginBtn && !loginBtn.dataset.navBound){
   loginBtn.dataset.navBound = '1';
   loginBtn.addEventListener('click', (e)=>{
     e.preventDefault();
     e.stopPropagation();
     // Always stash ranking so login never wipes progress
-    if(hasProgress()) stashDraftBeforeLogin();
-    allowLeave = true;
-    window.onbeforeunload = null;
+    try{ if(hasProgress()) stashDraftBeforeLogin(); }catch(_){}
+    setAllowLeave(true);
     location.href = 'account.html';
   }, true);
 }
@@ -1506,9 +1510,7 @@ document.getElementById('stayBtn')?.addEventListener('click', ()=>{
 });
 document.getElementById('leaveBtn')?.addEventListener('click', ()=>{
   document.getElementById('leaveModal')?.classList.remove('open');
-  allowLeave = true;
-  // detach beforeunload for this navigation
-  window.onbeforeunload = null;
+  setAllowLeave(true);
   window.location.href = pendingNav;
 });
 

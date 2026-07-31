@@ -138,6 +138,7 @@
 
   function showApp() {
     if (status) status.remove();
+    document.body.classList.remove('booting');
     ['heroSection', 'listActions', 'board', 'toolbar', 'poolWrap'].forEach((hid) => {
       const el = document.getElementById(hid);
       if (el) el.hidden = false;

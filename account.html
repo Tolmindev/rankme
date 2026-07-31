@@ -78,6 +78,7 @@ async function renderCabinet(user){
   const name = user.user_metadata?.full_name || user.user_metadata?.custom_claims?.global_name || user.user_metadata?.name || user.email || 'User';
   const avatar = user.user_metadata?.avatar_url || user.user_metadata?.picture || '';
   const provider = resolveProvider(user);
+  const providerLabel = ({google:'Google', discord:'Discord', x:'X', twitter:'X'})[provider] || provider;
 
   let listHtml = '<div class="empty">Loading…</div>';
   panel.innerHTML = `
@@ -88,7 +89,7 @@ async function renderCabinet(user){
         <div class="holo-ring"></div>
         ${avatar ? `<img class="avatar" src="${avatar}" alt="">` : `<div class="avatar-fallback">${(name[0]||'U').toUpperCase()}</div>`}
       </div>
-      <div class="meta"><b>${name}</b><span>${provider}</span></div>
+      <div class="meta"><b>${name}</b><span>${providerLabel}</span></div>
     </div>
     <div class="list">
       <h2>Saved Exclusive lists</h2>

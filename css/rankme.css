@@ -17,6 +17,8 @@
   font-size: 16px;
 }
 *{ box-sizing:border-box; }
+/* HTML hidden must win over display:flex on toolbar/board/etc */
+[hidden]{ display: none !important; }
 html,body{ margin:0; padding:0; }
 /* sticky page shell + seamless full-viewport background */
 html{
@@ -991,4 +993,47 @@ body.theme-gold .faction-btn img{ filter: none !important; border-radius: 0 !imp
 .blank-cover-edit svg{ width:18px; height:18px; display:block; }
 @media (max-width:720px){
   .blank-cover-card{ width:100%; max-width:100%; aspect-ratio:16/9; }
+}
+
+
+/* ========== PROFILE / AVATAR ========== */
+.profile{
+  display:flex; align-items:center; gap:16px;
+  margin:18px 0 22px; padding:12px 0;
+}
+.avatar-wrap{
+  position:relative;
+  width:56px; height:56px; flex-shrink:0;
+}
+.avatar-wrap .holo-ring{
+  position:absolute; inset:-3px; border-radius:50%;
+  background: linear-gradient(135deg,#b79bf0,#e6a9e8,#cdd6f7,#b79bf0);
+  opacity:.85; z-index:0;
+  animation: accountShimmer 4s linear infinite;
+  background-size: 200% 100%;
+}
+.avatar-wrap .avatar,
+.avatar-wrap .avatar-fallback{
+  position:relative; z-index:1;
+  width:56px; height:56px; border-radius:50% !important;
+  object-fit:cover; display:block;
+  background:#1a1728; border:2px solid #12101a;
+  box-sizing:border-box;
+}
+.avatar-wrap .avatar-fallback{
+  display:flex; align-items:center; justify-content:center;
+  font-weight:900; font-size:1.2rem; color:#e8d4ff;
+}
+.profile .meta{
+  display:flex; flex-direction:column; align-items:flex-start; gap:4px;
+  min-width:0;
+}
+.profile .meta b{
+  font-size:1rem; font-weight:800; color:var(--text);
+  line-height:1.2;
+}
+.profile .meta span{
+  font-size:.78rem; font-weight:700; color:var(--text-dim);
+  text-transform:capitalize; letter-spacing:.02em;
+  margin:0; padding:0;
 }

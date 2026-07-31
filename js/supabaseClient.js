@@ -117,22 +117,27 @@ async function loadShortLink(code) {
   return data.payload;
 }
 
-/** Navigate to account — stash draft, allow leave, never blocked by beforeunload */
+/** Navigate to account — always allowed; ranking stashed in sessionStorage */
 function goToAccount(){
+  if(typeof window.navigateToAccount === 'function'){
+    window.navigateToAccount();
+    return;
+  }
   try{
-    if(typeof window.allowLeave !== 'undefined') window.allowLeave = true;
+    window.allowLeave = true;
+    sessionStorage.setItem('rankme_nav_ok', '1');
     if(typeof hasProgress === 'function' && hasProgress() && typeof stashDraftBeforeLogin === 'function'){
       stashDraftBeforeLogin();
     }
   }catch(e){}
-  try{ window.onbeforeunload = null; }catch(e){}
-  location.href = 'account.html';
+  location.assign(new URL('account.html', location.href).href);
 }
 
 // Show nickname on Login button across all pages (wait for DOM)
 function updateNavAuth(){
   return (async function(){
     try{
+      try{ sessionStorage.removeItem('rankme_nav_ok'); }catch(_){}
       if(typeof supabase === 'undefined') return;
       await initSupabase();
       const user = await getSessionUser();

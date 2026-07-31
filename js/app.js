@@ -1453,21 +1453,40 @@ function hasProgress(){
   return Object.values(state.assignment).some(arr=>arr.length>0);
 }
 
-let allowLeave = false;
-window.allowLeave = false; // exposed for goToAccount / supabaseClient
 let pendingNav = '#';
+window.allowLeave = false;
 
+/** Allow leaving page without native browser dialog */
 function setAllowLeave(v){
-  allowLeave = !!v;
-  window.allowLeave = allowLeave;
+  window.allowLeave = !!v;
+  try{
+    if(v) sessionStorage.setItem('rankme_nav_ok', '1');
+    else sessionStorage.removeItem('rankme_nav_ok');
+  }catch(_){}
 }
+window.setAllowLeave = setAllowLeave;
 
-// Tab close / refresh only — in-app nav must call setAllowLeave(true) first
-window.addEventListener('beforeunload', (e)=>{
-  if(allowLeave || window.allowLeave || !hasProgress()) return;
+function rankmeBeforeUnload(e){
+  try{ if(sessionStorage.getItem('rankme_nav_ok') === '1') return; }catch(_){}
+  if(window.allowLeave) return;
+  if(typeof hasProgress === 'function' && !hasProgress()) return;
   e.preventDefault();
   e.returnValue = '';
-});
+}
+window.addEventListener('beforeunload', rankmeBeforeUnload);
+
+/** Account is always allowed — ranking is stashed, never blocked */
+function navigateToAccount(){
+  setAllowLeave(true);
+  try{
+    if(typeof hasProgress === 'function' && hasProgress() && typeof stashDraftBeforeLogin === 'function'){
+      stashDraftBeforeLogin();
+    }
+  }catch(_){}
+  // hard navigation
+  window.location.assign(new URL('account.html', location.href).href);
+}
+window.navigateToAccount = navigateToAccount;
 
 function bindLeaveGuard(el, href){
   if(!el || el.dataset.leaveBound) return;
@@ -1475,7 +1494,12 @@ function bindLeaveGuard(el, href){
   el.addEventListener('click', (e)=>{
     const target = href || el.getAttribute('href') || '';
     if(!target || target === '#' || target.startsWith('javascript')) return;
-    // same page
+    // Account / login always free to open
+    if(/account\.html/i.test(target)){
+      e.preventDefault();
+      navigateToAccount();
+      return;
+    }
     try{
       const u = new URL(target, location.href);
       if(u.pathname === location.pathname && u.search === location.search && !u.hash){
@@ -1483,7 +1507,7 @@ function bindLeaveGuard(el, href){
         return;
       }
     }catch(_){}
-    if(!hasProgress()) return;
+    if(typeof hasProgress === 'function' && !hasProgress()) return;
     e.preventDefault();
     e.stopPropagation();
     pendingNav = target;
@@ -1492,16 +1516,15 @@ function bindLeaveGuard(el, href){
 }
 
 document.querySelectorAll('nav.main a, a.brand').forEach(a => bindLeaveGuard(a));
+
 const loginBtn = document.getElementById('loginBtn');
-if(loginBtn && !loginBtn.dataset.navBound){
+if(loginBtn){
   loginBtn.dataset.navBound = '1';
+  loginBtn.dataset.accountNav = '1'; // prevent supabaseClient double-bind
   loginBtn.addEventListener('click', (e)=>{
     e.preventDefault();
-    e.stopPropagation();
-    // Always stash ranking so login never wipes progress
-    try{ if(hasProgress()) stashDraftBeforeLogin(); }catch(_){}
-    setAllowLeave(true);
-    location.href = 'account.html';
+    e.stopImmediatePropagation();
+    navigateToAccount();
   }, true);
 }
 

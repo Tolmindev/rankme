@@ -55,7 +55,7 @@ const DEFAULT_TIERS = [
   {id:'t10',name:'BAD',            hue:100, sat:55, light:82},
 ];
 
-const EXPERT_PRESETS = Object.assign({}, {"eldud":{"tiers":[{"id":"t1","name":"GOD","hue":255,"sat":55,"light":82},{"id":"t2","name":"BOSSES META","hue":355,"sat":70,"light":65},{"id":"t3","name":"PVP META","hue":28,"sat":65,"light":62},{"id":"t4","name":"ASSISTANT META","hue":320,"sat":65,"light":65},{"id":"t5","name":"GOOD","hue":268,"sat":50,"light":62},{"id":"t6","name":"ASSISTANT","hue":220,"sat":35,"light":52},{"id":"t7","name":"TOWERS","hue":172,"sat":50,"light":52},{"id":"t8","name":"DECENT","hue":135,"sat":38,"light":48},{"id":"t9","name":"DISAPPOINTED","hue":110,"sat":55,"light":70},{"id":"t10","name":"BAD","hue":100,"sat":55,"light":82}],"assignment":{"t1":[46,41,23,118,115,95,21],"t2":[62,116,30,100,19,6,77,17,42,15,81,13,65],"t3":[83,8,50,39,3,26,7,16,69],"t4":[38,40,24,12,49,34,54,61,4,36,89],"t5":[82,63,105,9,14,70,33,86,106,119,45,72,10,29],"t6":[78,117,92,44,74,104,109,71,108,101,57,58,1,31,73],"t7":[93,97,64,53,94,84,76,67,66,68,52,96,90,88,85,98,80,75],"t8":[47,11,113,35,110,20,59,43,114,111,102,112,123,5,56],"t9":[25,107,37,22,32,103,18,48],"t10":[2,55,28,91,79,87,60]}}}, (window.RANKME_EXPERT_PRESETS || {}));
+const EXPERT_PRESETS = Object.assign({}, {"eldud":{"tiers":[{"id":"t1","hue":255,"sat":55,"name":"GOD","light":82},{"id":"t2","hue":355,"sat":70,"name":"BOSSES META","light":65},{"id":"t3","hue":28,"sat":65,"name":"PVP META","light":62},{"id":"t4","hue":320,"sat":65,"name":"ASSISTANT META","light":65},{"id":"t5","hue":268,"sat":50,"name":"GOOD","light":62},{"id":"t6","hue":220,"sat":35,"name":"ASSISTANT","light":52},{"id":"t7","hue":172,"sat":50,"name":"SUPREME FIST","light":52},{"id":"t8","hue":135,"sat":38,"name":"DECENT","light":48},{"id":"t9","hue":110,"sat":55,"name":"DISAPPOINTED","light":70},{"id":"t10","hue":100,"sat":55,"name":"BAD","light":82}],"assignment":{"t1":[46,23,118,41,12,95,99,115,62,21],"t2":[116,6,100,19,77,17,42,81,13,65,121],"t3":[50,83,8,7,15,3,63,26,51,39,16,69],"t4":[38,40,24,49,34,89,71,54,61,27,1],"t5":[14,35,82,45,117,10,105,119,30,70,33,11,9,72,29],"t6":[120,36,4,78,20,18,44,92,74,31,108,104,109,102,57,58,101],"t7":[86,93,97,64,53,94,84,76,67,66,68,52,96,90,88,85,98,80,75],"t8":[47,43,113,114,110,106,59,111,73,112,123,56],"t9":[25,107,37,22,32,5,103,48],"t10":[2,55,28,91,79,87,60]}}}, (window.RANKME_EXPERT_PRESETS || {}));
 
 const BLANK_TIERS = [
   {id:'t1', name:'S', hue:0,   sat:70, light:62},
@@ -584,12 +584,13 @@ function onDragMove(e){
       const children = [...cont.children].filter(c =>
         c !== drag.source &&
         !c.classList.contains('placeholder') &&
-        c.style.display !== 'none'
+        c.style.display !== 'none' &&
+        c.style.visibility !== 'hidden'
       );
       let inserted = false;
+      // Horizontal tiers: order by X only (left = stronger)
       for(const child of children){
         const b = child.getBoundingClientRect();
-        if(e.clientY < b.top - 6 || e.clientY > b.bottom + 6) continue;
         const midX = b.left + b.width / 2;
         if(e.clientX < midX){
           cont.insertBefore(ph, child);
@@ -637,10 +638,10 @@ function onDragEnd(e){
 
   document.querySelectorAll('.tier-row').forEach(r=>r.classList.remove('drag-over'));
   document.querySelectorAll('.portal-slot').forEach(s=>s.classList.remove('drag-over'));
-  document.querySelectorAll('.card.placeholder').forEach(p=>p.remove());
 
   // Pure tap / no real drag started → restore and exit (fixes dim cards on mobile)
   if(!drag.active){
+    document.querySelectorAll('.card.placeholder').forEach(p=>p.remove());
     cleanupDragSource(drag.source);
     try { if(drag.floater) drag.floater.remove(); } catch(err){}
     drag = null;
@@ -662,9 +663,31 @@ function onDragEnd(e){
     }
   }
 
+  // IMPORTANT: read drop order WHILE placeholder is still in the DOM
+  let orderedIds = null;
+  if(targetContainer && !(targetPortal && portalsOn)){
+    const seen = new Set();
+    orderedIds = [];
+    for(const c of [...targetContainer.children]){
+      if(c === drag.source) continue;
+      let id = null;
+      if(c.classList.contains('placeholder')) id = cid;
+      else {
+        const n = parseInt(c.dataset.cardId, 10);
+        if(Number.isFinite(n)) id = n;
+      }
+      if(id === null || seen.has(id)) continue;
+      seen.add(id);
+      orderedIds.push(id);
+    }
+    if(!seen.has(cid)) orderedIds.push(cid);
+  }
+
+  // Now safe to clear placeholders
+  document.querySelectorAll('.card.placeholder').forEach(p=>p.remove());
+
   // Drop on Magic Portal
   if(targetPortal && portalsOn){
-    if(drag.placeholder) drag.placeholder.remove();
     cleanupDragSource(drag.source);
     const tierId = targetPortal.dataset.tierId;
     const label = targetPortal.dataset.label || 'tier';
@@ -686,9 +709,8 @@ function onDragEnd(e){
     return;
   }
 
-  // No valid drop target → put back (no evaporate on failed drop)
-  if(!targetContainer){
-    if(drag.placeholder) drag.placeholder.remove();
+  // No valid drop target → put back
+  if(!targetContainer || !orderedIds){
     cleanupDragSource(drag.source);
     try { if(floater) floater.remove(); } catch(err){}
     drag = null;
@@ -696,29 +718,19 @@ function onDragEnd(e){
     return;
   }
 
-  // Normal drop
+  // Normal drop — preserve left-to-right order from placeholder
   removeFromAllData(cid);
 
   const cont = targetContainer;
-  const ids = [...cont.children]
-    .filter(c => c !== drag.source)
-    .map(c => {
-      if(c.classList.contains('placeholder')) return cid;
-      const id = parseInt(c.dataset.cardId, 10);
-      return Number.isFinite(id) ? id : null;
-    })
-    .filter(id => id !== null);
-
-  if(!ids.includes(cid)) ids.push(cid);
-
   if(cont.classList.contains('pool')){
-    state.pool = [...new Set(ids)].sort((a,b)=>a-b);
+    // pool stays sorted by id for browsing
+    if(!orderedIds.includes(cid)) orderedIds.push(cid);
+    state.pool = [...new Set(orderedIds)];
   } else {
     const tid = cont.dataset.tierId;
-    if(tid) state.assignment[tid] = ids;
+    if(tid) state.assignment[tid] = orderedIds;
   }
 
-  if(drag.placeholder) drag.placeholder.remove();
   cleanupDragSource(drag.source);
   try { if(floater) floater.remove(); } catch(err){}
   drag = null;

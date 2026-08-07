@@ -1,1 +1,1036 @@
-{"id":"sf-duel","title":"Street Fighter: Duel","footerLabel":"Street Fighter: Duel","exportName":"rankme-sf-duel-tierlist.png","description":"Rank every Street Fighter: Duel fighter. Drag, drop, customize tiers, and share your ranking with one link.","cover":"assets/brand/SF_Cover_1.webp","parallax":true,"cardShape":"portrait","cardPath":"assets/cards/","cardAspect":1.35,"theme":null,"noFactions":false,"factionOrder":["MASTER","INFERNAL","WIND","THUNDER","FLAME","LEGENDARY","A+"],"cards":[{"id":1,"file":"card_001.png","faction":"MASTER","name":"Gen"},{"id":2,"file":"card_002.png","faction":"MASTER","name":"Akuma"},{"id":3,"file":"card_003.png","faction":"MASTER","name":"Gouken"},{"id":4,"file":"card_004.png","faction":"MASTER","name":"Rose"},{"id":5,"file":"card_005.png","faction":"MASTER","name":"Trendy Cammy"},{"id":6,"file":"card_006.png","faction":"MASTER","name":"Taoist Gen"},{"id":7,"file":"card_007.png","faction":"MASTER","name":"Trendt Ryu"},{"id":8,"file":"card_008.png","faction":"MASTER","name":"Athlete Chun-Li"},{"id":9,"file":"card_009.png","faction":"MASTER","name":"Trendy Dhalsim"},{"id":10,"file":"card_010.png","faction":"MASTER","name":"Dante"},{"id":11,"file":"card_011.png","faction":"MASTER","name":"Summer Yun"},{"id":12,"file":"card_012.png","faction":"MASTER","name":" Master Leonardo"},{"id":13,"file":"card_013.png","faction":"MASTER","name":"Raphael"},{"id":14,"file":"card_014.png","faction":"MASTER","name":"Luke"},{"id":15,"file":"card_015.png","faction":"MASTER","name":"Jp"},{"id":16,"file":"card_016.png","faction":"MASTER","name":"Summer Ibuki"},{"id":17,"file":"card_017.png","faction":"MASTER","name":"Diviner Rose"},{"id":18,"file":"card_018.png","faction":"MASTER","name":"Firecracker Sakura"},{"id":19,"file":"card_019.png","faction":"MASTER","name":"Rich E Honda"},{"id":20,"file":"card_020.png","faction":"MASTER","name":"Kunoichi Ibuki"},{"id":21,"file":"card_021.png","faction":"MASTER","name":"Cowbot T Hawk"},{"id":22,"file":"card_022.png","faction":"MASTER","name":"Banquet Guy"},{"id":23,"file":"card_023.png","faction":"MASTER","name":"Popstar Poison"},{"id":24,"file":"card_024.png","faction":"MASTER","name":"Popstar Chun Li"},{"id":25,"file":"card_025.png","faction":"MASTER","name":"Popstar Juri"},{"id":26,"file":"card_026.png","faction":"MASTER","name":"Hermit Gouken"},{"id":27,"file":"card_027.png","faction":"MASTER","name":"Summer Rose"},{"id":28,"file":"card_028.png","faction":"INFERNAL","name":"Juri"},{"id":29,"file":"card_029.png","faction":"INFERNAL","name":"Seth"},{"id":30,"file":"card_030.png","faction":"INFERNAL","name":"M Bison"},{"id":31,"file":"card_031.png","faction":"INFERNAL","name":"Balrog"},{"id":32,"file":"card_032.png","faction":"INFERNAL","name":"Vega"},{"id":33,"file":"card_033.png","faction":"INFERNAL","name":"Sagat"},{"id":34,"file":"card_034.png","faction":"INFERNAL","name":"Evil Ryu"},{"id":35,"file":"card_035.png","faction":"INFERNAL","name":"Oni"},{"id":36,"file":"card_036.png","faction":"INFERNAL","name":"Witch Juri"},{"id":37,"file":"card_037.png","faction":"INFERNAL","name":"Gore Magala Ken"},{"id":38,"file":"card_038.png","faction":"INFERNAL","name":"Vergil"},{"id":39,"file":"card_039.png","faction":"INFERNAL","name":"Michelangelo"},{"id":40,"file":"card_040.png","faction":"INFERNAL","name":"Donatello"},{"id":41,"file":"card_041.png","faction":"INFERNAL","name":"Vizconde Vega"},{"id":42,"file":"card_042.png","faction":"INFERNAL","name":"Pharaoh Sagat"},{"id":43,"file":"card_043.png","faction":"INFERNAL","name":"Archon Decapre"},{"id":44,"file":"card_044.png","faction":"INFERNAL","name":"Chief Viper"},{"id":45,"file":"card_045.png","faction":"INFERNAL","name":"Giant Wrestler Hugo"},{"id":46,"file":"card_046.png","faction":"INFERNAL","name":"Overlord Bison"},{"id":47,"file":"card_047.png","faction":"INFERNAL","name":"Summer Poison"},{"id":48,"file":"card_048.png","faction":"INFERNAL","name":"Horror Hakan"},{"id":49,"file":"card_049.png","faction":"INFERNAL","name":"Shadaloo Cammy"},{"id":50,"file":"card_050.png","faction":"INFERNAL","name":"Shadow Ryu"},{"id":51,"file":"card_051.png","faction":"INFERNAL","name":"Cold-Hearted Adon"},{"id":52,"file":"card_052.png","faction":"WIND","name":"Chun Li"},{"id":53,"file":"card_053.png","faction":"WIND","name":"Guile"},{"id":54,"file":"card_054.png","faction":"WIND","name":"Abel"},{"id":55,"file":"card_055.png","faction":"WIND","name":"Cammy"},{"id":56,"file":"card_056.png","faction":"WIND","name":"Guy"},{"id":57,"file":"card_057.png","faction":"WIND","name":"Yun"},{"id":58,"file":"card_058.png","faction":"WIND","name":"Yang"},{"id":59,"file":"card_059.png","faction":"WIND","name":"T Hawk"},{"id":60,"file":"card_060.png","faction":"WIND","name":"El Fuerte"},{"id":61,"file":"card_061.png","faction":"WIND","name":"Beast Zangief"},{"id":62,"file":"card_062.png","faction":"WIND","name":"Street Poison"},{"id":63,"file":"card_063.png","faction":"WIND","name":"Summer Elena"},{"id":64,"file":"card_064.png","faction":"WIND","name":"Trendy Akuma"},{"id":65,"file":"card_065.png","faction":"WIND","name":"Royal Balrog"},{"id":66,"file":"card_066.png","faction":"WIND","name":"Saikyo Dan"},{"id":67,"file":"card_067.png","faction":"WIND","name":"Nishiki Sakura"},{"id":68,"file":"card_068.png","faction":"THUNDER","name":"Blanka"},{"id":69,"file":"card_069.png","faction":"THUNDER","name":"E Honda"},{"id":70,"file":"card_070.png","faction":"THUNDER","name":"Zangief"},{"id":71,"file":"card_071.png","faction":"THUNDER","name":"Poison"},{"id":72,"file":"card_072.png","faction":"THUNDER","name":"Elena"},{"id":73,"file":"card_073.png","faction":"THUNDER","name":"Makoto"},{"id":74,"file":"card_074.png","faction":"THUNDER","name":"Mad Ryu"},{"id":75,"file":"card_075.png","faction":"THUNDER","name":"Combat Guile"},{"id":76,"file":"card_076.png","faction":"THUNDER","name":"Mummy Dhalsim"},{"id":77,"file":"card_077.png","faction":"THUNDER","name":"Suit Abel"},{"id":78,"file":"card_078.png","faction":"THUNDER","name":"Trendy Guile"},{"id":79,"file":"card_079.png","faction":"THUNDER","name":"Charming Dudley"},{"id":80,"file":"card_080.png","faction":"THUNDER","name":"Baddest Juri"},{"id":81,"file":"card_081.png","faction":"THUNDER","name":"Action Guy"},{"id":82,"file":"card_082.png","faction":"THUNDER","name":"Banquet Rose"},{"id":83,"file":"card_083.png","faction":"THUNDER","name":"Horror Oni"},{"id":84,"file":"card_084.png","faction":"FLAME","name":"Dhalsim"},{"id":85,"file":"card_085.png","faction":"FLAME","name":"Hugo"},{"id":86,"file":"card_086.png","faction":"FLAME","name":"C Viper"},{"id":87,"file":"card_087.png","faction":"FLAME","name":"Adon"},{"id":88,"file":"card_088.png","faction":"FLAME","name":"Decapre"},{"id":89,"file":"card_089.png","faction":"FLAME","name":"Fei Long"},{"id":90,"file":"card_090.png","faction":"FLAME","name":"Dee Jay"},{"id":91,"file":"card_091.png","faction":"FLAME","name":"Dudley"},{"id":92,"file":"card_092.png","faction":"FLAME","name":"Mayor Cody"},{"id":93,"file":"card_093.png","faction":"FLAME","name":"Cammy & Vega"},{"id":94,"file":"card_094.png","faction":"FLAME","name":"Summer Yang"},{"id":95,"file":"card_095.png","faction":"FLAME","name":"Fire Adon"},{"id":96,"file":"card_096.png","faction":"FLAME","name":"Furisode Makoto"},{"id":97,"file":"card_097.png","faction":"FLAME","name":"Banquet Cammy"},{"id":98,"file":"card_098.png","faction":"FLAME","name":"Summer Cody"},{"id":99,"file":"card_099.png","faction":"FLAME","name":"Monk Bison"},{"id":100,"file":"card_100.png","faction":"LEGENDARY","name":"Flame Chun Li"},{"id":101,"file":"card_101.png","faction":"LEGENDARY","name":"Fashion Sakura"},{"id":102,"file":"card_102.png","faction":"LEGENDARY","name":"Fashion Blanka"},{"id":103,"file":"card_103.png","faction":"LEGENDARY","name":"Jonin Ibuki"},{"id":104,"file":"card_104.png","faction":"LEGENDARY","name":"Nero"},{"id":105,"file":"card_105.png","faction":"LEGENDARY","name":"Shredder"},{"id":106,"file":"card_106.png","faction":"LEGENDARY","name":"Christmas Rufus"},{"id":107,"file":"card_107.png","faction":"LEGENDARY","name":"Fashion Ken"},{"id":108,"file":"card_108.png","faction":"LEGENDARY","name":"Hydro Chun Li"},{"id":109,"file":"card_109.png","faction":"LEGENDARY","name":"Trendy Elena"},{"id":110,"file":"card_110.png","faction":"LEGENDARY","name":"Agent C Viper"},{"id":111,"file":"card_111.png","faction":"LEGENDARY","name":"Banquet Guile"},{"id":112,"file":"card_112.png","faction":"LEGENDARY","name":"Fashion E Honda"},{"id":113,"file":"card_113.png","faction":"LEGENDARY","name":"Santa Blanka"},{"id":114,"file":"card_114.png","faction":"LEGENDARY","name":"Vacation Dee Jay"},{"id":115,"file":"card_115.png","faction":"LEGENDARY","name":"Banquet Fei Long"},{"id":116,"file":"card_116.png","faction":"LEGENDARY","name":"Mech Zangief"},{"id":117,"file":"card_117.png","faction":"LEGENDARY","name":"Cupid Hugo"},{"id":118,"file":"card_118.png","faction":"LEGENDARY","name":"Zombie Cody"},{"id":119,"file":"card_119.png","faction":"LEGENDARY","name":"Fairy Makoto"},{"id":120,"file":"card_120.png","faction":"LEGENDARY","name":"Magican Rolento"},{"id":121,"file":"card_121.png","faction":"LEGENDARY","name":"Luchador El Fuerte"},{"id":122,"file":"card_122.png","faction":"A+","name":"Ibuki"},{"id":123,"file":"card_123.png","faction":"A+","name":"Cody"},{"id":124,"file":"card_124.png","faction":"A+","name":"Rufus"},{"id":125,"file":"card_125.png","faction":"A+","name":"Dan"},{"id":126,"file":"card_126.png","faction":"A+","name":"Sakura"},{"id":127,"file":"card_127.png","faction":"A+","name":"Ryu"},{"id":128,"file":"card_128.png","faction":"A+","name":"Hakan"},{"id":129,"file":"card_129.png","faction":"A+","name":"Ken"},{"id":130,"file":"card_130.png","faction":"A+","name":"Rolento"}],"experts":[{"id":"eldud","name":"ElDuD","youtube":"https://youtube.com/@ElDuD89","preset":{"tiers":[{"id":"t1","name":"GOD","hue":255,"sat":55,"light":82},{"id":"t2","name":"BOSSES META","hue":355,"sat":70,"light":65},{"id":"t3","name":"PVP META","hue":28,"sat":65,"light":62},{"id":"t4","name":"ASSISTANT META","hue":320,"sat":65,"light":65},{"id":"t5","name":"GOOD","hue":268,"sat":50,"light":62},{"id":"t6","name":"ASSISTANT","hue":220,"sat":35,"light":52},{"id":"t7","name":"TOWERS","hue":172,"sat":50,"light":52},{"id":"t8","name":"DECENT","hue":135,"sat":38,"light":48},{"id":"t9","name":"DISAPPOINTED","hue":110,"sat":55,"light":70},{"id":"t10","name":"BAD","hue":100,"sat":55,"light":82}],"assignment":{"t1":[46,41,23,118,115,95,21],"t2":[62,116,30,100,19,6,77,17,42,15,81,13,65],"t3":[83,8,50,39,3,26,7,16,69],"t4":[38,40,24,12,49,34,54,61,4,36,89],"t5":[82,63,105,9,14,70,33,86,106,119,45,72,10,29],"t6":[78,117,92,44,74,104,109,71,108,101,57,58,1,31,73],"t7":[93,97,64,53,94,84,76,67,66,68,52,96,90,88,85,98,80,75],"t8":[47,11,113,35,110,20,59,43,114,111,102,112,123,5,56],"t9":[25,107,37,22,32,103,18,48],"t10":[2,55,28,91,79,87,60]}}}]}
+{
+  "id": "sf-duel",
+  "title": "Street Fighter: Duel",
+  "footerLabel": "Street Fighter: Duel",
+  "exportName": "rankme-sf-duel-tierlist.png",
+  "description": "Rank every Street Fighter: Duel fighter. Drag, drop, customize tiers, and share your ranking with one link.",
+  "cover": "assets/brand/SF_Cover_1.webp",
+  "parallax": true,
+  "cardShape": "portrait",
+  "cardPath": "assets/cards/",
+  "cardAspect": 1.35,
+  "theme": null,
+  "noFactions": false,
+  "factionOrder": [
+    "MASTER",
+    "INFERNAL",
+    "WIND",
+    "THUNDER",
+    "FLAME",
+    "LEGENDARY",
+    "A+"
+  ],
+  "cards": [
+    {
+      "id": 1,
+      "file": "card_001.png",
+      "faction": "MASTER",
+      "name": "Gen"
+    },
+    {
+      "id": 2,
+      "file": "card_002.png",
+      "faction": "MASTER",
+      "name": "Akuma"
+    },
+    {
+      "id": 3,
+      "file": "card_003.png",
+      "faction": "MASTER",
+      "name": "Gouken"
+    },
+    {
+      "id": 4,
+      "file": "card_004.png",
+      "faction": "MASTER",
+      "name": "Rose"
+    },
+    {
+      "id": 5,
+      "file": "card_005.png",
+      "faction": "MASTER",
+      "name": "Trendy Cammy"
+    },
+    {
+      "id": 6,
+      "file": "card_006.png",
+      "faction": "MASTER",
+      "name": "Taoist Gen"
+    },
+    {
+      "id": 7,
+      "file": "card_007.png",
+      "faction": "MASTER",
+      "name": "Trendt Ryu"
+    },
+    {
+      "id": 8,
+      "file": "card_008.png",
+      "faction": "MASTER",
+      "name": "Athlete Chun-Li"
+    },
+    {
+      "id": 9,
+      "file": "card_009.png",
+      "faction": "MASTER",
+      "name": "Trendy Dhalsim"
+    },
+    {
+      "id": 10,
+      "file": "card_010.png",
+      "faction": "MASTER",
+      "name": "Dante"
+    },
+    {
+      "id": 11,
+      "file": "card_011.png",
+      "faction": "MASTER",
+      "name": "Summer Yun"
+    },
+    {
+      "id": 12,
+      "file": "card_012.png",
+      "faction": "MASTER",
+      "name": " Master Leonardo"
+    },
+    {
+      "id": 13,
+      "file": "card_013.png",
+      "faction": "MASTER",
+      "name": "Raphael"
+    },
+    {
+      "id": 14,
+      "file": "card_014.png",
+      "faction": "MASTER",
+      "name": "Luke"
+    },
+    {
+      "id": 15,
+      "file": "card_015.png",
+      "faction": "MASTER",
+      "name": "Jp"
+    },
+    {
+      "id": 16,
+      "file": "card_016.png",
+      "faction": "MASTER",
+      "name": "Summer Ibuki"
+    },
+    {
+      "id": 17,
+      "file": "card_017.png",
+      "faction": "MASTER",
+      "name": "Diviner Rose"
+    },
+    {
+      "id": 18,
+      "file": "card_018.png",
+      "faction": "MASTER",
+      "name": "Firecracker Sakura"
+    },
+    {
+      "id": 19,
+      "file": "card_019.png",
+      "faction": "MASTER",
+      "name": "Rich E Honda"
+    },
+    {
+      "id": 20,
+      "file": "card_020.png",
+      "faction": "MASTER",
+      "name": "Kunoichi Ibuki"
+    },
+    {
+      "id": 21,
+      "file": "card_021.png",
+      "faction": "MASTER",
+      "name": "Cowbot T Hawk"
+    },
+    {
+      "id": 22,
+      "file": "card_022.png",
+      "faction": "MASTER",
+      "name": "Banquet Guy"
+    },
+    {
+      "id": 23,
+      "file": "card_023.png",
+      "faction": "MASTER",
+      "name": "Popstar Poison"
+    },
+    {
+      "id": 24,
+      "file": "card_024.png",
+      "faction": "MASTER",
+      "name": "Popstar Chun Li"
+    },
+    {
+      "id": 25,
+      "file": "card_025.png",
+      "faction": "MASTER",
+      "name": "Popstar Juri"
+    },
+    {
+      "id": 26,
+      "file": "card_026.png",
+      "faction": "MASTER",
+      "name": "Hermit Gouken"
+    },
+    {
+      "id": 27,
+      "file": "card_027.png",
+      "faction": "MASTER",
+      "name": "Summer Rose"
+    },
+    {
+      "id": 28,
+      "file": "card_028.png",
+      "faction": "INFERNAL",
+      "name": "Juri"
+    },
+    {
+      "id": 29,
+      "file": "card_029.png",
+      "faction": "INFERNAL",
+      "name": "Seth"
+    },
+    {
+      "id": 30,
+      "file": "card_030.png",
+      "faction": "INFERNAL",
+      "name": "M Bison"
+    },
+    {
+      "id": 31,
+      "file": "card_031.png",
+      "faction": "INFERNAL",
+      "name": "Balrog"
+    },
+    {
+      "id": 32,
+      "file": "card_032.png",
+      "faction": "INFERNAL",
+      "name": "Vega"
+    },
+    {
+      "id": 33,
+      "file": "card_033.png",
+      "faction": "INFERNAL",
+      "name": "Sagat"
+    },
+    {
+      "id": 34,
+      "file": "card_034.png",
+      "faction": "INFERNAL",
+      "name": "Evil Ryu"
+    },
+    {
+      "id": 35,
+      "file": "card_035.png",
+      "faction": "INFERNAL",
+      "name": "Oni"
+    },
+    {
+      "id": 36,
+      "file": "card_036.png",
+      "faction": "INFERNAL",
+      "name": "Witch Juri"
+    },
+    {
+      "id": 37,
+      "file": "card_037.png",
+      "faction": "INFERNAL",
+      "name": "Gore Magala Ken"
+    },
+    {
+      "id": 38,
+      "file": "card_038.png",
+      "faction": "INFERNAL",
+      "name": "Vergil"
+    },
+    {
+      "id": 39,
+      "file": "card_039.png",
+      "faction": "INFERNAL",
+      "name": "Michelangelo"
+    },
+    {
+      "id": 40,
+      "file": "card_040.png",
+      "faction": "INFERNAL",
+      "name": "Donatello"
+    },
+    {
+      "id": 41,
+      "file": "card_041.png",
+      "faction": "INFERNAL",
+      "name": "Vizconde Vega"
+    },
+    {
+      "id": 42,
+      "file": "card_042.png",
+      "faction": "INFERNAL",
+      "name": "Pharaoh Sagat"
+    },
+    {
+      "id": 43,
+      "file": "card_043.png",
+      "faction": "INFERNAL",
+      "name": "Archon Decapre"
+    },
+    {
+      "id": 44,
+      "file": "card_044.png",
+      "faction": "INFERNAL",
+      "name": "Chief Viper"
+    },
+    {
+      "id": 45,
+      "file": "card_045.png",
+      "faction": "INFERNAL",
+      "name": "Giant Wrestler Hugo"
+    },
+    {
+      "id": 46,
+      "file": "card_046.png",
+      "faction": "INFERNAL",
+      "name": "Overlord Bison"
+    },
+    {
+      "id": 47,
+      "file": "card_047.png",
+      "faction": "INFERNAL",
+      "name": "Summer Poison"
+    },
+    {
+      "id": 48,
+      "file": "card_048.png",
+      "faction": "INFERNAL",
+      "name": "Horror Hakan"
+    },
+    {
+      "id": 49,
+      "file": "card_049.png",
+      "faction": "INFERNAL",
+      "name": "Shadaloo Cammy"
+    },
+    {
+      "id": 50,
+      "file": "card_050.png",
+      "faction": "INFERNAL",
+      "name": "Shadow Ryu"
+    },
+    {
+      "id": 51,
+      "file": "card_051.png",
+      "faction": "INFERNAL",
+      "name": "Cold-Hearted Adon"
+    },
+    {
+      "id": 52,
+      "file": "card_052.png",
+      "faction": "WIND",
+      "name": "Chun Li"
+    },
+    {
+      "id": 53,
+      "file": "card_053.png",
+      "faction": "WIND",
+      "name": "Guile"
+    },
+    {
+      "id": 54,
+      "file": "card_054.png",
+      "faction": "WIND",
+      "name": "Abel"
+    },
+    {
+      "id": 55,
+      "file": "card_055.png",
+      "faction": "WIND",
+      "name": "Cammy"
+    },
+    {
+      "id": 56,
+      "file": "card_056.png",
+      "faction": "WIND",
+      "name": "Guy"
+    },
+    {
+      "id": 57,
+      "file": "card_057.png",
+      "faction": "WIND",
+      "name": "Yun"
+    },
+    {
+      "id": 58,
+      "file": "card_058.png",
+      "faction": "WIND",
+      "name": "Yang"
+    },
+    {
+      "id": 59,
+      "file": "card_059.png",
+      "faction": "WIND",
+      "name": "T Hawk"
+    },
+    {
+      "id": 60,
+      "file": "card_060.png",
+      "faction": "WIND",
+      "name": "El Fuerte"
+    },
+    {
+      "id": 61,
+      "file": "card_061.png",
+      "faction": "WIND",
+      "name": "Beast Zangief"
+    },
+    {
+      "id": 62,
+      "file": "card_062.png",
+      "faction": "WIND",
+      "name": "Street Poison"
+    },
+    {
+      "id": 63,
+      "file": "card_063.png",
+      "faction": "WIND",
+      "name": "Summer Elena"
+    },
+    {
+      "id": 64,
+      "file": "card_064.png",
+      "faction": "WIND",
+      "name": "Trendy Akuma"
+    },
+    {
+      "id": 65,
+      "file": "card_065.png",
+      "faction": "WIND",
+      "name": "Royal Balrog"
+    },
+    {
+      "id": 66,
+      "file": "card_066.png",
+      "faction": "WIND",
+      "name": "Saikyo Dan"
+    },
+    {
+      "id": 67,
+      "file": "card_067.png",
+      "faction": "WIND",
+      "name": "Nishiki Sakura"
+    },
+    {
+      "id": 68,
+      "file": "card_068.png",
+      "faction": "THUNDER",
+      "name": "Blanka"
+    },
+    {
+      "id": 69,
+      "file": "card_069.png",
+      "faction": "THUNDER",
+      "name": "E Honda"
+    },
+    {
+      "id": 70,
+      "file": "card_070.png",
+      "faction": "THUNDER",
+      "name": "Zangief"
+    },
+    {
+      "id": 71,
+      "file": "card_071.png",
+      "faction": "THUNDER",
+      "name": "Poison"
+    },
+    {
+      "id": 72,
+      "file": "card_072.png",
+      "faction": "THUNDER",
+      "name": "Elena"
+    },
+    {
+      "id": 73,
+      "file": "card_073.png",
+      "faction": "THUNDER",
+      "name": "Makoto"
+    },
+    {
+      "id": 74,
+      "file": "card_074.png",
+      "faction": "THUNDER",
+      "name": "Mad Ryu"
+    },
+    {
+      "id": 75,
+      "file": "card_075.png",
+      "faction": "THUNDER",
+      "name": "Combat Guile"
+    },
+    {
+      "id": 76,
+      "file": "card_076.png",
+      "faction": "THUNDER",
+      "name": "Mummy Dhalsim"
+    },
+    {
+      "id": 77,
+      "file": "card_077.png",
+      "faction": "THUNDER",
+      "name": "Suit Abel"
+    },
+    {
+      "id": 78,
+      "file": "card_078.png",
+      "faction": "THUNDER",
+      "name": "Trendy Guile"
+    },
+    {
+      "id": 79,
+      "file": "card_079.png",
+      "faction": "THUNDER",
+      "name": "Charming Dudley"
+    },
+    {
+      "id": 80,
+      "file": "card_080.png",
+      "faction": "THUNDER",
+      "name": "Baddest Juri"
+    },
+    {
+      "id": 81,
+      "file": "card_081.png",
+      "faction": "THUNDER",
+      "name": "Action Guy"
+    },
+    {
+      "id": 82,
+      "file": "card_082.png",
+      "faction": "THUNDER",
+      "name": "Banquet Rose"
+    },
+    {
+      "id": 83,
+      "file": "card_083.png",
+      "faction": "THUNDER",
+      "name": "Horror Oni"
+    },
+    {
+      "id": 84,
+      "file": "card_084.png",
+      "faction": "FLAME",
+      "name": "Dhalsim"
+    },
+    {
+      "id": 85,
+      "file": "card_085.png",
+      "faction": "FLAME",
+      "name": "Hugo"
+    },
+    {
+      "id": 86,
+      "file": "card_086.png",
+      "faction": "FLAME",
+      "name": "C Viper"
+    },
+    {
+      "id": 87,
+      "file": "card_087.png",
+      "faction": "FLAME",
+      "name": "Adon"
+    },
+    {
+      "id": 88,
+      "file": "card_088.png",
+      "faction": "FLAME",
+      "name": "Decapre"
+    },
+    {
+      "id": 89,
+      "file": "card_089.png",
+      "faction": "FLAME",
+      "name": "Fei Long"
+    },
+    {
+      "id": 90,
+      "file": "card_090.png",
+      "faction": "FLAME",
+      "name": "Dee Jay"
+    },
+    {
+      "id": 91,
+      "file": "card_091.png",
+      "faction": "FLAME",
+      "name": "Dudley"
+    },
+    {
+      "id": 92,
+      "file": "card_092.png",
+      "faction": "FLAME",
+      "name": "Mayor Cody"
+    },
+    {
+      "id": 93,
+      "file": "card_093.png",
+      "faction": "FLAME",
+      "name": "Cammy & Vega"
+    },
+    {
+      "id": 94,
+      "file": "card_094.png",
+      "faction": "FLAME",
+      "name": "Summer Yang"
+    },
+    {
+      "id": 95,
+      "file": "card_095.png",
+      "faction": "FLAME",
+      "name": "Fire Adon"
+    },
+    {
+      "id": 96,
+      "file": "card_096.png",
+      "faction": "FLAME",
+      "name": "Furisode Makoto"
+    },
+    {
+      "id": 97,
+      "file": "card_097.png",
+      "faction": "FLAME",
+      "name": "Banquet Cammy"
+    },
+    {
+      "id": 98,
+      "file": "card_098.png",
+      "faction": "FLAME",
+      "name": "Summer Cody"
+    },
+    {
+      "id": 99,
+      "file": "card_099.png",
+      "faction": "FLAME",
+      "name": "Monk Bison"
+    },
+    {
+      "id": 100,
+      "file": "card_100.png",
+      "faction": "LEGENDARY",
+      "name": "Flame Chun Li"
+    },
+    {
+      "id": 101,
+      "file": "card_101.png",
+      "faction": "LEGENDARY",
+      "name": "Fashion Sakura"
+    },
+    {
+      "id": 102,
+      "file": "card_102.png",
+      "faction": "LEGENDARY",
+      "name": "Fashion Blanka"
+    },
+    {
+      "id": 103,
+      "file": "card_103.png",
+      "faction": "LEGENDARY",
+      "name": "Jonin Ibuki"
+    },
+    {
+      "id": 104,
+      "file": "card_104.png",
+      "faction": "LEGENDARY",
+      "name": "Nero"
+    },
+    {
+      "id": 105,
+      "file": "card_105.png",
+      "faction": "LEGENDARY",
+      "name": "Shredder"
+    },
+    {
+      "id": 106,
+      "file": "card_106.png",
+      "faction": "LEGENDARY",
+      "name": "Christmas Rufus"
+    },
+    {
+      "id": 107,
+      "file": "card_107.png",
+      "faction": "LEGENDARY",
+      "name": "Fashion Ken"
+    },
+    {
+      "id": 108,
+      "file": "card_108.png",
+      "faction": "LEGENDARY",
+      "name": "Hydro Chun Li"
+    },
+    {
+      "id": 109,
+      "file": "card_109.png",
+      "faction": "LEGENDARY",
+      "name": "Trendy Elena"
+    },
+    {
+      "id": 110,
+      "file": "card_110.png",
+      "faction": "LEGENDARY",
+      "name": "Agent C Viper"
+    },
+    {
+      "id": 111,
+      "file": "card_111.png",
+      "faction": "LEGENDARY",
+      "name": "Banquet Guile"
+    },
+    {
+      "id": 112,
+      "file": "card_112.png",
+      "faction": "LEGENDARY",
+      "name": "Fashion E Honda"
+    },
+    {
+      "id": 113,
+      "file": "card_113.png",
+      "faction": "LEGENDARY",
+      "name": "Santa Blanka"
+    },
+    {
+      "id": 114,
+      "file": "card_114.png",
+      "faction": "LEGENDARY",
+      "name": "Vacation Dee Jay"
+    },
+    {
+      "id": 115,
+      "file": "card_115.png",
+      "faction": "LEGENDARY",
+      "name": "Banquet Fei Long"
+    },
+    {
+      "id": 116,
+      "file": "card_116.png",
+      "faction": "LEGENDARY",
+      "name": "Mech Zangief"
+    },
+    {
+      "id": 117,
+      "file": "card_117.png",
+      "faction": "LEGENDARY",
+      "name": "Cupid Hugo"
+    },
+    {
+      "id": 118,
+      "file": "card_118.png",
+      "faction": "LEGENDARY",
+      "name": "Zombie Cody"
+    },
+    {
+      "id": 119,
+      "file": "card_119.png",
+      "faction": "LEGENDARY",
+      "name": "Fairy Makoto"
+    },
+    {
+      "id": 120,
+      "file": "card_120.png",
+      "faction": "LEGENDARY",
+      "name": "Magican Rolento"
+    },
+    {
+      "id": 121,
+      "file": "card_121.png",
+      "faction": "LEGENDARY",
+      "name": "Luchador El Fuerte"
+    },
+    {
+      "id": 131,
+      "file": "card_131.png",
+      "faction": "LEGENDARY",
+      "name": "Vacation Balrog"
+    },
+    {
+      "id": 122,
+      "file": "card_122.png",
+      "faction": "A+",
+      "name": "Ibuki"
+    },
+    {
+      "id": 123,
+      "file": "card_123.png",
+      "faction": "A+",
+      "name": "Cody"
+    },
+    {
+      "id": 124,
+      "file": "card_124.png",
+      "faction": "A+",
+      "name": "Rufus"
+    },
+    {
+      "id": 125,
+      "file": "card_125.png",
+      "faction": "A+",
+      "name": "Dan"
+    },
+    {
+      "id": 126,
+      "file": "card_126.png",
+      "faction": "A+",
+      "name": "Sakura"
+    },
+    {
+      "id": 127,
+      "file": "card_127.png",
+      "faction": "A+",
+      "name": "Ryu"
+    },
+    {
+      "id": 128,
+      "file": "card_128.png",
+      "faction": "A+",
+      "name": "Hakan"
+    },
+    {
+      "id": 129,
+      "file": "card_129.png",
+      "faction": "A+",
+      "name": "Ken"
+    },
+    {
+      "id": 130,
+      "file": "card_130.png",
+      "faction": "A+",
+      "name": "Rolento"
+    }
+  ],
+  "experts": [
+    {
+      "id": "eldud",
+      "name": "ElDuD",
+      "youtube": "https://youtube.com/@ElDuD89",
+      "preset": {
+        "tiers": [
+          {
+            "id": "t1",
+            "hue": 255,
+            "sat": 55,
+            "name": "GOD",
+            "light": 82
+          },
+          {
+            "id": "t2",
+            "hue": 355,
+            "sat": 70,
+            "name": "BOSSES META",
+            "light": 65
+          },
+          {
+            "id": "t3",
+            "hue": 28,
+            "sat": 65,
+            "name": "PVP META",
+            "light": 62
+          },
+          {
+            "id": "t4",
+            "hue": 320,
+            "sat": 65,
+            "name": "ASSISTANT META",
+            "light": 65
+          },
+          {
+            "id": "t5",
+            "hue": 268,
+            "sat": 50,
+            "name": "GOOD",
+            "light": 62
+          },
+          {
+            "id": "t6",
+            "hue": 220,
+            "sat": 35,
+            "name": "ASSISTANT",
+            "light": 52
+          },
+          {
+            "id": "t7",
+            "hue": 172,
+            "sat": 50,
+            "name": "SUPREME FIST",
+            "light": 52
+          },
+          {
+            "id": "t8",
+            "hue": 135,
+            "sat": 38,
+            "name": "DECENT",
+            "light": 48
+          },
+          {
+            "id": "t9",
+            "hue": 110,
+            "sat": 55,
+            "name": "DISAPPOINTED",
+            "light": 70
+          },
+          {
+            "id": "t10",
+            "hue": 100,
+            "sat": 55,
+            "name": "BAD",
+            "light": 82
+          }
+        ],
+        "assignment": {
+          "t1": [
+            46,
+            23,
+            118,
+            41,
+            12,
+            95,
+            99,
+            115,
+            62,
+            21
+          ],
+          "t2": [
+            116,
+            6,
+            100,
+            19,
+            77,
+            17,
+            42,
+            81,
+            13,
+            65,
+            121
+          ],
+          "t3": [
+            50,
+            83,
+            8,
+            7,
+            15,
+            3,
+            63,
+            26,
+            51,
+            39,
+            16,
+            69
+          ],
+          "t4": [
+            38,
+            40,
+            24,
+            49,
+            34,
+            89,
+            71,
+            54,
+            61,
+            27,
+            1
+          ],
+          "t5": [
+            14,
+            35,
+            82,
+            45,
+            117,
+            10,
+            105,
+            119,
+            30,
+            70,
+            33,
+            11,
+            9,
+            72,
+            29
+          ],
+          "t6": [
+            120,
+            36,
+            4,
+            78,
+            20,
+            18,
+            44,
+            92,
+            74,
+            31,
+            108,
+            104,
+            109,
+            102,
+            57,
+            58,
+            101
+          ],
+          "t7": [
+            86,
+            93,
+            97,
+            64,
+            53,
+            94,
+            84,
+            76,
+            67,
+            66,
+            68,
+            52,
+            96,
+            90,
+            88,
+            85,
+            98,
+            80,
+            75
+          ],
+          "t8": [
+            47,
+            43,
+            113,
+            114,
+            110,
+            106,
+            59,
+            111,
+            73,
+            112,
+            123,
+            56
+          ],
+          "t9": [
+            25,
+            107,
+            37,
+            22,
+            32,
+            5,
+            103,
+            48
+          ],
+          "t10": [
+            2,
+            55,
+            28,
+            91,
+            79,
+            87,
+            60
+          ]
+        }
+      }
+    }
+  ]
+}

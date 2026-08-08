@@ -1279,12 +1279,6 @@ async function exportPNG(returnBlobOnly, blobCb){
             bg.addColorStop(1, 'rgba(18,14,28,0.98)');
             ctx.fillStyle = bg;
             ctx.fill();
-            // brand violet rim
-            ctx.strokeStyle = THEME_GOLD ? 'rgba(201,168,240,0.85)' : 'rgba(230,200,140,0.75)';
-            ctx.lineWidth = Math.max(1.5, cardW * 0.03);
-            ctx.stroke();
-            ctx.shadowColor = 'rgba(180,130,230,0.35)';
-            ctx.shadowBlur = cardW * 0.1;
           } else {
             ctx.fillStyle = 'rgba(255,255,255,0.045)';
             ctx.fill();
@@ -1293,6 +1287,17 @@ async function exportPNG(returnBlobOnly, blobCb){
           // cover fills frame — no empty letterbox
           ctx.drawImage(img, x, cy, cardW, cardH);
           ctx.restore();
+          // Thin rim on top — matches site (1px gold for square, violet for LoL)
+          if(CARD_SHAPE === 'square' || THEME_GOLD){
+            ctx.save();
+            ctx.beginPath();
+            if(ctx.roundRect) ctx.roundRect(x + 0.5, cy + 0.5, cardW - 1, cardH - 1, Math.max(5, r - 1));
+            else ctx.rect(x + 0.5, cy + 0.5, cardW - 1, cardH - 1);
+            ctx.strokeStyle = THEME_GOLD ? 'rgba(201,168,240,0.55)' : 'rgba(220,180,120,0.4)';
+            ctx.lineWidth = Math.max(1, Math.min(1.5, cardW * 0.012));
+            ctx.stroke();
+            ctx.restore();
+          }
         } catch(e){}
       }
       col++;

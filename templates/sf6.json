@@ -1,0 +1,200 @@
+{
+  "id": "sf6",
+  "title": "Street Fighter 6",
+  "footerLabel": "Street Fighter 6",
+  "exportName": "rankme-sf6-tierlist.png",
+  "cardShape": "square",
+  "cardPath": "assets/sf6/",
+  "noFactions": true,
+  "parallax": true,
+  "cover": "assets/brand/SF6_Cover.webp",
+  "description": "Rank every Street Fighter 6 fighter on RankMe.",
+  "cards": [
+    {
+      "id": 1,
+      "file": "A.K.I.png",
+      "name": "A.K.I",
+      "faction": "ALL"
+    },
+    {
+      "id": 2,
+      "file": "Akuma.png",
+      "name": "Akuma",
+      "faction": "ALL"
+    },
+    {
+      "id": 3,
+      "file": "Alex.png",
+      "name": "Alex",
+      "faction": "ALL"
+    },
+    {
+      "id": 4,
+      "file": "Blanka.png",
+      "name": "Blanka",
+      "faction": "ALL"
+    },
+    {
+      "id": 5,
+      "file": "C. Viper.png",
+      "name": "C. Viper",
+      "faction": "ALL"
+    },
+    {
+      "id": 6,
+      "file": "Cammy.png",
+      "name": "Cammy",
+      "faction": "ALL"
+    },
+    {
+      "id": 7,
+      "file": "Chun-Li.png",
+      "name": "Chun-Li",
+      "faction": "ALL"
+    },
+    {
+      "id": 8,
+      "file": "Dee Jay.png",
+      "name": "Dee Jay",
+      "faction": "ALL"
+    },
+    {
+      "id": 9,
+      "file": "Dhalsim.png",
+      "name": "Dhalsim",
+      "faction": "ALL"
+    },
+    {
+      "id": 10,
+      "file": "E. Honda.png",
+      "name": "E. Honda",
+      "faction": "ALL"
+    },
+    {
+      "id": 11,
+      "file": "Ed.png",
+      "name": "Ed",
+      "faction": "ALL"
+    },
+    {
+      "id": 12,
+      "file": "Elena.png",
+      "name": "Elena",
+      "faction": "ALL"
+    },
+    {
+      "id": 13,
+      "file": "Guile.png",
+      "name": "Guile",
+      "faction": "ALL"
+    },
+    {
+      "id": 14,
+      "file": "Ingrid.png",
+      "name": "Ingrid",
+      "faction": "ALL"
+    },
+    {
+      "id": 15,
+      "file": "Jamie.png",
+      "name": "Jamie",
+      "faction": "ALL"
+    },
+    {
+      "id": 16,
+      "file": "JP.png",
+      "name": "JP",
+      "faction": "ALL"
+    },
+    {
+      "id": 17,
+      "file": "Juri.png",
+      "name": "Juri",
+      "faction": "ALL"
+    },
+    {
+      "id": 18,
+      "file": "Ken.png",
+      "name": "Ken",
+      "faction": "ALL"
+    },
+    {
+      "id": 19,
+      "file": "Kimberly.png",
+      "name": "Kimberly",
+      "faction": "ALL"
+    },
+    {
+      "id": 20,
+      "file": "Lily.png",
+      "name": "Lily",
+      "faction": "ALL"
+    },
+    {
+      "id": 21,
+      "file": "Luke.png",
+      "name": "Luke",
+      "faction": "ALL"
+    },
+    {
+      "id": 22,
+      "file": "M. Bison.png",
+      "name": "M. Bison",
+      "faction": "ALL"
+    },
+    {
+      "id": 23,
+      "file": "Mai.png",
+      "name": "Mai",
+      "faction": "ALL"
+    },
+    {
+      "id": 24,
+      "file": "Manon.png",
+      "name": "Manon",
+      "faction": "ALL"
+    },
+    {
+      "id": 25,
+      "file": "Marisa.png",
+      "name": "Marisa",
+      "faction": "ALL"
+    },
+    {
+      "id": 26,
+      "file": "Rashid.png",
+      "name": "Rashid",
+      "faction": "ALL"
+    },
+    {
+      "id": 27,
+      "file": "Ryu.png",
+      "name": "Ryu",
+      "faction": "ALL"
+    },
+    {
+      "id": 28,
+      "file": "Sagat.png",
+      "name": "Sagat",
+      "faction": "ALL"
+    },
+    {
+      "id": 29,
+      "file": "Terry.png",
+      "name": "Terry",
+      "faction": "ALL"
+    },
+    {
+      "id": 30,
+      "file": "Yasmine.png",
+      "name": "Yasmine",
+      "faction": "ALL"
+    },
+    {
+      "id": 31,
+      "file": "Zangief.png",
+      "name": "Zangief",
+      "faction": "ALL"
+    }
+  ]
+}

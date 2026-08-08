@@ -34,6 +34,17 @@
         "moba"
       ],
       "parallax": true
+    },
+    {
+      "id": "sf6",
+      "title": "Street Fighter 6",
+      "cover": "assets/brand/SF6_Cover.webp",
+      "href": "tier.html?t=sf6",
+      "tags": [
+        "games",
+        "fighting"
+      ],
+      "parallax": true
     }
   ]
 }

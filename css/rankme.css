@@ -383,8 +383,10 @@ nav.main a.cta-nav:hover{ filter:brightness(1.08); transform:translateY(-1px); c
   appearance:none; -webkit-appearance:none; width:100%; height:12px; border-radius:999px; margin-bottom:16px; touch-action:none;
   background: linear-gradient(90deg,#ff5b5b,#ffd25b,#7bff7b,#5bd0ff,#8f6bff,#ff6bd6,#ff5b5b);
   outline:none; border:none; cursor:pointer;
+  color: transparent; caret-color: transparent; -webkit-text-fill-color: transparent;
+  accent-color: transparent;
 }
-.hue-slider:focus{ outline:none; }
+.hue-slider:focus, .hue-slider:focus-visible{ outline:none; box-shadow:none; }
 .hue-slider::-webkit-slider-runnable-track{
   height:12px; border-radius:999px; border:none;
   background: linear-gradient(90deg,#ff5b5b,#ffd25b,#7bff7b,#5bd0ff,#8f6bff,#ff6bd6,#ff5b5b);
@@ -427,8 +429,9 @@ nav.main a.cta-nav:hover{ filter:brightness(1.08); transform:translateY(-1px); c
   width:120px; height:6px; border-radius:999px; appearance:none; -webkit-appearance:none;
   background: linear-gradient(90deg, #5a4a7a, #b79bf0 50%, #e6a9e8);
   outline:none; cursor:pointer; border:none; margin:0; padding:0; accent-color: transparent;
+  color: transparent; caret-color: transparent; -webkit-text-fill-color: transparent;
 }
-.size-ctrl input[type=range]:focus, .size-ctrl input[type=range]:focus-visible{ outline:none; }
+.size-ctrl input[type=range]:focus, .size-ctrl input[type=range]:focus-visible{ outline:none; box-shadow:none; }
 .size-ctrl input[type=range]::-webkit-slider-runnable-track{
   height:6px; border-radius:999px; border:none; background: linear-gradient(90deg, #5a4a7a, #b79bf0 50%, #e6a9e8);
 }

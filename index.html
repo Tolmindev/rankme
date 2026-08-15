@@ -7,16 +7,15 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/supabaseClient.js"></script>
 <meta property="og:title" content="RankMe - The easiest way to create tier lists">
-<meta property="og:description" content="No account needed. Build tier lists, export PNGs, and share rankings in seconds.">
+<meta property="og:description" content="Build tier lists. Export PNG. Share. No account needed.">
 <meta property="og:image" content="https://rankme.lol/assets/brand/Share_RankMe.png?v=20260807">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="description" content="No account needed. Build tier lists, export PNGs, and share rankings in seconds.">
+<meta name="description" content="Build tier lists. Export PNG. Share. No account needed.">
 <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/rankme.css">
-
 </head>
 <body>
 
@@ -30,128 +29,66 @@
 </header>
 
 <main class="page">
-  <section class="hero-home">
-    <h1>Drag. Rank. Share.</h1>
-    <p>No account needed. Build tier lists, export PNGs, and share rankings in seconds.</p>
-    <div class="cta-row">
-      <a class="cta primary" href="create.html">Start Ranking</a>
-    </div>
-  </section>
+  <div class="home-wrap">
 
-  <h2 class="section-title">Exclusive</h2>
-  <div class="grid" style="margin-bottom:40px">
-    <a class="tl-card exclusive epic" href="tier.html?t=sf-duel">
-      <div class="cover">
-        <span class="tag">Exclusive</span>
-        <img class="cover-art" src="assets/brand/SF_Cover_1.webp" alt="Street Fighter: Duel">
+    <section class="hero-home">
+      <h1>Drag. Rank. Share.</h1>
+      <p>Build tier lists. Export PNG. Share. No account needed.</p>
+      <div class="cta-row">
+        <a class="cta primary cta-start" href="create.html">Start Ranking</a>
       </div>
-      <div class="body">
-        <div class="title">Street Fighter: Duel</div>
-        <div class="meta">Exclusive · 131 fighters</div>
-      </div>
-    </a>
-    <a class="tl-card exclusive" href="tier.html?t=sf-duel-ex">
-      <div class="cover">
-        <span class="tag">Exclusive</span>
-        <img class="cover-art" src="assets/brand/SFD_EX_Cover.webp" alt="Street Fighter: Duel EX-Move">
-      </div>
-      <div class="body">
-        <div class="title">Street Fighter: Duel EX-Move</div>
-        <div class="meta">Exclusive · 35 EX skills</div>
-      </div>
-    </a>
+    </section>
 
-    <a class="tl-card exclusive epic" href="tier.html?t=lol">
-      <div class="cover">
-        <span class="tag">EXCLUSIVE</span>
-        <img class="cover-art" src="assets/brand/LoL_Cover.webp" alt="League of Legends">
+    <section class="discover-toolbar" aria-label="Search and filter templates">
+      <div class="search-box">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input id="homeSearch" type="text" placeholder="Search…" autocomplete="off">
+        <button type="button" class="clear-btn" id="homeSearchClear" hidden aria-label="Clear search">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
       </div>
-      <div class="body">
-        <div class="title">League of Legends</div>
-        <div class="meta">Exclusive · 173 champions</div>
+      <div class="filter-row">
+        <div class="chip-scroll" id="categoryChips"></div>
+        <div class="dd" id="sortDd">
+          <button type="button" class="dd-trigger" id="sortDdTrigger" aria-haspopup="listbox" aria-expanded="false">
+            <span id="sortDdLabel">Featured</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <ul class="dd-menu" id="sortDdMenu" role="listbox">
+            <li role="option" data-value="featured" aria-selected="true">Featured</li>
+            <li role="option" data-value="newest">Newest</li>
+            <li role="option" data-value="alphabetical">Alphabetical</li>
+            <li role="option" data-value="popular">Popular</li>
+          </ul>
+        </div>
       </div>
-    </a>
+    </section>
 
-    <a class="tl-card exclusive epic" href="tier.html?t=sf6">
-      <div class="cover">
-        <span class="tag">Exclusive</span>
-        <img class="cover-art" src="assets/brand/SF6_Cover.webp" alt="Street Fighter 6">
+    <section aria-label="Templates">
+      <div class="section-head">
+        <h2 class="section-title">Templates</h2>
+        <p class="results-meta" id="resultsMeta"></p>
       </div>
-      <div class="body">
-        <div class="title">Street Fighter 6</div>
-        <div class="meta">Exclusive · 31 fighters</div>
+      <div class="grid" id="discoverGrid"></div>
+    </section>
+
+    <section aria-label="Community" style="margin-top:48px">
+      <div class="section-head">
+        <h2 class="section-title">Community</h2>
       </div>
-    </a>
+      <div class="community-panel" id="communityBody">
+        <div class="community-empty">
+          <div class="icon">🌱</div>
+          <p>Loading community activity…</p>
+        </div>
+      </div>
+    </section>
 
-
-  </div>
-
-  <h2 class="section-title">Community</h2>
-  <div class="grid" id="communityGrid">
-    <div class="empty-state">
-      Community lists coming soon.<br>
-      Create offline now - export PNG anytime.
-    </div>
   </div>
 </main>
 
 <footer id="site-footer" class="site"></footer>
 <script src="js/footer.js" defer></script>
-
-
-
-<script>
-(function(){
-  // Ensure template id survives if server strips query from tier.html
-  document.querySelectorAll('a.tl-card[href*="tier.html"]').forEach(function(a){
-    a.addEventListener('click', function(){
-      try {
-        var u = new URL(a.href, location.href);
-        var t = u.searchParams.get('t');
-        if (t) sessionStorage.setItem('rankme_t', t);
-      } catch (e) {}
-    });
-  });
-  function bindParallax(card){
-    const img = card.querySelector('.cover img.cover-art, img.cover-card, img.parallax-img');
-    if(!img) return;
-    const max = 10;
-    const onMove = (e)=>{
-      const r = card.getBoundingClientRect();
-      const px = (e.clientX - r.left) / r.width - 0.5;
-      const py = (e.clientY - r.top) / r.height - 0.5;
-      img.style.transform = 'scale(1.12) translate3d(' + (-px*max*2).toFixed(1) + 'px,' + (-py*max*2).toFixed(1) + 'px,0)';
-    };
-    const onLeave = ()=>{ img.style.transform = 'scale(1.08) translate3d(0,0,0)'; };
-    card.addEventListener('pointermove', onMove);
-    card.addEventListener('pointerleave', onLeave);
-  }
-  document.querySelectorAll('.tl-card.epic, .parallax-host').forEach(bindParallax);
-})();
-</script>
-
-<script>
-(function(){
-  document.querySelectorAll('.tl-card.epic .cover').forEach(host=>{
-    const img = host.querySelector('img.cover-art');
-    if(!img) return;
-    let raf=0, tx=0, ty=0, cx=0, cy=0;
-    const max=6;
-    function tick(){
-      cx += (tx-cx)*0.1; cy += (ty-cy)*0.1;
-      img.style.transform = 'scale(1.06) translate3d('+cx.toFixed(2)+'px,'+cy.toFixed(2)+'px,0)';
-      if(Math.abs(tx-cx)>0.04||Math.abs(ty-cy)>0.04) raf=requestAnimationFrame(tick); else raf=0;
-    }
-    host.addEventListener('pointermove', e=>{
-      const r=host.getBoundingClientRect();
-      tx = -((e.clientX-r.left)/r.width-0.5)*max*2;
-      ty = -((e.clientY-r.top)/r.height-0.5)*max*2;
-      if(!raf) raf=requestAnimationFrame(tick);
-    });
-    host.addEventListener('pointerleave', ()=>{ tx=0; ty=0; if(!raf) raf=requestAnimationFrame(tick); });
-  });
-})();
-</script>
-
+<script src="js/home.js" defer></script>
 </body>
 </html>

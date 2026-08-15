@@ -38,11 +38,11 @@
     </button>
     <input type="file" id="coverEditInput" accept="image/*" hidden>
   </div>
-  <div style="flex:1 1 260px;max-width:520px">
-    <h1 id="listTitle" style="margin:0 0 8px;font-size:1.6rem;font-weight:900" contenteditable="true">My tier list</h1>
-    <p class="desc" style="margin:0">Upload your own images, rank them, and export a PNG.</p>
-    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
-      <label class="pill-btn add" style="cursor:pointer;display:inline-flex;align-items:center;gap:6px">
+  <div class="hero-text blank-hero-text">
+    <h1 class="hero-title" id="listTitle" contenteditable="true">My Rank</h1>
+    <p class="desc">Upload, rank, export PNG.</p>
+    <div class="blank-upload-row">
+      <label class="pill-btn add" for="uploadImgs">
         <input type="file" id="uploadImgs" accept="image/*" multiple hidden>
         + Upload images
       </label>
@@ -70,10 +70,11 @@
 
   try {
     var cover = sessionStorage.getItem('rankme_blank_cover');
-    var title = sessionStorage.getItem('rankme_blank_title');
+    var title = sessionStorage.getItem('rankme_blank_title') || localStorage.getItem('rankme_draft_title');
     if (title) {
       var h = document.getElementById('listTitle');
       if (h) h.textContent = title;
+      try { localStorage.setItem('rankme_draft_title', title); } catch (e2) {}
     }
     if (cover) applyCover(cover, false);
   } catch (e) {}
@@ -131,7 +132,7 @@
   <div class="portals-bar" id="portalsBar" hidden></div>
   <div class="pool-header">
     <div class="faction-filters" id="factionFilters"></div>
-    <button class="portal-btn" id="portalBtn" type="button" title="Drop cards into portals to send them to tiers">MAGIC PORTAL</button>
+    <button class="portal-btn" id="portalBtn" type="button" title="Portals">TELEPORTATION</button>
   </div>
   <div class="pool" id="pool"></div>
 </div>
@@ -142,8 +143,8 @@
 
 <div class="modal-back" id="leaveModal">
   <div class="modal">
-    <h3>Leave without saving?</h3>
-    <p>Your changes haven't been saved. Export a PNG or sign in to keep this ranking.</p>
+    <h3>Leave?</h3>
+    <p>Not saved. Export or sign in.</p>
     <div class="modal-actions">
       <button class="primary" id="stayBtn">Stay</button>
       <button id="leaveBtn">Leave anyway</button>

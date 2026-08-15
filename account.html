@@ -82,8 +82,8 @@ async function renderCabinet(user){
 
   let listHtml = '<div class="empty">Loading…</div>';
   panel.innerHTML = `
-    <h1>My Rankings</h1>
-    <p class="sub">Your saved <b>Exclusive</b> rankings. Custom images are not stored on the server.</p>
+    <h1>Collection</h1>
+    <p class="sub">Saved Exclusive rankings.</p>
     <div class="profile">
       <div class="avatar-wrap">
         <div class="holo-ring"></div>
@@ -92,7 +92,7 @@ async function renderCabinet(user){
       <div class="meta"><b>${name}</b><span>${providerLabel}</span></div>
     </div>
     <div class="list">
-      <h2>Saved Exclusive lists</h2>
+      <h2>Saved</h2>
       <div id="listBox">${listHtml}</div>
     </div>
     <button class="login-btn ghost" id="logout">Log out</button>`;
@@ -106,17 +106,19 @@ async function renderCabinet(user){
     const rows = await listMyTierlists();
     const box = document.getElementById('listBox');
     if(!rows.length){
-      box.innerHTML = '<div class="empty">No saved rankings yet.</div>';
+      box.innerHTML = '<div class="empty">Nothing saved yet.</div>';
     } else {
       box.innerHTML = rows.map(r=>{
         const tid = r.template_id || 'sf-duel';
         const openHref = 'tier.html?t=' + encodeURIComponent(tid);
         const when = r.updated_at ? new Date(r.updated_at).toLocaleString() : '';
+        const pub = !!r.is_public;
         return `<div class="tl-item">
-          <div><div class="t">${r.title||'Untitled'}</div><div class="d">${r.template_id||'exclusive'} · ${when}</div></div>
+          <div><div class="t">${r.title||'Untitled'}${pub ? ' <span class="pub-badge">Public</span>' : ''}</div><div class="d">${r.template_id||'exclusive'} · ${when}</div></div>
           <div class="tl-actions">
             <a class="primary" href="${openHref}" data-id="${r.id}">Open</a>
             <button type="button" class="share" data-share="${r.id}">Share</button>
+            <button type="button" class="pub-btn ${pub ? 'is-public' : ''}" data-pub="${r.id}" data-on="${pub ? '1' : '0'}">${pub ? 'Public' : 'Publish'}</button>
             <button type="button" class="danger" data-del="${r.id}">Delete</button>
           </div>
         </div>`;
@@ -161,6 +163,25 @@ async function renderCabinet(user){
           }
         };
       });
+      box.querySelectorAll('[data-pub]').forEach(btn=>{
+        btn.onclick = async ()=>{
+          const id = btn.dataset.pub;
+          const on = btn.dataset.on === '1';
+          try{
+            await setTierlistPublic(id, !on);
+            btn.dataset.on = on ? '0' : '1';
+            btn.textContent = on ? 'Publish' : 'Public';
+            btn.classList.toggle('is-public', !on);
+            const title = btn.closest('.tl-item')?.querySelector('.t');
+            if(title){
+              title.querySelector('.pub-badge')?.remove();
+              if(!on) title.insertAdjacentHTML('beforeend', ' <span class="pub-badge">Public</span>');
+            }
+          }catch(e){
+            alert('Add column is_public to tierlists in Supabase (boolean).');
+          }
+        };
+      });
       // Open with payload via sessionStorage
       box.querySelectorAll('a.primary').forEach(a=>{
         a.addEventListener('click', (e)=>{
@@ -199,7 +220,7 @@ async function renderCabinet(user){
 
 <div class="modal-back" id="delModal">
   <div class="modal">
-    <h3>Delete this list?</h3>
+    <h3>Delete?</h3>
     <p>This cannot be undone.</p>
     <div class="modal-actions">
       <button type="button" class="primary" id="delCancel">Cancel</button>

@@ -8,7 +8,7 @@
   "noFactions": true,
   "parallax": true,
   "cover": "assets/brand/SF6_Cover.webp",
-  "description": "Rank every Street Fighter 6 fighter on RankMe.",
+  "description": "Street Fighter 6 is a 2023 fighting game by Capcom with innovative mechanics, multiple modes, and a diverse roster.",
   "cards": [
     {
       "id": 1,

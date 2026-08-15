@@ -1,50 +1,140 @@
 {
-  "exclusives": [
+  "templates": [
     {
       "id": "sf-duel",
       "title": "Street Fighter: Duel",
+      "description": "Collect iconic Street Fighters, upgrade your team, and enter epic battles in this idle RPG twist on the Street Fighter universe.",
       "cover": "assets/brand/SF_Cover_1.webp",
       "href": "tier.html?t=sf-duel",
+      "category": "games",
       "tags": [
         "games",
         "fighting",
-        "mobile"
+        "mobile",
+        "street fighter",
+        "capcom"
       ],
+      "itemCount": 131,
+      "itemLabel": "fighters",
+      "creator": "RankMe",
+      "createdAt": "2024-11-02",
+      "featured": true,
+      "exclusive": true,
       "parallax": true
     },
     {
       "id": "sf-duel-ex",
       "title": "Street Fighter: Duel EX-Move",
+      "description": "Rank every EX-Move skill from Street Fighter: Duel.",
       "cover": "assets/brand/SFD_EX_Cover.webp",
       "href": "tier.html?t=sf-duel-ex",
+      "category": "games",
       "tags": [
         "games",
         "fighting",
-        "mobile"
+        "mobile",
+        "street fighter",
+        "ex-move"
       ],
+      "itemCount": 35,
+      "itemLabel": "EX skills",
+      "creator": "RankMe",
+      "createdAt": "2024-11-10",
+      "featured": false,
+      "exclusive": true,
       "parallax": false
     },
     {
       "id": "lol",
       "title": "League of Legends",
+      "description": "Rank all League of Legends champions, from top lane to support.",
       "cover": "assets/brand/LoL_Cover.webp",
       "href": "tier.html?t=lol",
+      "category": "games",
       "tags": [
         "games",
-        "moba"
+        "moba",
+        "league of legends",
+        "riot"
       ],
+      "itemCount": 173,
+      "itemLabel": "champions",
+      "creator": "RankMe",
+      "createdAt": "2025-01-15",
+      "featured": true,
+      "exclusive": true,
       "parallax": true
     },
     {
       "id": "sf6",
       "title": "Street Fighter 6",
+      "description": "Street Fighter 6 is a 2023 fighting game by Capcom with innovative mechanics, multiple modes, and a diverse roster.",
       "cover": "assets/brand/SF6_Cover.webp",
       "href": "tier.html?t=sf6",
+      "category": "games",
       "tags": [
         "games",
-        "fighting"
+        "fighting",
+        "street fighter",
+        "capcom"
       ],
+      "itemCount": 31,
+      "itemLabel": "fighters",
+      "creator": "RankMe",
+      "createdAt": "2026-08-08",
+      "featured": true,
+      "exclusive": true,
+      "parallax": true
+    },
+    {
+      "id": "dota2",
+      "title": "Dota 2",
+      "description": "Dota is the deepest multi-player action RTS game ever made and there's always a new strategy or tactic to discover.",
+      "cover": "assets/brand/Dota2_Cover.webp",
+      "href": "tier.html?t=dota2",
+      "category": "games",
+      "tags": [
+        "games",
+        "moba",
+        "dota",
+        "valve"
+      ],
+      "itemCount": 127,
+      "itemLabel": "heroes",
+      "creator": "RankMe",
+      "createdAt": "2026-08-14",
+      "featured": true,
+      "exclusive": true,
       "parallax": true
     }
-  ]
+  ],
+  "categoryMeta": {
+    "games": {
+      "label": "Games"
+    },
+    "anime": {
+      "label": "Anime"
+    },
+    "movies": {
+      "label": "Movies"
+    },
+    "tv": {
+      "label": "TV"
+    },
+    "sports": {
+      "label": "Sports"
+    },
+    "music": {
+      "label": "Music"
+    },
+    "memes": {
+      "label": "Memes"
+    },
+    "technology": {
+      "label": "Technology"
+    },
+    "other": {
+      "label": "Other"
+    }
+  }
 }

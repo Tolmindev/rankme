@@ -1,4 +1,4 @@
-/* RankMe boot — resolve template id, load templates/{id}.json, then app.js */
+/* RankMe boot - resolve template id, load templates/{id}.json, then app.js */
 (function () {
   function fail(msg) {
     try { document.body.classList.remove('booting'); } catch (e) {}
@@ -85,6 +85,8 @@
       img.src = t.cover;
       img.alt = t.title || '';
     }
+    const titleEl = document.getElementById('heroTitle');
+    if (titleEl) titleEl.textContent = t.title || '';
     const desc = document.getElementById('heroDesc');
     if (desc) desc.textContent = t.description || '';
 

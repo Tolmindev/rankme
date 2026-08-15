@@ -9,7 +9,6 @@
 <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/rankme.css">
-
 </head>
 <body>
 <header class="site">
@@ -23,59 +22,204 @@
 
 <div class="wrap narrow">
   <div class="panel-card">
-    <h1>New tier list</h1>
-    <p class="sub">Build offline, export PNG anytime. No account needed.</p>
+    <div class="create-head">
+      <div>
+        <h1>New Rank</h1>
+        
+      </div>
+      <div class="tag-dd" id="tagDd">
+        <button type="button" class="tag-dd-btn" id="tagDdBtn">Other</button>
+        <div class="tag-dd-menu" id="tagDdMenu" role="listbox">
+          <button type="button" class="tag-dd-item" data-value="games">Games</button>
+          <button type="button" class="tag-dd-item" data-value="anime">Anime</button>
+          <button type="button" class="tag-dd-item" data-value="movies">Movies</button>
+          <button type="button" class="tag-dd-item" data-value="tv">TV</button>
+          <button type="button" class="tag-dd-item" data-value="music">Music</button>
+          <button type="button" class="tag-dd-item" data-value="sports">Sports</button>
+          <button type="button" class="tag-dd-item" data-value="food">Food</button>
+          <button type="button" class="tag-dd-item" data-value="tech">Technology</button>
+          <button type="button" class="tag-dd-item active" data-value="other">Other</button>
+        </div>
+        <input type="hidden" id="tagSelect" value="other">
+      </div>
+    </div>
 
     <label>Title</label>
-    <input type="text" id="title" placeholder="My tier list" maxlength="60">
+    <input type="text" id="title" placeholder="My Rank" maxlength="60">
 
-    <label>Cover (optional)</label>
+    <label>Cover</label>
     <div class="cover-drop" id="coverDrop">Drop image or click · 1200×630</div>
     <input type="file" id="coverFile" accept="image/*" hidden>
-    <p class="hint">For the gallery card later. Optional.</p>
 
-    <div class="row">
-      <button class="btn primary" id="startBlank">Start blank</button>
+    <div class="row" style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:16px">
+      <button class="btn primary" id="startBlank">Start</button>
+      <a class="btn ghost" href="index.html" style="text-decoration:none">Templates</a>
     </div>
 
-    <div class="note">
-      Custom lists stay in your browser. Only Exclusive rankings can be saved with Login.
+    <div class="images-drop" id="imagesDrop" title="Add ranking images">
+      <div class="ico" aria-hidden="true">↑</div>
+      <div class="hint">Drop images here or click to choose<br>Your files stay on this device</div>
+      <div class="count" id="imagesCount" hidden></div>
     </div>
+    <input type="file" id="imagesFile" accept="image/*" multiple hidden>
+    <div class="images-preview" id="imagesPreview"></div>
   </div>
 </div>
 
 <footer id="site-footer" class="site"></footer>
 <script src="js/footer.js" defer></script>
-
 <script>
-let coverDataUrl = null;
-document.getElementById('coverDrop').onclick = () => document.getElementById('coverFile').click();
-document.getElementById('coverFile').onchange = (e) => {
-  const f = e.target.files && e.target.files[0];
-  if (!f) return;
-  const drop = document.getElementById('coverDrop');
-  const reader = new FileReader();
-  reader.onload = () => {
-    coverDataUrl = reader.result;
-    drop.innerHTML = '';
-    const img = document.createElement('img');
-    img.src = coverDataUrl;
-    img.alt = f.name;
-    img.style.cssText = 'max-width:100%;max-height:160px;border-radius:10px;display:block;margin:0 auto';
-    drop.appendChild(img);
+(function () {
+  var coverDataUrl = null;
+  var imageFiles = []; // {name, dataUrl}
+
+  var coverDrop = document.getElementById('coverDrop');
+  var coverFile = document.getElementById('coverFile');
+  var imagesDrop = document.getElementById('imagesDrop');
+  var imagesFile = document.getElementById('imagesFile');
+  var imagesPreview = document.getElementById('imagesPreview');
+  var imagesCount = document.getElementById('imagesCount');
+  var tagSelect = document.getElementById('tagSelect');
+  var tagDd = document.getElementById('tagDd');
+  var tagDdBtn = document.getElementById('tagDdBtn');
+  var tagDdMenu = document.getElementById('tagDdMenu');
+  if (tagDdBtn && tagDd && tagDdMenu) {
+    tagDdBtn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      tagDd.classList.toggle('open');
+    });
+    tagDdMenu.querySelectorAll('.tag-dd-item').forEach(function (item) {
+      item.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var v = item.getAttribute('data-value') || '';
+        tagSelect.value = v;
+        tagDdBtn.textContent = item.textContent.trim();
+        tagDdMenu.querySelectorAll('.tag-dd-item').forEach(function (x) { x.classList.remove('active'); });
+        item.classList.add('active');
+        tagDd.classList.remove('open');
+      });
+    });
+    document.addEventListener('click', function () { tagDd.classList.remove('open'); });
+  }
+
+  function readFile(file) {
+    return new Promise(function (resolve, reject) {
+      var r = new FileReader();
+      r.onload = function () { resolve(r.result); };
+      r.onerror = reject;
+      r.readAsDataURL(file);
+    });
+  }
+
+  coverDrop.onclick = function () { coverFile.click(); };
+  coverFile.onchange = function (e) {
+    var f = e.target.files && e.target.files[0];
+    if (!f) return;
+    readFile(f).then(function (url) {
+      coverDataUrl = url;
+      coverDrop.innerHTML = '';
+      var img = document.createElement('img');
+      img.src = url;
+      img.alt = f.name;
+      img.style.cssText = 'max-width:100%;max-height:160px;border-radius:10px;display:block;margin:0 auto';
+      coverDrop.appendChild(img);
+    });
   };
-  reader.readAsDataURL(f);
-};
-document.getElementById('startBlank').onclick = () => {
-  const title = document.getElementById('title').value.trim() || 'My tier list';
-  try {
-    sessionStorage.setItem('rankme_blank_title', title);
-    localStorage.setItem('rankme_draft_title', title);
-    if (coverDataUrl) sessionStorage.setItem('rankme_blank_cover', coverDataUrl);
-    else sessionStorage.removeItem('rankme_blank_cover');
-  } catch (e) {}
-  location.href = 'builder.html';
-};
+  ;['dragenter','dragover'].forEach(function (ev) {
+    coverDrop.addEventListener(ev, function (e) {
+      e.preventDefault(); coverDrop.classList.add('drag-over');
+    });
+  });
+  ;['dragleave','drop'].forEach(function (ev) {
+    coverDrop.addEventListener(ev, function (e) {
+      e.preventDefault(); coverDrop.classList.remove('drag-over');
+    });
+  });
+  coverDrop.addEventListener('drop', function (e) {
+    var f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+    if (!f || !f.type.startsWith('image/')) return;
+    readFile(f).then(function (url) {
+      coverDataUrl = url;
+      coverDrop.innerHTML = '';
+      var img = document.createElement('img');
+      img.src = url;
+      img.alt = f.name;
+      img.style.cssText = 'max-width:100%;max-height:160px;border-radius:10px;display:block;margin:0 auto';
+      coverDrop.appendChild(img);
+    });
+  });
+
+  function refreshPreview() {
+    imagesPreview.innerHTML = '';
+    imageFiles.forEach(function (it) {
+      var img = document.createElement('img');
+      img.src = it.dataUrl;
+      img.alt = it.name;
+      imagesPreview.appendChild(img);
+    });
+    if (imageFiles.length) {
+      imagesCount.hidden = false;
+      imagesCount.textContent = imageFiles.length + (imageFiles.length === 1 ? ' image' : ' images');
+    } else {
+      imagesCount.hidden = true;
+    }
+  }
+
+  function addImageFiles(fileList) {
+    var list = Array.prototype.slice.call(fileList || []);
+    list = list.filter(function (f) { return f && f.type && f.type.startsWith('image/'); });
+    if (!list.length) return;
+    Promise.all(list.map(function (f) {
+      return readFile(f).then(function (url) {
+        return { name: f.name, dataUrl: url };
+      });
+    })).then(function (items) {
+      imageFiles = imageFiles.concat(items);
+      refreshPreview();
+    });
+  }
+
+  imagesDrop.onclick = function () { imagesFile.click(); };
+  imagesFile.onchange = function (e) {
+    addImageFiles(e.target.files);
+    imagesFile.value = '';
+  };
+  ;['dragenter','dragover'].forEach(function (ev) {
+    imagesDrop.addEventListener(ev, function (e) {
+      e.preventDefault(); imagesDrop.classList.add('drag-over');
+    });
+  });
+  ;['dragleave','drop'].forEach(function (ev) {
+    imagesDrop.addEventListener(ev, function (e) {
+      e.preventDefault(); imagesDrop.classList.remove('drag-over');
+    });
+  });
+  imagesDrop.addEventListener('drop', function (e) {
+    if (e.dataTransfer && e.dataTransfer.files) addImageFiles(e.dataTransfer.files);
+  });
+
+  document.getElementById('startBlank').onclick = function () {
+    var title = (document.getElementById('title').value || 'My Rank').trim().slice(0, 60);
+    var tag = (tagSelect.value || '').trim();
+    try {
+      sessionStorage.setItem('rankme_blank_title', title);
+      if (coverDataUrl) sessionStorage.setItem('rankme_blank_cover', coverDataUrl);
+      else sessionStorage.removeItem('rankme_blank_cover');
+      if (tag) sessionStorage.setItem('rankme_blank_tag', tag);
+      else sessionStorage.removeItem('rankme_blank_tag');
+      if (imageFiles.length) {
+        sessionStorage.setItem('rankme_blank_images', JSON.stringify(imageFiles.slice(0, 200)));
+      } else {
+        sessionStorage.removeItem('rankme_blank_images');
+      }
+      sessionStorage.setItem('rankme_nav_ok', '1');
+    } catch (err) {
+      alert('Storage full - remove some images and try again.');
+      return;
+    }
+    location.href = 'builder.html?blank=1';
+  };
+})();
 </script>
 </body>
 </html>

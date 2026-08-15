@@ -1,4 +1,4 @@
-/* RankMe shared footer — single source of truth */
+/* RankMe shared footer - single source of truth */
 (function () {
   var root = document.getElementById('site-footer');
   if (!root) return;

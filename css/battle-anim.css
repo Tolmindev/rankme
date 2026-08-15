@@ -1,0 +1,182 @@
+/* RankMe Battle — card selection animation
+   Loaded AFTER rankme.css. Single source of truth for .chosen / .rejected.
+*/
+
+.battle-card{
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 2px solid rgba(160, 130, 210, 0.45);
+  background: linear-gradient(150deg, rgba(120, 90, 170, 0.22), rgba(60, 45, 90, 0.35));
+  cursor: pointer;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+.battle-card-inner{
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.battle-card-frame{
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 28%, rgba(255, 255, 255, 0.05), transparent 55%),
+    linear-gradient(160deg, #241d38, #150f22);
+}
+
+.battle-card-frame img{
+  width: 92%;
+  height: 92%;
+  object-fit: contain;
+  object-position: center;
+  filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.45));
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.battle-card-name{
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  padding: 6px 8px 8px;
+  background: linear-gradient(0deg, rgba(6, 4, 10, 0.82), transparent);
+  font-weight: 600;
+  font-size: 0.48rem;
+  line-height: 1.2;
+  color: rgba(255,255,255,0.92);
+  text-align: center;
+  pointer-events: none;
+}
+
+.battle-electric{
+  position: absolute;
+  inset: 0;
+  border-radius: 18px;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 1;
+}
+
+/* Hover */
+.battle-side:hover .battle-card:not(.chosen):not(.rejected),
+.battle-card:hover:not(.chosen):not(.rejected){
+  transform: translateY(-4px) translateZ(0);
+  border-color: rgba(200, 160, 240, 0.6);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
+}
+
+/* Winner: approach → settle → fade */
+.battle-card.chosen{
+  z-index: 5;
+  border: 3px solid transparent;
+  border-radius: 18px;
+  overflow: hidden;
+  /* 3-color gradient border: pink → purple → cyan */
+  background:
+    linear-gradient(145deg, #1a1528 0%, #161224 100%) padding-box,
+    linear-gradient(130deg, #ff6b9d 0%, #c084fc 45%, #7dd3fc 100%) border-box;
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  box-shadow:
+    0 0 0 1px rgba(192, 132, 252, 0.35),
+    0 0 22px rgba(255, 107, 157, 0.55),
+    0 0 40px rgba(192, 132, 252, 0.4),
+    0 0 56px rgba(125, 211, 252, 0.25);
+  filter: brightness(1.06);
+  animation: winnerHoldFade 0.85s ease-out forwards;
+}
+
+.battle-card.chosen .battle-electric{
+  opacity: 1;
+  animation: electricFadeOut 0.85s ease forwards;
+}
+
+/* Loser: shrink + fade */
+.battle-card.rejected{
+  z-index: 1;
+  pointer-events: none;
+  animation: loserShrinkFade 0.7s ease-out forwards;
+}
+
+@keyframes winnerHoldFade{
+  0%{
+    opacity: 1;
+    transform: translateZ(0) scale(1) translateY(0);
+  }
+  30%{
+    opacity: 1;
+    transform: translateZ(0) scale(1.08) translateY(-6px);
+  }
+  65%{
+    opacity: 1;
+    transform: translateZ(0) scale(1) translateY(0);
+  }
+  100%{
+    opacity: 0;
+    transform: translateZ(0) scale(1) translateY(0);
+  }
+}
+
+@keyframes loserShrinkFade{
+  0%{
+    opacity: 1;
+    transform: translateZ(0) scale(1);
+    filter: none;
+  }
+  100%{
+    opacity: 0;
+    transform: translateZ(0) scale(0.8);
+    filter: brightness(0.55);
+  }
+}
+
+@keyframes electricFadeOut{
+  0%, 35%{ opacity: 1; }
+  100%{ opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .battle-card.chosen,
+  .battle-card.rejected{
+    animation-duration: 0.2s;
+  }
+}
+
+
+/* VS: text only */
+.battle-vs-divider{
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  width: auto;
+  height: auto;
+  padding: 0;
+}
+
+
+/* Equal: no vertical bounce */
+.battle-card.equal-pick.chosen{
+  animation: equalHoldFade 0.75s ease-out forwards;
+}
+@keyframes equalHoldFade{
+  0%{ opacity: 1; transform: translateZ(0) scale(1); }
+  25%{ opacity: 1; transform: translateZ(0) scale(1.04); }
+  70%{ opacity: 1; transform: translateZ(0) scale(1); }
+  100%{ opacity: 0; transform: translateZ(0) scale(1); }
+}

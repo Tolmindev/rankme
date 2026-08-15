@@ -8,6 +8,7 @@ const CARD_ASPECT = (TMPL && TMPL.cardAspect) || (CARD_SHAPE === 'square' ? 1 : 
 const CARD_PATH = (TMPL && TMPL.cardPath) || 'assets/cards/';
 const NO_FACTIONS = !!(TMPL && TMPL.noFactions);
 const TEMPLATE_ID = (TMPL && TMPL.id) || (window.RANKME_BLANK ? 'blank' : 'sf-duel');
+try { if (typeof trackTemplateUse === 'function' && TEMPLATE_ID && TEMPLATE_ID !== 'blank') trackTemplateUse(TEMPLATE_ID, 'open'); } catch (e) {}
 const TEMPLATE_TITLE = (TMPL && TMPL.title) || 'Street Fighter: Duel';
 const TEMPLATE_EXPORT = (TMPL && TMPL.exportName) || null;
 const TEMPLATE_FOOTER = (TMPL && TMPL.footerLabel) || null;
@@ -16,20 +17,21 @@ const FACTION_ORDER = (TMPL && TMPL.factionOrder) || null;
 const FACTION_ICON_MAP = (TMPL && TMPL.factionIcons) || null;
 
 const BLANK_MODE = !!window.RANKME_BLANK;
-const DEFAULT_CARD_META_LIST = [{"id": 1, "file": "card_001.png", "faction": "MASTER", "name": "Gen"}, {"id": 2, "file": "card_002.png", "faction": "MASTER", "name": "Akuma"}, {"id": 3, "file": "card_003.png", "faction": "MASTER", "name": "Gouken"}, {"id": 4, "file": "card_004.png", "faction": "MASTER", "name": "Rose"}, {"id": 5, "file": "card_005.png", "faction": "MASTER", "name": "Trendy Cammy"}, {"id": 6, "file": "card_006.png", "faction": "MASTER", "name": "Taoist Gen"}, {"id": 7, "file": "card_007.png", "faction": "MASTER", "name": "Trendt Ryu"}, {"id": 8, "file": "card_008.png", "faction": "MASTER", "name": "Athlete Chun-Li"}, {"id": 9, "file": "card_009.png", "faction": "MASTER", "name": "Trendy Dhalsim"}, {"id": 10, "file": "card_010.png", "faction": "MASTER", "name": "Dante"}, {"id": 11, "file": "card_011.png", "faction": "MASTER", "name": "Summer Yun"}, {"id": 12, "file": "card_012.png", "faction": "MASTER", "name": " Master Leonardo"}, {"id": 13, "file": "card_013.png", "faction": "MASTER", "name": "Raphael"}, {"id": 14, "file": "card_014.png", "faction": "MASTER", "name": "Luke"}, {"id": 15, "file": "card_015.png", "faction": "MASTER", "name": "Jp"}, {"id": 16, "file": "card_016.png", "faction": "MASTER", "name": "Summer Ibuki"}, {"id": 17, "file": "card_017.png", "faction": "MASTER", "name": "Diviner Rose"}, {"id": 18, "file": "card_018.png", "faction": "MASTER", "name": "Firecracker Sakura"}, {"id": 19, "file": "card_019.png", "faction": "MASTER", "name": "Rich E Honda"}, {"id": 20, "file": "card_020.png", "faction": "MASTER", "name": "Kunoichi Ibuki"}, {"id": 21, "file": "card_021.png", "faction": "MASTER", "name": "Cowbot T Hawk"}, {"id": 22, "file": "card_022.png", "faction": "MASTER", "name": "Banquet Guy"}, {"id": 23, "file": "card_023.png", "faction": "MASTER", "name": "Popstar Poison"}, {"id": 24, "file": "card_024.png", "faction": "MASTER", "name": "Popstar Chun Li"}, {"id": 25, "file": "card_025.png", "faction": "MASTER", "name": "Popstar Juri"}, {"id": 26, "file": "card_026.png", "faction": "MASTER", "name": "Hermit Gouken"}, {"id": 27, "file": "card_027.png", "faction": "MASTER", "name": "Summer Rose"}, {"id": 28, "file": "card_028.png", "faction": "INFERNAL", "name": "Juri"}, {"id": 29, "file": "card_029.png", "faction": "INFERNAL", "name": "Seth"}, {"id": 30, "file": "card_030.png", "faction": "INFERNAL", "name": "M Bison"}, {"id": 31, "file": "card_031.png", "faction": "INFERNAL", "name": "Balrog"}, {"id": 32, "file": "card_032.png", "faction": "INFERNAL", "name": "Vega"}, {"id": 33, "file": "card_033.png", "faction": "INFERNAL", "name": "Sagat"}, {"id": 34, "file": "card_034.png", "faction": "INFERNAL", "name": "Evil Ryu"}, {"id": 35, "file": "card_035.png", "faction": "INFERNAL", "name": "Oni"}, {"id": 36, "file": "card_036.png", "faction": "INFERNAL", "name": "Witch Juri"}, {"id": 37, "file": "card_037.png", "faction": "INFERNAL", "name": "Gore Magala Ken"}, {"id": 38, "file": "card_038.png", "faction": "INFERNAL", "name": "Vergil"}, {"id": 39, "file": "card_039.png", "faction": "INFERNAL", "name": "Michelangelo"}, {"id": 40, "file": "card_040.png", "faction": "INFERNAL", "name": "Donatello"}, {"id": 41, "file": "card_041.png", "faction": "INFERNAL", "name": "Vizconde Vega"}, {"id": 42, "file": "card_042.png", "faction": "INFERNAL", "name": "Pharaoh Sagat"}, {"id": 43, "file": "card_043.png", "faction": "INFERNAL", "name": "Archon Decapre"}, {"id": 44, "file": "card_044.png", "faction": "INFERNAL", "name": "Chief Viper"}, {"id": 45, "file": "card_045.png", "faction": "INFERNAL", "name": "Giant Wrestler Hugo"}, {"id": 46, "file": "card_046.png", "faction": "INFERNAL", "name": "Overlord Bison"}, {"id": 47, "file": "card_047.png", "faction": "INFERNAL", "name": "Summer Poison"}, {"id": 48, "file": "card_048.png", "faction": "INFERNAL", "name": "Horror Hakan"}, {"id": 49, "file": "card_049.png", "faction": "INFERNAL", "name": "Shadaloo Cammy"}, {"id": 50, "file": "card_050.png", "faction": "INFERNAL", "name": "Shadow Ryu"}, {"id": 51, "file": "card_051.png", "faction": "INFERNAL", "name": "Cold-Hearted Adon"}, {"id": 52, "file": "card_052.png", "faction": "WIND", "name": "Chun Li"}, {"id": 53, "file": "card_053.png", "faction": "WIND", "name": "Guile"}, {"id": 54, "file": "card_054.png", "faction": "WIND", "name": "Abel"}, {"id": 55, "file": "card_055.png", "faction": "WIND", "name": "Cammy"}, {"id": 56, "file": "card_056.png", "faction": "WIND", "name": "Guy"}, {"id": 57, "file": "card_057.png", "faction": "WIND", "name": "Yun"}, {"id": 58, "file": "card_058.png", "faction": "WIND", "name": "Yang"}, {"id": 59, "file": "card_059.png", "faction": "WIND", "name": "T Hawk"}, {"id": 60, "file": "card_060.png", "faction": "WIND", "name": "El Fuerte"}, {"id": 61, "file": "card_061.png", "faction": "WIND", "name": "Beast Zangief"}, {"id": 62, "file": "card_062.png", "faction": "WIND", "name": "Street Poison"}, {"id": 63, "file": "card_063.png", "faction": "WIND", "name": "Summer Elena"}, {"id": 64, "file": "card_064.png", "faction": "WIND", "name": "Trendy Akuma"}, {"id": 65, "file": "card_065.png", "faction": "WIND", "name": "Royal Balrog"}, {"id": 66, "file": "card_066.png", "faction": "WIND", "name": "Saikyo Dan"}, {"id": 67, "file": "card_067.png", "faction": "WIND", "name": "Nishiki Sakura"}, {"id": 68, "file": "card_068.png", "faction": "THUNDER", "name": "Blanka"}, {"id": 69, "file": "card_069.png", "faction": "THUNDER", "name": "E Honda"}, {"id": 70, "file": "card_070.png", "faction": "THUNDER", "name": "Zangief"}, {"id": 71, "file": "card_071.png", "faction": "THUNDER", "name": "Poison"}, {"id": 72, "file": "card_072.png", "faction": "THUNDER", "name": "Elena"}, {"id": 73, "file": "card_073.png", "faction": "THUNDER", "name": "Makoto"}, {"id": 74, "file": "card_074.png", "faction": "THUNDER", "name": "Mad Ryu"}, {"id": 75, "file": "card_075.png", "faction": "THUNDER", "name": "Combat Guile"}, {"id": 76, "file": "card_076.png", "faction": "THUNDER", "name": "Mummy Dhalsim"}, {"id": 77, "file": "card_077.png", "faction": "THUNDER", "name": "Suit Abel"}, {"id": 78, "file": "card_078.png", "faction": "THUNDER", "name": "Trendy Guile"}, {"id": 79, "file": "card_079.png", "faction": "THUNDER", "name": "Charming Dudley"}, {"id": 80, "file": "card_080.png", "faction": "THUNDER", "name": "Baddest Juri"}, {"id": 81, "file": "card_081.png", "faction": "THUNDER", "name": "Action Guy"}, {"id": 82, "file": "card_082.png", "faction": "THUNDER", "name": "Banquet Rose"}, {"id": 83, "file": "card_083.png", "faction": "THUNDER", "name": "Horror Oni"}, {"id": 84, "file": "card_084.png", "faction": "FLAME", "name": "Dhalsim"}, {"id": 85, "file": "card_085.png", "faction": "FLAME", "name": "Hugo"}, {"id": 86, "file": "card_086.png", "faction": "FLAME", "name": "C Viper"}, {"id": 87, "file": "card_087.png", "faction": "FLAME", "name": "Adon"}, {"id": 88, "file": "card_088.png", "faction": "FLAME", "name": "Decapre"}, {"id": 89, "file": "card_089.png", "faction": "FLAME", "name": "Fei Long"}, {"id": 90, "file": "card_090.png", "faction": "FLAME", "name": "Dee Jay"}, {"id": 91, "file": "card_091.png", "faction": "FLAME", "name": "Dudley"}, {"id": 92, "file": "card_092.png", "faction": "FLAME", "name": "Mayor Cody"}, {"id": 93, "file": "card_093.png", "faction": "FLAME", "name": "Cammy & Vega"}, {"id": 94, "file": "card_094.png", "faction": "FLAME", "name": "Summer Yang"}, {"id": 95, "file": "card_095.png", "faction": "FLAME", "name": "Fire Adon"}, {"id": 96, "file": "card_096.png", "faction": "FLAME", "name": "Furisode Makoto"}, {"id": 97, "file": "card_097.png", "faction": "FLAME", "name": "Banquet Cammy"}, {"id": 98, "file": "card_098.png", "faction": "FLAME", "name": "Summer Cody"}, {"id": 99, "file": "card_099.png", "faction": "FLAME", "name": "Monk Bison"}, {"id": 100, "file": "card_100.png", "faction": "LEGENDARY", "name": "Flame Chun Li"}, {"id": 101, "file": "card_101.png", "faction": "LEGENDARY", "name": "Fashion Sakura"}, {"id": 102, "file": "card_102.png", "faction": "LEGENDARY", "name": "Fashion Blanka"}, {"id": 103, "file": "card_103.png", "faction": "LEGENDARY", "name": "Jonin Ibuki"}, {"id": 104, "file": "card_104.png", "faction": "LEGENDARY", "name": "Nero"}, {"id": 105, "file": "card_105.png", "faction": "LEGENDARY", "name": "Shredder"}, {"id": 106, "file": "card_106.png", "faction": "LEGENDARY", "name": "Christmas Rufus"}, {"id": 107, "file": "card_107.png", "faction": "LEGENDARY", "name": "Fashion Ken"}, {"id": 108, "file": "card_108.png", "faction": "LEGENDARY", "name": "Hydro Chun Li"}, {"id": 109, "file": "card_109.png", "faction": "LEGENDARY", "name": "Trendy Elena"}, {"id": 110, "file": "card_110.png", "faction": "LEGENDARY", "name": "Agent C Viper"}, {"id": 111, "file": "card_111.png", "faction": "LEGENDARY", "name": "Banquet Guile"}, {"id": 112, "file": "card_112.png", "faction": "LEGENDARY", "name": "Fashion E Honda"}, {"id": 113, "file": "card_113.png", "faction": "LEGENDARY", "name": "Santa Blanka"}, {"id": 114, "file": "card_114.png", "faction": "LEGENDARY", "name": "Vacation Dee Jay"}, {"id": 115, "file": "card_115.png", "faction": "LEGENDARY", "name": "Banquet Fei Long"}, {"id": 116, "file": "card_116.png", "faction": "LEGENDARY", "name": "Mech Zangief"}, {"id": 117, "file": "card_117.png", "faction": "LEGENDARY", "name": "Cupid Hugo"}, {"id": 118, "file": "card_118.png", "faction": "LEGENDARY", "name": "Zombie Cody"}, {"id": 119, "file": "card_119.png", "faction": "LEGENDARY", "name": "Fairy Makoto"}, {"id": 120, "file": "card_120.png", "faction": "LEGENDARY", "name": "Magican Rolento"}, {"id": 121, "file": "card_121.png", "faction": "LEGENDARY", "name": "Luchador El Fuerte"}, {"id": 122, "file": "card_122.png", "faction": "A+", "name": "Ibuki"}, {"id": 123, "file": "card_123.png", "faction": "A+", "name": "Cody"}, {"id": 124, "file": "card_124.png", "faction": "A+", "name": "Rufus"}, {"id": 125, "file": "card_125.png", "faction": "A+", "name": "Dan"}, {"id": 126, "file": "card_126.png", "faction": "A+", "name": "Sakura"}, {"id": 127, "file": "card_127.png", "faction": "A+", "name": "Ryu"}, {"id": 128, "file": "card_128.png", "faction": "A+", "name": "Hakan"}, {"id": 129, "file": "card_129.png", "faction": "A+", "name": "Ken"}, {"id": 130, "file": "card_130.png", "faction": "A+", "name": "Rolento"}];
-// Blank builder: no stock cards — only user uploads
+/* Card data lives in templates/*.json only (loaded as window.RANKME_TEMPLATE). */
+const DEFAULT_CARD_META_LIST = [];
+// Blank builder: no stock cards - only user uploads
 const CARD_META_LIST = BLANK_MODE
   ? []
   : ((TMPL && Array.isArray(TMPL.cards) && TMPL.cards.length)
       ? TMPL.cards
-      : DEFAULT_CARD_META_LIST);
+      : (console.warn('[RankMe] No template cards — load via boot.js / templates/*.json'), DEFAULT_CARD_META_LIST));
 const CARD_META = {};
 CARD_META_LIST.forEach(c => CARD_META[c.id] = c);
 const N_CARDS = CARD_META_LIST.length;
 const FACTIONS = NO_FACTIONS ? [] : (
   FACTION_ORDER || [...new Set(CARD_META_LIST.flatMap(c => Array.isArray(c.roles) ? c.roles : [c.faction]))]
 );
-const FACTION_HUE = {MASTER:210, INFERNAL:275, WIND:210, THUNDER:48, FLAME:8, LEGENDARY:290, 'A+':32, Fighter:30, Tank:200, Mage:270, Assassin:0, Marksman:50, Support:160};
+const FACTION_HUE = {MASTER:210, INFERNAL:275, WIND:210, THUNDER:48, FLAME:8, LEGENDARY:290, 'A+':32, Fighter:30, Tank:200, Mage:270, Assassin:0, Marksman:50, Support:160, Strength:270, Agility:280, Intelligence:265, Universal:275};
 const FACTION_ICON = {};
 FACTIONS.forEach(f => {
   FACTION_ICON[f] = (FACTION_ICON_MAP && FACTION_ICON_MAP[f]) || (`assets/factions/${f}_icon.svg`);
@@ -66,7 +68,7 @@ const BLANK_TIERS = [
 ];
 
 let state = {
-  // Exclusive opens with standard S–D strips; ElDuD hash loads expert layout
+  // Exclusive opens with standard S-D strips; ElDuD hash loads expert layout
   tiers: JSON.parse(JSON.stringify(BLANK_TIERS)),
   assignment: {},
   pool: [],
@@ -78,7 +80,8 @@ let customIdSeq = 10000;
 
 function freshPool(){
   if(BLANK_MODE) return [];
-  return Array.from({length:N_CARDS}, (_,i)=>i+1);
+  // Preserve template card order (not numeric id sort) so new legendaries stay after their peers
+  return CARD_META_LIST.map(function (c) { return Number(c.id); }).filter(function (id) { return id > 0; });
 }
 
 function loadFromHash(){
@@ -215,10 +218,14 @@ function initState(){
   state.tiers.forEach(t=> state.assignment[t.id] = []);
   state.pool = freshPool();
   if(BLANK_MODE){
-    const title = localStorage.getItem('rankme_draft_title');
-    if(title){
-      const el = document.getElementById('listTitle');
-      if(el) el.textContent = title;
+    let title = null;
+    try { title = sessionStorage.getItem('rankme_blank_title'); } catch(e){}
+    if(!title){ try { title = localStorage.getItem('rankme_draft_title'); } catch(e){} }
+    const el = document.getElementById('listTitle');
+    if(el){
+      if(title && title !== 'My tier list') el.textContent = title;
+      else el.textContent = 'My Rank';
+      try { localStorage.setItem('rankme_draft_title', el.textContent); } catch(e){}
     }
   }
 }
@@ -244,11 +251,6 @@ function render(){
     const labelWrap = document.createElement('div');
     labelWrap.className = 'tier-label-wrap';
 
-    const pill = document.createElement('div');
-    pill.className = 'tier-pill';
-    pill.style.setProperty('--c1', lighten(t,8));
-    pill.style.setProperty('--c2', hsl(t));
-
     const label = document.createElement('div');
     label.className = 'tier-label';
     label.contentEditable = 'true';
@@ -264,10 +266,9 @@ function render(){
     });
     label.addEventListener('keydown', (e)=>{ if(e.key==='Enter'){ e.preventDefault(); label.blur(); } });
     label.addEventListener('blur', ()=>{
-      if(!label.textContent.trim()) { label.textContent = t.name = 'ROW'; }
+      if(!label.textContent.trim()) { label.textContent = t.name = 'ROW'; fitLabelFont(label, t.name); }
     });
 
-    labelWrap.appendChild(pill);
     labelWrap.appendChild(label);
     row.appendChild(labelWrap);
 
@@ -303,11 +304,18 @@ function render(){
 }
 
 function fitLabelFont(el, text){
-  let size = 13;
+  const len = (text || '').replace(/\s+/g,'').length || 1;
+  // Short names → big type; long names → smaller, but never below 12px
+  let size;
+  if(len <= 1) size = 24;
+  else if(len === 2) size = 18;
+  else if(len <= 4) size = 15;
+  else if(len <= 8) size = 13;
+  else size = 12;
   el.style.fontSize = size+'px';
-  const maxTries = 10;
+  el.style.lineHeight = len <= 2 ? '1' : '1.15';
   let tries = 0;
-  while(tries < maxTries && (el.scrollHeight > el.clientHeight+2 || el.scrollWidth > el.clientWidth+2) && size > 7){
+  while(tries < 8 && (el.scrollHeight > el.clientHeight+2 || el.scrollWidth > el.clientWidth+2) && size > 12){
     size -= 1;
     el.style.fontSize = size+'px';
     tries++;
@@ -329,15 +337,21 @@ function cardMatchesFilter(id, filter){
 function renderPool(){
   if(!poolEl) return;
   state.pool = [...new Set(state.pool.map(Number))].filter(id => id > 0);
+  // Single source of truth: template / CARD_META_LIST order (not numeric id)
+  var order = {};
+  CARD_META_LIST.forEach(function (c, i) { order[Number(c.id)] = i; });
+  state.pool.sort(function (a, b) {
+    var oa = order.hasOwnProperty(a) ? order[a] : 1e9 + a;
+    var ob = order.hasOwnProperty(b) ? order[b] : 1e9 + b;
+    return oa - ob;
+  });
 
-  // Index current DOM cards once
   const existing = new Map();
   Array.from(poolEl.querySelectorAll('.card')).forEach(el => {
     const id = Number(el.dataset.cardId);
     if(id) existing.set(id, el);
   });
 
-  // Drop DOM cards that left the pool entirely (moved to a tier)
   const poolSet = new Set(state.pool);
   existing.forEach((el, id) => {
     if(!poolSet.has(id)){
@@ -346,23 +360,17 @@ function renderPool(){
     }
   });
 
-  // Ensure every pool card exists in DOM (create once, keep forever while in pool)
+  // Create missing cards, then move every node into template order via appendChild
   state.pool.forEach(cid => {
-    if(!existing.has(cid)){
+    var el = existing.get(cid);
+    if(!el){
       try {
-        const el = makeCard(cid);
+        el = makeCard(cid);
         existing.set(cid, el);
-        poolEl.appendChild(el);
-      } catch(e){ console.warn('card', cid, e); }
+      } catch(e){ console.warn('card', cid, e); return; }
     }
-  });
-
-  // Filter = show/hide only (never destroy images — fixes vanish on role toggle)
-  state.pool.forEach(cid => {
-    const el = existing.get(cid);
-    if(!el) return;
-    const show = cardMatchesFilter(cid, activeFilter);
-    el.style.display = show ? '' : 'none';
+    poolEl.appendChild(el);
+    el.style.display = cardMatchesFilter(cid, activeFilter) ? '' : 'none';
   });
 }
 
@@ -382,7 +390,11 @@ function makeCard(cid){
   img.onerror = function(){ this.onerror = null; this.style.opacity = '0.35'; };
   el.title = custom ? custom.name : (meta ? meta.name : '');
   el.appendChild(img);
-  el.addEventListener('pointerdown', onCardPointerDown);
+  el.addEventListener('pointerdown', onCardPointerDown, { passive: false });
+  // iOS Safari: block native scroll/gesture on the card itself
+  el.addEventListener('touchstart', function(ev){
+    // only mark; actual drag via pointer events
+  }, { passive: true });
   return el;
 }
 
@@ -466,7 +478,7 @@ document.getElementById('portalBtn').addEventListener('click', ()=>{
   portalsOn = !portalsOn;
   document.getElementById('portalBtn').classList.toggle('active', portalsOn);
   renderPortals();
-  showToast(portalsOn ? 'Teleportation ON' : 'Teleportation OFF');
+  showToast(portalsOn ? 'Portals on' : 'Portals off');
 });
 
 /* ---------------- Drag & drop (pointer-based, mouse+touch) ---------------- */
@@ -474,12 +486,33 @@ document.getElementById('portalBtn').addEventListener('click', ()=>{
 let drag = null;
 let autoScrollRAF = null;
 
+function lockPageScroll(){
+  try {
+    document.documentElement.classList.add('rankme-dragging');
+    document.body.classList.add('rankme-dragging');
+  } catch(err){}
+}
+function unlockPageScroll(){
+  try {
+    document.documentElement.classList.remove('rankme-dragging');
+    document.body.classList.remove('rankme-dragging');
+  } catch(err){}
+}
+function blockTouchScroll(e){
+  if(!drag) return;
+  try { e.preventDefault(); } catch(err){}
+}
+
 function onCardPointerDown(e){
-  if(e.button !== undefined && e.button !== 0) return;
   if(drag) return;
-  // Don't preventDefault yet — wait until real drag starts (keeps click/scroll clean on mobile)
+  // Mouse: ignore right/middle. Touch/pen: always allow (button can be weird)
+  const isTouch = e.pointerType === 'touch' || e.pointerType === 'pen' || e.pointerType === '';
+  if(!isTouch && e.button !== undefined && e.button > 0) return;
+  try { e.preventDefault(); } catch(err){}
+
   const source = e.currentTarget;
   const cid = source.dataset.cardId;
+  if(cid === undefined || cid === null || cid === '') return;
   const rect = source.getBoundingClientRect();
 
   drag = {
@@ -490,16 +523,25 @@ function onCardPointerDown(e){
     startedContainer: source.parentElement,
     lastY: e.clientY,
     moved: false,
-    active: false, // becomes true after movement threshold
+    active: false,
     startX: e.clientX,
     startY: e.clientY,
-    startRect: rect,
+    startRect: { left: rect.left, top: rect.top, width: rect.width, height: rect.height },
+    isTouch: isTouch,
   };
 
   try { source.setPointerCapture(e.pointerId); } catch(err){}
-  window.addEventListener('pointermove', onDragMove);
+  lockPageScroll();
+  // Critical for mobile: stop page scroll while finger is on a card
+  document.addEventListener('touchmove', blockTouchScroll, { passive: false, capture: true });
+  window.addEventListener('pointermove', onDragMove, { passive: false });
   window.addEventListener('pointerup', onDragEnd);
   window.addEventListener('pointercancel', onDragEnd);
+  // Start visual immediately on touch so user feels the grab
+  if(isTouch){
+    drag.moved = true;
+    beginDragVisual();
+  }
 }
 
 function beginDragVisual(){
@@ -548,13 +590,15 @@ function autoScrollTick(){
 
 function onDragMove(e){
   if(!drag || e.pointerId !== drag.pointerId) return;
+  try { e.preventDefault(); } catch(err){}
   drag.lastY = e.clientY;
 
   const dx = Math.abs(e.clientX - drag.startX);
   const dy = Math.abs(e.clientY - drag.startY);
-  // Threshold ~10px: tap/click does NOT dim the card
   if(!drag.active){
-    if(dx < 10 && dy < 10) return;
+    // Decide scroll vs drag by first meaningful movement (no long-press)
+    // Free drag — tiny threshold (touch already started in pointerdown)
+    if(dx < 3 && dy < 3) return;
     drag.moved = true;
     try { e.preventDefault(); } catch(err){}
     beginDragVisual();
@@ -631,6 +675,8 @@ function cleanupDragSource(source){
 
 function onDragEnd(e){
   if(!drag || (e.pointerId!==undefined && e.pointerId !== drag.pointerId)) return;
+  document.removeEventListener('touchmove', blockTouchScroll, { capture: true });
+  unlockPageScroll();
   window.removeEventListener('pointermove', onDragMove);
   window.removeEventListener('pointerup', onDragEnd);
   window.removeEventListener('pointercancel', onDragEnd);
@@ -704,7 +750,7 @@ function onDragEnd(e){
       try { render(); renderFactionFilters(); renderPool(); } catch(err){
         console.error(err); activeFilter = 'ALL'; render();
       }
-      showToast('Teleported to ' + label);
+      showToast('→ ' + label);
     }, 260);
     return;
   }
@@ -718,12 +764,12 @@ function onDragEnd(e){
     return;
   }
 
-  // Normal drop — preserve left-to-right order from placeholder
+  // Normal drop - preserve left-to-right order from placeholder
   removeFromAllData(cid);
 
   const cont = targetContainer;
   if(cont.classList.contains('pool')){
-    // pool stays sorted by id for browsing
+    // pool order is reapplied in renderPool (template order)
     if(!orderedIds.includes(cid)) orderedIds.push(cid);
     state.pool = [...new Set(orderedIds)];
   } else {
@@ -792,13 +838,19 @@ function openRowSettings(tierId, anchorBtn){
   positionPop();
   openPopover = pop;
 
-  pop.querySelector('.hue-slider').addEventListener('input', (e)=>{
-    t.hue = parseInt(e.target.value);
+  const hueInput = pop.querySelector('.hue-slider');
+  const setHueThumb = (v)=>{
+    hueInput.style.setProperty('--thumb', `hsl(${v}, 90%, 58%)`);
+    hueInput.style.setProperty('--thumb-glow', `hsla(${v}, 95%, 62%, .65)`);
+  };
+  setHueThumb(t.hue);
+  hueInput.addEventListener('input', (e)=>{
+    t.hue = parseInt(e.target.value, 10);
+    setHueThumb(t.hue);
     const row = document.querySelector(`.tier-row[data-tier-id="${tierId}"]`);
     if(row){
-      row.querySelector('.tier-pill').style.setProperty('--c1', lighten(t,8));
-      row.querySelector('.tier-pill').style.setProperty('--c2', hsl(t));
-      row.querySelector('.tier-label').style.setProperty('--hue', t.hue);
+      const lab = row.querySelector('.tier-label');
+      if(lab) lab.style.setProperty('--hue', t.hue);
     }
   });
   pop.querySelector('.clear').addEventListener('click', ()=>{
@@ -807,7 +859,7 @@ function openRowSettings(tierId, anchorBtn){
     render(); closePopover();
   });
   pop.querySelector('.del').addEventListener('click', ()=>{
-    if(state.tiers.length<=1){ showToast('You need at least one row'); return; }
+    if(state.tiers.length<=1){ showToast('Need one row'); return; }
     state.pool.push(...(state.assignment[tierId]||[]));
     delete state.assignment[tierId];
     state.tiers = state.tiers.filter(x=>x.id!==tierId);
@@ -833,7 +885,18 @@ document.getElementById('addRowBtn').addEventListener('click', ()=>{
 
 const sizeSlider = document.getElementById('sizeSlider');
 let _sizeDragging = false;
-function setCardSize(px){
+function setCardSize(sliderVal){
+  /* Portrait/square: slider value ≈ pixel width.
+     Landscape (Dota etc.): map slider to a larger readable width range. */
+  var px = +sliderVal;
+  if(CARD_SHAPE === 'landscape'){
+    var minS = 50, maxS = 140;
+    var minPx = 72, maxPx = 260;
+    var t = (px - minS) / (maxS - minS);
+    if(t < 0) t = 0;
+    if(t > 1) t = 1;
+    px = Math.round(minPx + t * (maxPx - minPx));
+  }
   document.documentElement.style.setProperty('--card-w', px + 'px');
   if(CARD_SHAPE === 'square'){
     document.documentElement.style.setProperty('--card-h', px + 'px');
@@ -859,8 +922,9 @@ sizeSlider.addEventListener('input', (e)=>{
   setCardSize(+e.target.value);
 });
 document.getElementById('sizeResetBtn').addEventListener('click', ()=>{
-  sizeSlider.value = 64;
-  setCardSize(64);
+  const def = CARD_SHAPE === 'landscape' ? 78 : 64;
+  sizeSlider.value = def;
+  setCardSize(def);
 });
 
 function showConfirm(title, text, onConfirm){
@@ -887,7 +951,7 @@ document.getElementById('clearAllBtn').addEventListener('click', ()=>{
     state.pool = [...stock, ...customIds.filter(id => !stock.includes(id))];
     history.replaceState(null,'',location.pathname + location.search);
     render();
-    showToast('Tier List Cleared');
+    showToast('Cleared');
   });
 });
 
@@ -900,7 +964,7 @@ document.getElementById('fillAllBtn').addEventListener('click', ()=>{
     });
     state.pool = [];
     render();
-    showToast('Rows Filled Randomly');
+    showToast('Filled');
   });
 });
 
@@ -956,7 +1020,7 @@ async function buildShareUrl(){
 }
 
 function shareCaption(){
-  if(BLANK_MODE) return 'My tier list on RankMe - create yours at rankme.lol';
+  if(BLANK_MODE) return 'My Rank on RankMe - create yours at rankme.lol';
   const t = (typeof TEMPLATE_TITLE === 'string' && TEMPLATE_TITLE) ? TEMPLATE_TITLE : 'RankMe';
   return 'My ' + t + ' tier list on RankMe - rankme.lol';
 }
@@ -982,7 +1046,7 @@ async function shareLinkOrImage(kind){
           title: 'RankMe tier list',
           text: caption + '\nhttps://rankme.lol'
         });
-        showToast('Link Ready');
+        showToast('Link copied');
         return;
       }
       // fallback: download image
@@ -990,9 +1054,9 @@ async function shareLinkOrImage(kind){
       a.href = URL.createObjectURL(blob);
       a.download = 'rankme-tierlist.png';
       a.click();
-      showToast('PNG Saved - Ready to Share');
+      showToast('Saved');
     }catch(e){
-      showToast('Could not share image');
+      showToast('Share failed');
     }
     return;
   }
@@ -1023,7 +1087,41 @@ document.getElementById('shareDiscord')?.addEventListener('click', ()=> shareLin
 document.getElementById('shareTelegram')?.addEventListener('click', ()=> shareLinkOrImage('telegram'));
 document.getElementById('shareX')?.addEventListener('click', ()=> shareLinkOrImage('x'));
 
-document.getElementById('downloadBtn')?.addEventListener('click', ()=>exportPNG());
+document.getElementById('downloadBtn')?.addEventListener('click', ()=> openDownloadModal());
+
+function openDownloadModal(){
+  let back = document.getElementById('downloadModal');
+  if(!back){
+    back = document.createElement('div');
+    back.className = 'modal-back';
+    back.id = 'downloadModal';
+    back.innerHTML = `
+      <div class="modal download-modal">
+        <h3>Download</h3>
+        <p>Choose quality</p>
+        <div class="download-modal-actions">
+          <button type="button" class="dl-std" id="dlStdBtn">Standard PNG</button>
+          <button type="button" class="dl-max" id="dlMaxBtn"><span>Max Quality</span></button>
+          <button type="button" class="dl-cancel" id="dlCancelBtn">Cancel</button>
+        </div>
+      </div>`;
+    document.body.appendChild(back);
+    back.addEventListener('click', (e)=>{ if(e.target === back) closeDownloadModal(); });
+    back.querySelector('#dlCancelBtn').addEventListener('click', closeDownloadModal);
+    back.querySelector('#dlStdBtn').addEventListener('click', ()=>{
+      closeDownloadModal();
+      exportPNG(false, null, null);
+    });
+    back.querySelector('#dlMaxBtn').addEventListener('click', ()=>{
+      closeDownloadModal();
+      exportPNG(false, null, 100);
+    });
+  }
+  back.classList.add('open');
+}
+function closeDownloadModal(){
+  document.getElementById('downloadModal')?.classList.remove('open');
+}
 
 // Remix = editable copy + option to add own images into the pool
 let remixFlag = false;
@@ -1055,13 +1153,13 @@ function wireRemixUpload(){
       n++;
     }
     renderPool();
-    showToast(n + ' custom image(s) added to pool');
+    showToast(n + ' added');
     e.target.value = '';
   });
 }
 document.getElementById('remixBtn')?.addEventListener('click', ()=>{
   if(BLANK_MODE){
-    showToast('Remix is for Exclusive templates');
+    showToast('Remix: Exclusive only');
     return;
   }
   state.tiers = JSON.parse(JSON.stringify(state.tiers));
@@ -1086,7 +1184,7 @@ function stashDraftBeforeLogin(opts){
     if(needReturn){
       sessionStorage.setItem('rankme_login_return', location.href);
     } else {
-      // Opening Account while already logged in — do NOT bounce back from account.html
+      // Opening Account while already logged in - do NOT bounce back from account.html
       sessionStorage.removeItem('rankme_login_return');
     }
     sessionStorage.setItem('rankme_draft_payload', JSON.stringify({
@@ -1123,7 +1221,7 @@ function restoreDraftIfAny(){
         const h = document.getElementById('listTitle');
         if(h) h.textContent = data.title;
       }
-      showToast('Ranking restored — you can Save now');
+      showToast('Restored');
       return true;
     }
   }catch(e){ console.warn('restore draft', e); }
@@ -1132,7 +1230,7 @@ function restoreDraftIfAny(){
 
 document.getElementById('saveAccountBtn')?.addEventListener('click', async ()=>{
   if(BLANK_MODE){
-    showToast('Account save is for Exclusive templates only');
+    showToast('Save: Exclusive only');
     return;
   }
   try{
@@ -1143,7 +1241,7 @@ document.getElementById('saveAccountBtn')?.addEventListener('click', async ()=>{
     const user = await getSessionUser();
     if(!user){
       stashDraftBeforeLogin({ needReturn: true });
-      showToast('Sign in to save — your ranking is kept');
+      showToast('Sign in to save - your ranking is kept');
       setAllowLeave(true);
       location.href = 'account.html';
       return;
@@ -1154,10 +1252,10 @@ document.getElementById('saveAccountBtn')?.addEventListener('click', async ()=>{
     const payload = { tiers: state.tiers, assignment: state.assignment };
     await saveExclusiveTierlist({ title, templateId: TEMPLATE_ID || 'sf-duel', payload });
     remixFlag = false;
-    showToast('Ranking Saved');
+    showToast('Saved');
   }catch(e){
     console.error(e);
-    showToast(e.message || 'Save failed — check Supabase table');
+    showToast(e.message || 'Save failed - check Supabase table');
   }
 });
 
@@ -1170,22 +1268,39 @@ async function exportPNGBlob(){
   });
 }
 
-async function exportPNG(returnBlobOnly, blobCb){
+async function exportPNG(returnBlobOnly, blobCb, forceSize){
   sanitizeState();
-  if(!returnBlobOnly) showToast('Generating PNG...');
+  if(!returnBlobOnly) showToast(forceSize ? 'Exporting…' : 'Exporting…');
   const scale = 2; // pixel density / quality
-  // Layout follows Size slider; scale=2 keeps sharp PNG
-  const uiSize = parseInt(document.getElementById('sizeSlider')?.value || '64', 10);
-  const cardW = Math.round(Math.min(140, Math.max(48, uiSize * 1.15)));
-  const cardH = Math.round(cardW * (CARD_SHAPE === 'square' ? 1 : (CARD_ASPECT || 1.35)));
+  // Layout follows Size slider (or forced max for premium export)
+  const sliderEl = document.getElementById('sizeSlider');
+  const sliderMax = parseInt(sliderEl?.max || '100', 10);
+  const uiSize = forceSize != null
+    ? Math.min(sliderMax, Math.max(40, forceSize))
+    : parseInt(sliderEl?.value || '64', 10);
+  let cardW;
+  if(CARD_SHAPE === 'landscape'){
+    const minS = 50, maxS = 140, minPx = 72, maxPx = 260;
+    let t = (uiSize - minS) / (maxS - minS);
+    if(t < 0) t = 0; if(t > 1) t = 1;
+    cardW = Math.round(minPx + t * (maxPx - minPx));
+  } else {
+    cardW = Math.round(Math.min(140, Math.max(48, uiSize * 1.15)));
+  }
+  const isSquareCard = CARD_SHAPE === 'square' || document.body.classList.contains('card-square');
+  const cardH = Math.round(cardW * (isSquareCard ? 1 : (CARD_ASPECT || 1.35)));
   const cardGap = 8;
   const padX = 14;
   const padY = 12;
-  const labelW = 160;
-  const width = 1600;
+  const labelW = 150;
+  const padRight = 20;
+  const MAX_W = 1600;
 
-  const cardsAreaW = width - labelW - 8;
-  const cardsPerLine = Math.max(1, Math.floor((cardsAreaW - padX + cardGap) / (cardW + cardGap)));
+  // Content-aware width: only as wide as needed for cards (no empty right void)
+  const maxCards = Math.max(1, ...state.tiers.map(t => (state.assignment[t.id]||[]).length));
+  const maxFit = Math.max(1, Math.floor((MAX_W - labelW - padX - padRight + cardGap) / (cardW + cardGap)));
+  const cardsPerLine = Math.min(maxCards, maxFit);
+  const width = Math.max(640, labelW + padX + cardsPerLine * (cardW + cardGap) - cardGap + padRight);
 
   const allIds = new Set();
   state.tiers.forEach(tier => (state.assignment[tier.id]||[]).forEach(id => allIds.add(id)));
@@ -1204,7 +1319,7 @@ async function exportPNG(returnBlobOnly, blobCb){
     const lines = Math.max(1, Math.ceil(n / cardsPerLine) || 1);
     return Math.max(padY*2 + cardH, padY*2 + lines * cardH + Math.max(0, lines-1)*cardGap);
   });
-  const padTop = 24;
+  const padTop = 20;
   const footH = 72;
   const height = padTop + rowHeights.reduce((a,b)=>a+b, 0) + footH;
 
@@ -1214,12 +1329,11 @@ async function exportPNG(returnBlobOnly, blobCb){
   const ctx = canvas.getContext('2d');
   ctx.setTransform(scale, 0, 0, scale, 0, 0);
 
-  // Clean dark background (no dual flares)
+  // Clean dark background
   ctx.fillStyle = '#0e0c14';
   ctx.fillRect(0, 0, width, height);
-  // single soft vignette from top center
   const g1 = ctx.createRadialGradient(width*0.5, 0, 0, width*0.5, 0, height*0.45);
-  g1.addColorStop(0, 'rgba(160,120,220,0.08)');
+  g1.addColorStop(0, 'rgba(160,120,220,0.07)');
   g1.addColorStop(1, 'rgba(160,120,220,0)');
   ctx.fillStyle = g1;
   ctx.fillRect(0, 0, width, height);
@@ -1229,30 +1343,31 @@ async function exportPNG(returnBlobOnly, blobCb){
     const tier = state.tiers[i];
     const rh = rowHeights[i];
 
-    const c1 = `hsl(${tier.hue}, ${tier.sat}%, ${Math.min(88, tier.light + 4)}%)`;
-    const c2 = `hsl(${tier.hue}, ${tier.sat}%, ${Math.max(28, tier.light - 8)}%)`;
-    const grad = ctx.createLinearGradient(0, y, labelW, y + rh);
-    grad.addColorStop(0, c1);
-    grad.addColorStop(1, c2);
+    // Premium label: rich color, muted neon (lower sat, deeper stops)
+    const baseSat = Number(tier.sat);
+    const baseLight = Number(tier.light);
+    const sat = Math.min(52, Math.max(32, Math.round((Number.isFinite(baseSat) ? baseSat : 50) * 0.72)));
+    const lightTop = Math.min(52, Math.max(42, Math.round((Number.isFinite(baseLight) ? baseLight : 55) * 0.55 + 18)));
+    const lightMid = Math.max(36, lightTop - 6);
+    const lightBot = Math.max(28, lightTop - 14);
+    const satMid = Math.max(28, sat - 4);
+    const satBot = Math.max(26, sat - 6);
+    const grad = ctx.createLinearGradient(0, y, 0, y + rh);
+    grad.addColorStop(0, `hsl(${tier.hue}, ${sat}%, ${lightTop}%)`);
+    grad.addColorStop(0.55, `hsl(${tier.hue}, ${satMid}%, ${lightMid}%)`);
+    grad.addColorStop(1, `hsl(${tier.hue}, ${satBot}%, ${lightBot}%)`);
     ctx.fillStyle = grad;
     ctx.fillRect(0, y, labelW, rh);
-
-    // left pill accent
-    const pill = ctx.createLinearGradient(0, y, 0, y + rh);
-    pill.addColorStop(0, `hsl(${tier.hue}, ${tier.sat}%, ${Math.min(95, tier.light+12)}%)`);
-    pill.addColorStop(1, `hsl(${tier.hue}, ${tier.sat}%, ${tier.light}%)`);
-    ctx.fillStyle = pill;
-    ctx.fillRect(0, y, 8, rh);
 
     ctx.fillStyle = '#ffffff';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    fitAndWrap(ctx, tier.name, 8 + (labelW-8)/2, y + rh/2, labelW - 20, 11, Math.min(20, Math.round(cardW*0.28)));
+    fitAndWrap(ctx, tier.name, labelW/2, y + rh/2, labelW - 16, 11, Math.min(22, Math.round(cardW*0.28)));
 
-    ctx.fillStyle = 'rgba(255,255,255,0.02)';
+    ctx.fillStyle = 'rgba(255,255,255,0.025)';
     ctx.fillRect(labelW, y, width - labelW, rh);
 
-    ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+    ctx.strokeStyle = 'rgba(255,255,255,0.05)';
     ctx.lineWidth = 1;
     ctx.beginPath();
     ctx.moveTo(0, y + rh - 0.5);
@@ -1268,30 +1383,42 @@ async function exportPNG(returnBlobOnly, blobCb){
       const img = imgCache[Number(cid)] || imgCache[cid];
       if(img){
         try {
-          const r = Math.max(6, Math.round(cardW * (CARD_SHAPE === 'square' ? 0.14 : 0.12)));
+          const r = CARD_SHAPE === 'landscape'
+            ? Math.max(2, Math.min(4, Math.round(cardW * 0.015)))
+            : Math.max(6, Math.round(cardW * (CARD_SHAPE === 'square' ? 0.14 : 0.12)));
           ctx.save();
           ctx.beginPath();
           if(ctx.roundRect) ctx.roundRect(x, cy, cardW, cardH, r);
           else ctx.rect(x, cy, cardW, cardH);
           if(CARD_SHAPE === 'square' || THEME_GOLD){
-            const bg = ctx.createLinearGradient(x, cy, x+cardW, cy+cardH);
-            bg.addColorStop(0, 'rgba(40,32,60,0.95)');
-            bg.addColorStop(1, 'rgba(18,14,28,0.98)');
-            ctx.fillStyle = bg;
+            ctx.fillStyle = 'rgba(24,18,36,0.95)';
             ctx.fill();
           } else {
-            ctx.fillStyle = 'rgba(255,255,255,0.045)';
+            ctx.fillStyle = 'rgba(255,255,255,0.04)';
             ctx.fill();
           }
           ctx.clip();
-          // cover fills frame — no empty letterbox
-          ctx.drawImage(img, x, cy, cardW, cardH);
+          // contain: keep image aspect, center in card (no stretch)
+          (function(){
+            const iw = img.naturalWidth || img.width || 1;
+            const ih = img.naturalHeight || img.height || 1;
+            const ir = iw / ih;
+            const br = cardW / cardH;
+            let dw, dh, dx, dy;
+            if(ir > br){
+              dw = cardW; dh = cardW / ir;
+              dx = x; dy = cy + (cardH - dh) / 2;
+            } else {
+              dh = cardH; dw = cardH * ir;
+              dx = x + (cardW - dw) / 2; dy = cy;
+            }
+            ctx.drawImage(img, dx, dy, dw, dh);
+          })();
           ctx.restore();
-          // Thin rim on top — matches site (1px gold for square, violet for LoL)
           if(CARD_SHAPE === 'square' || THEME_GOLD){
             ctx.save();
             ctx.beginPath();
-            if(ctx.roundRect) ctx.roundRect(x + 0.5, cy + 0.5, cardW - 1, cardH - 1, Math.max(5, r - 1));
+            if(ctx.roundRect) ctx.roundRect(x + 0.5, cy + 0.5, cardW - 1, cardH - 1, CARD_SHAPE === 'landscape' ? r : Math.max(5, r - 1));
             else ctx.rect(x + 0.5, cy + 0.5, cardW - 1, cardH - 1);
             ctx.strokeStyle = THEME_GOLD ? 'rgba(201,168,240,0.55)' : 'rgba(220,180,120,0.4)';
             ctx.lineWidth = Math.max(1, Math.min(1.5, cardW * 0.012));
@@ -1365,7 +1492,11 @@ async function exportPNG(returnBlobOnly, blobCb){
   }
 
   // Right: title + exclusive badge
-  const rightLabel = BLANK_MODE ? 'Custom Tier List' : (TEMPLATE_FOOTER || TEMPLATE_TITLE || 'RankMe');
+  const listTitleEl = document.getElementById('listTitle');
+  const customTitle = (listTitleEl && listTitleEl.textContent || '').trim();
+  const rightLabel = BLANK_MODE
+    ? (customTitle || 'Custom Tier List')
+    : (TEMPLATE_FOOTER || TEMPLATE_TITLE || 'RankMe');
   ctx.font = '800 14px Montserrat, system-ui, sans-serif';
   ctx.textAlign = 'right';
   ctx.textBaseline = 'middle';
@@ -1411,29 +1542,53 @@ async function exportPNG(returnBlobOnly, blobCb){
 }
 
 function fitAndWrap(ctx, text, x, y, maxWidth, minSize, maxSize){
+  const raw = String(text || '').trim() || 'ROW';
   let size = maxSize;
-  let lines;
+  let lines = [raw];
   while(size >= minSize){
-    ctx.font = `900 ${size}px Montserrat, sans-serif`;
-    lines = wrapLines(ctx, text, maxWidth);
-    if(lines.length <= 2) break;
+    ctx.font = `800 ${size}px Montserrat, system-ui, sans-serif`;
+    lines = wrapLines(ctx, raw, maxWidth);
+    // Prefer ≤3 lines; allow 4 only for very long names at min size
+    if(lines.length <= 3) break;
     size--;
   }
-  ctx.font = `900 ${size}px Montserrat, sans-serif`;
-  const lh = size*1.15;
-  const startY = y - (lines.length-1)*lh/2;
-  lines.forEach((l,i)=> ctx.fillText(l, x, startY + i*lh));
+  // If still overflowing width on a single long token, force char wrap at min size
+  ctx.font = `800 ${size}px Montserrat, system-ui, sans-serif`;
+  lines = wrapLines(ctx, raw, maxWidth);
+  const lh = size * 1.12;
+  const startY = y - ((lines.length - 1) * lh) / 2;
+  lines.forEach((l, i) => ctx.fillText(l, x, startY + i * lh));
 }
 function wrapLines(ctx, text, maxWidth){
-  const words = text.split(' ');
-  let line = '', lines = [];
-  for(const w of words){
-    const test = line ? line+' '+w : w;
-    if(ctx.measureText(test).width > maxWidth && line){ lines.push(line); line = w; }
-    else line = test;
-  }
-  lines.push(line);
-  return lines;
+  const words = String(text).split(/\s+/).filter(Boolean);
+  const lines = [];
+  let line = '';
+  const pushChunk = (chunk)=>{
+    if(!chunk) return;
+    if(ctx.measureText(chunk).width <= maxWidth){
+      if(line && ctx.measureText(line + ' ' + chunk).width <= maxWidth){
+        line = line + ' ' + chunk;
+      } else {
+        if(line) lines.push(line);
+        line = chunk;
+      }
+      return;
+    }
+    // Long unbroken string - split by characters
+    if(line){ lines.push(line); line = ''; }
+    let buf = '';
+    for(const ch of chunk){
+      const t = buf + ch;
+      if(ctx.measureText(t).width > maxWidth && buf){
+        lines.push(buf);
+        buf = ch;
+      } else buf = t;
+    }
+    if(buf) line = buf;
+  };
+  for(const w of words) pushChunk(w);
+  if(line) lines.push(line);
+  return lines.length ? lines : [''];
 }
 
 function loadImage(src){
@@ -1499,7 +1654,7 @@ function rankmeBeforeUnload(e){
 }
 window.addEventListener('beforeunload', rankmeBeforeUnload);
 
-/** Account is always allowed — ranking is stashed, never blocked */
+/** Account is always allowed - ranking is stashed, never blocked */
 function navigateToAccount(){
   setAllowLeave(true);
   try{
@@ -1572,10 +1727,19 @@ try{
     const data = JSON.parse(raw);
     if(data.tiers && data.assignment){
       state.tiers = data.tiers;
-      state.assignment = data.assignment;
+      const assignment = {};
+      Object.keys(data.assignment).forEach(k=>{
+        assignment[k] = (data.assignment[k] || []).map(id=>{
+          const n = parseInt(id, 10);
+          return (String(n) === String(id) && !isNaN(n)) ? n : id;
+        });
+      });
+      state.assignment = assignment;
       const used = new Set();
-      Object.values(state.assignment).forEach(arr => arr.forEach(id=>used.add(id)));
-      state.pool = freshPool().filter(id=>!used.has(id));
+      Object.values(state.assignment).forEach(arr => arr.forEach(id=>{
+        used.add(id); used.add(String(id));
+      }));
+      state.pool = freshPool().filter(id=>!used.has(id) && !used.has(String(id)));
       window.__rankmeFromCabinet = true;
       sanitizeState();
       // + My images only after explicit Remix
@@ -1583,10 +1747,103 @@ try{
   }
 }catch(e){}
 
+
+function normalizeCardId(id){
+  if(typeof id === 'number' && Number.isFinite(id)) return id;
+  const s = String(id);
+  if(/^\d+$/.test(s)){
+    const n = parseInt(s, 10);
+    // Prefer numeric key if CARD_META uses numbers
+    if(CARD_META[n]) return n;
+    if(CARD_META[s]) return s;
+    return n;
+  }
+  return s;
+}
+
+function applyBattleResult(){
+  try{
+    const params = new URLSearchParams(location.search);
+    const wantBattle = params.get('battle') === '1';
+    let raw = sessionStorage.getItem('rankme_battle_result');
+    if(!raw){
+      try { raw = localStorage.getItem('rankme_battle_result'); } catch(_){}
+    }
+    // Also accept if open_payload already applied but pool still full? handled below
+    if(!raw){
+      if(!wantBattle) return false;
+      return false;
+    }
+    const data = JSON.parse(raw);
+    try { sessionStorage.removeItem('rankme_battle_result'); } catch(_){}
+    try { localStorage.removeItem('rankme_battle_result'); } catch(_){}
+    if(!data || !data.payload || !data.payload.tiers || !data.payload.assignment) return false;
+    if(data.templateId && data.templateId !== TEMPLATE_ID){
+      console.warn('battle template mismatch', data.templateId, TEMPLATE_ID);
+      return false;
+    }
+
+    const tiers = data.payload.tiers;
+    const assignment = {};
+    Object.keys(data.payload.assignment).forEach(k=>{
+      const arr = data.payload.assignment[k] || [];
+      assignment[k] = arr.map(normalizeCardId);
+    });
+
+    // Ensure every ranked id exists in CARD_META or custom
+    let placed = 0;
+    Object.values(assignment).forEach(arr => { placed += arr.length; });
+    if(placed === 0){
+      console.warn('battle assignment empty');
+      return false;
+    }
+
+    state.tiers = tiers.map(t=>({
+      id: t.id,
+      name: t.name,
+      hue: t.hue,
+      sat: t.sat,
+      light: t.light
+    }));
+    state.assignment = assignment;
+
+    const used = new Set();
+    Object.values(state.assignment).forEach(arr=>{
+      arr.forEach(id=>{
+        used.add(id);
+        used.add(String(id));
+        if(typeof id === 'number') used.add(id);
+      });
+    });
+    state.pool = freshPool().filter(id=>!used.has(id) && !used.has(String(id)));
+    window.__rankmeFromCabinet = true;
+    window.__rankmeFromBattle = true;
+    if(typeof sanitizeState === 'function') sanitizeState();
+    console.log('battle result applied', placed, 'cards');
+    return true;
+  }catch(e){
+    console.warn('applyBattleResult failed', e);
+    return false;
+  }
+}
+
 (async ()=>{
   if(CARD_SHAPE === 'square') document.body.classList.add('card-square');
+  if(CARD_SHAPE === 'landscape') {
+    document.body.classList.add('card-landscape');
+    const s = document.getElementById('sizeSlider');
+    if(s && !s.dataset.landscapeInit) {
+      s.dataset.landscapeInit = '1';
+      s.min = '50';
+      s.max = '140';
+      s.value = '78';
+      setCardSize(78);
+    }
+  }
   if(THEME_GOLD) document.body.classList.add('theme-gold');
   if(NO_FACTIONS) document.body.classList.add('no-factions');
+  // Battle Mode → Open ranking
+  applyBattleResult();
   const expertId = new URLSearchParams(location.search).get('e');
   if(expertId && applyExpertPreset(expertId)){
     // expert loaded
@@ -1633,6 +1890,39 @@ if(BLANK_MODE){
   // portals still useful in blank
   const upload = document.getElementById('uploadImgs');
   if(upload){
+    function loadImageSize(src){
+      return new Promise((resolve)=>{
+        const img = new Image();
+        img.onload = ()=> resolve({ w: img.naturalWidth || 1, h: img.naturalHeight || 1 });
+        img.onerror = ()=> resolve({ w: 1, h: 1 });
+        img.src = src;
+      });
+    }
+    async function autoFitCardShape(){
+      // Only for blank / custom uploads — majority rules
+      const ids = Object.keys(state.customCards || {});
+      if(!ids.length) return;
+      let square = 0, portrait = 0, landscape = 0;
+      for(const id of ids){
+        const src = state.customCards[id].src;
+        if(!src) continue;
+        const { w, h } = await loadImageSize(src);
+        const r = w / h;
+        if(r >= 0.85 && r <= 1.15) square++;
+        else if(r < 0.85) portrait++;
+        else landscape++;
+      }
+      // prefer square if most are square-ish; else portrait frame
+      const useSquare = square >= portrait && square >= landscape;
+      document.body.classList.toggle('card-square', useSquare);
+      const px = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--card-w')) || 64;
+      if(useSquare){
+        document.documentElement.style.setProperty('--card-h', px + 'px');
+      } else {
+        const aspect = 1.35;
+        document.documentElement.style.setProperty('--card-h', Math.round(px * aspect) + 'px');
+      }
+    }
     upload.addEventListener('change', async (e)=>{
       const files = [...(e.target.files||[])];
       for(const f of files){
@@ -1647,11 +1937,33 @@ if(BLANK_MODE){
         state.customCards[id] = { src, name: f.name.replace(/\.[^.]+$/, '') };
         state.pool.push(id);
       }
+      await autoFitCardShape();
       renderPool();
       showToast(files.length + ' image(s) added');
       e.target.value = '';
     });
   }
+  // Preload images chosen on Create page
+  try{
+    const raw = sessionStorage.getItem('rankme_blank_images');
+    if(raw){
+      const list = JSON.parse(raw);
+      if(Array.isArray(list)){
+        list.forEach(it=>{
+          if(!it || !it.dataUrl) return;
+          const id = customIdSeq++;
+          state.customCards[id] = { src: it.dataUrl, name: (it.name||'image').replace(/\.[^.]+$/, '') };
+          state.pool.push(id);
+        });
+        sessionStorage.removeItem('rankme_blank_images');
+        autoFitCardShape().then(()=>{ renderPool(); if(list.length) showToast(list.length + ' image(s) added'); });
+      }
+    }
+  }catch(err){}
+  try{
+    const tag = sessionStorage.getItem('rankme_blank_tag');
+    if(tag) sessionStorage.setItem('rankme_list_tag', tag);
+  }catch(err){}
 } else {
   renderFactionFilters();
 }
@@ -1694,3 +2006,68 @@ document.querySelectorAll('a.expert-name, #eldudLink').forEach(a => {
   });
 });
 })();
+
+
+/* Battle Mode launch from tier page — under description */
+(function(){
+  function resolveId(){
+    try{
+      if(typeof TEMPLATE_ID !== 'undefined' && TEMPLATE_ID && TEMPLATE_ID !== 'blank') return String(TEMPLATE_ID);
+    }catch(e){}
+    try{
+      if(window.RANKME_TEMPLATE && window.RANKME_TEMPLATE.id && window.RANKME_TEMPLATE.id !== 'blank')
+        return String(window.RANKME_TEMPLATE.id);
+    }catch(e){}
+    try{
+      var p = new URLSearchParams(location.search);
+      var t = (p.get('t') || '').trim();
+      if(t && t !== 'blank') return t;
+    }catch(e){}
+    try{
+      var s = sessionStorage.getItem('rankme_t');
+      if(s && s !== 'blank') return s;
+    }catch(e){}
+    try{
+      var m = location.pathname.match(/\/(sf-duel-ex|sf-duel|lol|sf6)(?:\.html)?/);
+      if(m) return m[1];
+    }catch(e){}
+    return '';
+  }
+  function goBattle(e){
+    if(e){ e.preventDefault(); e.stopPropagation(); }
+    var id = resolveId();
+    if(!id){
+      console.warn('Battle: no template id');
+      alert('Open a template first, then start Battle Mode.');
+      return;
+    }
+    try{ sessionStorage.setItem('rankme_t', id); }catch(err){}
+    try{
+      window.allowLeave = true;
+      sessionStorage.setItem('rankme_nav_ok', '1');
+    }catch(err){}
+    window.location.assign('battle.html?t=' + encodeURIComponent(id));
+  }
+  function bind(){
+    var btn = document.getElementById('battleModeBtn');
+    if(!btn) return;
+    var id = resolveId();
+    if(!id){
+      btn.style.display = 'none';
+      return;
+    }
+    btn.style.display = '';
+    btn.style.pointerEvents = 'auto';
+    btn.style.cursor = 'pointer';
+    btn.disabled = false;
+    btn.onclick = goBattle;
+  }
+  bind();
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', bind);
+  }
+  setTimeout(bind, 0);
+  setTimeout(bind, 200);
+  setTimeout(bind, 800);
+})();
+

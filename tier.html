@@ -9,11 +9,11 @@
 <meta name="description" content="Create tier lists in seconds. Drag, drop, share. Free, no sign-up.">
 <meta property="og:title" content="Tier List - RankMe" id="metaOgTitle">
 <meta property="og:description" content="Drag, rank, share on RankMe." id="metaOgDesc">
-<meta property="og:image" content="https://rankme.lol/assets/brand/Share_RankMe.png" id="metaOgImage">
+<meta property="og:image" content="https://rankme.lol/assets/brand/Share_RankMe.png?v=20260807" id="metaOgImage">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://rankme.lol/assets/brand/Share_RankMe.png" id="metaTwImage">
+<meta name="twitter:image" content="https://rankme.lol/assets/brand/Share_RankMe.png?v=20260807" id="metaTwImage">
 <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,7 +39,13 @@
 
 <section class="hero" id="heroSection" hidden>
   <div class="parallax-host" id="coverHost"><img class="title-logo cover-card parallax-img" id="coverImg" src="" alt=""></div>
-  <p class="desc" id="heroDesc"></p>
+  <div class="hero-text">
+    <h1 class="hero-title" id="heroTitle"></h1>
+    <p class="desc" id="heroDesc"></p>
+    <div class="hero-battle-wrap">
+      <button type="button" class="btn-battle-hero" id="battleModeBtn" title="Battle Mode">Battle Mode</button>
+    </div>
+  </div>
   <div class="experts-block" id="expertsBlock" hidden>
     <div class="experts-heading">Expert Rankings</div>
     <div class="experts-strip" id="expertsStrip"></div>
@@ -50,12 +56,12 @@
   <div class="left-actions">
     <label class="pill-btn upload-remix" id="remixUploadWrap" hidden>
       <input type="file" id="remixUpload" accept="image/*" multiple hidden>
-      + Upload Images
+      + Upload
     </label>
   </div>
   <div class="right-actions">
-    <button class="pill-btn remix-btn" id="remixBtn" type="button" title="Create an Editable Copy">Remix</button>
-    <button class="pill-btn save-btn" id="saveAccountBtn" type="button" title="Save This Ranking">Save</button>
+    <button class="pill-btn remix-btn" id="remixBtn" type="button" title="Remix">Remix</button>
+    <button class="pill-btn save-btn" id="saveAccountBtn" type="button" title="Save">Save</button>
   </div>
 </div>
 
@@ -93,7 +99,7 @@
   <div class="portals-bar" id="portalsBar" hidden></div>
   <div class="pool-header">
     <div class="faction-filters" id="factionFilters"></div>
-    <button class="portal-btn" id="portalBtn" type="button" title="Drop Cards into Portals">TELEPORTATION</button>
+    <button class="portal-btn" id="portalBtn" type="button" title="Portals">TELEPORTATION</button>
   </div>
   <div class="pool" id="pool"></div>
 </div>
@@ -104,8 +110,8 @@
 
 <div class="modal-back" id="leaveModal">
   <div class="modal">
-    <h3>Leave without saving?</h3>
-    <p>Your changes haven't been saved. Export a PNG or sign in to keep this ranking.</p>
+    <h3>Leave?</h3>
+    <p>Not saved. Export or sign in.</p>
     <div class="modal-actions">
       <button class="primary" id="stayBtn">Stay</button>
       <button id="leaveBtn">Leave anyway</button>

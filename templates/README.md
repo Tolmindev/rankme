@@ -1,15 +1,72 @@
 # RankMe templates
 
-Each exclusive tier list is one JSON file.
+Adding a new exclusive tier list should take minutes, not hours.
 
-## Add a new exclusive
+## Quick add
 
-1. Put images in `assets/your-game/`
-2. Copy `sf-duel-ex.json` → `your-game.json`
-3. Fill: id, title, description, cover, cardPath, cardShape (`portrait`|`square`), cards[], optional factions/theme/experts
-4. Add card to `catalog.json`
-5. Link from index: `tier.html?t=your-game`
+1. **Images** → `assets/<id>/` (webp preferred, consistent size)
+2. **JSON** → copy `sf-duel-ex.json` to `templates/<id>.json`
+3. **Catalog** → one object in `templates/catalog.json`
+4. Deploy. Open: `tier.html?t=<id>`
 
-Open: `/tier.html?t=your-game`
+No new HTML page required. `boot.js` loads `templates/<id>.json` automatically.
 
-Old URLs (`sf-duel.html` etc.) redirect automatically.
+## catalog.json fields
+
+| Field | Required | Notes |
+|-------|----------|--------|
+| `id` | yes | URL slug, same as JSON filename |
+| `title` | yes | Card + page title |
+| `description` | yes | Short, one sentence preferred |
+| `cover` | yes | Path e.g. `assets/brand/My_Cover.webp` |
+| `href` | yes | `tier.html?t=<id>` |
+| `category` | yes | `games` / `anime` / `movies` / … |
+| `tags` | yes | Array of strings for search |
+| `itemCount` | yes | Number shown on card |
+| `itemLabel` | yes | e.g. `fighters`, `champions` |
+| `featured` | no | Sort boost on home |
+| `exclusive` | no | Exclusive badge + RGB border |
+| `parallax` | no | Cover parallax (desktop only) |
+
+## Template JSON fields
+
+| Field | Required | Notes |
+|-------|----------|--------|
+| `id` | yes | Same as catalog |
+| `title` | yes | |
+| `description` | yes | |
+| `cover` | yes | |
+| `cardPath` | yes | Folder with card images, trailing `/` |
+| `cardShape` | yes | `portrait` or `square` |
+| `cards` | yes | `[{id, file, name, faction?}, …]` |
+| `footerLabel` | no | Export footer text |
+| `exportName` | no | Default PNG filename |
+| `parallax` | no | |
+| `noFactions` | no | Hide faction filters |
+| `factions` / `theme` / `experts` | no | Optional filters & expert presets |
+
+## Experts (optional)
+
+```json
+"experts": [{
+  "id": "eldud",
+  "name": "ElDuD",
+  "youtube": "https://youtube.com/@ElDuD89",
+  "assignment": { "t1": [1,2], "t2": [3] }
+}]
+```
+
+## Checklist before ship
+
+- [ ] Cover ~1200×630 (or same ratio as others)
+- [ ] All `cards[].file` exist under `cardPath`
+- [ ] `itemCount` matches `cards.length`
+- [ ] Search finds title / tags on home
+- [ ] Battle Mode opens from card
+- [ ] Export PNG looks correct
+
+## Do not
+
+- Create per-game HTML (use `tier.html?t=`)
+- Put huge PNGs in repo without compress
+- Hardcode card lists in `app.js`

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>Battle Mode - RankMe</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabaseClient.js"></script>
+<meta name="description" content="Quick head-to-head comparisons that build your tier list automatically.">
+<link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/rankme.css">
+<link rel="stylesheet" href="css/battle-anim.css">
+</head>
+<body>
+
+<header class="site">
+  <a class="brand" href="index.html"><img src="assets/brand/RankMe_logo.svg" alt="RankMe"></a>
+  <nav class="main">
+    <a href="index.html">Browse</a>
+    <a href="create.html" class="cta-nav">Create</a>
+    <button class="login-btn" id="loginBtn" type="button">Account</button>
+  </nav>
+</header>
+
+<main class="battle-page">
+  <div class="battle-top">
+    <button class="battle-back" id="battleBack" type="button">Back</button>
+    <div class="battle-progress-wrap">
+      <div class="battle-progress-bar"><div class="fill" id="battleFill"></div></div>
+      <div class="battle-progress-label"><span id="battleProgressLabel">0 / 0</span></div>
+    </div>
+    <button class="battle-exit" id="battleExit" type="button">Exit</button>
+  </div>
+
+  <div class="battle-arena" id="battleArena">
+    <h1 class="battle-question">Who wins?</h1>
+    <p class="battle-sub">Pick one · <span id="battleTitle"></span></p>
+    <div class="battle-vs-row" id="battleVsRow"></div>
+    <button class="battle-skip" id="battleSkip" type="button">Skip</button>
+    <p class="battle-how">Each round you pick a winner. Those picks become a ranking.<br>
+More rounds - clearer order. You can edit after.</p>
+  </div>
+</main>
+
+<div class="battle-overlay" id="battleOverlay">
+  <div class="battle-panel" id="battlePanel"></div>
+</div>
+
+<footer id="site-footer" class="site"></footer>
+<script src="js/footer.js" defer></script>
+<script src="js/battle.js"></script>
+<script src="js/battle-ui.js" defer></script>
+
+</body>
+</html>

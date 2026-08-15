@@ -1,0 +1,399 @@
+/* RankMe · account — Account, auth, modals, toasts, download */
+
+h1,h2,h3,.tier-label,.brand-name,.faction-btn,.download-btn,.login-btn {
+  font-weight: 800;
+}
+
+body > .toast {
+  width: auto;
+  max-width: min(90vw, 360px);
+}
+
+.login-btn {
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: .85rem;
+  font-weight: 800;
+  background: transparent;
+  color: var(--text-dim);
+  border: 1px solid var(--line);
+  cursor: pointer;
+  box-shadow: none;
+  transition: color .15s, border-color .15s, background .15s;
+}
+
+.login-btn:hover {
+  color: var(--text);
+  border-color: rgba(200,160,240,.45);
+  background: rgba(255,255,255,0.04);
+  filter: none;
+}
+
+.login-btn.logged-in {
+  position: relative;
+  border: 1px solid transparent;
+  background: linear-gradient(#12101a, #12101a) padding-box,
+    linear-gradient(90deg,#b79bf0,#e6a9e8,#cdd6f7,#b79bf0,#e6a9e8) border-box;
+  background-size: 100% 100%, 220% 100%;
+  animation: accountShimmer 4s linear infinite;
+  color: var(--text);
+}
+
+.login-btn.logged-in:hover {
+  filter: brightness(1.08);
+  box-shadow: 0 0 16px rgba(190,150,255,.35);
+}
+
+.download-btn {
+  padding: 11px 22px;
+  border-radius: 999px;
+  border: none;
+  letter-spacing: .4px;
+  font-weight: 800;
+  background: var(--accent-grad);
+  color: #1a1226;
+  cursor: pointer;
+  font-size: .82rem;
+  transition: filter .15s, transform .15s, box-shadow .18s;
+  box-shadow: 0 0 16px rgba(180,120,255,.28);
+}
+
+.download-btn:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+  box-shadow: 0 0 24px rgba(200,140,255,.5), 0 0 40px rgba(160,100,230,.22);
+}
+
+.modal-back {
+  position: fixed;
+  inset: 0;
+  background: rgba(6,4,10,.72);
+  backdrop-filter: blur(6px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 400;
+}
+
+.modal-back.open {
+  display: flex;
+}
+
+.modal {
+  background: #1b1729;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 28px 30px;
+  max-width: 380px;
+  text-align: center;
+}
+
+.modal h3 {
+  margin: 0 0 10px;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--text);
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+.modal p {
+  color: var(--text-dim);
+  font-size: .88rem;
+  line-height: 1.5;
+  margin: 0 0 20px;
+  font-weight: 600;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.modal-actions button {
+  padding: 10px 22px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: #171327;
+  color: var(--text);
+  cursor: pointer;
+  font-weight: 700;
+  font-size: .85rem;
+  transition: transform .15s, border-color .15s, background .15s, box-shadow .15s, filter .15s;
+}
+
+.modal-actions button:hover {
+  border-color: rgba(200,160,240,.55);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(120,80,200,.25);
+  color: #fff;
+}
+
+.modal-actions button.primary {
+  background: var(--accent-grad);
+  color: #1a1226;
+  border: none;
+}
+
+.modal-actions button.primary:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(180,120,240,.4);
+}
+
+.download-modal {
+  max-width: 440px;
+  width: min(440px,92vw);
+  padding: 32px 36px;
+}
+
+.download-modal h3 {
+  font-size: 1.25rem;
+  margin-bottom: 8px;
+}
+
+.download-modal p {
+  margin-bottom: 24px;
+  font-size: .95rem;
+}
+
+.download-modal-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.download-modal-actions .dl-std, .download-modal-actions .dl-max {
+  min-height: 48px;
+  border-radius: 999px;
+  font-size: .95rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.download-modal-actions .dl-std {
+  padding: 12px 22px;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: .88rem;
+  cursor: pointer;
+  border: 1px solid rgba(200,160,240,.35);
+  background: #171327;
+  color: #f0eafc;
+  transition: border-color .15s, box-shadow .15s, transform .15s;
+}
+
+.download-modal-actions .dl-std:hover {
+  border-color: rgba(200,160,240,.7);
+  box-shadow: 0 0 16px rgba(180,120,255,.25);
+  transform: translateY(-1px);
+}
+
+.download-modal-actions .dl-max {
+  position: relative;
+  padding: 14px 22px;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: .9rem;
+  cursor: pointer;
+  color: #f8f4ff;
+  overflow: hidden;
+  background: linear-gradient(145deg, #2a1f3d 0%, #1a1228 100%) padding-box,
+    linear-gradient(120deg, #ff6b6b, #f7c948, #7bed9f, #70a1ff, #a29bfe, #ff6b81, #ff6b6b) border-box;
+  background-size: 100% 100%, 220% 100%;
+  border: 2px solid transparent;
+  background-origin: padding-box, border-box;
+  background-clip: padding-box, border-box;
+  box-shadow: 0 0 22px rgba(180,120,255,.35), 0 0 48px rgba(255,120,180,.12), inset 0 1px 0 rgba(255,255,255,.1);
+  animation: dlMaxShift 4s linear infinite alternate;
+  transition: filter .15s, transform .15s, box-shadow .15s;
+}
+
+.download-modal-actions .dl-max span {
+  position: relative;
+  z-index: 1;
+  letter-spacing: .3px;
+}
+
+.download-modal-actions .dl-max:hover {
+  filter: brightness(1.12) saturate(1.1);
+  transform: translateY(-2px);
+  box-shadow: 0 0 28px rgba(200,140,255,.5), 0 0 56px rgba(255,120,180,.2), inset 0 1px 0 rgba(255,255,255,.14);
+}
+
+.download-modal-actions .dl-cancel {
+  padding: 10px;
+  border: none;
+  background: transparent;
+  color: var(--text-dim);
+  font-weight: 700;
+  font-size: .82rem;
+  cursor: pointer;
+}
+
+.download-modal-actions .dl-cancel:hover {
+  color: var(--text);
+}
+
+.toast {
+  position: fixed;
+  bottom: 26px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  opacity: 0;
+  background: #211c33;
+  border: 1px solid var(--line);
+  padding: 12px 22px;
+  border-radius: 999px;
+  font-size: .85rem;
+  transition: opacity .25s ease, transform .25s ease;
+  z-index: 500;
+  pointer-events: none;
+  font-weight: 600;
+  width: auto;
+  max-width: min(90vw, 360px);
+  white-space: nowrap;
+  text-align: center;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.panel-card {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+  overflow: visible;
+  cursor: default;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  padding: 28px 28px 24px;
+  box-sizing: border-box;
+  transform: none;
+  filter: none;
+  box-shadow: none;
+  position: relative;
+  touch-action: auto;
+  user-select: auto;
+}
+
+.panel-card:hover {
+  transform: none;
+  filter: none;
+  box-shadow: none;
+}
+
+.login-btn.ghost {
+  margin-top: 8px;
+}
+
+.profile .avatar-wrap {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  flex: 0 0 56px;
+  margin: 0;
+}
+
+.profile .avatar-wrap .holo-ring {
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  background: linear-gradient(135deg,#b79bf0,#e6a9e8,#cdd6f7,#b79bf0);
+  background-size: 200% 100%;
+  opacity: .9;
+  z-index: 0;
+  animation: accountShimmer 4s linear infinite;
+  pointer-events: none;
+}
+
+.profile .avatar-wrap .avatar, .profile .avatar-wrap .avatar-fallback {
+  position: relative;
+  z-index: 1;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  background: #1a1728;
+  border: 2px solid #12101a;
+  box-sizing: border-box;
+  margin: 0;
+}
+
+.profile .avatar-wrap .avatar-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 1.15rem;
+  color: #e8d4ff;
+}
+
+#delModal .modal-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 18px;
+}
+
+#delModal .modal-actions button {
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: .85rem;
+  cursor: pointer;
+  border: 1px solid rgba(200,160,240,.35);
+  background: rgba(30,26,48,.95);
+  color: var(--text);
+  font-family: inherit;
+  transition: filter .15s, box-shadow .15s, border-color .15s;
+}
+
+#delModal .modal-actions button.primary {
+  background: linear-gradient(135deg,#c4a0f0,#9b7ad8);
+  border-color: transparent;
+  color: #1a1028;
+}
+
+#delModal .modal-actions button.danger {
+  border-color: rgba(255,100,120,.45);
+  color: #ffb0bc;
+  background: rgba(40,16,24,.9);
+}
+
+#delModal .modal-actions button:hover {
+  filter: brightness(1.08);
+  box-shadow: 0 0 14px rgba(180,120,255,.3);
+}
+
+@media (max-width: 720px) {
+
+  .download-btn {
+    order: 4;
+    width: 100%;
+    text-align: center;
+  }
+
+  .login-btn, .cta {
+    min-height: 44px;
+  }
+
+  .login-btn {
+    padding: 8px 12px;
+    font-size: .75rem;
+    white-space: nowrap;
+  }
+
+}

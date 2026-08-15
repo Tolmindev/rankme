@@ -168,28 +168,56 @@ function updateNavAuth() {
       document.querySelectorAll('[data-auth-account]').forEach(function (el) {
         el.hidden = !user;
       });
-      document.querySelectorAll('[data-auth-name]').forEach(function (el) {
-        if (!user) return;
-        var name =
+      var displayName = 'Account';
+      if (user) {
+        displayName =
           user.user_metadata?.full_name ||
           user.user_metadata?.name ||
           user.user_metadata?.user_name ||
           user.email ||
           'Account';
-        el.textContent = name;
+      }
+      document.querySelectorAll('[data-auth-name]').forEach(function (el) {
+        el.textContent = displayName;
       });
       document.querySelectorAll('[data-auth-avatar]').forEach(function (el) {
         var url = user && (user.user_metadata?.avatar_url || user.user_metadata?.picture);
         if (url && el.tagName === 'IMG') el.src = url;
       });
+      /* Shared header button */
+      var loginBtn = document.getElementById('loginBtn');
+      if (loginBtn && !loginBtn.querySelector('img')) {
+        loginBtn.textContent = displayName;
+      }
+      if (loginBtn) {
+        loginBtn.classList.toggle('is-logged-in', !!user);
+      }
     } catch (e) {
       console.warn('[RankMe] updateNavAuth', e);
     }
   })();
 }
 
+
+/* ---- Account nav (all pages; app.js may override with draft-stash on tier) ---- */
+function bindAccountButton() {
+  var btn = document.getElementById('loginBtn');
+  if (!btn || btn.dataset.navBound === '1') return; // app.js already owns this button
+  if (btn.dataset.accountBound === '1') return;
+  btn.dataset.accountBound = '1';
+  btn.addEventListener('click', function (e) {
+    e.preventDefault();
+    location.href = 'account.html';
+  });
+}
+
+
 if (typeof document !== 'undefined') {
-  document.addEventListener('DOMContentLoaded', updateNavAuth);
+  document.addEventListener('DOMContentLoaded', function () {
+    bindAccountButton();
+    updateNavAuth();
+  });
+  bindAccountButton();
   updateNavAuth();
 }
 

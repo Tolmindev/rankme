@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
 <title>RankMe - Drag. Rank. Share.</title>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="js/supabaseClient.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+<script src="js/supabaseClient.js" defer></script>
 <meta property="og:title" content="RankMe - The easiest way to create tier lists">
 <meta property="og:description" content="Build tier lists. Export PNG. Share. No account needed.">
 <meta property="og:image" content="https://rankme.lol/assets/brand/Share_RankMe.png?v=20260807">
@@ -15,7 +15,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/rankme.css">
+<link rel="stylesheet" href="css/rankme.css?v=20260816perf">
 </head>
 <body>
 
@@ -24,7 +24,7 @@
   <nav class="main">
     <a href="index.html" class="active">Browse</a>
     <a href="create.html" class="cta-nav">Create</a>
-    <button class="login-btn" id="loginBtn" type="button">Account</button>
+    <a class="login-btn" id="loginBtn" href="account.html">Account</a>
   </nav>
 </header>
 

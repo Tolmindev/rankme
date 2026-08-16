@@ -4,14 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
 <title>Battle Mode - RankMe</title>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="js/supabaseClient.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+<script src="js/supabaseClient.js" defer></script>
 <meta name="description" content="Quick head-to-head comparisons that build your tier list automatically.">
 <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/rankme.css">
+<link rel="stylesheet" href="css/rankme.css?v=20260816perf">
 <link rel="stylesheet" href="css/battle-anim.css">
 </head>
 <body>
@@ -21,7 +21,7 @@
   <nav class="main">
     <a href="index.html">Browse</a>
     <a href="create.html" class="cta-nav">Create</a>
-    <button class="login-btn" id="loginBtn" type="button">Account</button>
+    <a class="login-btn" id="loginBtn" href="account.html">Account</a>
   </nav>
 </header>
 

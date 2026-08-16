@@ -20,7 +20,8 @@
       "createdAt": "2024-11-02",
       "featured": true,
       "exclusive": true,
-      "parallax": true
+      "parallax": true,
+      "coverThumb": "assets/brand/SF_Cover_1_thumb.webp"
     },
     {
       "id": "sf-duel-ex",
@@ -42,7 +43,8 @@
       "createdAt": "2024-11-10",
       "featured": false,
       "exclusive": true,
-      "parallax": false
+      "parallax": false,
+      "coverThumb": "assets/brand/SFD_EX_Cover_thumb.webp"
     },
     {
       "id": "lol",
@@ -63,7 +65,8 @@
       "createdAt": "2025-01-15",
       "featured": true,
       "exclusive": true,
-      "parallax": true
+      "parallax": true,
+      "coverThumb": "assets/brand/LoL_Cover_thumb.webp"
     },
     {
       "id": "sf6",
@@ -84,7 +87,8 @@
       "createdAt": "2026-08-08",
       "featured": true,
       "exclusive": true,
-      "parallax": true
+      "parallax": true,
+      "coverThumb": "assets/brand/SF6_Cover_thumb.webp"
     },
     {
       "id": "dota2",
@@ -105,7 +109,8 @@
       "createdAt": "2026-08-14",
       "featured": true,
       "exclusive": true,
-      "parallax": true
+      "parallax": true,
+      "coverThumb": "assets/brand/Dota2_Cover_thumb.webp"
     }
   ],
   "categoryMeta": {

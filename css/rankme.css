@@ -1,4 +1,4 @@
-/* RankMe — bundled entry (GitHub Pages safe). Source modules: css/_*.css */
+/* RankMe bundled — v20260816perf */
 
 
 /* ===== _tokens.css ===== */
@@ -4792,7 +4792,8 @@ nav.main a.cta-nav:hover {
   box-shadow: 0 0 12px rgba(180,140,240,.3);
 }
 
-HOMEPAGE v2 - hero preview, search, categories, filters, cards, community ====================================================================== */ .home-wrap {
+/* /* HOMEPAGE v2 */
+.home-wrap {
   width: 100%;
   max-width: 1180px;
   margin: 0 auto;

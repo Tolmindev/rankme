@@ -138,7 +138,7 @@
       '<div class="tl-card exclusive' + epicClass + '" data-id="' + escapeHtml(t.id) + '">' +
         '<a class="cover" href="' + escapeHtml(t.href) + '" data-stash="' + escapeHtml(t.id) + '">' +
           exclusiveTag + catTag +
-          '<img class="cover-art" src="' + escapeHtml(t.cover) + '" alt="' + escapeHtml(t.title) + '" loading="lazy">' +
+          '<img class="cover-art" src="' + escapeHtml(t.coverThumb || t.cover) + '" alt="' + escapeHtml(t.title) + '" loading="lazy">' +
         '</a>' +
         '<div class="body">' +
           '<a class="title" href="' + escapeHtml(t.href) + '" data-stash="' + escapeHtml(t.id) + '">' + escapeHtml(t.title) + '</a>' +

@@ -88,7 +88,7 @@
   text-align: center;
   padding: 6px 8px;
   line-height: 1.15;
-  white-space: pre-line;
+  white-space: pre-wrap;
   text-transform: uppercase;
   letter-spacing: .35px;
   background: linear-gradient(105deg,
@@ -1411,4 +1411,5 @@ body.card-landscape .card.floating {
   width: 100%;
   text-align: center;
   line-height: 1.15;
+  white-space: pre-wrap;
 }

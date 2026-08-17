@@ -275,7 +275,8 @@ function render(){
     });
     label.addEventListener('input', ()=>{
       t.name = (label.innerText || '').replace(/\u00a0/g, ' ');
-      fitLabelFontLive(label);
+      // Resize lines in place — do not rebuild DOM (rebuild ate spaces)
+      sizeLabelLinesInPlace(label);
     });
     label.addEventListener('keydown', (e)=>{
       if(e.key === 'Enter'){
@@ -374,6 +375,27 @@ function setLabelCaretOffset(el, offset){
   range.collapse(false);
   sel.removeAllRanges();
   sel.addRange(range);
+}
+
+function sizeLabelLinesInPlace(el){
+  const spans = el.querySelectorAll('.tier-label-line');
+  if(spans.length){
+    spans.forEach(function(span){
+      let line = (span.textContent || '').replace(/\u00a0/g, ' ');
+      if(line === '\u00a0' || line === '\xa0') line = '';
+      span.style.fontSize = labelLineFontSize(line) + 'px';
+    });
+    return;
+  }
+  // Plain text fallback while editing
+  const text = (el.innerText || '').replace(/\u00a0/g, ' ');
+  const lines = text.split('\n');
+  let maxLen = 1;
+  lines.forEach(function(line){
+    const n = line.replace(/\s+/g, '').length;
+    if(n > maxLen) maxLen = n;
+  });
+  el.style.fontSize = labelLineFontSize(maxLen <= 1 ? 'A' : 'A'.repeat(maxLen)) + 'px';
 }
 
 function fitLabelFontLive(el){

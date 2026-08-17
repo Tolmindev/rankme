@@ -261,12 +261,35 @@ function render(){
     label.textContent = t.name;
     fitLabelFont(label, t.name);
     label.addEventListener('input', ()=>{
-      t.name = label.textContent;
-      fitLabelFont(label, t.name);
+      t.name = (label.innerText || '').replace(/\u00a0/g, ' ');
     });
-    label.addEventListener('keydown', (e)=>{ if(e.key==='Enter'){ e.preventDefault(); label.blur(); } });
+    label.addEventListener('keydown', (e)=>{
+      if(e.key === 'Enter'){
+        e.preventDefault();
+        // New line instead of ending edit
+        try {
+          document.execCommand('insertLineBreak');
+        } catch (err) {
+          const br = document.createElement('br');
+          const sel = window.getSelection();
+          if(sel && sel.rangeCount){
+            const range = sel.getRangeAt(0);
+            range.deleteContents();
+            range.insertNode(br);
+            range.setStartAfter(br);
+            range.collapse(true);
+            sel.removeAllRanges();
+            sel.addRange(range);
+          }
+        }
+        t.name = (label.innerText || '').replace(/\u00a0/g, ' ');
+      }
+    });
     label.addEventListener('blur', ()=>{
-      if(!label.textContent.trim()) { label.textContent = t.name = 'ROW'; fitLabelFont(label, t.name); }
+      let name = (label.innerText || '').replace(/\u00a0/g, ' ').replace(/\n+$/,'');
+      if(!name.trim()) name = 'ROW';
+      t.name = name;
+      fitLabelFont(label, name);
     });
 
     labelWrap.appendChild(label);
@@ -303,23 +326,46 @@ function render(){
   renderPortals();
 }
 
+function labelLineFontSize(line){
+  const len = (line || '').replace(/\s+/g, '').length || 1;
+  // Same curve as before — per line
+  if(len <= 1) return 24;
+  if(len === 2) return 18;
+  if(len <= 4) return 15;
+  if(len <= 8) return 13;
+  return 12;
+}
+
 function fitLabelFont(el, text){
-  const len = (text || '').replace(/\s+/g,'').length || 1;
-  // Short names → big type; long names → smaller, but never below 12px
-  let size;
-  if(len <= 1) size = 24;
-  else if(len === 2) size = 18;
-  else if(len <= 4) size = 15;
-  else if(len <= 8) size = 13;
-  else size = 12;
-  el.style.fontSize = size+'px';
-  el.style.lineHeight = len <= 2 ? '1' : '1.15';
-  let tries = 0;
-  while(tries < 8 && (el.scrollHeight > el.clientHeight+2 || el.scrollWidth > el.clientWidth+2) && size > 12){
-    size -= 1;
-    el.style.fontSize = size+'px';
-    tries++;
+  const raw = String(text == null ? '' : text).replace(/\r/g, '');
+  const lines = raw.split('\n');
+  el.style.fontSize = '';
+  el.style.lineHeight = '1.15';
+  el.textContent = '';
+
+  if(lines.length <= 1){
+    const line = lines[0] || '';
+    el.textContent = line;
+    let size = labelLineFontSize(line);
+    el.style.fontSize = size + 'px';
+    el.style.lineHeight = (line.replace(/\s+/g, '').length <= 2) ? '1' : '1.15';
+    let tries = 0;
+    while(tries < 8 && (el.scrollHeight > el.clientHeight+2 || el.scrollWidth > el.clientWidth+2) && size > 12){
+      size -= 1;
+      el.style.fontSize = size + 'px';
+      tries++;
+    }
+    return;
   }
+
+  // Multi-line: each line keeps its own size
+  lines.forEach(function(line){
+    const span = document.createElement('span');
+    span.className = 'tier-label-line';
+    span.textContent = line.length ? line : '\u00a0';
+    span.style.fontSize = labelLineFontSize(line) + 'px';
+    el.appendChild(span);
+  });
 }
 
 let activeFilter = 'ALL';
@@ -1542,17 +1588,39 @@ async function exportPNG(returnBlobOnly, blobCb, forceSize){
 }
 
 function fitAndWrap(ctx, text, x, y, maxWidth, minSize, maxSize){
-  const raw = String(text || '').trim() || 'ROW';
+  const raw = String(text || '').replace(/\r/g, '').trim() || 'ROW';
+  // Explicit newlines from editor → one canvas line each, own size
+  if(raw.includes('\n')){
+    const parts = raw.split('\n');
+    const sized = parts.map(function(line){
+      let size = labelLineFontSize(line);
+      size = Math.max(minSize, Math.min(maxSize, size));
+      ctx.font = '800 ' + size + 'px Montserrat, system-ui, sans-serif';
+      // Shrink if a single line is wider than label
+      while(size > minSize && ctx.measureText(line).width > maxWidth){
+        size -= 1;
+        ctx.font = '800 ' + size + 'px Montserrat, system-ui, sans-serif';
+      }
+      return { line: line.length ? line : ' ', size };
+    });
+    const totalH = sized.reduce(function(a, s){ return a + s.size * 1.15; }, 0);
+    let cy = y - totalH / 2;
+    sized.forEach(function(s){
+      ctx.font = '800 ' + s.size + 'px Montserrat, system-ui, sans-serif';
+      cy += s.size * 1.15 / 2;
+      ctx.fillText(s.line, x, cy);
+      cy += s.size * 1.15 / 2;
+    });
+    return;
+  }
   let size = maxSize;
   let lines = [raw];
   while(size >= minSize){
     ctx.font = `800 ${size}px Montserrat, system-ui, sans-serif`;
     lines = wrapLines(ctx, raw, maxWidth);
-    // Prefer ≤3 lines; allow 4 only for very long names at min size
     if(lines.length <= 3) break;
     size--;
   }
-  // If still overflowing width on a single long token, force char wrap at min size
   ctx.font = `800 ${size}px Montserrat, system-ui, sans-serif`;
   lines = wrapLines(ctx, raw, maxWidth);
   const lh = size * 1.12;
@@ -1612,7 +1680,7 @@ function getCardImage(cid){
     return null;
   }
   if(!meta) return null;
-  const file = meta.file; // e.g. card_046.png
+  const file = meta.file; // e.g. card_046.webp
   const els = document.querySelectorAll('img');
   for(const el of els){
     if(!el.complete || el.naturalWidth <= 0) continue;

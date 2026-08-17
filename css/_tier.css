@@ -82,11 +82,13 @@
 .tier-label {
   flex: 1;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
   padding: 6px 8px;
   line-height: 1.15;
+  white-space: pre-line;
   text-transform: uppercase;
   letter-spacing: .35px;
   background: linear-gradient(105deg,
@@ -1401,4 +1403,12 @@ body.card-landscape .card:hover {
 body.card-landscape .card.floating {
   box-shadow: 0 0 0 2px rgba(200, 170, 255, 0.55), 0 14px 36px rgba(0, 0, 0, 0.45);
   filter: brightness(1.12);
+}
+
+
+.tier-label-line {
+  display: block;
+  width: 100%;
+  text-align: center;
+  line-height: 1.15;
 }

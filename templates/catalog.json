@@ -26,7 +26,7 @@
     {
       "id": "sf-duel-ex",
       "title": "Street Fighter: Duel EX-Move",
-      "description": "Rank every EX-Move skill from Street Fighter: Duel.",
+      "description": "Unlockable battle skills with base and exclusive stats.",
       "cover": "assets/brand/SFD_EX_Cover.webp",
       "href": "tier.html?t=sf-duel-ex",
       "category": "games",

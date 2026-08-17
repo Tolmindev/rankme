@@ -151,10 +151,14 @@
   100%{ opacity: 0; }
 }
 
+/* Keep pick feedback visible even when OS asks for less motion.
+   (Windows "Animation effects" off was collapsing 0.85s → 0.2s and leaving a blank gap.) */
 @media (prefers-reduced-motion: reduce){
-  .battle-card.chosen,
+  .battle-card.chosen{
+    animation-duration: 0.55s;
+  }
   .battle-card.rejected{
-    animation-duration: 0.2s;
+    animation-duration: 0.45s;
   }
 }
 

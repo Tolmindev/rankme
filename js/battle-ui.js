@@ -145,7 +145,7 @@
     completed++;
     persist();
     // short flash only — no long stall
-    setTimeout(afterPick, 900);
+    scheduleAfterPick(document.querySelector(".battle-card.chosen") || document.querySelector(".battle-card"));
   }
 
   function showModeSelect(t) {
@@ -446,6 +446,33 @@
     });
   }
 
+  
+  function pickAnimMs() {
+    try {
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        return 600;
+      }
+    } catch (e) {}
+    return 900;
+  }
+
+  function scheduleAfterPick(primaryCard) {
+    var done = false;
+    function finish() {
+      if (done) return;
+      done = true;
+      afterPick();
+    }
+    if (primaryCard) {
+      primaryCard.addEventListener('animationend', function onEnd(e) {
+        if (e.target !== primaryCard) return;
+        primaryCard.removeEventListener('animationend', onEnd);
+        finish();
+      });
+    }
+    setTimeout(finish, pickAnimMs());
+  }
+
   function choose(winnerIdStr) {
     if (locked || !currentPair) return;
     locked = true;
@@ -471,7 +498,7 @@
       if (typeof reportCardBattle === 'function') reportCardBattle(tpl.id, winnerId, loserId);
     } catch (e) {}
 
-    setTimeout(afterPick, 900);
+    scheduleAfterPick(winCard || loseCard);
   }
 
   function afterPick() {

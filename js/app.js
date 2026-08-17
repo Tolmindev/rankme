@@ -260,13 +260,20 @@ function render(){
     label.style.setProperty('--light', t.light+'%');
     label.textContent = t.name;
     fitLabelFont(label, t.name);
+    label.addEventListener('focus', ()=>{
+      // Plain text while typing (keeps caret stable)
+      const name = t.name || (label.innerText || '');
+      label.textContent = '';
+      label.innerText = name;
+      fitLabelFontLive(label);
+    });
     label.addEventListener('input', ()=>{
       t.name = (label.innerText || '').replace(/\u00a0/g, ' ');
+      fitLabelFontLive(label);
     });
     label.addEventListener('keydown', (e)=>{
       if(e.key === 'Enter'){
         e.preventDefault();
-        // New line instead of ending edit
         try {
           document.execCommand('insertLineBreak');
         } catch (err) {
@@ -283,6 +290,7 @@ function render(){
           }
         }
         t.name = (label.innerText || '').replace(/\u00a0/g, ' ');
+        fitLabelFontLive(label);
       }
     });
     label.addEventListener('blur', ()=>{
@@ -334,6 +342,20 @@ function labelLineFontSize(line){
   if(len <= 4) return 15;
   if(len <= 8) return 13;
   return 12;
+}
+
+function fitLabelFontLive(el){
+  // While editing: one size from the longest line (caret-safe)
+  const text = (el.innerText || '').replace(/\u00a0/g, ' ');
+  const lines = text.split('\n');
+  let maxLen = 1;
+  lines.forEach(function(line){
+    const n = line.replace(/\s+/g, '').length;
+    if(n > maxLen) maxLen = n;
+  });
+  const size = labelLineFontSize(maxLen <= 1 ? 'A' : 'A'.repeat(maxLen));
+  el.style.fontSize = size + 'px';
+  el.style.lineHeight = maxLen <= 2 ? '1' : '1.15';
 }
 
 function fitLabelFont(el, text){

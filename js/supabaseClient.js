@@ -184,13 +184,25 @@ function updateNavAuth() {
         var url = user && (user.user_metadata?.avatar_url || user.user_metadata?.picture);
         if (url && el.tagName === 'IMG') el.src = url;
       });
-      /* Shared header button */
+      /* Shared header: avatar circle when logged in, label when guest */
       var loginBtn = document.getElementById('loginBtn');
-      if (loginBtn && !loginBtn.querySelector('img')) {
-        loginBtn.textContent = displayName;
-      }
       if (loginBtn) {
         loginBtn.classList.toggle('is-logged-in', !!user);
+        var avatarUrl = user && (user.user_metadata?.avatar_url || user.user_metadata?.picture);
+        if (user && avatarUrl) {
+          loginBtn.classList.add('login-btn-avatar');
+          loginBtn.setAttribute('title', displayName);
+          loginBtn.setAttribute('aria-label', displayName);
+          loginBtn.innerHTML = '<img class="nav-avatar" src="' + avatarUrl + '" alt="">';
+        } else if (user) {
+          loginBtn.classList.remove('login-btn-avatar');
+          loginBtn.textContent = displayName;
+        } else {
+          loginBtn.classList.remove('login-btn-avatar');
+          if (loginBtn.tagName === 'A' || loginBtn.tagName === 'BUTTON') {
+            loginBtn.textContent = 'Account';
+          }
+        }
       }
     } catch (e) {
       console.warn('[RankMe] updateNavAuth', e);
@@ -202,11 +214,13 @@ function updateNavAuth() {
 /* ---- Account nav (all pages; app.js may override with draft-stash on tier) ---- */
 function bindAccountButton() {
   var btn = document.getElementById('loginBtn');
-  if (!btn || btn.dataset.navBound === '1') return; // app.js already owns this button
+  if (!btn || btn.dataset.navBound === '1') return; // app.js owns tier (draft stash)
+  /* Prefer native <a href="account.html"> — no JS required.
+     If still a <button>, add one click handler. */
+  if (btn.tagName === 'A' && btn.getAttribute('href')) return;
   if (btn.dataset.accountBound === '1') return;
   btn.dataset.accountBound = '1';
-  btn.addEventListener('click', function (e) {
-    e.preventDefault();
+  btn.addEventListener('click', function () {
     location.href = 'account.html';
   });
 }

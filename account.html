@@ -6,7 +6,7 @@
 <title>Account - RankMe</title>
 <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/rankme.css?v=20260816perf">
+<link rel="stylesheet" href="css/rankme.css?v=20260817account">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
 <script src="js/supabaseClient.js" defer></script>
 
@@ -17,7 +17,7 @@
   <nav class="main">
     <a href="index.html">Browse</a>
     <a href="create.html" class="cta-nav">Create</a>
-    <button class="login-btn" id="navBtn">Account</button>
+    <a class="login-btn" id="loginBtn" href="account.html">Account</a>
   </nav>
 </header>
 <div class="wrap">
@@ -25,7 +25,7 @@
 </div>
 <script>
 const panel = document.getElementById('panel');
-const navBtn = document.getElementById('navBtn');
+const navBtn = document.getElementById('loginBtn');
 
 function providerIcon(p){
   if(p==='discord') return `<span class="ico discord"><svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M20 4.4A18 18 0 0 0 15.6 3l-.3.6a15 15 0 0 1 3.8 1.4A16 16 0 0 0 12 3.4 16 16 0 0 0 4.9 5 15 15 0 0 1 8.7 3.6L8.4 3A18 18 0 0 0 4 4.4C1.6 8 1 11.6 1.2 15.1A18 18 0 0 0 6.6 18l.8-1.3a11 11 0 0 1-1.8-.9l.5-.4a13 13 0 0 0 11.8 0l.5.4c-.6.3-1.2.6-1.8.9l.8 1.3a18 18 0 0 0 5.4-2.9C23 11.4 22.1 7.8 20 4.4ZM8.7 13.6c-.8 0-1.5-.8-1.5-1.7s.7-1.7 1.5-1.7 1.5.8 1.5 1.7-.7 1.7-1.5 1.7Zm6.6 0c-.8 0-1.5-.8-1.5-1.7s.7-1.7 1.5-1.7 1.5.8 1.5 1.7-.7 1.7-1.5 1.7Z"/></svg></span>`;
@@ -73,8 +73,11 @@ async function renderLogin(){
 }
 
 async function renderCabinet(user){
-  navBtn.textContent = user.user_metadata?.full_name || user.user_metadata?.name || 'Account';
-  navBtn.classList.add('logged-in');
+  if (typeof updateNavAuth === 'function') updateNavAuth();
+  else if (navBtn) {
+    navBtn.textContent = user.user_metadata?.full_name || user.user_metadata?.name || 'Account';
+    navBtn.classList.add('logged-in');
+  }
   const name = user.user_metadata?.full_name || user.user_metadata?.custom_claims?.global_name || user.user_metadata?.name || user.email || 'User';
   const avatar = user.user_metadata?.avatar_url || user.user_metadata?.picture || '';
   const provider = resolveProvider(user);
@@ -198,24 +201,39 @@ async function renderCabinet(user){
   }
 }
 
-(async ()=>{
-  await initSupabase();
-  const user = await getSessionUser();
-  if(user){
-    // Came from Save / ranking page with a stashed draft → return there
-    try{
-      const ret = sessionStorage.getItem('rankme_login_return');
-      const draft = sessionStorage.getItem('rankme_draft_payload');
-      if(ret && draft){
-        location.href = ret;
-        return;
-      }
-    }catch(e){}
-    await renderCabinet(user);
-  } else {
-    await renderLogin();
+async function bootAccount(){
+  if (typeof initSupabase !== 'function') {
+    panel.innerHTML = '<div class="empty">Could not load auth. Refresh the page.</div>';
+    return;
   }
-})();
+  try {
+    await initSupabase();
+    const user = await getSessionUser();
+    if(user){
+      try{
+        const ret = sessionStorage.getItem('rankme_login_return');
+        const draft = sessionStorage.getItem('rankme_draft_payload');
+        if(ret && draft){
+          location.href = ret;
+          return;
+        }
+      }catch(e){}
+      await renderCabinet(user);
+    } else {
+      await renderLogin();
+    }
+  } catch (e) {
+    console.error(e);
+    panel.innerHTML = '<div class="empty">Something went wrong. <button type="button" class="btn-mini primary" onclick="location.reload()">Retry</button></div>';
+  }
+}
+
+// deferred scripts in <head> run before DOMContentLoaded — wait for them
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', bootAccount);
+} else {
+  bootAccount();
+}
 </script>
 
 <div class="modal-back" id="delModal">

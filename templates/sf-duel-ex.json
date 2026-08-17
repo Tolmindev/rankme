@@ -1,1 +1,266 @@
-{"id":"sf-duel-ex","title":"Street Fighter: Duel EX-Move","footerLabel":"SF Duel EX-Move","exportName":"rankme-sf-duel-ex-move.png","cardShape":"square","cardPath":"assets/ex-moves/","noFactions":true,"cards":[{"id":1,"file":"1_Chains_of_Guilt.webp","name":"Chains of Guilt","faction":"EX"},{"id":2,"file":"2_Natures_Advent.webp","name":"Natures Advent","faction":"EX"},{"id":3,"file":"3_Toxic_Love.webp","name":"Toxic Love","faction":"EX"},{"id":4,"file":"4_Tanuki_Whirl.webp","name":"Tanuki Whirl","faction":"EX"},{"id":5,"file":"5_Crimson_Lotus_Flame.webp","name":"Crimson Lotus Flame","faction":"EX"},{"id":6,"file":"6_Crazy_Potato.webp","name":"Crazy Potato","faction":"EX"},{"id":7,"file":"7_Breath_of_Rage.webp","name":"Breath of Rage","faction":"EX"},{"id":8,"file":"8_Void_Protection.webp","name":"Void Protection","faction":"EX"},{"id":9,"file":"9_Summer_Waves.webp","name":"Summer Waves","faction":"EX"},{"id":10,"file":"10_Zanku_Hodosho.webp","name":"Zanku Hodosho","faction":"EX"},{"id":11,"file":"11_Doomsday_Jubilation.webp","name":"Doomsday Jubilation","faction":"EX"},{"id":12,"file":"12_Deadly_Web.webp","name":"Deadly Web","faction":"EX"},{"id":13,"file":"13_Abyss_of_Desire.webp","name":"Abyss of Desire","faction":"EX"},{"id":14,"file":"14_Yin-Yang_Power.webp","name":"Yin-Yang Power","faction":"EX"},{"id":15,"file":"15_Messatsu_Konhado.webp","name":"Messatsu Konhado","faction":"EX"},{"id":16,"file":"16_Lethal_Radiance.webp","name":"Lethal Radiance","faction":"EX"},{"id":17,"file":"17_Hundred_Kicks_Symphony.webp","name":"Hundred Kicks Symphony","faction":"EX"},{"id":18,"file":"18_Agile_Melody.webp","name":"Agile Melody","faction":"EX"},{"id":19,"file":"19_Bushin_Descends.webp","name":"Bushin Descends","faction":"EX"},{"id":20,"file":"20_Flame_Demon_Descends.webp","name":"Flame Demon Descends","faction":"EX"},{"id":21,"file":"21_Gentle_Wave_Guard.webp","name":"Gentle Wave Guard","faction":"EX"},{"id":22,"file":"22_Vigilante.webp","name":"Vigilante","faction":"EX"},{"id":23,"file":"23_Scarlet_Dragon.webp","name":"Scarlet Dragon","faction":"EX"},{"id":24,"file":"24_He_of_Thousand_Hits.webp","name":"He of Thousand Hits","faction":"EX"},{"id":25,"file":"25_Satsui_no_Iki.webp","name":"Satsui no Iki","faction":"EX"},{"id":26,"file":"26_Saber_Onslaught.webp","name":"Saber Onslaught","faction":"EX"},{"id":27,"file":"27_Daily_Income.webp","name":"Daily Income","faction":"EX"},{"id":28,"file":"28_Above_All.webp","name":"Above All","faction":"EX"},{"id":29,"file":"29_Tears_of_Blood.webp","name":"Tears of Blood","faction":"EX"},{"id":30,"file":"30_Elegant_Follow-Up.webp","name":"Elegant Follow-Up","faction":"EX"},{"id":31,"file":"31_Soul-Draining_Tarot.webp","name":"Soul-Draining Tarot","faction":"EX"},{"id":32,"file":"32_Furious_Roar.webp","name":"Furious Roar","faction":"EX"},{"id":33,"file":"33_Soul_Exterminator.webp","name":"Soul Exterminator","faction":"EX"},{"id":34,"file":"34_Thunder_Blessing.webp","name":"Thunder Blessing","faction":"EX"},{"id":35,"file":"35_Death_Descents.webp","name":"Death Descents","faction":"EX"}],"cover":"assets/brand/SFD_EX_Cover.webp","description":"Street Fighter: Duel EX-Move - RankMe exclusive. Unlockable battle skills with base and exclusive stats. Rank all 35 EX Moves, drag into tiers, share with one link.","parallax":false}
+{
+  "id": "sf-duel-ex",
+  "title": "Street Fighter: Duel EX-Move",
+  "footerLabel": "SF Duel EX-Move",
+  "exportName": "rankme-sf-duel-ex-move.png",
+  "cardShape": "square",
+  "cardPath": "assets/ex-moves/",
+  "noFactions": true,
+  "cards": [
+    {
+      "id": 1,
+      "file": "1_Chains_of_Guilt.webp",
+      "name": "Chains of Guilt",
+      "faction": "EX"
+    },
+    {
+      "id": 2,
+      "file": "2_Natures_Advent.webp",
+      "name": "Natures Advent",
+      "faction": "EX"
+    },
+    {
+      "id": 3,
+      "file": "3_Toxic_Love.webp",
+      "name": "Toxic Love",
+      "faction": "EX"
+    },
+    {
+      "id": 4,
+      "file": "4_Tanuki_Whirl.webp",
+      "name": "Tanuki Whirl",
+      "faction": "EX"
+    },
+    {
+      "id": 5,
+      "file": "5_Crimson_Lotus_Flame.webp",
+      "name": "Crimson Lotus Flame",
+      "faction": "EX"
+    },
+    {
+      "id": 6,
+      "file": "6_Crazy_Potato.webp",
+      "name": "Crazy Potato",
+      "faction": "EX"
+    },
+    {
+      "id": 7,
+      "file": "7_Breath_of_Rage.webp",
+      "name": "Breath of Rage",
+      "faction": "EX"
+    },
+    {
+      "id": 8,
+      "file": "8_Void_Protection.webp",
+      "name": "Void Protection",
+      "faction": "EX"
+    },
+    {
+      "id": 9,
+      "file": "9_Summer_Waves.webp",
+      "name": "Summer Waves",
+      "faction": "EX"
+    },
+    {
+      "id": 10,
+      "file": "10_Zanku_Hodosho.webp",
+      "name": "Zanku Hodosho",
+      "faction": "EX"
+    },
+    {
+      "id": 11,
+      "file": "11_Doomsday_Jubilation.webp",
+      "name": "Doomsday Jubilation",
+      "faction": "EX"
+    },
+    {
+      "id": 12,
+      "file": "12_Deadly_Web.webp",
+      "name": "Deadly Web",
+      "faction": "EX"
+    },
+    {
+      "id": 13,
+      "file": "13_Abyss_of_Desire.webp",
+      "name": "Abyss of Desire",
+      "faction": "EX"
+    },
+    {
+      "id": 14,
+      "file": "14_Yin-Yang_Power.webp",
+      "name": "Yin-Yang Power",
+      "faction": "EX"
+    },
+    {
+      "id": 15,
+      "file": "15_Messatsu_Konhado.webp",
+      "name": "Messatsu Konhado",
+      "faction": "EX"
+    },
+    {
+      "id": 16,
+      "file": "16_Lethal_Radiance.webp",
+      "name": "Lethal Radiance",
+      "faction": "EX"
+    },
+    {
+      "id": 17,
+      "file": "17_Hundred_Kicks_Symphony.webp",
+      "name": "Hundred Kicks Symphony",
+      "faction": "EX"
+    },
+    {
+      "id": 18,
+      "file": "18_Agile_Melody.webp",
+      "name": "Agile Melody",
+      "faction": "EX"
+    },
+    {
+      "id": 19,
+      "file": "19_Bushin_Descends.webp",
+      "name": "Bushin Descends",
+      "faction": "EX"
+    },
+    {
+      "id": 20,
+      "file": "20_Flame_Demon_Descends.webp",
+      "name": "Flame Demon Descends",
+      "faction": "EX"
+    },
+    {
+      "id": 21,
+      "file": "21_Gentle_Wave_Guard.webp",
+      "name": "Gentle Wave Guard",
+      "faction": "EX"
+    },
+    {
+      "id": 22,
+      "file": "22_Vigilante.webp",
+      "name": "Vigilante",
+      "faction": "EX"
+    },
+    {
+      "id": 23,
+      "file": "23_Scarlet_Dragon.webp",
+      "name": "Scarlet Dragon",
+      "faction": "EX"
+    },
+    {
+      "id": 24,
+      "file": "24_He_of_Thousand_Hits.webp",
+      "name": "He of Thousand Hits",
+      "faction": "EX"
+    },
+    {
+      "id": 25,
+      "file": "25_Satsui_no_Iki.webp",
+      "name": "Satsui no Iki",
+      "faction": "EX"
+    },
+    {
+      "id": 26,
+      "file": "26_Saber_Onslaught.webp",
+      "name": "Saber Onslaught",
+      "faction": "EX"
+    },
+    {
+      "id": 27,
+      "file": "27_Daily_Income.webp",
+      "name": "Daily Income",
+      "faction": "EX"
+    },
+    {
+      "id": 28,
+      "file": "28_Above_All.webp",
+      "name": "Above All",
+      "faction": "EX"
+    },
+    {
+      "id": 29,
+      "file": "29_Tears_of_Blood.webp",
+      "name": "Tears of Blood",
+      "faction": "EX"
+    },
+    {
+      "id": 30,
+      "file": "30_Elegant_Follow-Up.webp",
+      "name": "Elegant Follow-Up",
+      "faction": "EX"
+    },
+    {
+      "id": 31,
+      "file": "31_Soul-Draining_Tarot.webp",
+      "name": "Soul-Draining Tarot",
+      "faction": "EX"
+    },
+    {
+      "id": 32,
+      "file": "32_Furious_Roar.webp",
+      "name": "Furious Roar",
+      "faction": "EX"
+    },
+    {
+      "id": 33,
+      "file": "33_Soul_Exterminator.webp",
+      "name": "Soul Exterminator",
+      "faction": "EX"
+    },
+    {
+      "id": 34,
+      "file": "34_Thunder_Blessing.webp",
+      "name": "Thunder Blessing",
+      "faction": "EX"
+    },
+    {
+      "id": 35,
+      "file": "35_Death_Descents.webp",
+      "name": "Death Descents",
+      "faction": "EX"
+    },
+    {
+      "id": 36,
+      "file": "36_Black_Knight.webp",
+      "name": "Black Knight",
+      "faction": "EX"
+    },
+    {
+      "id": 37,
+      "file": "37_Courage_Tag.webp",
+      "name": "Courage Tag",
+      "faction": "EX"
+    },
+    {
+      "id": 38,
+      "file": "38_Gore_Magala_Blast.webp",
+      "name": "Gore Magala Blast",
+      "faction": "EX"
+    },
+    {
+      "id": 39,
+      "file": "39_Mad_Reason.webp",
+      "name": "Mad Reason",
+      "faction": "EX"
+    },
+    {
+      "id": 40,
+      "file": "40_Quaking_Flames.webp",
+      "name": "Quaking Flames",
+      "faction": "EX"
+    },
+    {
+      "id": 41,
+      "file": "41_Shadowless_Dagger.webp",
+      "name": "Shadowless Dagger",
+      "faction": "EX"
+    },
+    {
+      "id": 42,
+      "file": "42_Shadow_Judgment.webp",
+      "name": "Shadow Judgment",
+      "faction": "EX"
+    }
+  ],
+  "cover": "assets/brand/SFD_EX_Cover.webp",
+  "description": "Street Fighter: Duel EX-Move - RankMe exclusive. Unlockable battle skills with base and exclusive stats. Rank all 42 EX Moves, drag into tiers, share with one link.",
+  "parallax": false
+}

@@ -286,7 +286,7 @@ function render(){
         const text = (label.innerText || '').replace(/\u00a0/g, ' ');
         const next = text.slice(0, off) + '\n' + text.slice(off);
         t.name = next;
-        fitLabelFont(label, next);
+        fitLabelFont(label, next, true);
         setLabelCaretOffset(label, off + 1);
       }
     });
@@ -377,27 +377,26 @@ function setLabelCaretOffset(el, offset){
 }
 
 function fitLabelFontLive(el){
-  // Per-line sizes while typing; restore caret so edit stays smooth
+  // Per-line sizes while typing; keep trailing empty line so Enter works
   const off = getLabelCaretOffset(el);
   const text = (el.innerText || '').replace(/\u00a0/g, ' ');
-  const norm = normalizeLabelText(text);
-  // If only trailing newline was removed, keep caret on last real char
-  const nextOff = Math.min(off, norm.raw.length);
-  fitLabelFont(el, norm.raw);
-  setLabelCaretOffset(el, nextOff);
+  const norm = normalizeLabelText(text, true);
+  fitLabelFont(el, norm.raw, true);
+  setLabelCaretOffset(el, Math.min(off, norm.raw.length));
 }
 
-function normalizeLabelText(text){
+function normalizeLabelText(text, keepTrailingEmpty){
   let raw = String(text == null ? '' : text).replace(/\r/g, '');
-  // Drop trailing empty lines (Enter then Backspace left "SS\n" → looked shifted up)
-  raw = raw.replace(/\n+$/g, '');
   const lines = raw.split('\n');
-  while(lines.length > 1 && lines[lines.length - 1] === '') lines.pop();
+  if(!keepTrailingEmpty){
+    // Blur / final: drop trailing empty lines (fixes "SS" shifted up after Enter+Backspace)
+    while(lines.length > 1 && lines[lines.length - 1] === '') lines.pop();
+  }
   return { raw: lines.join('\n'), lines: lines };
 }
 
-function fitLabelFont(el, text){
-  const norm = normalizeLabelText(text);
+function fitLabelFont(el, text, keepTrailingEmpty){
+  const norm = normalizeLabelText(text, keepTrailingEmpty);
   const lines = norm.lines;
   el.style.fontSize = '';
   el.style.lineHeight = '1.15';

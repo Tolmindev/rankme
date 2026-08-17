@@ -9,7 +9,8 @@ body > .toast {
   max-width: min(90vw, 360px);
 }
 
-.login-btn {
+/* Pill Account button (guest / text label) */
+.login-btn:not(.login-btn-avatar) {
   padding: 8px 16px;
   border-radius: 999px;
   font-size: .85rem;
@@ -22,14 +23,15 @@ body > .toast {
   transition: color .15s, border-color .15s, background .15s;
 }
 
-.login-btn:hover {
+.login-btn:not(.login-btn-avatar):hover {
   color: var(--text);
   border-color: rgba(200,160,240,.45);
   background: rgba(255,255,255,0.04);
   filter: none;
 }
 
-.login-btn.logged-in {
+.login-btn:not(.login-btn-avatar).logged-in,
+.login-btn.logged-in:not(.login-btn-avatar) {
   position: relative;
   border: 1px solid transparent;
   background: linear-gradient(#12101a, #12101a) padding-box,
@@ -39,9 +41,47 @@ body > .toast {
   color: var(--text);
 }
 
-.login-btn.logged-in:hover {
+.login-btn:not(.login-btn-avatar).logged-in:hover,
+.login-btn.logged-in:not(.login-btn-avatar):hover {
   filter: brightness(1.08);
   box-shadow: 0 0 16px rgba(190,150,255,.35);
+}
+
+/* Logged-in avatar: always a circle — own rules, not an override war */
+.login-btn.login-btn-avatar {
+  box-sizing: border-box;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  margin: 0;
+  border-radius: 50%;
+  border: 1.5px solid rgba(200, 160, 240, 0.5);
+  background: #1a1728;
+  overflow: hidden;
+  display: block;
+  flex: 0 0 36px;
+  align-self: center;
+  cursor: pointer;
+  line-height: 0;
+  font-size: 0;
+  animation: none;
+  box-shadow: none;
+}
+
+.login-btn.login-btn-avatar:hover {
+  border-color: rgba(220, 180, 255, 0.9);
+  box-shadow: 0 0 12px rgba(180, 140, 255, 0.35);
+  filter: none;
+  background: #1a1728;
+}
+
+.login-btn.login-btn-avatar .nav-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 50%;
+  display: block;
 }
 
 .download-btn {
@@ -386,14 +426,16 @@ body > .toast {
     text-align: center;
   }
 
-  .login-btn, .cta {
+  .login-btn:not(.login-btn-avatar), .cta {
     min-height: 44px;
   }
 
-  .login-btn {
+  .login-btn:not(.login-btn-avatar) {
     padding: 8px 12px;
     font-size: .75rem;
     white-space: nowrap;
   }
 
+
 }
+

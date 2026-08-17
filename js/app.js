@@ -261,11 +261,17 @@ function render(){
     label.textContent = t.name;
     fitLabelFont(label, t.name);
     label.addEventListener('focus', ()=>{
-      // Plain text while typing (keeps caret stable)
       const name = t.name || (label.innerText || '');
-      label.textContent = '';
-      label.innerText = name;
-      fitLabelFontLive(label);
+      fitLabelFont(label, name);
+      // Caret to end for quick edit
+      try {
+        const sel = window.getSelection();
+        const range = document.createRange();
+        range.selectNodeContents(label);
+        range.collapse(false);
+        sel.removeAllRanges();
+        sel.addRange(range);
+      } catch (err) {}
     });
     label.addEventListener('input', ()=>{
       t.name = (label.innerText || '').replace(/\u00a0/g, ' ');
@@ -344,18 +350,47 @@ function labelLineFontSize(line){
   return 12;
 }
 
+function getLabelCaretOffset(el){
+  const sel = window.getSelection();
+  if(!sel || !sel.rangeCount) return 0;
+  const range = sel.getRangeAt(0);
+  if(!el.contains(range.endContainer)) return 0;
+  const pre = range.cloneRange();
+  pre.selectNodeContents(el);
+  pre.setEnd(range.endContainer, range.endOffset);
+  return pre.toString().length;
+}
+
+function setLabelCaretOffset(el, offset){
+  const sel = window.getSelection();
+  if(!sel) return;
+  let current = 0;
+  const walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+  let node;
+  const range = document.createRange();
+  while((node = walk.nextNode())){
+    const len = node.textContent.length;
+    if(current + len >= offset){
+      range.setStart(node, Math.max(0, offset - current));
+      range.collapse(true);
+      sel.removeAllRanges();
+      sel.addRange(range);
+      return;
+    }
+    current += len;
+  }
+  range.selectNodeContents(el);
+  range.collapse(false);
+  sel.removeAllRanges();
+  sel.addRange(range);
+}
+
 function fitLabelFontLive(el){
-  // While editing: one size from the longest line (caret-safe)
+  // Per-line sizes while typing; restore caret so edit stays smooth
+  const off = getLabelCaretOffset(el);
   const text = (el.innerText || '').replace(/\u00a0/g, ' ');
-  const lines = text.split('\n');
-  let maxLen = 1;
-  lines.forEach(function(line){
-    const n = line.replace(/\s+/g, '').length;
-    if(n > maxLen) maxLen = n;
-  });
-  const size = labelLineFontSize(maxLen <= 1 ? 'A' : 'A'.repeat(maxLen));
-  el.style.fontSize = size + 'px';
-  el.style.lineHeight = maxLen <= 2 ? '1' : '1.15';
+  fitLabelFont(el, text);
+  setLabelCaretOffset(el, off);
 }
 
 function fitLabelFont(el, text){

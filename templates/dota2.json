@@ -26,7 +26,7 @@
   "cards": [
     {
       "id": 1,
-      "file": "001_Strength_Alchemist.png",
+      "file": "001_Strength_Alchemist.webp",
       "name": "Alchemist",
       "faction": "Strength",
       "roles": [
@@ -35,7 +35,7 @@
     },
     {
       "id": 2,
-      "file": "002_Strength_Axe.png",
+      "file": "002_Strength_Axe.webp",
       "name": "Axe",
       "faction": "Strength",
       "roles": [
@@ -44,7 +44,7 @@
     },
     {
       "id": 3,
-      "file": "003_Strength_Bristleback.png",
+      "file": "003_Strength_Bristleback.webp",
       "name": "Bristleback",
       "faction": "Strength",
       "roles": [
@@ -53,7 +53,7 @@
     },
     {
       "id": 4,
-      "file": "004_Strength_Centaur_Warrunner.png",
+      "file": "004_Strength_Centaur_Warrunner.webp",
       "name": "Centaur Warrunner",
       "faction": "Strength",
       "roles": [
@@ -62,7 +62,7 @@
     },
     {
       "id": 5,
-      "file": "005_Strength_Chaos_Knight.png",
+      "file": "005_Strength_Chaos_Knight.webp",
       "name": "Chaos Knight",
       "faction": "Strength",
       "roles": [
@@ -71,7 +71,7 @@
     },
     {
       "id": 6,
-      "file": "006_Strength_Clockwerk.png",
+      "file": "006_Strength_Clockwerk.webp",
       "name": "Clockwerk",
       "faction": "Strength",
       "roles": [
@@ -80,7 +80,7 @@
     },
     {
       "id": 7,
-      "file": "007_Strength_Dawnbreaker.png",
+      "file": "007_Strength_Dawnbreaker.webp",
       "name": "Dawnbreaker",
       "faction": "Strength",
       "roles": [
@@ -89,7 +89,7 @@
     },
     {
       "id": 8,
-      "file": "008_Strength_Doom.png",
+      "file": "008_Strength_Doom.webp",
       "name": "Doom",
       "faction": "Strength",
       "roles": [
@@ -98,7 +98,7 @@
     },
     {
       "id": 9,
-      "file": "009_Strength_Dragon_Knight.png",
+      "file": "009_Strength_Dragon_Knight.webp",
       "name": "Dragon Knight",
       "faction": "Strength",
       "roles": [
@@ -107,7 +107,7 @@
     },
     {
       "id": 10,
-      "file": "010_Strength_Earth_Spirit.png",
+      "file": "010_Strength_Earth_Spirit.webp",
       "name": "Earth Spirit",
       "faction": "Strength",
       "roles": [
@@ -116,7 +116,7 @@
     },
     {
       "id": 11,
-      "file": "011_Strength_Earthshaker.png",
+      "file": "011_Strength_Earthshaker.webp",
       "name": "Earthshaker",
       "faction": "Strength",
       "roles": [
@@ -125,7 +125,7 @@
     },
     {
       "id": 12,
-      "file": "012_Strength_Elder_Titan.png",
+      "file": "012_Strength_Elder_Titan.webp",
       "name": "Elder Titan",
       "faction": "Strength",
       "roles": [
@@ -134,7 +134,7 @@
     },
     {
       "id": 13,
-      "file": "013_Strength_Huskar.png",
+      "file": "013_Strength_Huskar.webp",
       "name": "Huskar",
       "faction": "Strength",
       "roles": [
@@ -143,7 +143,7 @@
     },
     {
       "id": 14,
-      "file": "014_Strength_Kunkka.png",
+      "file": "014_Strength_Kunkka.webp",
       "name": "Kunkka",
       "faction": "Strength",
       "roles": [
@@ -152,7 +152,7 @@
     },
     {
       "id": 15,
-      "file": "015_Strength_Largo.png",
+      "file": "015_Strength_Largo.webp",
       "name": "Largo",
       "faction": "Strength",
       "roles": [
@@ -161,7 +161,7 @@
     },
     {
       "id": 16,
-      "file": "016_Strength_Legion_Commander.png",
+      "file": "016_Strength_Legion_Commander.webp",
       "name": "Legion Commander",
       "faction": "Strength",
       "roles": [
@@ -170,7 +170,7 @@
     },
     {
       "id": 17,
-      "file": "017_Strength_Lifestealer.png",
+      "file": "017_Strength_Lifestealer.webp",
       "name": "Lifestealer",
       "faction": "Strength",
       "roles": [
@@ -179,7 +179,7 @@
     },
     {
       "id": 18,
-      "file": "018_Strength_Lycan.png",
+      "file": "018_Strength_Lycan.webp",
       "name": "Lycan",
       "faction": "Strength",
       "roles": [
@@ -188,7 +188,7 @@
     },
     {
       "id": 19,
-      "file": "019_Strength_Mars.png",
+      "file": "019_Strength_Mars.webp",
       "name": "Mars",
       "faction": "Strength",
       "roles": [
@@ -197,7 +197,7 @@
     },
     {
       "id": 20,
-      "file": "020_Strength_Night_Stalker.png",
+      "file": "020_Strength_Night_Stalker.webp",
       "name": "Night Stalker",
       "faction": "Strength",
       "roles": [
@@ -206,7 +206,7 @@
     },
     {
       "id": 21,
-      "file": "021_Strength_Ogre_Magi.png",
+      "file": "021_Strength_Ogre_Magi.webp",
       "name": "Ogre Magi",
       "faction": "Strength",
       "roles": [
@@ -215,7 +215,7 @@
     },
     {
       "id": 22,
-      "file": "022_Strength_Omniknight.png",
+      "file": "022_Strength_Omniknight.webp",
       "name": "Omniknight",
       "faction": "Strength",
       "roles": [
@@ -224,7 +224,7 @@
     },
     {
       "id": 23,
-      "file": "023_Strength_Phoenix.png",
+      "file": "023_Strength_Phoenix.webp",
       "name": "Phoenix",
       "faction": "Strength",
       "roles": [
@@ -233,7 +233,7 @@
     },
     {
       "id": 24,
-      "file": "024_Strength_Primal_Beast.png",
+      "file": "024_Strength_Primal_Beast.webp",
       "name": "Primal Beast",
       "faction": "Strength",
       "roles": [
@@ -242,7 +242,7 @@
     },
     {
       "id": 25,
-      "file": "025_Strength_Pudge.png",
+      "file": "025_Strength_Pudge.webp",
       "name": "Pudge",
       "faction": "Strength",
       "roles": [
@@ -251,7 +251,7 @@
     },
     {
       "id": 26,
-      "file": "026_Strength_Slardar.png",
+      "file": "026_Strength_Slardar.webp",
       "name": "Slardar",
       "faction": "Strength",
       "roles": [
@@ -260,7 +260,7 @@
     },
     {
       "id": 27,
-      "file": "027_Strength_Spirit_Breaker.png",
+      "file": "027_Strength_Spirit_Breaker.webp",
       "name": "Spirit Breaker",
       "faction": "Strength",
       "roles": [
@@ -269,7 +269,7 @@
     },
     {
       "id": 28,
-      "file": "028_Strength_Sven.png",
+      "file": "028_Strength_Sven.webp",
       "name": "Sven",
       "faction": "Strength",
       "roles": [
@@ -278,7 +278,7 @@
     },
     {
       "id": 29,
-      "file": "029_Strength_Tidehunter.png",
+      "file": "029_Strength_Tidehunter.webp",
       "name": "Tidehunter",
       "faction": "Strength",
       "roles": [
@@ -287,7 +287,7 @@
     },
     {
       "id": 30,
-      "file": "030_Strength_Timbersaw.png",
+      "file": "030_Strength_Timbersaw.webp",
       "name": "Timbersaw",
       "faction": "Strength",
       "roles": [
@@ -296,7 +296,7 @@
     },
     {
       "id": 31,
-      "file": "031_Strength_Tiny.png",
+      "file": "031_Strength_Tiny.webp",
       "name": "Tiny",
       "faction": "Strength",
       "roles": [
@@ -305,7 +305,7 @@
     },
     {
       "id": 32,
-      "file": "032_Strength_Treant_Protector.png",
+      "file": "032_Strength_Treant_Protector.webp",
       "name": "Treant Protector",
       "faction": "Strength",
       "roles": [
@@ -314,7 +314,7 @@
     },
     {
       "id": 33,
-      "file": "033_Strength_Tusk.png",
+      "file": "033_Strength_Tusk.webp",
       "name": "Tusk",
       "faction": "Strength",
       "roles": [
@@ -323,7 +323,7 @@
     },
     {
       "id": 34,
-      "file": "034_Strength_Underlord.png",
+      "file": "034_Strength_Underlord.webp",
       "name": "Underlord",
       "faction": "Strength",
       "roles": [
@@ -332,7 +332,7 @@
     },
     {
       "id": 35,
-      "file": "035_Strength_Undying.png",
+      "file": "035_Strength_Undying.webp",
       "name": "Undying",
       "faction": "Strength",
       "roles": [
@@ -341,7 +341,7 @@
     },
     {
       "id": 36,
-      "file": "036_Strength_Wraith_King.png",
+      "file": "036_Strength_Wraith_King.webp",
       "name": "Wraith King",
       "faction": "Strength",
       "roles": [
@@ -350,7 +350,7 @@
     },
     {
       "id": 37,
-      "file": "037_Agility_Anti-Mage.png",
+      "file": "037_Agility_Anti-Mage.webp",
       "name": "Anti-Mage",
       "faction": "Agility",
       "roles": [
@@ -359,7 +359,7 @@
     },
     {
       "id": 38,
-      "file": "038_Agility_Bloodseeker.png",
+      "file": "038_Agility_Bloodseeker.webp",
       "name": "Bloodseeker",
       "faction": "Agility",
       "roles": [
@@ -368,7 +368,7 @@
     },
     {
       "id": 39,
-      "file": "039_Agility_Bounty_Hunter.png",
+      "file": "039_Agility_Bounty_Hunter.webp",
       "name": "Bounty Hunter",
       "faction": "Agility",
       "roles": [
@@ -377,7 +377,7 @@
     },
     {
       "id": 40,
-      "file": "040_Agility_Broodmother.png",
+      "file": "040_Agility_Broodmother.webp",
       "name": "Broodmother",
       "faction": "Agility",
       "roles": [
@@ -386,7 +386,7 @@
     },
     {
       "id": 41,
-      "file": "041_Agility_Clinkz.png",
+      "file": "041_Agility_Clinkz.webp",
       "name": "Clinkz",
       "faction": "Agility",
       "roles": [
@@ -395,7 +395,7 @@
     },
     {
       "id": 42,
-      "file": "042_Agility_Drow_Ranger.png",
+      "file": "042_Agility_Drow_Ranger.webp",
       "name": "Drow Ranger",
       "faction": "Agility",
       "roles": [
@@ -404,7 +404,7 @@
     },
     {
       "id": 43,
-      "file": "043_Agility_Ember_Spirit.png",
+      "file": "043_Agility_Ember_Spirit.webp",
       "name": "Ember Spirit",
       "faction": "Agility",
       "roles": [
@@ -413,7 +413,7 @@
     },
     {
       "id": 44,
-      "file": "044_Agility_Faceless_Void.png",
+      "file": "044_Agility_Faceless_Void.webp",
       "name": "Faceless Void",
       "faction": "Agility",
       "roles": [
@@ -422,7 +422,7 @@
     },
     {
       "id": 45,
-      "file": "045_Agility_Gyrocopter.png",
+      "file": "045_Agility_Gyrocopter.webp",
       "name": "Gyrocopter",
       "faction": "Agility",
       "roles": [
@@ -431,7 +431,7 @@
     },
     {
       "id": 46,
-      "file": "046_Agility_Hoodwink.png",
+      "file": "046_Agility_Hoodwink.webp",
       "name": "Hoodwink",
       "faction": "Agility",
       "roles": [
@@ -440,7 +440,7 @@
     },
     {
       "id": 47,
-      "file": "047_Agility_Juggernaut.png",
+      "file": "047_Agility_Juggernaut.webp",
       "name": "Juggernaut",
       "faction": "Agility",
       "roles": [
@@ -449,7 +449,7 @@
     },
     {
       "id": 48,
-      "file": "048_Agility_Kez.png",
+      "file": "048_Agility_Kez.webp",
       "name": "Kez",
       "faction": "Agility",
       "roles": [
@@ -458,7 +458,7 @@
     },
     {
       "id": 49,
-      "file": "049_Agility_Lone_Druid.png",
+      "file": "049_Agility_Lone_Druid.webp",
       "name": "Lone Druid",
       "faction": "Agility",
       "roles": [
@@ -467,7 +467,7 @@
     },
     {
       "id": 50,
-      "file": "050_Agility_Luna.png",
+      "file": "050_Agility_Luna.webp",
       "name": "Luna",
       "faction": "Agility",
       "roles": [
@@ -476,7 +476,7 @@
     },
     {
       "id": 51,
-      "file": "051_Agility_Medusa.png",
+      "file": "051_Agility_Medusa.webp",
       "name": "Medusa",
       "faction": "Agility",
       "roles": [
@@ -485,7 +485,7 @@
     },
     {
       "id": 52,
-      "file": "052_Agility_Meepo.png",
+      "file": "052_Agility_Meepo.webp",
       "name": "Meepo",
       "faction": "Agility",
       "roles": [
@@ -494,7 +494,7 @@
     },
     {
       "id": 53,
-      "file": "053_Agility_Mirana.png",
+      "file": "053_Agility_Mirana.webp",
       "name": "Mirana",
       "faction": "Agility",
       "roles": [
@@ -503,7 +503,7 @@
     },
     {
       "id": 54,
-      "file": "054_Agility_Monkey_King.png",
+      "file": "054_Agility_Monkey_King.webp",
       "name": "Monkey King",
       "faction": "Agility",
       "roles": [
@@ -512,7 +512,7 @@
     },
     {
       "id": 55,
-      "file": "055_Agility_Morphling.png",
+      "file": "055_Agility_Morphling.webp",
       "name": "Morphling",
       "faction": "Agility",
       "roles": [
@@ -521,7 +521,7 @@
     },
     {
       "id": 56,
-      "file": "056_Agility_Naga_Siren.png",
+      "file": "056_Agility_Naga_Siren.webp",
       "name": "Naga Siren",
       "faction": "Agility",
       "roles": [
@@ -530,7 +530,7 @@
     },
     {
       "id": 57,
-      "file": "057_Agility_Phantom_Assassin.png",
+      "file": "057_Agility_Phantom_Assassin.webp",
       "name": "Phantom Assassin",
       "faction": "Agility",
       "roles": [
@@ -539,7 +539,7 @@
     },
     {
       "id": 58,
-      "file": "058_Agility_Phantom_Lancer.png",
+      "file": "058_Agility_Phantom_Lancer.webp",
       "name": "Phantom Lancer",
       "faction": "Agility",
       "roles": [
@@ -548,7 +548,7 @@
     },
     {
       "id": 59,
-      "file": "059_Agility_Razor.png",
+      "file": "059_Agility_Razor.webp",
       "name": "Razor",
       "faction": "Agility",
       "roles": [
@@ -557,7 +557,7 @@
     },
     {
       "id": 60,
-      "file": "060_Agility_Riki.png",
+      "file": "060_Agility_Riki.webp",
       "name": "Riki",
       "faction": "Agility",
       "roles": [
@@ -566,7 +566,7 @@
     },
     {
       "id": 61,
-      "file": "061_Agility_Shadow_Fiend.png",
+      "file": "061_Agility_Shadow_Fiend.webp",
       "name": "Shadow Fiend",
       "faction": "Agility",
       "roles": [
@@ -575,7 +575,7 @@
     },
     {
       "id": 62,
-      "file": "062_Agility_Slark.png",
+      "file": "062_Agility_Slark.webp",
       "name": "Slark",
       "faction": "Agility",
       "roles": [
@@ -584,7 +584,7 @@
     },
     {
       "id": 63,
-      "file": "063_Agility_Sniper.png",
+      "file": "063_Agility_Sniper.webp",
       "name": "Sniper",
       "faction": "Agility",
       "roles": [
@@ -593,7 +593,7 @@
     },
     {
       "id": 64,
-      "file": "064_Agility_Spectre.png",
+      "file": "064_Agility_Spectre.webp",
       "name": "Spectre",
       "faction": "Agility",
       "roles": [
@@ -602,7 +602,7 @@
     },
     {
       "id": 65,
-      "file": "065_Agility_Templar_Assassin.png",
+      "file": "065_Agility_Templar_Assassin.webp",
       "name": "Templar Assassin",
       "faction": "Agility",
       "roles": [
@@ -611,7 +611,7 @@
     },
     {
       "id": 66,
-      "file": "066_Agility_Terrorblade.png",
+      "file": "066_Agility_Terrorblade.webp",
       "name": "Terrorblade",
       "faction": "Agility",
       "roles": [
@@ -620,7 +620,7 @@
     },
     {
       "id": 67,
-      "file": "067_Agility_Troll_Warlord.png",
+      "file": "067_Agility_Troll_Warlord.webp",
       "name": "Troll Warlord",
       "faction": "Agility",
       "roles": [
@@ -629,7 +629,7 @@
     },
     {
       "id": 68,
-      "file": "068_Agility_Ursa.png",
+      "file": "068_Agility_Ursa.webp",
       "name": "Ursa",
       "faction": "Agility",
       "roles": [
@@ -638,7 +638,7 @@
     },
     {
       "id": 69,
-      "file": "069_Agility_Vengeful_Spirit.png",
+      "file": "069_Agility_Vengeful_Spirit.webp",
       "name": "Vengeful Spirit",
       "faction": "Agility",
       "roles": [
@@ -647,7 +647,7 @@
     },
     {
       "id": 70,
-      "file": "070_Agility_Viper.png",
+      "file": "070_Agility_Viper.webp",
       "name": "Viper",
       "faction": "Agility",
       "roles": [
@@ -656,7 +656,7 @@
     },
     {
       "id": 71,
-      "file": "071_Agility_Weaver.png",
+      "file": "071_Agility_Weaver.webp",
       "name": "Weaver",
       "faction": "Agility",
       "roles": [
@@ -665,7 +665,7 @@
     },
     {
       "id": 72,
-      "file": "072_Intelligence_Ancient_Apparition.png",
+      "file": "072_Intelligence_Ancient_Apparition.webp",
       "name": "Ancient Apparition",
       "faction": "Intelligence",
       "roles": [
@@ -674,7 +674,7 @@
     },
     {
       "id": 73,
-      "file": "073_Intelligence_Chen.png",
+      "file": "073_Intelligence_Chen.webp",
       "name": "Chen",
       "faction": "Intelligence",
       "roles": [
@@ -683,7 +683,7 @@
     },
     {
       "id": 74,
-      "file": "074_Intelligence_Crystal_Maiden.png",
+      "file": "074_Intelligence_Crystal_Maiden.webp",
       "name": "Crystal Maiden",
       "faction": "Intelligence",
       "roles": [
@@ -692,7 +692,7 @@
     },
     {
       "id": 75,
-      "file": "075_Intelligence_Dark_Seer.png",
+      "file": "075_Intelligence_Dark_Seer.webp",
       "name": "Dark Seer",
       "faction": "Intelligence",
       "roles": [
@@ -701,7 +701,7 @@
     },
     {
       "id": 76,
-      "file": "076_Intelligence_Dark_Willow.png",
+      "file": "076_Intelligence_Dark_Willow.webp",
       "name": "Dark Willow",
       "faction": "Intelligence",
       "roles": [
@@ -710,7 +710,7 @@
     },
     {
       "id": 77,
-      "file": "077_Intelligence_Disruptor.png",
+      "file": "077_Intelligence_Disruptor.webp",
       "name": "Disruptor",
       "faction": "Intelligence",
       "roles": [
@@ -719,7 +719,7 @@
     },
     {
       "id": 78,
-      "file": "078_Intelligence_Enchantress.png",
+      "file": "078_Intelligence_Enchantress.webp",
       "name": "Enchantress",
       "faction": "Intelligence",
       "roles": [
@@ -728,7 +728,7 @@
     },
     {
       "id": 79,
-      "file": "079_Intelligence_Grimstroke.png",
+      "file": "079_Intelligence_Grimstroke.webp",
       "name": "Grimstroke",
       "faction": "Intelligence",
       "roles": [
@@ -737,7 +737,7 @@
     },
     {
       "id": 80,
-      "file": "080_Intelligence_Invoker.png",
+      "file": "080_Intelligence_Invoker.webp",
       "name": "Invoker",
       "faction": "Intelligence",
       "roles": [
@@ -746,7 +746,7 @@
     },
     {
       "id": 81,
-      "file": "081_Intelligence_Jakiro.png",
+      "file": "081_Intelligence_Jakiro.webp",
       "name": "Jakiro",
       "faction": "Intelligence",
       "roles": [
@@ -755,7 +755,7 @@
     },
     {
       "id": 82,
-      "file": "082_Intelligence_Keeper_of_the_Light.png",
+      "file": "082_Intelligence_Keeper_of_the_Light.webp",
       "name": "Keeper of the Light",
       "faction": "Intelligence",
       "roles": [
@@ -764,7 +764,7 @@
     },
     {
       "id": 83,
-      "file": "083_Intelligence_Leshrac.png",
+      "file": "083_Intelligence_Leshrac.webp",
       "name": "Leshrac",
       "faction": "Intelligence",
       "roles": [
@@ -773,7 +773,7 @@
     },
     {
       "id": 84,
-      "file": "084_Intelligence_Lich.png",
+      "file": "084_Intelligence_Lich.webp",
       "name": "Lich",
       "faction": "Intelligence",
       "roles": [
@@ -782,7 +782,7 @@
     },
     {
       "id": 85,
-      "file": "085_Intelligence_Lina.png",
+      "file": "085_Intelligence_Lina.webp",
       "name": "Lina",
       "faction": "Intelligence",
       "roles": [
@@ -791,7 +791,7 @@
     },
     {
       "id": 86,
-      "file": "086_Intelligence_Lion.png",
+      "file": "086_Intelligence_Lion.webp",
       "name": "Lion",
       "faction": "Intelligence",
       "roles": [
@@ -800,7 +800,7 @@
     },
     {
       "id": 87,
-      "file": "087_Intelligence_Muerta.png",
+      "file": "087_Intelligence_Muerta.webp",
       "name": "Muerta",
       "faction": "Intelligence",
       "roles": [
@@ -809,7 +809,7 @@
     },
     {
       "id": 88,
-      "file": "088_Intelligence_Necrophos.png",
+      "file": "088_Intelligence_Necrophos.webp",
       "name": "Necrophos",
       "faction": "Intelligence",
       "roles": [
@@ -818,7 +818,7 @@
     },
     {
       "id": 89,
-      "file": "089_Intelligence_Oracle.png",
+      "file": "089_Intelligence_Oracle.webp",
       "name": "Oracle",
       "faction": "Intelligence",
       "roles": [
@@ -827,7 +827,7 @@
     },
     {
       "id": 90,
-      "file": "090_Intelligence_Outworld_Destroyer.png",
+      "file": "090_Intelligence_Outworld_Destroyer.webp",
       "name": "Outworld Destroyer",
       "faction": "Intelligence",
       "roles": [
@@ -836,7 +836,7 @@
     },
     {
       "id": 91,
-      "file": "091_Intelligence_Puck.png",
+      "file": "091_Intelligence_Puck.webp",
       "name": "Puck",
       "faction": "Intelligence",
       "roles": [
@@ -845,7 +845,7 @@
     },
     {
       "id": 92,
-      "file": "092_Intelligence_Pugna.png",
+      "file": "092_Intelligence_Pugna.webp",
       "name": "Pugna",
       "faction": "Intelligence",
       "roles": [
@@ -854,7 +854,7 @@
     },
     {
       "id": 93,
-      "file": "093_Intelligence_Queen_of_Pain.png",
+      "file": "093_Intelligence_Queen_of_Pain.webp",
       "name": "Queen of Pain",
       "faction": "Intelligence",
       "roles": [
@@ -863,7 +863,7 @@
     },
     {
       "id": 94,
-      "file": "094_Intelligence_Ringmaster.png",
+      "file": "094_Intelligence_Ringmaster.webp",
       "name": "Ringmaster",
       "faction": "Intelligence",
       "roles": [
@@ -872,7 +872,7 @@
     },
     {
       "id": 95,
-      "file": "095_Intelligence_Rubick.png",
+      "file": "095_Intelligence_Rubick.webp",
       "name": "Rubick",
       "faction": "Intelligence",
       "roles": [
@@ -881,7 +881,7 @@
     },
     {
       "id": 96,
-      "file": "096_Intelligence_Shadow_Demon.png",
+      "file": "096_Intelligence_Shadow_Demon.webp",
       "name": "Shadow Demon",
       "faction": "Intelligence",
       "roles": [
@@ -890,7 +890,7 @@
     },
     {
       "id": 97,
-      "file": "097_Intelligence_Shadow_Shaman.png",
+      "file": "097_Intelligence_Shadow_Shaman.webp",
       "name": "Shadow Shaman",
       "faction": "Intelligence",
       "roles": [
@@ -899,7 +899,7 @@
     },
     {
       "id": 98,
-      "file": "098_Intelligence_Silencer.png",
+      "file": "098_Intelligence_Silencer.webp",
       "name": "Silencer",
       "faction": "Intelligence",
       "roles": [
@@ -908,7 +908,7 @@
     },
     {
       "id": 99,
-      "file": "099_Intelligence_Skywrath_Mage.png",
+      "file": "099_Intelligence_Skywrath_Mage.webp",
       "name": "Skywrath Mage",
       "faction": "Intelligence",
       "roles": [
@@ -917,7 +917,7 @@
     },
     {
       "id": 100,
-      "file": "100_Intelligence_Storm_Spirit.png",
+      "file": "100_Intelligence_Storm_Spirit.webp",
       "name": "Storm Spirit",
       "faction": "Intelligence",
       "roles": [
@@ -926,7 +926,7 @@
     },
     {
       "id": 101,
-      "file": "101_Intelligence_Tinker.png",
+      "file": "101_Intelligence_Tinker.webp",
       "name": "Tinker",
       "faction": "Intelligence",
       "roles": [
@@ -935,7 +935,7 @@
     },
     {
       "id": 102,
-      "file": "102_Intelligence_Warlock.png",
+      "file": "102_Intelligence_Warlock.webp",
       "name": "Warlock",
       "faction": "Intelligence",
       "roles": [
@@ -944,7 +944,7 @@
     },
     {
       "id": 103,
-      "file": "103_Intelligence_Winter_Wyvern.png",
+      "file": "103_Intelligence_Winter_Wyvern.webp",
       "name": "Winter Wyvern",
       "faction": "Intelligence",
       "roles": [
@@ -953,7 +953,7 @@
     },
     {
       "id": 104,
-      "file": "104_Intelligence_Witch_Doctor.png",
+      "file": "104_Intelligence_Witch_Doctor.webp",
       "name": "Witch Doctor",
       "faction": "Intelligence",
       "roles": [
@@ -962,7 +962,7 @@
     },
     {
       "id": 105,
-      "file": "105_Intelligence_Zeus.png",
+      "file": "105_Intelligence_Zeus.webp",
       "name": "Zeus",
       "faction": "Intelligence",
       "roles": [
@@ -971,7 +971,7 @@
     },
     {
       "id": 106,
-      "file": "106_Universal_Abaddon.png",
+      "file": "106_Universal_Abaddon.webp",
       "name": "Abaddon",
       "faction": "Universal",
       "roles": [
@@ -980,7 +980,7 @@
     },
     {
       "id": 107,
-      "file": "107_Universal_Arc_Warden.png",
+      "file": "107_Universal_Arc_Warden.webp",
       "name": "Arc Warden",
       "faction": "Universal",
       "roles": [
@@ -989,7 +989,7 @@
     },
     {
       "id": 108,
-      "file": "108_Universal_Bane.png",
+      "file": "108_Universal_Bane.webp",
       "name": "Bane",
       "faction": "Universal",
       "roles": [
@@ -998,7 +998,7 @@
     },
     {
       "id": 109,
-      "file": "109_Universal_Batrider.png",
+      "file": "109_Universal_Batrider.webp",
       "name": "Batrider",
       "faction": "Universal",
       "roles": [
@@ -1007,7 +1007,7 @@
     },
     {
       "id": 110,
-      "file": "110_Universal_Beastmaster.png",
+      "file": "110_Universal_Beastmaster.webp",
       "name": "Beastmaster",
       "faction": "Universal",
       "roles": [
@@ -1016,7 +1016,7 @@
     },
     {
       "id": 111,
-      "file": "111_Universal_Brewmaster.png",
+      "file": "111_Universal_Brewmaster.webp",
       "name": "Brewmaster",
       "faction": "Universal",
       "roles": [
@@ -1025,7 +1025,7 @@
     },
     {
       "id": 112,
-      "file": "112_Universal_Dazzle.png",
+      "file": "112_Universal_Dazzle.webp",
       "name": "Dazzle",
       "faction": "Universal",
       "roles": [
@@ -1034,7 +1034,7 @@
     },
     {
       "id": 113,
-      "file": "113_Universal_Death_Prophet.png",
+      "file": "113_Universal_Death_Prophet.webp",
       "name": "Death Prophet",
       "faction": "Universal",
       "roles": [
@@ -1043,7 +1043,7 @@
     },
     {
       "id": 114,
-      "file": "114_Universal_Enigma.png",
+      "file": "114_Universal_Enigma.webp",
       "name": "Enigma",
       "faction": "Universal",
       "roles": [
@@ -1052,7 +1052,7 @@
     },
     {
       "id": 115,
-      "file": "115_Universal_Io.png",
+      "file": "115_Universal_Io.webp",
       "name": "Io",
       "faction": "Universal",
       "roles": [
@@ -1061,7 +1061,7 @@
     },
     {
       "id": 116,
-      "file": "116_Universal_Magnus.png",
+      "file": "116_Universal_Magnus.webp",
       "name": "Magnus",
       "faction": "Universal",
       "roles": [
@@ -1070,7 +1070,7 @@
     },
     {
       "id": 117,
-      "file": "117_Universal_Marci.png",
+      "file": "117_Universal_Marci.webp",
       "name": "Marci",
       "faction": "Universal",
       "roles": [
@@ -1079,7 +1079,7 @@
     },
     {
       "id": 118,
-      "file": "118_Universal_Natures_Prophet.png",
+      "file": "118_Universal_Natures_Prophet.webp",
       "name": "Natures Prophet",
       "faction": "Universal",
       "roles": [
@@ -1088,7 +1088,7 @@
     },
     {
       "id": 119,
-      "file": "119_Universal_Nyx_Assassin.png",
+      "file": "119_Universal_Nyx_Assassin.webp",
       "name": "Nyx Assassin",
       "faction": "Universal",
       "roles": [
@@ -1097,7 +1097,7 @@
     },
     {
       "id": 120,
-      "file": "120_Universal_Pangolier.png",
+      "file": "120_Universal_Pangolier.webp",
       "name": "Pangolier",
       "faction": "Universal",
       "roles": [
@@ -1106,7 +1106,7 @@
     },
     {
       "id": 121,
-      "file": "121_Universal_Sand_King.png",
+      "file": "121_Universal_Sand_King.webp",
       "name": "Sand King",
       "faction": "Universal",
       "roles": [
@@ -1115,7 +1115,7 @@
     },
     {
       "id": 122,
-      "file": "122_Universal_Snapfire.png",
+      "file": "122_Universal_Snapfire.webp",
       "name": "Snapfire",
       "faction": "Universal",
       "roles": [
@@ -1124,7 +1124,7 @@
     },
     {
       "id": 123,
-      "file": "123_Universal_Techies.png",
+      "file": "123_Universal_Techies.webp",
       "name": "Techies",
       "faction": "Universal",
       "roles": [
@@ -1133,7 +1133,7 @@
     },
     {
       "id": 124,
-      "file": "124_Universal_Venomancer.png",
+      "file": "124_Universal_Venomancer.webp",
       "name": "Venomancer",
       "faction": "Universal",
       "roles": [
@@ -1142,7 +1142,7 @@
     },
     {
       "id": 125,
-      "file": "125_Universal_Visage.png",
+      "file": "125_Universal_Visage.webp",
       "name": "Visage",
       "faction": "Universal",
       "roles": [
@@ -1151,7 +1151,7 @@
     },
     {
       "id": 126,
-      "file": "126_Universal_Void_Spirit.png",
+      "file": "126_Universal_Void_Spirit.webp",
       "name": "Void Spirit",
       "faction": "Universal",
       "roles": [
@@ -1160,7 +1160,7 @@
     },
     {
       "id": 127,
-      "file": "127_Universal_Windranger.png",
+      "file": "127_Universal_Windranger.webp",
       "name": "Windranger",
       "faction": "Universal",
       "roles": [

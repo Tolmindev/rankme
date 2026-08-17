@@ -23,787 +23,787 @@
   "cards": [
     {
       "id": 1,
-      "file": "card_001.png",
+      "file": "card_001.webp",
       "faction": "MASTER",
       "name": "Gen"
     },
     {
       "id": 2,
-      "file": "card_002.png",
+      "file": "card_002.webp",
       "faction": "MASTER",
       "name": "Akuma"
     },
     {
       "id": 3,
-      "file": "card_003.png",
+      "file": "card_003.webp",
       "faction": "MASTER",
       "name": "Gouken"
     },
     {
       "id": 4,
-      "file": "card_004.png",
+      "file": "card_004.webp",
       "faction": "MASTER",
       "name": "Rose"
     },
     {
       "id": 5,
-      "file": "card_005.png",
+      "file": "card_005.webp",
       "faction": "MASTER",
       "name": "Trendy Cammy"
     },
     {
       "id": 6,
-      "file": "card_006.png",
+      "file": "card_006.webp",
       "faction": "MASTER",
       "name": "Taoist Gen"
     },
     {
       "id": 7,
-      "file": "card_007.png",
+      "file": "card_007.webp",
       "faction": "MASTER",
       "name": "Trendt Ryu"
     },
     {
       "id": 8,
-      "file": "card_008.png",
+      "file": "card_008.webp",
       "faction": "MASTER",
       "name": "Athlete Chun-Li"
     },
     {
       "id": 9,
-      "file": "card_009.png",
+      "file": "card_009.webp",
       "faction": "MASTER",
       "name": "Trendy Dhalsim"
     },
     {
       "id": 10,
-      "file": "card_010.png",
+      "file": "card_010.webp",
       "faction": "MASTER",
       "name": "Dante"
     },
     {
       "id": 11,
-      "file": "card_011.png",
+      "file": "card_011.webp",
       "faction": "MASTER",
       "name": "Summer Yun"
     },
     {
       "id": 12,
-      "file": "card_012.png",
+      "file": "card_012.webp",
       "faction": "MASTER",
       "name": " Master Leonardo"
     },
     {
       "id": 13,
-      "file": "card_013.png",
+      "file": "card_013.webp",
       "faction": "MASTER",
       "name": "Raphael"
     },
     {
       "id": 14,
-      "file": "card_014.png",
+      "file": "card_014.webp",
       "faction": "MASTER",
       "name": "Luke"
     },
     {
       "id": 15,
-      "file": "card_015.png",
+      "file": "card_015.webp",
       "faction": "MASTER",
       "name": "Jp"
     },
     {
       "id": 16,
-      "file": "card_016.png",
+      "file": "card_016.webp",
       "faction": "MASTER",
       "name": "Summer Ibuki"
     },
     {
       "id": 17,
-      "file": "card_017.png",
+      "file": "card_017.webp",
       "faction": "MASTER",
       "name": "Diviner Rose"
     },
     {
       "id": 18,
-      "file": "card_018.png",
+      "file": "card_018.webp",
       "faction": "MASTER",
       "name": "Firecracker Sakura"
     },
     {
       "id": 19,
-      "file": "card_019.png",
+      "file": "card_019.webp",
       "faction": "MASTER",
       "name": "Rich E Honda"
     },
     {
       "id": 20,
-      "file": "card_020.png",
+      "file": "card_020.webp",
       "faction": "MASTER",
       "name": "Kunoichi Ibuki"
     },
     {
       "id": 21,
-      "file": "card_021.png",
+      "file": "card_021.webp",
       "faction": "MASTER",
       "name": "Cowbot T Hawk"
     },
     {
       "id": 22,
-      "file": "card_022.png",
+      "file": "card_022.webp",
       "faction": "MASTER",
       "name": "Banquet Guy"
     },
     {
       "id": 23,
-      "file": "card_023.png",
+      "file": "card_023.webp",
       "faction": "MASTER",
       "name": "Popstar Poison"
     },
     {
       "id": 24,
-      "file": "card_024.png",
+      "file": "card_024.webp",
       "faction": "MASTER",
       "name": "Popstar Chun Li"
     },
     {
       "id": 25,
-      "file": "card_025.png",
+      "file": "card_025.webp",
       "faction": "MASTER",
       "name": "Popstar Juri"
     },
     {
       "id": 26,
-      "file": "card_026.png",
+      "file": "card_026.webp",
       "faction": "MASTER",
       "name": "Hermit Gouken"
     },
     {
       "id": 27,
-      "file": "card_027.png",
+      "file": "card_027.webp",
       "faction": "MASTER",
       "name": "Summer Rose"
     },
     {
       "id": 28,
-      "file": "card_028.png",
+      "file": "card_028.webp",
       "faction": "INFERNAL",
       "name": "Juri"
     },
     {
       "id": 29,
-      "file": "card_029.png",
+      "file": "card_029.webp",
       "faction": "INFERNAL",
       "name": "Seth"
     },
     {
       "id": 30,
-      "file": "card_030.png",
+      "file": "card_030.webp",
       "faction": "INFERNAL",
       "name": "M Bison"
     },
     {
       "id": 31,
-      "file": "card_031.png",
+      "file": "card_031.webp",
       "faction": "INFERNAL",
       "name": "Balrog"
     },
     {
       "id": 32,
-      "file": "card_032.png",
+      "file": "card_032.webp",
       "faction": "INFERNAL",
       "name": "Vega"
     },
     {
       "id": 33,
-      "file": "card_033.png",
+      "file": "card_033.webp",
       "faction": "INFERNAL",
       "name": "Sagat"
     },
     {
       "id": 34,
-      "file": "card_034.png",
+      "file": "card_034.webp",
       "faction": "INFERNAL",
       "name": "Evil Ryu"
     },
     {
       "id": 35,
-      "file": "card_035.png",
+      "file": "card_035.webp",
       "faction": "INFERNAL",
       "name": "Oni"
     },
     {
       "id": 36,
-      "file": "card_036.png",
+      "file": "card_036.webp",
       "faction": "INFERNAL",
       "name": "Witch Juri"
     },
     {
       "id": 37,
-      "file": "card_037.png",
+      "file": "card_037.webp",
       "faction": "INFERNAL",
       "name": "Gore Magala Ken"
     },
     {
       "id": 38,
-      "file": "card_038.png",
+      "file": "card_038.webp",
       "faction": "INFERNAL",
       "name": "Vergil"
     },
     {
       "id": 39,
-      "file": "card_039.png",
+      "file": "card_039.webp",
       "faction": "INFERNAL",
       "name": "Michelangelo"
     },
     {
       "id": 40,
-      "file": "card_040.png",
+      "file": "card_040.webp",
       "faction": "INFERNAL",
       "name": "Donatello"
     },
     {
       "id": 41,
-      "file": "card_041.png",
+      "file": "card_041.webp",
       "faction": "INFERNAL",
       "name": "Vizconde Vega"
     },
     {
       "id": 42,
-      "file": "card_042.png",
+      "file": "card_042.webp",
       "faction": "INFERNAL",
       "name": "Pharaoh Sagat"
     },
     {
       "id": 43,
-      "file": "card_043.png",
+      "file": "card_043.webp",
       "faction": "INFERNAL",
       "name": "Archon Decapre"
     },
     {
       "id": 44,
-      "file": "card_044.png",
+      "file": "card_044.webp",
       "faction": "INFERNAL",
       "name": "Chief Viper"
     },
     {
       "id": 45,
-      "file": "card_045.png",
+      "file": "card_045.webp",
       "faction": "INFERNAL",
       "name": "Giant Wrestler Hugo"
     },
     {
       "id": 46,
-      "file": "card_046.png",
+      "file": "card_046.webp",
       "faction": "INFERNAL",
       "name": "Overlord Bison"
     },
     {
       "id": 47,
-      "file": "card_047.png",
+      "file": "card_047.webp",
       "faction": "INFERNAL",
       "name": "Summer Poison"
     },
     {
       "id": 48,
-      "file": "card_048.png",
+      "file": "card_048.webp",
       "faction": "INFERNAL",
       "name": "Horror Hakan"
     },
     {
       "id": 49,
-      "file": "card_049.png",
+      "file": "card_049.webp",
       "faction": "INFERNAL",
       "name": "Shadaloo Cammy"
     },
     {
       "id": 50,
-      "file": "card_050.png",
+      "file": "card_050.webp",
       "faction": "INFERNAL",
       "name": "Shadow Ryu"
     },
     {
       "id": 51,
-      "file": "card_051.png",
+      "file": "card_051.webp",
       "faction": "INFERNAL",
       "name": "Cold-Hearted Adon"
     },
     {
       "id": 52,
-      "file": "card_052.png",
+      "file": "card_052.webp",
       "faction": "WIND",
       "name": "Chun Li"
     },
     {
       "id": 53,
-      "file": "card_053.png",
+      "file": "card_053.webp",
       "faction": "WIND",
       "name": "Guile"
     },
     {
       "id": 54,
-      "file": "card_054.png",
+      "file": "card_054.webp",
       "faction": "WIND",
       "name": "Abel"
     },
     {
       "id": 55,
-      "file": "card_055.png",
+      "file": "card_055.webp",
       "faction": "WIND",
       "name": "Cammy"
     },
     {
       "id": 56,
-      "file": "card_056.png",
+      "file": "card_056.webp",
       "faction": "WIND",
       "name": "Guy"
     },
     {
       "id": 57,
-      "file": "card_057.png",
+      "file": "card_057.webp",
       "faction": "WIND",
       "name": "Yun"
     },
     {
       "id": 58,
-      "file": "card_058.png",
+      "file": "card_058.webp",
       "faction": "WIND",
       "name": "Yang"
     },
     {
       "id": 59,
-      "file": "card_059.png",
+      "file": "card_059.webp",
       "faction": "WIND",
       "name": "T Hawk"
     },
     {
       "id": 60,
-      "file": "card_060.png",
+      "file": "card_060.webp",
       "faction": "WIND",
       "name": "El Fuerte"
     },
     {
       "id": 61,
-      "file": "card_061.png",
+      "file": "card_061.webp",
       "faction": "WIND",
       "name": "Beast Zangief"
     },
     {
       "id": 62,
-      "file": "card_062.png",
+      "file": "card_062.webp",
       "faction": "WIND",
       "name": "Street Poison"
     },
     {
       "id": 63,
-      "file": "card_063.png",
+      "file": "card_063.webp",
       "faction": "WIND",
       "name": "Summer Elena"
     },
     {
       "id": 64,
-      "file": "card_064.png",
+      "file": "card_064.webp",
       "faction": "WIND",
       "name": "Trendy Akuma"
     },
     {
       "id": 65,
-      "file": "card_065.png",
+      "file": "card_065.webp",
       "faction": "WIND",
       "name": "Royal Balrog"
     },
     {
       "id": 66,
-      "file": "card_066.png",
+      "file": "card_066.webp",
       "faction": "WIND",
       "name": "Saikyo Dan"
     },
     {
       "id": 67,
-      "file": "card_067.png",
+      "file": "card_067.webp",
       "faction": "WIND",
       "name": "Nishiki Sakura"
     },
     {
       "id": 68,
-      "file": "card_068.png",
+      "file": "card_068.webp",
       "faction": "THUNDER",
       "name": "Blanka"
     },
     {
       "id": 69,
-      "file": "card_069.png",
+      "file": "card_069.webp",
       "faction": "THUNDER",
       "name": "E Honda"
     },
     {
       "id": 70,
-      "file": "card_070.png",
+      "file": "card_070.webp",
       "faction": "THUNDER",
       "name": "Zangief"
     },
     {
       "id": 71,
-      "file": "card_071.png",
+      "file": "card_071.webp",
       "faction": "THUNDER",
       "name": "Poison"
     },
     {
       "id": 72,
-      "file": "card_072.png",
+      "file": "card_072.webp",
       "faction": "THUNDER",
       "name": "Elena"
     },
     {
       "id": 73,
-      "file": "card_073.png",
+      "file": "card_073.webp",
       "faction": "THUNDER",
       "name": "Makoto"
     },
     {
       "id": 74,
-      "file": "card_074.png",
+      "file": "card_074.webp",
       "faction": "THUNDER",
       "name": "Mad Ryu"
     },
     {
       "id": 75,
-      "file": "card_075.png",
+      "file": "card_075.webp",
       "faction": "THUNDER",
       "name": "Combat Guile"
     },
     {
       "id": 76,
-      "file": "card_076.png",
+      "file": "card_076.webp",
       "faction": "THUNDER",
       "name": "Mummy Dhalsim"
     },
     {
       "id": 77,
-      "file": "card_077.png",
+      "file": "card_077.webp",
       "faction": "THUNDER",
       "name": "Suit Abel"
     },
     {
       "id": 78,
-      "file": "card_078.png",
+      "file": "card_078.webp",
       "faction": "THUNDER",
       "name": "Trendy Guile"
     },
     {
       "id": 79,
-      "file": "card_079.png",
+      "file": "card_079.webp",
       "faction": "THUNDER",
       "name": "Charming Dudley"
     },
     {
       "id": 80,
-      "file": "card_080.png",
+      "file": "card_080.webp",
       "faction": "THUNDER",
       "name": "Baddest Juri"
     },
     {
       "id": 81,
-      "file": "card_081.png",
+      "file": "card_081.webp",
       "faction": "THUNDER",
       "name": "Action Guy"
     },
     {
       "id": 82,
-      "file": "card_082.png",
+      "file": "card_082.webp",
       "faction": "THUNDER",
       "name": "Banquet Rose"
     },
     {
       "id": 83,
-      "file": "card_083.png",
+      "file": "card_083.webp",
       "faction": "THUNDER",
       "name": "Horror Oni"
     },
     {
       "id": 84,
-      "file": "card_084.png",
+      "file": "card_084.webp",
       "faction": "FLAME",
       "name": "Dhalsim"
     },
     {
       "id": 85,
-      "file": "card_085.png",
+      "file": "card_085.webp",
       "faction": "FLAME",
       "name": "Hugo"
     },
     {
       "id": 86,
-      "file": "card_086.png",
+      "file": "card_086.webp",
       "faction": "FLAME",
       "name": "C Viper"
     },
     {
       "id": 87,
-      "file": "card_087.png",
+      "file": "card_087.webp",
       "faction": "FLAME",
       "name": "Adon"
     },
     {
       "id": 88,
-      "file": "card_088.png",
+      "file": "card_088.webp",
       "faction": "FLAME",
       "name": "Decapre"
     },
     {
       "id": 89,
-      "file": "card_089.png",
+      "file": "card_089.webp",
       "faction": "FLAME",
       "name": "Fei Long"
     },
     {
       "id": 90,
-      "file": "card_090.png",
+      "file": "card_090.webp",
       "faction": "FLAME",
       "name": "Dee Jay"
     },
     {
       "id": 91,
-      "file": "card_091.png",
+      "file": "card_091.webp",
       "faction": "FLAME",
       "name": "Dudley"
     },
     {
       "id": 92,
-      "file": "card_092.png",
+      "file": "card_092.webp",
       "faction": "FLAME",
       "name": "Mayor Cody"
     },
     {
       "id": 93,
-      "file": "card_093.png",
+      "file": "card_093.webp",
       "faction": "FLAME",
       "name": "Cammy & Vega"
     },
     {
       "id": 94,
-      "file": "card_094.png",
+      "file": "card_094.webp",
       "faction": "FLAME",
       "name": "Summer Yang"
     },
     {
       "id": 95,
-      "file": "card_095.png",
+      "file": "card_095.webp",
       "faction": "FLAME",
       "name": "Fire Adon"
     },
     {
       "id": 96,
-      "file": "card_096.png",
+      "file": "card_096.webp",
       "faction": "FLAME",
       "name": "Furisode Makoto"
     },
     {
       "id": 97,
-      "file": "card_097.png",
+      "file": "card_097.webp",
       "faction": "FLAME",
       "name": "Banquet Cammy"
     },
     {
       "id": 98,
-      "file": "card_098.png",
+      "file": "card_098.webp",
       "faction": "FLAME",
       "name": "Summer Cody"
     },
     {
       "id": 99,
-      "file": "card_099.png",
+      "file": "card_099.webp",
       "faction": "FLAME",
       "name": "Monk Bison"
     },
     {
       "id": 100,
-      "file": "card_100.png",
+      "file": "card_100.webp",
       "faction": "LEGENDARY",
       "name": "Flame Chun Li"
     },
     {
       "id": 101,
-      "file": "card_101.png",
+      "file": "card_101.webp",
       "faction": "LEGENDARY",
       "name": "Fashion Sakura"
     },
     {
       "id": 102,
-      "file": "card_102.png",
+      "file": "card_102.webp",
       "faction": "LEGENDARY",
       "name": "Fashion Blanka"
     },
     {
       "id": 103,
-      "file": "card_103.png",
+      "file": "card_103.webp",
       "faction": "LEGENDARY",
       "name": "Jonin Ibuki"
     },
     {
       "id": 104,
-      "file": "card_104.png",
+      "file": "card_104.webp",
       "faction": "LEGENDARY",
       "name": "Nero"
     },
     {
       "id": 105,
-      "file": "card_105.png",
+      "file": "card_105.webp",
       "faction": "LEGENDARY",
       "name": "Shredder"
     },
     {
       "id": 106,
-      "file": "card_106.png",
+      "file": "card_106.webp",
       "faction": "LEGENDARY",
       "name": "Christmas Rufus"
     },
     {
       "id": 107,
-      "file": "card_107.png",
+      "file": "card_107.webp",
       "faction": "LEGENDARY",
       "name": "Fashion Ken"
     },
     {
       "id": 108,
-      "file": "card_108.png",
+      "file": "card_108.webp",
       "faction": "LEGENDARY",
       "name": "Hydro Chun Li"
     },
     {
       "id": 109,
-      "file": "card_109.png",
+      "file": "card_109.webp",
       "faction": "LEGENDARY",
       "name": "Trendy Elena"
     },
     {
       "id": 110,
-      "file": "card_110.png",
+      "file": "card_110.webp",
       "faction": "LEGENDARY",
       "name": "Agent C Viper"
     },
     {
       "id": 111,
-      "file": "card_111.png",
+      "file": "card_111.webp",
       "faction": "LEGENDARY",
       "name": "Banquet Guile"
     },
     {
       "id": 112,
-      "file": "card_112.png",
+      "file": "card_112.webp",
       "faction": "LEGENDARY",
       "name": "Fashion E Honda"
     },
     {
       "id": 113,
-      "file": "card_113.png",
+      "file": "card_113.webp",
       "faction": "LEGENDARY",
       "name": "Santa Blanka"
     },
     {
       "id": 114,
-      "file": "card_114.png",
+      "file": "card_114.webp",
       "faction": "LEGENDARY",
       "name": "Vacation Dee Jay"
     },
     {
       "id": 115,
-      "file": "card_115.png",
+      "file": "card_115.webp",
       "faction": "LEGENDARY",
       "name": "Banquet Fei Long"
     },
     {
       "id": 116,
-      "file": "card_116.png",
+      "file": "card_116.webp",
       "faction": "LEGENDARY",
       "name": "Mech Zangief"
     },
     {
       "id": 117,
-      "file": "card_117.png",
+      "file": "card_117.webp",
       "faction": "LEGENDARY",
       "name": "Cupid Hugo"
     },
     {
       "id": 118,
-      "file": "card_118.png",
+      "file": "card_118.webp",
       "faction": "LEGENDARY",
       "name": "Zombie Cody"
     },
     {
       "id": 119,
-      "file": "card_119.png",
+      "file": "card_119.webp",
       "faction": "LEGENDARY",
       "name": "Fairy Makoto"
     },
     {
       "id": 120,
-      "file": "card_120.png",
+      "file": "card_120.webp",
       "faction": "LEGENDARY",
       "name": "Magican Rolento"
     },
     {
       "id": 121,
-      "file": "card_121.png",
+      "file": "card_121.webp",
       "faction": "LEGENDARY",
       "name": "Luchador El Fuerte"
     },
     {
       "id": 131,
-      "file": "card_131.png",
+      "file": "card_131.webp",
       "faction": "LEGENDARY",
       "name": "Vacation Balrog"
     },
     {
       "id": 122,
-      "file": "card_122.png",
+      "file": "card_122.webp",
       "faction": "A+",
       "name": "Ibuki"
     },
     {
       "id": 123,
-      "file": "card_123.png",
+      "file": "card_123.webp",
       "faction": "A+",
       "name": "Cody"
     },
     {
       "id": 124,
-      "file": "card_124.png",
+      "file": "card_124.webp",
       "faction": "A+",
       "name": "Rufus"
     },
     {
       "id": 125,
-      "file": "card_125.png",
+      "file": "card_125.webp",
       "faction": "A+",
       "name": "Dan"
     },
     {
       "id": 126,
-      "file": "card_126.png",
+      "file": "card_126.webp",
       "faction": "A+",
       "name": "Sakura"
     },
     {
       "id": 127,
-      "file": "card_127.png",
+      "file": "card_127.webp",
       "faction": "A+",
       "name": "Ryu"
     },
     {
       "id": 128,
-      "file": "card_128.png",
+      "file": "card_128.webp",
       "faction": "A+",
       "name": "Hakan"
     },
     {
       "id": 129,
-      "file": "card_129.png",
+      "file": "card_129.webp",
       "faction": "A+",
       "name": "Ken"
     },
     {
       "id": 130,
-      "file": "card_130.png",
+      "file": "card_130.webp",
       "faction": "A+",
       "name": "Rolento"
     }

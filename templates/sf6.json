@@ -12,187 +12,187 @@
   "cards": [
     {
       "id": 1,
-      "file": "A.K.I.png",
+      "file": "A.K.I.webp",
       "name": "A.K.I",
       "faction": "ALL"
     },
     {
       "id": 2,
-      "file": "Akuma.png",
+      "file": "Akuma.webp",
       "name": "Akuma",
       "faction": "ALL"
     },
     {
       "id": 3,
-      "file": "Alex.png",
+      "file": "Alex.webp",
       "name": "Alex",
       "faction": "ALL"
     },
     {
       "id": 4,
-      "file": "Blanka.png",
+      "file": "Blanka.webp",
       "name": "Blanka",
       "faction": "ALL"
     },
     {
       "id": 5,
-      "file": "C. Viper.png",
+      "file": "C. Viper.webp",
       "name": "C. Viper",
       "faction": "ALL"
     },
     {
       "id": 6,
-      "file": "Cammy.png",
+      "file": "Cammy.webp",
       "name": "Cammy",
       "faction": "ALL"
     },
     {
       "id": 7,
-      "file": "Chun-Li.png",
+      "file": "Chun-Li.webp",
       "name": "Chun-Li",
       "faction": "ALL"
     },
     {
       "id": 8,
-      "file": "Dee Jay.png",
+      "file": "Dee Jay.webp",
       "name": "Dee Jay",
       "faction": "ALL"
     },
     {
       "id": 9,
-      "file": "Dhalsim.png",
+      "file": "Dhalsim.webp",
       "name": "Dhalsim",
       "faction": "ALL"
     },
     {
       "id": 10,
-      "file": "E. Honda.png",
+      "file": "E. Honda.webp",
       "name": "E. Honda",
       "faction": "ALL"
     },
     {
       "id": 11,
-      "file": "Ed.png",
+      "file": "Ed.webp",
       "name": "Ed",
       "faction": "ALL"
     },
     {
       "id": 12,
-      "file": "Elena.png",
+      "file": "Elena.webp",
       "name": "Elena",
       "faction": "ALL"
     },
     {
       "id": 13,
-      "file": "Guile.png",
+      "file": "Guile.webp",
       "name": "Guile",
       "faction": "ALL"
     },
     {
       "id": 14,
-      "file": "Ingrid.png",
+      "file": "Ingrid.webp",
       "name": "Ingrid",
       "faction": "ALL"
     },
     {
       "id": 15,
-      "file": "Jamie.png",
+      "file": "Jamie.webp",
       "name": "Jamie",
       "faction": "ALL"
     },
     {
       "id": 16,
-      "file": "JP.png",
+      "file": "JP.webp",
       "name": "JP",
       "faction": "ALL"
     },
     {
       "id": 17,
-      "file": "Juri.png",
+      "file": "Juri.webp",
       "name": "Juri",
       "faction": "ALL"
     },
     {
       "id": 18,
-      "file": "Ken.png",
+      "file": "Ken.webp",
       "name": "Ken",
       "faction": "ALL"
     },
     {
       "id": 19,
-      "file": "Kimberly.png",
+      "file": "Kimberly.webp",
       "name": "Kimberly",
       "faction": "ALL"
     },
     {
       "id": 20,
-      "file": "Lily.png",
+      "file": "Lily.webp",
       "name": "Lily",
       "faction": "ALL"
     },
     {
       "id": 21,
-      "file": "Luke.png",
+      "file": "Luke.webp",
       "name": "Luke",
       "faction": "ALL"
     },
     {
       "id": 22,
-      "file": "M. Bison.png",
+      "file": "M. Bison.webp",
       "name": "M. Bison",
       "faction": "ALL"
     },
     {
       "id": 23,
-      "file": "Mai.png",
+      "file": "Mai.webp",
       "name": "Mai",
       "faction": "ALL"
     },
     {
       "id": 24,
-      "file": "Manon.png",
+      "file": "Manon.webp",
       "name": "Manon",
       "faction": "ALL"
     },
     {
       "id": 25,
-      "file": "Marisa.png",
+      "file": "Marisa.webp",
       "name": "Marisa",
       "faction": "ALL"
     },
     {
       "id": 26,
-      "file": "Rashid.png",
+      "file": "Rashid.webp",
       "name": "Rashid",
       "faction": "ALL"
     },
     {
       "id": 27,
-      "file": "Ryu.png",
+      "file": "Ryu.webp",
       "name": "Ryu",
       "faction": "ALL"
     },
     {
       "id": 28,
-      "file": "Sagat.png",
+      "file": "Sagat.webp",
       "name": "Sagat",
       "faction": "ALL"
     },
     {
       "id": 29,
-      "file": "Terry.png",
+      "file": "Terry.webp",
       "name": "Terry",
       "faction": "ALL"
     },
     {
       "id": 30,
-      "file": "Yasmine.png",
+      "file": "Yasmine.webp",
       "name": "Yasmine",
       "faction": "ALL"
     },
     {
       "id": 31,
-      "file": "Zangief.png",
+      "file": "Zangief.webp",
       "name": "Zangief",
       "faction": "ALL"
     }

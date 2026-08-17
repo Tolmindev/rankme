@@ -41,7 +41,7 @@ const ALL_ICON = 'assets/factions/ALL_icon.svg';
 const cardSrc = id => {
   if(state.customCards && state.customCards[id]) return state.customCards[id].src;
   if(CARD_META[id]) return CARD_PATH + CARD_META[id].file;
-  return CARD_PATH + `card_${String(id).padStart(3,'0')}.png`;
+  return CARD_PATH + `card_${String(id).padStart(3,'0')}.webp`;
 };
 
 const DEFAULT_TIERS = [

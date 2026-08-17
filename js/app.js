@@ -280,23 +280,14 @@ function render(){
     label.addEventListener('keydown', (e)=>{
       if(e.key === 'Enter'){
         e.preventDefault();
-        try {
-          document.execCommand('insertLineBreak');
-        } catch (err) {
-          const br = document.createElement('br');
-          const sel = window.getSelection();
-          if(sel && sel.rangeCount){
-            const range = sel.getRangeAt(0);
-            range.deleteContents();
-            range.insertNode(br);
-            range.setStartAfter(br);
-            range.collapse(true);
-            sel.removeAllRanges();
-            sel.addRange(range);
-          }
-        }
-        t.name = (label.innerText || '').replace(/\u00a0/g, ' ');
-        fitLabelFontLive(label);
+        e.stopPropagation();
+        // Insert \n at caret, then reflow per-line sizes (no execCommand)
+        const off = getLabelCaretOffset(label);
+        const text = (label.innerText || '').replace(/\u00a0/g, ' ');
+        const next = text.slice(0, off) + '\n' + text.slice(off);
+        t.name = next;
+        fitLabelFont(label, next);
+        setLabelCaretOffset(label, off + 1);
       }
     });
     label.addEventListener('blur', ()=>{

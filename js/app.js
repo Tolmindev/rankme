@@ -380,13 +380,25 @@ function fitLabelFontLive(el){
   // Per-line sizes while typing; restore caret so edit stays smooth
   const off = getLabelCaretOffset(el);
   const text = (el.innerText || '').replace(/\u00a0/g, ' ');
-  fitLabelFont(el, text);
-  setLabelCaretOffset(el, off);
+  const norm = normalizeLabelText(text);
+  // If only trailing newline was removed, keep caret on last real char
+  const nextOff = Math.min(off, norm.raw.length);
+  fitLabelFont(el, norm.raw);
+  setLabelCaretOffset(el, nextOff);
+}
+
+function normalizeLabelText(text){
+  let raw = String(text == null ? '' : text).replace(/\r/g, '');
+  // Drop trailing empty lines (Enter then Backspace left "SS\n" → looked shifted up)
+  raw = raw.replace(/\n+$/g, '');
+  const lines = raw.split('\n');
+  while(lines.length > 1 && lines[lines.length - 1] === '') lines.pop();
+  return { raw: lines.join('\n'), lines: lines };
 }
 
 function fitLabelFont(el, text){
-  const raw = String(text == null ? '' : text).replace(/\r/g, '');
-  const lines = raw.split('\n');
+  const norm = normalizeLabelText(text);
+  const lines = norm.lines;
   el.style.fontSize = '';
   el.style.lineHeight = '1.15';
   el.textContent = '';

@@ -91,6 +91,7 @@
   white-space: pre-wrap;
   text-transform: uppercase;
   letter-spacing: .35px;
+  caret-color: rgba(255, 255, 255, 0.35);
   background: linear-gradient(105deg,
     hsla(var(--hue), var(--sat), var(--light), .95) 0%,
     hsla(var(--hue), var(--sat), var(--light), .72) 48%,

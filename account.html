@@ -6,7 +6,7 @@
 <title>Account - RankMe</title>
 <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/rankme.css?v=20260817account">
+<link rel="stylesheet" href="css/rankme.css?v=20260818skel2">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
 <script src="js/supabaseClient.js" defer></script>
 
@@ -21,7 +21,23 @@
   </nav>
 </header>
 <div class="wrap">
-  <div class="panel-card" id="panel">Loading…</div>
+  <div class="panel-card" id="panel" aria-busy="true">
+    <div class="skel-account" aria-hidden="true">
+      <div class="skel-account-head">
+        <div class="skel-block skel-avatar-lg"></div>
+        <div class="skel-skel-text">
+          <div class="skel-line skel-line-title"></div>
+          <div class="skel-line skel-line-meta"></div>
+        </div>
+      </div>
+      <div class="skel-line skel-line-sub"></div>
+      <div class="skel-account-list">
+        <div class="skel-block skel-account-row"></div>
+        <div class="skel-block skel-account-row"></div>
+        <div class="skel-block skel-account-row"></div>
+      </div>
+    </div>
+  </div>
 </div>
 <script>
 const panel = document.getElementById('panel');
@@ -83,7 +99,7 @@ async function renderCabinet(user){
   const provider = resolveProvider(user);
   const providerLabel = ({google:'Google', discord:'Discord', x:'X', twitter:'X'})[provider] || provider;
 
-  let listHtml = '<div class="empty">Loading…</div>';
+  let listHtml = '<div class="skel-account-list" aria-hidden="true"><div class="skel-block skel-account-row"></div><div class="skel-block skel-account-row"></div></div>';
   panel.innerHTML = `
     <h1>Collection</h1>
     <p class="sub">Saved Exclusive rankings.</p>

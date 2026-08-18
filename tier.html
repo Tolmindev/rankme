@@ -18,10 +18,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/rankme.css?v=20260817account">
+<link rel="stylesheet" href="css/rankme.css?v=20260818skel2">
 <style>
   [hidden]{display:none!important}
-  .boot-loading{min-height:50vh;display:flex;align-items:center;justify-content:center;color:var(--text-dim,#a79fc4);font-weight:700;letter-spacing:.3px}
+  /* boot-loading styles in rankme.css */
   .boot-error{max-width:420px;margin:48px auto;padding:24px;border-radius:14px;background:#1a1728;border:1px solid rgba(255,100,100,.35);color:#ffb3b3;font-weight:700;text-align:center}
 </style>
 </head>
@@ -35,7 +35,17 @@
   </nav>
 </header>
 
-<div id="bootStatus" class="boot-loading">Loading tier list…</div>
+<div id="bootStatus" class="boot-loading" aria-busy="true" aria-label="Loading">
+  <div class="skel-tier-boot" aria-hidden="true">
+    <div class="skel-block skel-cover"></div>
+    <div class="skel-line skel-line-title" style="width:55%;margin:0 auto"></div>
+    <div class="skel-line skel-line-sub" style="width:80%;margin:0 auto"></div>
+    <div class="skel-block skel-row"></div>
+    <div class="skel-block skel-row"></div>
+    <div class="skel-block skel-row"></div>
+    <div class="skel-block skel-row"></div>
+  </div>
+</div>
 
 <section class="hero" id="heroSection" hidden>
   <div class="parallax-host" id="coverHost"><img class="title-logo cover-card parallax-img" id="coverImg" src="" alt=""></div>

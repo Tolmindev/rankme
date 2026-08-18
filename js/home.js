@@ -165,6 +165,7 @@
       + (state.category !== 'all' ? ' in ' + escapeHtml((state.categoryMeta[state.category] || {}).label || state.category) : '');
 
     if (!sorted.length) {
+      els.grid.removeAttribute('aria-busy');
       els.grid.innerHTML =
         '<div class="no-results">' +
           '<div class="big">🔍</div>' +
@@ -194,6 +195,7 @@
         '</div>';
     }
     els.grid.innerHTML = html;
+    els.grid.removeAttribute('aria-busy');
     var sab = document.getElementById('showAllTemplates');
     if (sab) {
       sab.addEventListener('click', function () {

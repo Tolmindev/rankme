@@ -267,35 +267,33 @@
     var views = typeof formatCount === 'function' ? formatCount(row.view_count) : String(row.view_count || 0);
     var author = escapeHtml(row.author_name || 'User');
     var av = row.author_avatar
-      ? '<img src="' + escapeHtml(row.author_avatar) + '" alt="">'
-      : '<span class="cr-av-fallback">' + author.charAt(0).toUpperCase() + '</span>';
+      ? '<img class="avatar" src="' + escapeHtml(row.author_avatar) + '" alt="">'
+      : '<span class="avatar av-fallback">' + author.charAt(0).toUpperCase() + '</span>';
     var profileHref = row.user_id
       ? 'account.html?u=' + encodeURIComponent(String(row.user_id))
       : '';
     var authorBlock = profileHref
-      ? '<a class="cr-author" href="' + profileHref + '" data-profile="1">' + av + '<span>' + author + '</span></a>'
-      : '<div class="cr-author">' + av + '<span>' + author + '</span></div>';
+      ? '<a class="creator" href="' + profileHref + '" data-profile="1">' + av + '<span class="creator-text"><b>' + author + '</b></span></a>'
+      : '<div class="creator">' + av + '<span class="creator-text"><b>' + author + '</b></span></div>';
     try {
       if (!window.__rmCommunityRows) window.__rmCommunityRows = {};
       window.__rmCommunityRows[String(row.id)] = row;
     } catch (e) {}
+    var metaBits = [];
+    if (ago) metaBits.push('<span>' + escapeHtml(ago) + '</span>');
+    metaBits.push('<span class="sc-stat"><img src="assets/icons/heart.svg" alt=""> ' + likes + '</span>');
+    metaBits.push('<span class="sc-stat"><img src="assets/icons/view.svg" alt=""> ' + views + '</span>');
     return (
-      '<a class="cr-card" href="' + href + '" data-cid="' + escapeHtml(String(row.id)) + '">' +
-        '<div class="cr-cover">' +
-          '<span class="sc-tag sc-tag-cat">Games</span>' +
-          '<span class="sc-tag sc-tag-ex">Exclusive</span>' +
-          '<img src="' + escapeHtml(cover) + '" alt="" loading="lazy">' +
-        '</div>' +
-        '<div class="cr-body">' +
-          '<div class="cr-text">' +
-            '<div class="cr-title">' + title + '</div>' +
-            '<div class="cr-meta">' +
-              (ago ? '<span>' + escapeHtml(ago) + '</span>' : '') +
-              '<span class="sc-stat"><img src="assets/icons/heart.svg" alt=""> ' + likes + '</span>' +
-              '<span class="sc-stat"><img src="assets/icons/view.svg" alt=""> ' + views + '</span>' +
-            '</div>' +
-          '</div>' +
-          authorBlock +
+      '<a class="tl-card exclusive community-tl" href="' + href + '" data-cid="' + escapeHtml(String(row.id)) + '">' +
+        '<span class="cover">' +
+          '<span class="tag tag-cat" data-cat="games">Games</span>' +
+          '<span class="tag">Exclusive</span>' +
+          '<img class="cover-art" src="' + escapeHtml(cover) + '" alt="" loading="lazy">' +
+        '</span>' +
+        '<div class="body">' +
+          '<div class="title">' + title + '</div>' +
+          '<div class="meta community-meta">' + metaBits.join(' ') + '</div>' +
+          '<div class="foot-row">' + authorBlock + '</div>' +
         '</div>' +
       '</a>'
     );
@@ -311,7 +309,7 @@
         '<h2 class="community-rankings-title">Community Rankings</h2>' +
         '<div class="community-grid">' + rows.map(communityCardHtml).join('') + '</div>';
       // Prefetch payload into sessionStorage so tier page can open community rank reliably
-      els.community.querySelectorAll('a.cr-card[data-cid]').forEach(function (a) {
+      els.community.querySelectorAll('a.community-tl[data-cid]').forEach(function (a) {
         a.addEventListener('click', function (ev) {
           if (ev.target.closest && ev.target.closest('[data-profile]')) return;
           var cid = a.getAttribute('data-cid');

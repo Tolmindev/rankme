@@ -5391,14 +5391,12 @@ nav.main a.cta-nav:hover {
   gap: 8px;
 }
 
-/* Community ranking cards — exact mockup layout */
+/* Community cards = same tl-card stack as Templates */
 .community-panel .community-rankings-title {
   margin: 0 0 16px;
   font-size: 1.05rem;
   font-weight: 900;
   text-align: left;
-  text-transform: none;
-  letter-spacing: 0.01em;
   color: var(--text);
 }
 .community-panel .community-grid {
@@ -5406,140 +5404,63 @@ nav.main a.cta-nav:hover {
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 18px;
 }
-.community-panel .cr-card {
-  display: flex !important;
-  flex-direction: column !important;
-  width: 100%;
-  max-width: 100%;
-  margin: 0;
-  padding: 0;
+.community-panel a.tl-card.community-tl {
   text-decoration: none;
   color: inherit;
-  background: #161224;
-  border: 1px solid rgba(120, 100, 160, 0.3);
-  border-radius: 16px;
-  overflow: hidden;
-  box-sizing: border-box;
-  transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s;
+  cursor: pointer;
 }
-.community-panel .cr-card:hover {
-  border-color: rgba(180, 140, 255, 0.5);
-  transform: translateY(-2px);
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+.community-panel .community-tl .body {
+  padding-bottom: 12px;
 }
-.community-panel .cr-cover {
-  position: relative;
-  display: block;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  overflow: hidden;
-  background: #12101c;
-  flex: 0 0 auto;
-}
-.community-panel .cr-cover img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-.community-panel .cr-cover .sc-tag {
-  position: absolute;
-  top: 10px;
-  z-index: 2;
-  font-size: 0.62rem;
-  font-weight: 800;
-  padding: 4px 10px;
-  border-radius: 999px;
-}
-.community-panel .cr-cover .sc-tag-cat {
-  left: 10px;
-  background: rgba(20, 16, 32, 0.85);
-  color: #e8d4f0;
-  border: 1px solid rgba(180, 150, 220, 0.35);
-}
-.community-panel .cr-cover .sc-tag-ex {
-  right: 10px;
-  left: auto;
-  background: linear-gradient(120deg, #b79bf0, #e6a9e8);
-  color: #1a1226;
-}
-.community-panel .cr-body {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 12px 14px 14px;
-  background: #161224;
-  flex: 0 0 auto;
-  min-width: 0;
-}
-.community-panel .cr-text {
-  min-width: 0;
-  flex: 1;
-}
-.community-panel .cr-title {
-  margin: 0 0 6px;
-  font-weight: 900;
-  font-size: 1rem;
-  line-height: 1.25;
-  color: #fff;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-.community-panel .cr-meta {
+.community-panel .community-tl .community-meta {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 10px;
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: var(--text-dim);
 }
-.community-panel .cr-meta .sc-stat {
+.community-panel .community-tl .community-meta .sc-stat {
   display: inline-flex;
   align-items: center;
   gap: 4px;
 }
-.community-panel .cr-meta img {
+.community-panel .community-tl .community-meta img {
   width: 13px;
   height: 13px;
   opacity: 0.9;
 }
-.community-panel .cr-author {
+.community-panel .community-tl .foot-row {
+  margin-top: 10px;
   display: flex;
+  justify-content: flex-end;
+}
+.community-panel .community-tl .creator {
+  display: inline-flex;
   align-items: center;
   gap: 8px;
-  flex-shrink: 0;
-  max-width: 42%;
+  text-decoration: none;
+  color: #e8e0f4;
   font-size: 0.78rem;
   font-weight: 700;
-  color: #e8e0f4;
-  text-decoration: none;
 }
-.community-panel a.cr-author:hover { color: #fff; }
-.community-panel .cr-author span {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.community-panel .cr-author img,
-.community-panel .cr-av-fallback {
-  width: 36px;
-  height: 36px;
+.community-panel .community-tl .creator:hover { color: #fff; }
+.community-panel .community-tl .creator .avatar {
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid rgba(180, 140, 255, 0.5);
-  flex-shrink: 0;
+  border: 2px solid rgba(180, 140, 255, 0.45);
 }
-.community-panel .cr-av-fallback {
+.community-panel .community-tl .creator .av-fallback {
   display: grid;
   place-items: center;
   background: #2a2438;
   color: #e8d4ff;
   font-weight: 900;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid rgba(180, 140, 255, 0.45);
 }
 @media (max-width: 720px) {
   .community-panel .community-grid {

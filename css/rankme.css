@@ -5391,7 +5391,7 @@ nav.main a.cta-nav:hover {
   gap: 8px;
 }
 
-/* Community cards = same tl-card stack as Templates */
+/* Community cards — vertical tl-card (div, not nested <a>) */
 .community-panel .community-rankings-title {
   margin: 0 0 16px;
   font-size: 1.05rem;
@@ -5404,19 +5404,37 @@ nav.main a.cta-nav:hover {
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 18px;
 }
-.community-panel a.tl-card.community-tl {
+.community-panel .tl-card.community-tl {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
   text-decoration: none;
   color: inherit;
-  cursor: pointer;
+  max-width: 100%;
+}
+.community-panel .community-tl .cover {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
 }
 .community-panel .community-tl .body {
-  padding-bottom: 12px;
+  padding: 12px 14px 14px;
+}
+.community-panel .community-tl .title {
+  font-weight: 900;
+  font-size: 1rem;
+  margin: 0 0 6px;
+  color: #fff;
+  outline: none;
 }
 .community-panel .community-tl .community-meta {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 10px;
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  font-weight: 600;
 }
 .community-panel .community-tl .community-meta .sc-stat {
   display: inline-flex;
@@ -5430,6 +5448,8 @@ nav.main a.cta-nav:hover {
 }
 .community-panel .community-tl .foot-row {
   margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
   display: flex;
   justify-content: flex-end;
 }
@@ -5442,24 +5462,28 @@ nav.main a.cta-nav:hover {
   font-size: 0.78rem;
   font-weight: 700;
 }
-.community-panel .community-tl .creator:hover { color: #fff; }
+.community-panel .community-tl .creator:hover {
+  color: #fff;
+  text-decoration: none;
+}
 .community-panel .community-tl .creator .avatar {
   width: 32px;
   height: 32px;
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid rgba(180, 140, 255, 0.45);
+  flex-shrink: 0;
 }
 .community-panel .community-tl .creator .av-fallback {
   display: grid;
   place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
   background: #2a2438;
   color: #e8d4ff;
   font-weight: 900;
   font-size: 0.75rem;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
   border: 2px solid rgba(180, 140, 255, 0.45);
 }
 @media (max-width: 720px) {

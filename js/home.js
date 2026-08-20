@@ -273,10 +273,18 @@
       ? 'account.html?u=' + encodeURIComponent(String(row.user_id))
       : '';
     var authorBlock = profileHref
-      ? '<a class="cr-author" href="' + profileHref + '" onclick="event.stopPropagation()">' + av + '<span>' + author + '</span></a>'
+      ? '<a class="cr-author" href="' + profileHref + '" data-profile="1">' + av + '<span>' + author + '</span></a>'
       : '<div class="cr-author">' + av + '<span>' + author + '</span></div>';
+    var payloadAttr = '';
+    try {
+      if (row.payload) {
+        if (!window.__rmCommunityPayloads) window.__rmCommunityPayloads = {};
+        window.__rmCommunityPayloads[String(row.id)] = row.payload;
+        payloadAttr = ' data-cid="' + escapeHtml(String(row.id)) + '"';
+      }
+    } catch (e) {}
     return (
-      '<a class="cr-card" href="' + href + '">' +
+      '<a class="cr-card" href="' + href + '"' + payloadAttr + '>' +
         '<div class="cr-cover">' +
           '<span class="sc-tag sc-tag-cat">Games</span>' +
           '<span class="sc-tag sc-tag-ex">Exclusive</span>' +
@@ -306,6 +314,19 @@
       els.community.innerHTML =
         '<h2 class="community-rankings-title">Community Rankings</h2>' +
         '<div class="community-grid">' + rows.map(communityCardHtml).join('') + '</div>';
+      // Prefetch payload into sessionStorage so tier page can open community rank reliably
+      els.community.querySelectorAll('a.cr-card[data-cid]').forEach(function (a) {
+        a.addEventListener('click', function (ev) {
+          if (ev.target.closest && ev.target.closest('[data-profile]')) return;
+          var cid = a.getAttribute('data-cid');
+          var pl = window.__rmCommunityPayloads && window.__rmCommunityPayloads[cid];
+          if (!pl) return;
+          try {
+            sessionStorage.setItem('rankme_open_payload', typeof pl === 'string' ? pl : JSON.stringify(pl));
+            sessionStorage.setItem('rankme_community_id', String(cid));
+          } catch (err) {}
+        });
+      });
     } catch (e) {
       els.community.innerHTML =
         '<div class="community-empty">' +

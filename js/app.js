@@ -2253,8 +2253,24 @@ async function tryLoadCommunityFromQuery() {
   try {
     const params = new URLSearchParams(location.search);
     const cid = params.get('c');
-    if (!cid || typeof getTierlistById !== 'function') return;
-    const row = await getTierlistById(cid);
+    if (!cid) return;
+    let row = null;
+    if (typeof getTierlistById === 'function') {
+      try { row = await getTierlistById(cid); } catch (e) { row = null; }
+    }
+    // Fallback: payload stashed on community card click
+    if ((!row || !row.payload)) {
+      try {
+        const raw = sessionStorage.getItem('rankme_open_payload');
+        const sid = sessionStorage.getItem('rankme_community_id');
+        if (raw && sid && String(sid) === String(cid)) {
+          row = row || { id: cid };
+          row.payload = JSON.parse(raw);
+          sessionStorage.removeItem('rankme_open_payload');
+          sessionStorage.removeItem('rankme_community_id');
+        }
+      } catch (e) {}
+    }
     if (!row || !row.payload) return;
     const data = typeof row.payload === 'string' ? JSON.parse(row.payload) : row.payload;
     if (!data.tiers || !data.assignment) return;

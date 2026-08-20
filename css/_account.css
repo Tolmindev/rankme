@@ -471,18 +471,23 @@ body > .toast {
   padding: 28px 28px 32px;
 }
 .account-h1 {
-  margin: 0 0 22px;
-  font-size: 1.55rem;
+  display: block;
+  clear: both;
+  margin: 0 0 18px;
+  padding: 0;
+  font-size: 1.5rem;
   font-weight: 900;
   letter-spacing: 0.02em;
-  line-height: 1.2;
+  line-height: 1.25;
+  color: #fff;
 }
 .account-profile {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 14px 20px;
-  margin-bottom: 28px;
+  margin: 0 0 28px;
+  padding: 0;
 }
 .ap-avatar-wrap {
   flex-shrink: 0;
@@ -610,9 +615,11 @@ body > .toast {
   .mobile-only { display: none !important; }
   .as-head .desktop-only { display: block; }
   .sc-cover {
-    width: 148px;
-    min-width: 148px;
+    width: 200px;
+    min-width: 200px;
   }
+  .sc-title { font-size: 1.25rem; }
+  .sc-btn { padding: 12px 14px; font-size: 0.9rem; }
 }
 @media (max-width: 720px) {
   .desktop-only { display: none !important; }
@@ -631,28 +638,30 @@ body > .toast {
 }
 
 .saved-card {
-  background: rgba(22, 18, 36, 0.9);
-  border: 1.5px solid rgba(160, 130, 220, 0.35);
-  border-radius: 16px;
-  padding: 12px;
+  background: rgba(22, 18, 36, 0.95);
+  border: 1.5px solid rgba(160, 130, 220, 0.4);
+  border-radius: 20px;
+  padding: 16px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
+  box-sizing: border-box;
 }
 .sc-top {
   display: flex;
-  gap: 12px;
+  gap: 16px;
   align-items: flex-start;
 }
 .sc-cover {
   position: relative;
-  width: 112px;
-  min-width: 112px;
-  aspect-ratio: 16/10;
-  border-radius: 10px;
+  width: 140px;
+  min-width: 140px;
+  aspect-ratio: 16 / 10;
+  border-radius: 14px;
   overflow: hidden;
   display: block;
   border: 1px solid rgba(140, 120, 180, 0.3);
+  flex-shrink: 0;
 }
 .sc-cover img {
   width: 100%;
@@ -662,77 +671,81 @@ body > .toast {
 }
 .sc-tag {
   position: absolute;
-  top: 6px;
+  top: 8px;
   z-index: 1;
   font-size: 0.58rem;
   font-weight: 800;
-  padding: 2px 7px;
+  padding: 3px 8px;
   border-radius: 999px;
   text-transform: uppercase;
   letter-spacing: 0.02em;
 }
 .sc-tag-cat {
-  left: 6px;
-  background: rgba(20, 16, 32, 0.75);
+  left: 8px;
+  background: rgba(20, 16, 32, 0.8);
   color: #e8d4f0;
   border: 1px solid rgba(180, 150, 220, 0.35);
 }
 .sc-tag-ex {
-  right: 6px;
+  right: 8px;
   background: linear-gradient(120deg, #b79bf0, #e6a9e8);
   color: #1a1226;
 }
-.sc-info { flex: 1; min-width: 0; }
+.sc-info {
+  flex: 1;
+  min-width: 0;
+  padding-top: 2px;
+}
 .sc-title {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   font-weight: 900;
-  font-size: 0.95rem;
+  font-size: 1.05rem;
   line-height: 1.25;
   color: #fff;
   text-decoration: none;
-  margin-bottom: 4px;
+  margin: 0 0 8px;
 }
 .sc-title:hover { color: #e6d4ff; }
 .sc-meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 10px;
   align-items: center;
-  font-size: 0.72rem;
+  font-size: 0.78rem;
   color: var(--text-dim);
   font-weight: 600;
 }
 .sc-stat {
   display: inline-flex;
   align-items: center;
-  gap: 3px;
+  gap: 4px;
 }
 .sc-stat img {
-  width: 12px;
-  height: 12px;
-  opacity: 0.85;
+  width: 14px;
+  height: 14px;
+  opacity: 0.9;
 }
 .sc-status {
-  margin-top: 6px;
-  font-size: 0.72rem;
+  margin-top: 8px;
+  font-size: 0.8rem;
   font-weight: 700;
   color: #9a90b0;
 }
 .sc-status.is-pub { color: #5dce7a; }
 .sc-actions {
   display: flex;
-  gap: 8px;
+  gap: 10px;
 }
 .sc-btn {
   flex: 1;
   text-align: center;
-  padding: 9px 10px;
+  padding: 11px 12px;
   border-radius: 999px;
   font-weight: 800;
-  font-size: 0.78rem;
+  font-size: 0.85rem;
   font-family: inherit;
   cursor: pointer;
   text-decoration: none;
@@ -768,41 +781,15 @@ body > .toast {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding-top: 4px;
-  font-size: 0.8rem;
+  padding-top: 2px;
+  font-size: 0.85rem;
   font-weight: 700;
-  color: var(--text-dim);
+  color: #e8e0f4;
 }
 
-/* Achievements placeholders */
-.ach-row {
-  display: flex;
-  gap: 10px;
-  overflow-x: auto;
-  padding-bottom: 4px;
-}
-.ach-card, .ach-slot {
-  width: 88px;
-  height: 88px;
-  border-radius: 12px;
-  flex-shrink: 0;
-}
-.ach-slot {
-  background: rgba(30, 24, 48, 0.8);
-  border: 1px dashed rgba(120, 100, 160, 0.3);
-}
-.ach-placeholder-art {
-  background: linear-gradient(145deg, #1a1430, #2a1f48);
-  border: 1.5px solid rgba(180, 140, 255, 0.4);
-  display: grid;
-  place-items: center;
-  box-shadow: 0 0 16px rgba(140, 100, 220, 0.2);
-}
-.ach-soon {
-  font-size: 0.7rem;
-  font-weight: 800;
-  color: #c4a0f0;
-  letter-spacing: 0.04em;
+/* Achievements — empty until feature ships */
+.account-section-ach .as-sub {
+  margin-top: 2px;
 }
 
 /* Squishy switch (CodePen-inspired, RankMe green) */

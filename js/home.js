@@ -231,17 +231,68 @@
     });
   }
 
-  /* ---- Community: best-effort, real data only, graceful no-op if unavailable ---- */
-  function communityItemHtml(row, templateById) {
-    var tpl = templateById[row.template_id];
-    var title = escapeHtml((row.title && row.title !== 'Untitled') ? row.title : (tpl ? tpl.title : 'Ranking'));
-    var cover = tpl ? tpl.cover : 'assets/brand/favicon.svg';
-    var href = tpl ? tpl.href : '#';
-    var when = escapeHtml(fmtDate(row.updated_at || row.created_at));
+  /* ---- Community rankings grid (cover + stats + author) ---- */
+  function coverForTemplate(tid) {
+    var map = {
+      'lol': 'assets/brand/LoL_Cover_thumb.webp',
+      'sf-duel': 'assets/brand/SF_Cover_1_thumb.webp',
+      'sf-duel-ex': 'assets/brand/SFD_EX_Cover_thumb.webp',
+      'sf6': 'assets/brand/SF6_Cover_thumb.webp',
+      'dota2': 'assets/brand/Dota2_Cover_thumb.webp',
+    };
+    return map[tid] || 'assets/brand/SF_Cover_1_thumb.webp';
+  }
+
+  function titleForTemplate(tid, fallback) {
+    var map = {
+      'lol': 'League of Legends',
+      'sf-duel': 'Street Fighter: Duel',
+      'sf-duel-ex': 'SF Duel EX-Move',
+      'sf6': 'Street Fighter 6',
+      'dota2': 'Dota 2',
+    };
+    if (fallback && fallback !== 'Untitled') return fallback;
+    return map[tid] || tid || 'Tier list';
+  }
+
+  function communityCardHtml(row) {
+    var tid = row.template_id || 'sf-duel';
+    var cover = coverForTemplate(tid);
+    var title = escapeHtml(titleForTemplate(tid, row.title));
+    var href = 'tier.html?t=' + encodeURIComponent(tid) + '&c=' + encodeURIComponent(String(row.id));
+    var ago = typeof timeAgo === 'function'
+      ? timeAgo(row.updated_at || row.created_at)
+      : fmtDate(row.updated_at || row.created_at);
+    var likes = typeof formatCount === 'function' ? formatCount(row.like_count) : String(row.like_count || 0);
+    var views = typeof formatCount === 'function' ? formatCount(row.view_count) : String(row.view_count || 0);
+    var author = escapeHtml(row.author_name || 'User');
+    var av = row.author_avatar
+      ? '<img src="' + escapeHtml(row.author_avatar) + '" alt="">'
+      : '<span class="cr-av-fallback">' + author.charAt(0).toUpperCase() + '</span>';
+    var profileHref = row.user_id
+      ? 'account.html?u=' + encodeURIComponent(String(row.user_id))
+      : '';
+    var authorBlock = profileHref
+      ? '<a class="cr-author" href="' + profileHref + '" onclick="event.stopPropagation()">' + av + '<span>' + author + '</span></a>'
+      : '<div class="cr-author">' + av + '<span>' + author + '</span></div>';
     return (
-      '<a class="community-item" href="' + escapeHtml(href) + '">' +
-        '<img src="' + escapeHtml(cover) + '" alt="">' +
-        '<div><div class="ci-title">' + title + '</div><div class="ci-meta">' + when + '</div></div>' +
+      '<a class="cr-card" href="' + href + '">' +
+        '<div class="cr-cover">' +
+          '<span class="sc-tag sc-tag-cat">Games</span>' +
+          '<span class="sc-tag sc-tag-ex">Exclusive</span>' +
+          '<img src="' + escapeHtml(cover) + '" alt="" loading="lazy">' +
+        '</div>' +
+        '<div class="cr-body">' +
+          '<div class="cr-text">' +
+            '<div class="cr-title">' + title + '</div>' +
+            '<div class="cr-meta">' +
+              (ago ? '<span>' + escapeHtml(ago) + '</span>' : '') +
+              '<span class="sc-stat"><img src="assets/icons/heart.svg" alt=""> ' + likes + '</span>' +
+              '<span class="sc-stat"><img src="assets/icons/view.svg" alt=""> ' + views + '</span>' +
+            '</div>' +
+          '</div>' +
+          authorBlock +
+        '</div>' +
       '</a>'
     );
   }
@@ -252,45 +303,9 @@
       if (typeof listPublicTierlists !== 'function') throw new Error('no api');
       var rows = await listPublicTierlists(12);
       if (!rows || !rows.length) throw new Error('empty');
-      var ids = rows.map(function (r) { return r.id; });
-      var liked = new Set();
-      try {
-        if (typeof getMyLikedIds === 'function') liked = await getMyLikedIds(ids);
-      } catch (e) {}
-      els.community.innerHTML = '<div class="community-list">' + rows.map(function (r) {
-        var tid = r.template_id || 'sf-duel';
-        var href = 'tier.html?t=' + encodeURIComponent(tid);
-        var when = r.updated_at ? new Date(r.updated_at).toLocaleDateString() : '';
-        var lc = r.like_count || 0;
-        var isLiked = liked.has(String(r.id));
-        return '<div class="community-item" data-id="' + escapeHtml(String(r.id)) + '">' +
-          '<a class="ci-main" href="' + href + '">' +
-            '<div class="ci-title">' + escapeHtml(r.title || 'Untitled') + '</div>' +
-            '<div class="ci-meta">' + escapeHtml(tid) + (when ? ' · ' + when : '') + '</div>' +
-          '</a>' +
-          '<button type="button" class="heart-btn' + (isLiked ? ' on' : '') + '" data-like="' + escapeHtml(String(r.id)) + '" aria-label="Like">' +
-            '<span class="heart-ico">' + (isLiked ? '♥' : '♡') + '</span>' +
-            '<span class="heart-n">' + lc + '</span>' +
-          '</button>' +
-          '</div>';
-      }).join('') + '</div>';
-      els.community.querySelectorAll('[data-like]').forEach(function (btn) {
-        btn.addEventListener('click', async function (e) {
-          e.preventDefault();
-          e.stopPropagation();
-          try {
-            if (typeof toggleTierlistLike !== 'function') return;
-            var res = await toggleTierlistLike(btn.getAttribute('data-like'));
-            btn.classList.toggle('on', !!res.liked);
-            btn.querySelector('.heart-ico').textContent = res.liked ? '♥' : '♡';
-            btn.querySelector('.heart-n').textContent = String(res.like_count || 0);
-          } catch (err) {
-            if (String(err.message || err).indexOf('Login') >= 0) {
-              location.href = 'account.html';
-            }
-          }
-        });
-      });
+      els.community.innerHTML =
+        '<h2 class="community-rankings-title">Community Rankings</h2>' +
+        '<div class="community-grid">' + rows.map(communityCardHtml).join('') + '</div>';
     } catch (e) {
       els.community.innerHTML =
         '<div class="community-empty">' +

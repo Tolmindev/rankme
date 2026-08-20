@@ -53,20 +53,39 @@ async function rankmeSignOut() {
 
 /* ---- Exclusive tierlists (user-owned rows; RLS: auth.uid() = user_id) ---- */
 
-async function saveExclusiveTierlist({ title, templateId, payload }) {
+async function saveExclusiveTierlist({ title, templateId, payload, id }) {
   const client = await initSupabase();
   const user = await getSessionUser();
   if (!client || !user) throw new Error('Login required');
+  const meta = user.user_metadata || {};
+  const authorName =
+    meta.full_name || meta.custom_claims?.global_name || meta.name || meta.user_name || user.email || 'User';
+  const authorAvatar = meta.avatar_url || meta.picture || '';
+  const now = new Date().toISOString();
   const row = {
     user_id: user.id,
     title: title || 'Untitled',
     template_id: templateId || 'sf-duel',
     payload,
-    updated_at: new Date().toISOString(),
+    author_name: authorName,
+    author_avatar: authorAvatar,
+    updated_at: now,
   };
+  // Overwrite own save when id is known (edit existing ranking)
+  if (id) {
+    const { data, error } = await client
+      .from('tierlists')
+      .update(row)
+      .eq('id', id)
+      .eq('user_id', user.id)
+      .select('id')
+      .single();
+    if (!error && data) return data;
+    // fall through to insert if row missing
+  }
   const { data, error } = await client
     .from('tierlists')
-    .insert(row)
+    .insert(Object.assign({ created_at: now }, row))
     .select('id')
     .single();
   if (error) throw error;
@@ -79,10 +98,19 @@ async function listMyTierlists() {
   if (!client || !user) return [];
   const { data, error } = await client
     .from('tierlists')
-    .select('id, title, template_id, payload, created_at, updated_at, is_public, like_count')
+    .select('id, title, template_id, payload, created_at, updated_at, is_public, like_count, view_count, author_name, author_avatar')
     .eq('user_id', user.id)
     .order('updated_at', { ascending: false });
-  if (error) throw error;
+  if (error) {
+    // fallback without optional columns
+    const { data: d2, error: e2 } = await client
+      .from('tierlists')
+      .select('id, title, template_id, payload, created_at, updated_at, is_public, like_count')
+      .eq('user_id', user.id)
+      .order('updated_at', { ascending: false });
+    if (e2) throw e2;
+    return d2 || [];
+  }
   return data || [];
 }
 
@@ -103,15 +131,104 @@ async function listPublicTierlists(limit) {
   if (!client) return [];
   const { data, error } = await client
     .from('tierlists')
-    .select('id, title, template_id, updated_at, user_id, is_public, like_count')
+    .select('id, title, template_id, updated_at, created_at, user_id, is_public, like_count, view_count, author_name, author_avatar, payload')
     .eq('is_public', true)
     .order('updated_at', { ascending: false })
     .limit(limit || 24);
   if (error) {
     console.warn('[RankMe] listPublicTierlists', error.message);
-    return [];
+    const { data: d2 } = await client
+      .from('tierlists')
+      .select('id, title, template_id, updated_at, user_id, is_public, like_count')
+      .eq('is_public', true)
+      .order('updated_at', { ascending: false })
+      .limit(limit || 24);
+    return d2 || [];
   }
   return data || [];
+}
+
+/** Public profile: only is_public lists for a given user_id (works without login). */
+async function listPublicTierlistsByUser(userId, limit) {
+  const client = await initSupabase();
+  if (!client || !userId) return [];
+  const { data, error } = await client
+    .from('tierlists')
+    .select('id, title, template_id, updated_at, created_at, user_id, is_public, like_count, view_count, author_name, author_avatar, payload')
+    .eq('is_public', true)
+    .eq('user_id', userId)
+    .order('updated_at', { ascending: false })
+    .limit(limit || 48);
+  if (error) {
+    console.warn('[RankMe] listPublicTierlistsByUser', error.message);
+    const { data: d2 } = await client
+      .from('tierlists')
+      .select('id, title, template_id, updated_at, user_id, is_public, like_count, author_name, author_avatar')
+      .eq('is_public', true)
+      .eq('user_id', userId)
+      .order('updated_at', { ascending: false })
+      .limit(limit || 48);
+    return d2 || [];
+  }
+  return data || [];
+}
+
+async function getTierlistById(id) {
+  const client = await initSupabase();
+  if (!client || !id) return null;
+  const { data, error } = await client
+    .from('tierlists')
+    .select('id, title, template_id, payload, updated_at, created_at, user_id, is_public, like_count, view_count, author_name, author_avatar')
+    .eq('id', id)
+    .maybeSingle();
+  if (error) {
+    console.warn('[RankMe] getTierlistById', error.message);
+    return null;
+  }
+  return data;
+}
+
+async function incrementTierlistView(id) {
+  if (!id) return;
+  const client = await initSupabase();
+  if (!client) return;
+  try {
+    await client.rpc('increment_tierlist_view', { tid: id });
+  } catch (e) {
+    // optional RPC / column
+  }
+}
+
+/* Display helpers */
+function formatCount(n) {
+  n = Number(n) || 0;
+  if (n >= 1000000) return (n / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
+  if (n >= 1000) return (n / 1000).toFixed(1).replace(/\.0$/, '') + 'K';
+  return String(n);
+}
+
+function timeAgo(iso) {
+  if (!iso) return '';
+  const d = new Date(iso);
+  if (isNaN(d.getTime())) return '';
+  const s = Math.max(0, (Date.now() - d.getTime()) / 1000);
+  if (s < 60) return 'just now';
+  if (s < 3600) return Math.floor(s / 60) + 'm ago';
+  if (s < 86400) return Math.floor(s / 3600) + 'h ago';
+  if (s < 86400 * 7) {
+    const days = Math.floor(s / 86400);
+    return days === 1 ? '1 day ago' : days + ' days ago';
+  }
+  if (s < 86400 * 30) {
+    const w = Math.floor(s / (86400 * 7));
+    return w === 1 ? '1 week ago' : w + ' weeks ago';
+  }
+  if (s < 86400 * 365) {
+    const m = Math.floor(s / (86400 * 30));
+    return m === 1 ? '1 month ago' : m + ' months ago';
+  }
+  const y = Math.floor(s / (86400 * 365));
+  return y === 1 ? '1 year ago' : y + ' years ago';
 }
 
 async function deleteTierlist(id) {

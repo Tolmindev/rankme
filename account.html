@@ -6,12 +6,11 @@
 <title>Account - RankMe</title>
 <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/rankme.css?v=20260818skel2">
+<link rel="stylesheet" href="css/rankme.css?v=20260821community">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
 <script src="js/supabaseClient.js" defer></script>
-
 </head>
-<body>
+<body class="page-account">
 <header class="site">
   <a class="brand" href="index.html"><img src="assets/brand/RankMe_logo.svg" alt="RankMe"></a>
   <nav class="main">
@@ -20,8 +19,11 @@
     <a class="login-btn" id="loginBtn" href="account.html">Account</a>
   </nav>
 </header>
-<div class="wrap">
-  <div class="panel-card" id="panel" aria-busy="true">
+
+<div class="account-bg" aria-hidden="true"></div>
+
+<div class="wrap account-wrap">
+  <div class="panel-card account-panel" id="panel" aria-busy="true">
     <div class="skel-account" aria-hidden="true">
       <div class="skel-account-head">
         <div class="skel-block skel-avatar-lg"></div>
@@ -39,6 +41,21 @@
     </div>
   </div>
 </div>
+
+<div class="modal-back" id="delModal">
+  <div class="modal">
+    <h3>Delete?</h3>
+    <p>This cannot be undone.</p>
+    <div class="modal-actions">
+      <button type="button" class="primary" id="delCancel">Cancel</button>
+      <button type="button" class="danger" id="delOk">Delete</button>
+    </div>
+  </div>
+</div>
+
+<footer id="site-footer" class="site"></footer>
+<script src="js/footer.js" defer></script>
+
 <script>
 const panel = document.getElementById('panel');
 const navBtn = document.getElementById('loginBtn');
@@ -62,12 +79,42 @@ function resolveProvider(user){
   return p === 'twitter' ? 'x' : p;
 }
 
+function coverForTemplate(tid){
+  const map = {
+    'lol': 'assets/brand/LoL_Cover_thumb.webp',
+    'sf-duel': 'assets/brand/SF_Cover_1_thumb.webp',
+    'sf-duel-ex': 'assets/brand/SFD_EX_Cover_thumb.webp',
+    'sf6': 'assets/brand/SF6_Cover_thumb.webp',
+    'dota2': 'assets/brand/Dota2_Cover_thumb.webp',
+  };
+  return map[tid] || 'assets/brand/SF_Cover_1_thumb.webp';
+}
+
+function titleForTemplate(tid, fallback){
+  const map = {
+    'lol': 'League of Legends',
+    'sf-duel': 'Street Fighter: Duel',
+    'sf-duel-ex': 'SF Duel EX-Move',
+    'sf6': 'Street Fighter 6',
+    'dota2': 'Dota 2',
+  };
+  return fallback || map[tid] || tid || 'Tier list';
+}
+
+function bindSquishy(root){
+  (root || document).querySelectorAll('.toggle-checkbox').forEach(cb=>{
+    if(cb.dataset.bound) return;
+    cb.dataset.bound = '1';
+    cb.addEventListener('click', ()=> cb.classList.add('toggled-once'), { once: true });
+  });
+}
+
 async function renderLogin(){
   navBtn.textContent = 'Account';
-  navBtn.classList.remove('logged-in');
+  navBtn.classList.remove('login-btn-avatar', 'logged-in');
   panel.innerHTML = `
-    <h1>Login</h1>
-    <p class="sub">Login to save <b>Exclusive</b> rankings. Custom images stay in your browser only.</p>
+    <h1 class="account-h1">Login</h1>
+    <p class="sub">Login to save <b>Exclusive</b> rankings. Custom images stay on your device.</p>
     <div class="providers">
       <button class="prov" data-p="discord">${providerIcon('discord')} Continue with Discord</button>
       <button class="prov" data-p="google">${providerIcon('google')} Continue with Google</button>
@@ -88,32 +135,123 @@ async function renderLogin(){
   });
 }
 
+function savedCardHtml(r, opts){
+  opts = opts || {};
+  const isPublicView = !!opts.publicView;
+  const tid = r.template_id || 'sf-duel';
+  const cover = coverForTemplate(tid);
+  const title = titleForTemplate(tid, r.title);
+  const ago = typeof timeAgo === 'function' ? timeAgo(r.updated_at || r.created_at) : '';
+  const likes = typeof formatCount === 'function' ? formatCount(r.like_count) : String(r.like_count || 0);
+  const views = typeof formatCount === 'function' ? formatCount(r.view_count) : String(r.view_count || 0);
+  const pub = !!r.is_public;
+  // Public lists open with community context so bar + like work
+  const openHref = isPublicView || pub
+    ? 'tier.html?t=' + encodeURIComponent(tid) + '&c=' + encodeURIComponent(r.id)
+    : 'tier.html?t=' + encodeURIComponent(tid);
+  const actions = isPublicView
+    ? `<div class="sc-actions">
+        <a class="sc-btn sc-open" href="${openHref}" data-open="${r.id}">Open</a>
+        <button type="button" class="sc-btn sc-share" data-share="${r.id}">Share</button>
+      </div>`
+    : `<div class="sc-actions">
+        <a class="sc-btn sc-open" href="${openHref}" data-open="${r.id}">Open</a>
+        <button type="button" class="sc-btn sc-share" data-share="${r.id}">Share</button>
+        <button type="button" class="sc-btn sc-del" data-del="${r.id}">Delete</button>
+      </div>
+      <div class="sc-publish">
+        <span>Publish to Community</span>
+        <label class="toggle-container green">
+          <input class="toggle-checkbox" type="checkbox" data-pub="${r.id}" ${pub ? 'checked' : ''} aria-label="Publish to Community">
+          <div class="toggle-track"><div class="toggle-thumb"></div></div>
+        </label>
+      </div>`;
+  return `<article class="saved-card" data-id="${r.id}">
+    <div class="sc-top">
+      <a class="sc-cover" href="${openHref}" data-open="${r.id}">
+        <span class="sc-tag sc-tag-cat">Games</span>
+        <span class="sc-tag sc-tag-ex">Exclusive</span>
+        <img src="${cover}" alt="" loading="lazy">
+      </a>
+      <div class="sc-info">
+        <a class="sc-title" href="${openHref}" data-open="${r.id}">${title.replace(/</g,'')}</a>
+        <div class="sc-meta">
+          ${ago ? `<span>${ago}</span>` : ''}
+          <span class="sc-stat"><img src="assets/icons/heart.svg" alt=""> ${likes}</span>
+          <span class="sc-stat"><img src="assets/icons/view.svg" alt=""> ${views}</span>
+        </div>
+        ${isPublicView ? '' : `<div class="sc-status ${pub ? 'is-pub' : ''}">${pub ? 'Published' : 'Unpublished'}</div>`}
+      </div>
+    </div>
+    ${actions}
+  </article>`;
+}
+
 async function renderCabinet(user){
   if (typeof updateNavAuth === 'function') updateNavAuth();
-  else if (navBtn) {
-    navBtn.textContent = user.user_metadata?.full_name || user.user_metadata?.name || 'Account';
-    navBtn.classList.add('logged-in');
-  }
   const name = user.user_metadata?.full_name || user.user_metadata?.custom_claims?.global_name || user.user_metadata?.name || user.email || 'User';
   const avatar = user.user_metadata?.avatar_url || user.user_metadata?.picture || '';
   const provider = resolveProvider(user);
   const providerLabel = ({google:'Google', discord:'Discord', x:'X', twitter:'X'})[provider] || provider;
 
-  let listHtml = '<div class="skel-account-list" aria-hidden="true"><div class="skel-block skel-account-row"></div><div class="skel-block skel-account-row"></div></div>';
+  panel.removeAttribute('aria-busy');
   panel.innerHTML = `
-    <h1>Collection</h1>
-    <p class="sub">Saved Exclusive rankings.</p>
-    <div class="profile">
-      <div class="avatar-wrap">
-        <div class="holo-ring"></div>
-        ${avatar ? `<img class="avatar" src="${avatar}" alt="">` : `<div class="avatar-fallback">${(name[0]||'U').toUpperCase()}</div>`}
+    <h1 class="account-h1 desktop-only">My Collection</h1>
+    <div class="account-profile">
+      <div class="ap-avatar-wrap">
+        ${avatar ? `<img class="ap-avatar" src="${avatar}" alt="">` : `<div class="ap-avatar ap-fallback">${(name[0]||'U').toUpperCase()}</div>`}
       </div>
-      <div class="meta"><b>${name}</b><span>${providerLabel}</span></div>
+      <div class="ap-text">
+        <b class="ap-name">${name.replace(/</g,'')}</b>
+        <span class="ap-provider">${providerLabel}</span>
+      </div>
+      <div class="ap-stats" id="apStats">
+        <div class="ap-stat"><b id="statLists">0</b><span>Tier Lists</span></div>
+        <div class="ap-stat"><b id="statBattles">0</b><span>Battles</span></div>
+        <div class="ap-stat"><b id="statAch">0</b><span>Achievements</span></div>
+        <div class="ap-stat"><b id="statLikes">0</b><span>Likes</span></div>
+      </div>
     </div>
-    <div class="list">
-      <h2>Saved</h2>
-      <div id="listBox">${listHtml}</div>
-    </div>
+
+    <section class="account-section">
+      <div class="as-head">
+        <div>
+          <h2>Saved</h2>
+          <p class="as-sub mobile-only">Saved Exclusive rankings</p>
+        </div>
+        <p class="as-sub desktop-only">Saved Exclusive rankings</p>
+      </div>
+      <div class="saved-grid" id="listBox"></div>
+      <div class="as-more" id="savedMore" hidden>
+        <button type="button" class="show-all-btn" id="savedShowAll">Show all</button>
+      </div>
+    </section>
+
+    <section class="account-section">
+      <div class="as-head">
+        <div>
+          <h2>Achievements</h2>
+          <p class="as-sub mobile-only">Collectible Cards</p>
+        </div>
+        <p class="as-sub desktop-only">Collectible Cards</p>
+      </div>
+      <div class="ach-row" id="achRow">
+        <div class="ach-card ach-placeholder-art" title="Coming soon">
+          <div class="ach-soon">Soon</div>
+        </div>
+        <div class="ach-slot"></div>
+        <div class="ach-slot"></div>
+        <div class="ach-slot desktop-only"></div>
+        <div class="ach-slot desktop-only"></div>
+        <div class="ach-slot desktop-only"></div>
+        <div class="ach-slot desktop-only"></div>
+        <div class="ach-slot desktop-only"></div>
+      </div>
+      <div class="as-more">
+        <button type="button" class="show-all-btn" disabled title="Coming soon">Show all</button>
+      </div>
+    </section>
+
     <button class="login-btn ghost" id="logout">Log out</button>`;
 
   document.getElementById('logout').onclick = async ()=>{
@@ -124,97 +262,245 @@ async function renderCabinet(user){
   try{
     const rows = await listMyTierlists();
     const box = document.getElementById('listBox');
+    const totalLikes = rows.reduce((s,r)=> s + (Number(r.like_count)||0), 0);
+    document.getElementById('statLists').textContent = String(rows.length);
+    document.getElementById('statLikes').textContent = typeof formatCount === 'function' ? formatCount(totalLikes) : String(totalLikes);
+
     if(!rows.length){
-      box.innerHTML = '<div class="empty">Nothing saved yet.</div>';
+      box.innerHTML = '<div class="empty">Nothing saved yet. Open an Exclusive template, rank, press Save.</div>';
     } else {
-      box.innerHTML = rows.map(r=>{
-        const tid = r.template_id || 'sf-duel';
-        const openHref = 'tier.html?t=' + encodeURIComponent(tid);
-        const when = r.updated_at ? new Date(r.updated_at).toLocaleString() : '';
-        const pub = !!r.is_public;
-        return `<div class="tl-item">
-          <div><div class="t">${r.title||'Untitled'}${pub ? ' <span class="pub-badge">Public</span>' : ''}</div><div class="d">${r.template_id||'exclusive'} · ${when}</div></div>
-          <div class="tl-actions">
-            <a class="primary" href="${openHref}" data-id="${r.id}">Open</a>
-            <button type="button" class="share" data-share="${r.id}">Share</button>
-            <button type="button" class="pub-btn ${pub ? 'is-public' : ''}" data-pub="${r.id}" data-on="${pub ? '1' : '0'}">${pub ? 'Public' : 'Publish'}</button>
-            <button type="button" class="danger" data-del="${r.id}">Delete</button>
-          </div>
-        </div>`;
-      }).join('');
-      box.querySelectorAll('[data-del]').forEach(btn=>{
-        btn.onclick = ()=>{
-          const id = btn.dataset.del;
-          const modal = document.getElementById('delModal');
-          modal.classList.add('open');
-          const ok = document.getElementById('delOk');
-          const cancel = document.getElementById('delCancel');
-          const cleanup = ()=>{ modal.classList.remove('open'); ok.onclick=null; cancel.onclick=null; };
-          cancel.onclick = cleanup;
-          ok.onclick = async ()=>{
-            cleanup();
-            await deleteTierlist(id);
-            renderCabinet(user);
-          };
-        };
-      });
-      box.querySelectorAll('[data-share]').forEach(btn=>{
-        btn.onclick = async ()=>{
-          const row = rows.find(x=>String(x.id)===String(btn.dataset.share));
-          if(!row?.payload) return;
-          try{
-            const tid = encodeURIComponent(row.template_id || 'sf-duel');
-            let url = location.origin + '/tier.html?t=' + tid;
-            if(typeof createShortLink === 'function'){
-              const code = await createShortLink(row.payload);
-              if(code) url = location.origin + '/tier.html?t=' + tid + '&s=' + code;
-            }
-            if(url.indexOf('&s=') < 0 && url.indexOf('?s=') < 0){
-              const json = JSON.stringify(row.payload);
-              let hash = 'r' + btoa(unescape(encodeURIComponent(json))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
-              url = location.origin + '/tier.html?t=' + tid + '#' + hash;
-            }
-            await navigator.clipboard.writeText(url);
-            btn.textContent = 'Copied!';
-            setTimeout(()=> btn.textContent = 'Share', 1500);
-          }catch(e){
-            alert('Could not copy link');
-          }
-        };
-      });
-      box.querySelectorAll('[data-pub]').forEach(btn=>{
-        btn.onclick = async ()=>{
-          const id = btn.dataset.pub;
-          const on = btn.dataset.on === '1';
-          try{
-            await setTierlistPublic(id, !on);
-            btn.dataset.on = on ? '0' : '1';
-            btn.textContent = on ? 'Publish' : 'Public';
-            btn.classList.toggle('is-public', !on);
-            const title = btn.closest('.tl-item')?.querySelector('.t');
-            if(title){
-              title.querySelector('.pub-badge')?.remove();
-              if(!on) title.insertAdjacentHTML('beforeend', ' <span class="pub-badge">Public</span>');
-            }
-          }catch(e){
-            alert('Add column is_public to tierlists in Supabase (boolean).');
-          }
-        };
-      });
-      // Open with payload via sessionStorage
-      box.querySelectorAll('a.primary').forEach(a=>{
-        a.addEventListener('click', (e)=>{
-          const id = a.getAttribute('data-id');
-          const row = rows.find(x=>String(x.id)===String(id));
-          if(row?.payload){
-            sessionStorage.setItem('rankme_open_payload', JSON.stringify(row.payload));
-          }
-        });
-      });
+      const limit = window.matchMedia('(max-width:720px)').matches ? 1 : 3;
+      let showAll = false;
+      const paint = ()=>{
+        const slice = showAll ? rows : rows.slice(0, limit);
+        box.innerHTML = slice.map(r => savedCardHtml(r)).join('');
+        const more = document.getElementById('savedMore');
+        if(rows.length > limit){
+          more.hidden = false;
+          const btn = document.getElementById('savedShowAll');
+          btn.textContent = showAll ? 'Show less' : 'Show all';
+          btn.onclick = ()=>{ showAll = !showAll; paint(); };
+        } else {
+          more.hidden = true;
+        }
+        bindSquishy(box);
+        wireSavedActions(rows, user);
+      };
+      paint();
     }
   }catch(e){
-    document.getElementById('listBox').innerHTML = `<div class="empty">Could not load lists. Create table <code>tierlists</code> in Supabase (see SQL below). ${e.message||''}</div>`;
+    document.getElementById('listBox').innerHTML = `<div class="empty">Could not load lists. ${e.message||''}</div>`;
   }
+}
+
+function wireSavedActions(rows, user){
+  const box = document.getElementById('listBox');
+  if(!box) return;
+
+  box.querySelectorAll('[data-open]').forEach(a=>{
+    a.addEventListener('click', (e)=>{
+      const id = a.getAttribute('data-open');
+      const row = rows.find(x=>String(x.id)===String(id));
+      if(row?.payload){
+        sessionStorage.setItem('rankme_open_payload', JSON.stringify(row.payload));
+        sessionStorage.setItem('rankme_saved_id', String(row.id));
+      }
+    });
+  });
+
+  box.querySelectorAll('[data-del]').forEach(btn=>{
+    btn.onclick = ()=>{
+      const id = btn.dataset.del;
+      const modal = document.getElementById('delModal');
+      modal.classList.add('open');
+      const ok = document.getElementById('delOk');
+      const cancel = document.getElementById('delCancel');
+      const cleanup = ()=>{ modal.classList.remove('open'); ok.onclick=null; cancel.onclick=null; };
+      cancel.onclick = cleanup;
+      ok.onclick = async ()=>{
+        cleanup();
+        await deleteTierlist(id);
+        renderCabinet(user);
+      };
+    };
+  });
+
+  box.querySelectorAll('[data-share]').forEach(btn=>{
+    btn.onclick = async ()=>{
+      const row = rows.find(x=>String(x.id)===String(btn.dataset.share));
+      if(!row) return;
+      try{
+        const tid = encodeURIComponent(row.template_id || 'sf-duel');
+        let url = location.origin + '/tier.html?t=' + tid;
+        if(row.is_public){
+          url = location.origin + '/tier.html?t=' + tid + '&c=' + encodeURIComponent(row.id);
+        } else if(row.payload && typeof createShortLink === 'function'){
+          const code = await createShortLink(row.payload);
+          if(code) url = location.origin + '/tier.html?t=' + tid + '&s=' + code;
+        }
+        await navigator.clipboard.writeText(url);
+        btn.textContent = 'Copied!';
+        setTimeout(()=> btn.textContent = 'Share', 1500);
+      }catch(e){
+        alert('Could not copy link');
+      }
+    };
+  });
+
+  box.querySelectorAll('[data-pub]').forEach(cb=>{
+    cb.addEventListener('change', async ()=>{
+      const id = cb.getAttribute('data-pub');
+      const on = cb.checked;
+      try{
+        await setTierlistPublic(id, on);
+        const card = cb.closest('.saved-card');
+        const st = card?.querySelector('.sc-status');
+        if(st){
+          st.textContent = on ? 'Published' : 'Unpublished';
+          st.classList.toggle('is-pub', on);
+        }
+        const row = rows.find(x=>String(x.id)===String(id));
+        if(row) row.is_public = on;
+      }catch(e){
+        cb.checked = !on;
+        alert('Could not update publish state. Check is_public column in Supabase.');
+      }
+    });
+  });
+}
+
+async function renderPublicProfile(userId){
+  panel.removeAttribute('aria-busy');
+  document.title = 'Profile - RankMe';
+
+  let rows = [];
+  try {
+    rows = typeof listPublicTierlistsByUser === 'function'
+      ? await listPublicTierlistsByUser(userId)
+      : [];
+  } catch (e) {
+    panel.innerHTML = '<div class="empty">Could not load profile. ' + (e.message || '') + '</div>';
+    return;
+  }
+
+  const first = rows[0] || {};
+  const name = (first.author_name || 'User').replace(/</g, '');
+  const avatar = first.author_avatar || '';
+  const totalLikes = rows.reduce((s, r) => s + (Number(r.like_count) || 0), 0);
+  const fc = typeof formatCount === 'function' ? formatCount : String;
+
+  panel.innerHTML = `
+    <h1 class="account-h1 desktop-only">Collection</h1>
+    <div class="account-profile">
+      <div class="ap-avatar-wrap">
+        ${avatar
+          ? `<img class="ap-avatar" src="${String(avatar).replace(/"/g, '')}" alt="">`
+          : `<div class="ap-avatar ap-fallback">${(name[0] || 'U').toUpperCase()}</div>`}
+      </div>
+      <div class="ap-text">
+        <b class="ap-name">${name}</b>
+        <span class="ap-provider">Public profile</span>
+      </div>
+      <div class="ap-stats" id="apStats">
+        <div class="ap-stat"><b id="statLists">${rows.length}</b><span>Tier Lists</span></div>
+        <div class="ap-stat"><b>0</b><span>Battles</span></div>
+        <div class="ap-stat"><b>0</b><span>Achievements</span></div>
+        <div class="ap-stat"><b id="statLikes">${fc(totalLikes)}</b><span>Likes</span></div>
+      </div>
+    </div>
+
+    <section class="account-section">
+      <div class="as-head">
+        <div>
+          <h2>Published</h2>
+          <p class="as-sub mobile-only">Public rankings</p>
+        </div>
+        <p class="as-sub desktop-only">Public rankings</p>
+      </div>
+      <div class="saved-grid" id="listBox"></div>
+      <div class="as-more" id="savedMore" hidden>
+        <button type="button" class="show-all-btn" id="savedShowAll">Show all</button>
+      </div>
+    </section>
+
+    <section class="account-section">
+      <div class="as-head">
+        <div>
+          <h2>Achievements</h2>
+          <p class="as-sub mobile-only">Collectible Cards</p>
+        </div>
+        <p class="as-sub desktop-only">Collectible Cards</p>
+      </div>
+      <div class="ach-row" id="achRow">
+        <div class="ach-card ach-placeholder-art" title="Coming soon"><div class="ach-soon">Soon</div></div>
+        <div class="ach-slot"></div>
+        <div class="ach-slot"></div>
+        <div class="ach-slot desktop-only"></div>
+        <div class="ach-slot desktop-only"></div>
+        <div class="ach-slot desktop-only"></div>
+        <div class="ach-slot desktop-only"></div>
+        <div class="ach-slot desktop-only"></div>
+      </div>
+      <div class="as-more">
+        <button type="button" class="show-all-btn" disabled title="Coming soon">Show all</button>
+      </div>
+    </section>`;
+
+  const box = document.getElementById('listBox');
+  if (!rows.length) {
+    box.innerHTML = '<div class="empty">No public rankings yet.</div>';
+    return;
+  }
+
+  const limit = window.matchMedia('(max-width:720px)').matches ? 1 : 3;
+  let showAll = false;
+  const paint = () => {
+    const slice = showAll ? rows : rows.slice(0, limit);
+    box.innerHTML = slice.map(r => savedCardHtml(r, { publicView: true })).join('');
+    const more = document.getElementById('savedMore');
+    if (rows.length > limit) {
+      more.hidden = false;
+      const btn = document.getElementById('savedShowAll');
+      btn.textContent = showAll ? 'Show less' : 'Show all';
+      btn.onclick = () => { showAll = !showAll; paint(); };
+    } else {
+      more.hidden = true;
+    }
+    wirePublicActions(rows);
+  };
+  paint();
+}
+
+function wirePublicActions(rows) {
+  const box = document.getElementById('listBox');
+  if (!box) return;
+
+  box.querySelectorAll('[data-open]').forEach(a => {
+    a.addEventListener('click', () => {
+      const id = a.getAttribute('data-open');
+      const row = rows.find(x => String(x.id) === String(id));
+      if (row?.payload) {
+        sessionStorage.setItem('rankme_open_payload', JSON.stringify(row.payload));
+        sessionStorage.setItem('rankme_community_id', String(row.id));
+      }
+    });
+  });
+
+  box.querySelectorAll('[data-share]').forEach(btn => {
+    btn.onclick = async () => {
+      const row = rows.find(x => String(x.id) === String(btn.dataset.share));
+      if (!row) return;
+      try {
+        const tid = encodeURIComponent(row.template_id || 'sf-duel');
+        const url = location.origin + '/tier.html?t=' + tid + '&c=' + encodeURIComponent(row.id);
+        await navigator.clipboard.writeText(url);
+        btn.textContent = 'Copied!';
+        setTimeout(() => { btn.textContent = 'Share'; }, 1500);
+      } catch (e) {
+        alert('Could not copy link');
+      }
+    };
+  });
 }
 
 async function bootAccount(){
@@ -224,16 +510,25 @@ async function bootAccount(){
   }
   try {
     await initSupabase();
+    if (typeof updateNavAuth === 'function') updateNavAuth();
+
+    const params = new URLSearchParams(location.search);
+    const publicUid = params.get('u');
+    if (publicUid) {
+      await renderPublicProfile(publicUid);
+      return;
+    }
+
     const user = await getSessionUser();
-    if(user){
-      try{
+    if (user) {
+      try {
         const ret = sessionStorage.getItem('rankme_login_return');
         const draft = sessionStorage.getItem('rankme_draft_payload');
-        if(ret && draft){
+        if (ret && draft) {
           location.href = ret;
           return;
         }
-      }catch(e){}
+      } catch (e) {}
       await renderCabinet(user);
     } else {
       await renderLogin();
@@ -244,26 +539,11 @@ async function bootAccount(){
   }
 }
 
-// deferred scripts in <head> run before DOMContentLoaded — wait for them
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', bootAccount);
 } else {
   bootAccount();
 }
 </script>
-
-<div class="modal-back" id="delModal">
-  <div class="modal">
-    <h3>Delete?</h3>
-    <p>This cannot be undone.</p>
-    <div class="modal-actions">
-      <button type="button" class="primary" id="delCancel">Cancel</button>
-      <button type="button" class="danger" id="delOk">Delete</button>
-    </div>
-  </div>
-</div>
-<footer id="site-footer" class="site"></footer>
-<script src="js/footer.js" defer></script>
-
 </body>
 </html>

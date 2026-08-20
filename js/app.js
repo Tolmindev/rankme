@@ -1252,6 +1252,9 @@ function closeDownloadModal(){
 
 // Remix = editable copy + option to add own images into the pool
 let remixFlag = false;
+let savedTierlistId = null;   // overwrite own ranking on Save
+let communityMode = false;    // viewing someone else's public list
+let communityMeta = null;
 function setRemixUI(on){
   remixFlag = !!on;
   const wrap = document.getElementById('remixUploadWrap');
@@ -1295,6 +1298,15 @@ document.getElementById('remixBtn')?.addEventListener('click', ()=>{
   Object.values(state.assignment).forEach(arr => arr.forEach(id => used.add(id)));
   state.pool = freshPool().filter(id => !used.has(id));
   setRemixUI(true);
+  communityMode = false;
+  communityMeta = null;
+  savedTierlistId = null;
+  const bar = document.getElementById('communityBar');
+  if (bar) bar.hidden = true;
+  const battle = document.getElementById('battleModeBtn');
+  const battleWrap = document.querySelector('.hero-battle-wrap');
+  if (battle) battle.hidden = false;
+  if (battleWrap) battleWrap.hidden = false;
   window.__rankmeFromCabinet = true;
   wireRemixUpload();
   render();
@@ -1377,9 +1389,20 @@ document.getElementById('saveAccountBtn')?.addEventListener('click', async ()=>{
     const title = remixFlag ? ('Remix · ' + base) : (base + ' list');
     sanitizeState();
     const payload = { tiers: state.tiers, assignment: state.assignment };
-    await saveExclusiveTierlist({ title, templateId: TEMPLATE_ID || 'sf-duel', payload });
+    const overwriteId = (!remixFlag && savedTierlistId) ? savedTierlistId : null;
+    const row = await saveExclusiveTierlist({
+      title,
+      templateId: TEMPLATE_ID || 'sf-duel',
+      payload,
+      id: overwriteId || undefined,
+    });
+    if (row && row.id) savedTierlistId = row.id;
     remixFlag = false;
-    showToast('Saved');
+    communityMode = false;
+    communityMeta = null;
+    const bar = document.getElementById('communityBar');
+    if (bar) bar.hidden = true;
+    showToast('Ranking Saved');
   }catch(e){
     console.error(e);
     showToast(e.message || 'Save failed - check Supabase table');
@@ -1890,8 +1913,11 @@ try{
       }));
       state.pool = freshPool().filter(id=>!used.has(id) && !used.has(String(id)));
       window.__rankmeFromCabinet = true;
+      try {
+        const sid = sessionStorage.getItem('rankme_saved_id');
+        if (sid) { savedTierlistId = sid; sessionStorage.removeItem('rankme_saved_id'); }
+      } catch (_) {}
       sanitizeState();
-      // + My images only after explicit Remix
     }
   }
 }catch(e){}
@@ -2220,3 +2246,118 @@ document.querySelectorAll('a.expert-name, #eldudLink').forEach(a => {
   setTimeout(bind, 800);
 })();
 
+
+
+/* Community ranking UI (public list via ?c=id) */
+async function tryLoadCommunityFromQuery() {
+  try {
+    const params = new URLSearchParams(location.search);
+    const cid = params.get('c');
+    if (!cid || typeof getTierlistById !== 'function') return;
+    const row = await getTierlistById(cid);
+    if (!row || !row.payload) return;
+    const data = typeof row.payload === 'string' ? JSON.parse(row.payload) : row.payload;
+    if (!data.tiers || !data.assignment) return;
+    state.tiers = data.tiers;
+    const assignment = {};
+    Object.keys(data.assignment).forEach(k => {
+      assignment[k] = (data.assignment[k] || []).map(id => {
+        const n = parseInt(id, 10);
+        return (String(n) === String(id) && !isNaN(n)) ? n : id;
+      });
+    });
+    state.assignment = assignment;
+    const used = new Set();
+    Object.values(state.assignment).forEach(arr => arr.forEach(id => {
+      used.add(id); used.add(String(id));
+    }));
+    state.pool = freshPool().filter(id => !used.has(id) && !used.has(String(id)));
+    communityMode = true;
+    communityMeta = {
+      id: row.id,
+      userId: row.user_id || '',
+      authorName: row.author_name || 'User',
+      authorAvatar: row.author_avatar || '',
+      likes: row.like_count || 0,
+      views: row.view_count || 0,
+      updatedAt: row.updated_at || row.created_at,
+    };
+    savedTierlistId = null;
+    sanitizeState();
+    if (typeof incrementTierlistView === 'function') incrementTierlistView(row.id);
+    setupCommunityUI();
+    if (typeof render === 'function') render();
+    if (!BLANK_MODE && typeof renderFactionFilters === 'function') renderFactionFilters();
+    if (typeof renderPortals === 'function') renderPortals();
+  } catch (err) {
+    console.warn('community load', err);
+  }
+}
+
+function setupCommunityUI() {
+  if (!communityMode || !communityMeta) return;
+  const battle = document.getElementById('battleModeBtn');
+  const battleWrap = document.querySelector('.hero-battle-wrap');
+  if (battle) battle.hidden = true;
+  if (battleWrap) battleWrap.hidden = true;
+  let bar = document.getElementById('communityBar');
+  if (!bar) {
+    bar = document.createElement('div');
+    bar.id = 'communityBar';
+    bar.className = 'community-bar';
+    const listAct = document.getElementById('listActions');
+    if (listAct && listAct.parentNode) listAct.parentNode.insertBefore(bar, listAct);
+  }
+  const m = communityMeta;
+  const ago = typeof timeAgo === 'function' ? timeAgo(m.updatedAt) : '';
+  const likes = typeof formatCount === 'function' ? formatCount(m.likes) : String(m.likes || 0);
+  const views = typeof formatCount === 'function' ? formatCount(m.views) : String(m.views || 0);
+  const av = m.authorAvatar
+    ? '<img class="cb-avatar" src="' + String(m.authorAvatar).replace(/"/g, '') + '" alt="">'
+    : '<div class="cb-avatar cb-fallback">' + String(m.authorName || 'U').charAt(0).toUpperCase() + '</div>';
+  const profileHref = m.userId ? ('account.html?u=' + encodeURIComponent(String(m.userId))) : '';
+  const nameHtml = profileHref
+    ? ('<a class="cb-name" href="' + profileHref + '">' + String(m.authorName || 'User').replace(/</g, '') + '</a>')
+    : ('<b class="cb-name">' + String(m.authorName || 'User').replace(/</g, '') + '</b>');
+  bar.innerHTML =
+    '<div class="cb-left">' + (profileHref ? ('<a class="cb-av-link" href="' + profileHref + '">' + av + '</a>') : av) +
+      '<div class="cb-meta">' + nameHtml +
+      (ago ? '<span class="cb-ago">Updated ' + ago + '</span>' : '') + '</div></div>' +
+    '<div class="cb-stats">' +
+      '<span class="cb-stat" title="Views"><img src="assets/icons/view.svg" alt="" class="cb-ico"> ' + views + '</span>' +
+      '<button type="button" class="cb-like" id="communityLikeBtn" aria-label="Like">' +
+        '<img src="assets/icons/heart.svg" alt="" class="cb-ico heart-empty">' +
+        '<img src="assets/icons/heart_full.svg" alt="" class="cb-ico heart-full">' +
+        '<span class="cb-like-n">' + likes + '</span></button></div>';
+  bar.hidden = false;
+  const likeBtn = document.getElementById('communityLikeBtn');
+  if (likeBtn) {
+    if (typeof getMyLikedIds === 'function') {
+      getMyLikedIds([m.id]).then(function (set) {
+        if (set && set.has(String(m.id))) likeBtn.classList.add('on');
+      }).catch(function () {});
+    }
+    likeBtn.onclick = async function () {
+      try {
+        if (typeof toggleTierlistLike !== 'function') return;
+        const res = await toggleTierlistLike(m.id);
+        likeBtn.classList.toggle('on', !!res.liked);
+        likeBtn.classList.remove('pop');
+        void likeBtn.offsetWidth;
+        likeBtn.classList.add('pop');
+        setTimeout(function () { likeBtn.classList.remove('pop'); }, 560);
+        const n = likeBtn.querySelector('.cb-like-n');
+        if (n) n.textContent = typeof formatCount === 'function' ? formatCount(res.like_count) : String(res.like_count || 0);
+        m.likes = res.like_count || 0;
+      } catch (err) {
+        if (String(err.message || err).indexOf('Login') >= 0) location.href = 'account.html';
+      }
+    };
+  }
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', function () { tryLoadCommunityFromQuery(); });
+} else {
+  tryLoadCommunityFromQuery();
+}

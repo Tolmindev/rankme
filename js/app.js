@@ -212,6 +212,7 @@ function applyHashState(){
 
 function initState(){
   if(window.__rankmeFromCabinet) return;
+  if(typeof communityMode !== 'undefined' && communityMode) return;
   if(!BLANK_MODE && loadFromHash()) return;
   if(BLANK_MODE && loadFromHash()) return;
   state.assignment = {};
@@ -1340,6 +1341,7 @@ function stashDraftBeforeLogin(opts){
 
 function restoreDraftIfAny(){
   try{
+    if(typeof communityMode !== 'undefined' && communityMode) return false;
     const raw = sessionStorage.getItem('rankme_draft_payload');
     if(!raw) return false;
     const data = JSON.parse(raw);
@@ -2263,6 +2265,25 @@ async function tryLoadCommunityFromQuery() {
     if (typeof getTierlistById === 'function') {
       try { row = await getTierlistById(cid); } catch (e) { row = null; }
     }
+    // Direct REST fallback (bypasses SDK issues)
+    if ((!row || !row.payload) && window.RANKME_SB && window.RANKME_SB.url) {
+      try {
+        const q = window.RANKME_SB.url + '/rest/v1/tierlists?id=eq.' + encodeURIComponent(cid) +
+          '&select=id,title,template_id,payload,updated_at,created_at,user_id,is_public,like_count,view_count,author_name,author_avatar';
+        const res = await fetch(q, {
+          headers: {
+            apikey: window.RANKME_SB.key,
+            Authorization: 'Bearer ' + window.RANKME_SB.key,
+          },
+        });
+        if (res.ok) {
+          const arr = await res.json();
+          if (arr && arr[0]) row = arr[0];
+        }
+      } catch (e) {
+        console.warn('[RankMe] community REST fallback', e);
+      }
+    }
     // Fallback: full row stashed when clicking community card on home
     if (!row || !row.payload) {
       try {
@@ -2302,6 +2323,7 @@ async function tryLoadCommunityFromQuery() {
     state.pool = freshPool().filter(id => !used.has(id) && !used.has(String(id)));
 
     communityMode = true;
+    window.__rankmeFromCabinet = true;
     communityMeta = {
       id: row.id || cid,
       userId: row.user_id || '',

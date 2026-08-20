@@ -2017,6 +2017,10 @@ function applyBattleResult(){
   }
   if(THEME_GOLD) document.body.classList.add('theme-gold');
   if(NO_FACTIONS) document.body.classList.add('no-factions');
+  // Community public ranking (?c=id) — load BEFORE first render
+  if (typeof tryLoadCommunityFromQuery === 'function') {
+    await tryLoadCommunityFromQuery();
+  }
   // Battle Mode → Open ranking
   applyBattleResult();
   const expertId = new URLSearchParams(location.search).get('e');
@@ -2274,7 +2278,8 @@ async function tryLoadCommunityFromQuery() {
       } catch (e) {}
     }
     if (!row || !row.payload) {
-      console.warn('[RankMe] community: no payload for', cid);
+      console.warn('[RankMe] community: no payload for', cid, row);
+      if (typeof showToast === 'function') showToast('Could not load this community ranking');
       return;
     }
 
@@ -2391,8 +2396,4 @@ function setupCommunityUI() {
   }
 }
 
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', function () { tryLoadCommunityFromQuery(); });
-} else {
-  tryLoadCommunityFromQuery();
-}
+/* community load runs in async init above */

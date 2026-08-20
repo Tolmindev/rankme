@@ -183,7 +183,15 @@ async function getTierlistById(id) {
     .maybeSingle();
   if (error) {
     console.warn('[RankMe] getTierlistById', error.message);
-    return null;
+    // fallback: list filter by id (sometimes maybeSingle + RLS behaves oddly)
+    const { data: rows, error: e2 } = await client
+      .from('tierlists')
+      .select('id, title, template_id, payload, updated_at, created_at, user_id, is_public, like_count, view_count, author_name, author_avatar')
+      .eq('id', id)
+      .eq('is_public', true)
+      .limit(1);
+    if (e2) console.warn('[RankMe] getTierlistById fallback', e2.message);
+    return (rows && rows[0]) || null;
   }
   return data;
 }

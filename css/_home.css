@@ -645,7 +645,7 @@ nav.main a.cta-nav:hover {
   gap: 8px;
 }
 
-/* Community ranking cards — vertical cards in a grid (same title style as Templates) */
+/* Community ranking cards — mockup: cover top, footer title+author */
 .community-rankings-title {
   margin: 0 0 16px;
   font-size: 1.05rem;
@@ -657,35 +657,36 @@ nav.main a.cta-nav:hover {
 }
 .community-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 300px));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 18px;
   align-items: stretch;
-  justify-content: start;
 }
 .cr-card {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
   text-decoration: none;
   color: inherit;
-  background: rgba(18, 14, 30, 0.95);
+  background: #161224;
   border: 1px solid rgba(120, 100, 160, 0.28);
-  border-radius: 14px;
+  border-radius: 16px;
   overflow: hidden;
-  min-width: 0;
   transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s;
 }
 .cr-card:hover {
   border-color: rgba(180, 140, 255, 0.45);
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
 }
 .cr-cover {
   position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
   overflow: hidden;
-  background: #161224;
-  flex-shrink: 0;
+  background: #12101c;
+  flex: 0 0 auto;
 }
 .cr-cover img {
   width: 100%;
@@ -695,21 +696,22 @@ nav.main a.cta-nav:hover {
 }
 .cr-cover .sc-tag {
   position: absolute;
-  top: 8px;
+  top: 10px;
   z-index: 1;
-  font-size: 0.58rem;
+  font-size: 0.62rem;
   font-weight: 800;
-  padding: 3px 8px;
+  padding: 4px 10px;
   border-radius: 999px;
+  letter-spacing: 0.02em;
 }
 .cr-cover .sc-tag-cat {
-  left: 8px;
-  background: rgba(20, 16, 32, 0.8);
+  left: 10px;
+  background: rgba(20, 16, 32, 0.82);
   color: #e8d4f0;
   border: 1px solid rgba(180, 150, 220, 0.35);
 }
 .cr-cover .sc-tag-ex {
-  right: 8px;
+  right: 10px;
   background: linear-gradient(120deg, #b79bf0, #e6a9e8);
   color: #1a1226;
 }
@@ -718,20 +720,22 @@ nav.main a.cta-nav:hover {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
-  padding: 12px 12px 14px;
-  flex: 1;
+  gap: 12px;
+  padding: 12px 14px 14px;
+  background: #161224;
+  flex: 0 0 auto;
   min-width: 0;
 }
 .cr-text {
   min-width: 0;
-  flex: 1;
+  flex: 1 1 auto;
 }
 .cr-title {
-  font-weight: 800;
-  font-size: 0.88rem;
+  font-weight: 900;
+  font-size: 1rem;
   color: #fff;
-  margin: 0 0 4px;
+  margin: 0 0 6px;
+  line-height: 1.25;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -740,35 +744,34 @@ nav.main a.cta-nav:hover {
 .cr-meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  font-size: 0.7rem;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.72rem;
   color: var(--text-dim);
   font-weight: 600;
 }
 .cr-meta .sc-stat {
   display: inline-flex;
   align-items: center;
-  gap: 3px;
+  gap: 4px;
 }
 .cr-meta img {
-  width: 12px;
-  height: 12px;
-  opacity: 0.85;
+  width: 13px;
+  height: 13px;
+  opacity: 0.9;
 }
 .cr-author {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   flex-shrink: 0;
-  font-size: 0.7rem;
+  font-size: 0.78rem;
   font-weight: 700;
-  color: #d8c8f0;
+  color: #e8e0f4;
   text-decoration: none;
   max-width: 42%;
 }
-a.cr-author:hover {
-  color: #fff;
-}
+a.cr-author:hover { color: #fff; }
 .cr-author span {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -776,11 +779,11 @@ a.cr-author:hover {
 }
 .cr-author img,
 .cr-av-fallback {
-  width: 28px;
-  height: 28px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   object-fit: cover;
-  border: 1.5px solid rgba(180, 140, 255, 0.45);
+  border: 2px solid rgba(180, 140, 255, 0.5);
   flex-shrink: 0;
 }
 .cr-av-fallback {
@@ -789,7 +792,7 @@ a.cr-author:hover {
   background: #2a2438;
   color: #e8d4ff;
   font-weight: 900;
-  font-size: 0.72rem;
+  font-size: 0.8rem;
 }
 .community-panel .community-rankings-title {
   margin-bottom: 16px;
@@ -799,3 +802,4 @@ a.cr-author:hover {
     grid-template-columns: 1fr;
   }
 }
+

@@ -5391,77 +5391,79 @@ nav.main a.cta-nav:hover {
   gap: 8px;
 }
 
-/* Community ranking cards — mockup: cover top, footer title+author */
-.community-rankings-title {
+/* Community ranking cards — exact mockup layout */
+.community-panel .community-rankings-title {
   margin: 0 0 16px;
   font-size: 1.05rem;
   font-weight: 900;
-  letter-spacing: 0.01em;
   text-align: left;
   text-transform: none;
+  letter-spacing: 0.01em;
   color: var(--text);
 }
-.community-grid {
+.community-panel .community-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 18px;
-  align-items: stretch;
 }
-.cr-card {
-  display: flex;
-  flex-direction: column;
+.community-panel .cr-card {
+  display: flex !important;
+  flex-direction: column !important;
   width: 100%;
   max-width: 100%;
-  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
   text-decoration: none;
   color: inherit;
   background: #161224;
-  border: 1px solid rgba(120, 100, 160, 0.28);
+  border: 1px solid rgba(120, 100, 160, 0.3);
   border-radius: 16px;
   overflow: hidden;
+  box-sizing: border-box;
   transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s;
 }
-.cr-card:hover {
-  border-color: rgba(180, 140, 255, 0.45);
+.community-panel .cr-card:hover {
+  border-color: rgba(180, 140, 255, 0.5);
   transform: translateY(-2px);
   box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
 }
-.cr-cover {
+.community-panel .cr-cover {
   position: relative;
+  display: block;
   width: 100%;
   aspect-ratio: 16 / 9;
   overflow: hidden;
   background: #12101c;
   flex: 0 0 auto;
 }
-.cr-cover img {
+.community-panel .cr-cover img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
-.cr-cover .sc-tag {
+.community-panel .cr-cover .sc-tag {
   position: absolute;
   top: 10px;
-  z-index: 1;
+  z-index: 2;
   font-size: 0.62rem;
   font-weight: 800;
   padding: 4px 10px;
   border-radius: 999px;
-  letter-spacing: 0.02em;
 }
-.cr-cover .sc-tag-cat {
+.community-panel .cr-cover .sc-tag-cat {
   left: 10px;
-  background: rgba(20, 16, 32, 0.82);
+  background: rgba(20, 16, 32, 0.85);
   color: #e8d4f0;
   border: 1px solid rgba(180, 150, 220, 0.35);
 }
-.cr-cover .sc-tag-ex {
+.community-panel .cr-cover .sc-tag-ex {
   right: 10px;
+  left: auto;
   background: linear-gradient(120deg, #b79bf0, #e6a9e8);
   color: #1a1226;
 }
-.cr-body {
+.community-panel .cr-body {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -5472,59 +5474,58 @@ nav.main a.cta-nav:hover {
   flex: 0 0 auto;
   min-width: 0;
 }
-.cr-text {
+.community-panel .cr-text {
   min-width: 0;
-  flex: 1 1 auto;
+  flex: 1;
 }
-.cr-title {
+.community-panel .cr-title {
+  margin: 0 0 6px;
   font-weight: 900;
   font-size: 1rem;
-  color: #fff;
-  margin: 0 0 6px;
   line-height: 1.25;
+  color: #fff;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-.cr-meta {
+.community-panel .cr-meta {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
   gap: 10px;
   font-size: 0.72rem;
-  color: var(--text-dim);
   font-weight: 600;
+  color: var(--text-dim);
 }
-.cr-meta .sc-stat {
+.community-panel .cr-meta .sc-stat {
   display: inline-flex;
   align-items: center;
   gap: 4px;
 }
-.cr-meta img {
+.community-panel .cr-meta img {
   width: 13px;
   height: 13px;
   opacity: 0.9;
 }
-.cr-author {
+.community-panel .cr-author {
   display: flex;
   align-items: center;
   gap: 8px;
   flex-shrink: 0;
+  max-width: 42%;
   font-size: 0.78rem;
   font-weight: 700;
   color: #e8e0f4;
   text-decoration: none;
-  max-width: 42%;
 }
-a.cr-author:hover { color: #fff; }
-.cr-author span {
+.community-panel a.cr-author:hover { color: #fff; }
+.community-panel .cr-author span {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.cr-author img,
-.cr-av-fallback {
+.community-panel .cr-author img,
+.community-panel .cr-av-fallback {
   width: 36px;
   height: 36px;
   border-radius: 50%;
@@ -5532,7 +5533,7 @@ a.cr-author:hover { color: #fff; }
   border: 2px solid rgba(180, 140, 255, 0.5);
   flex-shrink: 0;
 }
-.cr-av-fallback {
+.community-panel .cr-av-fallback {
   display: grid;
   place-items: center;
   background: #2a2438;
@@ -5540,15 +5541,11 @@ a.cr-author:hover { color: #fff; }
   font-weight: 900;
   font-size: 0.8rem;
 }
-.community-panel .community-rankings-title {
-  margin-bottom: 16px;
-}
 @media (max-width: 720px) {
-  .community-grid {
+  .community-panel .community-grid {
     grid-template-columns: 1fr;
   }
 }
-
 
 /* RankMe · account — Account, auth, modals, toasts, download */
 

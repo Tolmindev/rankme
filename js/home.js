@@ -275,16 +275,12 @@
     var authorBlock = profileHref
       ? '<a class="cr-author" href="' + profileHref + '" data-profile="1">' + av + '<span>' + author + '</span></a>'
       : '<div class="cr-author">' + av + '<span>' + author + '</span></div>';
-    var payloadAttr = '';
     try {
-      if (row.payload) {
-        if (!window.__rmCommunityPayloads) window.__rmCommunityPayloads = {};
-        window.__rmCommunityPayloads[String(row.id)] = row.payload;
-        payloadAttr = ' data-cid="' + escapeHtml(String(row.id)) + '"';
-      }
+      if (!window.__rmCommunityRows) window.__rmCommunityRows = {};
+      window.__rmCommunityRows[String(row.id)] = row;
     } catch (e) {}
     return (
-      '<a class="cr-card" href="' + href + '"' + payloadAttr + '>' +
+      '<a class="cr-card" href="' + href + '" data-cid="' + escapeHtml(String(row.id)) + '">' +
         '<div class="cr-cover">' +
           '<span class="sc-tag sc-tag-cat">Games</span>' +
           '<span class="sc-tag sc-tag-ex">Exclusive</span>' +
@@ -319,10 +315,10 @@
         a.addEventListener('click', function (ev) {
           if (ev.target.closest && ev.target.closest('[data-profile]')) return;
           var cid = a.getAttribute('data-cid');
-          var pl = window.__rmCommunityPayloads && window.__rmCommunityPayloads[cid];
-          if (!pl) return;
+          var row = window.__rmCommunityRows && window.__rmCommunityRows[cid];
+          if (!row) return;
           try {
-            sessionStorage.setItem('rankme_open_payload', typeof pl === 'string' ? pl : JSON.stringify(pl));
+            sessionStorage.setItem('rankme_community_row', JSON.stringify(row));
             sessionStorage.setItem('rankme_community_id', String(cid));
           } catch (err) {}
         });

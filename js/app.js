@@ -2254,26 +2254,33 @@ async function tryLoadCommunityFromQuery() {
     const params = new URLSearchParams(location.search);
     const cid = params.get('c');
     if (!cid) return;
+
     let row = null;
     if (typeof getTierlistById === 'function') {
       try { row = await getTierlistById(cid); } catch (e) { row = null; }
     }
-    // Fallback: payload stashed on community card click
-    if ((!row || !row.payload)) {
+    // Fallback: full row stashed when clicking community card on home
+    if (!row || !row.payload) {
       try {
-        const raw = sessionStorage.getItem('rankme_open_payload');
         const sid = sessionStorage.getItem('rankme_community_id');
+        const raw = sessionStorage.getItem('rankme_community_row');
         if (raw && sid && String(sid) === String(cid)) {
-          row = row || { id: cid };
-          row.payload = JSON.parse(raw);
-          sessionStorage.removeItem('rankme_open_payload');
+          const stashed = JSON.parse(raw);
+          row = Object.assign({}, stashed, row || {});
+          if (!row.payload && stashed.payload) row.payload = stashed.payload;
+          sessionStorage.removeItem('rankme_community_row');
           sessionStorage.removeItem('rankme_community_id');
         }
       } catch (e) {}
     }
-    if (!row || !row.payload) return;
+    if (!row || !row.payload) {
+      console.warn('[RankMe] community: no payload for', cid);
+      return;
+    }
+
     const data = typeof row.payload === 'string' ? JSON.parse(row.payload) : row.payload;
     if (!data.tiers || !data.assignment) return;
+
     state.tiers = data.tiers;
     const assignment = {};
     Object.keys(data.assignment).forEach(k => {
@@ -2288,9 +2295,10 @@ async function tryLoadCommunityFromQuery() {
       used.add(id); used.add(String(id));
     }));
     state.pool = freshPool().filter(id => !used.has(id) && !used.has(String(id)));
+
     communityMode = true;
     communityMeta = {
-      id: row.id,
+      id: row.id || cid,
       userId: row.user_id || '',
       authorName: row.author_name || 'User',
       authorAvatar: row.author_avatar || '',
@@ -2300,11 +2308,12 @@ async function tryLoadCommunityFromQuery() {
     };
     savedTierlistId = null;
     sanitizeState();
-    if (typeof incrementTierlistView === 'function') incrementTierlistView(row.id);
-    setupCommunityUI();
+
     if (typeof render === 'function') render();
     if (!BLANK_MODE && typeof renderFactionFilters === 'function') renderFactionFilters();
     if (typeof renderPortals === 'function') renderPortals();
+    setupCommunityUI();
+    if (typeof incrementTierlistView === 'function') incrementTierlistView(row.id || cid);
   } catch (err) {
     console.warn('community load', err);
   }
@@ -2316,13 +2325,23 @@ function setupCommunityUI() {
   const battleWrap = document.querySelector('.hero-battle-wrap');
   if (battle) battle.hidden = true;
   if (battleWrap) battleWrap.hidden = true;
+  const listAct = document.getElementById('listActions');
+  if (listAct) {
+    listAct.hidden = false;
+    listAct.removeAttribute('hidden');
+  }
   let bar = document.getElementById('communityBar');
   if (!bar) {
     bar = document.createElement('div');
     bar.id = 'communityBar';
     bar.className = 'community-bar';
-    const listAct = document.getElementById('listActions');
-    if (listAct && listAct.parentNode) listAct.parentNode.insertBefore(bar, listAct);
+    if (listAct && listAct.parentNode) {
+      listAct.parentNode.insertBefore(bar, listAct);
+    } else {
+      const hero = document.getElementById('heroSection') || document.querySelector('.hero');
+      if (hero && hero.parentNode) hero.parentNode.insertBefore(bar, hero.nextSibling);
+      else document.body.appendChild(bar);
+    }
   }
   const m = communityMeta;
   const ago = typeof timeAgo === 'function' ? timeAgo(m.updatedAt) : '';

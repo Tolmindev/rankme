@@ -2144,6 +2144,16 @@ body.community-view .toolbar {
 body.community-view .hero-title,
 body.community-view .hero .desc {
   cursor: default;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.hero > .hero-text > .hero-title.is-editable,
+.hero > .hero-text > .desc.is-editable {
+  pointer-events: auto;
+  user-select: text;
+  -webkit-user-select: text;
+  cursor: text;
 }
 
 /* RankMe · tier — Board, rows, cards, toolbar, filters, portals, pool */

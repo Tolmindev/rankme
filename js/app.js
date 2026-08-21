@@ -2225,49 +2225,57 @@ function applyOpenHeroMeta() {
 function setHeroEditable(on) {
   on = !!on;
   ['heroTitle', 'heroDesc'].forEach(function (id) {
-    const el = document.getElementById(id);
-    if (!el) return;
+    var el = document.getElementById(id);
+    if (!el || !el.parentNode) return;
+    // Clone to drop any stuck non-editable browser state from community view
+    var next = el.cloneNode(true);
+    next.id = id;
+    next.className = el.className.replace(/\bis-editable\b/g, '').trim();
+    next.spellcheck = false;
     if (on) {
-      el.setAttribute('contenteditable', 'plaintext-only');
-      // fallback if plaintext-only unsupported
-      try { el.contentEditable = 'plaintext-only'; } catch (_) { el.contentEditable = true; }
-      if (el.contentEditable !== 'true' && el.contentEditable !== 'plaintext-only') {
-        el.contentEditable = true;
-        el.setAttribute('contenteditable', 'true');
-      }
-      el.classList.add('is-editable');
-      el.style.pointerEvents = 'auto';
-      el.style.userSelect = 'text';
-      el.style.webkitUserSelect = 'text';
+      next.setAttribute('contenteditable', 'true');
+      next.contentEditable = true;
+      next.classList.add('is-editable');
+      next.style.pointerEvents = 'auto';
+      next.style.userSelect = 'text';
+      next.style.webkitUserSelect = 'text';
+      next.style.cursor = 'text';
     } else {
-      el.setAttribute('contenteditable', 'false');
-      el.contentEditable = false;
-      el.classList.remove('is-editable');
-      el.style.pointerEvents = '';
-      el.style.userSelect = '';
-      el.style.webkitUserSelect = '';
-      el.blur();
+      next.setAttribute('contenteditable', 'false');
+      next.contentEditable = false;
+      next.classList.remove('is-editable');
+      next.style.pointerEvents = '';
+      next.style.userSelect = '';
+      next.style.webkitUserSelect = '';
+      next.style.cursor = '';
     }
-    el.spellcheck = false;
-    if (on && !el.dataset.heroEditBound) {
-      el.dataset.heroEditBound = '1';
-      el.addEventListener('keydown', function (e) {
-        if (e.key === 'Enter' && id === 'heroTitle') {
-          e.preventDefault();
-          el.blur();
-        }
-      });
-      el.addEventListener('blur', function () {
-        try {
-          const title = (document.getElementById('heroTitle')?.textContent || '').trim();
-          const desc = (document.getElementById('heroDesc')?.textContent || '').trim();
-          if (title) localStorage.setItem('rankme_draft_title', title);
-          localStorage.setItem('rankme_draft_desc', desc);
-        } catch (err) {}
-      });
-    }
+    el.parentNode.replaceChild(next, el);
   });
+  // Bind once on document for live hero fields (survives clone)
+  if (!window.__rankmeHeroEditBound) {
+    window.__rankmeHeroEditBound = true;
+    document.addEventListener('keydown', function (e) {
+      var t = e.target;
+      if (!t || !t.id) return;
+      if (t.id === 'heroTitle' && e.key === 'Enter') {
+        e.preventDefault();
+        t.blur();
+      }
+    });
+    document.addEventListener('focusout', function (e) {
+      var t = e.target;
+      if (!t || (t.id !== 'heroTitle' && t.id !== 'heroDesc')) return;
+      if (t.getAttribute('contenteditable') !== 'true') return;
+      try {
+        var title = (document.getElementById('heroTitle') && document.getElementById('heroTitle').textContent || '').trim();
+        var desc = (document.getElementById('heroDesc') && document.getElementById('heroDesc').textContent || '').trim();
+        if (title) localStorage.setItem('rankme_draft_title', title);
+        localStorage.setItem('rankme_draft_desc', desc);
+      } catch (err) {}
+    });
+  }
 }
+
 
 /** Read-only community chrome via body.community-view (see _hero.css). */
 function enterCommunityView() {

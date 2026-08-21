@@ -486,13 +486,13 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
     flex-direction: column;
     align-items: stretch;
     text-align: center;
-    padding: 20px 16px 12px;
-    gap: 12px;
-    margin: 0 auto 12px;
+    padding: 16px 16px 0;
+    gap: 10px;
+    margin: 0 auto;
     justify-content: flex-start;
     min-height: 0;
     height: auto;
-    margin-bottom: 4px;
+    margin-bottom: 0;
   }
 
   .blank-cover-card, .hero .parallax-host {
@@ -501,9 +501,9 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
   }
 
   .list-actions {
-    margin: 0 auto 12px;
+    margin: 8px auto 12px;
     padding: 0 14px;
-    min-height: 40px;
+    min-height: 0;
     gap: 8px;
   }
 
@@ -628,8 +628,24 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
 
   .hero > .experts-block, .experts-block {
     width: 100%;
-    margin: 12px 0 0;
+    margin: 8px 0 0;
     padding: 0;
+  }
+  .experts-block[hidden],
+  #expertsBlock[hidden] {
+    display: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+    border: none !important;
+  }
+  .hero-battle-wrap[hidden],
+  .hero-battle-wrap:has(#battleModeBtn[hidden]) {
+    display: none !important;
+    margin: 0 !important;
+    min-height: 0 !important;
   }
 
   .hero .parallax-host, .blank-cover-card {
@@ -768,11 +784,10 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
   justify-content: space-between;
   gap: 12px;
   max-width: 1400px;
-  width: calc(100% - 48px);
+  width: 100%;
   margin: 0 auto 14px;
-  padding: 0;
+  padding: 0 24px;
   box-sizing: border-box;
-  /* same left edge as tier board */
 }
 .community-toolbar #listActions {
   margin: 0 0 0 auto;
@@ -899,8 +914,12 @@ a.cb-name:hover { color: #e8d4ff; }
   .community-toolbar {
     flex-direction: column;
     align-items: stretch;
-    width: calc(100% - 24px);
+    width: 100%;
+    max-width: 1400px;
+    padding: 0 14px;
+    margin: 8px auto 12px;
     gap: 10px;
+    box-sizing: border-box;
   }
   .community-bar {
     width: 100%;
@@ -911,6 +930,8 @@ a.cb-name:hover { color: #e8d4ff; }
   .community-toolbar #listActions {
     margin-left: 0;
     align-self: flex-end;
+    padding: 0;
+    min-height: 0;
   }
 }
 
@@ -924,4 +945,20 @@ a.cb-name:hover { color: #e8d4ff; }
 body.community-view #expertsBlock,
 body.community-view .experts-block {
   display: none !important;
+  margin: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+}
+#expertsBlock[hidden],
+.experts-block[hidden] {
+  display: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  height: 0 !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+.hero-battle-wrap[hidden] {
+  display: none !important;
+  margin: 0 !important;
 }

@@ -212,7 +212,7 @@ function applyHashState(){
 
 function initState(){
   if(window.__rankmeFromCabinet) return;
-  if(typeof communityMode !== 'undefined' && communityMode) return;
+  if(communityMode) return;
   if(!BLANK_MODE && loadFromHash()) return;
   if(BLANK_MODE && loadFromHash()) return;
   state.assignment = {};
@@ -254,7 +254,7 @@ function render(){
 
     const label = document.createElement('div');
     label.className = 'tier-label';
-    label.contentEditable = (typeof communityMode !== 'undefined' && communityMode) ? 'false' : 'true';
+    label.contentEditable = (communityMode) ? 'false' : 'true';
     label.spellcheck = false;
     label.style.setProperty('--hue', t.hue);
     label.style.setProperty('--sat', t.sat+'%');
@@ -262,7 +262,7 @@ function render(){
     label.textContent = t.name;
     fitLabelFont(label, t.name);
     label.addEventListener('focus', ()=>{
-      if (typeof communityMode !== 'undefined' && communityMode) { label.blur(); return; }
+      if (communityMode) { label.blur(); return; }
       const name = t.name || (label.innerText || '');
       fitLabelFont(label, name);
       // Caret to end for quick edit
@@ -633,7 +633,7 @@ function blockTouchScroll(e){
 }
 
 function onCardPointerDown(e){
-  if (typeof communityMode !== 'undefined' && communityMode) return;
+  if (communityMode) return;
 
   if(drag) return;
   // Mouse: ignore right/middle. Touch/pen: always allow (button can be weird)
@@ -1296,25 +1296,18 @@ document.getElementById('remixBtn')?.addEventListener('click', ()=>{
     showToast('Remix: Exclusive only');
     return;
   }
+  // Community → same editor path as Exclusive remix (no special chrome hacks)
+  if (communityMode) exitCommunityToEditor();
   state.tiers = JSON.parse(JSON.stringify(state.tiers));
   state.assignment = JSON.parse(JSON.stringify(state.assignment));
   const used = new Set();
   Object.values(state.assignment).forEach(arr => arr.forEach(id => used.add(id)));
   state.pool = freshPool().filter(id => !used.has(id));
   setRemixUI(true);
-  communityMode = false;
-  communityMeta = null;
   savedTierlistId = null;
-  const bar = document.getElementById('communityBar');
-  if (bar) bar.hidden = true;
-  const battle = document.getElementById('battleModeBtn');
-  const battleWrap = document.querySelector('.hero-battle-wrap');
-  if (battle) battle.hidden = false;
-  if (battleWrap) battleWrap.hidden = false;
   window.__rankmeFromCabinet = true;
   wireRemixUpload();
   render();
-  setCommunityChrome(false);
   if(!BLANK_MODE) renderFactionFilters();
   renderPortals();
   showToast('Remix ready');
@@ -1345,7 +1338,7 @@ function stashDraftBeforeLogin(opts){
 
 function restoreDraftIfAny(){
   try{
-    if(typeof communityMode !== 'undefined' && communityMode) return false;
+    if(communityMode) return false;
     const raw = sessionStorage.getItem('rankme_draft_payload');
     if(!raw) return false;
     const data = JSON.parse(raw);
@@ -1404,10 +1397,9 @@ document.getElementById('saveAccountBtn')?.addEventListener('click', async ()=>{
     });
     if (row && row.id) savedTierlistId = row.id;
     remixFlag = false;
-    communityMode = false;
-    communityMeta = null;
-    const bar = document.getElementById('communityBar');
-    if (bar) bar.hidden = true;
+    if (document.body.classList.contains('community-view') || communityMode) {
+      exitCommunityToEditor();
+    }
     showToast('Ranking Saved');
   }catch(e){
     console.error(e);
@@ -2117,35 +2109,38 @@ async function tryLoadCommunityFromQuery() {
 }
 
 
-/** Community view chrome: single switch via body.community-view (CSS). */
-function setCommunityChrome(on) {
-  on = !!on;
-  document.body.classList.toggle('community-view', on);
-  if (on) {
-    portalsOn = false;
-    const pb = document.getElementById('portalBtn');
-    if (pb) pb.classList.remove('active');
-    if (typeof renderPortals === 'function') renderPortals();
-  }
-  document.querySelectorAll('.tier-label').forEach(function (label) {
-    label.contentEditable = on ? 'false' : 'true';
+/** Read-only community chrome via body.community-view (see _hero.css). */
+function enterCommunityView() {
+  document.body.classList.add('community-view');
+  portalsOn = false;
+  const pb = document.getElementById('portalBtn');
+  if (pb) pb.classList.remove('active');
+  if (typeof renderPortals === 'function') renderPortals();
+}
+
+/** Drop community mode and restore the normal editor shell. */
+function exitCommunityToEditor() {
+  communityMode = false;
+  communityMeta = null;
+  document.body.classList.remove('community-view');
+  const bar = document.getElementById('communityBar');
+  if (bar) bar.hidden = true;
+  ['listActions', 'board', 'toolbar', 'poolWrap'].forEach(function (id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.hidden = false;
+    el.removeAttribute('hidden');
   });
+  // Battle stays template-default (shown); experts stay off on remix copy
+  const battle = document.getElementById('battleModeBtn');
+  const battleWrap = document.querySelector('.hero-battle-wrap');
+  if (battle) { battle.hidden = false; battle.removeAttribute('hidden'); }
+  if (battleWrap) { battleWrap.hidden = false; battleWrap.removeAttribute('hidden'); }
 }
 
 function setupCommunityUI() {
   if (!communityMode || !communityMeta) return;
-  setCommunityChrome(true);
-  const battle = document.getElementById('battleModeBtn');
-  const battleWrap = document.querySelector('.hero-battle-wrap');
-  if (battle) battle.hidden = true;
-  if (battleWrap) battleWrap.hidden = true;
-  // Expert strip only for template view, not community rankings
-  var expertsBlock = document.getElementById('expertsBlock');
-  if (expertsBlock) {
-    expertsBlock.hidden = true;
-    expertsBlock.setAttribute('hidden', '');
-    expertsBlock.style.display = 'none';
-  }
+  enterCommunityView();
   const listAct = document.getElementById('listActions');
   if (listAct) {
     listAct.hidden = false;

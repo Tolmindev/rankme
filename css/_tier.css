@@ -1414,3 +1414,15 @@ body.card-landscape .card.floating {
   line-height: 1.15;
   white-space: pre-wrap;
 }
+
+/* community-view overrides (cascade last) — win over mobile display:flex */
+body.community-view .hero-battle-wrap,
+body.community-view .hero-text .hero-battle-wrap,
+body.community-view .hero > .hero-text .hero-battle-wrap,
+body.community-view #battleModeBtn,
+body.community-view button.btn-battle-hero {
+  display: none;
+}
+body.community-view .toolbar {
+  justify-content: center;
+}

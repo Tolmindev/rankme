@@ -2214,6 +2214,11 @@ function enterCommunityView() {
   const pb = document.getElementById('portalBtn');
   if (pb) pb.classList.remove('active');
   if (typeof renderPortals === 'function') renderPortals();
+  // Hide battle — attribute + CSS (mobile display:flex cannot revive [hidden])
+  const battle = document.getElementById('battleModeBtn');
+  const battleWrap = document.querySelector('.hero-battle-wrap');
+  if (battle) { battle.hidden = true; battle.setAttribute('hidden', ''); }
+  if (battleWrap) { battleWrap.hidden = true; battleWrap.setAttribute('hidden', ''); }
 }
 
 /** Drop community mode and restore the normal editor shell. */

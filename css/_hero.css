@@ -995,6 +995,7 @@ a.cb-name:hover { color: #e8d4ff; }
 body.community-view #expertsBlock,
 body.community-view .experts-block,
 body.community-view .hero-battle-wrap,
+body.community-view #battleModeBtn,
 body.community-view .toolbar-actions,
 body.community-view #poolWrap,
 body.community-view #portalBtn,
@@ -1015,7 +1016,7 @@ body.community-view .tier-label {
   pointer-events: none;
 }
 body.community-view .toolbar {
-  justify-content: flex-start;
+  justify-content: center;
   flex-wrap: wrap;
 }
 

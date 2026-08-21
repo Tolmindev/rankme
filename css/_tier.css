@@ -1424,10 +1424,8 @@ body.card-landscape .card.floating {
   white-space: pre-wrap;
 }
 
-/* community-view overrides (cascade last) — win over mobile display:flex */
+/* community-view cascade last (wins over mobile display:flex) */
 body.community-view .hero-battle-wrap,
-body.community-view .hero-text .hero-battle-wrap,
-body.community-view .hero > .hero-text .hero-battle-wrap,
 body.community-view #battleModeBtn,
 body.community-view button.btn-battle-hero {
   display: none;

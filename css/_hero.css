@@ -991,7 +991,7 @@ a.cb-name:hover { color: #e8d4ff; }
   }
 }
 
-/* Community ranking — read-only view (single switch: body.community-view) */
+/* Community ranking — body.community-view (read-only public) */
 body.community-view #expertsBlock,
 body.community-view .experts-block,
 body.community-view .hero-battle-wrap,
@@ -1004,23 +1004,36 @@ body.community-view .tier-side {
   display: none;
 }
 body.community-view .card {
+  pointer-events: none;
   cursor: default;
-  touch-action: pan-y;
 }
 body.community-view .tier-label {
-  cursor: default;
+  pointer-events: none;
   user-select: none;
   -webkit-user-select: none;
-  caret-color: transparent;
-  outline: none;
-  pointer-events: none;
+  cursor: default;
 }
 body.community-view .toolbar {
   justify-content: center;
-  flex-wrap: wrap;
 }
 
-/* Editable hero title / subtitle (own editor, not community view) */
+/* Hero title/desc edit — body[data-editor] only */
+body[data-editor="0"] #heroTitle,
+body[data-editor="0"] #heroDesc {
+  pointer-events: none;
+  cursor: default;
+  -webkit-user-select: none;
+  user-select: none;
+}
+body[data-editor="1"] #heroTitle,
+body[data-editor="1"] #heroDesc {
+  pointer-events: auto;
+  cursor: text;
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+/* Editable focus chrome */
 .hero-title.is-editable,
 .hero .desc.is-editable {
   outline: none;
@@ -1040,36 +1053,4 @@ body.community-view .toolbar {
 .hero .desc.is-editable:focus {
   background: rgba(180, 140, 255, 0.1);
   box-shadow: 0 0 0 1.5px rgba(180, 140, 255, 0.35);
-}
-body.community-view .hero-title,
-body.community-view .hero .desc {
-  cursor: default;
-  pointer-events: none;
-  user-select: none;
-  -webkit-user-select: none;
-}
-.hero > .hero-text > .hero-title.is-editable,
-.hero > .hero-text > .desc.is-editable {
-  pointer-events: auto;
-  user-select: text;
-  -webkit-user-select: text;
-  cursor: text;
-}
-
-/* Editor mode: body[data-editor] is the only switch for hero title/desc edit */
-body[data-editor="0"] #heroTitle,
-body[data-editor="0"] #heroDesc {
-  pointer-events: none;
-  cursor: default;
-  -webkit-user-select: none;
-  user-select: none;
-}
-body[data-editor="1"] #heroTitle,
-body[data-editor="1"] #heroDesc,
-body[data-editor="1"] #heroTitle.is-editable,
-body[data-editor="1"] #heroDesc.is-editable {
-  pointer-events: auto;
-  cursor: text;
-  -webkit-user-select: text;
-  user-select: text;
 }

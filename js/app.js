@@ -1303,24 +1303,35 @@ function doRemix() {
       return;
     }
 
-    // Always leave community read-only shell
-    communityMode = false;
-    communityMeta = null;
-    document.body.classList.remove('community-view');
-    var bar = document.getElementById('communityBar');
-    if (bar) bar.hidden = true;
-    ['listActions', 'board', 'toolbar', 'poolWrap'].forEach(function (id) {
-      var el = document.getElementById(id);
-      if (!el) return;
-      el.hidden = false;
-      el.removeAttribute('hidden');
-    });
-    var battle = document.getElementById('battleModeBtn');
-    var battleWrap = document.querySelector('.hero-battle-wrap');
-    if (battle) { battle.hidden = false; battle.removeAttribute('hidden'); }
-    if (battleWrap) { battleWrap.hidden = false; battleWrap.removeAttribute('hidden'); }
+    // From public/community: same path as Open from Save —
+    // full reload into editor (no leftover community lock).
+    if (communityMode || document.body.classList.contains('community-view') ||
+        /[?&]c=/.test(location.search)) {
+      var title = '';
+      var subtitle = '';
+      try {
+        title = (document.getElementById('heroTitle') && document.getElementById('heroTitle').textContent || '').trim();
+        subtitle = (document.getElementById('heroDesc') && document.getElementById('heroDesc').textContent || '').trim();
+      } catch (e) {}
+      var payload = {
+        tiers: state.tiers,
+        assignment: state.assignment,
+        customCards: state.customCards || {},
+        subtitle: subtitle || null,
+      };
+      sessionStorage.setItem('rankme_open_payload', JSON.stringify(payload));
+      sessionStorage.setItem('rankme_open_title', title || '');
+      if (subtitle) sessionStorage.setItem('rankme_open_subtitle', subtitle);
+      else sessionStorage.removeItem('rankme_open_subtitle');
+      sessionStorage.setItem('rankme_remix_pending', '1');
+      sessionStorage.removeItem('rankme_saved_id');
+      var tid = TEMPLATE_ID || 'sf-duel';
+      setAllowLeave(true);
+      location.href = 'tier.html?t=' + encodeURIComponent(tid);
+      return;
+    }
 
-    // Clone current ranking into an editable draft
+    // Already in editor: in-place remix
     state.tiers = JSON.parse(JSON.stringify(state.tiers || []));
     state.assignment = JSON.parse(JSON.stringify(state.assignment || {}));
     var used = new Set();
@@ -1336,7 +1347,6 @@ function doRemix() {
     state.pool = pool.filter(function (id) {
       return !used.has(id) && !used.has(String(id)) && !used.has(Number(id));
     });
-
     remixFlag = true;
     savedTierlistId = null;
     window.__rankmeFromCabinet = true;
@@ -1346,11 +1356,7 @@ function doRemix() {
     if (!BLANK_MODE && typeof renderFactionFilters === 'function') renderFactionFilters();
     if (typeof renderPortals === 'function') renderPortals();
     if (typeof setHeroEditable === 'function') setHeroEditable(true);
-    // Force after paint — some mobile browsers ignore contentEditable until next frame
-    requestAnimationFrame(function () {
-      if (typeof setHeroEditable === 'function') setHeroEditable(true);
-    });
-    markDirty();
+    if (typeof markDirty === 'function') markDirty();
     showToast('Remix ready');
   } catch (err) {
     console.error('[RankMe] remix failed', err && (err.message || err));
@@ -2005,6 +2011,10 @@ try{
         if (ot) window.__rankmeOpenTitle = ot;
         if (os) window.__rankmeOpenSubtitle = os;
         if (data.subtitle) window.__rankmeOpenSubtitle = data.subtitle;
+        if (sessionStorage.getItem('rankme_remix_pending') === '1') {
+          sessionStorage.removeItem('rankme_remix_pending');
+          window.__rankmeRemixPending = true;
+        }
       } catch (_) {}
       sanitizeState();
     }
@@ -2229,19 +2239,12 @@ function setHeroEditable(on) {
   ['heroTitle', 'heroDesc'].forEach(function (id) {
     var el = document.getElementById(id);
     if (!el) return;
-    if (on) {
-      el.setAttribute('contenteditable', 'true');
-      el.contentEditable = 'true';
-      el.classList.add('is-editable');
-      el.setAttribute('tabindex', '0');
-    } else {
-      el.setAttribute('contenteditable', 'false');
-      el.contentEditable = 'false';
-      el.classList.remove('is-editable');
-      el.removeAttribute('tabindex');
-      try { el.blur(); } catch (e) {}
-    }
+    el.contentEditable = on ? 'true' : 'false';
+    el.setAttribute('contenteditable', on ? 'true' : 'false');
+    el.classList.toggle('is-editable', on);
     el.spellcheck = false;
+    if (on) el.setAttribute('tabindex', '0');
+    else el.removeAttribute('tabindex');
   });
 }
 
@@ -2249,35 +2252,32 @@ function setHeroEditable(on) {
 function enterCommunityView() {
   document.body.classList.add('community-view');
   markClean();
-  setHeroEditable(false); // data-editor=0
+  setHeroEditable(false);
   portalsOn = false;
-  const pb = document.getElementById('portalBtn');
+  var pb = document.getElementById('portalBtn');
   if (pb) pb.classList.remove('active');
   if (typeof renderPortals === 'function') renderPortals();
-  // Hide battle — attribute + CSS (mobile display:flex cannot revive [hidden])
-  const battle = document.getElementById('battleModeBtn');
-  const battleWrap = document.querySelector('.hero-battle-wrap');
+  var battle = document.getElementById('battleModeBtn');
+  var battleWrap = document.querySelector('.hero-battle-wrap');
   if (battle) { battle.hidden = true; battle.setAttribute('hidden', ''); }
   if (battleWrap) { battleWrap.hidden = true; battleWrap.setAttribute('hidden', ''); }
 }
 
-/** Drop community mode and restore the normal editor shell. */
 function exitCommunityToEditor() {
   communityMode = false;
   communityMeta = null;
   document.body.classList.remove('community-view');
   setHeroEditable(true);
-  const bar = document.getElementById('communityBar');
+  var bar = document.getElementById('communityBar');
   if (bar) bar.hidden = true;
   ['listActions', 'board', 'toolbar', 'poolWrap'].forEach(function (id) {
-    const el = document.getElementById(id);
+    var el = document.getElementById(id);
     if (!el) return;
     el.hidden = false;
     el.removeAttribute('hidden');
   });
-  // Battle stays template-default (shown); experts stay off on remix copy
-  const battle = document.getElementById('battleModeBtn');
-  const battleWrap = document.querySelector('.hero-battle-wrap');
+  var battle = document.getElementById('battleModeBtn');
+  var battleWrap = document.querySelector('.hero-battle-wrap');
   if (battle) { battle.hidden = false; battle.removeAttribute('hidden'); }
   if (battleWrap) { battleWrap.hidden = false; battleWrap.removeAttribute('hidden'); }
 }
@@ -2409,8 +2409,18 @@ function setupCommunityUI() {
   render();
   if(!BLANK_MODE) renderFactionFilters();
   renderPortals();
-  if (typeof applyOpenHeroMeta === 'function') applyOpenHeroMeta();
-  if (typeof setHeroEditable === 'function') setHeroEditable(!communityMode);
+  applyOpenHeroMeta();
+  setHeroEditable(!communityMode);
+  if (window.__rankmeRemixPending) {
+    window.__rankmeRemixPending = false;
+    remixFlag = true;
+    savedTierlistId = null;
+    setRemixUI(true);
+    wireRemixUpload();
+    setHeroEditable(true);
+    markDirty();
+    showToast('Remix ready');
+  }
 })();
 
 if(BLANK_MODE){
@@ -2602,5 +2612,3 @@ document.querySelectorAll('a.expert-name, #eldudLink').forEach(a => {
 })();
 
 
-
-/* community load runs in async init above */

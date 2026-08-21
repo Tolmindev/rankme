@@ -1298,22 +1298,9 @@ function doRemix() {
       showToast('Remix: Exclusive only');
       return;
     }
-    // Community → normal editor, then same path as Exclusive remix
-    if (communityMode) {
-      if (typeof exitCommunityToEditor === 'function') exitCommunityToEditor();
-      else {
-        communityMode = false;
-        communityMeta = null;
-        document.body.classList.remove('community-view');
-        const bar = document.getElementById('communityBar');
-        if (bar) bar.hidden = true;
-        ['listActions', 'board', 'toolbar', 'poolWrap'].forEach(function (id) {
-          const el = document.getElementById(id);
-          if (!el) return;
-          el.hidden = false;
-          el.removeAttribute('hidden');
-        });
-      }
+    // Leave community view first (same as opening your own editor)
+    if (communityMode || document.body.classList.contains('community-view')) {
+      exitCommunityToEditor();
     }
     state.tiers = JSON.parse(JSON.stringify(state.tiers || []));
     state.assignment = JSON.parse(JSON.stringify(state.assignment || {}));
@@ -1329,7 +1316,8 @@ function doRemix() {
     render();
     if (!BLANK_MODE) renderFactionFilters();
     renderPortals();
-    if (typeof setHeroEditable === 'function') setHeroEditable(true);
+    // Editor mode: title + subtitle editable
+    setHeroEditable(true);
     showToast('Remix ready');
   } catch (err) {
     console.error('[RankMe] remix failed', err);
@@ -2179,12 +2167,20 @@ function applyOpenHeroMeta() {
 }
 
 function setHeroEditable(on) {
-  on = !!on && !communityMode;
+  on = !!on;
   ['heroTitle', 'heroDesc'].forEach(function (id) {
     const el = document.getElementById(id);
     if (!el) return;
-    el.contentEditable = on ? 'true' : 'false';
-    el.classList.toggle('is-editable', on);
+    if (on) {
+      el.setAttribute('contenteditable', 'true');
+      el.contentEditable = true;
+      el.classList.add('is-editable');
+    } else {
+      el.setAttribute('contenteditable', 'false');
+      el.contentEditable = false;
+      el.classList.remove('is-editable');
+      el.blur();
+    }
     el.spellcheck = false;
     if (on && !el.dataset.heroEditBound) {
       el.dataset.heroEditBound = '1';

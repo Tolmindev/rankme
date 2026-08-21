@@ -1298,29 +1298,53 @@ function doRemix() {
       showToast('Remix: Exclusive only');
       return;
     }
-    // Leave community view first (same as opening your own editor)
-    if (communityMode || document.body.classList.contains('community-view')) {
-      exitCommunityToEditor();
-    }
+
+    // Always leave community read-only shell
+    communityMode = false;
+    communityMeta = null;
+    document.body.classList.remove('community-view');
+    var bar = document.getElementById('communityBar');
+    if (bar) bar.hidden = true;
+    ['listActions', 'board', 'toolbar', 'poolWrap'].forEach(function (id) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      el.hidden = false;
+      el.removeAttribute('hidden');
+    });
+    var battle = document.getElementById('battleModeBtn');
+    var battleWrap = document.querySelector('.hero-battle-wrap');
+    if (battle) { battle.hidden = false; battle.removeAttribute('hidden'); }
+    if (battleWrap) { battleWrap.hidden = false; battleWrap.removeAttribute('hidden'); }
+
+    // Clone current ranking into an editable draft
     state.tiers = JSON.parse(JSON.stringify(state.tiers || []));
     state.assignment = JSON.parse(JSON.stringify(state.assignment || {}));
-    const used = new Set();
-    Object.values(state.assignment).forEach(function (arr) {
-      (arr || []).forEach(function (id) { used.add(Number(id)); });
+    var used = new Set();
+    Object.keys(state.assignment).forEach(function (k) {
+      (state.assignment[k] || []).forEach(function (id) {
+        used.add(id);
+        used.add(String(id));
+        var n = Number(id);
+        if (!isNaN(n)) used.add(n);
+      });
     });
-    state.pool = freshPool().filter(function (id) { return !used.has(Number(id)); });
-    setRemixUI(true);
+    var pool = typeof freshPool === 'function' ? freshPool() : [];
+    state.pool = pool.filter(function (id) {
+      return !used.has(id) && !used.has(String(id)) && !used.has(Number(id));
+    });
+
+    remixFlag = true;
     savedTierlistId = null;
     window.__rankmeFromCabinet = true;
-    wireRemixUpload();
-    render();
-    if (!BLANK_MODE) renderFactionFilters();
-    renderPortals();
-    // Editor mode: title + subtitle editable
-    setHeroEditable(true);
+    setRemixUI(true);
+    if (typeof wireRemixUpload === 'function') wireRemixUpload();
+    if (typeof render === 'function') render();
+    if (!BLANK_MODE && typeof renderFactionFilters === 'function') renderFactionFilters();
+    if (typeof renderPortals === 'function') renderPortals();
+    if (typeof setHeroEditable === 'function') setHeroEditable(true);
     showToast('Remix ready');
   } catch (err) {
-    console.error('[RankMe] remix failed', err);
+    console.error('[RankMe] remix failed', err && (err.message || err));
     showToast('Remix failed - try refresh');
   }
 }

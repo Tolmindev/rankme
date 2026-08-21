@@ -2139,15 +2139,21 @@ body[data-editor="1"] #heroDesc {
   user-select: text;
 }
 
-/* Editable focus chrome */
+/* Editable focus — no padding shift, same left edge as static text */
+.hero > .hero-text > .hero-title,
+.hero > .hero-text > .desc {
+  margin: 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
 .hero-title.is-editable,
 .hero .desc.is-editable {
   outline: none;
-  border-radius: 10px;
+  border-radius: 8px;
   cursor: text;
-  padding: 6px 12px;
-  margin-left: -12px;
-  margin-right: -12px;
+  padding: 0;
+  margin: 0;
   box-sizing: border-box;
   transition: box-shadow 0.15s ease, background 0.15s ease;
 }

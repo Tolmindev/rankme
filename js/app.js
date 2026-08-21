@@ -2232,10 +2232,84 @@ function applyOpenHeroMeta() {
   } catch (e) {}
 }
 
+var HERO_TITLE_MAX = 48;
+var HERO_DESC_MAX = 160;
+
+function clampHeroText(el) {
+  if (!el || !el.id) return;
+  var max = el.id === 'heroTitle' ? HERO_TITLE_MAX : HERO_DESC_MAX;
+  var text = (el.textContent || '').replace(/\r\n/g, '\n');
+  if (text.length <= max) return;
+  el.textContent = text.slice(0, max);
+  try {
+    var range = document.createRange();
+    var sel = window.getSelection();
+    range.selectNodeContents(el);
+    range.collapse(false);
+    sel.removeAllRanges();
+    sel.addRange(range);
+  } catch (e) {}
+}
+
+function bindHeroLimits() {
+  if (window.__rankmeHeroLimitsBound) return;
+  window.__rankmeHeroLimitsBound = true;
+  document.addEventListener('input', function (e) {
+    var t = e.target;
+    if (!t || (t.id !== 'heroTitle' && t.id !== 'heroDesc')) return;
+    if (t.getAttribute('contenteditable') !== 'true') return;
+    clampHeroText(t);
+    if (typeof markDirty === 'function') markDirty();
+  });
+  document.addEventListener('paste', function (e) {
+    var t = e.target;
+    if (!t || (t.id !== 'heroTitle' && t.id !== 'heroDesc')) return;
+    if (t.getAttribute('contenteditable') !== 'true') return;
+    e.preventDefault();
+    var max = t.id === 'heroTitle' ? HERO_TITLE_MAX : HERO_DESC_MAX;
+    var paste = '';
+    try {
+      paste = (e.clipboardData || window.clipboardData).getData('text/plain') || '';
+    } catch (err) {}
+    paste = paste.replace(/\r\n/g, '\n');
+    var cur = t.textContent || '';
+    var sel = window.getSelection();
+    var before = cur;
+    var after = '';
+    if (sel && sel.rangeCount && sel.anchorNode && t.contains(sel.anchorNode)) {
+      var range = sel.getRangeAt(0);
+      var pre = range.cloneRange();
+      pre.selectNodeContents(t);
+      pre.setEnd(range.startContainer, range.startOffset);
+      before = pre.toString();
+      var post = range.cloneRange();
+      post.selectNodeContents(t);
+      post.setStart(range.endContainer, range.endOffset);
+      after = post.toString();
+    }
+    var room = max - before.length - after.length;
+    if (room < 0) room = 0;
+    var insert = paste.slice(0, room);
+    t.textContent = (before + insert + after).slice(0, max);
+    clampHeroText(t);
+    if (typeof markDirty === 'function') markDirty();
+  });
+  document.addEventListener('keydown', function (e) {
+    var t = e.target;
+    if (!t || t.id !== 'heroTitle') return;
+    if (t.getAttribute('contenteditable') !== 'true') return;
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      t.blur();
+    }
+  });
+}
+
 function setHeroEditable(on) {
   on = !!on;
   document.body.setAttribute('data-editor', on ? '1' : '0');
   if (on) document.body.classList.remove('community-view');
+  bindHeroLimits();
   ['heroTitle', 'heroDesc'].forEach(function (id) {
     var el = document.getElementById(id);
     if (!el) return;
@@ -2243,8 +2317,12 @@ function setHeroEditable(on) {
     el.setAttribute('contenteditable', on ? 'true' : 'false');
     el.classList.toggle('is-editable', on);
     el.spellcheck = false;
-    if (on) el.setAttribute('tabindex', '0');
-    else el.removeAttribute('tabindex');
+    if (on) {
+      el.setAttribute('tabindex', '0');
+      clampHeroText(el);
+    } else {
+      el.removeAttribute('tabindex');
+    }
   });
 }
 

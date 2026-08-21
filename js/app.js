@@ -1329,6 +1329,7 @@ function doRemix() {
     render();
     if (!BLANK_MODE) renderFactionFilters();
     renderPortals();
+    if (typeof setHeroEditable === 'function') setHeroEditable(true);
     showToast('Remix ready');
   } catch (err) {
     console.error('[RankMe] remix failed', err);
@@ -1358,7 +1359,8 @@ function stashDraftBeforeLogin(opts){
       pool: state.pool,
       templateId: TEMPLATE_ID,
       remixFlag: !!remixFlag,
-      title: (document.getElementById('heroTitle')?.textContent || document.getElementById('listTitle')?.textContent || '').trim() || null
+      title: (document.getElementById('heroTitle')?.textContent || document.getElementById('listTitle')?.textContent || '').trim() || null,
+      subtitle: (document.getElementById('heroDesc')?.textContent || '').trim() || null
     }));
   }catch(e){ console.warn('stash draft', e); }
 }
@@ -1383,8 +1385,12 @@ function restoreDraftIfAny(){
       window.__rankmeFromCabinet = true;
       sanitizeState();
       if(data.title){
-        const h = (document.getElementById('heroTitle') || document.getElementById('listTitle'));
+        const h = document.getElementById('heroTitle') || document.getElementById('listTitle');
         if(h) h.textContent = data.title;
+      }
+      if(data.subtitle){
+        const d = document.getElementById('heroDesc');
+        if(d) d.textContent = data.subtitle;
       }
       showToast('Restored');
       return true;
@@ -1948,6 +1954,13 @@ try{
       try {
         const sid = sessionStorage.getItem('rankme_saved_id');
         if (sid) { savedTierlistId = sid; sessionStorage.removeItem('rankme_saved_id'); }
+        const ot = sessionStorage.getItem('rankme_open_title');
+        const os = sessionStorage.getItem('rankme_open_subtitle');
+        sessionStorage.removeItem('rankme_open_title');
+        sessionStorage.removeItem('rankme_open_subtitle');
+        if (ot) window.__rankmeOpenTitle = ot;
+        if (os) window.__rankmeOpenSubtitle = os;
+        if (data.subtitle) window.__rankmeOpenSubtitle = data.subtitle;
       } catch (_) {}
       sanitizeState();
     }
@@ -2150,6 +2163,21 @@ async function tryLoadCommunityFromQuery() {
 
 
 
+function applyOpenHeroMeta() {
+  try {
+    const ht = document.getElementById('heroTitle');
+    const hd = document.getElementById('heroDesc');
+    if (ht && window.__rankmeOpenTitle) {
+      ht.textContent = String(window.__rankmeOpenTitle);
+      window.__rankmeOpenTitle = null;
+    }
+    if (hd && window.__rankmeOpenSubtitle) {
+      hd.textContent = String(window.__rankmeOpenSubtitle);
+      window.__rankmeOpenSubtitle = null;
+    }
+  } catch (e) {}
+}
+
 function setHeroEditable(on) {
   on = !!on && !communityMode;
   ['heroTitle', 'heroDesc'].forEach(function (id) {
@@ -2336,6 +2364,7 @@ function setupCommunityUI() {
   render();
   if(!BLANK_MODE) renderFactionFilters();
   renderPortals();
+  if (typeof applyOpenHeroMeta === 'function') applyOpenHeroMeta();
   if (typeof setHeroEditable === 'function') setHeroEditable(!communityMode);
 })();
 

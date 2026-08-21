@@ -303,6 +303,14 @@ function wireSavedActions(rows, user){
       if(row?.payload){
         sessionStorage.setItem('rankme_open_payload', JSON.stringify(row.payload));
         sessionStorage.setItem('rankme_saved_id', String(row.id));
+        try {
+          sessionStorage.setItem('rankme_open_title', row.title || '');
+          if (row.payload && row.payload.subtitle) {
+            sessionStorage.setItem('rankme_open_subtitle', String(row.payload.subtitle));
+          } else {
+            sessionStorage.removeItem('rankme_open_subtitle');
+          }
+        } catch (err) {}
       }
     });
   });

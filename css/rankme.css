@@ -2135,7 +2135,7 @@ body[data-editor="1"] #heroDesc {
   user-select: text;
 }
 
-/* Editable focus — no padding shift, same left edge as static text */
+/* Editable fields: same padding on title + desc (aligned), air around text */
 .hero > .hero-text > .hero-title,
 .hero > .hero-text > .desc {
   margin: 0;
@@ -2146,12 +2146,12 @@ body[data-editor="1"] #heroDesc {
 .hero-title.is-editable,
 .hero .desc.is-editable {
   outline: none;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: text;
-  padding: 0;
+  padding: 8px 12px;
   margin: 0;
   box-sizing: border-box;
-  transition: box-shadow 0.15s ease, background 0.15s ease;
+  transition: background 0.15s ease, box-shadow 0.15s ease;
 }
 .hero-title.is-editable:hover,
 .hero .desc.is-editable:hover {
@@ -2161,6 +2161,10 @@ body[data-editor="1"] #heroDesc {
 .hero .desc.is-editable:focus {
   background: rgba(180, 140, 255, 0.1);
   box-shadow: 0 0 0 1.5px rgba(180, 140, 255, 0.35);
+}
+/* keep gap between title / desc when padded */
+.hero > .hero-text {
+  gap: 10px;
 }
 
 /* RankMe · tier — Board, rows, cards, toolbar, filters, portals, pool */

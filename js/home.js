@@ -283,12 +283,10 @@
       (ago ? '<span>' + escapeHtml(ago) + '</span>' : '') +
       '<span class="sc-stat"><img src="assets/icons/heart.svg" alt=""> ' + likes + '</span>' +
       '<span class="sc-stat"><img src="assets/icons/view.svg" alt=""> ' + views + '</span>';
-    // DIV not A — nested <a class="creator"> would break the DOM
+    // DIV card — no exclusive RGB, no Games/Exclusive badges
     return (
-      '<div class="tl-card exclusive community-tl" data-href="' + escapeHtml(href) + '" data-cid="' + escapeHtml(String(row.id)) + '" role="link" tabindex="0">' +
+      '<div class="tl-card community-tl" data-href="' + escapeHtml(href) + '" data-cid="' + escapeHtml(String(row.id)) + '" role="link" tabindex="0">' +
         '<div class="cover">' +
-          '<span class="tag tag-cat" data-cat="games">Games</span>' +
-          '<span class="tag">Exclusive</span>' +
           '<img class="cover-art" src="' + escapeHtml(cover) + '" alt="" loading="lazy">' +
         '</div>' +
         '<div class="body">' +

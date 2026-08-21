@@ -176,24 +176,27 @@ async function listPublicTierlistsByUser(userId, limit) {
 async function getTierlistById(id) {
   const client = await initSupabase();
   if (!client || !id) return null;
-  const { data, error } = await client
+  // Wait for session restore so RLS sees auth.uid() when logged in
+  try { await client.auth.getSession(); } catch (e) {}
+  const cols = 'id, title, template_id, payload, updated_at, created_at, user_id, is_public, like_count, view_count, author_name, author_avatar';
+  let { data, error } = await client
     .from('tierlists')
-    .select('id, title, template_id, payload, updated_at, created_at, user_id, is_public, like_count, view_count, author_name, author_avatar')
+    .select(cols)
     .eq('id', id)
     .maybeSingle();
   if (error) {
     console.warn('[RankMe] getTierlistById', error.message);
-    // fallback: list filter by id (sometimes maybeSingle + RLS behaves oddly)
-    const { data: rows, error: e2 } = await client
-      .from('tierlists')
-      .select('id, title, template_id, payload, updated_at, created_at, user_id, is_public, like_count, view_count, author_name, author_avatar')
-      .eq('id', id)
-      .eq('is_public', true)
-      .limit(1);
-    if (e2) console.warn('[RankMe] getTierlistById fallback', e2.message);
-    return (rows && rows[0]) || null;
+    data = null;
   }
-  return data;
+  if (data && data.payload) return data;
+  // Fallback without maybeSingle
+  const { data: rows, error: e2 } = await client
+    .from('tierlists')
+    .select(cols)
+    .eq('id', id)
+    .limit(1);
+  if (e2) console.warn('[RankMe] getTierlistById fallback', e2.message);
+  return (rows && rows[0]) || null;
 }
 
 async function incrementTierlistView(id) {

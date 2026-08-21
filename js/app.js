@@ -2342,7 +2342,7 @@ async function tryLoadCommunityFromQuery() {
     setupCommunityUI();
     if (typeof incrementTierlistView === 'function') incrementTierlistView(row.id || cid);
   } catch (err) {
-    console.warn('community load', err);
+    console.warn('[RankMe] community load failed:', err && (err.message || String(err)));
   }
 }
 

@@ -2124,8 +2124,12 @@ body.community-view .toolbar {
 .hero-title.is-editable,
 .hero .desc.is-editable {
   outline: none;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: text;
+  padding: 6px 12px;
+  margin-left: -12px;
+  margin-right: -12px;
+  box-sizing: border-box;
   transition: box-shadow 0.15s ease, background 0.15s ease;
 }
 .hero-title.is-editable:hover,
@@ -2544,6 +2548,15 @@ body.community-view .hero .desc {
   align-items: center;
   gap: 8px;
   flex-wrap: wrap;
+}
+
+/* Equal size for Add / Fill / Clear — same height and min-width */
+.toolbar-actions .pill-btn {
+  min-width: 108px;
+  height: 38px;
+  padding: 0 16px;
+  box-sizing: border-box;
+  justify-content: center;
 }
 
 .size-ctrl {

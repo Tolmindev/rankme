@@ -1024,8 +1024,12 @@ body.community-view .toolbar {
 .hero-title.is-editable,
 .hero .desc.is-editable {
   outline: none;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: text;
+  padding: 6px 12px;
+  margin-left: -12px;
+  margin-right: -12px;
+  box-sizing: border-box;
   transition: box-shadow 0.15s ease, background 0.15s ease;
 }
 .hero-title.is-editable:hover,

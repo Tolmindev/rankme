@@ -402,6 +402,15 @@
   flex-wrap: wrap;
 }
 
+/* Equal size for Add / Fill / Clear — same height and min-width */
+.toolbar-actions .pill-btn {
+  min-width: 108px;
+  height: 38px;
+  padding: 0 16px;
+  box-sizing: border-box;
+  justify-content: center;
+}
+
 .size-ctrl {
   display: flex;
   align-items: center;

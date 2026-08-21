@@ -6,7 +6,7 @@
 <title>Account - RankMe</title>
 <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/rankme.css?v=20260821ui3">
+<link rel="stylesheet" href="css/rankme.css?v=20260821cb5">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
 <script src="js/supabaseClient.js" defer></script>
 </head>
@@ -98,7 +98,10 @@ function titleForTemplate(tid, fallback){
     'sf6': 'Street Fighter 6',
     'dota2': 'Dota 2',
   };
-  return fallback || map[tid] || tid || 'Tier list';
+  const base = map[tid] || tid || 'Ranking';
+  let raw = (fallback && fallback !== 'Untitled') ? String(fallback) : base;
+  raw = raw.replace(/\s+list$/i, '').trim();
+  return raw || base;
 }
 
 function bindSquishy(root){

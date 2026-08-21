@@ -58,9 +58,18 @@ async function saveExclusiveTierlist({ title, templateId, payload, id }) {
   const user = await getSessionUser();
   if (!client || !user) throw new Error('Login required');
   const meta = user.user_metadata || {};
-  const authorName =
-    meta.full_name || meta.custom_claims?.global_name || meta.name || meta.user_name || user.email || 'User';
-  const authorAvatar = meta.avatar_url || meta.picture || '';
+  const authorName = (
+    meta.full_name ||
+    meta.name ||
+    meta.custom_claims?.global_name ||
+    meta.user_name ||
+    meta.preferred_username ||
+    (meta.given_name && meta.family_name ? (meta.given_name + ' ' + meta.family_name) : null) ||
+    meta.given_name ||
+    (user.email ? user.email.split('@')[0] : null) ||
+    'User'
+  );
+  const authorAvatar = meta.avatar_url || meta.picture || meta.avatar || '';
   const now = new Date().toISOString();
   const row = {
     user_id: user.id,
@@ -118,9 +127,28 @@ async function setTierlistPublic(id, isPublic) {
   const client = await initSupabase();
   const user = await getSessionUser();
   if (!client || !user) throw new Error('Login required');
+  const meta = user.user_metadata || {};
+  const authorName = (
+    meta.full_name ||
+    meta.name ||
+    meta.custom_claims?.global_name ||
+    meta.user_name ||
+    meta.preferred_username ||
+    (meta.given_name && meta.family_name ? (meta.given_name + ' ' + meta.family_name) : null) ||
+    meta.given_name ||
+    (user.email ? user.email.split('@')[0] : null) ||
+    'User'
+  );
+  const authorAvatar = meta.avatar_url || meta.picture || meta.avatar || '';
+  const patch = {
+    is_public: !!isPublic,
+    updated_at: new Date().toISOString(),
+    author_name: authorName,
+    author_avatar: authorAvatar,
+  };
   const { error } = await client
     .from('tierlists')
-    .update({ is_public: !!isPublic, updated_at: new Date().toISOString() })
+    .update(patch)
     .eq('id', id)
     .eq('user_id', user.id);
   if (error) throw error;

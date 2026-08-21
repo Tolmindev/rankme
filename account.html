@@ -148,8 +148,8 @@ function savedCardHtml(r, opts){
   const likes = typeof formatCount === 'function' ? formatCount(r.like_count) : String(r.like_count || 0);
   const views = typeof formatCount === 'function' ? formatCount(r.view_count) : String(r.view_count || 0);
   const pub = !!r.is_public;
-  // Public lists open with community context so bar + like work
-  const openHref = isPublicView || pub
+  // Owner Open = always editor. Community ?c= only when viewing someone else's public profile.
+  const openHref = isPublicView
     ? 'tier.html?t=' + encodeURIComponent(tid) + '&c=' + encodeURIComponent(r.id)
     : 'tier.html?t=' + encodeURIComponent(tid);
   const actions = isPublicView
@@ -304,6 +304,8 @@ function wireSavedActions(rows, user){
         sessionStorage.setItem('rankme_open_payload', JSON.stringify(row.payload));
         sessionStorage.setItem('rankme_saved_id', String(row.id));
         try {
+          sessionStorage.removeItem('rankme_community_id');
+          sessionStorage.removeItem('rankme_community_row');
           sessionStorage.setItem('rankme_open_title', row.title || '');
           if (row.payload && row.payload.subtitle) {
             sessionStorage.setItem('rankme_open_subtitle', String(row.payload.subtitle));

@@ -54,6 +54,12 @@ body {
   -webkit-user-select: none;
   user-select: none;
 }
+[contenteditable="true"],
+[contenteditable=""],
+.is-editable {
+  -webkit-user-select: text;
+  user-select: text;
+}
 
 @supports not (background: conic-gradient(from var(--elec-angle), red, blue)) {
 

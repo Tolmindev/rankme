@@ -2224,64 +2224,32 @@ function applyOpenHeroMeta() {
 
 function setHeroEditable(on) {
   on = !!on;
+  document.body.setAttribute('data-editor', on ? '1' : '0');
+  if (on) document.body.classList.remove('community-view');
   ['heroTitle', 'heroDesc'].forEach(function (id) {
     var el = document.getElementById(id);
-    if (!el || !el.parentNode) return;
-    // Clone to drop any stuck non-editable browser state from community view
-    var next = el.cloneNode(true);
-    next.id = id;
-    next.className = el.className.replace(/\bis-editable\b/g, '').trim();
-    next.spellcheck = false;
+    if (!el) return;
     if (on) {
-      next.setAttribute('contenteditable', 'true');
-      next.contentEditable = true;
-      next.classList.add('is-editable');
-      next.style.pointerEvents = 'auto';
-      next.style.userSelect = 'text';
-      next.style.webkitUserSelect = 'text';
-      next.style.cursor = 'text';
+      el.setAttribute('contenteditable', 'true');
+      el.contentEditable = 'true';
+      el.classList.add('is-editable');
+      el.setAttribute('tabindex', '0');
     } else {
-      next.setAttribute('contenteditable', 'false');
-      next.contentEditable = false;
-      next.classList.remove('is-editable');
-      next.style.pointerEvents = '';
-      next.style.userSelect = '';
-      next.style.webkitUserSelect = '';
-      next.style.cursor = '';
+      el.setAttribute('contenteditable', 'false');
+      el.contentEditable = 'false';
+      el.classList.remove('is-editable');
+      el.removeAttribute('tabindex');
+      try { el.blur(); } catch (e) {}
     }
-    el.parentNode.replaceChild(next, el);
+    el.spellcheck = false;
   });
-  // Bind once on document for live hero fields (survives clone)
-  if (!window.__rankmeHeroEditBound) {
-    window.__rankmeHeroEditBound = true;
-    document.addEventListener('keydown', function (e) {
-      var t = e.target;
-      if (!t || !t.id) return;
-      if (t.id === 'heroTitle' && e.key === 'Enter') {
-        e.preventDefault();
-        t.blur();
-      }
-    });
-    document.addEventListener('focusout', function (e) {
-      var t = e.target;
-      if (!t || (t.id !== 'heroTitle' && t.id !== 'heroDesc')) return;
-      if (t.getAttribute('contenteditable') !== 'true') return;
-      try {
-        var title = (document.getElementById('heroTitle') && document.getElementById('heroTitle').textContent || '').trim();
-        var desc = (document.getElementById('heroDesc') && document.getElementById('heroDesc').textContent || '').trim();
-        if (title) localStorage.setItem('rankme_draft_title', title);
-        localStorage.setItem('rankme_draft_desc', desc);
-      } catch (err) {}
-    });
-  }
 }
 
 
-/** Read-only community chrome via body.community-view (see _hero.css). */
 function enterCommunityView() {
   document.body.classList.add('community-view');
   markClean();
-  setHeroEditable(false);
+  setHeroEditable(false); // data-editor=0
   portalsOn = false;
   const pb = document.getElementById('portalBtn');
   if (pb) pb.classList.remove('active');

@@ -54,6 +54,12 @@ body {
   -webkit-user-select: none;
   user-select: none;
 }
+[contenteditable="true"],
+[contenteditable=""],
+.is-editable {
+  -webkit-user-select: text;
+  user-select: text;
+}
 
 @supports not (background: conic-gradient(from var(--elec-angle), red, blue)) {
 
@@ -2154,6 +2160,24 @@ body.community-view .hero .desc {
   user-select: text;
   -webkit-user-select: text;
   cursor: text;
+}
+
+/* Editor mode: body[data-editor] is the only switch for hero title/desc edit */
+body[data-editor="0"] #heroTitle,
+body[data-editor="0"] #heroDesc {
+  pointer-events: none;
+  cursor: default;
+  -webkit-user-select: none;
+  user-select: none;
+}
+body[data-editor="1"] #heroTitle,
+body[data-editor="1"] #heroDesc,
+body[data-editor="1"] #heroTitle.is-editable,
+body[data-editor="1"] #heroDesc.is-editable {
+  pointer-events: auto;
+  cursor: text;
+  -webkit-user-select: text;
+  user-select: text;
 }
 
 /* RankMe · tier — Board, rows, cards, toolbar, filters, portals, pool */

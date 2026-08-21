@@ -877,7 +877,7 @@ a.cb-name:hover { color: #e8d4ff; }
 .cb-like {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 2px;
   background: transparent;
   border: none;
   cursor: pointer;
@@ -885,24 +885,26 @@ a.cb-name:hover { color: #e8d4ff; }
   font-size: 0.9rem;
   font-weight: 700;
   color: #e8d4f0;
-  padding: 2px;
+  padding: 0;
+  height: 26px;
+  line-height: 1;
 }
-/* Twitter heart sprite (cssanimation.rocks / CodePen mindstorm) */
+/* Twitter heart sprite — frame is oversized; scale so heart matches .cb-ico (26px) */
 .cb-heart {
   display: block;
-  width: 32px;
-  height: 32px;
+  width: 52px;
+  height: 52px;
   flex-shrink: 0;
-  margin: -3px;
+  margin: -13px -8px -13px -10px;
   background: url("../assets/icons/heart-sprite.png") no-repeat;
-  background-size: 896px 32px; /* 28 frames × 32px */
+  background-size: 1456px 52px; /* 28 × 52 */
   background-position: 0 0;
   transition: background-position 0s steps(28);
   pointer-events: none;
 }
 .cb-like.on .cb-heart {
   transition-duration: 1s;
-  background-position: -864px 0; /* (28-1) × 32 */
+  background-position: -1404px 0; /* 27 × 52 */
 }
 .cb-like:hover .cb-heart {
   filter: brightness(1.08);

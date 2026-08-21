@@ -255,7 +255,6 @@ function render(){
     const label = document.createElement('div');
     label.className = 'tier-label';
     label.contentEditable = (typeof communityMode !== 'undefined' && communityMode) ? 'false' : 'true';
-    if (typeof communityMode !== 'undefined' && communityMode) label.classList.add('tier-label-locked');
     label.spellcheck = false;
     label.style.setProperty('--hue', t.hue);
     label.style.setProperty('--sat', t.sat+'%');
@@ -2118,57 +2117,18 @@ async function tryLoadCommunityFromQuery() {
 }
 
 
+/** Community view chrome: single switch via body.community-view (CSS). */
 function setCommunityChrome(on) {
   on = !!on;
   document.body.classList.toggle('community-view', on);
-  const pool = document.getElementById('poolWrap');
-  if (pool) {
-    pool.hidden = on;
-    if (on) {
-      pool.setAttribute('hidden', '');
-      pool.style.display = 'none';
-    } else {
-      pool.removeAttribute('hidden');
-      pool.style.display = '';
-    }
+  if (on) {
+    portalsOn = false;
+    const pb = document.getElementById('portalBtn');
+    if (pb) pb.classList.remove('active');
+    if (typeof renderPortals === 'function') renderPortals();
   }
-  const toolbar = document.getElementById('toolbar');
-  if (toolbar) {
-    toolbar.hidden = false;
-    toolbar.removeAttribute('hidden');
-    toolbar.style.display = '';
-  }
-  document.querySelectorAll('.toolbar-actions').forEach(function (el) {
-    el.hidden = on;
-    if (on) {
-      el.setAttribute('hidden', '');
-      el.style.display = 'none';
-    } else {
-      el.removeAttribute('hidden');
-      el.style.display = '';
-    }
-  });
-  const portalBtn = document.getElementById('portalBtn');
-  if (portalBtn) {
-    portalBtn.hidden = on;
-    if (on) {
-      portalBtn.setAttribute('hidden', '');
-      portalBtn.classList.remove('active');
-      portalsOn = false;
-      if (typeof renderPortals === 'function') renderPortals();
-    } else {
-      portalBtn.removeAttribute('hidden');
-      portalBtn.style.display = '';
-    }
-  }
-  const faction = document.getElementById('factionFilters');
-  if (faction) {
-    faction.style.display = on ? 'none' : '';
-  }
-  // Lock / unlock tier title editing
   document.querySelectorAll('.tier-label').forEach(function (label) {
     label.contentEditable = on ? 'false' : 'true';
-    label.classList.toggle('tier-label-locked', on);
   });
 }
 

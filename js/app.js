@@ -870,6 +870,7 @@ function onDragEnd(e){
     const label = targetPortal.dataset.label || 'tier';
     removeFromAllData(cid);
     if(!state.assignment[tierId]) state.assignment[tierId] = [];
+    markDirty();
     if(!state.assignment[tierId].includes(cid)) state.assignment[tierId].push(cid);
     state.pool = state.pool.filter(id => id !== cid);
     floater.style.transition = 'transform .25s ease, opacity .25s ease';
@@ -906,6 +907,7 @@ function onDragEnd(e){
   } else {
     const tid = cont.dataset.tierId;
     if(tid) state.assignment[tid] = orderedIds;
+    markDirty();
   }
 
   cleanupDragSource(drag.source);
@@ -1077,6 +1079,7 @@ document.getElementById('clearAllBtn').addEventListener('click', ()=>{
   showConfirm('Clear the whole tier list?', 'Everything on the rows goes back to the pool. This can\'t be undone.', ()=>{
     state.assignment = {};
     state.tiers.forEach(t=>state.assignment[t.id]=[]);
+    markDirty();
     // Stock cards + custom uploads both return to pool
     const stock = freshPool();
     const customIds = Object.keys(state.customCards||{}).map(Number).filter(Boolean);
@@ -1093,6 +1096,7 @@ document.getElementById('fillAllBtn').addEventListener('click', ()=>{
     shuffled.forEach(cid=>{
       const t = state.tiers[Math.floor(Math.random()*state.tiers.length)];
       state.assignment[t.id].push(cid);
+      markDirty();
     });
     state.pool = [];
     render();
@@ -1342,6 +1346,11 @@ function doRemix() {
     if (!BLANK_MODE && typeof renderFactionFilters === 'function') renderFactionFilters();
     if (typeof renderPortals === 'function') renderPortals();
     if (typeof setHeroEditable === 'function') setHeroEditable(true);
+    // Force after paint — some mobile browsers ignore contentEditable until next frame
+    requestAnimationFrame(function () {
+      if (typeof setHeroEditable === 'function') setHeroEditable(true);
+    });
+    markDirty();
     showToast('Remix ready');
   } catch (err) {
     console.error('[RankMe] remix failed', err && (err.message || err));
@@ -1452,6 +1461,7 @@ document.getElementById('saveAccountBtn')?.addEventListener('click', async ()=>{
     if (document.body.classList.contains('community-view') || communityMode) {
       exitCommunityToEditor();
     }
+    markClean();
     showToast('Ranking Saved');
   }catch(e){
     console.error(e);
@@ -1851,7 +1861,30 @@ function getCardImage(cid){
 /* ---------------- Leave warning ---------------- */
 
 function hasProgress(){
-  return Object.values(state.assignment).some(arr=>arr.length>0);
+  return Object.values(state.assignment || {}).some(function (arr) {
+    return arr && arr.length > 0;
+  });
+}
+
+/** True only when user has unsaved edits (not community view, not after Save). */
+let rankingDirty = false;
+
+function markDirty() {
+  if (communityMode) return;
+  rankingDirty = true;
+  setAllowLeave(false);
+}
+
+function markClean() {
+  rankingDirty = false;
+  setAllowLeave(true);
+}
+
+function needsLeaveWarn() {
+  if (communityMode) return false;
+  if (window.allowLeave) return false;
+  if (!rankingDirty) return false;
+  return hasProgress();
 }
 
 let pendingNav = '#';
@@ -1869,8 +1902,7 @@ window.setAllowLeave = setAllowLeave;
 
 function rankmeBeforeUnload(e){
   try{ if(sessionStorage.getItem('rankme_nav_ok') === '1') return; }catch(_){}
-  if(window.allowLeave) return;
-  if(typeof hasProgress === 'function' && !hasProgress()) return;
+  if (!needsLeaveWarn()) return;
   e.preventDefault();
   e.returnValue = '';
 }
@@ -1910,7 +1942,7 @@ function bindLeaveGuard(el, href){
         return;
       }
     }catch(_){}
-    if(typeof hasProgress === 'function' && !hasProgress()) return;
+    if (!needsLeaveWarn()) return;
     e.preventDefault();
     e.stopPropagation();
     pendingNav = target;
@@ -2196,13 +2228,24 @@ function setHeroEditable(on) {
     const el = document.getElementById(id);
     if (!el) return;
     if (on) {
-      el.setAttribute('contenteditable', 'true');
-      el.contentEditable = true;
+      el.setAttribute('contenteditable', 'plaintext-only');
+      // fallback if plaintext-only unsupported
+      try { el.contentEditable = 'plaintext-only'; } catch (_) { el.contentEditable = true; }
+      if (el.contentEditable !== 'true' && el.contentEditable !== 'plaintext-only') {
+        el.contentEditable = true;
+        el.setAttribute('contenteditable', 'true');
+      }
       el.classList.add('is-editable');
+      el.style.pointerEvents = 'auto';
+      el.style.userSelect = 'text';
+      el.style.webkitUserSelect = 'text';
     } else {
       el.setAttribute('contenteditable', 'false');
       el.contentEditable = false;
       el.classList.remove('is-editable');
+      el.style.pointerEvents = '';
+      el.style.userSelect = '';
+      el.style.webkitUserSelect = '';
       el.blur();
     }
     el.spellcheck = false;
@@ -2229,6 +2272,7 @@ function setHeroEditable(on) {
 /** Read-only community chrome via body.community-view (see _hero.css). */
 function enterCommunityView() {
   document.body.classList.add('community-view');
+  markClean();
   setHeroEditable(false);
   portalsOn = false;
   const pb = document.getElementById('portalBtn');

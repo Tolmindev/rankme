@@ -261,7 +261,8 @@
   function communityCardHtml(row) {
     var tid = row.template_id || 'sf-duel';
     var cover = coverForTemplate(tid);
-    var title = escapeHtml(titleForTemplate(tid, row.title));
+    var titleText = titleForTemplate(tid, row.title);
+    var title = escapeHtml(titleText);
     var href = 'tier.html?t=' + encodeURIComponent(tid) + '&c=' + encodeURIComponent(String(row.id));
     var ago = typeof timeAgo === 'function'
       ? timeAgo(row.updated_at || row.created_at)
@@ -270,77 +271,105 @@
     var views = typeof formatCount === 'function' ? formatCount(row.view_count) : String(row.view_count || 0);
     var author = escapeHtml(row.author_name || 'User');
     var av = row.author_avatar
-      ? '<img class="avatar" src="' + escapeHtml(row.author_avatar) + '" alt="">'
-      : '<span class="avatar av-fallback">' + author.charAt(0).toUpperCase() + '</span>';
+      ? '<img class="cc-av" src="' + escapeHtml(row.author_avatar) + '" alt="">'
+      : '<span class="cc-av cc-av-fallback">' + author.charAt(0).toUpperCase() + '</span>';
     var profileHref = row.user_id
       ? 'account.html?u=' + encodeURIComponent(String(row.user_id))
       : '';
     var authorBlock = profileHref
-      ? '<a class="creator" href="' + profileHref + '" data-profile="1">' + av + '<span>' + author + '</span></a>'
-      : '<div class="creator">' + av + '<span>' + author + '</span></div>';
+      ? '<a class="cc-author" href="' + profileHref + '" data-profile="1">' + av + '<span class="cc-author-name">' + author + '</span></a>'
+      : '<div class="cc-author">' + av + '<span class="cc-author-name">' + author + '</span></div>';
     try {
       if (!window.__rmCommunityRows) window.__rmCommunityRows = {};
       window.__rmCommunityRows[String(row.id)] = row;
     } catch (e) {}
-    var metaLine =
-      (ago ? '<span>' + escapeHtml(ago) + '</span>' : '') +
-      '<span class="sc-stat"><img src="assets/icons/heart.svg" alt=""> ' + likes + '</span>' +
-      '<span class="sc-stat"><img src="assets/icons/view.svg" alt=""> ' + views + '</span>';
-    // DIV card — no exclusive RGB, no Games/Exclusive badges
     return (
-      '<div class="tl-card community-tl" data-href="' + escapeHtml(href) + '" data-cid="' + escapeHtml(String(row.id)) + '" role="link" tabindex="0">' +
-        '<div class="cover">' +
-          '<img class="cover-art" src="' + escapeHtml(cover) + '" alt="" loading="lazy">' +
+      '<article class="cc-card" data-href="' + escapeHtml(href) + '" data-cid="' + escapeHtml(String(row.id)) + '" role="link" tabindex="0">' +
+        '<div class="cc-cover"><img src="' + escapeHtml(cover) + '" alt="" loading="lazy"></div>' +
+        '<div class="cc-body">' +
+          '<div class="cc-title"><span class="cc-title-text">' + title + '</span></div>' +
+          '<div class="cc-stats">' +
+            (ago ? '<span class="cc-ago">' + escapeHtml(ago) + '</span>' : '') +
+            '<span class="cc-stat"><img src="assets/icons/heart.svg" alt="">' + likes + '</span>' +
+            '<span class="cc-stat"><img src="assets/icons/view.svg" alt="">' + views + '</span>' +
+          '</div>' +
+          authorBlock +
         '</div>' +
-        '<div class="body">' +
-          '<div class="title">' + title + '</div>' +
-          '<div class="meta community-meta">' + metaLine + '</div>' +
-          '<div class="foot-row">' + authorBlock + '</div>' +
-        '</div>' +
-      '</div>'
+      '</article>'
     );
+  }
+
+  function wireCommunityCards(root) {
+    if (!root) return;
+    root.querySelectorAll('.cc-card[data-cid]').forEach(function (card) {
+      function openCard() {
+        var cid = card.getAttribute('data-cid');
+        var href = card.getAttribute('data-href');
+        var row = window.__rmCommunityRows && window.__rmCommunityRows[cid];
+        if (row) {
+          try {
+            sessionStorage.setItem('rankme_community_row', JSON.stringify(row));
+            sessionStorage.setItem('rankme_community_id', String(cid));
+          } catch (err) {}
+        }
+        if (href) location.href = href;
+      }
+      card.addEventListener('click', function (ev) {
+        if (ev.target.closest && ev.target.closest('[data-profile]')) return;
+        ev.preventDefault();
+        openCard();
+      });
+      card.addEventListener('keydown', function (ev) {
+        if (ev.key === 'Enter' || ev.key === ' ') {
+          ev.preventDefault();
+          openCard();
+        }
+      });
+      // Marquee only when title overflows
+      var titleEl = card.querySelector('.cc-title');
+      var textEl = card.querySelector('.cc-title-text');
+      if (titleEl && textEl && textEl.scrollWidth > titleEl.clientWidth + 2) {
+        titleEl.classList.add('is-long');
+      }
+    });
   }
 
   async function loadCommunity() {
     if (!els.community) return;
     try {
       if (typeof listPublicTierlists !== 'function') throw new Error('no api');
-      var rows = await listPublicTierlists(12);
+      var rows = await listPublicTierlists(24);
       if (!rows || !rows.length) throw new Error('empty');
-      els.community.innerHTML =
+      var isMobile = window.matchMedia && window.matchMedia('(max-width: 720px)').matches;
+      var limit = isMobile ? 3 : 6;
+      var visible = rows.slice(0, limit);
+      var rest = rows.slice(limit);
+      var html =
         '<h2 class="community-rankings-title">Community Rankings</h2>' +
-        '<div class="community-grid">' + rows.map(communityCardHtml).join('') + '</div>';
-      // Prefetch payload into sessionStorage so tier page can open community rank reliably
-      els.community.querySelectorAll('.community-tl[data-cid]').forEach(function (card) {
-        function openCard() {
-          var cid = card.getAttribute('data-cid');
-          var href = card.getAttribute('data-href');
-          var row = window.__rmCommunityRows && window.__rmCommunityRows[cid];
-          if (row) {
-            try {
-              sessionStorage.setItem('rankme_community_row', JSON.stringify(row));
-              sessionStorage.setItem('rankme_community_id', String(cid));
-            } catch (err) {}
-          }
-          if (href) location.href = href;
-        }
-        card.addEventListener('click', function (ev) {
-          if (ev.target.closest && ev.target.closest('[data-profile]')) return;
-          ev.preventDefault();
-          openCard();
+        '<div class="community-grid">' + visible.map(communityCardHtml).join('') + '</div>';
+      if (rest.length) {
+        html +=
+          '<button type="button" class="cc-show-all" id="communityShowAll">Show all</button>' +
+          '<div class="community-grid community-grid-more" id="communityGridMore" hidden>' +
+            rest.map(communityCardHtml).join('') +
+          '</div>';
+      }
+      els.community.innerHTML = html;
+      wireCommunityCards(els.community);
+      var showBtn = document.getElementById('communityShowAll');
+      var more = document.getElementById('communityGridMore');
+      if (showBtn && more) {
+        showBtn.addEventListener('click', function () {
+          more.hidden = false;
+          more.removeAttribute('hidden');
+          showBtn.hidden = true;
+          wireCommunityCards(more);
         });
-        card.addEventListener('keydown', function (ev) {
-          if (ev.key === 'Enter' || ev.key === ' ') {
-            ev.preventDefault();
-            openCard();
-          }
-        });
-      });
+      }
     } catch (e) {
       els.community.innerHTML =
-        '<div class="community-empty">' +
-          '<p>No public lists yet</p>' +
-        '</div>';
+        '<h2 class="community-rankings-title">Community Rankings</h2>' +
+        '<div class="community-empty"><p>No public lists yet</p></div>';
     }
   }
 

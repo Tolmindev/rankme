@@ -5313,320 +5313,154 @@ nav.main a.cta-nav:hover {
   flex-shrink: 0;
 }
 
-.community-panel {
-  background: linear-gradient(165deg, rgba(36, 30, 54, 0.97), rgba(24, 20, 38, 0.98));
-  border: 1px solid rgba(130, 110, 175, 0.28);
-  border-radius: var(--radius);
-  padding: 26px;
-  margin-top: 8px;
-}
 
-.community-empty {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  padding: 36px 16px;
-  color: var(--text-dim);
-  gap: 10px;
-}
-
-.community-empty .icon {
-  font-size: 2rem;
-  opacity: .7;
-}
-
-.community-empty p {
-  max-width: 420px;
-  margin: 0;
-  font-weight: 600;
-  font-size: .88rem;
-  line-height: 1.6;
-}
-
-.tl-card .tag {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  z-index: 2;
-  font-size: .6rem;
+/* Community Rankings — compact cards, no panel chrome */
+.community-rankings-title {
+  font-size: 1.15rem;
   font-weight: 800;
-  letter-spacing: .5px;
-  text-transform: uppercase;
-  padding: 4px 9px;
-  border-radius: 999px;
-  background: linear-gradient(120deg,#b79bf0,#e6a9e8);
-  color: #1a1226;
-  box-shadow: 0 2px 10px rgba(0,0,0,.35);
-  left: auto;
+  color: #f2eaff;
+  margin: 0 0 18px;
+  letter-spacing: 0.2px;
 }
 
-.tl-card .tag-cat {
-  left: 10px;
-  right: auto;
-  background: rgba(20,16,32,.75);
-  border: 1px solid rgba(255,255,255,.12);
-  color: #f0eafc;
-  text-transform: capitalize;
+#communityBody {
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: none;
+  box-shadow: none;
 }
 
-.tl-card .tag-cat[data-cat="games"] {
-  border-color: rgba(120,180,255,.45);
-  color: #b8d4ff;
-}
-
-.tl-card .tag-cat[data-cat="anime"] {
-  border-color: rgba(255,140,180,.45);
-  color: #ffc0d4;
-}
-
-.tl-card .tag-cat[data-cat="movies"] {
-  border-color: rgba(255,200,100,.45);
-  color: #ffe0a8;
-}
-
-.tl-card .tag-cat[data-cat="tv"] {
-  border-color: rgba(160,220,160,.45);
-  color: #c8f0c8;
-}
-
-.tl-card .tag-cat[data-cat="sports"] {
-  border-color: rgba(255,160,80,.45);
-  color: #ffd0a8;
-}
-
-.tl-card .tag-cat[data-cat="music"] {
-  border-color: rgba(200,140,255,.45);
-  color: #e0c8ff;
-}
-
-.tl-card .tag-cat[data-cat="memes"] {
-  border-color: rgba(255,220,80,.45);
-  color: #fff0a8;
-}
-
-.tl-card .tag-cat[data-cat="technology"] {
-  border-color: rgba(120,220,220,.45);
-  color: #b8f0f0;
-}
-
-.filter-row, .discover-toolbar, .home-filters {
-  position: relative;
-}
-
-@media (max-width: 720px) {
-  .cat-chip:focus, .cat-chip:focus-visible {
-    outline: none;
-  }
-
-  .cat-chip {
-    min-height: 44px;
-    padding: 10px 16px;
-    font-size: 0.72rem;
-  }
-
-  .home-wrap {
-    padding: 0 16px 90px;
-  }
-
-  .discover-toolbar {
-    margin: 6px 0 16px;
-  }
-
-  .chip-scroll .cat-chip {
-    flex: 0 0 auto;
-    min-height: 36px;
-    padding: 8px 14px;
-    font-size: 0.72rem;
-  }
-
-  .home-wrap, .account-wrap, .create-wrap, main {
-    max-width: 100%;
-    box-sizing: border-box;
-  }
-
-  .discover-toolbar .filter-row {
-    flex-direction: column;
-    align-items: stretch;
-    flex-wrap: nowrap;
-    gap: 10px;
-  }
-
-  .discover-toolbar .chip-scroll {
-    width: 100%;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .discover-toolbar #sortDd, .discover-toolbar .filter-row > .dd {
-    margin-left: 0;
-    width: 100%;
-  }
-
-  .discover-toolbar .dd-trigger {
-    width: 100%;
-    justify-content: center;
-  }
-}
-
-
-
-/* —— Home skeleton layouts (base .skel-* in _chrome) —— */
-.skel-card {
-  pointer-events: none;
-  border-color: rgba(80, 70, 110, 0.35);
-}
-
-.skel-card .skel-cover {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  border-radius: 0;
-}
-
-.skel-card .body {
-  padding: 14px 16px 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.community-skel {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  padding: 8px 4px;
-}
-
-.community-skel-item {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 10px 12px;
-}
-
-.skel-skel-text {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-/* Community cards — compact, no RGB, no badges */
-.community-panel .community-rankings-title {
-  margin: 0 0 14px;
-  font-size: 1.05rem;
-  font-weight: 900;
-  text-align: left;
-  color: var(--text);
-}
-.community-panel .community-grid {
+.community-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 12px;
-}
-.community-panel .tl-card.community-tl {
-  display: flex;
-  flex-direction: column;
-  cursor: pointer;
-  text-decoration: none;
-  color: inherit;
-  max-width: 180px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
   width: 100%;
-  background: var(--panel);
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  overflow: hidden;
-  height: 100%;
-}
-.community-panel .community-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 12px;
   align-items: stretch;
 }
-.community-panel .community-tl .cover {
-  display: block;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  overflow: hidden;
-  background: #12101c;
-  flex-shrink: 0;
+
+.community-grid-more {
+  margin-top: 16px;
 }
-.community-panel .community-tl .cover img.cover-art {
+
+.cc-card {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  gap: 12px;
+  padding: 10px;
+  border-radius: 14px;
+  background: rgba(22, 18, 36, 0.92);
+  border: 1.5px solid rgba(160, 130, 220, 0.28);
+  cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.cc-card:hover {
+  border-color: rgba(200, 170, 255, 0.55);
+  box-shadow: 0 6px 20px rgba(80, 40, 140, 0.25);
+}
+
+.cc-cover {
+  flex: 0 0 42%;
+  max-width: 150px;
+  min-width: 110px;
+  aspect-ratio: 16 / 10;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #1a1428;
+}
+
+.cc-cover img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
-.community-panel .community-tl .body {
+
+.cc-body {
+  flex: 1 1 auto;
+  min-width: 0;
   display: flex;
   flex-direction: column;
-  flex: 1;
-  padding: 8px 10px 10px;
-  min-height: 96px;
-}
-.community-panel .community-tl .title {
-  font-weight: 800;
-  font-size: 0.78rem;
-  margin: 0 0 4px;
-  color: #fff;
-  line-height: 1.25;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  min-height: 2.5em;
-}
-.community-panel .community-tl .community-meta {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
+  justify-content: center;
   gap: 6px;
-  font-size: 0.62rem;
-  color: var(--text-dim);
-  font-weight: 600;
-  margin-top: 0;
+  padding: 2px 2px 2px 0;
 }
-.community-panel .community-tl .community-meta .sc-stat {
+
+.cc-title {
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: #f4eefc;
+  line-height: 1.25;
+}
+
+.cc-title-text {
+  display: inline-block;
+  max-width: 100%;
+}
+
+.cc-title.is-long .cc-title-text {
+  max-width: none;
+  padding-right: 1.2em;
+  animation: cc-marquee 10s linear infinite;
+}
+
+@keyframes cc-marquee {
+  0%, 12% { transform: translateX(0); }
+  88%, 100% { transform: translateX(calc(-100% + 4.5em)); }
+}
+
+.cc-stats {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #b9a8d4;
+  min-width: 0;
+}
+
+.cc-ago {
+  flex-shrink: 0;
+}
+
+.cc-stat {
   display: inline-flex;
   align-items: center;
-  gap: 3px;
+  gap: 4px;
+  flex-shrink: 0;
 }
-.community-panel .community-tl .community-meta img {
-  width: 11px;
-  height: 11px;
+
+.cc-stat img {
+  width: 12px;
+  height: 12px;
   opacity: 0.9;
 }
-.community-panel .community-tl .body {
-  background: linear-gradient(180deg, transparent 40%, rgba(18, 14, 28, 0.55) 100%);
-}
-.community-panel .community-tl .foot-row {
-  margin-top: auto;
-  padding-top: 8px;
-  border-top: none;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  min-height: 28px;
-}
-.community-panel .community-tl .creator {
+
+.cc-author {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 7px;
   text-decoration: none;
   color: #e8e0f4;
-  font-size: 0.68rem;
+  font-size: 0.72rem;
   font-weight: 700;
-  padding: 2px 6px 2px 2px;
-  border-radius: 999px;
-  margin-left: 0;
+  min-width: 0;
+  max-width: 100%;
+  margin-top: 2px;
 }
-.community-panel .community-tl .creator:hover {
+
+.cc-author:hover {
   color: #fff;
-  background: rgba(180, 140, 255, 0.15);
 }
-.community-panel .community-tl .creator .avatar {
+
+.cc-av {
   width: 22px;
   height: 22px;
   border-radius: 50%;
@@ -5634,26 +5468,76 @@ nav.main a.cta-nav:hover {
   border: 1.5px solid rgba(180, 140, 255, 0.45);
   flex-shrink: 0;
 }
-.community-panel .community-tl .creator .av-fallback {
+
+.cc-av-fallback {
   display: grid;
   place-items: center;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
   background: #2a2438;
   color: #e8d4ff;
   font-weight: 900;
   font-size: 0.62rem;
-  border: 1.5px solid rgba(180, 140, 255, 0.45);
 }
+
+.cc-author-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.cc-show-all {
+  display: block;
+  margin: 20px auto 0;
+  padding: 10px 28px;
+  border-radius: 999px;
+  border: 1.5px solid rgba(180, 140, 255, 0.4);
+  background: rgba(28, 22, 44, 0.95);
+  color: #f0e6ff;
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.cc-show-all:hover {
+  border-color: rgba(210, 180, 255, 0.7);
+  background: rgba(40, 30, 60, 0.98);
+}
+
+.community-empty {
+  text-align: center;
+  padding: 28px 12px;
+  color: #a898c0;
+  font-size: 0.9rem;
+}
+
+.community-skel {
+  display: none;
+}
+
 @media (max-width: 720px) {
-  .community-panel .community-grid {
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 10px;
+  .community-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
   }
-  .community-panel .tl-card.community-tl {
-    max-width: none;
+  .cc-cover {
+    flex: 0 0 38%;
+    max-width: 130px;
+    min-width: 100px;
   }
+  .cc-title {
+    font-size: 0.88rem;
+  }
+  .community-rankings-title {
+    text-align: left;
+    margin-bottom: 14px;
+  }
+}
+
+.community-section {
+  margin-top: 48px;
+  width: 100%;
 }
 
 /* RankMe · account — Account, auth, modals, toasts, download */

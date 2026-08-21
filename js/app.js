@@ -2019,6 +2019,171 @@ function applyBattleResult(){
   }
   if(THEME_GOLD) document.body.classList.add('theme-gold');
   if(NO_FACTIONS) document.body.classList.add('no-factions');
+
+/* Community ranking UI (public list via ?c=id) */
+async function tryLoadCommunityFromQuery() {
+  try {
+    const params = new URLSearchParams(location.search);
+    const cid = params.get('c');
+    if (!cid) return;
+
+    let row = null;
+    if (typeof getTierlistById === 'function') {
+      try { row = await getTierlistById(cid); } catch (e) { row = null; }
+    }
+    // Direct REST fallback (bypasses SDK issues)
+    if ((!row || !row.payload) && window.RANKME_SB && window.RANKME_SB.url) {
+      try {
+        const q = window.RANKME_SB.url + '/rest/v1/tierlists?id=eq.' + encodeURIComponent(cid) +
+          '&select=id,title,template_id,payload,updated_at,created_at,user_id,is_public,like_count,view_count,author_name,author_avatar';
+        const res = await fetch(q, {
+          headers: {
+            apikey: window.RANKME_SB.key,
+            Authorization: 'Bearer ' + window.RANKME_SB.key,
+          },
+        });
+        if (res.ok) {
+          const arr = await res.json();
+          if (arr && arr[0]) row = arr[0];
+        }
+      } catch (e) {
+        console.warn('[RankMe] community REST fallback', e);
+      }
+    }
+    // Fallback: full row stashed when clicking community card on home
+    if (!row || !row.payload) {
+      try {
+        const sid = sessionStorage.getItem('rankme_community_id');
+        const raw = sessionStorage.getItem('rankme_community_row');
+        if (raw && sid && String(sid) === String(cid)) {
+          const stashed = JSON.parse(raw);
+          row = Object.assign({}, stashed, row || {});
+          if (!row.payload && stashed.payload) row.payload = stashed.payload;
+          sessionStorage.removeItem('rankme_community_row');
+          sessionStorage.removeItem('rankme_community_id');
+        }
+      } catch (e) {}
+    }
+    if (!row || !row.payload) {
+      console.warn('[RankMe] community: no payload for', cid, row);
+      if (typeof showToast === 'function') showToast('Could not load this community ranking');
+      return;
+    }
+
+    const data = typeof row.payload === 'string' ? JSON.parse(row.payload) : row.payload;
+    if (!data.tiers || !data.assignment) return;
+
+    state.tiers = data.tiers;
+    const assignment = {};
+    Object.keys(data.assignment).forEach(k => {
+      assignment[k] = (data.assignment[k] || []).map(id => {
+        const n = parseInt(id, 10);
+        return (String(n) === String(id) && !isNaN(n)) ? n : id;
+      });
+    });
+    state.assignment = assignment;
+    const used = new Set();
+    Object.values(state.assignment).forEach(arr => arr.forEach(id => {
+      used.add(id); used.add(String(id));
+    }));
+    state.pool = freshPool().filter(id => !used.has(id) && !used.has(String(id)));
+
+    communityMode = true;
+    window.__rankmeFromCabinet = true;
+    communityMeta = {
+      id: row.id || cid,
+      userId: row.user_id || '',
+      authorName: row.author_name || 'User',
+      authorAvatar: row.author_avatar || '',
+      likes: row.like_count || 0,
+      views: row.view_count || 0,
+      updatedAt: row.updated_at || row.created_at,
+    };
+    savedTierlistId = null;
+    sanitizeState();
+
+    if (typeof render === 'function') render();
+    if (!BLANK_MODE && typeof renderFactionFilters === 'function') renderFactionFilters();
+    if (typeof renderPortals === 'function') renderPortals();
+    setupCommunityUI();
+    if (typeof incrementTierlistView === 'function') incrementTierlistView(row.id || cid);
+  } catch (err) {
+    console.warn('[RankMe] community load failed:', err && (err.message || String(err)));
+  }
+}
+
+function setupCommunityUI() {
+  if (!communityMode || !communityMeta) return;
+  const battle = document.getElementById('battleModeBtn');
+  const battleWrap = document.querySelector('.hero-battle-wrap');
+  if (battle) battle.hidden = true;
+  if (battleWrap) battleWrap.hidden = true;
+  const listAct = document.getElementById('listActions');
+  if (listAct) {
+    listAct.hidden = false;
+    listAct.removeAttribute('hidden');
+  }
+  let bar = document.getElementById('communityBar');
+  if (!bar) {
+    bar = document.createElement('div');
+    bar.id = 'communityBar';
+    bar.className = 'community-bar';
+    if (listAct && listAct.parentNode) {
+      listAct.parentNode.insertBefore(bar, listAct);
+    } else {
+      const hero = document.getElementById('heroSection') || document.querySelector('.hero');
+      if (hero && hero.parentNode) hero.parentNode.insertBefore(bar, hero.nextSibling);
+      else document.body.appendChild(bar);
+    }
+  }
+  const m = communityMeta;
+  const ago = typeof timeAgo === 'function' ? timeAgo(m.updatedAt) : '';
+  const likes = typeof formatCount === 'function' ? formatCount(m.likes) : String(m.likes || 0);
+  const views = typeof formatCount === 'function' ? formatCount(m.views) : String(m.views || 0);
+  const av = m.authorAvatar
+    ? '<img class="cb-avatar" src="' + String(m.authorAvatar).replace(/"/g, '') + '" alt="">'
+    : '<div class="cb-avatar cb-fallback">' + String(m.authorName || 'U').charAt(0).toUpperCase() + '</div>';
+  const profileHref = m.userId ? ('account.html?u=' + encodeURIComponent(String(m.userId))) : '';
+  const nameHtml = profileHref
+    ? ('<a class="cb-name" href="' + profileHref + '">' + String(m.authorName || 'User').replace(/</g, '') + '</a>')
+    : ('<b class="cb-name">' + String(m.authorName || 'User').replace(/</g, '') + '</b>');
+  bar.innerHTML =
+    '<div class="cb-left">' + (profileHref ? ('<a class="cb-av-link" href="' + profileHref + '">' + av + '</a>') : av) +
+      '<div class="cb-meta">' + nameHtml +
+      (ago ? '<span class="cb-ago">Updated ' + ago + '</span>' : '') + '</div></div>' +
+    '<div class="cb-stats">' +
+      '<span class="cb-stat" title="Views"><img src="assets/icons/view.svg" alt="" class="cb-ico"> ' + views + '</span>' +
+      '<button type="button" class="cb-like" id="communityLikeBtn" aria-label="Like">' +
+        '<img src="assets/icons/heart.svg" alt="" class="cb-ico heart-empty">' +
+        '<img src="assets/icons/heart_full.svg" alt="" class="cb-ico heart-full">' +
+        '<span class="cb-like-n">' + likes + '</span></button></div>';
+  bar.hidden = false;
+  const likeBtn = document.getElementById('communityLikeBtn');
+  if (likeBtn) {
+    if (typeof getMyLikedIds === 'function') {
+      getMyLikedIds([m.id]).then(function (set) {
+        if (set && set.has(String(m.id))) likeBtn.classList.add('on');
+      }).catch(function () {});
+    }
+    likeBtn.onclick = async function () {
+      try {
+        if (typeof toggleTierlistLike !== 'function') return;
+        const res = await toggleTierlistLike(m.id);
+        likeBtn.classList.toggle('on', !!res.liked);
+        likeBtn.classList.remove('pop');
+        void likeBtn.offsetWidth;
+        likeBtn.classList.add('pop');
+        setTimeout(function () { likeBtn.classList.remove('pop'); }, 560);
+        const n = likeBtn.querySelector('.cb-like-n');
+        if (n) n.textContent = typeof formatCount === 'function' ? formatCount(res.like_count) : String(res.like_count || 0);
+        m.likes = res.like_count || 0;
+      } catch (err) {
+        if (String(err.message || err).indexOf('Login') >= 0) location.href = 'account.html';
+      }
+    };
+  }
+}
+
   // Community public ranking (?c=id) — load BEFORE first render
   if (typeof tryLoadCommunityFromQuery === 'function') {
     await tryLoadCommunityFromQuery();
@@ -2253,169 +2418,5 @@ document.querySelectorAll('a.expert-name, #eldudLink').forEach(a => {
 })();
 
 
-
-/* Community ranking UI (public list via ?c=id) */
-async function tryLoadCommunityFromQuery() {
-  try {
-    const params = new URLSearchParams(location.search);
-    const cid = params.get('c');
-    if (!cid) return;
-
-    let row = null;
-    if (typeof getTierlistById === 'function') {
-      try { row = await getTierlistById(cid); } catch (e) { row = null; }
-    }
-    // Direct REST fallback (bypasses SDK issues)
-    if ((!row || !row.payload) && window.RANKME_SB && window.RANKME_SB.url) {
-      try {
-        const q = window.RANKME_SB.url + '/rest/v1/tierlists?id=eq.' + encodeURIComponent(cid) +
-          '&select=id,title,template_id,payload,updated_at,created_at,user_id,is_public,like_count,view_count,author_name,author_avatar';
-        const res = await fetch(q, {
-          headers: {
-            apikey: window.RANKME_SB.key,
-            Authorization: 'Bearer ' + window.RANKME_SB.key,
-          },
-        });
-        if (res.ok) {
-          const arr = await res.json();
-          if (arr && arr[0]) row = arr[0];
-        }
-      } catch (e) {
-        console.warn('[RankMe] community REST fallback', e);
-      }
-    }
-    // Fallback: full row stashed when clicking community card on home
-    if (!row || !row.payload) {
-      try {
-        const sid = sessionStorage.getItem('rankme_community_id');
-        const raw = sessionStorage.getItem('rankme_community_row');
-        if (raw && sid && String(sid) === String(cid)) {
-          const stashed = JSON.parse(raw);
-          row = Object.assign({}, stashed, row || {});
-          if (!row.payload && stashed.payload) row.payload = stashed.payload;
-          sessionStorage.removeItem('rankme_community_row');
-          sessionStorage.removeItem('rankme_community_id');
-        }
-      } catch (e) {}
-    }
-    if (!row || !row.payload) {
-      console.warn('[RankMe] community: no payload for', cid, row);
-      if (typeof showToast === 'function') showToast('Could not load this community ranking');
-      return;
-    }
-
-    const data = typeof row.payload === 'string' ? JSON.parse(row.payload) : row.payload;
-    if (!data.tiers || !data.assignment) return;
-
-    state.tiers = data.tiers;
-    const assignment = {};
-    Object.keys(data.assignment).forEach(k => {
-      assignment[k] = (data.assignment[k] || []).map(id => {
-        const n = parseInt(id, 10);
-        return (String(n) === String(id) && !isNaN(n)) ? n : id;
-      });
-    });
-    state.assignment = assignment;
-    const used = new Set();
-    Object.values(state.assignment).forEach(arr => arr.forEach(id => {
-      used.add(id); used.add(String(id));
-    }));
-    state.pool = freshPool().filter(id => !used.has(id) && !used.has(String(id)));
-
-    communityMode = true;
-    window.__rankmeFromCabinet = true;
-    communityMeta = {
-      id: row.id || cid,
-      userId: row.user_id || '',
-      authorName: row.author_name || 'User',
-      authorAvatar: row.author_avatar || '',
-      likes: row.like_count || 0,
-      views: row.view_count || 0,
-      updatedAt: row.updated_at || row.created_at,
-    };
-    savedTierlistId = null;
-    sanitizeState();
-
-    if (typeof render === 'function') render();
-    if (!BLANK_MODE && typeof renderFactionFilters === 'function') renderFactionFilters();
-    if (typeof renderPortals === 'function') renderPortals();
-    setupCommunityUI();
-    if (typeof incrementTierlistView === 'function') incrementTierlistView(row.id || cid);
-  } catch (err) {
-    console.warn('[RankMe] community load failed:', err && (err.message || String(err)));
-  }
-}
-
-function setupCommunityUI() {
-  if (!communityMode || !communityMeta) return;
-  const battle = document.getElementById('battleModeBtn');
-  const battleWrap = document.querySelector('.hero-battle-wrap');
-  if (battle) battle.hidden = true;
-  if (battleWrap) battleWrap.hidden = true;
-  const listAct = document.getElementById('listActions');
-  if (listAct) {
-    listAct.hidden = false;
-    listAct.removeAttribute('hidden');
-  }
-  let bar = document.getElementById('communityBar');
-  if (!bar) {
-    bar = document.createElement('div');
-    bar.id = 'communityBar';
-    bar.className = 'community-bar';
-    if (listAct && listAct.parentNode) {
-      listAct.parentNode.insertBefore(bar, listAct);
-    } else {
-      const hero = document.getElementById('heroSection') || document.querySelector('.hero');
-      if (hero && hero.parentNode) hero.parentNode.insertBefore(bar, hero.nextSibling);
-      else document.body.appendChild(bar);
-    }
-  }
-  const m = communityMeta;
-  const ago = typeof timeAgo === 'function' ? timeAgo(m.updatedAt) : '';
-  const likes = typeof formatCount === 'function' ? formatCount(m.likes) : String(m.likes || 0);
-  const views = typeof formatCount === 'function' ? formatCount(m.views) : String(m.views || 0);
-  const av = m.authorAvatar
-    ? '<img class="cb-avatar" src="' + String(m.authorAvatar).replace(/"/g, '') + '" alt="">'
-    : '<div class="cb-avatar cb-fallback">' + String(m.authorName || 'U').charAt(0).toUpperCase() + '</div>';
-  const profileHref = m.userId ? ('account.html?u=' + encodeURIComponent(String(m.userId))) : '';
-  const nameHtml = profileHref
-    ? ('<a class="cb-name" href="' + profileHref + '">' + String(m.authorName || 'User').replace(/</g, '') + '</a>')
-    : ('<b class="cb-name">' + String(m.authorName || 'User').replace(/</g, '') + '</b>');
-  bar.innerHTML =
-    '<div class="cb-left">' + (profileHref ? ('<a class="cb-av-link" href="' + profileHref + '">' + av + '</a>') : av) +
-      '<div class="cb-meta">' + nameHtml +
-      (ago ? '<span class="cb-ago">Updated ' + ago + '</span>' : '') + '</div></div>' +
-    '<div class="cb-stats">' +
-      '<span class="cb-stat" title="Views"><img src="assets/icons/view.svg" alt="" class="cb-ico"> ' + views + '</span>' +
-      '<button type="button" class="cb-like" id="communityLikeBtn" aria-label="Like">' +
-        '<img src="assets/icons/heart.svg" alt="" class="cb-ico heart-empty">' +
-        '<img src="assets/icons/heart_full.svg" alt="" class="cb-ico heart-full">' +
-        '<span class="cb-like-n">' + likes + '</span></button></div>';
-  bar.hidden = false;
-  const likeBtn = document.getElementById('communityLikeBtn');
-  if (likeBtn) {
-    if (typeof getMyLikedIds === 'function') {
-      getMyLikedIds([m.id]).then(function (set) {
-        if (set && set.has(String(m.id))) likeBtn.classList.add('on');
-      }).catch(function () {});
-    }
-    likeBtn.onclick = async function () {
-      try {
-        if (typeof toggleTierlistLike !== 'function') return;
-        const res = await toggleTierlistLike(m.id);
-        likeBtn.classList.toggle('on', !!res.liked);
-        likeBtn.classList.remove('pop');
-        void likeBtn.offsetWidth;
-        likeBtn.classList.add('pop');
-        setTimeout(function () { likeBtn.classList.remove('pop'); }, 560);
-        const n = likeBtn.querySelector('.cb-like-n');
-        if (n) n.textContent = typeof formatCount === 'function' ? formatCount(res.like_count) : String(res.like_count || 0);
-        m.likes = res.like_count || 0;
-      } catch (err) {
-        if (String(err.message || err).indexOf('Login') >= 0) location.href = 'account.html';
-      }
-    };
-  }
-}
 
 /* community load runs in async init above */

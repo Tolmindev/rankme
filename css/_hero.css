@@ -762,29 +762,47 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
 }
 
 /* Community creator bar on tier page */
-.community-bar {
+.community-toolbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
   max-width: 1400px;
   width: calc(100% - 48px);
-  margin: 0 auto 12px;
-  padding: 10px 16px;
+  margin: 0 auto 14px;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+}
+.community-toolbar #listActions {
+  margin: 0;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+.community-bar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 18px;
+  width: auto;
+  max-width: 100%;
+  margin: 0;
+  padding: 8px 14px 8px 10px;
   background: rgba(22, 18, 36, 0.92);
   border: 1px solid rgba(140, 120, 180, 0.28);
   border-radius: 999px;
   box-sizing: border-box;
+  flex: 0 1 auto;
+  min-width: 0;
 }
 .cb-left {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   min-width: 0;
 }
 .cb-avatar {
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid transparent;
@@ -808,7 +826,7 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
   min-width: 0;
 }
 .cb-name {
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   font-weight: 800;
   color: #fff;
   text-decoration: none;
@@ -820,57 +838,72 @@ a.cb-name:hover { color: #e8d4ff; }
   text-decoration: none;
 }
 .cb-ago {
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   color: var(--text-dim);
   font-weight: 600;
 }
 .cb-stats {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
   flex-shrink: 0;
+  margin-left: 8px;
 }
 .cb-stat {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  font-size: 0.85rem;
+  gap: 8px;
+  font-size: 0.95rem;
   font-weight: 700;
   color: #e8d4f0;
 }
 .cb-ico {
-  width: 18px;
-  height: 18px;
-  opacity: 0.9;
+  width: 28px;
+  height: 28px;
+  opacity: 0.95;
 }
 .cb-like {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   background: transparent;
   border: none;
   cursor: pointer;
   font-family: inherit;
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   font-weight: 700;
   color: #e8d4f0;
-  padding: 4px 6px;
+  padding: 4px 4px;
   border-radius: 999px;
   position: relative;
-  transition: transform 0.15s;
+}
+.cb-heart {
+  position: relative;
+  display: inline-flex;
+  width: 28px;
+  height: 28px;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.cb-heart .cb-ico {
+  position: absolute;
+  inset: 0;
+  width: 28px;
+  height: 28px;
 }
 .cb-like .heart-full { display: none; }
 .cb-like.on .heart-empty { display: none; }
 .cb-like.on .heart-full { display: block; }
-.cb-like:hover { transform: scale(1.08); }
-.cb-like.pop {
+.cb-like:hover .cb-heart { transform: scale(1.1); }
+.cb-heart.pop {
   animation: likePop 0.55s cubic-bezier(0.18, 0.9, 0.32, 1.35);
 }
-.cb-like.pop::after {
+.cb-heart.pop::after {
   content: '';
   position: absolute;
   left: 50%;
-  top: 45%;
+  top: 50%;
   width: 8px;
   height: 8px;
   margin: -4px 0 0 -4px;
@@ -885,21 +918,27 @@ a.cb-name:hover { color: #e8d4ff; }
     -16px -4px 0 -2px #e87890;
   animation: likeBurst 0.55s ease-out forwards;
 }
-@keyframes likePop {
-  0% { transform: scale(1); }
-  30% { transform: scale(1.4); filter: drop-shadow(0 0 12px rgba(208, 84, 85, 0.85)); }
-  55% { transform: scale(0.92); }
-  100% { transform: scale(1); filter: none; }
-}
-@keyframes likeBurst {
-  0% { opacity: 1; transform: scale(0.4); }
-  100% { opacity: 0; transform: scale(1.6); }
-}
 @media (max-width: 720px) {
+  .community-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    width: calc(100% - 24px);
+    gap: 10px;
+  }
   .community-bar {
-    width: calc(100% - 28px);
+    width: 100%;
+    justify-content: space-between;
     border-radius: 16px;
     padding: 10px 12px;
   }
-  .cb-name { font-size: 0.82rem; }
+  .community-toolbar #listActions {
+    margin-left: 0;
+    justify-content: flex-end;
+  }
+  .cb-name { font-size: 0.84rem; }
+  .cb-ico, .cb-heart, .cb-heart .cb-ico {
+    width: 30px;
+    height: 30px;
+  }
 }
+

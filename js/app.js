@@ -2129,7 +2129,17 @@ function setupCommunityUI() {
     bar.id = 'communityBar';
     bar.className = 'community-bar';
     if (listAct && listAct.parentNode) {
-      listAct.parentNode.insertBefore(bar, listAct);
+      let wrap = document.getElementById('communityToolbar');
+      if (!wrap) {
+        wrap = document.createElement('div');
+        wrap.id = 'communityToolbar';
+        wrap.className = 'community-toolbar';
+        listAct.parentNode.insertBefore(wrap, listAct);
+        wrap.appendChild(bar);
+        wrap.appendChild(listAct);
+      } else {
+        wrap.insertBefore(bar, wrap.firstChild);
+      }
     } else {
       const hero = document.getElementById('heroSection') || document.querySelector('.hero');
       if (hero && hero.parentNode) hero.parentNode.insertBefore(bar, hero.nextSibling);
@@ -2154,8 +2164,10 @@ function setupCommunityUI() {
     '<div class="cb-stats">' +
       '<span class="cb-stat" title="Views"><img src="assets/icons/view.svg" alt="" class="cb-ico"> ' + views + '</span>' +
       '<button type="button" class="cb-like" id="communityLikeBtn" aria-label="Like">' +
-        '<img src="assets/icons/heart.svg" alt="" class="cb-ico heart-empty">' +
-        '<img src="assets/icons/heart_full.svg" alt="" class="cb-ico heart-full">' +
+        '<span class="cb-heart">' +
+          '<img src="assets/icons/heart.svg" alt="" class="cb-ico heart-empty">' +
+          '<img src="assets/icons/heart_full.svg" alt="" class="cb-ico heart-full">' +
+        '</span>' +
         '<span class="cb-like-n">' + likes + '</span></button></div>';
   bar.hidden = false;
   const likeBtn = document.getElementById('communityLikeBtn');
@@ -2170,10 +2182,13 @@ function setupCommunityUI() {
         if (typeof toggleTierlistLike !== 'function') return;
         const res = await toggleTierlistLike(m.id);
         likeBtn.classList.toggle('on', !!res.liked);
-        likeBtn.classList.remove('pop');
-        void likeBtn.offsetWidth;
-        likeBtn.classList.add('pop');
-        setTimeout(function () { likeBtn.classList.remove('pop'); }, 560);
+        var heart = likeBtn.querySelector('.cb-heart');
+        if (heart) {
+          heart.classList.remove('pop');
+          void heart.offsetWidth;
+          heart.classList.add('pop');
+          setTimeout(function () { heart.classList.remove('pop'); }, 560);
+        }
         const n = likeBtn.querySelector('.cb-like-n');
         if (n) n.textContent = typeof formatCount === 'function' ? formatCount(res.like_count) : String(res.like_count || 0);
         m.likes = res.like_count || 0;

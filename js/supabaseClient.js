@@ -461,6 +461,65 @@ async function fetchTemplateStats() {
 
 /* ---- Card battle priors (RPC only) ---- */
 
+
+/* ---- User battle completions (profile counter) ---- */
+
+async function recordUserBattleComplete(templateId) {
+  try {
+    if (typeof trackTemplateUse === 'function' && templateId) {
+      // allow a second battle track on complete (session key uses different suffix)
+      try { sessionStorage.removeItem('rankme_tracked_battle_' + templateId); } catch (_) {}
+      trackTemplateUse(templateId, 'battle');
+    }
+  } catch (e) {}
+  const client = await initSupabase();
+  let user = null;
+  try {
+    if (client) {
+      const { data } = await client.auth.getUser();
+      user = data && data.user;
+    }
+  } catch (e) {}
+  // Local mirror (always works, even offline / free plan)
+  if (user && user.id) {
+    try {
+      const key = 'rankme_battles_' + user.id;
+      const n = (parseInt(localStorage.getItem(key) || '0', 10) || 0) + 1;
+      localStorage.setItem(key, String(n));
+    } catch (e) {}
+  }
+  // Optional server counter (run SUPABASE_USER_BATTLES.sql once)
+  if (client && user) {
+    try {
+      const { error } = await client.rpc('increment_user_battle');
+      if (error) console.warn('[RankMe] increment_user_battle', error.message);
+    } catch (e) {}
+  }
+}
+
+async function getUserBattleCount(userId) {
+  if (!userId) return 0;
+  let local = 0;
+  try {
+    local = parseInt(localStorage.getItem('rankme_battles_' + userId) || '0', 10) || 0;
+  } catch (e) {}
+  const client = await initSupabase();
+  if (!client) return local;
+  try {
+    const { data, error } = await client
+      .from('user_stats')
+      .select('battle_count')
+      .eq('user_id', userId)
+      .maybeSingle();
+    if (!error && data && data.battle_count != null) {
+      const server = Number(data.battle_count) || 0;
+      // Prefer higher of local/server so we never go backwards after SQL is added later
+      return Math.max(local, server);
+    }
+  } catch (e) {}
+  return local;
+}
+
 async function reportCardBattle(templateId, winnerId, loserId) {
   if (!templateId || winnerId == null || loserId == null) return;
   const client = await initSupabase();

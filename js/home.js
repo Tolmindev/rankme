@@ -128,8 +128,11 @@
 
   function cardHtml(t) {
     var meta = state.categoryMeta[t.category] || { label: t.category || 'Other' };
-    var exclusiveTag = t.exclusive ? '<span class="tag">Exclusive</span>' : '';
+    var exclusiveTag = t.exclusive ? '<span class="tag tag-exclusive">Exclusive</span>' : '';
     var catTag = t.category ? '<span class="tag tag-cat" data-cat="' + escapeHtml(t.category) + '">' + escapeHtml(meta.label || t.category) + '</span>' : '';
+    var badges = (catTag || exclusiveTag)
+      ? ('<div class="badge-row">' + catTag + exclusiveTag + '</div>')
+      : '';
     var epicClass = t.parallax ? ' epic' : '';
     var uses = t.useCount || 0;
     var metaLine = (t.itemCount ? t.itemCount + ' ' + (t.itemLabel || 'items') : '');
@@ -137,7 +140,7 @@
     return (
       '<div class="tl-card exclusive' + epicClass + '" data-id="' + escapeHtml(t.id) + '">' +
         '<a class="cover" href="' + escapeHtml(t.href) + '" data-stash="' + escapeHtml(t.id) + '">' +
-          exclusiveTag + catTag +
+          badges +
           '<img class="cover-art" src="' + escapeHtml(t.coverThumb || t.cover) + '" alt="' + escapeHtml(t.title) + '" loading="lazy">' +
         '</a>' +
         '<div class="body">' +

@@ -544,6 +544,9 @@
     setChrome('done');
     historyStack = [];
     B.clearProgress(tpl.id, mode);
+    try {
+      if (typeof recordUserBattleComplete === 'function') recordUserBattleComplete(tpl && tpl.id);
+    } catch (e) {}
 
     var ranked = engine.finalRanking();
     ranked = ranked.map(function (id) {

@@ -251,6 +251,18 @@ async function renderCabinet(user){
     const box = document.getElementById('listBox');
     const totalLikes = rows.reduce((s,r)=> s + (Number(r.like_count)||0), 0);
     document.getElementById('statLists').textContent = String(rows.length);
+    (async function () {
+      var el = document.getElementById('statBattles');
+      if (!el || typeof getUserBattleCount !== 'function') return;
+      try {
+        var uid = (window.__rankmeUser && window.__rankmeUser.id) || null;
+        if (!uid && typeof initSupabase === 'function') {
+          var c = await initSupabase();
+          if (c) { var gu = await c.auth.getUser(); uid = gu.data && gu.data.user && gu.data.user.id; }
+        }
+        if (uid) el.textContent = String(await getUserBattleCount(uid));
+      } catch (e) {}
+    })();
     document.getElementById('statLikes').textContent = typeof formatCount === 'function' ? formatCount(totalLikes) : String(totalLikes);
 
     if(!rows.length){
@@ -390,7 +402,7 @@ async function renderPublicProfile(userId){
       </div>
       <div class="ap-stats" id="apStats">
         <div class="ap-stat"><b id="statLists">${rows.length}</b><span>Tier Lists</span></div>
-        <div class="ap-stat"><b>0</b><span>Battles</span></div>
+        <div class="ap-stat"><b id="statBattles">0</b><span>Battles</span></div>
         <div class="ap-stat"><b>0</b><span>Achievements</span></div>
         <div class="ap-stat"><b id="statLikes">${fc(totalLikes)}</b><span>Likes</span></div>
       </div>
@@ -418,6 +430,16 @@ async function renderPublicProfile(userId){
         </div>
       </div>
     </section>`;
+
+    (async function () {
+      var el = document.getElementById('statBattles');
+      if (!el || typeof getUserBattleCount !== 'function') return;
+      try {
+        var uid = new URLSearchParams(location.search).get('u');
+        if (uid) el.textContent = String(await getUserBattleCount(uid));
+      } catch (e) {}
+    })();
+
 
   const box = document.getElementById('listBox');
   if (!rows.length) {

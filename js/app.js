@@ -1291,26 +1291,52 @@ function wireRemixUpload(){
     e.target.value = '';
   });
 }
-document.getElementById('remixBtn')?.addEventListener('click', ()=>{
-  if(BLANK_MODE){
-    showToast('Remix: Exclusive only');
-    return;
+function doRemix() {
+  try {
+    if (BLANK_MODE) {
+      showToast('Remix: Exclusive only');
+      return;
+    }
+    // Community → normal editor, then same path as Exclusive remix
+    if (communityMode) {
+      if (typeof exitCommunityToEditor === 'function') exitCommunityToEditor();
+      else {
+        communityMode = false;
+        communityMeta = null;
+        document.body.classList.remove('community-view');
+        const bar = document.getElementById('communityBar');
+        if (bar) bar.hidden = true;
+        ['listActions', 'board', 'toolbar', 'poolWrap'].forEach(function (id) {
+          const el = document.getElementById(id);
+          if (!el) return;
+          el.hidden = false;
+          el.removeAttribute('hidden');
+        });
+      }
+    }
+    state.tiers = JSON.parse(JSON.stringify(state.tiers || []));
+    state.assignment = JSON.parse(JSON.stringify(state.assignment || {}));
+    const used = new Set();
+    Object.values(state.assignment).forEach(function (arr) {
+      (arr || []).forEach(function (id) { used.add(Number(id)); });
+    });
+    state.pool = freshPool().filter(function (id) { return !used.has(Number(id)); });
+    setRemixUI(true);
+    savedTierlistId = null;
+    window.__rankmeFromCabinet = true;
+    wireRemixUpload();
+    render();
+    if (!BLANK_MODE) renderFactionFilters();
+    renderPortals();
+    showToast('Remix ready');
+  } catch (err) {
+    console.error('[RankMe] remix failed', err);
+    showToast('Remix failed - try refresh');
   }
-  // Community → same editor path as Exclusive remix (no special chrome hacks)
-  if (communityMode) exitCommunityToEditor();
-  state.tiers = JSON.parse(JSON.stringify(state.tiers));
-  state.assignment = JSON.parse(JSON.stringify(state.assignment));
-  const used = new Set();
-  Object.values(state.assignment).forEach(arr => arr.forEach(id => used.add(id)));
-  state.pool = freshPool().filter(id => !used.has(id));
-  setRemixUI(true);
-  savedTierlistId = null;
-  window.__rankmeFromCabinet = true;
-  wireRemixUpload();
-  render();
-  if(!BLANK_MODE) renderFactionFilters();
-  renderPortals();
-  showToast('Remix ready');
+}
+document.getElementById('remixBtn')?.addEventListener('click', function (e) {
+  e.preventDefault();
+  doRemix();
 });
 
 /** @param {{needReturn?: boolean}} opts needReturn=true only when redirecting to login/OAuth */

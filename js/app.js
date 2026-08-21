@@ -2118,6 +2118,12 @@ function setupCommunityUI() {
   const battleWrap = document.querySelector('.hero-battle-wrap');
   if (battle) battle.hidden = true;
   if (battleWrap) battleWrap.hidden = true;
+  // Expert strip only for template view, not community rankings
+  var expertsBlock = document.getElementById('expertsBlock');
+  if (expertsBlock) {
+    expertsBlock.hidden = true;
+    expertsBlock.style.display = 'none';
+  }
   const listAct = document.getElementById('listActions');
   if (listAct) {
     listAct.hidden = false;

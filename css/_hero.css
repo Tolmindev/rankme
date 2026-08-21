@@ -766,32 +766,29 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  gap: 12px;
   max-width: 1400px;
   width: calc(100% - 48px);
   margin: 0 auto 14px;
+  padding: 0;
   box-sizing: border-box;
-  flex-wrap: wrap;
 }
 .community-toolbar #listActions {
-  margin: 0;
-  margin-left: auto;
+  margin: 0 0 0 auto;
   flex-shrink: 0;
+  width: auto;
 }
 .community-bar {
   display: inline-flex;
   align-items: center;
-  justify-content: flex-start;
-  gap: 18px;
+  gap: 12px;
   width: auto;
-  max-width: 100%;
   margin: 0;
-  padding: 8px 14px 8px 10px;
+  padding: 6px 12px 6px 8px;
   background: rgba(22, 18, 36, 0.92);
   border: 1px solid rgba(140, 120, 180, 0.28);
   border-radius: 999px;
   box-sizing: border-box;
-  flex: 0 1 auto;
   min-width: 0;
 }
 .cb-left {
@@ -801,8 +798,8 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
   min-width: 0;
 }
 .cb-avatar {
-  width: 36px;
-  height: 36px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid transparent;
@@ -822,14 +819,15 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
 .cb-meta {
   display: flex;
   flex-direction: column;
-  gap: 1px;
+  gap: 0;
   min-width: 0;
 }
 .cb-name {
-  font-size: 0.88rem;
+  font-size: 0.86rem;
   font-weight: 800;
   color: #fff;
   text-decoration: none;
+  line-height: 1.2;
 }
 a.cb-name:hover { color: #e8d4ff; }
 .cb-av-link {
@@ -838,50 +836,47 @@ a.cb-name:hover { color: #e8d4ff; }
   text-decoration: none;
 }
 .cb-ago {
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   color: var(--text-dim);
   font-weight: 600;
 }
 .cb-stats {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   flex-shrink: 0;
-  margin-left: 8px;
 }
 .cb-stat {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  font-size: 0.95rem;
+  gap: 6px;
+  font-size: 0.9rem;
   font-weight: 700;
   color: #e8d4f0;
 }
 .cb-ico {
-  width: 28px;
-  height: 28px;
-  opacity: 0.95;
+  width: 26px;
+  height: 26px;
+  display: block;
 }
 .cb-like {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   background: transparent;
   border: none;
   cursor: pointer;
   font-family: inherit;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 700;
   color: #e8d4f0;
-  padding: 4px 4px;
-  border-radius: 999px;
-  position: relative;
+  padding: 2px;
 }
 .cb-heart {
   position: relative;
   display: inline-flex;
-  width: 28px;
-  height: 28px;
+  width: 26px;
+  height: 26px;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
@@ -889,56 +884,36 @@ a.cb-name:hover { color: #e8d4ff; }
 .cb-heart .cb-ico {
   position: absolute;
   inset: 0;
-  width: 28px;
-  height: 28px;
+  width: 26px;
+  height: 26px;
 }
 .cb-like .heart-full { display: none; }
 .cb-like.on .heart-empty { display: none; }
 .cb-like.on .heart-full { display: block; }
 .cb-like:hover .cb-heart { transform: scale(1.1); }
 .cb-heart.pop {
-  animation: likePop 0.55s cubic-bezier(0.18, 0.9, 0.32, 1.35);
-}
-.cb-heart.pop::after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 8px;
-  height: 8px;
-  margin: -4px 0 0 -4px;
-  border-radius: 50%;
-  pointer-events: none;
-  box-shadow:
-    0 -18px 0 -2px #d05455,
-    14px -10px 0 -2px #e87890,
-    16px 6px 0 -2px #d05455,
-    4px 16px 0 -2px #f0a0b0,
-    -12px 12px 0 -2px #d05455,
-    -16px -4px 0 -2px #e87890;
-  animation: likeBurst 0.55s ease-out forwards;
+  animation: likePop 0.35s ease-out;
 }
 @media (max-width: 720px) {
   .community-toolbar {
     flex-direction: column;
-    align-items: stretch;
+    align-items: flex-start;
     width: calc(100% - 24px);
     gap: 10px;
   }
   .community-bar {
-    width: 100%;
-    justify-content: space-between;
-    border-radius: 16px;
-    padding: 10px 12px;
+    width: auto;
+    max-width: 100%;
   }
   .community-toolbar #listActions {
     margin-left: 0;
-    justify-content: flex-end;
-  }
-  .cb-name { font-size: 0.84rem; }
-  .cb-ico, .cb-heart, .cb-heart .cb-ico {
-    width: 30px;
-    height: 30px;
+    align-self: flex-end;
   }
 }
 
+
+@keyframes likePop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.35); }
+  100% { transform: scale(1); }
+}

@@ -2098,7 +2098,8 @@ body.community-view .hero-battle-wrap,
 body.community-view .toolbar-actions,
 body.community-view #poolWrap,
 body.community-view #portalBtn,
-body.community-view #factionFilters {
+body.community-view #factionFilters,
+body.community-view .tier-side {
   display: none;
 }
 body.community-view .card {
@@ -2116,6 +2117,28 @@ body.community-view .tier-label {
 body.community-view .toolbar {
   justify-content: flex-start;
   flex-wrap: wrap;
+}
+
+/* Editable hero title / subtitle (own editor, not community view) */
+.hero-title.is-editable,
+.hero .desc.is-editable {
+  outline: none;
+  border-radius: 8px;
+  cursor: text;
+  transition: box-shadow 0.15s ease, background 0.15s ease;
+}
+.hero-title.is-editable:hover,
+.hero .desc.is-editable:hover {
+  background: rgba(180, 140, 255, 0.06);
+}
+.hero-title.is-editable:focus,
+.hero .desc.is-editable:focus {
+  background: rgba(180, 140, 255, 0.1);
+  box-shadow: 0 0 0 1.5px rgba(180, 140, 255, 0.35);
+}
+body.community-view .hero-title,
+body.community-view .hero .desc {
+  cursor: default;
 }
 
 /* RankMe · tier — Board, rows, cards, toolbar, filters, portals, pool */
@@ -5263,20 +5286,25 @@ nav.main a.cta-nav:hover {
 }
 
 .tl-card .cover .badge-row .tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
   font-size: 0.62rem;
   font-weight: 800;
   letter-spacing: 0.35px;
   text-transform: uppercase;
-  padding: 4px 9px;
+  padding: 0 10px;
+  height: 22px;
+  line-height: 1;
   border-radius: 999px;
   background: rgba(14, 12, 20, 0.78);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
   color: #f2eaff;
   border: 1px solid rgba(255, 255, 255, 0.14);
-  line-height: 1.2;
   white-space: nowrap;
+  box-sizing: border-box;
 }
 
 .tl-card .cover .badge-row .tag-exclusive {

@@ -998,7 +998,8 @@ body.community-view .hero-battle-wrap,
 body.community-view .toolbar-actions,
 body.community-view #poolWrap,
 body.community-view #portalBtn,
-body.community-view #factionFilters {
+body.community-view #factionFilters,
+body.community-view .tier-side {
   display: none;
 }
 body.community-view .card {
@@ -1016,4 +1017,26 @@ body.community-view .tier-label {
 body.community-view .toolbar {
   justify-content: flex-start;
   flex-wrap: wrap;
+}
+
+/* Editable hero title / subtitle (own editor, not community view) */
+.hero-title.is-editable,
+.hero .desc.is-editable {
+  outline: none;
+  border-radius: 8px;
+  cursor: text;
+  transition: box-shadow 0.15s ease, background 0.15s ease;
+}
+.hero-title.is-editable:hover,
+.hero .desc.is-editable:hover {
+  background: rgba(180, 140, 255, 0.06);
+}
+.hero-title.is-editable:focus,
+.hero .desc.is-editable:focus {
+  background: rgba(180, 140, 255, 0.1);
+  box-shadow: 0 0 0 1.5px rgba(180, 140, 255, 0.35);
+}
+body.community-view .hero-title,
+body.community-view .hero .desc {
+  cursor: default;
 }

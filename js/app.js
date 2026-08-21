@@ -222,7 +222,7 @@ function initState(){
     let title = null;
     try { title = sessionStorage.getItem('rankme_blank_title'); } catch(e){}
     if(!title){ try { title = localStorage.getItem('rankme_draft_title'); } catch(e){} }
-    const el = document.getElementById('listTitle');
+    const el = (document.getElementById('heroTitle') || document.getElementById('listTitle'));
     if(el){
       if(title && title !== 'My tier list') el.textContent = title;
       else el.textContent = 'My Rank';
@@ -932,6 +932,7 @@ function closePopover(){
 }
 
 function openRowSettings(tierId, anchorBtn){
+  if (communityMode) return;
   // Toggle: second click on same gear closes
   if(openPopover && openPopoverGear === anchorBtn){
     closePopover();
@@ -1357,7 +1358,7 @@ function stashDraftBeforeLogin(opts){
       pool: state.pool,
       templateId: TEMPLATE_ID,
       remixFlag: !!remixFlag,
-      title: (document.getElementById('listTitle')?.textContent || '').trim() || null
+      title: (document.getElementById('heroTitle')?.textContent || document.getElementById('listTitle')?.textContent || '').trim() || null
     }));
   }catch(e){ console.warn('stash draft', e); }
 }
@@ -1382,7 +1383,7 @@ function restoreDraftIfAny(){
       window.__rankmeFromCabinet = true;
       sanitizeState();
       if(data.title){
-        const h = document.getElementById('listTitle');
+        const h = (document.getElementById('heroTitle') || document.getElementById('listTitle'));
         if(h) h.textContent = data.title;
       }
       showToast('Restored');
@@ -1410,10 +1411,17 @@ document.getElementById('saveAccountBtn')?.addEventListener('click', async ()=>{
       location.href = 'account.html';
       return;
     }
-    const base = (TEMPLATE_TITLE || document.querySelector('.hero .desc b')?.textContent || 'Exclusive');
-    const title = remixFlag ? ('Remix · ' + base) : base;
+    const heroT = (document.getElementById('heroTitle')?.textContent || '').trim();
+    const heroD = (document.getElementById('heroDesc')?.textContent || '').trim();
+    const base = heroT || TEMPLATE_TITLE || 'Ranking';
+    const title = remixFlag && !heroT.startsWith('Remix') ? ('Remix · ' + base) : base;
     sanitizeState();
-    const payload = { tiers: state.tiers, assignment: state.assignment };
+    const payload = {
+      tiers: state.tiers,
+      assignment: state.assignment,
+      customCards: state.customCards || {},
+      subtitle: heroD || null,
+    };
     const overwriteId = (!remixFlag && savedTierlistId) ? savedTierlistId : null;
     const row = await saveExclusiveTierlist({
       title,
@@ -1666,7 +1674,7 @@ async function exportPNG(returnBlobOnly, blobCb, forceSize){
   }
 
   // Right: title + exclusive badge
-  const listTitleEl = document.getElementById('listTitle');
+  const listTitleEl = (document.getElementById('heroTitle') || document.getElementById('listTitle'));
   const customTitle = (listTitleEl && listTitleEl.textContent || '').trim();
   const rightLabel = BLANK_MODE
     ? (customTitle || 'Custom Tier List')
@@ -2121,6 +2129,12 @@ async function tryLoadCommunityFromQuery() {
       views: row.view_count || 0,
       updatedAt: row.updated_at || row.created_at,
     };
+    try {
+      const ht = document.getElementById('heroTitle');
+      const hd = document.getElementById('heroDesc');
+      if (ht && row.title) ht.textContent = String(row.title).replace(/\s+list$/i, '').trim();
+      if (hd && row.payload && row.payload.subtitle) hd.textContent = String(row.payload.subtitle);
+    } catch (e) {}
     savedTierlistId = null;
     sanitizeState();
 
@@ -2135,9 +2149,39 @@ async function tryLoadCommunityFromQuery() {
 }
 
 
+
+function setHeroEditable(on) {
+  on = !!on && !communityMode;
+  ['heroTitle', 'heroDesc'].forEach(function (id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.contentEditable = on ? 'true' : 'false';
+    el.classList.toggle('is-editable', on);
+    el.spellcheck = false;
+    if (on && !el.dataset.heroEditBound) {
+      el.dataset.heroEditBound = '1';
+      el.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' && id === 'heroTitle') {
+          e.preventDefault();
+          el.blur();
+        }
+      });
+      el.addEventListener('blur', function () {
+        try {
+          const title = (document.getElementById('heroTitle')?.textContent || '').trim();
+          const desc = (document.getElementById('heroDesc')?.textContent || '').trim();
+          if (title) localStorage.setItem('rankme_draft_title', title);
+          localStorage.setItem('rankme_draft_desc', desc);
+        } catch (err) {}
+      });
+    }
+  });
+}
+
 /** Read-only community chrome via body.community-view (see _hero.css). */
 function enterCommunityView() {
   document.body.classList.add('community-view');
+  setHeroEditable(false);
   portalsOn = false;
   const pb = document.getElementById('portalBtn');
   if (pb) pb.classList.remove('active');
@@ -2149,6 +2193,7 @@ function exitCommunityToEditor() {
   communityMode = false;
   communityMeta = null;
   document.body.classList.remove('community-view');
+  setHeroEditable(true);
   const bar = document.getElementById('communityBar');
   if (bar) bar.hidden = true;
   ['listActions', 'board', 'toolbar', 'poolWrap'].forEach(function (id) {
@@ -2291,6 +2336,7 @@ function setupCommunityUI() {
   render();
   if(!BLANK_MODE) renderFactionFilters();
   renderPortals();
+  if (typeof setHeroEditable === 'function') setHeroEditable(!communityMode);
 })();
 
 if(BLANK_MODE){

@@ -1388,7 +1388,7 @@ document.getElementById('saveAccountBtn')?.addEventListener('click', async ()=>{
       return;
     }
     const base = (TEMPLATE_TITLE || document.querySelector('.hero .desc b')?.textContent || 'Exclusive');
-    const title = remixFlag ? ('Remix · ' + base) : (base + ' list');
+    const title = remixFlag ? ('Remix · ' + base) : base;
     sanitizeState();
     const payload = { tiers: state.tiers, assignment: state.assignment };
     const overwriteId = (!remixFlag && savedTierlistId) ? savedTierlistId : null;
@@ -2119,9 +2119,11 @@ function setupCommunityUI() {
   if (battle) battle.hidden = true;
   if (battleWrap) battleWrap.hidden = true;
   // Expert strip only for template view, not community rankings
+  document.body.classList.add('community-view');
   var expertsBlock = document.getElementById('expertsBlock');
   if (expertsBlock) {
     expertsBlock.hidden = true;
+    expertsBlock.setAttribute('hidden', '');
     expertsBlock.style.display = 'none';
   }
   const listAct = document.getElementById('listActions');

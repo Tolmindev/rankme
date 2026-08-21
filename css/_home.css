@@ -670,16 +670,13 @@ nav.main a.cta-nav:hover {
   border: 1px solid var(--line);
   border-radius: 12px;
   overflow: hidden;
-  animation: none;
-  box-shadow: none;
-  filter: none;
-  background-image: none;
+  height: 100%;
 }
-.community-panel .tl-card.community-tl:hover {
-  transform: translateY(-2px);
-  border-color: rgba(180, 140, 255, 0.4);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-  filter: none;
+.community-panel .community-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
+  align-items: stretch;
 }
 .community-panel .community-tl .cover {
   display: block;
@@ -687,6 +684,7 @@ nav.main a.cta-nav:hover {
   aspect-ratio: 16 / 9;
   overflow: hidden;
   background: #12101c;
+  flex-shrink: 0;
 }
 .community-panel .community-tl .cover img.cover-art {
   width: 100%;
@@ -695,19 +693,23 @@ nav.main a.cta-nav:hover {
   display: block;
 }
 .community-panel .community-tl .body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
   padding: 8px 10px 10px;
+  min-height: 96px;
 }
 .community-panel .community-tl .title {
   font-weight: 800;
   font-size: 0.78rem;
   margin: 0 0 4px;
   color: #fff;
-  outline: none;
   line-height: 1.25;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  min-height: 2.5em;
 }
 .community-panel .community-tl .community-meta {
   display: flex;
@@ -717,6 +719,7 @@ nav.main a.cta-nav:hover {
   font-size: 0.62rem;
   color: var(--text-dim);
   font-weight: 600;
+  margin-top: 0;
 }
 .community-panel .community-tl .community-meta .sc-stat {
   display: inline-flex;
@@ -729,11 +732,13 @@ nav.main a.cta-nav:hover {
   opacity: 0.9;
 }
 .community-panel .community-tl .foot-row {
-  margin-top: 8px;
+  margin-top: auto;
   padding-top: 8px;
   border-top: 1px solid var(--line);
   display: flex;
   justify-content: flex-end;
+  align-items: center;
+  min-height: 28px;
 }
 .community-panel .community-tl .creator {
   display: inline-flex;
@@ -745,13 +750,10 @@ nav.main a.cta-nav:hover {
   font-weight: 700;
   padding: 2px 6px 2px 2px;
   border-radius: 999px;
-  transition: color 0.15s, background 0.15s, box-shadow 0.15s;
 }
 .community-panel .community-tl .creator:hover {
   color: #fff;
-  text-decoration: none;
   background: rgba(180, 140, 255, 0.15);
-  box-shadow: 0 0 12px rgba(180, 140, 255, 0.35);
 }
 .community-panel .community-tl .creator .avatar {
   width: 22px;
@@ -760,11 +762,6 @@ nav.main a.cta-nav:hover {
   object-fit: cover;
   border: 1.5px solid rgba(180, 140, 255, 0.45);
   flex-shrink: 0;
-  transition: border-color 0.15s, box-shadow 0.15s;
-}
-.community-panel .community-tl .creator:hover .avatar {
-  border-color: rgba(220, 180, 255, 0.9);
-  box-shadow: 0 0 8px rgba(180, 140, 255, 0.55);
 }
 .community-panel .community-tl .creator .av-fallback {
   display: grid;

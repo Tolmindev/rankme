@@ -251,8 +251,11 @@
       'sf6': 'Street Fighter 6',
       'dota2': 'Dota 2',
     };
-    if (fallback && fallback !== 'Untitled') return fallback;
-    return map[tid] || tid || 'Tier list';
+    var base = map[tid] || tid || 'Ranking';
+    var raw = (fallback && fallback !== 'Untitled') ? String(fallback) : base;
+    // Never show trailing " list" (legacy save titles)
+    raw = raw.replace(/\s+list$/i, '').trim();
+    return raw || base;
   }
 
   function communityCardHtml(row) {

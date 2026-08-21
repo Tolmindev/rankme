@@ -1992,28 +1992,41 @@ a.cb-name:hover { color: #e8d4ff; }
   font-weight: 700;
   color: #e8d4f0;
   padding: 2px;
+  flex-shrink: 0;
 }
+/* fixed slot for icon — scale is transform-only, no layout shift */
 .cb-heart {
   position: relative;
-  display: inline-flex;
+  display: block;
   width: 26px;
   height: 26px;
-  align-items: center;
-  justify-content: center;
   flex-shrink: 0;
+  overflow: visible;
 }
 .cb-heart .cb-ico {
   position: absolute;
   inset: 0;
   width: 26px;
   height: 26px;
+  transform-origin: center center;
 }
 .cb-like .heart-full { display: none; }
 .cb-like.on .heart-empty { display: none; }
 .cb-like.on .heart-full { display: block; }
-.cb-like:hover .cb-heart { transform: scale(1.1); }
-.cb-heart.pop {
+.cb-like:hover .cb-heart .cb-ico { transform: scale(1.1); }
+.cb-heart.pop .cb-ico {
   animation: likePop 0.35s ease-out;
+}
+/* reserve ~3 chars: 0–999 or 1k */
+.cb-like-n {
+  display: inline-block;
+  min-width: 3ch;
+  text-align: left;
+  font-variant-numeric: tabular-nums;
+  box-sizing: content-box;
+}
+.cb-stat {
+  font-variant-numeric: tabular-nums;
 }
 
 @media (max-width: 720px) {

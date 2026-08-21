@@ -1991,111 +1991,31 @@ a.cb-name:hover { color: #e8d4ff; }
   font-size: 0.9rem;
   font-weight: 700;
   color: #e8d4f0;
-  padding: 0;
-  height: 26px;
-  line-height: 1;
+  padding: 2px;
 }
-/* Our SVG hearts + CSS burst (Twitter-style, no PNG sprite) */
 .cb-heart {
   position: relative;
-  display: block;
+  display: inline-flex;
   width: 26px;
   height: 26px;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
-  pointer-events: none;
 }
-.cb-heart .heart-empty,
-.cb-heart .heart-full {
+.cb-heart .cb-ico {
   position: absolute;
   inset: 0;
   width: 26px;
   height: 26px;
-  display: block;
-  object-fit: contain;
 }
-.cb-heart .heart-full {
-  opacity: 0;
-  transform: scale(0);
+.cb-like .heart-full { display: none; }
+.cb-like.on .heart-empty { display: none; }
+.cb-like.on .heart-full { display: block; }
+.cb-like:hover .cb-heart { transform: scale(1.1); }
+.cb-heart.pop {
+  animation: likePop 0.35s ease-out;
 }
-.cb-like.on .heart-empty {
-  opacity: 0;
-}
-.cb-like.on .heart-full {
-  opacity: 1;
-  transform: scale(1);
-}
-.cb-like.anim .heart-full {
-  animation: cbHeartPop 0.55s cubic-bezier(0.15, 0.85, 0.35, 1.2) both;
-}
-.cb-burst {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 8px;
-  height: 8px;
-  margin: -4px 0 0 -4px;
-  border-radius: 50%;
-  border: 0 solid #e2264d;
-  opacity: 0;
-  pointer-events: none;
-  box-sizing: border-box;
-}
-.cb-like.anim .cb-burst {
-  animation: cbHeartRing 0.55s ease-out both;
-}
-.cb-like.anim .cb-heart::after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 4px;
-  height: 4px;
-  margin: -2px 0 0 -2px;
-  border-radius: 50%;
-  box-shadow:
-    12px 0 0 #8ce8c3,
-    -12px 0 0 #cc8ef5,
-    0 12px 0 #90d2fa,
-    0 -12px 0 #f58ea7,
-    9px 9px 0 #91d2fa,
-    -9px 9px 0 #8ce8c3,
-    9px -9px 0 #cc8ef5,
-    -9px -9px 0 #f58ea7;
-  animation: cbHeartDots 0.55s ease-out both;
-}
-.cb-like:hover .cb-heart {
-  transform: scale(1.08);
-  transition: transform 0.15s ease;
-}
-@keyframes cbHeartPop {
-  0% { transform: scale(0); opacity: 0; }
-  40% { transform: scale(1.35); opacity: 1; }
-  70% { transform: scale(0.92); }
-  100% { transform: scale(1); opacity: 1; }
-}
-@keyframes cbHeartRing {
-  0% {
-    width: 6px;
-    height: 6px;
-    margin: -3px 0 0 -3px;
-    border-width: 4px;
-    border-color: #e2264d;
-    opacity: 1;
-  }
-  100% {
-    width: 42px;
-    height: 42px;
-    margin: -21px 0 0 -21px;
-    border-width: 0;
-    border-color: #cc8ef5;
-    opacity: 0;
-  }
-}
-@keyframes cbHeartDots {
-  0% { transform: scale(0.3); opacity: 0; }
-  30% { opacity: 1; }
-  100% { transform: scale(1.35); opacity: 0; }
-}
+
 @media (max-width: 720px) {
   .community-toolbar {
     flex-direction: column;
@@ -2248,6 +2168,12 @@ body[data-editor="1"] #heroDesc {
 /* keep gap between title / desc when padded */
 .hero > .hero-text {
   gap: 10px;
+}
+
+@keyframes likePop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.35); }
+  100% { transform: scale(1); }
 }
 
 /* RankMe · tier — Board, rows, cards, toolbar, filters, portals, pool */

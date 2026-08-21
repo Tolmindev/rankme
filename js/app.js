@@ -254,7 +254,8 @@ function render(){
 
     const label = document.createElement('div');
     label.className = 'tier-label';
-    label.contentEditable = 'true';
+    label.contentEditable = (typeof communityMode !== 'undefined' && communityMode) ? 'false' : 'true';
+    if (typeof communityMode !== 'undefined' && communityMode) label.classList.add('tier-label-locked');
     label.spellcheck = false;
     label.style.setProperty('--hue', t.hue);
     label.style.setProperty('--sat', t.sat+'%');
@@ -262,6 +263,7 @@ function render(){
     label.textContent = t.name;
     fitLabelFont(label, t.name);
     label.addEventListener('focus', ()=>{
+      if (typeof communityMode !== 'undefined' && communityMode) { label.blur(); return; }
       const name = t.name || (label.innerText || '');
       fitLabelFont(label, name);
       // Caret to end for quick edit
@@ -1310,10 +1312,10 @@ document.getElementById('remixBtn')?.addEventListener('click', ()=>{
   const battleWrap = document.querySelector('.hero-battle-wrap');
   if (battle) battle.hidden = false;
   if (battleWrap) battleWrap.hidden = false;
-  setCommunityChrome(false);
   window.__rankmeFromCabinet = true;
   wireRemixUpload();
   render();
+  setCommunityChrome(false);
   if(!BLANK_MODE) renderFactionFilters();
   renderPortals();
   showToast('Remix ready');
@@ -2117,41 +2119,57 @@ async function tryLoadCommunityFromQuery() {
 
 
 function setCommunityChrome(on) {
-  document.body.classList.toggle('community-view', !!on);
+  on = !!on;
+  document.body.classList.toggle('community-view', on);
   const pool = document.getElementById('poolWrap');
   if (pool) {
+    pool.hidden = on;
     if (on) {
-      pool.hidden = true;
       pool.setAttribute('hidden', '');
+      pool.style.display = 'none';
     } else {
-      pool.hidden = false;
       pool.removeAttribute('hidden');
+      pool.style.display = '';
     }
   }
   const toolbar = document.getElementById('toolbar');
   if (toolbar) {
     toolbar.hidden = false;
     toolbar.removeAttribute('hidden');
+    toolbar.style.display = '';
   }
   document.querySelectorAll('.toolbar-actions').forEach(function (el) {
-    el.hidden = !!on;
-    if (on) el.setAttribute('hidden', '');
-    else el.removeAttribute('hidden');
+    el.hidden = on;
+    if (on) {
+      el.setAttribute('hidden', '');
+      el.style.display = 'none';
+    } else {
+      el.removeAttribute('hidden');
+      el.style.display = '';
+    }
   });
   const portalBtn = document.getElementById('portalBtn');
   if (portalBtn) {
-    portalBtn.hidden = !!on;
+    portalBtn.hidden = on;
     if (on) {
+      portalBtn.setAttribute('hidden', '');
       portalBtn.classList.remove('active');
       portalsOn = false;
       if (typeof renderPortals === 'function') renderPortals();
+    } else {
+      portalBtn.removeAttribute('hidden');
+      portalBtn.style.display = '';
     }
   }
   const faction = document.getElementById('factionFilters');
-  if (faction && on) {
-    // filters only make sense with pool — hide in community view
-    faction.style.display = 'none';
+  if (faction) {
+    faction.style.display = on ? 'none' : '';
   }
+  // Lock / unlock tier title editing
+  document.querySelectorAll('.tier-label').forEach(function (label) {
+    label.contentEditable = on ? 'false' : 'true';
+    label.classList.toggle('tier-label-locked', on);
+  });
 }
 
 function setupCommunityUI() {

@@ -2117,6 +2117,16 @@ body.community-view .toolbar {
   flex-wrap: wrap;
 }
 
+body.community-view .tier-label,
+.tier-label.tier-label-locked {
+  cursor: default;
+  user-select: none;
+  -webkit-user-select: none;
+  caret-color: transparent;
+  outline: none;
+  pointer-events: none;
+}
+
 /* RankMe · tier — Board, rows, cards, toolbar, filters, portals, pool */
 
 .page, main, .wrap, .board-wrap, .tier-shell, .pool-wrap {

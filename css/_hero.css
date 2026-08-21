@@ -1023,3 +1023,13 @@ body.community-view .toolbar {
   justify-content: flex-start;
   flex-wrap: wrap;
 }
+
+body.community-view .tier-label,
+.tier-label.tier-label-locked {
+  cursor: default;
+  user-select: none;
+  -webkit-user-select: none;
+  caret-color: transparent;
+  outline: none;
+  pointer-events: none;
+}

@@ -1104,11 +1104,11 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
 }
 
 .hero > .hero-text {
-  flex: 1 1 320px;
+  flex: 0 1 320px;
   max-width: 560px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: flex-start;
   gap: 14px;
   align-self: center;
@@ -1350,7 +1350,7 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
 }
 
 .hero-text {
-  flex: 1 1 240px;
+  flex: 0 1 auto;
   min-width: 0;
 }
 
@@ -1372,14 +1372,13 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
 }
 
 .hero .desc {
-  flex: 1 1 280px;
+  flex: 0 0 auto;
   max-width: 520px;
   color: var(--text-dim);
   font-size: .95rem;
   line-height: 1.65;
   font-weight: 600;
   margin: 0 0 4px;
-  margin-bottom: 6px;
   padding: 0;
 }
 
@@ -1481,7 +1480,7 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
 }
 
 .hero-text.blank-hero-text, .hero > .hero-text {
-  flex: 1 1 280px;
+  flex: 0 1 auto;
   max-width: 520px;
   display: flex;
   flex-direction: column;
@@ -1491,7 +1490,7 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
 }
 
 .hero-text, .hero > .hero-text, .hero-text.blank-hero-text {
-  flex: 1 1 280px;
+  flex: 0 1 auto;
   max-width: 520px;
   display: flex;
   flex-direction: column;
@@ -1623,7 +1622,7 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
   }
 
   .hero .parallax-host, .hero .title-logo, .hero img.cover-card {
-    margin-bottom: 14px;
+    margin-bottom: 0;
   }
 
   .hero h1, #listTitle {
@@ -1650,7 +1649,7 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
   .hero-text .hero-battle-wrap {
     display: flex;
     justify-content: center;
-    margin: 16px 0 4px;
+    margin: 10px 0 0;
   }
 
   .hero-text .btn-battle-hero, button.btn-battle-hero#battleModeBtn {
@@ -2010,7 +2009,7 @@ a.cb-name:hover { color: #e8d4ff; }
     width: 100%;
     max-width: 1400px;
     padding: 0 14px;
-    margin: 8px auto 12px;
+    margin: 12px auto 12px;
     gap: 10px;
     box-sizing: border-box;
   }
@@ -2054,6 +2053,68 @@ body.community-view .experts-block {
 .hero-battle-wrap[hidden] {
   display: none !important;
   margin: 0 !important;
+}
+
+
+/* mobile-tier-stack — single source of vertical rhythm under hero */
+@media (max-width: 720px) {
+  .hero {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    gap: 10px;
+  }
+  .hero > .hero-text,
+  .hero-text,
+  .hero-text.blank-hero-text {
+    flex: 0 0 auto;
+    min-height: 0;
+    height: auto;
+    margin: 0;
+    padding-bottom: 0;
+  }
+  .hero .desc,
+  .hero > .hero-text .desc {
+    flex: 0 0 auto;
+    margin: 0;
+  }
+  .hero-battle-wrap {
+    margin: 10px 0 0;
+  }
+  .hero-battle-wrap[hidden] {
+    display: none !important;
+    margin: 0 !important;
+  }
+  #expertsBlock[hidden],
+  .experts-block[hidden] {
+    display: none !important;
+    margin: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+  }
+  .list-actions {
+    margin-top: 12px;
+    margin-bottom: 12px;
+  }
+  .community-toolbar {
+    margin-top: 12px;
+  }
+}
+
+
+/* Community view: read-only chrome */
+body.community-view .toolbar-actions,
+body.community-view #poolWrap,
+body.community-view #portalBtn,
+body.community-view #factionFilters {
+  display: none !important;
+}
+body.community-view .card {
+  cursor: default;
+  touch-action: pan-y;
+}
+body.community-view .toolbar {
+  justify-content: flex-start;
+  flex-wrap: wrap;
 }
 
 /* RankMe · tier — Board, rows, cards, toolbar, filters, portals, pool */

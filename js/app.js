@@ -632,6 +632,8 @@ function blockTouchScroll(e){
 }
 
 function onCardPointerDown(e){
+  if (typeof communityMode !== 'undefined' && communityMode) return;
+
   if(drag) return;
   // Mouse: ignore right/middle. Touch/pen: always allow (button can be weird)
   const isTouch = e.pointerType === 'touch' || e.pointerType === 'pen' || e.pointerType === '';
@@ -1308,6 +1310,7 @@ document.getElementById('remixBtn')?.addEventListener('click', ()=>{
   const battleWrap = document.querySelector('.hero-battle-wrap');
   if (battle) battle.hidden = false;
   if (battleWrap) battleWrap.hidden = false;
+  setCommunityChrome(false);
   window.__rankmeFromCabinet = true;
   wireRemixUpload();
   render();
@@ -2112,14 +2115,53 @@ async function tryLoadCommunityFromQuery() {
   }
 }
 
+
+function setCommunityChrome(on) {
+  document.body.classList.toggle('community-view', !!on);
+  const pool = document.getElementById('poolWrap');
+  if (pool) {
+    if (on) {
+      pool.hidden = true;
+      pool.setAttribute('hidden', '');
+    } else {
+      pool.hidden = false;
+      pool.removeAttribute('hidden');
+    }
+  }
+  const toolbar = document.getElementById('toolbar');
+  if (toolbar) {
+    toolbar.hidden = false;
+    toolbar.removeAttribute('hidden');
+  }
+  document.querySelectorAll('.toolbar-actions').forEach(function (el) {
+    el.hidden = !!on;
+    if (on) el.setAttribute('hidden', '');
+    else el.removeAttribute('hidden');
+  });
+  const portalBtn = document.getElementById('portalBtn');
+  if (portalBtn) {
+    portalBtn.hidden = !!on;
+    if (on) {
+      portalBtn.classList.remove('active');
+      portalsOn = false;
+      if (typeof renderPortals === 'function') renderPortals();
+    }
+  }
+  const faction = document.getElementById('factionFilters');
+  if (faction && on) {
+    // filters only make sense with pool — hide in community view
+    faction.style.display = 'none';
+  }
+}
+
 function setupCommunityUI() {
   if (!communityMode || !communityMeta) return;
+  setCommunityChrome(true);
   const battle = document.getElementById('battleModeBtn');
   const battleWrap = document.querySelector('.hero-battle-wrap');
   if (battle) battle.hidden = true;
   if (battleWrap) battleWrap.hidden = true;
   // Expert strip only for template view, not community rankings
-  document.body.classList.add('community-view');
   var expertsBlock = document.getElementById('expertsBlock');
   if (expertsBlock) {
     expertsBlock.hidden = true;

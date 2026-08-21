@@ -2409,10 +2409,7 @@ function setupCommunityUI() {
     '<div class="cb-stats">' +
       '<span class="cb-stat" title="Views"><img src="assets/icons/view.svg" alt="" class="cb-ico"> ' + views + '</span>' +
       '<button type="button" class="cb-like" id="communityLikeBtn" aria-label="Like">' +
-        '<span class="cb-heart">' +
-          '<img src="assets/icons/heart.svg" alt="" class="cb-ico heart-empty">' +
-          '<img src="assets/icons/heart_full.svg" alt="" class="cb-ico heart-full">' +
-        '</span>' +
+        '<span class="cb-heart" aria-hidden="true"></span>' +
         '<span class="cb-like-n">' + likes + '</span></button></div>';
   bar.hidden = false;
   const likeBtn = document.getElementById('communityLikeBtn');
@@ -2426,13 +2423,14 @@ function setupCommunityUI() {
       try {
         if (typeof toggleTierlistLike !== 'function') return;
         const res = await toggleTierlistLike(m.id);
-        likeBtn.classList.toggle('on', !!res.liked);
-        var heart = likeBtn.querySelector('.cb-heart');
-        if (heart) {
-          heart.classList.remove('pop');
-          void heart.offsetWidth;
-          heart.classList.add('pop');
-          setTimeout(function () { heart.classList.remove('pop'); }, 560);
+        var liked = !!res.liked;
+        // Twitter-style sprite: animate only when liking
+        if (liked) {
+          likeBtn.classList.remove('on');
+          void likeBtn.offsetWidth;
+          likeBtn.classList.add('on');
+        } else {
+          likeBtn.classList.remove('on');
         }
         const n = likeBtn.querySelector('.cb-like-n');
         if (n) n.textContent = typeof formatCount === 'function' ? formatCount(res.like_count) : String(res.like_count || 0);

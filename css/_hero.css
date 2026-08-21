@@ -960,6 +960,9 @@ a.cb-name:hover { color: #e8d4ff; }
     margin: 0;
     padding-bottom: 0;
   }
+  .hero-text.blank-hero-text {
+    gap: 12px;
+  }
   .hero .desc,
   .hero > .hero-text .desc {
     flex: 0 0 auto;

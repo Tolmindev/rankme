@@ -790,7 +790,7 @@ html.rankme-dragging, html.rankme-dragging body, body.rankme-dragging {
   display: flex;
   justify-content: flex-start;
   width: 100%;
-  margin-top: 6px;
+  margin-top: 10px;
 }
 
 @media (max-width: 720px) {
@@ -840,7 +840,14 @@ html.rankme-dragging, html.rankme-dragging body, body.rankme-dragging {
 
   .blank-upload-row {
     justify-content: center;
-    margin-top: 12px;
+    margin-top: 16px;
+    margin-bottom: 4px;
+  }
+  .hero-text.blank-hero-text {
+    gap: 12px;
+  }
+  .hero-text.blank-hero-text .desc {
+    margin-bottom: 0;
   }
 
   .page {

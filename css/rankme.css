@@ -5499,12 +5499,15 @@ nav.main a.cta-nav:hover {
   height: 11px;
   opacity: 0.9;
 }
+.community-panel .community-tl .body {
+  background: linear-gradient(180deg, transparent 40%, rgba(18, 14, 28, 0.55) 100%);
+}
 .community-panel .community-tl .foot-row {
   margin-top: auto;
   padding-top: 8px;
-  border-top: 1px solid var(--line);
+  border-top: none;
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
   align-items: center;
   min-height: 28px;
 }
@@ -5518,6 +5521,7 @@ nav.main a.cta-nav:hover {
   font-weight: 700;
   padding: 2px 6px 2px 2px;
   border-radius: 999px;
+  margin-left: 0;
 }
 .community-panel .community-tl .creator:hover {
   color: #fff;

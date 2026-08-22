@@ -14,8 +14,8 @@
     vsRow: document.getElementById('battleVsRow'),
     fill: document.getElementById('battleFill'),
     progressLabel: document.getElementById('battleProgressLabel'),
-    skip: document.getElementById('battleSkip'),
     back: document.getElementById('battleBack'),
+    how: document.getElementById('battleHow'),
     overlay: document.getElementById('battleOverlay'),
     panel: document.getElementById('battlePanel'),
     top: document.querySelector('.battle-top'),
@@ -56,7 +56,16 @@
       els.top.classList.toggle('is-play', phase === 'play');
       els.top.classList.toggle('is-done', phase === 'done');
     }
-    if (els.skip) els.skip.style.display = phase === 'play' ? '' : 'none';
+    if (els.how) {
+      if (phase === 'play') {
+        els.how.hidden = false;
+        els.how.removeAttribute('hidden');
+      } else {
+        els.how.hidden = true;
+        els.how.setAttribute('hidden', '');
+        els.how.textContent = '';
+      }
+    }
   }
 
   function openOverlay(html) {
@@ -161,6 +170,7 @@
 
     document.title = 'Battle Mode - ' + (t.title || 'RankMe');
     setChrome('select');
+    if (els.how) { els.how.hidden = true; els.how.setAttribute('hidden', ''); els.how.textContent = ''; }
     historyStack = [];
     if (els.arena) els.arena.style.visibility = '';
 
@@ -271,31 +281,19 @@
         '<div class="battle-progress-bar"><div class="fill" id="battleFill"></div></div>' +
         '<div class="battle-progress-label"><span id="battleProgressLabel">0 / 0</span></div>' +
       '</div>' +
-      '<div class="battle-vs-row" id="battleVsRow"></div>' +
-      '<button class="battle-skip" id="battleSkip" type="button">Skip</button>' +
-      '<p class="battle-how">' +
-        (mode === 'full'
-          ? 'Full ranking builds a complete order from your picks. Take your time - you can leave and continue later.'
-          : 'Each round you pick a winner. Those picks become a ranking. More rounds - clearer order. You can edit after.') +
-      '</p>';
+      '<div class="battle-vs-row" id="battleVsRow"></div>';
 
     els.vsRow = document.getElementById('battleVsRow');
-    els.skip = document.getElementById('battleSkip');
     els.fill = document.getElementById('battleFill');
     els.progressLabel = document.getElementById('battleProgressLabel');
     var titleEl = document.getElementById('battleTitle');
     if (titleEl) titleEl.textContent = tpl.title || '';
-
-    if (els.skip) {
-      els.skip.onclick = function () {
-        if (locked || !currentPair) return;
-        locked = true;
-        pushHistory();
-        engine.recordChoice(currentPair[0], currentPair[1], true);
-        completed++;
-        persist();
-        afterPick();
-      };
+    if (els.how) {
+      els.how.hidden = false;
+      els.how.removeAttribute('hidden');
+      els.how.innerHTML = mode === 'full'
+        ? 'Full ranking builds a complete order from your picks.<br>Take your time - you can leave and continue later.'
+        : 'Each round you pick a winner. Those picks become a ranking.<br>More rounds - clearer order. You can edit after.';
     }
     if (els.back) {
       els.back.onclick = function (e) {

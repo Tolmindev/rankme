@@ -378,12 +378,14 @@ button, .cta, .btn, .btn-mini, .pill-btn, .download-btn, .login-btn, a.btn, a.ct
 }
 
 .battle-progress-wrap {
-  flex: 1 1 auto;
+  flex: 0 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 4px;
   min-width: 0;
+  width: 100%;
+  max-width: 400px;
 }
 
 .battle-progress-bar {
@@ -393,6 +395,16 @@ button, .cta, .btn, .btn-mini, .pill-btn, .download-btn, .login-btn, a.btn, a.ct
   background: rgba(32, 24, 48, 0.95);
   overflow: hidden;
   max-width: 420px;
+}
+
+.battle-progress-bar .fill {
+  display: block;
+  height: 100%;
+  width: 0%;
+  max-width: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #ff6b9d, #ff9f6b, #e6a0ff, #b79bf0);
+  transition: width 0.35s ease-out;
 }
 
 .battle-progress-label {
@@ -653,6 +665,10 @@ button, .cta, .btn, .btn-mini, .pill-btn, .download-btn, .login-btn, a.btn, a.ct
   gap: 28px;
   flex-wrap: nowrap;
   position: relative;
+  width: 100%;
+  flex: 1 1 auto;
+  min-height: 0;
+  box-sizing: border-box;
 }
 
 .battle-vs-center {
@@ -879,6 +895,11 @@ button, .cta, .btn, .btn-mini, .pill-btn, .download-btn, .login-btn, a.btn, a.ct
   padding: 0;
   box-sizing: border-box;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1 1 auto;
+  min-height: 0;
 }
 
 .battle-mode-cards {
@@ -887,7 +908,8 @@ button, .cta, .btn, .btn-mini, .pill-btn, .download-btn, .login-btn, a.btn, a.ct
   gap: 18px;
   width: 100%;
   max-width: 920px;
-  margin: 20px auto 0;
+  margin-top: auto;
+  margin-bottom: auto;
   box-sizing: border-box;
 }
 
@@ -1161,6 +1183,8 @@ to { --elec-angle: 360deg; }
     justify-content: center;
     gap: 6px;
     width: 100%;
+    flex: 1 1 auto;
+    min-height: 0;
   }
 
   .battle-side {
@@ -1205,7 +1229,9 @@ to { --elec-angle: 360deg; }
   .battle-mode-cards {
     grid-template-columns: 1fr;
     gap: 12px;
-    margin: 16px auto 0;
+    width: 100%;
+    margin-top: auto;
+    margin-bottom: auto;
   }
 
   .bmc-actions {

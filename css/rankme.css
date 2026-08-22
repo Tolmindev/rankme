@@ -1285,7 +1285,7 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
   overflow: visible;
 }
 
-/* Title: bright holofoil base + free spotlight (no box clip) */
+/* Title — refined holofoil + soft cursor sheen */
 .hero-home .hero-title-mesh {
   position: relative;
   display: inline-block;
@@ -1298,32 +1298,7 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
   overflow: visible;
   --mx: 50%;
   --my: 50%;
-  --spot: 10rem;
-}
-/* soft free glow behind letters — not masked to a rectangle */
-.hero-home .hero-title-mesh::before {
-  content: '';
-  position: absolute;
-  left: var(--mx);
-  top: var(--my);
-  width: 14rem;
-  height: 14rem;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0;
-  transition: opacity 0.2s ease;
-  background: radial-gradient(
-    circle,
-    rgba(220, 200, 255, 0.4) 0%,
-    rgba(160, 210, 255, 0.18) 35%,
-    rgba(180, 140, 255, 0.06) 55%,
-    transparent 70%
-  );
-}
-.hero-home .hero-title-mesh.is-active::before {
-  opacity: 1;
+  --spot: 7.5rem;
 }
 .hero-home .htm-base,
 .hero-home .htm-lite {
@@ -1338,22 +1313,20 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-/* bright base — always readable, holofoil */
+/* elegant base */
 .hero-home .htm-base {
   background-image: linear-gradient(
-    120deg,
-    #a78bfa 0%,
-    #c4b5fd 18%,
-    #e9b8f5 36%,
-    #b8a0ff 52%,
-    #d8b4fe 68%,
-    #9b7aef 84%,
-    #c4b5fd 100%
+    125deg,
+    #9b7aef 0%,
+    #c4b5fd 28%,
+    #d8b4fe 50%,
+    #b794f0 72%,
+    #a78bfa 100%
   );
-  background-size: 180% 100%;
-  animation: heroTitleShimmer 14s ease-in-out infinite;
+  background-size: 170% 100%;
+  animation: heroTitleShimmer 18s ease-in-out infinite;
 }
-/* brighter holofoil only where the cursor is — mask only on text fill, no filter */
+/* subtle sheen under cursor — soft holofoil, no white blast */
 .hero-home .htm-lite {
   position: absolute;
   left: 0;
@@ -1363,38 +1336,36 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
   z-index: 2;
   pointer-events: none;
   opacity: 0;
-  transition: opacity 0.15s ease;
+  transition: opacity 0.25s ease;
   background-image: linear-gradient(
-    115deg,
-    #e8eef8 0%,
-    #f5f7fc 10%,
-    #b8e8ff 22%,
-    #dcc8ff 38%,
-    #ffd6f5 50%,
-    #c8b8ff 64%,
-    #a8f0e8 78%,
-    #e8e0ff 90%,
-    #d0d8f0 100%
+    120deg,
+    #c4b5fd 0%,
+    #e9d5ff 22%,
+    #ddd6fe 40%,
+    #f0abfc 55%,
+    #c4b5fd 72%,
+    #a5b4fc 88%,
+    #d8b4fe 100%
   );
-  background-size: 200% 100%;
+  background-size: 190% 100%;
   -webkit-mask-image: radial-gradient(
     circle var(--spot) at var(--mx) var(--my),
     #000 0%,
-    #000 30%,
-    rgba(0, 0, 0, 0.5) 50%,
-    transparent 74%
+    rgba(0, 0, 0, 0.65) 35%,
+    rgba(0, 0, 0, 0.2) 58%,
+    transparent 78%
   );
   mask-image: radial-gradient(
     circle var(--spot) at var(--mx) var(--my),
     #000 0%,
-    #000 30%,
-    rgba(0, 0, 0, 0.5) 50%,
-    transparent 74%
+    rgba(0, 0, 0, 0.65) 35%,
+    rgba(0, 0, 0, 0.2) 58%,
+    transparent 78%
   );
 }
 .hero-home .hero-title-mesh.is-active .htm-lite {
-  opacity: 1;
-  animation: heroTitleShimmer 5s ease-in-out infinite;
+  opacity: 0.85;
+  animation: heroTitleShimmer 8s ease-in-out infinite;
 }
 @keyframes heroTitleShimmer {
   0%, 100% { background-position: 0% 50%; }
@@ -1402,13 +1373,9 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
 }
 @media (max-width: 720px) {
   .hero-home .hero-title-mesh {
-    --spot: 7rem;
+    --spot: 5.5rem;
     font-size: clamp(1.85rem, 9.5vw, 2.45rem);
     letter-spacing: -0.025em;
-  }
-  .hero-home .hero-title-mesh::before {
-    width: 11rem;
-    height: 11rem;
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -1416,8 +1383,7 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
   .hero-home .htm-lite {
     animation: none;
   }
-  .hero-home .htm-lite,
-  .hero-home .hero-title-mesh::before {
+  .hero-home .htm-lite {
     opacity: 0 !important;
   }
 }

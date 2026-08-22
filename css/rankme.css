@@ -113,7 +113,6 @@ body {
   }
 
 }
-
 /* RankMe · chrome — Site chrome: header, footer, page shell, buttons */
 
 body > .page, body > .wrap {
@@ -1104,7 +1103,6 @@ html.rankme-dragging, html.rankme-dragging body, body.rankme-dragging {
   height: 56px;
   border-radius: 12px;
 }
-
 /* RankMe · hero — Tier hero, experts strip, list actions, battle CTA */
 
 body > header.site, body > footer.site, body > #site-footer, body > .toolbar, body > .board, body > .pool-wrap, body > .list-actions, body > .hero, body > .experts-strip, body > .toast-host {
@@ -2304,7 +2302,6 @@ body[data-editor="1"] #heroDesc {
   40% { transform: scale(1.35); }
   100% { transform: scale(1); }
 }
-
 /* RankMe · tier — Board, rows, cards, toolbar, filters, portals, pool */
 
 .page, main, .wrap, .board-wrap, .tier-shell, .pool-wrap {
@@ -3740,7 +3737,6 @@ body.community-view button.btn-battle-hero {
 body.community-view .toolbar {
   justify-content: center;
 }
-
 /* RankMe · battle — Battle mode UI (loaded with battle-anim overrides) */
 
 .list-actions .battle-launch, #battleModeBtn {
@@ -3778,12 +3774,9 @@ body.community-view .toolbar {
   width: 100%;
   max-width: 1100px;
   margin: 0 auto;
-  padding: 28px 24px 24px;
+  padding: 20px 24px 80px;
+  min-height: 70vh;
   box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: calc(100vh - 140px);
 }
 
 .battle-back {
@@ -3818,14 +3811,9 @@ body.community-view .toolbar {
 
 .battle-arena {
   text-align: center;
-  padding: 0 0 16px;
+  padding: 12px 0 8px;
   width: 100%;
   box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  flex: 1 1 auto;
 }
 
 .battle-arena:has(.battle-mode-select) {
@@ -3835,40 +3823,10 @@ body.community-view .toolbar {
   padding-right: 0;
 }
 
-.battle-footer {
-  flex: 0 0 auto;
-  width: 100%;
-  max-width: 520px;
-  margin-top: auto;
-  padding: 16px 16px 8px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  box-sizing: border-box;
-}
-.battle-footer .battle-how {
-  margin: 0;
-  max-width: 420px;
-  padding: 0;
-  font-size: 0.72rem;
-  font-weight: 500;
-  line-height: 1.45;
-  color: rgba(180, 170, 200, 0.72);
-  text-align: center;
-}
-.battle-footer .battle-how[hidden] {
-  display: none;
-}
-.battle-footer .battle-back {
-  margin: 0 auto;
-}
-
 .battle-question {
   font-size: 1.6rem;
   font-weight: 900;
   margin: 0 0 6px;
-  line-height: 1.2;
 }
 
 .battle-sub {
@@ -3928,12 +3886,12 @@ body.community-view .toolbar {
 
 .battle-how {
   max-width: 420px;
-  margin: 0;
-  padding: 0;
-  font-size: 0.72rem;
+  margin: 18px auto 0;
+  padding: 0 16px;
+  font-size: .72rem;
   font-weight: 500;
   line-height: 1.45;
-  color: rgba(180, 170, 200, 0.72);
+  color: rgba(180,170,200,.72);
   text-align: center;
 }
 
@@ -4127,7 +4085,29 @@ button, .cta, .btn, .btn-mini, .pill-btn, .download-btn, .login-btn, a.btn, a.ct
   padding: 0 8px;
   box-sizing: border-box;
 }
-
+@media (max-width: 720px) {
+  .battle-page {
+    padding-top: 14px;
+  }
+  .battle-progress-in-arena {
+    max-width: min(340px, 100%);
+    margin: 0 auto 16px;
+    padding: 0 4px;
+  }
+  .battle-top {
+    margin-bottom: 8px;
+  }
+  .battle-arena {
+    padding-top: 8px;
+  }
+  .battle-top .battle-back,
+  button.battle-back {
+    min-height: 32px;
+    height: 32px;
+    min-width: 68px;
+    font-size: 0.75rem;
+  }
+}
 .battle-progress-wrap {
   flex: 1 1 auto;
   display: flex;
@@ -4207,10 +4187,51 @@ button, .cta, .btn, .btn-mini, .pill-btn, .download-btn, .login-btn, a.btn, a.ct
     0 0 56px rgba(125, 211, 252, 0.25);
 }
 
+.battle-top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  position: relative;
+  z-index: 20;
+  width: 100%;
+  max-width: 920px;
+  margin: 0 auto 10px;
+  padding: 0 12px;
+  box-sizing: border-box;
+}
 
+.battle-top .battle-back,
+button.battle-back {
+  flex: 0 0 auto;
+  min-width: 72px;
+  min-height: 34px;
+  height: 34px;
+  padding: 0 16px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  opacity: 0.9;
+}
 
+.battle-top .battle-progress-wrap {
+  flex: 1 1 auto;
+  min-width: 0;
+}
 
+.battle-top.is-select .battle-progress-wrap {
+  visibility: hidden;
+  pointer-events: none;
+}
 
+.battle-top.is-select .battle-icon-btn, .battle-top.is-done .battle-icon-btn {
+  visibility: hidden;
+  pointer-events: none;
+}
 
 .battle-card.equal-pick {
   border: 2px solid transparent;
@@ -4331,8 +4352,41 @@ button, .cta, .btn, .btn-mini, .pill-btn, .download-btn, .login-btn, a.btn, a.ct
   animation-fill-mode: forwards;
 }
 
+.battle-top .battle-back, button.battle-back {
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  pointer-events: auto;
+  border: 1.5px solid rgba(200,160,240,.4);
+  background: linear-gradient(135deg, rgba(40,32,58,.95), rgba(22,18,36,.98));
+  color: #e8dff8;
+  font-family: inherit;
+  font-weight: 800;
+  font-size: 0.82rem;
+  border-radius: 999px;
+  min-height: 40px;
+  min-width: 88px;
+  padding: 0 16px;
+  gap: 6px;
+  box-shadow: none;
+  transition: transform .15s ease, border-color .15s ease, box-shadow .15s ease, background .15s ease, color .15s ease, filter .15s ease;
+  opacity: 1;
+  visibility: visible;
+}
 
+.battle-top .battle-back:hover, button.battle-back:hover {
+  border-color: rgba(220,180,255,.75);
+  background: linear-gradient(135deg, rgba(70,50,110,.95), rgba(40,30,70,.98));
+  color: #fff;
+  box-shadow: 0 0 18px rgba(180,120,255,.4);
+  transform: translateY(-2px);
+  filter: brightness(1.08);
+}
 
+.battle-top .battle-back:active, button.battle-back:active {
+  transform: translateY(0) scale(0.97);
+  box-shadow: 0 0 10px rgba(180,120,255,.25);
+}
 
 .battle-vs-divider, .battle-vs-center .battle-vs-divider {
   background: none;
@@ -4392,7 +4446,14 @@ button, .cta, .btn, .btn-mini, .pill-btn, .download-btn, .login-btn, a.btn, a.ct
   box-shadow: none;
 }
 
+.battle-back svg, button.battle-back svg, .battle-top .battle-back svg {
+  display: none;
+}
 
+.battle-back::before, button.battle-back::before, .battle-top .battle-back::before {
+  content: none;
+  display: none;
+}
 
 .battle-rank-row:nth-child(1) .battle-rank-num, .battle-rank-num.gold {
   background: linear-gradient(145deg, #ffe566 0%, #f5b800 45%, #d49200 100%);
@@ -4647,9 +4708,9 @@ button, .cta, .btn, .btn-mini, .pill-btn, .download-btn, .login-btn, a.btn, a.ct
 
 .battle-mode-select {
   width: 100%;
-  max-width: 920px;
+  max-width: 100%;
   margin: 0 auto;
-  padding: 0 0 8px;
+  padding: 12px 0 48px;
   box-sizing: border-box;
   text-align: center;
 }
@@ -4891,75 +4952,10 @@ to { --elec-angle: 360deg; }
 }
 
 @media (max-width: 720px) {
-  .battle-page {
-    padding: 16px 12px 16px;
-    max-width: 100%;
-    width: 100%;
-    min-height: calc(100vh - 110px);
-    box-sizing: border-box;
-  }
 
-  .battle-arena {
-    padding: 0 0 8px;
-    justify-content: flex-start;
-    flex: 1 1 auto;
-  }
-
-  .battle-question {
-    font-size: 1.25rem;
-    margin: 0 0 4px;
-  }
-
-  .battle-sub {
-    margin: 0 0 10px;
-    font-size: 0.8rem;
-  }
-
-  .battle-progress-in-arena {
-    max-width: min(340px, 100%);
-    margin: 0 auto 14px;
-  }
-
-  .battle-vs-row {
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    width: 100%;
-    padding: 0 4px;
-    box-sizing: border-box;
-  }
-
-  .battle-side {
-    flex: 0 0 auto;
-    width: min(40vw, 150px);
-    max-width: 150px;
-    min-width: 110px;
-    gap: 8px;
-  }
-
-  .battle-card {
-    width: 100%;
-  }
-
-  .battle-card.chosen {
-    transform: scale(1.04);
-  }
-
-  .battle-vs-center {
-    flex: 0 0 auto;
-    gap: 8px;
-    padding: 0 2px;
-  }
-
-  .battle-vs-center .battle-mid-btn:active {
-    transform: scale(0.96);
-  }
-
-  .battle-mid-btn {
-    width: 40px;
-    height: 40px;
+  .battle-top .battle-back {
+    min-width: 68px;
+    min-height: 32px;
   }
 
   .battle-mid-btn img {
@@ -4967,43 +4963,32 @@ to { --elec-angle: 360deg; }
     height: 18px;
   }
 
-  .battle-vs-divider {
-    width: 32px;
-    height: 32px;
-    font-size: 0.85rem;
-  }
-
-  .battle-footer {
-    margin-top: auto;
-    padding: 10px 8px 4px;
+  .battle-top {
     gap: 10px;
+    padding: 0 10px;
   }
 
-  .battle-footer .battle-how {
-    font-size: 0.68rem;
+  .battle-top .battle-back, button.battle-back {
+    min-width: 68px;
+    min-height: 32px;
+    height: 32px;
+    font-size: 0.75rem;
+    padding: 0 14px;
   }
 
-  .battle-footer .battle-back,
-  .battle-footer button.battle-back {
-    min-width: 88px;
-    min-height: 36px;
-    height: 36px;
+  .battle-top .battle-back span {
+    display: inline;
   }
 
-  .battle-mode-select {
-    width: 100%;
-    padding: 0;
-  }
-
-  .battle-mode-cards {
-    grid-template-columns: 1fr;
-    width: 100%;
+  .battle-vs-row {
     gap: 12px;
-    margin: 16px 0 8px;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 
-  .bmc-actions {
-    min-height: 54px;
+  .battle-mid-btn {
+    width: 40px;
+    height: 40px;
   }
 
   .battle-panel {
@@ -5015,6 +5000,107 @@ to { --elec-angle: 360deg; }
   .battle-result-list {
     max-height: min(38vh, 280px);
   }
+
+  .battle-vs-center {
+    gap: 8px;
+    padding: 0 2px;
+    position: relative;
+    z-index: 5;
+    pointer-events: auto;
+  }
+
+  .battle-vs-center .battle-mid-btn {
+    transform: none;
+    transition: border-color .15s, box-shadow .15s, filter .15s;
+  }
+
+  .battle-vs-center .battle-mid-btn:active {
+    transform: scale(0.96);
+  }
+
+  .battle-card.chosen {
+    transform: scale(1.04);
+  }
+
+  .battle-side {
+    width: auto;
+    align-self: center;
+    flex: 1;
+    gap: 10px;
+  }
+
+  .battle-page {
+    padding: 10px 14px 100px;
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .battle-back span {
+    display: none;
+  }
+
+  .battle-question {
+    font-size: 1.25rem;
+  }
+
+  .battle-vs-divider {
+    width: 32px;
+    height: 32px;
+    font-size: .85rem;
+  }
+
+  .battle-arena {
+    padding-top: 8px;
+  }
+
+  .bmc-actions {
+    min-height: 54px;
+  }
+
+  .battle-mode-select {
+    width: 100%;
+    max-width: 100%;
+    padding: 8px 0 32px;
+  }
+
+  .battle-mode-cards {
+    grid-template-columns: 1fr;
+    width: 100%;
+    max-width: 100%;
+    gap: 12px;
+    margin: 16px 0 12px;
+  }
+
+  .battle-mode-card {
+    width: 100%;
+    max-width: 100%;
+    min-height: 0;
+    height: auto;
+    padding: 14px 16px 12px;
+  }
+  .battle-mode-card .bmc-icon {
+    font-size: 1.35rem;
+    margin-bottom: 4px;
+  }
+  .battle-mode-card .bmc-title {
+    font-size: 1.05rem;
+    margin: 0 0 4px;
+  }
+  .battle-mode-card .bmc-meta {
+    font-size: 0.78rem;
+    margin: 0 0 6px;
+  }
+  .battle-mode-card .bmc-desc {
+    font-size: 0.75rem;
+    line-height: 1.35;
+    margin: 0 0 10px;
+  }
+  .battle-mode-card .bmc-actions {
+    min-height: 0;
+    margin-top: auto;
+  }
+
 }
 
 /* RankMe · home — Home, discover, template cards, community */
@@ -5730,7 +5816,6 @@ nav.main a.cta-nav:hover {
   margin-top: 48px;
   width: 100%;
 }
-
 /* RankMe · account — Account, auth, modals, toasts, download */
 
 h1,h2,h3,.tier-label,.brand-name,.faction-btn,.download-btn,.login-btn {
@@ -6605,7 +6690,6 @@ body > .toast {
 .toggle-checkbox:checked:not(.toggled-once) + .toggle-track > .toggle-thumb {
   transform: translateX(22px);
 }
-
 /* RankMe · create — Create / blank rank flow */
 
 .create-card, .wrap .card {

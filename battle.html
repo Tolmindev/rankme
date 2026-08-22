@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/rankme.css?v=20260822ai">
+<link rel="stylesheet" href="css/rankme.css?v=20260822ad">
 <link rel="stylesheet" href="css/battle-anim.css">
 </head>
 <body>
@@ -26,14 +26,17 @@
 </header>
 
 <main class="battle-page">
+  <div class="battle-top">
+    <button class="battle-back" id="battleBack" type="button">Back</button>
+  </div>
+
   <div class="battle-arena" id="battleArena">
     <h1 class="battle-question">Who wins?</h1>
     <p class="battle-sub">Pick one · <span id="battleTitle"></span></p>
     <div class="battle-vs-row" id="battleVsRow"></div>
-  </div>
-  <div class="battle-footer">
-    <p class="battle-how" id="battleHow" hidden></p>
-    <button class="battle-back" id="battleBack" type="button">Back</button>
+    <button class="battle-skip" id="battleSkip" type="button">Skip</button>
+    <p class="battle-how">Each round you pick a winner. Those picks become a ranking.<br>
+More rounds - clearer order. You can edit after.</p>
   </div>
 </main>
 

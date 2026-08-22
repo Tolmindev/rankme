@@ -732,17 +732,28 @@ body.theme-gold {
   border: none;
   color: var(--text-dim);
   cursor: pointer;
-  padding: 6px;
-  display: flex;
+  padding: 0;
+  margin: 0;
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
   border-radius: 50%;
+  line-height: 0;
   transition: background .15s, color .15s;
 }
-
+.search-box .clear-btn svg {
+  display: block;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
 .search-box .clear-btn:hover {
   background: rgba(255,255,255,.08);
   color: var(--text);
 }
-
 .search-box .clear-btn[hidden] {
   display: none !important;
 }
@@ -979,23 +990,13 @@ html.rankme-dragging, html.rankme-dragging body, body.rankme-dragging {
     grid-template-columns: 1fr;
   }
 
-  .clear-btn {
-    min-width: 44px;
-    min-height: 44px;
-    justify-content: center;
+  .search-box .clear-btn {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    min-height: 32px;
   }
 
-  .bottom-nav a.active {
-    color: #e8d4ff;
-  }
-
-  .bottom-nav a.active:hover {
-    background: rgba(200,160,240,0.12);
-  }
-
-  #site-footer {
-    padding-bottom: calc(84px + env(safe-area-inset-bottom));
-  }
 
 }
 
@@ -1283,22 +1284,71 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
   margin-bottom: 48px;
 }
 
-.hero-home h1 {
-  font-size: clamp(1.8rem, 4vw, 2.6rem);
+/* Mesh gradient title — RankMe holo / soft iridescent */
+.hero-home h1,
+.hero-home .hero-title-mesh {
+  font-size: clamp(2.15rem, 7vw, 3.55rem);
   font-weight: 900;
-  margin: 0 0 12px;
-  background: var(--accent-grad);
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+  margin: 0 0 14px;
+  color: transparent;
+  background-image: linear-gradient(
+    115deg,
+    #b8a0ff 0%,
+    #e8d4ff 16%,
+    #f5c6ff 28%,
+    #c4b5fd 42%,
+    #ffffff 50%,
+    #d8b4fe 58%,
+    #a78bfa 72%,
+    #f0abfc 86%,
+    #c4b5fd 100%
+  );
+  background-size: 240% 100%;
+  background-position: 0% 50%;
   -webkit-background-clip: text;
   background-clip: text;
-  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: heroTitleShimmer 9s ease-in-out infinite;
+  transition: filter 0.4s ease, background-size 0.4s ease;
+  will-change: background-position, filter;
+}
+.hero-home h1:hover,
+.hero-home .hero-title-mesh:hover {
+  animation-duration: 3.2s;
+  filter:
+    brightness(1.18)
+    drop-shadow(0 0 12px rgba(200, 160, 255, 0.55))
+    drop-shadow(0 0 28px rgba(232, 180, 255, 0.35))
+    drop-shadow(0 0 48px rgba(167, 139, 250, 0.2));
+}
+@keyframes heroTitleShimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
 
-.hero-home p {
-  color: var(--text-dim);
+.hero-home p,
+.hero-home .hero-sub {
+  color: rgba(248, 245, 255, 0.9);
   font-weight: 600;
   max-width: 520px;
   margin: 0 auto 28px;
   line-height: 1.6;
+  font-size: clamp(0.92rem, 2.2vw, 1.05rem);
+}
+
+@media (max-width: 720px) {
+  .hero-home h1,
+  .hero-home .hero-title-mesh {
+    font-size: clamp(1.85rem, 9.5vw, 2.45rem);
+    letter-spacing: -0.025em;
+  }
+  .hero-home p,
+  .hero-home .hero-sub {
+    color: rgba(250, 248, 255, 0.92);
+    padding: 0 8px;
+  }
 }
 
 .blank-cover-card img#blankCoverImg {
@@ -1974,6 +2024,7 @@ a.cb-name:hover { color: #e8d4ff; }
   font-size: 0.9rem;
   font-weight: 700;
   color: #e8d4f0;
+  font-variant-numeric: tabular-nums;
 }
 .cb-ico {
   width: 26px;
@@ -1994,7 +2045,6 @@ a.cb-name:hover { color: #e8d4ff; }
   padding: 2px;
   flex-shrink: 0;
 }
-/* fixed slot for icon — scale is transform-only, no layout shift */
 .cb-heart {
   position: relative;
   display: block;
@@ -2024,9 +2074,6 @@ a.cb-name:hover { color: #e8d4ff; }
   text-align: left;
   font-variant-numeric: tabular-nums;
   box-sizing: content-box;
-}
-.cb-stat {
-  font-variant-numeric: tabular-nums;
 }
 
 @media (max-width: 720px) {

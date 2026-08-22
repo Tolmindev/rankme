@@ -1284,7 +1284,7 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
   margin-bottom: 48px;
 }
 
-/* Mesh gradient title — RankMe holo / soft iridescent */
+/* Mesh title — soft RankMe shimmer (no heavy blur) */
 .hero-home h1,
 .hero-home .hero-title-mesh {
   font-size: clamp(2.15rem, 7vw, 3.55rem);
@@ -1294,34 +1294,27 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
   margin: 0 0 14px;
   color: transparent;
   background-image: linear-gradient(
-    115deg,
-    #b8a0ff 0%,
-    #e8d4ff 16%,
-    #f5c6ff 28%,
-    #c4b5fd 42%,
-    #ffffff 50%,
-    #d8b4fe 58%,
-    #a78bfa 72%,
-    #f0abfc 86%,
-    #c4b5fd 100%
+    120deg,
+    #c4b5fd 0%,
+    #dcc9ff 25%,
+    #e9d5ff 45%,
+    #f0e4ff 50%,
+    #e0c8fc 55%,
+    #c9b6f8 75%,
+    #b8a0ef 100%
   );
-  background-size: 240% 100%;
+  background-size: 180% 100%;
   background-position: 0% 50%;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: heroTitleShimmer 9s ease-in-out infinite;
-  transition: filter 0.4s ease, background-size 0.4s ease;
-  will-change: background-position, filter;
+  animation: heroTitleShimmer 14s ease-in-out infinite;
+  transition: filter 0.35s ease;
 }
 .hero-home h1:hover,
 .hero-home .hero-title-mesh:hover {
-  animation-duration: 3.2s;
-  filter:
-    brightness(1.18)
-    drop-shadow(0 0 12px rgba(200, 160, 255, 0.55))
-    drop-shadow(0 0 28px rgba(232, 180, 255, 0.35))
-    drop-shadow(0 0 48px rgba(167, 139, 250, 0.2));
+  animation-duration: 8s;
+  filter: brightness(1.08) drop-shadow(0 0 10px rgba(200, 170, 255, 0.28));
 }
 @keyframes heroTitleShimmer {
   0%, 100% { background-position: 0% 50%; }

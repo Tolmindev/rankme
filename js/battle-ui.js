@@ -15,7 +15,6 @@
     fill: document.getElementById('battleFill'),
     progressLabel: document.getElementById('battleProgressLabel'),
     skip: document.getElementById('battleSkip'),
-    exit: document.getElementById('battleExit'),
     back: document.getElementById('battleBack'),
     overlay: document.getElementById('battleOverlay'),
     panel: document.getElementById('battlePanel'),
@@ -211,9 +210,6 @@
     if (els.back) {
       els.back.onclick = function (e) { e.preventDefault(); location.href = 'index.html'; };
     }
-    if (els.exit) {
-      els.exit.onclick = function (e) { e.preventDefault(); location.href = 'index.html'; };
-    }
   }
 
   function modeCardHtml(modeKey, icon, title, count, mins, desc, saved, isFull) {
@@ -271,6 +267,10 @@
       '<h1 class="battle-question">Who wins?</h1>' +
       '<p class="battle-sub">Pick one · <span id="battleTitle"></span> · ' +
         '<span class="battle-mode-badge ' + mode + '">' + (mode === 'full' ? 'Full' : 'Quick') + '</span></p>' +
+      '<div class="battle-progress-wrap battle-progress-in-arena">' +
+        '<div class="battle-progress-bar"><div class="fill" id="battleFill"></div></div>' +
+        '<div class="battle-progress-label"><span id="battleProgressLabel">0 / 0</span></div>' +
+      '</div>' +
       '<div class="battle-vs-row" id="battleVsRow"></div>' +
       '<button class="battle-skip" id="battleSkip" type="button">Skip</button>' +
       '<p class="battle-how">' +
@@ -281,6 +281,8 @@
 
     els.vsRow = document.getElementById('battleVsRow');
     els.skip = document.getElementById('battleSkip');
+    els.fill = document.getElementById('battleFill');
+    els.progressLabel = document.getElementById('battleProgressLabel');
     var titleEl = document.getElementById('battleTitle');
     if (titleEl) titleEl.textContent = tpl.title || '';
 
@@ -300,13 +302,6 @@
         e.preventDefault();
         e.stopPropagation();
         showModeSelect(tpl);
-      };
-    }
-    if (els.exit) {
-      els.exit.onclick = function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        confirmLeave();
       };
     }
 
@@ -606,7 +601,7 @@
       '<ul class="battle-result-list">' + listHtml + '</ul>' +
       '<div class="row battle-panel-actions" style="flex-direction:column;">' +
         '<a class="btn primary" id="battleOpenRanking" href="' + builderHref + '">Open Ranking</a>' +
-        '<button type="button" class="btn ghost" id="battleExitComplete">Exit</button>' +
+        '<button type="button" class="btn ghost" id="battleExitComplete">Close</button>' +
       '</div>'
     );
     launchConfetti();
@@ -630,7 +625,7 @@
             '<p>Your ranking is ready - open it to apply the results, or exit and discard them.</p>' +
             '<div class="battle-panel-actions" style="flex-direction:column;width:100%;">' +
               '<a class="btn primary" id="battleOpenFromWarn" href="' + builderHref + '">Open Ranking</a>' +
-              '<button type="button" class="btn ghost" id="battleLeaveComplete">Exit</button>' +
+              '<button type="button" class="btn ghost" id="battleLeaveComplete">Leave</button>' +
             '</div>'
           );
           var openFromWarn = document.getElementById('battleOpenFromWarn');
@@ -661,34 +656,6 @@
         else location.href = 'index.html';
       };
     }
-    if (els.exit) {
-      els.exit.onclick = function (e) {
-        e.preventDefault();
-        var btn = document.getElementById('battleExitComplete');
-        if (btn) btn.click();
-        else location.href = 'index.html';
-      };
-    }
   }
 
-  function confirmLeave() {
-    if (completed <= 0) {
-      location.href = 'index.html';
-      return;
-    }
-    openOverlay(
-      '<h2>Leave battle?</h2>' +
-      '<p>Progress is saved on this device. You can continue later.</p>' +
-      '<div class="battle-panel-actions row">' +
-        '<button type="button" class="btn primary" id="battleStay">Keep playing</button>' +
-        '<button type="button" class="btn ghost" id="battleLeave">Leave</button>' +
-      '</div>'
-    );
-    document.getElementById('battleStay').onclick = function () {
-      closeOverlay();
-    };
-    document.getElementById('battleLeave').onclick = function () {
-      location.href = 'index.html';
-    };
-  }
 })();

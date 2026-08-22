@@ -361,23 +361,28 @@ button, .cta, .btn, .btn-mini, .pill-btn, .download-btn, .login-btn, a.btn, a.ct
 
 .battle-mode-card .bmc-resume {
   margin-top: auto;
+  margin-left: auto;
+  margin-right: auto;
   display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  min-width: 132px;
+  height: 36px;
   padding: 0 22px;
   border-radius: 999px;
   font-size: 0.8rem;
   font-weight: 800;
-  background: rgba(200,160,240,.15);
-  color: #e8d4ff;
-  margin-left: auto;
-  margin-right: auto;
-  width: auto;
-  min-width: 132px;
-  height: 36px;
-  align-items: center;
-  justify-content: center;
   letter-spacing: 0.04em;
   line-height: 1;
   box-sizing: border-box;
+  border: 1.5px solid rgba(200, 160, 240, 0.5);
+  background: linear-gradient(160deg, #2a2238 0%, #161022 50%, #1e1830 100%);
+  color: #f8f2ff;
+  box-shadow:
+    0 0 0 1px rgba(180, 140, 255, 0.1),
+    0 0 16px rgba(160, 120, 255, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 
 .download-modal-actions, .battle-panel-actions {
@@ -721,8 +726,16 @@ button, .cta, .btn, .btn-mini, .pill-btn, .download-btn, .login-btn, a.btn, a.ct
   border-radius: 999px;
   font-weight: 800;
   font-size: 0.85rem;
+  font-family: inherit;
   cursor: pointer;
-  transition: transform .15s, box-shadow .15s, filter .15s, border-color .15s;
+  border: 1.5px solid rgba(200, 160, 240, 0.5);
+  background: linear-gradient(160deg, #2a2238 0%, #161022 50%, #1e1830 100%);
+  color: #f8f2ff;
+  box-shadow:
+    0 0 0 1px rgba(180, 140, 255, 0.1),
+    0 0 16px rgba(160, 120, 255, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease, filter 0.15s ease;
 }
 
 .battle-rank-row:nth-child(1) .battle-rank-num, .battle-rank-num.gold {
@@ -784,8 +797,12 @@ button, .cta, .btn, .btn-mini, .pill-btn, .download-btn, .login-btn, a.btn, a.ct
 
 .bmc-resume:hover {
   transform: translateY(-2px);
+  border-color: rgba(220, 180, 255, 0.8);
   filter: brightness(1.1);
-  box-shadow: 0 0 22px rgba(180,140,255,.45);
+  box-shadow:
+    0 0 0 1px rgba(200, 160, 255, 0.22),
+    0 0 24px rgba(180, 140, 255, 0.38),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .battle-result-list li:nth-child(1) .battle-result-rank {
@@ -877,19 +894,25 @@ button, .cta, .btn, .btn-mini, .pill-btn, .download-btn, .login-btn, a.btn, a.ct
 }
 
 .bmc-resume {
-  border: 1.5px solid rgba(200,160,255,.45);
-  background: linear-gradient(120deg, rgba(90,60,140,.55), rgba(50,35,80,.7));
-  color: #f5efff;
-  box-shadow: 0 0 16px rgba(160,120,255,.28);
   display: inline-flex;
+  align-items: center;
+  justify-content: center;
   min-width: 120px;
   padding: 9px 22px;
   border-radius: 999px;
   font-weight: 800;
   font-size: 0.85rem;
+  font-family: inherit;
   cursor: pointer;
-  transition: transform .15s, box-shadow .15s, filter .15s;
   margin: 0;
+  border: 1.5px solid rgba(200, 160, 240, 0.5);
+  background: linear-gradient(160deg, #2a2238 0%, #161022 50%, #1e1830 100%);
+  color: #f8f2ff;
+  box-shadow:
+    0 0 0 1px rgba(180, 140, 255, 0.1),
+    0 0 16px rgba(160, 120, 255, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease, filter 0.15s ease;
 }
 
 .bmc-reset, .bmc-reset-slot {

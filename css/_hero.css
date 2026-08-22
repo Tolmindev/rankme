@@ -216,7 +216,7 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
 
 .hero-home p,
 .hero-home .hero-sub {
-  color: rgba(248, 245, 255, 0.9);
+  color: #f8f2ff;
   font-weight: 600;
   max-width: 520px;
   margin: 0 auto 28px;
@@ -232,7 +232,7 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
   }
   .hero-home p,
   .hero-home .hero-sub {
-    color: rgba(250, 248, 255, 0.92);
+    color: #f8f2ff;
     padding: 0 8px;
   }
 }

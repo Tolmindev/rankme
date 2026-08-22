@@ -1284,41 +1284,108 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
   margin-bottom: 48px;
 }
 
-/* Mesh title — richer purple/pink, no near-white */
-.hero-home h1,
+/* Title: base holofoil + cursor flashlight layer */
 .hero-home .hero-title-mesh {
+  position: relative;
+  display: inline-block;
   font-size: clamp(2.15rem, 7vw, 3.55rem);
   font-weight: 900;
   letter-spacing: -0.03em;
   line-height: 1.08;
   margin: 0 0 14px;
+  cursor: default;
+  --mx: 50%;
+  --my: 50%;
+  --spot: 9rem;
+}
+.hero-home .htm-base,
+.hero-home .htm-lite {
+  display: block;
+  font: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
   color: transparent;
-  background-image: linear-gradient(
-    115deg,
-    #9b7aef 0%,
-    #c4a0ff 18%,
-    #e0a8f5 36%,
-    #b794f0 50%,
-    #d4a5f8 64%,
-    #a78bfa 82%,
-    #8b6fd4 100%
-  );
-  background-size: 200% 100%;
-  background-position: 0% 50%;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: heroTitleShimmer 10s ease-in-out infinite;
-  transition: filter 0.35s ease;
 }
-.hero-home h1:hover,
-.hero-home .hero-title-mesh:hover {
-  animation-duration: 5s;
-  filter: brightness(1.12) drop-shadow(0 0 14px rgba(180, 140, 255, 0.4));
+/* quiet holofoil base */
+.hero-home .htm-base {
+  background-image: linear-gradient(
+    125deg,
+    #7a6a9e 0%,
+    #9b8bc4 22%,
+    #a890c8 40%,
+    #8f7ab0 58%,
+    #b09ad4 78%,
+    #7d6a9a 100%
+  );
+  background-size: 180% 100%;
+  animation: heroTitleShimmer 16s ease-in-out infinite;
+}
+/* bright holofoil only under the "flashlight" */
+.hero-home .htm-lite {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.18s ease;
+  background-image: linear-gradient(
+    115deg,
+    #c8d4e8 0%,
+    #e8eef8 12%,
+    #b8e0ff 24%,
+    #d4c0ff 38%,
+    #f0c8f8 50%,
+    #c0b0ff 62%,
+    #a8e8f0 76%,
+    #e0d0ff 88%,
+    #b8c8e0 100%
+  );
+  background-size: 200% 100%;
+  filter: drop-shadow(0 0 8px rgba(200, 180, 255, 0.45))
+          drop-shadow(0 0 18px rgba(160, 220, 255, 0.25));
+  -webkit-mask-image: radial-gradient(
+    circle var(--spot) at var(--mx) var(--my),
+    #000 0%,
+    #000 28%,
+    rgba(0, 0, 0, 0.55) 48%,
+    transparent 72%
+  );
+  mask-image: radial-gradient(
+    circle var(--spot) at var(--mx) var(--my),
+    #000 0%,
+    #000 28%,
+    rgba(0, 0, 0, 0.55) 48%,
+    transparent 72%
+  );
+}
+.hero-home .hero-title-mesh.is-active .htm-lite {
+  opacity: 1;
+  animation: heroTitleShimmer 6s ease-in-out infinite;
 }
 @keyframes heroTitleShimmer {
   0%, 100% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
+}
+@media (max-width: 720px) {
+  .hero-home .hero-title-mesh {
+    --spot: 6.5rem;
+    font-size: clamp(1.85rem, 9.5vw, 2.45rem);
+    letter-spacing: -0.025em;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-home .htm-base,
+  .hero-home .htm-lite {
+    animation: none;
+  }
+  .hero-home .htm-lite {
+    opacity: 0 !important;
+  }
 }
 
 .hero-home p,
@@ -1332,11 +1399,6 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
 }
 
 @media (max-width: 720px) {
-  .hero-home h1,
-  .hero-home .hero-title-mesh {
-    font-size: clamp(1.85rem, 9.5vw, 2.45rem);
-    letter-spacing: -0.025em;
-  }
   .hero-home p,
   .hero-home .hero-sub {
     color: #f8f2ff;

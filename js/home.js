@@ -376,6 +376,29 @@
     }
   }
 
+
+  function initHeroFlashlight() {
+    var el = document.querySelector('.hero-home .hero-title-mesh');
+    if (!el) return;
+    function setPos(clientX, clientY) {
+      var r = el.getBoundingClientRect();
+      var x = ((clientX - r.left) / Math.max(r.width, 1)) * 100;
+      var y = ((clientY - r.top) / Math.max(r.height, 1)) * 100;
+      el.style.setProperty('--mx', x.toFixed(2) + '%');
+      el.style.setProperty('--my', y.toFixed(2) + '%');
+    }
+    el.addEventListener('pointerenter', function (e) {
+      el.classList.add('is-active');
+      setPos(e.clientX, e.clientY);
+    });
+    el.addEventListener('pointermove', function (e) {
+      setPos(e.clientX, e.clientY);
+    });
+    el.addEventListener('pointerleave', function () {
+      el.classList.remove('is-active');
+    });
+  }
+
   function init(catalog) {
     state.all = catalog.templates || [];
     state.categoryMeta = catalog.categoryMeta || {};
@@ -393,6 +416,7 @@
 
     if (!els.grid) return; // not on homepage
 
+    initHeroFlashlight();
     state.sort = 'featured';
 
     var onSearch = debounce(function () {

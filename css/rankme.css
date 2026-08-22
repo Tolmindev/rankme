@@ -3778,11 +3778,12 @@ body.community-view .toolbar {
   width: 100%;
   max-width: 1100px;
   margin: 0 auto;
-  padding: 24px 24px 32px;
+  padding: 28px 24px 24px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-height: calc(100vh - 140px);
 }
 
 .battle-back {
@@ -3817,13 +3818,14 @@ body.community-view .toolbar {
 
 .battle-arena {
   text-align: center;
-  padding: 4px 0 20px;
+  padding: 0 0 16px;
   width: 100%;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
+  flex: 1 1 auto;
 }
 
 .battle-arena:has(.battle-mode-select) {
@@ -3837,8 +3839,8 @@ body.community-view .toolbar {
   flex: 0 0 auto;
   width: 100%;
   max-width: 520px;
-  margin: 12px auto 0;
-  padding: 4px 16px 8px;
+  margin-top: auto;
+  padding: 16px 16px 8px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -3866,6 +3868,7 @@ body.community-view .toolbar {
   font-size: 1.6rem;
   font-weight: 900;
   margin: 0 0 6px;
+  line-height: 1.2;
 }
 
 .battle-sub {
@@ -4204,41 +4207,10 @@ button, .cta, .btn, .btn-mini, .pill-btn, .download-btn, .login-btn, a.btn, a.ct
     0 0 56px rgba(125, 211, 252, 0.25);
 }
 
-.battle-top {
-  display: none;
-}
 
-.battle-top .battle-back,
-button.battle-back {
-  flex: 0 0 auto;
-  min-width: 72px;
-  min-height: 34px;
-  height: 34px;
-  padding: 0 16px;
-  border-radius: 999px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  font-size: 0.78rem;
-  font-weight: 700;
-  opacity: 0.9;
-}
 
-.battle-top .battle-progress-wrap {
-  flex: 1 1 auto;
-  min-width: 0;
-}
 
-.battle-top.is-select .battle-progress-wrap {
-  visibility: hidden;
-  pointer-events: none;
-}
 
-.battle-top.is-select .battle-icon-btn, .battle-top.is-done .battle-icon-btn {
-  visibility: hidden;
-  pointer-events: none;
-}
 
 .battle-card.equal-pick {
   border: 2px solid transparent;
@@ -4359,41 +4331,8 @@ button.battle-back {
   animation-fill-mode: forwards;
 }
 
-.battle-top .battle-back, button.battle-back {
-  appearance: none;
-  -webkit-appearance: none;
-  cursor: pointer;
-  pointer-events: auto;
-  border: 1.5px solid rgba(200,160,240,.4);
-  background: linear-gradient(135deg, rgba(40,32,58,.95), rgba(22,18,36,.98));
-  color: #e8dff8;
-  font-family: inherit;
-  font-weight: 800;
-  font-size: 0.82rem;
-  border-radius: 999px;
-  min-height: 40px;
-  min-width: 88px;
-  padding: 0 16px;
-  gap: 6px;
-  box-shadow: none;
-  transition: transform .15s ease, border-color .15s ease, box-shadow .15s ease, background .15s ease, color .15s ease, filter .15s ease;
-  opacity: 1;
-  visibility: visible;
-}
 
-.battle-top .battle-back:hover, button.battle-back:hover {
-  border-color: rgba(220,180,255,.75);
-  background: linear-gradient(135deg, rgba(70,50,110,.95), rgba(40,30,70,.98));
-  color: #fff;
-  box-shadow: 0 0 18px rgba(180,120,255,.4);
-  transform: translateY(-2px);
-  filter: brightness(1.08);
-}
 
-.battle-top .battle-back:active, button.battle-back:active {
-  transform: translateY(0) scale(0.97);
-  box-shadow: 0 0 10px rgba(180,120,255,.25);
-}
 
 .battle-vs-divider, .battle-vs-center .battle-vs-divider {
   background: none;
@@ -4453,14 +4392,7 @@ button.battle-back {
   box-shadow: none;
 }
 
-.battle-back svg, button.battle-back svg, .battle-top .battle-back svg {
-  display: none;
-}
 
-.battle-back::before, button.battle-back::before, .battle-top .battle-back::before {
-  content: none;
-  display: none;
-}
 
 .battle-rank-row:nth-child(1) .battle-rank-num, .battle-rank-num.gold {
   background: linear-gradient(145deg, #ffe566 0%, #f5b800 45%, #d49200 100%);
@@ -4717,7 +4649,7 @@ button.battle-back {
   width: 100%;
   max-width: 920px;
   margin: 0 auto;
-  padding: 8px 0 12px;
+  padding: 0 0 8px;
   box-sizing: border-box;
   text-align: center;
 }
@@ -4960,20 +4892,32 @@ to { --elec-angle: 360deg; }
 
 @media (max-width: 720px) {
   .battle-page {
-    padding: 12px 12px 24px;
+    padding: 16px 12px 16px;
     max-width: 100%;
     width: 100%;
-    min-height: 0;
+    min-height: calc(100vh - 110px);
     box-sizing: border-box;
   }
 
   .battle-arena {
-    padding: 4px 0 12px;
+    padding: 0 0 8px;
     justify-content: flex-start;
+    flex: 1 1 auto;
   }
 
   .battle-question {
     font-size: 1.25rem;
+    margin: 0 0 4px;
+  }
+
+  .battle-sub {
+    margin: 0 0 10px;
+    font-size: 0.8rem;
+  }
+
+  .battle-progress-in-arena {
+    max-width: min(340px, 100%);
+    margin: 0 auto 14px;
   }
 
   .battle-vs-row {
@@ -4983,7 +4927,6 @@ to { --elec-angle: 360deg; }
     justify-content: center;
     gap: 6px;
     width: 100%;
-    max-width: 100%;
     padding: 0 4px;
     box-sizing: border-box;
   }
@@ -4993,7 +4936,6 @@ to { --elec-angle: 360deg; }
     width: min(40vw, 150px);
     max-width: 150px;
     min-width: 110px;
-    align-self: center;
     gap: 8px;
   }
 
@@ -5009,14 +4951,6 @@ to { --elec-angle: 360deg; }
     flex: 0 0 auto;
     gap: 8px;
     padding: 0 2px;
-    position: relative;
-    z-index: 5;
-    pointer-events: auto;
-  }
-
-  .battle-vs-center .battle-mid-btn {
-    transform: none;
-    transition: border-color 0.15s, box-shadow 0.15s, filter 0.15s;
   }
 
   .battle-vs-center .battle-mid-btn:active {
@@ -5040,9 +4974,9 @@ to { --elec-angle: 360deg; }
   }
 
   .battle-footer {
-    margin-top: 8px;
-    padding: 4px 8px 4px;
-    gap: 12px;
+    margin-top: auto;
+    padding: 10px 8px 4px;
+    gap: 10px;
   }
 
   .battle-footer .battle-how {
@@ -5058,15 +4992,14 @@ to { --elec-angle: 360deg; }
 
   .battle-mode-select {
     width: 100%;
-    max-width: 100%;
-    padding: 8px 0 12px;
+    padding: 0;
   }
 
   .battle-mode-cards {
     grid-template-columns: 1fr;
     width: 100%;
-    max-width: 100%;
     gap: 12px;
+    margin: 16px 0 8px;
   }
 
   .bmc-actions {
@@ -5082,12 +5015,7 @@ to { --elec-angle: 360deg; }
   .battle-result-list {
     max-height: min(38vh, 280px);
   }
-
-  .battle-top {
-    display: none;
-  }
 }
-
 
 /* RankMe · home — Home, discover, template cards, community */
 

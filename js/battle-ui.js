@@ -228,7 +228,7 @@
         '<div class="bmc-meta">' + count + ' comparisons - ' + mins + ' min</div>' +
         '<div class="bmc-desc">' + desc + '</div>' +
         '<div class="bmc-actions">' +
-          '<span class="bmc-resume" data-action="continue">' + primary + '</span>' +
+          '<span class="bmc-resume' + (hasSave ? ' is-continue' : '') + '" data-action="continue">' + primary + '</span>' +
           reset +
         '</div>' +
       '</div>'

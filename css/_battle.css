@@ -311,7 +311,11 @@ button, .cta, .btn, .btn-mini, .pill-btn, .download-btn, .login-btn, a.btn, a.ct
   animation-duration: 1.2s;
 }
 
-.battle-mode-full .bmc-icon, .battle-mode-full .bmc-title, .battle-mode-full .bmc-meta, .battle-mode-full .bmc-desc, .battle-mode-full .bmc-resume {
+.battle-mode-full .bmc-icon,
+.battle-mode-full .bmc-title,
+.battle-mode-full .bmc-meta,
+.battle-mode-full .bmc-desc,
+.battle-mode-full .bmc-resume {
   position: relative;
   z-index: 1;
 }
@@ -320,7 +324,7 @@ button, .cta, .btn, .btn-mini, .pill-btn, .download-btn, .login-btn, a.btn, a.ct
   display: inline-block;
   padding: 2px 8px;
   border-radius: 999px;
-  font-size: .68rem;
+  font-size: 0.68rem;
   font-weight: 800;
   vertical-align: middle;
 }
@@ -387,32 +391,6 @@ button, .cta, .btn, .btn-mini, .pill-btn, .download-btn, .login-btn, a.btn, a.ct
   font-size: 0.65rem;
   font-weight: 500;
   color: rgba(200, 190, 220, 0.55);
-}
-
-.battle-mode-card .bmc-resume {
-  margin-top: auto;
-  margin-left: auto;
-  margin-right: auto;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: auto;
-  min-width: 132px;
-  height: 36px;
-  padding: 0 22px;
-  border-radius: 999px;
-  font-size: 0.8rem;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  line-height: 1;
-  box-sizing: border-box;
-  border: 1.5px solid rgba(200, 160, 240, 0.5);
-  background: linear-gradient(160deg, #2a2238 0%, #161022 50%, #1e1830 100%);
-  color: #f8f2ff;
-  box-shadow:
-    0 0 0 1px rgba(180, 140, 255, 0.1),
-    0 0 16px rgba(160, 120, 255, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 
 .download-modal-actions, .battle-panel-actions {
@@ -738,27 +716,6 @@ button.battle-back {
   display: none;
 }
 
-.bmc-resume, .bmc-new {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 110px;
-  padding: 10px 20px;
-  border-radius: 999px;
-  font-weight: 800;
-  font-size: 0.85rem;
-  font-family: inherit;
-  cursor: pointer;
-  border: 1.5px solid rgba(200, 160, 240, 0.5);
-  background: linear-gradient(160deg, #2a2238 0%, #161022 50%, #1e1830 100%);
-  color: #f8f2ff;
-  box-shadow:
-    0 0 0 1px rgba(180, 140, 255, 0.1),
-    0 0 16px rgba(160, 120, 255, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.06);
-  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease, filter 0.15s ease;
-}
-
 .battle-rank-row:nth-child(1) .battle-rank-num, .battle-rank-num.gold {
   background: linear-gradient(145deg, #ffe566 0%, #f5b800 45%, #d49200 100%);
   color: #3a2800;
@@ -814,16 +771,6 @@ button.battle-back {
 
 .battle-side .battle-card.chosen, .battle-side .battle-card.equal-pick {
   transform-origin: center center;
-}
-
-.bmc-resume:hover {
-  transform: translateY(-2px);
-  border-color: rgba(220, 180, 255, 0.8);
-  filter: brightness(1.1);
-  box-shadow:
-    0 0 0 1px rgba(200, 160, 255, 0.22),
-    0 0 24px rgba(180, 140, 255, 0.38),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .battle-result-list li:nth-child(1) .battle-result-rank {
@@ -914,27 +861,71 @@ button.battle-back {
   min-height: 58px;
 }
 
-.bmc-resume {
+/* Start / Continue — single source */
+.battle-mode-card .bmc-resume,
+.bmc-resume,
+.bmc-new {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 120px;
-  padding: 9px 22px;
+  margin: 0 auto;
+  margin-top: auto;
+  width: auto;
+  min-width: 132px;
+  height: 36px;
+  padding: 0 22px;
   border-radius: 999px;
-  font-weight: 800;
-  font-size: 0.85rem;
+  box-sizing: border-box;
   font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  line-height: 1;
   cursor: pointer;
-  margin: 0;
+  color: #f8f2ff;
   border: 1.5px solid rgba(200, 160, 240, 0.5);
   background: linear-gradient(160deg, #2a2238 0%, #161022 50%, #1e1830 100%);
-  color: #f8f2ff;
   box-shadow:
     0 0 0 1px rgba(180, 140, 255, 0.1),
     0 0 16px rgba(160, 120, 255, 0.2),
     inset 0 1px 0 rgba(255, 255, 255, 0.06);
   transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease, filter 0.15s ease;
 }
+.battle-mode-card .bmc-resume:hover,
+.bmc-resume:hover,
+.bmc-new:hover {
+  transform: translateY(-2px);
+  border-color: rgba(220, 180, 255, 0.8);
+  filter: brightness(1.1);
+  box-shadow:
+    0 0 0 1px rgba(200, 160, 255, 0.22),
+    0 0 24px rgba(180, 140, 255, 0.38),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+.battle-mode-card .bmc-resume.is-continue {
+  border-color: transparent;
+  background:
+    linear-gradient(160deg, #2a2238 0%, #161022 50%, #1e1830 100%) padding-box,
+    linear-gradient(115deg, #ff4d8d 0%, #ff7a45 35%, #ffc94a 68%, #ff6b4a 100%) border-box;
+  background-origin: padding-box, border-box;
+  background-clip: padding-box, border-box;
+  box-shadow:
+    0 0 0 1px rgba(255, 120, 70, 0.25),
+    0 0 16px rgba(255, 80, 140, 0.4),
+    0 0 28px rgba(255, 170, 50, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  color: #fff8f2;
+}
+.battle-mode-card .bmc-resume.is-continue:hover {
+  border-color: transparent;
+  filter: brightness(1.1);
+  box-shadow:
+    0 0 0 1px rgba(255, 150, 90, 0.4),
+    0 0 22px rgba(255, 90, 150, 0.5),
+    0 0 36px rgba(255, 190, 60, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
 
 .bmc-reset, .bmc-reset-slot {
   display: inline-flex;
@@ -1372,3 +1363,4 @@ to { --elec-angle: 360deg; }
   }
 
 }
+

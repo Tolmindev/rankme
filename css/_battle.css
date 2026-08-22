@@ -35,88 +35,102 @@
   width: 100%;
   max-width: 1100px;
   margin: 0 auto;
-  padding: 24px 24px 32px;
+  padding: 28px 24px 32px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.battle-back {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  color: var(--text-dim);
-  text-decoration: none;
-  font-weight: 700;
-  font-size: .85rem;
-  flex-shrink: 0;
-  padding: 8px 10px;
-  border-radius: 10px;
-  transition: color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out);
-}
-
-.battle-back:hover {
-  color: var(--text);
-  background: rgba(255,255,255,0.05);
-}
-
-.battle-progress-bar .fill {
-  height: 100%;
-  border-radius: 999px;
-  width: 0%;
-  max-width: 100%;
-  background: linear-gradient(90deg, #ff6b9d, #ff9f6b, #e6a0ff, #b79bf0);
-  background-size: 100% 100%;
-  animation: none;
-  transition: width var(--dur-slow) var(--ease-out);
+  min-height: calc(100vh - 148px);
 }
 
 .battle-arena {
-  text-align: center;
-  padding: 0 0 8px;
   width: 100%;
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 0;
   box-sizing: border-box;
+  text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
+  flex: 1 1 auto;
 }
 
 .battle-arena:has(.battle-mode-select) {
-  width: 100%;
-  max-width: 100%;
-  padding-left: 0;
-  padding-right: 0;
+  max-width: 920px;
 }
 
 .battle-footer {
   width: 100%;
-  max-width: 520px;
-  margin: 20px auto 0;
-  padding: 0 16px 8px;
+  max-width: 920px;
+  margin-top: auto;
+  padding: 24px 0 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 12px;
   box-sizing: border-box;
+  flex: 0 0 auto;
 }
+
 .battle-footer .battle-how {
   margin: 0;
   max-width: 420px;
-  padding: 0;
+  padding: 0 12px;
   font-size: 0.72rem;
   font-weight: 500;
   line-height: 1.45;
   color: rgba(180, 170, 200, 0.72);
   text-align: center;
 }
+
 .battle-footer .battle-how[hidden] {
   display: none;
 }
+
+/* Back — one solid pill style */
+.battle-back,
+button.battle-back,
 .battle-footer .battle-back {
+  appearance: none;
+  -webkit-appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 96px;
+  height: 40px;
+  padding: 0 20px;
   margin: 0 auto;
+  border-radius: 999px;
+  box-sizing: border-box;
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: rgba(235, 228, 250, 0.95);
+  background: rgba(28, 22, 42, 0.95);
+  border: 1.5px solid rgba(170, 140, 220, 0.4);
+  box-shadow: 0 0 0 1px rgba(120, 90, 180, 0.12), 0 4px 16px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  text-decoration: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease, color 0.15s ease;
 }
+
+.battle-back:hover,
+button.battle-back:hover,
+.battle-footer .battle-back:hover {
+  color: #fff;
+  border-color: rgba(200, 170, 255, 0.65);
+  box-shadow: 0 0 0 1px rgba(180, 140, 255, 0.2), 0 0 20px rgba(160, 120, 255, 0.25);
+  transform: translateY(-1px);
+}
+
+.battle-back:active,
+button.battle-back:active {
+  transform: translateY(0);
+}
+
 
 .battle-question {
   font-size: 1.6rem;
@@ -214,25 +228,6 @@
 
 .battle-choose-btn.primary:hover {
   box-shadow: var(--glow-accent);
-}
-
-.battle-skip {
-  margin-top: 30px;
-  background: none;
-  border: none;
-  color: var(--text-dim);
-  font-weight: 700;
-  font-size: .82rem;
-  cursor: pointer;
-  font-family: inherit;
-  padding: 10px 16px;
-  border-radius: 10px;
-  transition: color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out);
-}
-
-.battle-skip:hover {
-  color: var(--text);
-  background: rgba(255,255,255,0.04);
 }
 
 .battle-vs-row.entering {
@@ -425,28 +420,6 @@ button, .cta, .btn, .btn-mini, .pill-btn, .download-btn, .login-btn, a.btn, a.ct
   box-sizing: border-box;
 }
 
-.battle-back, button.battle-back {
-  min-width: 88px;
-  min-height: 40px;
-  height: 40px;
-  padding: 0 16px;
-  border-radius: 999px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  font-size: 0.8rem;
-  font-weight: 700;
-  box-sizing: border-box;
-  border: 1px solid rgba(160, 130, 210, 0.28);
-  background: rgba(22, 18, 36, 0.9);
-  color: rgba(230, 220, 245, 0.9);
-  cursor: pointer;
-  pointer-events: auto;
-  z-index: 21;
-  opacity: 1;
-  visibility: visible;
-}
 
 
 .battle-card.chosen {
@@ -903,7 +876,7 @@ button, .cta, .btn, .btn-mini, .pill-btn, .download-btn, .login-btn, a.btn, a.ct
   width: 100%;
   max-width: 920px;
   margin: 0 auto;
-  padding: 0 0 8px;
+  padding: 0;
   box-sizing: border-box;
   text-align: center;
 }
@@ -913,8 +886,8 @@ button, .cta, .btn, .btn-mini, .pill-btn, .download-btn, .login-btn, a.btn, a.ct
   grid-template-columns: 1fr 1fr;
   gap: 18px;
   width: 100%;
-  max-width: 100%;
-  margin: 20px 0 0;
+  max-width: 920px;
+  margin: 20px auto 0;
   box-sizing: border-box;
 }
 
@@ -1146,14 +1119,24 @@ to { --elec-angle: 360deg; }
 
 @media (max-width: 720px) {
   .battle-page {
-    padding: 16px 12px 24px;
+    padding: 16px 14px 24px;
     max-width: 100%;
-    width: 100%;
-    box-sizing: border-box;
+    min-height: calc(100vh - 120px);
+  }
+
+  .battle-arena,
+  .battle-footer {
+    max-width: 100%;
   }
 
   .battle-arena {
-    padding: 0 0 8px;
+    flex: 1 1 auto;
+    justify-content: flex-start;
+  }
+
+  .battle-footer {
+    margin-top: auto;
+    padding-top: 16px;
   }
 
   .battle-question {
@@ -1178,8 +1161,6 @@ to { --elec-angle: 360deg; }
     justify-content: center;
     gap: 6px;
     width: 100%;
-    padding: 0 4px;
-    box-sizing: border-box;
   }
 
   .battle-side {
@@ -1194,18 +1175,9 @@ to { --elec-angle: 360deg; }
     width: 100%;
   }
 
-  .battle-card.chosen {
-    transform: scale(1.04);
-  }
-
   .battle-vs-center {
     flex: 0 0 auto;
     gap: 8px;
-    padding: 0 2px;
-  }
-
-  .battle-vs-center .battle-mid-btn:active {
-    transform: scale(0.96);
   }
 
   .battle-mid-btn {
@@ -1218,39 +1190,22 @@ to { --elec-angle: 360deg; }
     height: 18px;
   }
 
-  .battle-vs-divider {
-    width: 32px;
-    height: 32px;
-    font-size: 0.85rem;
-  }
-
-  .battle-footer {
-    margin: 16px auto 0;
-    padding: 0 8px 4px;
-    gap: 10px;
-  }
-
   .battle-footer .battle-how {
     font-size: 0.68rem;
   }
 
-  .battle-footer .battle-back,
-  .battle-footer button.battle-back {
+  .battle-back,
+  button.battle-back,
+  .battle-footer .battle-back {
     min-width: 88px;
-    min-height: 36px;
     height: 36px;
-  }
-
-  .battle-mode-select {
-    width: 100%;
-    padding: 0;
+    font-size: 0.78rem;
   }
 
   .battle-mode-cards {
     grid-template-columns: 1fr;
-    width: 100%;
     gap: 12px;
-    margin: 16px 0 0;
+    margin: 16px auto 0;
   }
 
   .bmc-actions {

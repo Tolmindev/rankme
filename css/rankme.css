@@ -3778,8 +3778,7 @@ body.community-view .toolbar {
   width: 100%;
   max-width: 1100px;
   margin: 0 auto;
-  padding: 20px 24px 40px;
-  min-height: calc(100vh - 120px);
+  padding: 24px 24px 32px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -3818,15 +3817,13 @@ body.community-view .toolbar {
 
 .battle-arena {
   text-align: center;
-  padding: 8px 0 16px;
+  padding: 4px 0 20px;
   width: 100%;
   box-sizing: border-box;
-  flex: 1 1 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  min-height: 0;
+  justify-content: flex-start;
 }
 
 .battle-arena:has(.battle-mode-select) {
@@ -3834,19 +3831,18 @@ body.community-view .toolbar {
   max-width: 100%;
   padding-left: 0;
   padding-right: 0;
-  justify-content: center;
 }
 
 .battle-footer {
   flex: 0 0 auto;
   width: 100%;
   max-width: 520px;
-  margin: 8px auto 0;
-  padding: 8px 16px 12px;
+  margin: 12px auto 0;
+  padding: 4px 16px 8px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
   box-sizing: border-box;
 }
 .battle-footer .battle-how {
@@ -4128,29 +4124,7 @@ button, .cta, .btn, .btn-mini, .pill-btn, .download-btn, .login-btn, a.btn, a.ct
   padding: 0 8px;
   box-sizing: border-box;
 }
-@media (max-width: 720px) {
-  .battle-page {
-    padding-top: 14px;
-  }
-  .battle-progress-in-arena {
-    max-width: min(340px, 100%);
-    margin: 0 auto 16px;
-    padding: 0 4px;
-  }
-  .battle-top {
-    margin-bottom: 8px;
-  }
-  .battle-arena {
-    padding-top: 8px;
-  }
-  .battle-top .battle-back,
-  button.battle-back {
-    min-height: 32px;
-    height: 32px;
-    min-width: 68px;
-    font-size: 0.75rem;
-  }
-}
+
 .battle-progress-wrap {
   flex: 1 1 auto;
   display: flex;
@@ -4985,10 +4959,73 @@ to { --elec-angle: 360deg; }
 }
 
 @media (max-width: 720px) {
+  .battle-page {
+    padding: 12px 12px 24px;
+    max-width: 100%;
+    width: 100%;
+    min-height: 0;
+    box-sizing: border-box;
+  }
 
-  .battle-top .battle-back {
-    min-width: 68px;
-    min-height: 32px;
+  .battle-arena {
+    padding: 4px 0 12px;
+    justify-content: flex-start;
+  }
+
+  .battle-question {
+    font-size: 1.25rem;
+  }
+
+  .battle-vs-row {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+    max-width: 100%;
+    padding: 0 4px;
+    box-sizing: border-box;
+  }
+
+  .battle-side {
+    flex: 0 0 auto;
+    width: min(40vw, 150px);
+    max-width: 150px;
+    min-width: 110px;
+    align-self: center;
+    gap: 8px;
+  }
+
+  .battle-card {
+    width: 100%;
+  }
+
+  .battle-card.chosen {
+    transform: scale(1.04);
+  }
+
+  .battle-vs-center {
+    flex: 0 0 auto;
+    gap: 8px;
+    padding: 0 2px;
+    position: relative;
+    z-index: 5;
+    pointer-events: auto;
+  }
+
+  .battle-vs-center .battle-mid-btn {
+    transform: none;
+    transition: border-color 0.15s, box-shadow 0.15s, filter 0.15s;
+  }
+
+  .battle-vs-center .battle-mid-btn:active {
+    transform: scale(0.96);
+  }
+
+  .battle-mid-btn {
+    width: 40px;
+    height: 40px;
   }
 
   .battle-mid-btn img {
@@ -4996,32 +5033,44 @@ to { --elec-angle: 360deg; }
     height: 18px;
   }
 
-  .battle-top {
-    gap: 10px;
-    padding: 0 10px;
-  }
-
-  .battle-top .battle-back, button.battle-back {
-    min-width: 68px;
-    min-height: 32px;
+  .battle-vs-divider {
+    width: 32px;
     height: 32px;
-    font-size: 0.75rem;
-    padding: 0 14px;
+    font-size: 0.85rem;
   }
 
-  .battle-top .battle-back span {
-    display: inline;
-  }
-
-  .battle-vs-row {
+  .battle-footer {
+    margin-top: 8px;
+    padding: 4px 8px 4px;
     gap: 12px;
-    flex-wrap: wrap;
-    justify-content: center;
   }
 
-  .battle-mid-btn {
-    width: 40px;
-    height: 40px;
+  .battle-footer .battle-how {
+    font-size: 0.68rem;
+  }
+
+  .battle-footer .battle-back,
+  .battle-footer button.battle-back {
+    min-width: 88px;
+    min-height: 36px;
+    height: 36px;
+  }
+
+  .battle-mode-select {
+    width: 100%;
+    max-width: 100%;
+    padding: 8px 0 12px;
+  }
+
+  .battle-mode-cards {
+    grid-template-columns: 1fr;
+    width: 100%;
+    max-width: 100%;
+    gap: 12px;
+  }
+
+  .bmc-actions {
+    min-height: 54px;
   }
 
   .battle-panel {
@@ -5034,125 +5083,8 @@ to { --elec-angle: 360deg; }
     max-height: min(38vh, 280px);
   }
 
-  .battle-vs-center {
-    gap: 8px;
-    padding: 0 2px;
-    position: relative;
-    z-index: 5;
-    pointer-events: auto;
-  }
-
-  .battle-vs-center .battle-mid-btn {
-    transform: none;
-    transition: border-color .15s, box-shadow .15s, filter .15s;
-  }
-
-  .battle-vs-center .battle-mid-btn:active {
-    transform: scale(0.96);
-  }
-
-  .battle-card.chosen {
-    transform: scale(1.04);
-  }
-
-  .battle-side {
-    width: auto;
-    align-self: center;
-    flex: 1;
-    gap: 10px;
-  }
-
-  .battle-page {
-    padding: 10px 14px 100px;
-    max-width: 100%;
-    width: 100%;
-    box-sizing: border-box;
-  }
-
-  .battle-back span {
+  .battle-top {
     display: none;
-  }
-
-  .battle-question {
-    font-size: 1.25rem;
-  }
-
-  .battle-vs-divider {
-    width: 32px;
-    height: 32px;
-    font-size: .85rem;
-  }
-
-  .battle-arena {
-    padding-top: 8px;
-  }
-
-  .bmc-actions {
-    min-height: 54px;
-  }
-
-  .battle-mode-select {
-    width: 100%;
-    max-width: 100%;
-    padding: 8px 0 32px;
-  }
-
-  .battle-mode-cards {
-    grid-template-columns: 1fr;
-    width: 100%;
-    max-width: 100%;
-    gap: 12px;
-    margin: 16px 0 12px;
-  }
-
-  .battle-mode-card {
-    width: 100%;
-    max-width: 100%;
-    min-height: 0;
-    height: auto;
-    padding: 14px 16px 12px;
-  }
-  .battle-mode-card .bmc-icon {
-    font-size: 1.35rem;
-    margin-bottom: 4px;
-  }
-  .battle-mode-card .bmc-title {
-    font-size: 1.05rem;
-    margin: 0 0 4px;
-  }
-  .battle-mode-card .bmc-meta {
-    font-size: 0.78rem;
-    margin: 0 0 6px;
-  }
-  .battle-mode-card .bmc-desc {
-    font-size: 0.75rem;
-    line-height: 1.35;
-    margin: 0 0 10px;
-  }
-  .battle-mode-card .bmc-actions {
-    min-height: 0;
-    margin-top: auto;
-  }
-
-}
-
-@media (max-width: 720px) {
-  .battle-page {
-    padding: 12px 14px 24px;
-    min-height: calc(100vh - 100px);
-  }
-  .battle-footer {
-    gap: 12px;
-    padding: 6px 8px 8px;
-  }
-  .battle-footer .battle-how {
-    font-size: 0.68rem;
-  }
-  .battle-footer .battle-back,
-  .battle-footer button.battle-back {
-    min-width: 88px;
-    min-height: 36px;
-    height: 36px;
   }
 }
 

@@ -2093,7 +2093,6 @@ function applyBattleResult(){
     window.__rankmeFromCabinet = true;
     window.__rankmeFromBattle = true;
     if(typeof sanitizeState === 'function') sanitizeState();
-    console.log('battle result applied', placed, 'cards');
     return true;
   }catch(e){
     console.warn('applyBattleResult failed', e);
@@ -2233,14 +2232,17 @@ function applyOpenHeroMeta() {
 }
 
 var HERO_TITLE_MAX = 48;
-var HERO_DESC_MAX = 160;
+var HERO_DESC_MAX = 180;
 
-function clampHeroText(el) {
+function clampHeroText(el, opts) {
   if (!el || !el.id) return;
   var max = el.id === 'heroTitle' ? HERO_TITLE_MAX : HERO_DESC_MAX;
   var text = (el.textContent || '').replace(/\r\n/g, '\n');
   if (text.length <= max) return;
   el.textContent = text.slice(0, max);
+  /* Only restore caret while the user is typing - never on boot/clamp */
+  if (!opts || !opts.keepCaret) return;
+  if (document.activeElement !== el) return;
   try {
     var range = document.createRange();
     var sel = window.getSelection();
@@ -2258,7 +2260,7 @@ function bindHeroLimits() {
     var t = e.target;
     if (!t || (t.id !== 'heroTitle' && t.id !== 'heroDesc')) return;
     if (t.getAttribute('contenteditable') !== 'true') return;
-    clampHeroText(t);
+    clampHeroText(t, { keepCaret: true });
     if (typeof markDirty === 'function') markDirty();
   });
   document.addEventListener('paste', function (e) {
@@ -2291,7 +2293,7 @@ function bindHeroLimits() {
     if (room < 0) room = 0;
     var insert = paste.slice(0, room);
     t.textContent = (before + insert + after).slice(0, max);
-    clampHeroText(t);
+    clampHeroText(t, { keepCaret: true });
     if (typeof markDirty === 'function') markDirty();
   });
   document.addEventListener('keydown', function (e) {
@@ -2444,7 +2446,7 @@ function setupCommunityUI() {
   }
 }
 
-  // Community public ranking (?c=id) — load BEFORE first render
+  // Community (?c=)
   if (typeof tryLoadCommunityFromQuery === 'function') {
     await tryLoadCommunityFromQuery();
   }
@@ -2489,6 +2491,10 @@ function setupCommunityUI() {
   renderPortals();
   applyOpenHeroMeta();
   setHeroEditable(!communityMode);
+  try {
+    var ae = document.activeElement;
+    if (ae && (ae.id === 'heroTitle' || ae.id === 'heroDesc')) ae.blur();
+  } catch (e) {}
   if (window.__rankmeRemixPending) {
     window.__rankmeRemixPending = false;
     remixFlag = true;

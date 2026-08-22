@@ -3778,7 +3778,7 @@ body.community-view .toolbar {
   width: 100%;
   max-width: 1100px;
   margin: 0 auto;
-  padding: 28px 24px 80px;
+  padding: 12px 24px 80px;
   min-height: 70vh;
   box-sizing: border-box;
 }
@@ -3815,7 +3815,7 @@ body.community-view .toolbar {
 
 .battle-arena {
   text-align: center;
-  padding: 36px 0 8px;
+  padding: 4px 0 8px;
   width: 100%;
   box-sizing: border-box;
 }
@@ -3836,8 +3836,8 @@ body.community-view .toolbar {
 .battle-sub {
   color: var(--text-dim);
   font-weight: 600;
-  font-size: .88rem;
-  margin: 0 0 34px;
+  font-size: 0.88rem;
+  margin: 0 0 8px;
 }
 
 .battle-card {
@@ -4080,19 +4080,22 @@ button, .cta, .btn, .btn-mini, .pill-btn, .download-btn, .login-btn, a.btn, a.ct
 
 .battle-progress-in-arena {
   width: 100%;
-  max-width: 420px;
-  margin: 4px auto 18px;
-  padding: 0 12px;
+  max-width: 380px;
+  margin: 0 auto 14px;
+  padding: 0 8px;
   box-sizing: border-box;
 }
 @media (max-width: 720px) {
   .battle-progress-in-arena {
-    max-width: 100%;
-    margin: 2px auto 14px;
+    max-width: min(320px, 100%);
+    margin: 0 auto 12px;
     padding: 0 4px;
   }
   .battle-top {
-    margin-bottom: 8px;
+    margin-bottom: 2px;
+  }
+  .battle-arena {
+    padding-top: 2px;
   }
 }
 .battle-progress-wrap {
@@ -4108,7 +4111,7 @@ button, .cta, .btn, .btn-mini, .pill-btn, .download-btn, .login-btn, a.btn, a.ct
   width: 100%;
   height: 6px;
   border-radius: 999px;
-  background: rgba(255,255,255,0.08);
+  background: rgba(32, 24, 48, 0.95);
   overflow: hidden;
   max-width: 420px;
 }
@@ -4204,25 +4207,29 @@ button, .cta, .btn, .btn-mini, .pill-btn, .download-btn, .login-btn, a.btn, a.ct
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 8px;
   position: relative;
   z-index: 20;
   width: 100%;
   max-width: 920px;
-  margin: 0 auto 16px;
+  margin: 0 auto 4px;
   padding: 0 12px;
   box-sizing: border-box;
 }
 
 .battle-top .battle-back {
   flex: 0 0 auto;
-  min-width: 88px;
-  min-height: 40px;
+  min-width: 64px;
+  min-height: 30px;
+  padding: 0 14px;
   border-radius: 999px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 4px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  opacity: 0.85;
 }
 
 .battle-top .battle-progress-wrap {
@@ -4794,7 +4801,7 @@ button, .cta, .btn, .btn-mini, .pill-btn, .download-btn, .login-btn, a.btn, a.ct
   font-weight: 900;
   font-size: 0.78rem;
   flex-shrink: 0;
-  background: rgba(255,255,255,0.08);
+  background: rgba(32, 24, 48, 0.95);
   color: #e8dff8;
   line-height: 1;
   box-shadow: none;

@@ -175,9 +175,10 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
 .hero-home {
   text-align: center;
   margin-bottom: 48px;
+  overflow: visible;
 }
 
-/* Title: base holofoil + cursor flashlight layer */
+/* Title: bright holofoil base + free spotlight (no box clip) */
 .hero-home .hero-title-mesh {
   position: relative;
   display: inline-block;
@@ -187,12 +188,40 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
   line-height: 1.08;
   margin: 0 0 14px;
   cursor: default;
+  overflow: visible;
   --mx: 50%;
   --my: 50%;
-  --spot: 9rem;
+  --spot: 10rem;
+}
+/* soft free glow behind letters — not masked to a rectangle */
+.hero-home .hero-title-mesh::before {
+  content: '';
+  position: absolute;
+  left: var(--mx);
+  top: var(--my);
+  width: 14rem;
+  height: 14rem;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  background: radial-gradient(
+    circle,
+    rgba(220, 200, 255, 0.4) 0%,
+    rgba(160, 210, 255, 0.18) 35%,
+    rgba(180, 140, 255, 0.06) 55%,
+    transparent 70%
+  );
+}
+.hero-home .hero-title-mesh.is-active::before {
+  opacity: 1;
 }
 .hero-home .htm-base,
 .hero-home .htm-lite {
+  position: relative;
+  z-index: 1;
   display: block;
   font: inherit;
   letter-spacing: inherit;
@@ -202,63 +231,63 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-/* quiet holofoil base */
+/* bright base — always readable, holofoil */
 .hero-home .htm-base {
   background-image: linear-gradient(
-    125deg,
-    #7a6a9e 0%,
-    #9b8bc4 22%,
-    #a890c8 40%,
-    #8f7ab0 58%,
-    #b09ad4 78%,
-    #7d6a9a 100%
+    120deg,
+    #a78bfa 0%,
+    #c4b5fd 18%,
+    #e9b8f5 36%,
+    #b8a0ff 52%,
+    #d8b4fe 68%,
+    #9b7aef 84%,
+    #c4b5fd 100%
   );
   background-size: 180% 100%;
-  animation: heroTitleShimmer 16s ease-in-out infinite;
+  animation: heroTitleShimmer 14s ease-in-out infinite;
 }
-/* bright holofoil only under the "flashlight" */
+/* brighter holofoil only where the cursor is — mask only on text fill, no filter */
 .hero-home .htm-lite {
   position: absolute;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
+  z-index: 2;
   pointer-events: none;
   opacity: 0;
-  transition: opacity 0.18s ease;
+  transition: opacity 0.15s ease;
   background-image: linear-gradient(
     115deg,
-    #c8d4e8 0%,
-    #e8eef8 12%,
-    #b8e0ff 24%,
-    #d4c0ff 38%,
-    #f0c8f8 50%,
-    #c0b0ff 62%,
-    #a8e8f0 76%,
-    #e0d0ff 88%,
-    #b8c8e0 100%
+    #e8eef8 0%,
+    #f5f7fc 10%,
+    #b8e8ff 22%,
+    #dcc8ff 38%,
+    #ffd6f5 50%,
+    #c8b8ff 64%,
+    #a8f0e8 78%,
+    #e8e0ff 90%,
+    #d0d8f0 100%
   );
   background-size: 200% 100%;
-  filter: drop-shadow(0 0 8px rgba(200, 180, 255, 0.45))
-          drop-shadow(0 0 18px rgba(160, 220, 255, 0.25));
   -webkit-mask-image: radial-gradient(
     circle var(--spot) at var(--mx) var(--my),
     #000 0%,
-    #000 28%,
-    rgba(0, 0, 0, 0.55) 48%,
-    transparent 72%
+    #000 30%,
+    rgba(0, 0, 0, 0.5) 50%,
+    transparent 74%
   );
   mask-image: radial-gradient(
     circle var(--spot) at var(--mx) var(--my),
     #000 0%,
-    #000 28%,
-    rgba(0, 0, 0, 0.55) 48%,
-    transparent 72%
+    #000 30%,
+    rgba(0, 0, 0, 0.5) 50%,
+    transparent 74%
   );
 }
 .hero-home .hero-title-mesh.is-active .htm-lite {
   opacity: 1;
-  animation: heroTitleShimmer 6s ease-in-out infinite;
+  animation: heroTitleShimmer 5s ease-in-out infinite;
 }
 @keyframes heroTitleShimmer {
   0%, 100% { background-position: 0% 50%; }
@@ -266,9 +295,13 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
 }
 @media (max-width: 720px) {
   .hero-home .hero-title-mesh {
-    --spot: 6.5rem;
+    --spot: 7rem;
     font-size: clamp(1.85rem, 9.5vw, 2.45rem);
     letter-spacing: -0.025em;
+  }
+  .hero-home .hero-title-mesh::before {
+    width: 11rem;
+    height: 11rem;
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -276,7 +309,8 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
   .hero-home .htm-lite {
     animation: none;
   }
-  .hero-home .htm-lite {
+  .hero-home .htm-lite,
+  .hero-home .hero-title-mesh::before {
     opacity: 0 !important;
   }
 }

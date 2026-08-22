@@ -35,7 +35,7 @@
   width: 100%;
   max-width: 1100px;
   margin: 0 auto;
-  padding: 12px 24px 80px;
+  padding: 20px 24px 80px;
   min-height: 70vh;
   box-sizing: border-box;
 }
@@ -72,7 +72,7 @@
 
 .battle-arena {
   text-align: center;
-  padding: 4px 0 8px;
+  padding: 12px 0 8px;
   width: 100%;
   box-sizing: border-box;
 }
@@ -94,7 +94,7 @@
   color: var(--text-dim);
   font-weight: 600;
   font-size: 0.88rem;
-  margin: 0 0 8px;
+  margin: 0 0 12px;
 }
 
 .battle-card {
@@ -337,22 +337,32 @@ button, .cta, .btn, .btn-mini, .pill-btn, .download-btn, .login-btn, a.btn, a.ct
 
 .battle-progress-in-arena {
   width: 100%;
-  max-width: 380px;
-  margin: 0 auto 14px;
+  max-width: 400px;
+  margin: 0 auto 20px;
   padding: 0 8px;
   box-sizing: border-box;
 }
 @media (max-width: 720px) {
+  .battle-page {
+    padding-top: 14px;
+  }
   .battle-progress-in-arena {
-    max-width: min(320px, 100%);
-    margin: 0 auto 12px;
+    max-width: min(340px, 100%);
+    margin: 0 auto 16px;
     padding: 0 4px;
   }
   .battle-top {
-    margin-bottom: 2px;
+    margin-bottom: 8px;
   }
   .battle-arena {
-    padding-top: 2px;
+    padding-top: 8px;
+  }
+  .battle-top .battle-back,
+  button.battle-back {
+    min-height: 32px;
+    height: 32px;
+    min-width: 68px;
+    font-size: 0.75rem;
   }
 }
 .battle-progress-wrap {
@@ -469,24 +479,26 @@ button, .cta, .btn, .btn-mini, .pill-btn, .download-btn, .login-btn, a.btn, a.ct
   z-index: 20;
   width: 100%;
   max-width: 920px;
-  margin: 0 auto 4px;
+  margin: 0 auto 10px;
   padding: 0 12px;
   box-sizing: border-box;
 }
 
-.battle-top .battle-back {
+.battle-top .battle-back,
+button.battle-back {
   flex: 0 0 auto;
-  min-width: 64px;
-  min-height: 30px;
-  padding: 0 14px;
+  min-width: 72px;
+  min-height: 34px;
+  height: 34px;
+  padding: 0 16px;
   border-radius: 999px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 4px;
-  font-size: 0.75rem;
+  font-size: 0.78rem;
   font-weight: 700;
-  opacity: 0.85;
+  opacity: 0.9;
 }
 
 .battle-top .battle-progress-wrap {
@@ -1212,8 +1224,8 @@ to { --elec-angle: 360deg; }
 @media (max-width: 720px) {
 
   .battle-top .battle-back {
-    min-width: 72px;
-    min-height: 36px;
+    min-width: 68px;
+    min-height: 32px;
   }
 
   .battle-mid-btn img {
@@ -1227,10 +1239,11 @@ to { --elec-angle: 360deg; }
   }
 
   .battle-top .battle-back, button.battle-back {
-    min-width: 72px;
-    min-height: 38px;
-    font-size: 0.78rem;
-    padding: 0 12px;
+    min-width: 68px;
+    min-height: 32px;
+    height: 32px;
+    font-size: 0.75rem;
+    padding: 0 14px;
   }
 
   .battle-top .battle-back span {

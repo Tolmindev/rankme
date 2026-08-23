@@ -186,21 +186,21 @@ nav.main a {
   letter-spacing: .3px;
   padding: 8px 14px;
   border-radius: 999px;
-  transition: color .15s, background .15s, text-shadow .15s, box-shadow .15s;
+  background: transparent;
+  transition: color .15s, text-shadow .15s;
 }
 
 nav.main a:hover {
   color: var(--text);
-  background: rgba(255, 255, 255, 0.05);
+  text-shadow: 0 0 12px rgba(200, 160, 255, 0.35);
 }
 
 nav.main a.active {
   color: #fff;
-  background: rgba(255, 255, 255, 0.07);
+  background: transparent;
   text-shadow:
-    0 0 10px rgba(200, 160, 255, 0.7),
-    0 0 22px rgba(180, 130, 255, 0.45);
-  box-shadow: 0 0 18px rgba(180, 140, 255, 0.2);
+    0 0 10px rgba(200, 160, 255, 0.75),
+    0 0 24px rgba(180, 130, 255, 0.5);
 }
 
 nav.main a.exclusive {

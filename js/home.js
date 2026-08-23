@@ -13,6 +13,10 @@
     category: 'all',
     query: '',
     sort: 'newest',
+    tplVisible: null,
+    communityVisible: null,
+    communityRows: null,
+    hayById: {},
   };
 
   var els = {};
@@ -47,17 +51,43 @@
     } catch (e) { return ''; }
   }
 
-  function matchesQuery(t, q) {
+  var ALIAS = { sf: 'street fighter', lol: 'league of legends', ex: 'ex-move' };
+
+  /** One lowercase string per template: meta + all card names (built once at load). */
+  function buildHay(t, cardNames) {
+    var parts = [t.title, t.description, t.category, t.id]
+      .concat(t.tags || [])
+      .concat(cardNames || []);
+    // normalize separators so "Chun-li" matches "Chun Li"
+    return parts.join(' ').toLowerCase().replace(/[-_]+/g, ' ').replace(/\s+/g, ' ').trim();
+  }
+
+  function tokenMatch(hay, q) {
     if (!q) return true;
-    var raw = q.toLowerCase().trim();
-    var tokens = raw.split(/\s+/).filter(Boolean);
-    // expand short aliases
-    var expand = { sf: 'street fighter', lol: 'league of legends', ex: 'ex-move' };
-    tokens = tokens.map(function (tok) { return expand[tok] || tok; });
-    var hay = [t.title, t.description, t.category, t.id].concat(t.tags || []).join(' ').toLowerCase();
-    // each token must match (AND); also accept original raw substring
+    var raw = q.toLowerCase().trim().replace(/[-_]+/g, ' ').replace(/\s+/g, ' ').trim();
+    if (!raw) return true;
+    if (!hay) return false;
     if (hay.indexOf(raw) !== -1) return true;
+    var tokens = raw.split(/\s+/).filter(Boolean).map(function (tok) {
+      return ALIAS[tok] || tok;
+    });
     return tokens.every(function (tok) { return hay.indexOf(tok) !== -1; });
+  }
+
+  function matchesQuery(t, q) {
+    return tokenMatch(t._hay || buildHay(t, []), q);
+  }
+
+  /** Community: title, author, template id + same card index as that template. */
+  function matchesCommunityQuery(row, q) {
+    var hay = [
+      row.title || '',
+      row.author_name || '',
+      row.template_id || '',
+      String(row.id || ''),
+      (state.hayById && state.hayById[row.template_id]) || ''
+    ].join(' ').toLowerCase();
+    return tokenMatch(hay, q);
   }
 
   function computeCategoryCounts(items) {
@@ -114,6 +144,7 @@
       btn.addEventListener('click', function () {
         state.category = btn.getAttribute('data-cat');
         renderCategoryChips();
+        state.tplVisible = null;
         renderGrid();
       });
     });
@@ -181,28 +212,32 @@
         state.category = 'all';
         els.search.value = '';
         els.clearBtn.hidden = true;
+        state.communityVisible = null;
         renderCategoryChips();
         renderGrid();
+        paintCommunity();
       });
       return;
     }
 
-    var ROW_LIMIT = (window.matchMedia && window.matchMedia('(max-width: 720px)').matches) ? 3 : 6;
-    var showAll = !!window.__rankmeShowAllTemplates;
-    var visible = (showAll || sorted.length <= ROW_LIMIT) ? sorted : sorted.slice(0, ROW_LIMIT);
+    var INITIAL = (window.matchMedia && window.matchMedia('(max-width: 720px)').matches) ? 3 : 6;
+    var STEP = 12;
+    if (state.tplVisible == null || state.tplVisible < INITIAL) state.tplVisible = INITIAL;
+    if (state.tplVisible > sorted.length) state.tplVisible = sorted.length;
+    var visible = sorted.slice(0, state.tplVisible);
     var html = visible.map(cardHtml).join('');
-    if (!showAll && sorted.length > ROW_LIMIT) {
+    if (state.tplVisible < sorted.length) {
       html +=
         '<div class="show-all-wrap">' +
-          '<button type="button" class="show-all-btn" id="showAllTemplates">Show all · ' + sorted.length + '</button>' +
+          '<button type="button" class="show-all-btn" id="showMoreTemplates">Show more</button>' +
         '</div>';
     }
     els.grid.innerHTML = html;
     els.grid.removeAttribute('aria-busy');
-    var sab = document.getElementById('showAllTemplates');
+    var sab = document.getElementById('showMoreTemplates');
     if (sab) {
       sab.addEventListener('click', function () {
-        window.__rankmeShowAllTemplates = true;
+        state.tplVisible = Math.min(state.tplVisible + STEP, sorted.length);
         renderGrid();
       });
     }
@@ -337,39 +372,61 @@
     });
   }
 
+  function paintCommunity() {
+    if (!els.community) return;
+    var all = state.communityRows || [];
+    if (!all.length) {
+      els.community.innerHTML =
+        '<h2 class="community-rankings-title">Community Rankings</h2>' +
+        '<div class="community-empty"><p>No public lists yet</p></div>';
+      return;
+    }
+    var q = (state.query || '').trim();
+    var rows = all.filter(function (row) {
+      return matchesCommunityQuery(row, q);
+    });
+    if (!rows.length) {
+      els.community.innerHTML =
+        '<h2 class="community-rankings-title">Community Rankings</h2>' +
+        '<div class="community-empty"><p>No matches</p></div>';
+      return;
+    }
+    var isMobile = window.matchMedia && window.matchMedia('(max-width: 720px)').matches;
+    var INITIAL = isMobile ? 3 : 6;
+    var STEP = 12;
+    if (state.communityVisible == null || state.communityVisible < INITIAL) {
+      state.communityVisible = INITIAL;
+    }
+    if (state.communityVisible > rows.length) state.communityVisible = rows.length;
+    var visible = rows.slice(0, state.communityVisible);
+    var html =
+      '<h2 class="community-rankings-title">Community Rankings</h2>' +
+      '<div class="community-grid">' + visible.map(communityCardHtml).join('') + '</div>';
+    if (state.communityVisible < rows.length) {
+      html += '<button type="button" class="cc-show-all" id="communityShowMore">Show more</button>';
+    }
+    els.community.innerHTML = html;
+    wireCommunityCards(els.community);
+    var showBtn = document.getElementById('communityShowMore');
+    if (showBtn) {
+      showBtn.addEventListener('click', function () {
+        state.communityVisible = Math.min(state.communityVisible + STEP, rows.length);
+        paintCommunity();
+      });
+    }
+  }
+
   async function loadCommunity() {
     if (!els.community) return;
     try {
       if (typeof listPublicTierlists !== 'function') throw new Error('no api');
-      var rows = await listPublicTierlists(24);
+      var rows = await listPublicTierlists(48);
       if (!rows || !rows.length) throw new Error('empty');
-      var isMobile = window.matchMedia && window.matchMedia('(max-width: 720px)').matches;
-      var limit = isMobile ? 3 : 6;
-      var visible = rows.slice(0, limit);
-      var rest = rows.slice(limit);
-      var html =
-        '<h2 class="community-rankings-title">Community Rankings</h2>' +
-        '<div class="community-grid">' + visible.map(communityCardHtml).join('') + '</div>';
-      if (rest.length) {
-        html +=
-          '<button type="button" class="cc-show-all" id="communityShowAll">Show all</button>' +
-          '<div class="community-grid community-grid-more" id="communityGridMore" hidden>' +
-            rest.map(communityCardHtml).join('') +
-          '</div>';
-      }
-      els.community.innerHTML = html;
-      wireCommunityCards(els.community);
-      var showBtn = document.getElementById('communityShowAll');
-      var more = document.getElementById('communityGridMore');
-      if (showBtn && more) {
-        showBtn.addEventListener('click', function () {
-          more.hidden = false;
-          more.removeAttribute('hidden');
-          showBtn.hidden = true;
-          wireCommunityCards(more);
-        });
-      }
+      state.communityRows = rows;
+      state.communityVisible = null;
+      paintCommunity();
     } catch (e) {
+      state.communityRows = null;
       els.community.innerHTML =
         '<h2 class="community-rankings-title">Community Rankings</h2>' +
         '<div class="community-empty"><p>No public lists yet</p></div>';
@@ -422,7 +479,10 @@
     var onSearch = debounce(function () {
       state.query = els.search.value;
       els.clearBtn.hidden = !state.query;
+      state.tplVisible = null;
+      state.communityVisible = null;
       renderGrid();
+      paintCommunity();
     }, 120);
     els.search.addEventListener('input', onSearch);
     els.clearBtn.addEventListener('click', function () {
@@ -430,7 +490,10 @@
       state.query = '';
       els.clearBtn.hidden = true;
       els.search.focus();
+      state.tplVisible = null;
+      state.communityVisible = null;
       renderGrid();
+      paintCommunity();
     });
 
     function closeDd() {
@@ -448,6 +511,7 @@
     els.ddMenu.querySelectorAll('li').forEach(function (li) {
       li.addEventListener('click', function () {
         state.sort = li.getAttribute('data-value');
+        state.tplVisible = null;
         els.ddLabel.textContent = li.textContent;
         els.ddMenu.querySelectorAll('li').forEach(function (o) { o.setAttribute('aria-selected', 'false'); });
         li.setAttribute('aria-selected', 'true');
@@ -475,12 +539,41 @@
     return catalog;
   }
 
+  function indexTemplateCards(templates) {
+    return Promise.all(templates.map(function (t) {
+      return fetch('templates/' + encodeURIComponent(t.id) + '.json', { cache: 'force-cache' })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (data) {
+          var names = [];
+          var cards = data && Array.isArray(data.cards) ? data.cards : [];
+          for (var i = 0; i < cards.length; i++) {
+            var c = cards[i];
+            if (!c) continue;
+            if (c.name) {
+              var n = String(c.name);
+              names.push(n);
+              // so "chun li" hits "Chun-Li"
+              if (/[-_]/.test(n)) names.push(n.replace(/[-_]+/g, ' '));
+            }
+          }
+          t._hay = buildHay(t, names);
+          state.hayById[t.id] = t._hay;
+        })
+        .catch(function () {
+          t._hay = buildHay(t, []);
+          state.hayById[t.id] = t._hay;
+        });
+    }));
+  }
+
   fetch('templates/catalog.json')
     .then(function (r) { return r.json(); })
     .then(async function (catalog) {
       var stats = {};
       try { if (typeof fetchTemplateStats === 'function') stats = await fetchTemplateStats(); } catch (e) {}
-      init(mergeUseCounts(catalog, stats));
+      catalog = mergeUseCounts(catalog, stats);
+      await indexTemplateCards(catalog.templates || []);
+      init(catalog);
     })
     .catch(function (e) {
       console.error('Failed to load catalog', e);

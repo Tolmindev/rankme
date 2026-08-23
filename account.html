@@ -6,7 +6,7 @@
 <title>Account - RankMe</title>
 <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/rankme.css?v=20260821cb9">
+<link rel="stylesheet" href="css/rankme.css?v=20260823a">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
 <script src="js/supabaseClient.js" defer></script>
 </head>
@@ -104,6 +104,13 @@ function titleForTemplate(tid, fallback){
   return raw || base;
 }
 
+function emptySavedHtml(text){
+  return `<div class="saved-empty">
+    <img class="saved-ghost" src="assets/icons/ghost.svg" alt="">
+    <p>${text}</p>
+  </div>`;
+}
+
 function bindSquishy(root){
   (root || document).querySelectorAll('.toggle-checkbox').forEach(cb=>{
     if(cb.dataset.bound) return;
@@ -148,7 +155,6 @@ function savedCardHtml(r, opts){
   const likes = typeof formatCount === 'function' ? formatCount(r.like_count) : String(r.like_count || 0);
   const views = typeof formatCount === 'function' ? formatCount(r.view_count) : String(r.view_count || 0);
   const pub = !!r.is_public;
-  // Owner Open = always editor. Community ?c= only when viewing someone else's public profile.
   const openHref = isPublicView
     ? 'tier.html?t=' + encodeURIComponent(tid) + '&c=' + encodeURIComponent(r.id)
     : 'tier.html?t=' + encodeURIComponent(tid);
@@ -190,31 +196,36 @@ function savedCardHtml(r, opts){
   </article>`;
 }
 
+function profileBlock(name, avatarHtml, providerLabel, lists, battles, likes){
+  return `
+    <div class="account-profile">
+      <div class="ap-avatar-wrap">${avatarHtml}</div>
+      <div class="ap-text">
+        <b class="ap-name">${name.replace(/</g,'')}</b>
+        <span class="ap-provider">${providerLabel}</span>
+      </div>
+      <div class="ap-stats" id="apStats">
+        <div class="ap-stat"><b id="statLists">${lists}</b><span>Tier Lists</span></div>
+        <div class="ap-stat"><b id="statBattles">${battles}</b><span>Battles</span></div>
+        <div class="ap-stat"><b id="statAch">0</b><span>Achievements</span></div>
+        <div class="ap-stat"><b id="statLikes">${likes}</b><span>Likes</span></div>
+      </div>
+    </div>`;
+}
+
 async function renderCabinet(user){
   if (typeof updateNavAuth === 'function') updateNavAuth();
   const name = user.user_metadata?.full_name || user.user_metadata?.custom_claims?.global_name || user.user_metadata?.name || user.email || 'User';
   const avatar = user.user_metadata?.avatar_url || user.user_metadata?.picture || '';
   const provider = resolveProvider(user);
   const providerLabel = ({google:'Google', discord:'Discord', x:'X', twitter:'X'})[provider] || provider;
+  const av = avatar
+    ? `<img class="ap-avatar" src="${avatar}" alt="">`
+    : `<div class="ap-avatar ap-fallback">${(name[0]||'U').toUpperCase()}</div>`;
 
   panel.removeAttribute('aria-busy');
   panel.innerHTML = `
-    <h1 class="account-h1 desktop-only">My Collection</h1>
-    <div class="account-profile">
-      <div class="ap-avatar-wrap">
-        ${avatar ? `<img class="ap-avatar" src="${avatar}" alt="">` : `<div class="ap-avatar ap-fallback">${(name[0]||'U').toUpperCase()}</div>`}
-      </div>
-      <div class="ap-text">
-        <b class="ap-name">${name.replace(/</g,'')}</b>
-        <span class="ap-provider">${providerLabel}</span>
-      </div>
-      <div class="ap-stats" id="apStats">
-        <div class="ap-stat"><b id="statLists">0</b><span>Tier Lists</span></div>
-        <div class="ap-stat"><b id="statBattles">0</b><span>Battles</span></div>
-        <div class="ap-stat"><b id="statAch">0</b><span>Achievements</span></div>
-        <div class="ap-stat"><b id="statLikes">0</b><span>Likes</span></div>
-      </div>
-    </div>
+    ${profileBlock(name, av, providerLabel, '0', '0', '0')}
 
     <section class="account-section">
       <div class="as-head">
@@ -226,11 +237,11 @@ async function renderCabinet(user){
       </div>
       <div class="saved-grid" id="listBox"></div>
       <div class="as-more" id="savedMore" hidden>
-        <button type="button" class="show-all-btn" id="savedShowAll">Show all</button>
+        <button type="button" class="show-all-btn" id="savedShowAll">Show more</button>
       </div>
     </section>
 
-        <section class="account-section account-section-ach">
+    <section class="account-section account-section-ach">
       <div class="as-head">
         <div>
           <h2>Achievements</h2>
@@ -266,7 +277,7 @@ async function renderCabinet(user){
     document.getElementById('statLikes').textContent = typeof formatCount === 'function' ? formatCount(totalLikes) : String(totalLikes);
 
     if(!rows.length){
-      box.innerHTML = '<div class="empty">Nothing saved yet. Open an Exclusive template, rank, press Save.</div>';
+      box.innerHTML = emptySavedHtml('Nothing saved yet.');
     } else {
       const limit = window.matchMedia('(max-width:720px)').matches ? 1 : 2;
       let showAll = false;
@@ -277,7 +288,7 @@ async function renderCabinet(user){
         if(rows.length > limit){
           more.hidden = false;
           const btn = document.getElementById('savedShowAll');
-          btn.textContent = showAll ? 'Show less' : 'Show all';
+          btn.textContent = showAll ? 'Show less' : 'Show more';
           btn.onclick = ()=>{ showAll = !showAll; paint(); };
         } else {
           more.hidden = true;
@@ -397,26 +408,12 @@ async function renderPublicProfile(userId){
   const avatar = first.author_avatar || '';
   const totalLikes = rows.reduce((s, r) => s + (Number(r.like_count) || 0), 0);
   const fc = typeof formatCount === 'function' ? formatCount : String;
+  const av = avatar
+    ? `<img class="ap-avatar" src="${String(avatar).replace(/"/g, '')}" alt="">`
+    : `<div class="ap-avatar ap-fallback">${(name[0] || 'U').toUpperCase()}</div>`;
 
   panel.innerHTML = `
-    <h1 class="account-h1 desktop-only">Collection</h1>
-    <div class="account-profile">
-      <div class="ap-avatar-wrap">
-        ${avatar
-          ? `<img class="ap-avatar" src="${String(avatar).replace(/"/g, '')}" alt="">`
-          : `<div class="ap-avatar ap-fallback">${(name[0] || 'U').toUpperCase()}</div>`}
-      </div>
-      <div class="ap-text">
-        <b class="ap-name">${name}</b>
-        <span class="ap-provider">Public profile</span>
-      </div>
-      <div class="ap-stats" id="apStats">
-        <div class="ap-stat"><b id="statLists">${rows.length}</b><span>Tier Lists</span></div>
-        <div class="ap-stat"><b id="statBattles">0</b><span>Battles</span></div>
-        <div class="ap-stat"><b>0</b><span>Achievements</span></div>
-        <div class="ap-stat"><b id="statLikes">${fc(totalLikes)}</b><span>Likes</span></div>
-      </div>
-    </div>
+    ${profileBlock(name, av, 'Public profile', String(rows.length), '0', fc(totalLikes))}
 
     <section class="account-section">
       <div class="as-head">
@@ -428,11 +425,11 @@ async function renderPublicProfile(userId){
       </div>
       <div class="saved-grid" id="listBox"></div>
       <div class="as-more" id="savedMore" hidden>
-        <button type="button" class="show-all-btn" id="savedShowAll">Show all</button>
+        <button type="button" class="show-all-btn" id="savedShowAll">Show more</button>
       </div>
     </section>
 
-        <section class="account-section account-section-ach">
+    <section class="account-section account-section-ach">
       <div class="as-head">
         <div>
           <h2>Achievements</h2>
@@ -441,19 +438,18 @@ async function renderPublicProfile(userId){
       </div>
     </section>`;
 
-    (async function () {
-      var el = document.getElementById('statBattles');
-      if (!el || typeof getUserBattleCount !== 'function') return;
-      try {
-        var uid = new URLSearchParams(location.search).get('u');
-        if (uid) el.textContent = String(await getUserBattleCount(uid));
-      } catch (e) {}
-    })();
-
+  (async function () {
+    var el = document.getElementById('statBattles');
+    if (!el || typeof getUserBattleCount !== 'function') return;
+    try {
+      var uid = new URLSearchParams(location.search).get('u');
+      if (uid) el.textContent = String(await getUserBattleCount(uid));
+    } catch (e) {}
+  })();
 
   const box = document.getElementById('listBox');
   if (!rows.length) {
-    box.innerHTML = '<div class="empty">No public rankings yet.</div>';
+    box.innerHTML = emptySavedHtml('No public rankings yet.');
     return;
   }
 
@@ -466,7 +462,7 @@ async function renderPublicProfile(userId){
     if (rows.length > limit) {
       more.hidden = false;
       const btn = document.getElementById('savedShowAll');
-      btn.textContent = showAll ? 'Show less' : 'Show all';
+      btn.textContent = showAll ? 'Show less' : 'Show more';
       btn.onclick = () => { showAll = !showAll; paint(); };
     } else {
       more.hidden = true;

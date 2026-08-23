@@ -6,7 +6,7 @@
 <title>Account - RankMe</title>
 <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/rankme.css?v=20260823a">
+<link rel="stylesheet" href="css/rankme.css?v=20260823b">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
 <script src="js/supabaseClient.js" defer></script>
 </head>
@@ -119,6 +119,67 @@ function bindSquishy(root){
   });
 }
 
+function bindSavedMarquee(root){
+  (root || document).querySelectorAll('.sc-title').forEach(titleEl=>{
+    const textEl = titleEl.querySelector('.sc-title-text');
+    if (textEl && textEl.scrollWidth > titleEl.clientWidth + 2) titleEl.classList.add('is-long');
+  });
+}
+
+function closeSavedMenus(except){
+  document.querySelectorAll('.sc-menu.open').forEach(m=>{
+    if (m !== except) m.classList.remove('open');
+  });
+}
+
+function savedCardHtml(r, opts){
+  opts = opts || {};
+  const isPublicView = !!opts.publicView;
+  const tid = r.template_id || 'sf-duel';
+  const cover = coverForTemplate(tid);
+  const title = titleForTemplate(tid, r.title).replace(/</g,'');
+  const ago = typeof timeAgo === 'function' ? timeAgo(r.updated_at || r.created_at) : '';
+  const likes = typeof formatCount === 'function' ? formatCount(r.like_count) : String(r.like_count || 0);
+  const views = typeof formatCount === 'function' ? formatCount(r.view_count) : String(r.view_count || 0);
+  const pub = !!r.is_public;
+  const openHref = isPublicView
+    ? 'tier.html?t=' + encodeURIComponent(tid) + '&c=' + encodeURIComponent(r.id)
+    : 'tier.html?t=' + encodeURIComponent(tid);
+  const menu = isPublicView ? '' : `
+    <div class="sc-menu">
+      <button type="button" class="sc-dots" aria-label="More" aria-expanded="false">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>
+      </button>
+      <div class="sc-drop" role="menu">
+        <a href="${openHref}" data-open="${r.id}" role="menuitem">Open</a>
+        <button type="button" class="sc-drop-item" data-share="${r.id}" role="menuitem">Share</button>
+        <label class="sc-drop-pub">
+          <span>Publish to Community</span>
+          <span class="toggle-container green">
+            <input class="toggle-checkbox" type="checkbox" data-pub="${r.id}" ${pub ? 'checked' : ''} aria-label="Publish to Community">
+            <span class="toggle-track"><span class="toggle-thumb"></span></span>
+          </span>
+        </label>
+        <button type="button" class="sc-drop-item is-del" data-del="${r.id}" role="menuitem">Delete</button>
+      </div>
+    </div>`;
+  return `<article class="saved-card" data-id="${r.id}">
+    <a class="sc-cover" href="${openHref}" data-open="${r.id}">
+      <img src="${cover}" alt="" loading="lazy">
+    </a>
+    <div class="sc-body">
+      <a class="sc-title" href="${openHref}" data-open="${r.id}"><span class="sc-title-text">${title}</span></a>
+      <div class="sc-stats">
+        ${ago ? `<span class="sc-ago">${ago}</span>` : ''}
+        <span class="sc-stat"><img src="assets/icons/heart.svg" alt="">${likes}</span>
+        <span class="sc-stat"><img src="assets/icons/view.svg" alt="">${views}</span>
+      </div>
+      ${isPublicView ? '' : `<div class="sc-status ${pub ? 'is-pub' : ''}">${pub ? 'Published' : 'Unpublished'}</div>`}
+    </div>
+    ${menu}
+  </article>`;
+}
+
 async function renderLogin(){
   navBtn.textContent = 'Account';
   navBtn.classList.remove('login-btn-avatar', 'logged-in');
@@ -145,56 +206,6 @@ async function renderLogin(){
   });
 }
 
-function savedCardHtml(r, opts){
-  opts = opts || {};
-  const isPublicView = !!opts.publicView;
-  const tid = r.template_id || 'sf-duel';
-  const cover = coverForTemplate(tid);
-  const title = titleForTemplate(tid, r.title);
-  const ago = typeof timeAgo === 'function' ? timeAgo(r.updated_at || r.created_at) : '';
-  const likes = typeof formatCount === 'function' ? formatCount(r.like_count) : String(r.like_count || 0);
-  const views = typeof formatCount === 'function' ? formatCount(r.view_count) : String(r.view_count || 0);
-  const pub = !!r.is_public;
-  const openHref = isPublicView
-    ? 'tier.html?t=' + encodeURIComponent(tid) + '&c=' + encodeURIComponent(r.id)
-    : 'tier.html?t=' + encodeURIComponent(tid);
-  const actions = isPublicView
-    ? `<div class="sc-actions">
-        <a class="sc-btn sc-open" href="${openHref}" data-open="${r.id}">Open</a>
-        <button type="button" class="sc-btn sc-share" data-share="${r.id}">Share</button>
-      </div>`
-    : `<div class="sc-actions">
-        <a class="sc-btn sc-open" href="${openHref}" data-open="${r.id}">Open</a>
-        <button type="button" class="sc-btn sc-share" data-share="${r.id}">Share</button>
-        <button type="button" class="sc-btn sc-del" data-del="${r.id}">Delete</button>
-      </div>
-      <div class="sc-publish">
-        <span>Publish to Community</span>
-        <label class="toggle-container green">
-          <input class="toggle-checkbox" type="checkbox" data-pub="${r.id}" ${pub ? 'checked' : ''} aria-label="Publish to Community">
-          <div class="toggle-track"><div class="toggle-thumb"></div></div>
-        </label>
-      </div>`;
-  return `<article class="saved-card" data-id="${r.id}">
-    <div class="sc-top">
-      <a class="sc-cover" href="${openHref}" data-open="${r.id}">
-        <span class="sc-tag sc-tag-cat">Games</span>
-        <span class="sc-tag sc-tag-ex">Exclusive</span>
-        <img src="${cover}" alt="" loading="lazy">
-      </a>
-      <div class="sc-info">
-        <a class="sc-title" href="${openHref}" data-open="${r.id}">${title.replace(/</g,'')}</a>
-        <div class="sc-meta">
-          ${ago ? `<span>${ago}</span>` : ''}
-          <span class="sc-stat"><img src="assets/icons/heart.svg" alt=""> ${likes}</span>
-          <span class="sc-stat"><img src="assets/icons/view.svg" alt=""> ${views}</span>
-        </div>
-        ${isPublicView ? '' : `<div class="sc-status ${pub ? 'is-pub' : ''}">${pub ? 'Published' : 'Unpublished'}</div>`}
-      </div>
-    </div>
-    ${actions}
-  </article>`;
-}
 
 function profileBlock(name, avatarHtml, providerLabel, lists, battles, likes){
   return `
@@ -236,10 +247,11 @@ async function renderCabinet(user){
         <p class="as-sub desktop-only">Saved Exclusive rankings</p>
       </div>
       <div class="saved-grid" id="listBox"></div>
-      <div class="as-more" id="savedMore" hidden>
-        <button type="button" class="show-all-btn" id="savedShowAll">Show more</button>
-      </div>
     </section>
+
+    <div class="as-more" id="savedMore" hidden>
+      <button type="button" class="cc-show-all" id="savedShowAll">Show more</button>
+    </div>
 
     <section class="account-section account-section-ach">
       <div class="as-head">
@@ -279,24 +291,7 @@ async function renderCabinet(user){
     if(!rows.length){
       box.innerHTML = emptySavedHtml('Nothing saved yet.');
     } else {
-      const limit = window.matchMedia('(max-width:720px)').matches ? 1 : 2;
-      let showAll = false;
-      const paint = ()=>{
-        const slice = showAll ? rows : rows.slice(0, limit);
-        box.innerHTML = slice.map(r => savedCardHtml(r)).join('');
-        const more = document.getElementById('savedMore');
-        if(rows.length > limit){
-          more.hidden = false;
-          const btn = document.getElementById('savedShowAll');
-          btn.textContent = showAll ? 'Show less' : 'Show more';
-          btn.onclick = ()=>{ showAll = !showAll; paint(); };
-        } else {
-          more.hidden = true;
-        }
-        bindSquishy(box);
-        wireSavedActions(rows, user);
-      };
-      paint();
+      paintSavedList(rows, { owner: true, user: user });
     }
   }catch(e){
     document.getElementById('listBox').innerHTML = `<div class="empty">Could not load lists. ${e.message||''}</div>`;
@@ -308,7 +303,7 @@ function wireSavedActions(rows, user){
   if(!box) return;
 
   box.querySelectorAll('[data-open]').forEach(a=>{
-    a.addEventListener('click', (e)=>{
+    a.addEventListener('click', ()=>{
       const id = a.getAttribute('data-open');
       const row = rows.find(x=>String(x.id)===String(id));
       if(row?.payload){
@@ -326,6 +321,21 @@ function wireSavedActions(rows, user){
         } catch (err) {}
       }
     });
+  });
+
+  box.querySelectorAll('.sc-dots').forEach(btn=>{
+    btn.addEventListener('click', (e)=>{
+      e.preventDefault();
+      e.stopPropagation();
+      const menu = btn.closest('.sc-menu');
+      const open = !menu.classList.contains('open');
+      closeSavedMenus(menu);
+      menu.classList.toggle('open', open);
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  });
+  box.querySelectorAll('.sc-drop').forEach(drop=>{
+    drop.addEventListener('click', (e)=> e.stopPropagation());
   });
 
   box.querySelectorAll('[data-del]').forEach(btn=>{
@@ -359,8 +369,9 @@ function wireSavedActions(rows, user){
           if(code) url = location.origin + '/tier.html?t=' + tid + '&s=' + code;
         }
         await navigator.clipboard.writeText(url);
+        const prev = btn.textContent;
         btn.textContent = 'Copied!';
-        setTimeout(()=> btn.textContent = 'Share', 1500);
+        setTimeout(()=> btn.textContent = prev, 1500);
       }catch(e){
         alert('Could not copy link');
       }
@@ -386,6 +397,14 @@ function wireSavedActions(rows, user){
         alert('Could not update publish state. Check is_public column in Supabase.');
       }
     });
+  });
+}
+
+if (!window.__rmSavedMenuBound) {
+  window.__rmSavedMenuBound = true;
+  document.addEventListener('click', ()=> closeSavedMenus());
+  document.addEventListener('keydown', (e)=>{
+    if (e.key === 'Escape') closeSavedMenus();
   });
 }
 
@@ -424,10 +443,11 @@ async function renderPublicProfile(userId){
         <p class="as-sub desktop-only">Public rankings</p>
       </div>
       <div class="saved-grid" id="listBox"></div>
-      <div class="as-more" id="savedMore" hidden>
-        <button type="button" class="show-all-btn" id="savedShowAll">Show more</button>
-      </div>
     </section>
+
+    <div class="as-more" id="savedMore" hidden>
+      <button type="button" class="cc-show-all" id="savedShowAll">Show more</button>
+    </div>
 
     <section class="account-section account-section-ach">
       <div class="as-head">
@@ -453,21 +473,36 @@ async function renderPublicProfile(userId){
     return;
   }
 
-  const limit = window.matchMedia('(max-width:720px)').matches ? 1 : 2;
+  paintSavedList(rows, { owner: false });
+}
+
+const SAVED_VISIBLE = 6;
+
+function paintSavedList(rows, opts){
+  opts = opts || {};
+  const box = document.getElementById('listBox');
+  const more = document.getElementById('savedMore');
   let showAll = false;
-  const paint = () => {
-    const slice = showAll ? rows : rows.slice(0, limit);
-    box.innerHTML = slice.map(r => savedCardHtml(r, { publicView: true })).join('');
-    const more = document.getElementById('savedMore');
-    if (rows.length > limit) {
-      more.hidden = false;
-      const btn = document.getElementById('savedShowAll');
-      btn.textContent = showAll ? 'Show less' : 'Show more';
-      btn.onclick = () => { showAll = !showAll; paint(); };
-    } else {
-      more.hidden = true;
+  const paint = ()=>{
+    const slice = (showAll || rows.length <= SAVED_VISIBLE) ? rows : rows.slice(0, SAVED_VISIBLE);
+    box.innerHTML = slice.map(r => savedCardHtml(r, { publicView: !opts.owner })).join('');
+    if (more) {
+      if (rows.length > SAVED_VISIBLE) {
+        more.hidden = false;
+        const btn = document.getElementById('savedShowAll');
+        btn.textContent = showAll ? 'Show less' : 'Show more';
+        btn.onclick = ()=>{ showAll = !showAll; paint(); };
+      } else {
+        more.hidden = true;
+      }
     }
-    wirePublicActions(rows);
+    bindSavedMarquee(box);
+    if (opts.owner) {
+      bindSquishy(box);
+      wireSavedActions(rows, opts.user);
+    } else {
+      wirePublicActions(rows);
+    }
   };
   paint();
 }

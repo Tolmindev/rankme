@@ -757,7 +757,7 @@ body.theme-gold {
   color: var(--text);
 }
 .search-box .clear-btn[hidden] {
-  display: none !important;
+  display: none;
 }
 
 .results-meta {
@@ -3119,13 +3119,6 @@ body.theme-gold .faction-btn img {
   height: 18px;
   object-fit: contain;
 }
-
-.chip-scroll {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
 .dd-trigger {
   border-radius: 999px;
   display: flex;
@@ -3265,7 +3258,7 @@ body.theme-gold .faction-btn img {
   touch-action: none;
 }
 
-.dd-trigger, .filter-row .dd-trigger, #sortDd .dd-trigger, .dd .dd-trigger {
+.dd-trigger, .dd .dd-trigger {
   min-height: 32px;
   height: 32px;
   padding: 0 14px;
@@ -3295,12 +3288,6 @@ body.theme-gold .faction-btn.active {
   border-color: rgba(201,168,240,0.75);
   background: rgba(201,168,240,0.16);
 }
-
-.filter-row .dd, #sortDd {
-  width: auto;
-  max-width: 220px;
-}
-
 .pool-header {
   display: flex;
   align-items: center;
@@ -3420,15 +3407,6 @@ body.theme-gold .card img {
     inset 0 1px 0 rgba(200, 170, 255, 0.06),
     0 12px 40px rgba(0, 0, 0, 0.28);
 }
-
-.filter-row {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 10px;
-}
-
 @media (max-width: 720px) {
 
   .board {
@@ -3448,25 +3426,6 @@ body.theme-gold .card img {
     margin: 0 auto 40px;
     padding: 12px 12px 16px;
     overflow-x: hidden;
-  }
-
-  .filter-row {
-    flex-direction: column;
-    align-items: stretch;
-    width: 100%;
-    display: flex;
-    gap: 10px;
-    max-width: 100%;
-  }
-
-  .filter-row .dd, .filter-row #sortDd, #sortDd {
-    width: 100%;
-    max-width: 100%;
-  }
-
-  .filter-row .dd-trigger, #sortDd .dd-trigger {
-    width: 100%;
-    box-sizing: border-box;
   }
 
   .board, .toolbar, .pool-wrap, footer.site, .action-bar {
@@ -3518,25 +3477,6 @@ body.theme-gold .card img {
 
   .faction-btn {
     flex: 0 0 auto;
-  }
-
-  .chip-scroll, .filter-row, .toolbar-filters {
-    box-shadow: none;
-  }
-
-  .dd-trigger, .filter-row .dd-trigger {
-    min-height: 32px;
-    height: 32px;
-    width: 100%;
-    padding: 0 14px;
-    font-size: 0.72rem;
-    box-sizing: border-box;
-  }
-
-  .filter-row > .dd, .filter-row #sortDd {
-    width: 100%;
-    max-width: 100%;
-    align-self: stretch;
   }
 
   .faction-btn, .faction-btn.active, .faction-btn:hover, .faction-btn:focus, .faction-filters .faction-btn, .faction-filters .faction-btn.active {
@@ -3631,70 +3571,6 @@ body.theme-gold .card img {
     box-shadow: none;
   }
 
-  .filter-row .dd, #sortDd {
-    width: 100%;
-    max-width: 100%;
-  }
-
-  .chip-scroll {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: 4px;
-    scrollbar-width: none;
-    scroll-snap-type: x proximity;
-    display: flex;
-    overflow-y: hidden;
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
-    gap: 8px;
-    padding: 4px 2px 10px;
-    mask-image: linear-gradient(90deg, #000 0%, #000 calc(100% - 28px), transparent 100%);
-    -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 calc(100% - 28px), transparent 100%);
-  }
-
-  .dd {
-    width: 100%;
-  }
-
-  .dd-trigger {
-    border-radius: 999px;
-    width: 100%;
-    justify-content: space-between;
-  }
-
-  .dd-menu {
-    left: 0;
-    right: 0;
-    width: 100%;
-    transform-origin: top center;
-  }
-
-  .chip-scroll::-webkit-scrollbar {
-    display: none;
-  }
-
-  .filter-row .dd-trigger {
-    width: 100%;
-    min-width: 0;
-    justify-content: space-between;
-    box-sizing: border-box;
-  }
-
-  .filter-row .dd-menu {
-    left: 0;
-    right: 0;
-    width: 100%;
-    min-width: 0;
-    box-sizing: border-box;
-    transform: translateY(6px) scale(0.98);
-  }
-
-  .filter-row .dd.open .dd-menu {
-    transform: translateY(0) scale(1);
-  }
-
   .tier-row {
     max-width: 100%;
   }
@@ -3748,14 +3624,6 @@ body.theme-gold .card img {
     box-sizing: border-box;
     text-align: center;
     justify-content: center;
-  }
-  .chip-scroll {
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    gap: 8px;
-    width: 100%;
   }
 }
 
@@ -5808,14 +5676,11 @@ to { --elec-angle: 360deg; }
     min-width: 0;
   }
 
-  .discover-toolbar .sort-dd,
-  .discover-toolbar #sortDd {
+  .discover-toolbar .sort-dd {
     grid-column: 2;
     grid-row: 1;
     margin-left: 0;
     width: 44px;
-    max-width: 44px;
-    min-width: 44px;
   }
 
   .discover-toolbar .sort-label,
@@ -5825,9 +5690,7 @@ to { --elec-angle: 360deg; }
   .discover-toolbar .sort-menu-ico {
     display: block;
   }
-  .discover-toolbar .sort-trigger,
-  .discover-toolbar #sortDd .dd-trigger,
-  .discover-toolbar #sortDd .sort-trigger {
+  .discover-toolbar .sort-trigger {
     width: 44px;
     height: 44px;
     min-width: 44px;

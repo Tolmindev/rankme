@@ -641,7 +641,7 @@ body.theme-gold {
   color: var(--text);
 }
 .search-box .clear-btn[hidden] {
-  display: none !important;
+  display: none;
 }
 
 .results-meta {

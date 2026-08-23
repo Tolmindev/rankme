@@ -745,14 +745,11 @@
     min-width: 0;
   }
 
-  .discover-toolbar .sort-dd,
-  .discover-toolbar #sortDd {
+  .discover-toolbar .sort-dd {
     grid-column: 2;
     grid-row: 1;
     margin-left: 0;
     width: 44px;
-    max-width: 44px;
-    min-width: 44px;
   }
 
   .discover-toolbar .sort-label,
@@ -762,9 +759,7 @@
   .discover-toolbar .sort-menu-ico {
     display: block;
   }
-  .discover-toolbar .sort-trigger,
-  .discover-toolbar #sortDd .dd-trigger,
-  .discover-toolbar #sortDd .sort-trigger {
+  .discover-toolbar .sort-trigger {
     width: 44px;
     height: 44px;
     min-width: 44px;

@@ -15,7 +15,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/rankme.css?v=20260823v">
+<link rel="stylesheet" href="css/rankme.css?v=20260824b">
 </head>
 <body>
 
@@ -53,7 +53,13 @@
         </button>
       </div>
       <div class="filter-row">
-        <div class="chip-scroll" id="categoryChips"></div>
+        <div class="chip-scroll" id="categoryChips">
+          <span class="skel skel-chip" aria-hidden="true"></span>
+          <span class="skel skel-chip" aria-hidden="true"></span>
+          <span class="skel skel-chip" aria-hidden="true"></span>
+          <span class="skel skel-chip" aria-hidden="true"></span>
+          <span class="skel skel-chip" aria-hidden="true"></span>
+        </div>
         <div class="dd sort-dd" id="sortDd">
           <button type="button" class="dd-trigger sort-trigger" id="sortDdTrigger" aria-haspopup="listbox" aria-expanded="false" aria-label="Sort">
             <span id="sortDdLabel" class="sort-label">Featured</span>
@@ -77,58 +83,86 @@
       </div>
             <div class="grid" id="discoverGrid" aria-busy="true">
         <div class="tl-card skel-card" aria-hidden="true">
-          <div class="cover skel-block skel-cover"></div>
+          <div class="cover skel"></div>
           <div class="body">
-            <div class="skel-line skel-line-title"></div>
-            <div class="skel-line skel-line-sub"></div>
-            <div class="skel-line skel-line-meta"></div>
+            <div class="skel skel-line skel-line-title"></div>
+            <div class="skel skel-line skel-sm"></div>
+            <div class="skel-actions">
+              <div class="skel skel-pill"></div>
+              <div class="skel skel-pill"></div>
+            </div>
           </div>
         </div>
         <div class="tl-card skel-card" aria-hidden="true">
-          <div class="cover skel-block skel-cover"></div>
+          <div class="cover skel"></div>
           <div class="body">
-            <div class="skel-line skel-line-title"></div>
-            <div class="skel-line skel-line-sub"></div>
-            <div class="skel-line skel-line-meta"></div>
+            <div class="skel skel-line skel-line-title"></div>
+            <div class="skel skel-line skel-sm"></div>
+            <div class="skel-actions">
+              <div class="skel skel-pill"></div>
+              <div class="skel skel-pill"></div>
+            </div>
           </div>
         </div>
         <div class="tl-card skel-card" aria-hidden="true">
-          <div class="cover skel-block skel-cover"></div>
+          <div class="cover skel"></div>
           <div class="body">
-            <div class="skel-line skel-line-title"></div>
-            <div class="skel-line skel-line-sub"></div>
-            <div class="skel-line skel-line-meta"></div>
+            <div class="skel skel-line skel-line-title"></div>
+            <div class="skel skel-line skel-sm"></div>
+            <div class="skel-actions">
+              <div class="skel skel-pill"></div>
+              <div class="skel skel-pill"></div>
+            </div>
           </div>
         </div>
         <div class="tl-card skel-card" aria-hidden="true">
-          <div class="cover skel-block skel-cover"></div>
+          <div class="cover skel"></div>
           <div class="body">
-            <div class="skel-line skel-line-title"></div>
-            <div class="skel-line skel-line-sub"></div>
-            <div class="skel-line skel-line-meta"></div>
+            <div class="skel skel-line skel-line-title"></div>
+            <div class="skel skel-line skel-sm"></div>
+            <div class="skel-actions">
+              <div class="skel skel-pill"></div>
+              <div class="skel skel-pill"></div>
+            </div>
           </div>
         </div>
         <div class="tl-card skel-card" aria-hidden="true">
-          <div class="cover skel-block skel-cover"></div>
+          <div class="cover skel"></div>
           <div class="body">
-            <div class="skel-line skel-line-title"></div>
-            <div class="skel-line skel-line-sub"></div>
-            <div class="skel-line skel-line-meta"></div>
+            <div class="skel skel-line skel-line-title"></div>
+            <div class="skel skel-line skel-sm"></div>
+            <div class="skel-actions">
+              <div class="skel skel-pill"></div>
+              <div class="skel skel-pill"></div>
+            </div>
           </div>
         </div>
         <div class="tl-card skel-card" aria-hidden="true">
-          <div class="cover skel-block skel-cover"></div>
+          <div class="cover skel"></div>
           <div class="body">
-            <div class="skel-line skel-line-title"></div>
-            <div class="skel-line skel-line-sub"></div>
-            <div class="skel-line skel-line-meta"></div>
+            <div class="skel skel-line skel-line-title"></div>
+            <div class="skel skel-line skel-sm"></div>
+            <div class="skel-actions">
+              <div class="skel skel-pill"></div>
+              <div class="skel skel-pill"></div>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
     <section aria-label="Community Rankings" class="community-section">
-      <div id="communityBody"></div>
+      <div id="communityBody" aria-busy="true">
+        <h2 class="community-rankings-title">Community Rankings</h2>
+        <div class="community-grid">
+          <article class="cc-card skel-card" aria-hidden="true"><div class="cc-cover skel"></div><div class="cc-body"><div class="skel skel-line skel-line-title"></div><div class="skel skel-line skel-sm"></div><div class="skel skel-line skel-sm"></div></div></article>
+          <article class="cc-card skel-card" aria-hidden="true"><div class="cc-cover skel"></div><div class="cc-body"><div class="skel skel-line skel-line-title"></div><div class="skel skel-line skel-sm"></div><div class="skel skel-line skel-sm"></div></div></article>
+          <article class="cc-card skel-card" aria-hidden="true"><div class="cc-cover skel"></div><div class="cc-body"><div class="skel skel-line skel-line-title"></div><div class="skel skel-line skel-sm"></div><div class="skel skel-line skel-sm"></div></div></article>
+          <article class="cc-card skel-card" aria-hidden="true"><div class="cc-cover skel"></div><div class="cc-body"><div class="skel skel-line skel-line-title"></div><div class="skel skel-line skel-sm"></div><div class="skel skel-line skel-sm"></div></div></article>
+          <article class="cc-card skel-card" aria-hidden="true"><div class="cc-cover skel"></div><div class="cc-body"><div class="skel skel-line skel-line-title"></div><div class="skel skel-line skel-sm"></div><div class="skel skel-line skel-sm"></div></div></article>
+          <article class="cc-card skel-card" aria-hidden="true"><div class="cc-cover skel"></div><div class="cc-body"><div class="skel skel-line skel-line-title"></div><div class="skel skel-line skel-sm"></div><div class="skel skel-line skel-sm"></div></div></article>
+        </div>
+      </div>
     </section>
 
   </div>

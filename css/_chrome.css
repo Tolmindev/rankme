@@ -70,21 +70,26 @@ nav.main a {
   letter-spacing: .3px;
   padding: 8px 14px;
   border-radius: 999px;
-  transition: color .15s, background .15s, text-shadow .15s, box-shadow .15s;
+  background: none;
+  box-shadow: none;
+  transition: color .15s, text-shadow .15s;
 }
 
 nav.main a:hover {
   color: var(--text);
-  background: rgba(255, 255, 255, 0.05);
+  background: none;
+  text-shadow:
+    0 0 10px rgba(200, 160, 255, 0.7),
+    0 0 22px rgba(180, 130, 255, 0.45);
 }
 
 nav.main a.active {
   color: #fff;
-  background: rgba(255, 255, 255, 0.07);
+  background: none;
+  box-shadow: none;
   text-shadow:
-    0 0 10px rgba(200, 160, 255, 0.7),
-    0 0 22px rgba(180, 130, 255, 0.45);
-  box-shadow: 0 0 18px rgba(180, 140, 255, 0.2);
+    0 0 10px rgba(200, 160, 255, 0.55),
+    0 0 20px rgba(180, 130, 255, 0.3);
 }
 
 nav.main a.exclusive {
@@ -867,13 +872,20 @@ html.rankme-dragging, html.rankme-dragging body, body.rankme-dragging {
     color: var(--text-dim);
     padding: 8px 14px;
     border-radius: 999px;
-    transition: color .15s, background .15s, text-shadow .15s;
+    background: none;
+    box-shadow: none;
+    transition: color .15s, text-shadow .15s;
   }
-  nav.main > a:not(.login-btn):hover,
+  nav.main > a:not(.login-btn):hover {
+    color: #fff;
+    background: none;
+    text-shadow: 0 0 12px rgba(200, 160, 255, 0.55);
+  }
   nav.main > a:not(.login-btn).active {
     color: #fff;
-    background: rgba(255, 255, 255, 0.06);
-    text-shadow: 0 0 12px rgba(200, 160, 255, 0.55);
+    background: none;
+    box-shadow: none;
+    text-shadow: 0 0 12px rgba(200, 160, 255, 0.4);
   }
 
   /* Account: compact round control on the right */
@@ -886,10 +898,17 @@ html.rankme-dragging, html.rankme-dragging body, body.rankme-dragging {
     z-index: 2;
   }
   nav.main a.login-btn:not(.login-btn-avatar) {
+    box-sizing: border-box;
     width: 36px;
     height: 36px;
     min-width: 36px;
+    min-height: 36px;
+    max-width: 36px;
+    max-height: 36px;
+    aspect-ratio: 1 / 1;
     padding: 0;
+    margin: 0;
+    flex-shrink: 0;
     border-radius: 50%;
     border: 1.5px solid rgba(200, 160, 240, 0.45);
     background: #1a1728;
@@ -965,12 +984,13 @@ html.rankme-dragging, html.rankme-dragging body, body.rankme-dragging {
 
 }
 
-/* Shared loading skeletons */
+/* Shared loading skeletons — one primitive, layout via real page classes */
 @keyframes skelShimmer {
   0% { background-position: 100% 0; }
   100% { background-position: -100% 0; }
 }
 
+.skel,
 .skel-block,
 .skel-line {
   background: linear-gradient(
@@ -982,32 +1002,44 @@ html.rankme-dragging, html.rankme-dragging body, body.rankme-dragging {
   background-size: 200% 100%;
   animation: skelShimmer 1.35s ease-in-out infinite;
   border-radius: 10px;
+  pointer-events: none;
 }
 
 .skel-line {
   height: 12px;
   border-radius: 999px;
+  width: 70%;
 }
 
-.skel-line-title { width: 72%; height: 14px; }
-.skel-line-sub { width: 92%; }
-.skel-line-meta { width: 44%; height: 10px; opacity: 0.85; }
-
-.skel-avatar {
-  width: 44px;
-  height: 44px;
+.skel-line-title { width: 62%; height: 14px; }
+.skel-line-sub { width: 88%; }
+.skel-sm { width: 42%; height: 10px; opacity: 0.85; border-radius: 999px; }
+.skel-pill {
+  height: 38px;
+  border-radius: 999px;
+  flex: 1;
+  min-width: 0;
+}
+.skel-chip {
+  height: 32px;
+  width: 72px;
+  border-radius: 999px;
+  flex: 0 0 auto;
+  display: block;
+}
+.skel-round,
+.ap-avatar.skel {
   border-radius: 50%;
-  flex-shrink: 0;
 }
 
-.skel-avatar-lg {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  flex-shrink: 0;
+.skel-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .skel,
   .skel-block,
   .skel-line {
     animation: none;
@@ -1015,57 +1047,52 @@ html.rankme-dragging, html.rankme-dragging body, body.rankme-dragging {
   }
 }
 
-/* Account panel skeleton */
-.skel-account {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  padding: 8px 0;
-  pointer-events: none;
-}
-.skel-account-head {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-.skel-account-head .skel-skel-text {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.skel-account-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-top: 8px;
-}
-.skel-account-row {
-  height: 52px;
-  border-radius: 12px;
-}
-
-/* Tier boot skeleton */
+/* Tier boot — same hero + rows as the real page */
 .boot-loading {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 28px 24px 40px;
   min-height: 50vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
+  box-sizing: border-box;
 }
 .skel-tier-boot {
-  width: min(640px, 100%);
   display: flex;
   flex-direction: column;
   gap: 16px;
   pointer-events: none;
 }
-.skel-tier-boot .skel-cover {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  border-radius: 14px;
+.skel-tier-hero {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 24px;
 }
-.skel-tier-boot .skel-row {
-  height: 56px;
+.skel-tier-cover {
+  width: 420px;
+  max-width: min(420px, 100%);
+  aspect-ratio: 16 / 9;
+  border-radius: 16px;
+  flex: 0 0 auto;
+}
+.skel-tier-copy {
+  flex: 1 1 240px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  min-width: 0;
+}
+.skel-tier-cta {
+  width: 168px;
+  flex: none;
+  height: 42px;
+}
+.skel-row {
+  height: 64px;
   border-radius: 12px;
+  width: 100%;
+}
+@media (max-width: 720px) {
+  .boot-loading { padding: 20px 14px 32px; }
+  .skel-tier-cover { width: 100%; max-width: 100%; }
 }

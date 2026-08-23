@@ -686,9 +686,34 @@
   font-size: 0.9rem;
 }
 
-.community-skel {
-  display: none;
+.tl-card.skel-card .body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
+.tl-card.skel-card .cover.skel {
+  display: block;
+}
+.cc-card.skel-card {
+  cursor: default;
+  pointer-events: none;
+}
+.cc-card.skel-card .cc-cover.skel {
+  display: block;
+}
+.cc-card.skel-card .cc-body {
+  gap: 8px;
+}
+
+.chip-scroll .skel-chip + .skel-chip { margin: 0; }
+
+@media (max-width: 720px) {
+  .grid > .skel-card:nth-child(n+4),
+  .community-grid > .skel-card:nth-child(n+4) {
+    display: none;
+  }
+}
+
 
 @media (max-width: 720px) {
   .community-grid {

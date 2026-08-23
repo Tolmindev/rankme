@@ -6,7 +6,7 @@
 <title>Account - RankMe</title>
 <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/rankme.css?v=20260823v">
+<link rel="stylesheet" href="css/rankme.css?v=20260824b">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
 <script src="js/supabaseClient.js" defer></script>
 </head>
@@ -27,19 +27,38 @@
 <div class="wrap account-wrap">
   <div class="panel-card account-panel" id="panel" aria-busy="true">
     <div class="skel-account" aria-hidden="true">
-      <div class="skel-account-head">
-        <div class="skel-block skel-avatar-lg"></div>
-        <div class="skel-skel-text">
-          <div class="skel-line skel-line-title"></div>
-          <div class="skel-line skel-line-meta"></div>
+      <div class="account-profile">
+        <div class="ap-avatar skel"></div>
+        <div class="ap-text">
+          <div class="skel skel-line skel-line-title"></div>
+          <div class="skel skel-line skel-sm"></div>
+        </div>
+        <div class="ap-stats">
+          <div class="ap-stat"><span class="skel skel-line"></span><span class="skel skel-sm"></span></div>
+          <div class="ap-stat"><span class="skel skel-line"></span><span class="skel skel-sm"></span></div>
+          <div class="ap-stat"><span class="skel skel-line"></span><span class="skel skel-sm"></span></div>
+          <div class="ap-stat"><span class="skel skel-line"></span><span class="skel skel-sm"></span></div>
         </div>
       </div>
-      <div class="skel-line skel-line-sub"></div>
-      <div class="skel-account-list">
-        <div class="skel-block skel-account-row"></div>
-        <div class="skel-block skel-account-row"></div>
-        <div class="skel-block skel-account-row"></div>
-      </div>
+      <section class="account-section">
+        <div class="as-head">
+          <div class="skel skel-line skel-line-title"></div>
+        </div>
+        <div class="saved-grid">
+          <article class="saved-card skel-card"><div class="sc-cover skel"></div><div class="sc-body"><div class="skel skel-line skel-line-title"></div><div class="skel skel-line skel-sm"></div><div class="skel skel-line skel-sm"></div></div></article>
+          <article class="saved-card skel-card"><div class="sc-cover skel"></div><div class="sc-body"><div class="skel skel-line skel-line-title"></div><div class="skel skel-line skel-sm"></div><div class="skel skel-line skel-sm"></div></div></article>
+          <article class="saved-card skel-card"><div class="sc-cover skel"></div><div class="sc-body"><div class="skel skel-line skel-line-title"></div><div class="skel skel-line skel-sm"></div><div class="skel skel-line skel-sm"></div></div></article>
+          <article class="saved-card skel-card"><div class="sc-cover skel"></div><div class="sc-body"><div class="skel skel-line skel-line-title"></div><div class="skel skel-line skel-sm"></div><div class="skel skel-line skel-sm"></div></div></article>
+          <article class="saved-card skel-card"><div class="sc-cover skel"></div><div class="sc-body"><div class="skel skel-line skel-line-title"></div><div class="skel skel-line skel-sm"></div><div class="skel skel-line skel-sm"></div></div></article>
+          <article class="saved-card skel-card"><div class="sc-cover skel"></div><div class="sc-body"><div class="skel skel-line skel-line-title"></div><div class="skel skel-line skel-sm"></div><div class="skel skel-line skel-sm"></div></div></article>
+        </div>
+      </section>
+      <section class="account-section">
+        <div class="as-head">
+          <div class="skel skel-line skel-line-title"></div>
+        </div>
+        <div class="skel skel-line skel-sm"></div>
+      </section>
     </div>
   </div>
 </div>

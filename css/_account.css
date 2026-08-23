@@ -426,14 +426,8 @@ body > .toast {
     text-align: center;
   }
 
-  .login-btn:not(.login-btn-avatar), .cta {
+  .cta {
     min-height: 44px;
-  }
-
-  .login-btn:not(.login-btn-avatar) {
-    padding: 8px 12px;
-    font-size: .75rem;
-    white-space: nowrap;
   }
 
 
@@ -656,6 +650,27 @@ body > .toast {
 }
 @media (max-width: 720px) {
   .saved-grid { grid-template-columns: 1fr; gap: 12px; }
+}
+
+.skel-account { pointer-events: none; }
+.skel-account .ap-stat {
+  gap: 8px;
+}
+.skel-account .ap-stat .skel-line {
+  width: 28px;
+  height: 16px;
+}
+.skel-account .ap-stat .skel-sm {
+  width: 52px;
+}
+.saved-card.skel-card {
+  cursor: default;
+}
+@media (max-width: 980px) {
+  .saved-grid > .skel-card:nth-child(n+5) { display: none; }
+}
+@media (max-width: 720px) {
+  .saved-grid > .skel-card:nth-child(n+4) { display: none; }
 }
 
 @media (min-width: 721px) {

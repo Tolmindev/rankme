@@ -980,17 +980,8 @@ html.rankme-dragging, html.rankme-dragging body, body.rankme-dragging {
     font-weight: 800;
     white-space: nowrap;
     pointer-events: auto;
-    color: var(--text-dim);
-    padding: 8px 14px;
-    border-radius: 999px;
-    transition: color .15s, background .15s, text-shadow .15s;
   }
-  nav.main > a:not(.login-btn):hover,
-  nav.main > a:not(.login-btn).active {
-    color: #fff;
-    background: rgba(255, 255, 255, 0.06);
-    text-shadow: 0 0 12px rgba(200, 160, 255, 0.55);
-  }
+  /* hover/active: base nav.main a rules */
 
   /* Account: compact round control on the right */
   nav.main a.login-btn {

@@ -184,11 +184,23 @@ nav.main a {
   font-weight: 700;
   font-size: .92rem;
   letter-spacing: .3px;
-  transition: color .15s;
+  padding: 8px 14px;
+  border-radius: 999px;
+  transition: color .15s, background .15s, text-shadow .15s, box-shadow .15s;
 }
 
-nav.main a:hover, nav.main a.active {
+nav.main a:hover {
   color: var(--text);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+nav.main a.active {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.07);
+  text-shadow:
+    0 0 10px rgba(200, 160, 255, 0.7),
+    0 0 22px rgba(180, 130, 255, 0.45);
+  box-shadow: 0 0 18px rgba(180, 140, 255, 0.2);
 }
 
 nav.main a.exclusive {
@@ -5238,6 +5250,7 @@ to { --elec-angle: 360deg; }
 
 .discover-toolbar > .search-box {
   width: 100%;
+  margin-bottom: 0;
 }
 
 .discover-toolbar .filter-row {
@@ -5707,6 +5720,18 @@ to { --elec-angle: 360deg; }
     right: 0;
     width: min(220px, calc(100vw - 24px));
     min-width: 180px;
+    transform: translateY(-6px) scale(0.97);
+    transform-origin: top right;
+  }
+  .discover-toolbar .sort-dd.open .dd-menu {
+    transform: translateY(0) scale(1);
+  }
+
+  /* keep search + sort same height on one line */
+  .discover-toolbar > .search-box {
+    height: 44px;
+    margin-bottom: 0;
+    box-sizing: border-box;
   }
 
   .section-head {
@@ -6300,7 +6325,7 @@ body > .toast {
   border: 1px solid rgba(120, 100, 160, 0.2);
   border-radius: 18px;
   padding: 20px 18px 16px;
-  margin-bottom: 18px;
+  margin-bottom: 12px;
 }
 .as-head {
   display: flex;
@@ -6323,7 +6348,12 @@ body > .toast {
 .as-more {
   display: flex;
   justify-content: center;
-  margin-top: 14px;
+  margin: 6px 0 20px;
+  width: 100%;
+  flex-shrink: 0;
+}
+.as-more[hidden] {
+  display: none;
 }
 
 .desktop-only { display: block; }

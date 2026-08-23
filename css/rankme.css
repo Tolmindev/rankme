@@ -113,6 +113,7 @@ body {
   }
 
 }
+
 /* RankMe · chrome — Site chrome: header, footer, page shell, buttons */
 
 body > .page, body > .wrap {
@@ -922,28 +923,92 @@ html.rankme-dragging, html.rankme-dragging body, body.rankme-dragging {
 @media (max-width: 720px) {
 
   header.site {
-    padding: 10px 14px;
+    position: sticky;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
     gap: 8px;
   }
 
+  /* Crown only: crop full logo to left mark */
   .brand {
-    padding: 4px 6px;
-    margin: -4px -6px;
+    padding: 4px;
+    margin: -4px;
+    flex: 0 0 auto;
+    z-index: 1;
+    overflow: hidden;
+    width: 36px;
+    height: 32px;
   }
 
   .brand img {
-    height: 26px;
+    height: 28px;
+    width: auto;
+    max-width: none;
+    /* logo is wide (mark + wordmark); keep left crown in view */
+    transform: translateX(0);
+    object-fit: cover;
+    object-position: left center;
+    /* approximate crown crop via clip on container width */
   }
 
   nav.main {
-    gap: 8px;
-    flex-wrap: nowrap;
-    justify-content: flex-end;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    pointer-events: none;
+    z-index: 0;
   }
 
   nav.main a {
-    font-size: .78rem;
+    font-size: .95rem;
+    font-weight: 800;
     white-space: nowrap;
+    pointer-events: auto;
+  }
+
+  /* Account: compact round control on the right */
+  nav.main a.login-btn {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: auto;
+    z-index: 2;
+  }
+  nav.main a.login-btn:not(.login-btn-avatar) {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    padding: 0;
+    border-radius: 50%;
+    border: 1.5px solid rgba(200, 160, 240, 0.45);
+    background: #1a1728;
+    color: transparent;
+    font-size: 0;
+    line-height: 0;
+    overflow: hidden;
+    box-shadow: none;
+  }
+  nav.main a.login-btn:not(.login-btn-avatar)::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: center / 18px 18px no-repeat
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23c8b8e0' stroke-width='2'%3E%3Cpath d='M20 21a8 8 0 0 0-16 0'/%3E%3Ccircle cx='12' cy='8' r='4'/%3E%3C/svg%3E");
+  }
+  nav.main a.login-btn:not(.login-btn-avatar):hover {
+    border-color: rgba(220, 180, 255, 0.9);
+    background: #1a1728;
+    filter: none;
   }
 
   nav.main .search-ico {
@@ -957,7 +1022,7 @@ html.rankme-dragging, html.rankme-dragging body, body.rankme-dragging {
   }
 
   footer.site {
-    padding: 20px 16px 16px;
+    padding: 20px 12px 16px;
   }
 
   footer.site img.footer-logo {
@@ -977,12 +1042,12 @@ html.rankme-dragging, html.rankme-dragging body, body.rankme-dragging {
   }
 
   .page {
-    padding: 28px 14px 40px;
+    padding: 20px 10px 36px;
   }
 
   .wrap {
-    margin: 28px auto 40px;
-    padding: 0 14px;
+    margin: 24px auto 36px;
+    padding: 0 10px;
   }
 
   .grid {
@@ -995,7 +1060,6 @@ html.rankme-dragging, html.rankme-dragging body, body.rankme-dragging {
     min-width: 32px;
     min-height: 32px;
   }
-
 
 }
 
@@ -1103,6 +1167,7 @@ html.rankme-dragging, html.rankme-dragging body, body.rankme-dragging {
   height: 56px;
   border-radius: 12px;
 }
+
 /* RankMe · hero — Tier hero, experts strip, list actions, battle CTA */
 
 body > header.site, body > footer.site, body > #site-footer, body > .toolbar, body > .board, body > .pool-wrap, body > .list-actions, body > .hero, body > .experts-strip, body > .toast-host {
@@ -2302,6 +2367,7 @@ body[data-editor="1"] #heroDesc {
   40% { transform: scale(1.35); }
   100% { transform: scale(1); }
 }
+
 /* RankMe · tier — Board, rows, cards, toolbar, filters, portals, pool */
 
 .page, main, .wrap, .board-wrap, .tier-shell, .pool-wrap {
@@ -3737,6 +3803,7 @@ body.community-view button.btn-battle-hero {
 body.community-view .toolbar {
   justify-content: center;
 }
+
 /* RankMe · battle — Battle mode UI (loaded with battle-anim overrides) */
 
 .list-actions .battle-launch, #battleModeBtn {
@@ -4987,26 +5054,8 @@ to { --elec-angle: 360deg; }
     max-height: min(38vh, 280px);
   }
 }
+
 /* RankMe · home — Home, discover, template cards, community */
-
-nav.main a.cta-nav {
-  padding: 8px 18px;
-  border-radius: 999px;
-  font-size: .8rem;
-  font-weight: 800;
-  background: linear-gradient(120deg,#b79bf0,#e6a9e8);
-  color: #1a1226;
-  border: none;
-  text-decoration: none;
-  box-shadow: 0 4px 16px rgba(180,140,230,.35);
-  transition: filter .15s, transform .15s;
-}
-
-nav.main a.cta-nav:hover {
-  filter: brightness(1.08);
-  transform: translateY(-1px);
-  color: #1a1226;
-}
 
 /* Category pills — fill on active, brighter border on hover, no glow/lift */
 .cat-chip {
@@ -5309,12 +5358,42 @@ nav.main a.cta-nav:hover {
   margin: 8px 0 22px;
 }
 
+.discover-toolbar .search-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.discover-toolbar .search-row .search-box {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.discover-toolbar .sort-dd {
+  flex: 0 0 auto;
+  position: relative;
+}
+
+/* Desktop: text + chevron; hamburger icon hidden */
+.discover-toolbar .sort-menu-ico {
+  display: none;
+}
+.discover-toolbar .sort-label {
+  display: inline;
+}
+.discover-toolbar .sort-chevron {
+  display: block;
+  flex-shrink: 0;
+}
+
 .discover-toolbar .filter-row {
   display: flex;
   align-items: center;
   gap: 12px;
   width: 100%;
   flex-wrap: nowrap;
+  margin-top: 12px;
 }
 
 .discover-toolbar .chip-scroll {
@@ -5333,12 +5412,6 @@ nav.main a.cta-nav:hover {
 }
 .discover-toolbar .chip-scroll .cat-chip {
   flex: 0 0 auto;
-}
-
-.discover-toolbar #sortDd,
-.discover-toolbar .filter-row > .dd {
-  margin-left: auto;
-  flex-shrink: 0;
 }
 
 .tl-card .cover {
@@ -5700,6 +5773,56 @@ nav.main a.cta-nav:hover {
   margin-top: 48px;
   width: 100%;
 }
+
+
+@media (max-width: 720px) {
+  .home-wrap {
+    padding: 0 10px 48px;
+  }
+
+  .discover-toolbar {
+    margin: 4px 0 16px;
+  }
+
+  .discover-toolbar .search-row {
+    gap: 8px;
+  }
+
+  /* Sort as square icon button (hamburger) */
+  .discover-toolbar .sort-label,
+  .discover-toolbar .sort-chevron {
+    display: none;
+  }
+  .discover-toolbar .sort-menu-ico {
+    display: block;
+  }
+  .discover-toolbar .sort-trigger {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    padding: 0;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    justify-content: center;
+  }
+  .discover-toolbar .sort-dd .dd-menu {
+    left: auto;
+    right: 0;
+    width: min(220px, calc(100vw - 24px));
+    min-width: 180px;
+  }
+
+  .discover-toolbar .filter-row {
+    margin-top: 10px;
+  }
+
+  .section-head {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
 /* RankMe · account — Account, auth, modals, toasts, download */
 
 h1,h2,h3,.tier-label,.brand-name,.faction-btn,.download-btn,.login-btn {
@@ -6286,7 +6409,6 @@ body > .toast {
   border-radius: 18px;
   padding: 20px 18px 16px;
   margin-bottom: 18px;
-  overflow: visible;
 }
 .as-head {
   display: flex;
@@ -6309,7 +6431,7 @@ body > .toast {
 .as-more {
   display: flex;
   justify-content: center;
-  margin: 0 0 18px;
+  margin-top: 14px;
 }
 
 .desktop-only { display: block; }
@@ -6343,22 +6465,24 @@ body > .toast {
   color: var(--text-dim);
 }
 
-/* Saved cards — compact community-style */
+/* Saved cards — desktop 2 per row, roomy cover */
 .saved-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: 1fr;
   gap: 16px;
 }
-@media (max-width: 980px) {
-  .saved-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
-@media (max-width: 720px) {
-  .saved-grid { grid-template-columns: 1fr; gap: 12px; }
-}
-
 @media (min-width: 721px) {
+  .saved-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
   .desktop-only { display: block; }
   .mobile-only { display: none; }
+  .sc-cover {
+    width: 200px;
+    min-width: 200px;
+  }
+  .sc-title { font-size: 1.25rem; }
+  .sc-btn { padding: 12px 14px; font-size: 0.9rem; }
 }
 @media (max-width: 720px) {
   .desktop-only { display: none; }
@@ -6381,34 +6505,29 @@ body > .toast {
 }
 
 .saved-card {
+  background: rgba(22, 18, 36, 0.95);
+  border: 1.5px solid rgba(160, 130, 220, 0.4);
+  border-radius: 20px;
+  padding: 16px;
   display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  gap: 12px;
-  padding: 10px;
-  border-radius: 14px;
-  background: rgba(22, 18, 36, 0.92);
-  border: 1.5px solid rgba(160, 130, 220, 0.28);
-  min-width: 0;
+  flex-direction: column;
+  gap: 14px;
   box-sizing: border-box;
-  position: relative;
 }
-.saved-card:hover {
-  border-color: rgba(200, 170, 255, 0.55);
-  box-shadow: 0 6px 20px rgba(80, 40, 140, 0.25);
-}
-.saved-card:has(.sc-menu.open) {
-  z-index: 6;
+.sc-top {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
 }
 .sc-cover {
-  flex: 0 0 42%;
-  max-width: 150px;
-  min-width: 96px;
+  position: relative;
+  width: 140px;
+  min-width: 140px;
   aspect-ratio: 16 / 10;
-  border-radius: 10px;
+  border-radius: 14px;
   overflow: hidden;
-  background: #1a1428;
   display: block;
+  border: 1px solid rgba(140, 120, 180, 0.3);
   flex-shrink: 0;
 }
 .sc-cover img {
@@ -6417,177 +6536,122 @@ body > .toast {
   object-fit: cover;
   display: block;
 }
-.sc-body {
-  flex: 1 1 auto;
+.sc-tag {
+  position: absolute;
+  top: 8px;
+  z-index: 1;
+  font-size: 0.58rem;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+.sc-tag-cat {
+  left: 8px;
+  background: rgba(20, 16, 32, 0.8);
+  color: #e8d4f0;
+  border: 1px solid rgba(180, 150, 220, 0.35);
+}
+.sc-tag-ex {
+  right: 8px;
+  background: linear-gradient(120deg, #b79bf0, #e6a9e8);
+  color: #1a1226;
+}
+.sc-info {
+  flex: 1;
   min-width: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 5px;
-  padding: 2px 0;
+  padding-top: 2px;
 }
 .sc-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
   overflow: hidden;
-  white-space: nowrap;
-  font-size: 0.92rem;
-  font-weight: 800;
-  color: #f4eefc;
+  font-weight: 900;
+  font-size: 1.05rem;
   line-height: 1.25;
+  color: #fff;
   text-decoration: none;
+  margin: 0 0 8px;
 }
-.sc-title-text { display: inline-block; max-width: 100%; }
-.sc-title.is-long .sc-title-text {
-  max-width: none;
-  padding-right: 1.2em;
-  animation: cc-marquee 10s linear infinite;
-}
-.sc-stats {
+.sc-title:hover { color: #e6d4ff; }
+.sc-meta {
   display: flex;
-  flex-wrap: nowrap;
-  align-items: center;
+  flex-wrap: wrap;
   gap: 10px;
-  font-size: 0.72rem;
+  align-items: center;
+  font-size: 0.78rem;
+  color: var(--text-dim);
   font-weight: 600;
-  color: #b9a8d4;
 }
-.sc-ago { flex-shrink: 0; }
 .sc-stat {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  flex-shrink: 0;
 }
 .sc-stat img {
-  width: 12px;
-  height: 12px;
+  width: 14px;
+  height: 14px;
   opacity: 0.9;
 }
 .sc-status {
-  font-size: 0.72rem;
+  margin-top: 8px;
+  font-size: 0.8rem;
   font-weight: 700;
   color: #9a90b0;
 }
 .sc-status.is-pub { color: #5dce7a; }
-
-.sc-menu {
-  position: relative;
-  flex-shrink: 0;
-  align-self: center;
+.sc-actions {
+  display: flex;
+  gap: 10px;
 }
-.sc-dots {
-  width: 32px;
-  height: 32px;
-  padding: 0;
-  border: none;
-  border-radius: 8px;
-  background: transparent;
-  color: #c8b8e0;
-  cursor: pointer;
-  display: grid;
-  place-items: center;
-}
-.sc-dots:hover,
-.sc-menu.open .sc-dots {
-  background: rgba(255, 255, 255, 0.07);
-  color: #fff;
-}
-.sc-drop {
-  display: none;
-  position: absolute;
-  top: calc(100% + 6px);
-  right: 0;
-  z-index: 40;
-  min-width: 220px;
-  max-width: min(280px, calc(100vw - 24px));
-  padding: 6px;
-  border-radius: 14px;
-  background: #1a1628;
-  border: 1px solid rgba(160, 130, 220, 0.32);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
-  box-sizing: border-box;
-}
-.sc-menu.open .sc-drop { display: block; }
-.sc-drop a,
-.sc-drop button.sc-drop-item {
-  display: block;
-  width: 100%;
-  text-align: left;
-  background: transparent;
-  border: none;
-  color: #e8e0f4;
+.sc-btn {
+  flex: 1;
+  text-align: center;
+  padding: 11px 12px;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 0.85rem;
   font-family: inherit;
-  font-size: 0.88rem;
-  font-weight: 500;
-  line-height: 1.3;
-  padding: 10px 12px;
-  border-radius: 10px;
   cursor: pointer;
   text-decoration: none;
-  box-sizing: border-box;
+  border: 1.5px solid transparent;
+  transition: filter 0.15s, transform 0.15s, box-shadow 0.15s;
 }
-.sc-drop a:hover,
-.sc-drop button.sc-drop-item:hover {
-  background: rgba(255, 255, 255, 0.05);
+.sc-open {
+  background: linear-gradient(120deg, #b79bf0, #e6a9e8);
+  color: #1a1226;
+  box-shadow: 0 0 14px rgba(180, 140, 240, 0.35);
 }
-.sc-drop button.sc-drop-item.is-del {
-  color: #f07178;
+.sc-open:hover { filter: brightness(1.08); transform: translateY(-1px); }
+.sc-share {
   background: transparent;
+  border-color: rgba(180, 150, 220, 0.45);
+  color: #f0e8ff;
 }
-.sc-drop button.sc-drop-item.is-del:hover {
-  background: rgba(240, 113, 120, 0.1);
-  color: #ff8a90;
+.sc-share:hover {
+  border-color: rgba(220, 190, 255, 0.7);
+  background: rgba(255, 255, 255, 0.04);
 }
-/* Beat .wrap label (account page sits inside .wrap) */
-.sc-drop label.sc-drop-pub {
+.sc-del {
+  background: transparent;
+  border-color: rgba(255, 120, 130, 0.45);
+  color: #ffb0bc;
+}
+.sc-del:hover {
+  border-color: rgba(255, 150, 160, 0.7);
+  background: rgba(40, 16, 24, 0.5);
+}
+.sc-publish {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  width: 100%;
-  margin: 0;
-  padding: 10px 12px;
-  box-sizing: border-box;
-  font-family: inherit;
-  font-size: 0.88rem;
-  font-weight: 500;
-  line-height: 1.3;
-  letter-spacing: 0;
-  text-transform: none;
+  padding-top: 2px;
+  font-size: 0.85rem;
+  font-weight: 700;
   color: #e8e0f4;
-  cursor: default;
-  border-radius: 10px;
-}
-.sc-drop label.sc-drop-pub > span:first-child {
-  flex: 1 1 auto;
-  min-width: 0;
-  white-space: nowrap;
-}
-.sc-drop label.sc-drop-pub .toggle-container {
-  width: 44px;
-  height: 26px;
-  flex: 0 0 44px;
-}
-.sc-drop label.sc-drop-pub .toggle-thumb {
-  width: 18px;
-  height: 18px;
-}
-.sc-drop label.sc-drop-pub .toggle-checkbox:checked + .toggle-track > .toggle-thumb:not(.toggled-once),
-.sc-drop label.sc-drop-pub .toggle-checkbox:checked:not(.toggled-once) + .toggle-track > .toggle-thumb {
-  transform: translateX(18px);
-}
-@keyframes sc-bounce-in {
-  0% { border-radius: 40% / 50%; transform: translateX(6px) scale(1.45, 0.75); }
-  100% { border-radius: 50%; transform: translateX(18px) scale(1); }
-}
-@keyframes sc-bounce-out {
-  0% { border-radius: 40% / 50%; transform: translateX(4px) scale(1.45, 0.75); }
-  100% { border-radius: 50%; transform: translateX(0) scale(1); }
-}
-.sc-drop label.sc-drop-pub .toggle-checkbox.toggled-once:checked + .toggle-track > .toggle-thumb {
-  animation-name: grow-in, sc-bounce-in;
-}
-.sc-drop label.sc-drop-pub .toggle-checkbox.toggled-once + .toggle-track > .toggle-thumb {
-  animation-name: grow-out, sc-bounce-out;
 }
 
 /* Achievements — empty until feature ships */
@@ -6675,6 +6739,7 @@ body > .toast {
 .toggle-checkbox:checked:not(.toggled-once) + .toggle-track > .toggle-thumb {
   transform: translateX(22px);
 }
+
 /* RankMe · create — Create / blank rank flow */
 
 .create-card, .wrap .card {
@@ -6938,3 +7003,4 @@ body > .toast {
   color: #fff;
   box-shadow: 0 0 12px rgba(150,110,255,.3);
 }
+

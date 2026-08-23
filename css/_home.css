@@ -1,24 +1,5 @@
 /* RankMe · home — Home, discover, template cards, community */
 
-nav.main a.cta-nav {
-  padding: 8px 18px;
-  border-radius: 999px;
-  font-size: .8rem;
-  font-weight: 800;
-  background: linear-gradient(120deg,#b79bf0,#e6a9e8);
-  color: #1a1226;
-  border: none;
-  text-decoration: none;
-  box-shadow: 0 4px 16px rgba(180,140,230,.35);
-  transition: filter .15s, transform .15s;
-}
-
-nav.main a.cta-nav:hover {
-  filter: brightness(1.08);
-  transform: translateY(-1px);
-  color: #1a1226;
-}
-
 /* Category pills — fill on active, brighter border on hover, no glow/lift */
 .cat-chip {
   display: inline-flex;
@@ -320,12 +301,42 @@ nav.main a.cta-nav:hover {
   margin: 8px 0 22px;
 }
 
+.discover-toolbar .search-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.discover-toolbar .search-row .search-box {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.discover-toolbar .sort-dd {
+  flex: 0 0 auto;
+  position: relative;
+}
+
+/* Desktop: text + chevron; hamburger icon hidden */
+.discover-toolbar .sort-menu-ico {
+  display: none;
+}
+.discover-toolbar .sort-label {
+  display: inline;
+}
+.discover-toolbar .sort-chevron {
+  display: block;
+  flex-shrink: 0;
+}
+
 .discover-toolbar .filter-row {
   display: flex;
   align-items: center;
   gap: 12px;
   width: 100%;
   flex-wrap: nowrap;
+  margin-top: 12px;
 }
 
 .discover-toolbar .chip-scroll {
@@ -344,12 +355,6 @@ nav.main a.cta-nav:hover {
 }
 .discover-toolbar .chip-scroll .cat-chip {
   flex: 0 0 auto;
-}
-
-.discover-toolbar #sortDd,
-.discover-toolbar .filter-row > .dd {
-  margin-left: auto;
-  flex-shrink: 0;
 }
 
 .tl-card .cover {
@@ -710,4 +715,53 @@ nav.main a.cta-nav:hover {
 .community-section {
   margin-top: 48px;
   width: 100%;
+}
+
+
+@media (max-width: 720px) {
+  .home-wrap {
+    padding: 0 10px 48px;
+  }
+
+  .discover-toolbar {
+    margin: 4px 0 16px;
+  }
+
+  .discover-toolbar .search-row {
+    gap: 8px;
+  }
+
+  /* Sort as square icon button (hamburger) */
+  .discover-toolbar .sort-label,
+  .discover-toolbar .sort-chevron {
+    display: none;
+  }
+  .discover-toolbar .sort-menu-ico {
+    display: block;
+  }
+  .discover-toolbar .sort-trigger {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    padding: 0;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    justify-content: center;
+  }
+  .discover-toolbar .sort-dd .dd-menu {
+    left: auto;
+    right: 0;
+    width: min(220px, calc(100vw - 24px));
+    min-width: 180px;
+  }
+
+  .discover-toolbar .filter-row {
+    margin-top: 10px;
+  }
+
+  .section-head {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }

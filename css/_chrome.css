@@ -616,17 +616,28 @@ body.theme-gold {
   border: none;
   color: var(--text-dim);
   cursor: pointer;
-  padding: 6px;
-  display: flex;
+  padding: 0;
+  margin: 0;
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
   border-radius: 50%;
+  line-height: 0;
   transition: background .15s, color .15s;
 }
-
+.search-box .clear-btn svg {
+  display: block;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
 .search-box .clear-btn:hover {
   background: rgba(255,255,255,.08);
   color: var(--text);
 }
-
 .search-box .clear-btn[hidden] {
   display: none !important;
 }
@@ -796,28 +807,92 @@ html.rankme-dragging, html.rankme-dragging body, body.rankme-dragging {
 @media (max-width: 720px) {
 
   header.site {
-    padding: 10px 14px;
+    position: sticky;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
     gap: 8px;
   }
 
+  /* Crown only: crop full logo to left mark */
   .brand {
-    padding: 4px 6px;
-    margin: -4px -6px;
+    padding: 4px;
+    margin: -4px;
+    flex: 0 0 auto;
+    z-index: 1;
+    overflow: hidden;
+    width: 36px;
+    height: 32px;
   }
 
   .brand img {
-    height: 26px;
+    height: 28px;
+    width: auto;
+    max-width: none;
+    /* logo is wide (mark + wordmark); keep left crown in view */
+    transform: translateX(0);
+    object-fit: cover;
+    object-position: left center;
+    /* approximate crown crop via clip on container width */
   }
 
   nav.main {
-    gap: 8px;
-    flex-wrap: nowrap;
-    justify-content: flex-end;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    pointer-events: none;
+    z-index: 0;
   }
 
   nav.main a {
-    font-size: .78rem;
+    font-size: .95rem;
+    font-weight: 800;
     white-space: nowrap;
+    pointer-events: auto;
+  }
+
+  /* Account: compact round control on the right */
+  nav.main a.login-btn {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: auto;
+    z-index: 2;
+  }
+  nav.main a.login-btn:not(.login-btn-avatar) {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    padding: 0;
+    border-radius: 50%;
+    border: 1.5px solid rgba(200, 160, 240, 0.45);
+    background: #1a1728;
+    color: transparent;
+    font-size: 0;
+    line-height: 0;
+    overflow: hidden;
+    box-shadow: none;
+  }
+  nav.main a.login-btn:not(.login-btn-avatar)::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: center / 18px 18px no-repeat
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23c8b8e0' stroke-width='2'%3E%3Cpath d='M20 21a8 8 0 0 0-16 0'/%3E%3Ccircle cx='12' cy='8' r='4'/%3E%3C/svg%3E");
+  }
+  nav.main a.login-btn:not(.login-btn-avatar):hover {
+    border-color: rgba(220, 180, 255, 0.9);
+    background: #1a1728;
+    filter: none;
   }
 
   nav.main .search-ico {
@@ -831,7 +906,7 @@ html.rankme-dragging, html.rankme-dragging body, body.rankme-dragging {
   }
 
   footer.site {
-    padding: 20px 16px 16px;
+    padding: 20px 12px 16px;
   }
 
   footer.site img.footer-logo {
@@ -851,34 +926,23 @@ html.rankme-dragging, html.rankme-dragging body, body.rankme-dragging {
   }
 
   .page {
-    padding: 28px 14px 40px;
+    padding: 20px 10px 36px;
   }
 
   .wrap {
-    margin: 28px auto 40px;
-    padding: 0 14px;
+    margin: 24px auto 36px;
+    padding: 0 10px;
   }
 
   .grid {
     grid-template-columns: 1fr;
   }
 
-  .clear-btn {
-    min-width: 44px;
-    min-height: 44px;
-    justify-content: center;
-  }
-
-  .bottom-nav a.active {
-    color: #e8d4ff;
-  }
-
-  .bottom-nav a.active:hover {
-    background: rgba(200,160,240,0.12);
-  }
-
-  #site-footer {
-    padding-bottom: calc(84px + env(safe-area-inset-bottom));
+  .search-box .clear-btn {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    min-height: 32px;
   }
 
 }

@@ -46,6 +46,8 @@ header.site {
   transition: filter .35s ease, transform .25s ease;
   mix-blend-mode: normal;
 }
+.brand .brand-mark { display: none; height: 28px; width: auto; }
+.brand .brand-full { display: block; }
 
 .brand:hover img {
   transform: scale(1.04);
@@ -815,26 +817,20 @@ html.rankme-dragging, html.rankme-dragging body, body.rankme-dragging {
     gap: 8px;
   }
 
-  /* Crown only: crop full logo to left mark */
   .brand {
     padding: 4px;
     margin: -4px;
     flex: 0 0 auto;
-    z-index: 1;
-    overflow: hidden;
-    width: 36px;
-    height: 32px;
+    z-index: 2;
+    overflow: visible;
+    width: auto;
+    height: auto;
   }
-
-  .brand img {
+  .brand .brand-full { display: none; }
+  .brand .brand-mark {
+    display: block;
     height: 28px;
     width: auto;
-    max-width: none;
-    /* logo is wide (mark + wordmark); keep left crown in view */
-    transform: translateX(0);
-    object-fit: cover;
-    object-position: left center;
-    /* approximate crown crop via clip on container width */
   }
 
   nav.main {
@@ -848,14 +844,24 @@ html.rankme-dragging, html.rankme-dragging body, body.rankme-dragging {
     justify-content: center;
     gap: 0;
     pointer-events: none;
-    z-index: 0;
+    z-index: 1;
   }
 
-  nav.main a {
+  nav.main > a:not(.login-btn) {
     font-size: .95rem;
     font-weight: 800;
     white-space: nowrap;
     pointer-events: auto;
+    color: var(--text-dim);
+    padding: 8px 14px;
+    border-radius: 999px;
+    transition: color .15s, background .15s, text-shadow .15s;
+  }
+  nav.main > a:not(.login-btn):hover,
+  nav.main > a:not(.login-btn).active {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.06);
+    text-shadow: 0 0 12px rgba(200, 160, 255, 0.55);
   }
 
   /* Account: compact round control on the right */

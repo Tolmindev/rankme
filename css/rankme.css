@@ -162,6 +162,8 @@ header.site {
   transition: filter .35s ease, transform .25s ease;
   mix-blend-mode: normal;
 }
+.brand .brand-mark { display: none; height: 28px; width: auto; }
+.brand .brand-full { display: block; }
 
 .brand:hover img {
   transform: scale(1.04);
@@ -931,26 +933,20 @@ html.rankme-dragging, html.rankme-dragging body, body.rankme-dragging {
     gap: 8px;
   }
 
-  /* Crown only: crop full logo to left mark */
   .brand {
     padding: 4px;
     margin: -4px;
     flex: 0 0 auto;
-    z-index: 1;
-    overflow: hidden;
-    width: 36px;
-    height: 32px;
+    z-index: 2;
+    overflow: visible;
+    width: auto;
+    height: auto;
   }
-
-  .brand img {
+  .brand .brand-full { display: none; }
+  .brand .brand-mark {
+    display: block;
     height: 28px;
     width: auto;
-    max-width: none;
-    /* logo is wide (mark + wordmark); keep left crown in view */
-    transform: translateX(0);
-    object-fit: cover;
-    object-position: left center;
-    /* approximate crown crop via clip on container width */
   }
 
   nav.main {
@@ -964,14 +960,24 @@ html.rankme-dragging, html.rankme-dragging body, body.rankme-dragging {
     justify-content: center;
     gap: 0;
     pointer-events: none;
-    z-index: 0;
+    z-index: 1;
   }
 
-  nav.main a {
+  nav.main > a:not(.login-btn) {
     font-size: .95rem;
     font-weight: 800;
     white-space: nowrap;
     pointer-events: auto;
+    color: var(--text-dim);
+    padding: 8px 14px;
+    border-radius: 999px;
+    transition: color .15s, background .15s, text-shadow .15s;
+  }
+  nav.main > a:not(.login-btn):hover,
+  nav.main > a:not(.login-btn).active {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.06);
+    text-shadow: 0 0 12px rgba(200, 160, 255, 0.55);
   }
 
   /* Account: compact round control on the right */
@@ -5356,35 +5362,14 @@ to { --elec-angle: 360deg; }
 
 .discover-toolbar {
   margin: 8px 0 22px;
-}
-
-.discover-toolbar .search-row {
   display: flex;
-  align-items: center;
-  gap: 10px;
+  flex-direction: column;
+  gap: 12px;
   width: 100%;
 }
 
-.discover-toolbar .search-row .search-box {
-  flex: 1 1 auto;
-  min-width: 0;
-}
-
-.discover-toolbar .sort-dd {
-  flex: 0 0 auto;
-  position: relative;
-}
-
-/* Desktop: text + chevron; hamburger icon hidden */
-.discover-toolbar .sort-menu-ico {
-  display: none;
-}
-.discover-toolbar .sort-label {
-  display: inline;
-}
-.discover-toolbar .sort-chevron {
-  display: block;
-  flex-shrink: 0;
+.discover-toolbar > .search-box {
+  width: 100%;
 }
 
 .discover-toolbar .filter-row {
@@ -5393,7 +5378,6 @@ to { --elec-angle: 360deg; }
   gap: 12px;
   width: 100%;
   flex-wrap: nowrap;
-  margin-top: 12px;
 }
 
 .discover-toolbar .chip-scroll {
@@ -5412,6 +5396,24 @@ to { --elec-angle: 360deg; }
 }
 .discover-toolbar .chip-scroll .cat-chip {
   flex: 0 0 auto;
+}
+
+.discover-toolbar .sort-dd {
+  flex: 0 0 auto;
+  position: relative;
+  margin-left: auto;
+}
+
+/* Desktop: Featured + chevron; hamburger hidden */
+.discover-toolbar .sort-menu-ico {
+  display: none;
+}
+.discover-toolbar .sort-label {
+  display: inline;
+}
+.discover-toolbar .sort-chevron {
+  display: block;
+  flex-shrink: 0;
 }
 
 .tl-card .cover {
@@ -5774,7 +5776,6 @@ to { --elec-angle: 360deg; }
   width: 100%;
 }
 
-
 @media (max-width: 720px) {
   .home-wrap {
     padding: 0 10px 48px;
@@ -5782,13 +5783,41 @@ to { --elec-angle: 360deg; }
 
   .discover-toolbar {
     margin: 4px 0 16px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 44px;
+    grid-template-rows: auto auto;
+    gap: 10px 8px;
+    align-items: center;
   }
 
-  .discover-toolbar .search-row {
-    gap: 8px;
+  .discover-toolbar > .search-box {
+    grid-column: 1;
+    grid-row: 1;
+    width: auto;
+    min-width: 0;
   }
 
-  /* Sort as square icon button (hamburger) */
+  .discover-toolbar .filter-row {
+    display: contents;
+  }
+
+  .discover-toolbar .chip-scroll {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .discover-toolbar .sort-dd,
+  .discover-toolbar #sortDd {
+    grid-column: 2;
+    grid-row: 1;
+    margin-left: 0;
+    width: 44px;
+    max-width: 44px;
+    min-width: 44px;
+  }
+
   .discover-toolbar .sort-label,
   .discover-toolbar .sort-chevron {
     display: none;
@@ -5796,25 +5825,25 @@ to { --elec-angle: 360deg; }
   .discover-toolbar .sort-menu-ico {
     display: block;
   }
-  .discover-toolbar .sort-trigger {
+  .discover-toolbar .sort-trigger,
+  .discover-toolbar #sortDd .dd-trigger,
+  .discover-toolbar #sortDd .sort-trigger {
     width: 44px;
     height: 44px;
     min-width: 44px;
+    max-width: 44px;
     padding: 0;
     border-radius: 12px;
     display: grid;
     place-items: center;
     justify-content: center;
+    box-sizing: border-box;
   }
   .discover-toolbar .sort-dd .dd-menu {
     left: auto;
     right: 0;
     width: min(220px, calc(100vw - 24px));
     min-width: 180px;
-  }
-
-  .discover-toolbar .filter-row {
-    margin-top: 10px;
   }
 
   .section-head {

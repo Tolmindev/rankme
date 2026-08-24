@@ -76,6 +76,7 @@
 
 <footer id="site-footer" class="site"></footer>
 <script src="js/footer.js" defer></script>
+<script src="js/catalog.js"></script>
 
 <script>
 const panel = document.getElementById('panel');
@@ -101,28 +102,11 @@ function resolveProvider(user){
 }
 
 function coverForTemplate(tid){
-  const map = {
-    'lol': 'assets/brand/LoL_Cover_thumb.webp',
-    'sf-duel': 'assets/brand/SF_Cover_1_thumb.webp',
-    'sf-duel-ex': 'assets/brand/SFD_EX_Cover_thumb.webp',
-    'sf6': 'assets/brand/SF6_Cover_thumb.webp',
-    'dota2': 'assets/brand/Dota2_Cover_thumb.webp',
-  };
-  return map[tid] || 'assets/brand/SF_Cover_1_thumb.webp';
+  return (window.RankMeCatalog && RankMeCatalog.cover(tid)) || '';
 }
 
 function titleForTemplate(tid, fallback){
-  const map = {
-    'lol': 'League of Legends',
-    'sf-duel': 'Street Fighter: Duel',
-    'sf-duel-ex': 'SF Duel EX-Move',
-    'sf6': 'Street Fighter 6',
-    'dota2': 'Dota 2',
-  };
-  const base = map[tid] || tid || 'Ranking';
-  let raw = (fallback && fallback !== 'Untitled') ? String(fallback) : base;
-  raw = raw.replace(/\s+list$/i, '').trim();
-  return raw || base;
+  return (window.RankMeCatalog && RankMeCatalog.title(tid, fallback)) || fallback || tid || 'Ranking';
 }
 
 function emptySavedHtml(text){
@@ -566,6 +550,7 @@ async function bootAccount(){
     return;
   }
   try {
+    if (window.RankMeCatalog) await RankMeCatalog.load();
     await initSupabase();
     if (typeof updateNavAuth === 'function') updateNavAuth();
 

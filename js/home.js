@@ -269,37 +269,12 @@
     });
   }
 
-  /* ---- Community rankings grid (cover + stats + author) ---- */
-  function coverForTemplate(tid) {
-    var map = {
-      'lol': 'assets/brand/LoL_Cover_thumb.webp',
-      'sf-duel': 'assets/brand/SF_Cover_1_thumb.webp',
-      'sf-duel-ex': 'assets/brand/SFD_EX_Cover_thumb.webp',
-      'sf6': 'assets/brand/SF6_Cover_thumb.webp',
-      'dota2': 'assets/brand/Dota2_Cover_thumb.webp',
-    };
-    return map[tid] || 'assets/brand/SF_Cover_1_thumb.webp';
-  }
-
-  function titleForTemplate(tid, fallback) {
-    var map = {
-      'lol': 'League of Legends',
-      'sf-duel': 'Street Fighter: Duel',
-      'sf-duel-ex': 'SF Duel EX-Move',
-      'sf6': 'Street Fighter 6',
-      'dota2': 'Dota 2',
-    };
-    var base = map[tid] || tid || 'Ranking';
-    var raw = (fallback && fallback !== 'Untitled') ? String(fallback) : base;
-    // Never show trailing " list" (legacy save titles)
-    raw = raw.replace(/\s+list$/i, '').trim();
-    return raw || base;
-  }
+  /* Cover/title come from templates/catalog.json via RankMeCatalog. */
 
   function communityCardHtml(row) {
     var tid = row.template_id || 'sf-duel';
-    var cover = coverForTemplate(tid);
-    var titleText = titleForTemplate(tid, row.title);
+    var cover = (window.RankMeCatalog && RankMeCatalog.cover(tid)) || '';
+    var titleText = (window.RankMeCatalog && RankMeCatalog.title(tid, row.title)) || row.title || tid;
     var title = escapeHtml(titleText);
     var href = 'tier.html?t=' + encodeURIComponent(tid) + '&c=' + encodeURIComponent(String(row.id));
     var ago = typeof timeAgo === 'function'
@@ -566,8 +541,7 @@
     }));
   }
 
-  fetch('templates/catalog.json')
-    .then(function (r) { return r.json(); })
+  RankMeCatalog.load()
     .then(async function (catalog) {
       var stats = {};
       try { if (typeof fetchTemplateStats === 'function') stats = await fetchTemplateStats(); } catch (e) {}

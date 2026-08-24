@@ -113,7 +113,6 @@ body {
   }
 
 }
-
 /* RankMe · chrome — Site chrome: header, footer, page shell, buttons */
 
 body > .page, body > .wrap {
@@ -1212,7 +1211,6 @@ html.rankme-dragging, html.rankme-dragging body, body.rankme-dragging {
   .boot-loading { padding: 20px 14px 32px; }
   .skel-tier-cover { width: 100%; max-width: 100%; }
 }
-
 /* RankMe · hero — Tier hero, experts strip, list actions, battle CTA */
 
 body > header.site, body > footer.site, body > #site-footer, body > .toolbar, body > .board, body > .pool-wrap, body > .list-actions, body > .hero, body > .experts-strip, body > .toast-host {
@@ -2412,7 +2410,6 @@ body[data-editor="1"] #heroDesc {
   40% { transform: scale(1.35); }
   100% { transform: scale(1); }
 }
-
 /* RankMe · tier — Board, rows, cards, toolbar, filters, portals, pool */
 
 .page, main, .wrap, .board-wrap, .tier-shell, .pool-wrap {
@@ -3698,6 +3695,35 @@ body.card-landscape .card.floating {
   filter: brightness(1.12);
 }
 
+/* Thin frame: art already includes its own border (Skullgirls etc.) */
+body.card-thin .card {
+  padding: 1px;
+  border-radius: 6px;
+  background: #120f1a;
+  box-shadow: 0 0 0 1px rgba(180, 140, 240, 0.16);
+}
+
+body.card-thin .card img {
+  border-radius: 5px;
+  object-fit: contain;
+  background: transparent;
+}
+
+body.card-thin .card:hover {
+  transform: translateY(-2px) scale(1.04);
+  filter: brightness(1.08) saturate(1.08);
+  box-shadow:
+    0 0 0 1px rgba(220, 190, 255, 0.5),
+    0 8px 20px rgba(140, 90, 210, 0.28);
+}
+
+body.card-thin .card.floating {
+  box-shadow:
+    0 0 0 1.5px rgba(230, 210, 255, 0.65),
+    0 12px 32px rgba(140, 90, 210, 0.4);
+  filter: brightness(1.08);
+}
+
 
 .tier-label-line {
   display: block;
@@ -3716,7 +3742,6 @@ body.community-view button.btn-battle-hero {
 body.community-view .toolbar {
   justify-content: center;
 }
-
 /* RankMe · battle — Battle mode UI (loaded with battle-anim overrides) */
 
 .list-actions .battle-launch, #battleModeBtn {
@@ -4967,7 +4992,6 @@ to { --elec-angle: 360deg; }
     max-height: min(38vh, 280px);
   }
 }
-
 /* RankMe · home — Home, discover, template cards, community */
 
 /* Category pills — fill on active, brighter border on hover, no glow/lift */
@@ -5791,7 +5815,6 @@ to { --elec-angle: 360deg; }
     padding-right: 0;
   }
 }
-
 /* RankMe · account — Account, auth, modals, toasts, download */
 
 h1,h2,h3,.tier-label,.brand-name,.faction-btn,.download-btn,.login-btn {
@@ -6786,7 +6809,6 @@ body > .toast {
 .toggle-checkbox:checked:not(.toggled-once) + .toggle-track > .toggle-thumb {
   transform: translateX(22px);
 }
-
 /* RankMe · create — Create / blank rank flow */
 
 .create-card, .wrap .card {
@@ -7050,4 +7072,3 @@ body > .toast {
   color: #fff;
   box-shadow: 0 0 12px rgba(150,110,255,.3);
 }
-

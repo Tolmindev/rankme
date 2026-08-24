@@ -5,6 +5,7 @@
 const TMPL = window.RANKME_TEMPLATE || null;
 const CARD_SHAPE = (TMPL && TMPL.cardShape) || 'portrait';
 const CARD_ASPECT = (TMPL && TMPL.cardAspect) || (CARD_SHAPE === 'square' ? 1 : 1.35);
+const CARD_FRAME = (TMPL && TMPL.cardFrame) || 'default';
 const DEFAULT_CARD_SIZE = Number(TMPL && TMPL.defaultSize) || (CARD_SHAPE === 'landscape' ? 78 : 64);
 const CARD_PATH = (TMPL && TMPL.cardPath) || 'assets/cards/';
 const NO_FACTIONS = !!(TMPL && TMPL.noFactions);
@@ -2114,11 +2115,13 @@ function applyBattleResult(){
       setCardSize(DEFAULT_CARD_SIZE);
     }
   } else if (sizeSlider) {
+    if (DEFAULT_CARD_SIZE > 80) sizeSlider.max = String(Math.max(100, DEFAULT_CARD_SIZE + 24));
     sizeSlider.value = String(DEFAULT_CARD_SIZE);
     setCardSize(DEFAULT_CARD_SIZE);
   }
   if(THEME_GOLD) document.body.classList.add('theme-gold');
   if(NO_FACTIONS) document.body.classList.add('no-factions');
+  if(CARD_FRAME === 'thin') document.body.classList.add('card-thin');
 
 /* Community ranking UI (public list via ?c=id) */
 async function tryLoadCommunityFromQuery() {

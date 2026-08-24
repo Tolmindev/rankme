@@ -1080,7 +1080,7 @@ function showConfirm(title, text, onConfirm){
 }
 
 document.getElementById('clearAllBtn').addEventListener('click', ()=>{
-  showConfirm('Clear the whole tier list?', 'Everything on the rows goes back to the pool. This can\'t be undone.', ()=>{
+  showConfirm('Clear all?', 'Cards go back to the pool.', ()=>{
     state.assignment = {};
     state.tiers.forEach(t=>state.assignment[t.id]=[]);
     markDirty();
@@ -1095,7 +1095,7 @@ document.getElementById('clearAllBtn').addEventListener('click', ()=>{
 });
 
 document.getElementById('fillAllBtn').addEventListener('click', ()=>{
-  showConfirm('Fill all rows randomly?', 'Every fighter still in the pool will be dropped into a random row - handy as a starting point before you sort them.', ()=>{
+  showConfirm('Fill randomly?', 'Cards in the pool go to random rows.', ()=>{
     const shuffled = [...state.pool].sort(()=>Math.random()-0.5);
     shuffled.forEach(cid=>{
       const t = state.tiers[Math.floor(Math.random()*state.tiers.length)];

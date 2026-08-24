@@ -619,8 +619,8 @@
         exitBtn.onclick = function (e) {
           e.preventDefault();
           openOverlay(
-            '<h2>Leave without opening?</h2>' +
-            '<p>Your ranking is ready - open it to apply the results, or exit and discard them.</p>' +
+            '<h2>Leave?</h2>' +
+            '<p>Your ranking is ready. Open it or discard it.</p>' +
             '<div class="battle-panel-actions" style="flex-direction:column;width:100%;">' +
               '<a class="btn primary" id="battleOpenFromWarn" href="' + builderHref + '">Open Ranking</a>' +
               '<button type="button" class="btn ghost" id="battleLeaveComplete">Leave</button>' +

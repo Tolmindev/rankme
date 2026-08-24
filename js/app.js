@@ -5,6 +5,7 @@
 const TMPL = window.RANKME_TEMPLATE || null;
 const CARD_SHAPE = (TMPL && TMPL.cardShape) || 'portrait';
 const CARD_ASPECT = (TMPL && TMPL.cardAspect) || (CARD_SHAPE === 'square' ? 1 : 1.35);
+const DEFAULT_CARD_SIZE = Number(TMPL && TMPL.defaultSize) || (CARD_SHAPE === 'landscape' ? 78 : 64);
 const CARD_PATH = (TMPL && TMPL.cardPath) || 'assets/cards/';
 const NO_FACTIONS = !!(TMPL && TMPL.noFactions);
 const TEMPLATE_ID = (TMPL && TMPL.id) || (window.RANKME_BLANK ? 'blank' : 'sf-duel');
@@ -31,7 +32,7 @@ const N_CARDS = CARD_META_LIST.length;
 const FACTIONS = NO_FACTIONS ? [] : (
   FACTION_ORDER || [...new Set(CARD_META_LIST.flatMap(c => Array.isArray(c.roles) ? c.roles : [c.faction]))]
 );
-const FACTION_HUE = {MASTER:210, INFERNAL:275, WIND:210, THUNDER:48, FLAME:8, LEGENDARY:290, 'A+':32, Fighter:30, Tank:200, Mage:270, Assassin:0, Marksman:50, Support:160, Strength:270, Agility:280, Intelligence:265, Universal:275};
+const FACTION_HUE = {MASTER:210, INFERNAL:275, WIND:210, THUNDER:48, FLAME:8, LEGENDARY:290, 'A+':32, Fighter:30, Tank:200, Mage:270, Assassin:0, Marksman:50, Support:160, Strength:270, Agility:280, Intelligence:265, Universal:275, Bronze:22, Silver:210, Gold:42, Diamond:300};
 const FACTION_ICON = {};
 FACTIONS.forEach(f => {
   FACTION_ICON[f] = (FACTION_ICON_MAP && FACTION_ICON_MAP[f]) || (`assets/factions/${f}_icon.svg`);
@@ -40,7 +41,7 @@ const ALL_ICON = 'assets/factions/ALL_icon.svg';
 
 const cardSrc = id => {
   if(state.customCards && state.customCards[id]) return state.customCards[id].src;
-  if(CARD_META[id]) return CARD_PATH + CARD_META[id].file;
+  if(CARD_META[id]) return CARD_PATH + encodeURIComponent(CARD_META[id].file);
   return CARD_PATH + `card_${String(id).padStart(3,'0')}.webp`;
 };
 
@@ -1056,7 +1057,7 @@ sizeSlider.addEventListener('input', (e)=>{
   setCardSize(+e.target.value);
 });
 document.getElementById('sizeResetBtn').addEventListener('click', ()=>{
-  const def = CARD_SHAPE === 'landscape' ? 78 : 64;
+  const def = DEFAULT_CARD_SIZE;
   sizeSlider.value = def;
   setCardSize(def);
 });
@@ -2109,9 +2110,12 @@ function applyBattleResult(){
       s.dataset.landscapeInit = '1';
       s.min = '50';
       s.max = '140';
-      s.value = '78';
-      setCardSize(78);
+      s.value = String(DEFAULT_CARD_SIZE);
+      setCardSize(DEFAULT_CARD_SIZE);
     }
+  } else if (sizeSlider) {
+    sizeSlider.value = String(DEFAULT_CARD_SIZE);
+    setCardSize(DEFAULT_CARD_SIZE);
   }
   if(THEME_GOLD) document.body.classList.add('theme-gold');
   if(NO_FACTIONS) document.body.classList.add('no-factions');

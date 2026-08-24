@@ -1,0 +1,2756 @@
+{
+  "id": "skullgirls",
+  "title": "Skullgirls Mobile",
+  "footerLabel": "Skullgirls Mobile",
+  "exportName": "rankme-skullgirls-tierlist.png",
+  "cardShape": "portrait",
+  "cardAspect": 1.45,
+  "defaultSize": 80,
+  "cardPath": "assets/skullgirls/",
+  "theme": "default",
+  "noFactions": false,
+  "factionOrder": [
+    "Bronze",
+    "Silver",
+    "Gold",
+    "Diamond"
+  ],
+  "factionIcons": {
+    "Bronze": "assets/factions/sgBronze.svg",
+    "Silver": "assets/factions/sgSilver.svg",
+    "Gold": "assets/factions/sgGold.svg",
+    "Diamond": "assets/factions/sgDiamond.svg"
+  },
+  "cover": "assets/brand/Skullgirls_Cover.webp",
+  "description": "2D Fighting RPG packed with characters to collect, upgrade and customize as you search for the mysterious SKULLGIRL!",
+  "parallax": true,
+  "cards": [
+    {
+      "id": 1,
+      "file": "Annie_Bronze_Solar Flair.webp",
+      "name": "Annie - Solar Flair",
+      "faction": "Bronze",
+      "roles": [
+        "Bronze"
+      ]
+    },
+    {
+      "id": 2,
+      "file": "Annie_Bronze_Star Child.webp",
+      "name": "Annie - Star Child",
+      "faction": "Bronze",
+      "roles": [
+        "Bronze"
+      ]
+    },
+    {
+      "id": 3,
+      "file": "Annie_Silver_Galactic Glamour.webp",
+      "name": "Annie - Galactic Glamour",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 4,
+      "file": "Annie_Silver_Miss Mercury.webp",
+      "name": "Annie - Miss Mercury",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 5,
+      "file": "Annie_Silver_Ninja Star.webp",
+      "name": "Annie - Ninja Star",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 6,
+      "file": "Annie_Silver_Triple Threat.webp",
+      "name": "Annie - Triple Threat",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 7,
+      "file": "Annie_Gold_Ageless Wonder.webp",
+      "name": "Annie - Ageless Wonder",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 8,
+      "file": "Annie_Gold_Cosmic Rebel.webp",
+      "name": "Annie - Cosmic Rebel",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 9,
+      "file": "Annie_Gold_Death Defier.webp",
+      "name": "Annie - Death Defier",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 10,
+      "file": "Annie_Gold_Materia Girl.webp",
+      "name": "Annie - Materia Girl",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 11,
+      "file": "Annie_Gold_Moonstruck.webp",
+      "name": "Annie - Moonstruck",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 12,
+      "file": "Annie_Gold_Timeless Hero.webp",
+      "name": "Annie - Timeless Hero",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 13,
+      "file": "Annie_Gold_Wave Warrior.webp",
+      "name": "Annie - Wave Warrior",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 14,
+      "file": "Annie_Diamond_Fire Branded.webp",
+      "name": "Annie - Fire Branded",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 15,
+      "file": "Annie_Diamond_Model Leader.webp",
+      "name": "Annie - Model Leader",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 16,
+      "file": "Annie_Diamond_Soulbound.webp",
+      "name": "Annie - Soulbound",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 17,
+      "file": "Annie_Diamond_Star Shine.webp",
+      "name": "Annie - Star Shine",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 18,
+      "file": "Annie_Diamond_Starlight Rose.webp",
+      "name": "Annie - Starlight Rose",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 19,
+      "file": "Beowulf_Bronze_Cold Stones.webp",
+      "name": "Beowulf - Cold Stones",
+      "faction": "Bronze",
+      "roles": [
+        "Bronze"
+      ]
+    },
+    {
+      "id": 20,
+      "file": "Beowulf_Bronze_Underdog.webp",
+      "name": "Beowulf - Underdog",
+      "faction": "Bronze",
+      "roles": [
+        "Bronze"
+      ]
+    },
+    {
+      "id": 21,
+      "file": "Beowulf_Silver_Fan Favorite.webp",
+      "name": "Beowulf - Fan Favorite",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 22,
+      "file": "Beowulf_Silver_Hype Man.webp",
+      "name": "Beowulf - Hype Man",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 23,
+      "file": "Beowulf_Silver_Number One.webp",
+      "name": "Beowulf - Number One",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 24,
+      "file": "Beowulf_Silver_Wrestler X.webp",
+      "name": "Beowulf - Wrestler X",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 25,
+      "file": "Beowulf_Gold_Chill Guy.webp",
+      "name": "Beowulf - Chill Guy",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 26,
+      "file": "Beowulf_Gold_Dragon Brawler.webp",
+      "name": "Beowulf - Dragon Brawler",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 27,
+      "file": "Beowulf_Gold_Freedom Fighter.webp",
+      "name": "Beowulf - Freedom Fighter",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 28,
+      "file": "Beowulf_Gold_Pickle Baller.webp",
+      "name": "Beowulf - Pickle Baller",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 29,
+      "file": "Beowulf_Gold_Weekend Warrior.webp",
+      "name": "Beowulf - Weekend Warrior",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 30,
+      "file": "Beowulf_Gold_Wulfsbane.webp",
+      "name": "Beowulf - Wulfsbane",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 31,
+      "file": "Beowulf_Diamond_Beast King.webp",
+      "name": "Beowulf - Beast King",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 32,
+      "file": "Beowulf_Diamond_Dark Might.webp",
+      "name": "Beowulf - Dark Might",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 33,
+      "file": "Beowulf_Diamond_Ogre Achiever.webp",
+      "name": "Beowulf - Ogre Achiever",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 34,
+      "file": "Beowulf_Diamond_Snake Bite.webp",
+      "name": "Beowulf - Snake Bite",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 35,
+      "file": "Big_Band_Bronze_Bassline.webp",
+      "name": "Big Band - Bassline",
+      "faction": "Bronze",
+      "roles": [
+        "Bronze"
+      ]
+    },
+    {
+      "id": 36,
+      "file": "Big_Band_Bronze_Beat Box.webp",
+      "name": "Big Band - Beat Box",
+      "faction": "Bronze",
+      "roles": [
+        "Bronze"
+      ]
+    },
+    {
+      "id": 37,
+      "file": "Big_Band_Silver_Resonant Evil.webp",
+      "name": "Big Band - Resonant Evil",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 38,
+      "file": "Big_Band_Silver_Robocopy.webp",
+      "name": "Big Band - Robocopy",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 39,
+      "file": "Big_Band_Silver_Treble Maker.webp",
+      "name": "Big Band - Treble Maker",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 40,
+      "file": "Big_Band_Silver_Vintage Virtuoso.webp",
+      "name": "Big Band - Vintage Virtuoso",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 41,
+      "file": "Big_Band_Gold_Big Baddy.webp",
+      "name": "Big Band - Big Baddy",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 42,
+      "file": "Big_Band_Gold_Epic Sax.webp",
+      "name": "Big Band - Epic Sax",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 43,
+      "file": "Big_Band_Gold_G.I. Jazz.webp",
+      "name": "Big Band - G.I. Jazz",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 44,
+      "file": "Big_Band_Gold_Megasonic.webp",
+      "name": "Big Band - Megasonic",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 45,
+      "file": "Big_Band_Gold_One Up.webp",
+      "name": "Big Band - One Up",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 46,
+      "file": "Big_Band_Gold_Private Dick.webp",
+      "name": "Big Band - Private Dick",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 47,
+      "file": "Big_Band_Gold_Rhythm Rider.webp",
+      "name": "Big Band - Rhythm Rider",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 48,
+      "file": "Big_Band_Gold_Unbearable.webp",
+      "name": "Big Band - Unbearable",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 49,
+      "file": "Big_Band_Diamond_Brass Bandit.webp",
+      "name": "Big Band - Brass Bandit",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 50,
+      "file": "Big_Band_Diamond_Dream Band.webp",
+      "name": "Big Band - Dream Band",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 51,
+      "file": "Big_Band_Diamond_Heavy Metal.webp",
+      "name": "Big Band - Heavy Metal",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 52,
+      "file": "Black_Dahlia_Bronze_Golden Gunner.webp",
+      "name": "Black Dahlia - Golden Gunner",
+      "faction": "Bronze",
+      "roles": [
+        "Bronze"
+      ]
+    },
+    {
+      "id": 53,
+      "file": "Black_Dahlia_Bronze_Trigger Happy.webp",
+      "name": "Black Dahlia - Trigger Happy",
+      "faction": "Bronze",
+      "roles": [
+        "Bronze"
+      ]
+    },
+    {
+      "id": 54,
+      "file": "Black_Dahlia_Silver_Biohazard.webp",
+      "name": "Black Dahlia - Biohazard",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 55,
+      "file": "Black_Dahlia_Silver_Dame Slayer.webp",
+      "name": "Black Dahlia - Dame Slayer",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 56,
+      "file": "Black_Dahlia_Silver_Lethal Weapon.webp",
+      "name": "Black Dahlia - Lethal Weapon",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 57,
+      "file": "Black_Dahlia_Silver_Soul Crusher.webp",
+      "name": "Black Dahlia - Soul Crusher",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 58,
+      "file": "Black_Dahlia_Gold_Corrosive Agent.webp",
+      "name": "Black Dahlia - Corrosive Agent",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 59,
+      "file": "Black_Dahlia_Gold_Martial Outlaw.webp",
+      "name": "Black Dahlia - Martial Outlaw",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 60,
+      "file": "Black_Dahlia_Gold_Psycommander.webp",
+      "name": "Black Dahlia - Psycommander",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 61,
+      "file": "Black_Dahlia_Gold_Red Rider.webp",
+      "name": "Black Dahlia - Red Rider",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 62,
+      "file": "Black_Dahlia_Gold_Stellar Huntress.webp",
+      "name": "Black Dahlia - Stellar Huntress",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 63,
+      "file": "Black_Dahlia_Gold_Unfazed.webp",
+      "name": "Black Dahlia - Unfazed",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 64,
+      "file": "Black_Dahlia_Diamond_Fur Monger.webp",
+      "name": "Black Dahlia - Fur Monger",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 65,
+      "file": "Black_Dahlia_Diamond_Hex Caliber.webp",
+      "name": "Black Dahlia - Hex Caliber",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 66,
+      "file": "Black_Dahlia_Diamond_Locked 'N' Loaded.webp",
+      "name": "Black Dahlia - Locked 'N' Loaded",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 67,
+      "file": "Black_Dahlia_Diamond_Unholy Host.webp",
+      "name": "Black Dahlia - Unholy Host",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 68,
+      "file": "Cerebella_Bronze_Headstrong.webp",
+      "name": "Cerebella - Headstrong",
+      "faction": "Bronze",
+      "roles": [
+        "Bronze"
+      ]
+    },
+    {
+      "id": 69,
+      "file": "Cerebella_Bronze_Understudy.webp",
+      "name": "Cerebella - Understudy",
+      "faction": "Bronze",
+      "roles": [
+        "Bronze"
+      ]
+    },
+    {
+      "id": 70,
+      "file": "Cerebella_Silver_Big Top.webp",
+      "name": "Cerebella - Big Top",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 71,
+      "file": "Cerebella_Silver_Gray Matter.webp",
+      "name": "Cerebella - Gray Matter",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 72,
+      "file": "Cerebella_Silver_Stone Sentinel.webp",
+      "name": "Cerebella - Stone Sentinel",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 73,
+      "file": "Cerebella_Silver_Toad Warrior.webp",
+      "name": "Cerebella - Toad Warrior",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 74,
+      "file": "Cerebella_Gold_Armed Forces.webp",
+      "name": "Cerebella - Armed Forces",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 75,
+      "file": "Cerebella_Gold_Blitz & Glamour.webp",
+      "name": "Cerebella - Blitz & Glamour",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 76,
+      "file": "Cerebella_Gold_Brain Freeze.webp",
+      "name": "Cerebella - Brain Freeze",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 77,
+      "file": "Cerebella_Gold_Criminal Mind.webp",
+      "name": "Cerebella - Criminal Mind",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 78,
+      "file": "Cerebella_Gold_Harlequin.webp",
+      "name": "Cerebella - Harlequin",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 79,
+      "file": "Cerebella_Gold_Scare Giver.webp",
+      "name": "Cerebella - Scare Giver",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 80,
+      "file": "Cerebella_Diamond_Crimson Cyclone.webp",
+      "name": "Cerebella - Crimson Cyclone",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 81,
+      "file": "Cerebella_Diamond_Heavy Handed.webp",
+      "name": "Cerebella - Heavy Handed",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 82,
+      "file": "Cerebella_Diamond_Mekastar.webp",
+      "name": "Cerebella - Mekastar",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 83,
+      "file": "Cerebella_Diamond_Star-Spangled.webp",
+      "name": "Cerebella - Star-Spangled",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 84,
+      "file": "Double_Bronze_Nunsense.webp",
+      "name": "Double - Nunsense",
+      "faction": "Bronze",
+      "roles": [
+        "Bronze"
+      ]
+    },
+    {
+      "id": 85,
+      "file": "Double_Bronze_Sundae School.webp",
+      "name": "Double - Sundae School",
+      "faction": "Bronze",
+      "roles": [
+        "Bronze"
+      ]
+    },
+    {
+      "id": 86,
+      "file": "Double_Silver_Doublicious.webp",
+      "name": "Double - Doublicious",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 87,
+      "file": "Double_Silver_Myst-Match.webp",
+      "name": "Double - Myst-Match",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 88,
+      "file": "Double_Silver_Serpent Sin.webp",
+      "name": "Double - Serpent Sin",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 89,
+      "file": "Double_Silver_Temple Tyrant.webp",
+      "name": "Double - Temple Tyrant",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 90,
+      "file": "Double_Gold_Chaos Theory.webp",
+      "name": "Double - Chaos Theory",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 91,
+      "file": "Double_Gold_Evergreen Evil.webp",
+      "name": "Double - Evergreen Evil",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 92,
+      "file": "Double_Gold_Immoral Fiber.webp",
+      "name": "Double - Immoral Fiber",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 93,
+      "file": "Double_Gold_Rainbow Blight.webp",
+      "name": "Double - Rainbow Blight",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 94,
+      "file": "Double_Gold_Sea Witch.webp",
+      "name": "Double - Sea Witch",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 95,
+      "file": "Double_Gold_Xenomorph.webp",
+      "name": "Double - Xenomorph",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 96,
+      "file": "Double_Diamond_Altar Ego.webp",
+      "name": "Double - Altar Ego",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 97,
+      "file": "Double_Diamond_Creature of Habit.webp",
+      "name": "Double - Creature of Habit",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 98,
+      "file": "Double_Diamond_Grand Mother.webp",
+      "name": "Double - Grand Mother",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 99,
+      "file": "Double_Diamond_Heart of Darkness.webp",
+      "name": "Double - Heart of Darkness",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 100,
+      "file": "Double_Diamond_Jawbreaker.webp",
+      "name": "Double - Jawbreaker",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 101,
+      "file": "Eliza_Bronze_Decrypted.webp",
+      "name": "Eliza - Decrypted",
+      "faction": "Bronze",
+      "roles": [
+        "Bronze"
+      ]
+    },
+    {
+      "id": 102,
+      "file": "Eliza_Bronze_In Denile.webp",
+      "name": "Eliza - In Denile",
+      "faction": "Bronze",
+      "roles": [
+        "Bronze"
+      ]
+    },
+    {
+      "id": 103,
+      "file": "Eliza_Silver_Bloody Valentine.webp",
+      "name": "Eliza - Bloody Valentine",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 104,
+      "file": "Eliza_Silver_Nightshade.webp",
+      "name": "Eliza - Nightshade",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 105,
+      "file": "Eliza_Silver_Scarlet Viper.webp",
+      "name": "Eliza - Scarlet Viper",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 106,
+      "file": "Eliza_Silver_Tomb & Gloom.webp",
+      "name": "Eliza - Tomb & Gloom",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 107,
+      "file": "Eliza_Gold_Bloodbath.webp",
+      "name": "Eliza - Bloodbath",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 108,
+      "file": "Eliza_Gold_Diva Intervention.webp",
+      "name": "Eliza - Diva Intervention",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 109,
+      "file": "Eliza_Gold_Inner Pieces.webp",
+      "name": "Eliza - Inner Pieces",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 110,
+      "file": "Eliza_Gold_Lapis Luxury.webp",
+      "name": "Eliza - Lapis Luxury",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 111,
+      "file": "Eliza_Gold_Noble Mogul.webp",
+      "name": "Eliza - Noble Mogul",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 112,
+      "file": "Eliza_Gold_Red Velvet.webp",
+      "name": "Eliza - Red Velvet",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 113,
+      "file": "Eliza_Diamond_Dark Lord.webp",
+      "name": "Eliza - Dark Lord",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 114,
+      "file": "Eliza_Diamond_Don Passione.webp",
+      "name": "Eliza - Don Passione",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 115,
+      "file": "Eliza_Diamond_Killing Time.webp",
+      "name": "Eliza - Killing Time",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 116,
+      "file": "Eliza_Diamond_Mummy Dearest.webp",
+      "name": "Eliza - Mummy Dearest",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 117,
+      "file": "Eliza_Diamond_Stand Out.webp",
+      "name": "Eliza - Stand Out",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 118,
+      "file": "Filia_Bronze_Bad Hair Day.webp",
+      "name": "Filia - Bad Hair Day",
+      "faction": "Bronze",
+      "roles": [
+        "Bronze"
+      ]
+    },
+    {
+      "id": 119,
+      "file": "Filia_Bronze_Frayed Ends.webp",
+      "name": "Filia - Frayed Ends",
+      "faction": "Bronze",
+      "roles": [
+        "Bronze"
+      ]
+    },
+    {
+      "id": 120,
+      "file": "Filia_Silver_Bad Ms Frosty.webp",
+      "name": "Filia - Bad Ms Frosty",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 121,
+      "file": "Filia_Silver_Clue Chaser.webp",
+      "name": "Filia - Clue Chaser",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 122,
+      "file": "Filia_Silver_Hair Apparent.webp",
+      "name": "Filia - Hair Apparent",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 123,
+      "file": "Filia_Silver_Rock Star.webp",
+      "name": "Filia - Rock Star",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 124,
+      "file": "Filia_Gold_Curl Scout.webp",
+      "name": "Filia - Curl Scout",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 125,
+      "file": "Filia_Gold_Dread Locks.webp",
+      "name": "Filia - Dread Locks",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 126,
+      "file": "Filia_Gold_Idol Threat.webp",
+      "name": "Filia - Idol Threat",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 127,
+      "file": "Filia_Gold_Magicurl.webp",
+      "name": "Filia - Magicurl",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 128,
+      "file": "Filia_Gold_Parasite Weave.webp",
+      "name": "Filia - Parasite Weave",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 129,
+      "file": "Filia_Gold_Scale Tipper.webp",
+      "name": "Filia - Scale Tipper",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 130,
+      "file": "Filia_Gold_Windswept.webp",
+      "name": "Filia - Windswept",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 131,
+      "file": "Filia_Diamond_Blue Streak.webp",
+      "name": "Filia - Blue Streak",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 132,
+      "file": "Filia_Diamond_Class Cutter.webp",
+      "name": "Filia - Class Cutter",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 133,
+      "file": "Filia_Diamond_Djinn Frizz.webp",
+      "name": "Filia - Djinn Frizz",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 134,
+      "file": "Filia_Diamond_Shear Force.webp",
+      "name": "Filia - Shear Force",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 135,
+      "file": "Fukua_Bronze_Infernal Twin.webp",
+      "name": "Fukua - Infernal Twin",
+      "faction": "Bronze",
+      "roles": [
+        "Bronze"
+      ]
+    },
+    {
+      "id": 136,
+      "file": "Fukua_Bronze_Rough Copy.webp",
+      "name": "Fukua - Rough Copy",
+      "faction": "Bronze",
+      "roles": [
+        "Bronze"
+      ]
+    },
+    {
+      "id": 137,
+      "file": "Fukua_Silver_Chameleon Twist.webp",
+      "name": "Fukua - Chameleon Twist",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 138,
+      "file": "Fukua_Silver_Feared Faux.webp",
+      "name": "Fukua - Feared Faux",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 139,
+      "file": "Fukua_Silver_Rain Shadow.webp",
+      "name": "Fukua - Rain Shadow",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 140,
+      "file": "Fukua_Silver_Souls Sister.webp",
+      "name": "Fukua - Souls Sister",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 141,
+      "file": "Fukua_Gold_Feathered Edges.webp",
+      "name": "Fukua - Feathered Edges",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 142,
+      "file": "Fukua_Gold_Flower Power.webp",
+      "name": "Fukua - Flower Power",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 143,
+      "file": "Fukua_Gold_Hell's Belle.webp",
+      "name": "Fukua - Hell's Belle",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 144,
+      "file": "Fukua_Gold_Night Terror.webp",
+      "name": "Fukua - Night Terror",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 145,
+      "file": "Fukua_Gold_Phantom Threads.webp",
+      "name": "Fukua - Phantom Threads",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 146,
+      "file": "Fukua_Gold_Vaporwave Vixen.webp",
+      "name": "Fukua - Vaporwave Vixen",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 147,
+      "file": "Fukua_Diamond_Apex Complex.webp",
+      "name": "Fukua - Apex Complex",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 148,
+      "file": "Fukua_Diamond_Dream Demon.webp",
+      "name": "Fukua - Dream Demon",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 149,
+      "file": "Fukua_Diamond_Idol Echo.webp",
+      "name": "Fukua - Idol Echo",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 150,
+      "file": "Fukua_Diamond_Shadow Puppet.webp",
+      "name": "Fukua - Shadow Puppet",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 151,
+      "file": "Fukua_Diamond_Splitting Image.webp",
+      "name": "Fukua - Splitting Image",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 152,
+      "file": "Fukua_Diamond_True Self.webp",
+      "name": "Fukua - True Self",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 153,
+      "file": "Marie_Bronze_Bare Bones.webp",
+      "name": "Marie - Bare Bones",
+      "faction": "Bronze",
+      "roles": [
+        "Bronze"
+      ]
+    },
+    {
+      "id": 154,
+      "file": "Marie_Bronze_Moody Magus.webp",
+      "name": "Marie - Moody Magus",
+      "faction": "Bronze",
+      "roles": [
+        "Bronze"
+      ]
+    },
+    {
+      "id": 155,
+      "file": "Marie_Silver_Jack-O-Specter.webp",
+      "name": "Marie - Jack-O-Specter",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 156,
+      "file": "Marie_Silver_Maid of Honor.webp",
+      "name": "Marie - Maid of Honor",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 157,
+      "file": "Marie_Silver_Phantom Wrangler.webp",
+      "name": "Marie - Phantom Wrangler",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 158,
+      "file": "Marie_Silver_Snake Charmer.webp",
+      "name": "Marie - Snake Charmer",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 159,
+      "file": "Marie_Gold_Dark Horse.webp",
+      "name": "Marie - Dark Horse",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 160,
+      "file": "Marie_Gold_Gravedigger.webp",
+      "name": "Marie - Gravedigger",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 161,
+      "file": "Marie_Gold_Grin Reaper.webp",
+      "name": "Marie - Grin Reaper",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 162,
+      "file": "Marie_Gold_Gust Buster.webp",
+      "name": "Marie - Gust Buster",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 163,
+      "file": "Marie_Gold_Octoplasm.webp",
+      "name": "Marie - Octoplasm",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 164,
+      "file": "Marie_Gold_Spell-Bent.webp",
+      "name": "Marie - Spell-Bent",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 165,
+      "file": "Marie_Diamond_Comet Custodian.webp",
+      "name": "Marie - Comet Custodian",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 166,
+      "file": "Marie_Diamond_Heartless.webp",
+      "name": "Marie - Heartless",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 167,
+      "file": "Marie_Diamond_Mad Malice.webp",
+      "name": "Marie - Mad Malice",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 168,
+      "file": "Marie_Diamond_Megalomaniac.webp",
+      "name": "Marie - Megalomaniac",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 169,
+      "file": "Ms._Fortune_Bronze_Hellcat.webp",
+      "name": "Ms. Fortune - Hellcat",
+      "faction": "Bronze",
+      "roles": [
+        "Bronze"
+      ]
+    },
+    {
+      "id": 170,
+      "file": "Ms._Fortune_Bronze_Just Kitten.webp",
+      "name": "Ms. Fortune - Just Kitten",
+      "faction": "Bronze",
+      "roles": [
+        "Bronze"
+      ]
+    },
+    {
+      "id": 171,
+      "file": "Ms._Fortune_Silver_Feline Lucky.webp",
+      "name": "Ms. Fortune - Feline Lucky",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 172,
+      "file": "Ms._Fortune_Silver_Ms. Trial.webp",
+      "name": "Ms. Fortune - Ms. Trial",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 173,
+      "file": "Ms._Fortune_Silver_Patched Up.webp",
+      "name": "Ms. Fortune - Patched Up",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 174,
+      "file": "Ms._Fortune_Silver_Purrfect Dark.webp",
+      "name": "Ms. Fortune - Purrfect Dark",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 175,
+      "file": "Ms._Fortune_Gold_Claw & Order.webp",
+      "name": "Ms. Fortune - Claw & Order",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 176,
+      "file": "Ms._Fortune_Gold_Furmidable.webp",
+      "name": "Ms. Fortune - Furmidable",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 177,
+      "file": "Ms._Fortune_Gold_Hack n' Splash.webp",
+      "name": "Ms. Fortune - Hack n' Splash",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 178,
+      "file": "Ms._Fortune_Gold_Meow & Furever.webp",
+      "name": "Ms. Fortune - Meow & Furever",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 179,
+      "file": "Ms._Fortune_Gold_Rogue Agent.webp",
+      "name": "Ms. Fortune - Rogue Agent",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 180,
+      "file": "Ms._Fortune_Gold_Time Thief.webp",
+      "name": "Ms. Fortune - Time Thief",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 181,
+      "file": "Ms._Fortune_Diamond_Fatal Fray.webp",
+      "name": "Ms. Fortune - Fatal Fray",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 182,
+      "file": "Ms._Fortune_Diamond_Foot Soldier.webp",
+      "name": "Ms. Fortune - Foot Soldier",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 183,
+      "file": "Ms._Fortune_Diamond_Fortune Cookie.webp",
+      "name": "Ms. Fortune - Fortune Cookie",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 184,
+      "file": "Ms._Fortune_Diamond_Furry Fury.webp",
+      "name": "Ms. Fortune - Furry Fury",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 185,
+      "file": "Ms._Fortune_Diamond_Wind Stalker.webp",
+      "name": "Ms. Fortune - Wind Stalker",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 186,
+      "file": "Painwheel_Bronze_Rusty.webp",
+      "name": "Painwheel - Rusty",
+      "faction": "Bronze",
+      "roles": [
+        "Bronze"
+      ]
+    },
+    {
+      "id": 187,
+      "file": "Painwheel_Bronze_Twisted Mettle.webp",
+      "name": "Painwheel - Twisted Mettle",
+      "faction": "Bronze",
+      "roles": [
+        "Bronze"
+      ]
+    },
+    {
+      "id": 188,
+      "file": "Painwheel_Silver_Blood Drive.webp",
+      "name": "Painwheel - Blood Drive",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 189,
+      "file": "Painwheel_Silver_Freaky Friday.webp",
+      "name": "Painwheel - Freaky Friday",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 190,
+      "file": "Painwheel_Silver_Rage Appropriate.webp",
+      "name": "Painwheel - Rage Appropriate",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 191,
+      "file": "Painwheel_Silver_Sawed Apart.webp",
+      "name": "Painwheel - Sawed Apart",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 192,
+      "file": "Painwheel_Gold_Biting Cold.webp",
+      "name": "Painwheel - Biting Cold",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 193,
+      "file": "Painwheel_Gold_Buzzkill.webp",
+      "name": "Painwheel - Buzzkill",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 194,
+      "file": "Painwheel_Gold_Firefly.webp",
+      "name": "Painwheel - Firefly",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 195,
+      "file": "Painwheel_Gold_Grim Fan.webp",
+      "name": "Painwheel - Grim Fan",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 196,
+      "file": "Painwheel_Gold_Raw Nerv.webp",
+      "name": "Painwheel - Raw Nerv",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 197,
+      "file": "Painwheel_Gold_Tyrannical.webp",
+      "name": "Painwheel - Tyrannical",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 198,
+      "file": "Painwheel_Diamond_Fly Trap.webp",
+      "name": "Painwheel - Fly Trap",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 199,
+      "file": "Painwheel_Diamond_Masked Menace.webp",
+      "name": "Painwheel - Masked Menace",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 200,
+      "file": "Painwheel_Diamond_Neuromancer.webp",
+      "name": "Painwheel - Neuromancer",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 201,
+      "file": "Painwheel_Diamond_Web Crawler.webp",
+      "name": "Painwheel - Web Crawler",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 202,
+      "file": "Parasoul_Bronze_Heavy Reign.webp",
+      "name": "Parasoul - Heavy Reign",
+      "faction": "Bronze",
+      "roles": [
+        "Bronze"
+      ]
+    },
+    {
+      "id": 203,
+      "file": "Parasoul_Bronze_Sheltered.webp",
+      "name": "Parasoul - Sheltered",
+      "faction": "Bronze",
+      "roles": [
+        "Bronze"
+      ]
+    },
+    {
+      "id": 204,
+      "file": "Parasoul_Silver_Danger-Prone.webp",
+      "name": "Parasoul - Danger-Prone",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 205,
+      "file": "Parasoul_Silver_Ivy League.webp",
+      "name": "Parasoul - Ivy League",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 206,
+      "file": "Parasoul_Silver_No Egrets.webp",
+      "name": "Parasoul - No Egrets",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 207,
+      "file": "Parasoul_Silver_Shadow Ops.webp",
+      "name": "Parasoul - Shadow Ops",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 208,
+      "file": "Parasoul_Gold_High Ruler.webp",
+      "name": "Parasoul - High Ruler",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 209,
+      "file": "Parasoul_Gold_Indomitable.webp",
+      "name": "Parasoul - Indomitable",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 210,
+      "file": "Parasoul_Gold_Iron Matron.webp",
+      "name": "Parasoul - Iron Matron",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 211,
+      "file": "Parasoul_Gold_Primed.webp",
+      "name": "Parasoul - Primed",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 212,
+      "file": "Parasoul_Gold_Princess Pride.webp",
+      "name": "Parasoul - Princess Pride",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 213,
+      "file": "Parasoul_Gold_Regally Blonde.webp",
+      "name": "Parasoul - Regally Blonde",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 214,
+      "file": "Parasoul_Gold_Star-Crossed.webp",
+      "name": "Parasoul - Star-Crossed",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 215,
+      "file": "Parasoul_Diamond_Bombshell.webp",
+      "name": "Parasoul - Bombshell",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 216,
+      "file": "Parasoul_Diamond_Locked In.webp",
+      "name": "Parasoul - Locked In",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 217,
+      "file": "Parasoul_Diamond_Risky Ginger.webp",
+      "name": "Parasoul - Risky Ginger",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 218,
+      "file": "Parasoul_Diamond_Summer Salt.webp",
+      "name": "Parasoul - Summer Salt",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 219,
+      "file": "Peacock_Bronze_Rerun.webp",
+      "name": "Peacock - Rerun",
+      "faction": "Bronze",
+      "roles": [
+        "Bronze"
+      ]
+    },
+    {
+      "id": 220,
+      "file": "Peacock_Bronze_Sketchy.webp",
+      "name": "Peacock - Sketchy",
+      "faction": "Bronze",
+      "roles": [
+        "Bronze"
+      ]
+    },
+    {
+      "id": 221,
+      "file": "Peacock_Silver_Inkling.webp",
+      "name": "Peacock - Inkling",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 222,
+      "file": "Peacock_Silver_Pea Shooter.webp",
+      "name": "Peacock - Pea Shooter",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 223,
+      "file": "Peacock_Silver_Prism Plumage.webp",
+      "name": "Peacock - Prism Plumage",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 224,
+      "file": "Peacock_Silver_Wildcard.webp",
+      "name": "Peacock - Wildcard",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 225,
+      "file": "Peacock_Gold_Ionic Icon.webp",
+      "name": "Peacock - Ionic Icon",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 226,
+      "file": "Peacock_Gold_Mean One.webp",
+      "name": "Peacock - Mean One",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 227,
+      "file": "Peacock_Gold_Primal Prodigy.webp",
+      "name": "Peacock - Primal Prodigy",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 228,
+      "file": "Peacock_Gold_Solid Gold.webp",
+      "name": "Peacock - Solid Gold",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 229,
+      "file": "Peacock_Gold_That's All Folks!.webp",
+      "name": "Peacock - That's All Folks!",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 230,
+      "file": "Peacock_Gold_Ultraviolent.webp",
+      "name": "Peacock - Ultraviolent",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 231,
+      "file": "Peacock_Gold_Untouchable.webp",
+      "name": "Peacock - Untouchable",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 232,
+      "file": "Peacock_Diamond_Deal Breaker.webp",
+      "name": "Peacock - Deal Breaker",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 233,
+      "file": "Peacock_Diamond_Dream Catcher.webp",
+      "name": "Peacock - Dream Catcher",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 234,
+      "file": "Peacock_Diamond_Freeze Frame.webp",
+      "name": "Peacock - Freeze Frame",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 235,
+      "file": "Peacock_Diamond_Inkfluencer.webp",
+      "name": "Peacock - Inkfluencer",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 236,
+      "file": "Robo-Fortune_Bronze_M-3OW.webp",
+      "name": "Robo-Fortune - M-3OW",
+      "faction": "Bronze",
+      "roles": [
+        "Bronze"
+      ]
+    },
+    {
+      "id": 237,
+      "file": "Robo-Fortune_Bronze_Prototype.webp",
+      "name": "Robo-Fortune - Prototype",
+      "faction": "Bronze",
+      "roles": [
+        "Bronze"
+      ]
+    },
+    {
+      "id": 238,
+      "file": "Robo-Fortune_Silver_Blue Bomber.webp",
+      "name": "Robo-Fortune - Blue Bomber",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 239,
+      "file": "Robo-Fortune_Silver_Nyanotech.webp",
+      "name": "Robo-Fortune - Nyanotech",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 240,
+      "file": "Robo-Fortune_Silver_Purrminator.webp",
+      "name": "Robo-Fortune - Purrminator",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 241,
+      "file": "Robo-Fortune_Silver_Vector Protector.webp",
+      "name": "Robo-Fortune - Vector Protector",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 242,
+      "file": "Robo-Fortune_Gold_Blue Screen.webp",
+      "name": "Robo-Fortune - Blue Screen",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 243,
+      "file": "Robo-Fortune_Gold_Buffer Zone.webp",
+      "name": "Robo-Fortune - Buffer Zone",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 244,
+      "file": "Robo-Fortune_Gold_Double Exposure.webp",
+      "name": "Robo-Fortune - Double Exposure",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 245,
+      "file": "Robo-Fortune_Gold_Head Hunter.webp",
+      "name": "Robo-Fortune - Head Hunter",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 246,
+      "file": "Robo-Fortune_Gold_Number Cruncher.webp",
+      "name": "Robo-Fortune - Number Cruncher",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 247,
+      "file": "Robo-Fortune_Gold_Persona Assistant.webp",
+      "name": "Robo-Fortune - Persona Assistant",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 248,
+      "file": "Robo-Fortune_Gold_Terror Byte.webp",
+      "name": "Robo-Fortune - Terror Byte",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 249,
+      "file": "Robo-Fortune_Diamond_Overclocked.webp",
+      "name": "Robo-Fortune - Overclocked",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 250,
+      "file": "Robo-Fortune_Diamond_Proton Pulse.webp",
+      "name": "Robo-Fortune - Proton Pulse",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 251,
+      "file": "Robo-Fortune_Diamond_Reimaged.webp",
+      "name": "Robo-Fortune - Reimaged",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 252,
+      "file": "Robo-Fortune_Diamond_X-Bot.webp",
+      "name": "Robo-Fortune - X-Bot",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 253,
+      "file": "Squigly_Bronze_Scared Stiff.webp",
+      "name": "Squigly - Scared Stiff",
+      "faction": "Bronze",
+      "roles": [
+        "Bronze"
+      ]
+    },
+    {
+      "id": 254,
+      "file": "Squigly_Bronze_Stage Fright.webp",
+      "name": "Squigly - Stage Fright",
+      "faction": "Bronze",
+      "roles": [
+        "Bronze"
+      ]
+    },
+    {
+      "id": 255,
+      "file": "Squigly_Silver_Dead Heat.webp",
+      "name": "Squigly - Dead Heat",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 256,
+      "file": "Squigly_Silver_Gang Green.webp",
+      "name": "Squigly - Gang Green",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 257,
+      "file": "Squigly_Silver_Nearly Departed.webp",
+      "name": "Squigly - Nearly Departed",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 258,
+      "file": "Squigly_Silver_Necrobreaker.webp",
+      "name": "Squigly - Necrobreaker",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 259,
+      "file": "Squigly_Gold_Bio-Exorcist.webp",
+      "name": "Squigly - Bio-Exorcist",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 260,
+      "file": "Squigly_Gold_Dead of Winter.webp",
+      "name": "Squigly - Dead of Winter",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 261,
+      "file": "Squigly_Gold_Demon Artist.webp",
+      "name": "Squigly - Demon Artist",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 262,
+      "file": "Squigly_Gold_Nail Biter.webp",
+      "name": "Squigly - Nail Biter",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 263,
+      "file": "Squigly_Gold_Poltergust.webp",
+      "name": "Squigly - Poltergust",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 264,
+      "file": "Squigly_Gold_Thrill Shrieker.webp",
+      "name": "Squigly - Thrill Shrieker",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 265,
+      "file": "Squigly_Gold_Yellow One.webp",
+      "name": "Squigly - Yellow One",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 266,
+      "file": "Squigly_Diamond_Glacial Ghoul.webp",
+      "name": "Squigly - Glacial Ghoul",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 267,
+      "file": "Squigly_Diamond_Grave Danger.webp",
+      "name": "Squigly - Grave Danger",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 268,
+      "file": "Squigly_Diamond_Love Crafted.webp",
+      "name": "Squigly - Love Crafted",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 269,
+      "file": "Squigly_Diamond_Mana Flow.webp",
+      "name": "Squigly - Mana Flow",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 270,
+      "file": "Squigly_Diamond_Plot Twisted.webp",
+      "name": "Squigly - Plot Twisted",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 271,
+      "file": "Umbrella_Bronze_Fresh Heir.webp",
+      "name": "Umbrella - Fresh Heir",
+      "faction": "Bronze",
+      "roles": [
+        "Bronze"
+      ]
+    },
+    {
+      "id": 272,
+      "file": "Umbrella_Bronze_Salty.webp",
+      "name": "Umbrella - Salty",
+      "faction": "Bronze",
+      "roles": [
+        "Bronze"
+      ]
+    },
+    {
+      "id": 273,
+      "file": "Umbrella_Silver_Candy Crusher.webp",
+      "name": "Umbrella - Candy Crusher",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 274,
+      "file": "Umbrella_Silver_Puddle Pirate.webp",
+      "name": "Umbrella - Puddle Pirate",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 275,
+      "file": "Umbrella_Silver_Rose-Tinted.webp",
+      "name": "Umbrella - Rose-Tinted",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 276,
+      "file": "Umbrella_Silver_Wild Child.webp",
+      "name": "Umbrella - Wild Child",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 277,
+      "file": "Umbrella_Gold_Lucky Lure.webp",
+      "name": "Umbrella - Lucky Lure",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 278,
+      "file": "Umbrella_Gold_Palace Plunderer.webp",
+      "name": "Umbrella - Palace Plunderer",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 279,
+      "file": "Umbrella_Gold_Psykid.webp",
+      "name": "Umbrella - Psykid",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 280,
+      "file": "Umbrella_Gold_Space Case.webp",
+      "name": "Umbrella - Space Case",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 281,
+      "file": "Umbrella_Gold_Tidal Traveler.webp",
+      "name": "Umbrella - Tidal Traveler",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 282,
+      "file": "Umbrella_Gold_Wunderkind.webp",
+      "name": "Umbrella - Wunderkind",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 283,
+      "file": "Umbrella_Diamond_Angel Maker.webp",
+      "name": "Umbrella - Angel Maker",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 284,
+      "file": "Umbrella_Diamond_Death Wish.webp",
+      "name": "Umbrella - Death Wish",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 285,
+      "file": "Umbrella_Diamond_Eager Deceiver.webp",
+      "name": "Umbrella - Eager Deceiver",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 286,
+      "file": "Umbrella_Diamond_Raining Champ.webp",
+      "name": "Umbrella - Raining Champ",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 287,
+      "file": "Valentine_Bronze_Icy Hot.webp",
+      "name": "Valentine - Icy Hot",
+      "faction": "Bronze",
+      "roles": [
+        "Bronze"
+      ]
+    },
+    {
+      "id": 288,
+      "file": "Valentine_Bronze_Scrub.webp",
+      "name": "Valentine - Scrub",
+      "faction": "Bronze",
+      "roles": [
+        "Bronze"
+      ]
+    },
+    {
+      "id": 289,
+      "file": "Valentine_Silver_Graveyard Shift.webp",
+      "name": "Valentine - Graveyard Shift",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 290,
+      "file": "Valentine_Silver_Hallow Fiend.webp",
+      "name": "Valentine - Hallow Fiend",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 291,
+      "file": "Valentine_Silver_Kill Joy.webp",
+      "name": "Valentine - Kill Joy",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 292,
+      "file": "Valentine_Silver_Oh Mai.webp",
+      "name": "Valentine - Oh Mai",
+      "faction": "Silver",
+      "roles": [
+        "Silver"
+      ]
+    },
+    {
+      "id": 293,
+      "file": "Valentine_Gold_Final Fang.webp",
+      "name": "Valentine - Final Fang",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 294,
+      "file": "Valentine_Gold_Last Hope.webp",
+      "name": "Valentine - Last Hope",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 295,
+      "file": "Valentine_Gold_Pyro-Technique.webp",
+      "name": "Valentine - Pyro-Technique",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 296,
+      "file": "Valentine_Gold_Silent Kill.webp",
+      "name": "Valentine - Silent Kill",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 297,
+      "file": "Valentine_Gold_Superluminal.webp",
+      "name": "Valentine - Superluminal",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 298,
+      "file": "Valentine_Gold_Surgeon General.webp",
+      "name": "Valentine - Surgeon General",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 299,
+      "file": "Valentine_Diamond_Assassin's Greed.webp",
+      "name": "Valentine - Assassin's Greed",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 300,
+      "file": "Valentine_Diamond_Near Death.webp",
+      "name": "Valentine - Near Death",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 301,
+      "file": "Valentine_Diamond_Seraph Soldier.webp",
+      "name": "Valentine - Seraph Soldier",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 302,
+      "file": "Valentine_Diamond_Très Chic.webp",
+      "name": "Valentine - Très Chic",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
+      "id": 303,
+      "file": "Valentine_Diamond_Wetwork.webp",
+      "name": "Valentine - Wetwork",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    }
+  ]
+}

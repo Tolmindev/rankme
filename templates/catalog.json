@@ -111,6 +111,28 @@
       "exclusive": true,
       "parallax": true,
       "coverThumb": "assets/brand/Dota2_Cover_thumb.webp"
+    },
+    {
+      "id": "skullgirls",
+      "title": "Skullgirls Mobile",
+      "description": "2D Fighting RPG packed with characters to collect, upgrade and customize as you search for the mysterious SKULLGIRL!",
+      "cover": "assets/brand/Skullgirls_Cover.webp",
+      "href": "tier.html?t=skullgirls",
+      "category": "games",
+      "tags": [
+        "games",
+        "fighting",
+        "mobile",
+        "skullgirls"
+      ],
+      "itemCount": 303,
+      "itemLabel": "fighters",
+      "creator": "RankMe",
+      "createdAt": "2026-08-24",
+      "featured": true,
+      "exclusive": true,
+      "parallax": true,
+      "coverThumb": "assets/brand/Skullgirls_Cover_thumb.webp"
     }
   ],
   "categoryMeta": {

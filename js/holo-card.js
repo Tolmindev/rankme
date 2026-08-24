@@ -49,7 +49,7 @@
         '<span class="ach-card-face">' +
           '<img class="ach-art" src="' + item.img + '" alt="">' +
           '<span class="ach-foil" aria-hidden="true"></span>' +
-          '<span class="ach-spark" aria-hidden="true"></span>' +
+          '<span class="ach-sheen" aria-hidden="true"></span>' +
           '<span class="ach-glare" aria-hidden="true"></span>' +
         '</span>' +
       '</button>'

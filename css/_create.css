@@ -261,3 +261,8 @@
   color: #fff;
   box-shadow: 0 0 12px rgba(150,110,255,.3);
 }
+
+.create-card .row .btn {
+  flex: 1 1 0;
+  min-width: 0;
+}

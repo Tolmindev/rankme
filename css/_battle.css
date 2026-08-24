@@ -220,16 +220,6 @@ button.battle-back:active {
   transform: scale(1);
 }
 
-.battle-choose-btn.primary {
-  background: var(--accent-grad);
-  color: #1a1226;
-  border-color: transparent;
-}
-
-.battle-choose-btn.primary:hover {
-  box-shadow: var(--glow-accent);
-}
-
 .battle-vs-row.entering {
   opacity: 0;
   transform: translateY(10px) scale(.98);
@@ -521,18 +511,8 @@ button, .cta, .btn, .btn-mini, .pill-btn, .download-btn, .login-btn, a.btn, a.ct
 }
 
 .battle-panel .btn.primary, .battle-panel a.btn.primary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
   width: 100%;
   min-height: 46px;
-  border-radius: 999px;
-  background: linear-gradient(120deg, #8f6bd8, #c98fe0, #e6a9e8);
-  color: #1a1226;
-  font-weight: 900;
-  text-decoration: none;
-  border: none;
-  box-shadow: 0 0 18px rgba(180,140,255,.35);
 }
 
 .battle-panel .btn.ghost, .battle-panel a.btn.ghost {
@@ -540,13 +520,7 @@ button, .cta, .btn, .btn-mini, .pill-btn, .download-btn, .login-btn, a.btn, a.ct
   align-items: center;
   justify-content: center;
   width: 100%;
-  min-height: 42px;
-  border-radius: 999px;
-  background: transparent;
-  color: #e8dff8;
-  border: 1.5px solid rgba(200,160,240,.35);
-  font-weight: 700;
-  text-decoration: none;
+  min-height: 46px;
 }
 
 .battle-panel-actions {
@@ -1042,56 +1016,12 @@ button, .cta, .btn, .btn-mini, .pill-btn, .download-btn, .login-btn, a.btn, a.ct
 }
 
 .battle-panel .btn, .battle-panel a.btn, .battle-panel button.btn, .battle-panel-actions .btn, .battle-panel-actions a.btn, .battle-panel-actions button.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
   width: 100%;
   min-height: 46px;
-  border-radius: 999px;
-  font-weight: 800;
-  font-size: 0.95rem;
-  font-family: inherit;
-  cursor: pointer;
-  text-decoration: none;
-  box-sizing: border-box;
-  transition: transform .15s ease, box-shadow .15s ease, filter .15s ease, border-color .15s ease, background .15s ease;
 }
 
 .battle-panel .btn.primary, .battle-panel a.btn.primary, .battle-panel-actions .btn.primary, .battle-panel-actions a.btn.primary {
-  background: linear-gradient(120deg, #8f6bd8, #c98fe0, #e6a9e8);
-  color: #1a1226;
-  border: none;
-  box-shadow: 0 0 18px rgba(180,140,255,.35);
-}
-
-.battle-panel .btn.primary:hover, .battle-panel a.btn.primary:hover, .battle-panel-actions .btn.primary:hover, .battle-panel-actions a.btn.primary:hover {
-  filter: brightness(1.1);
-  transform: translateY(-2px);
-  box-shadow: 0 0 26px rgba(200,160,255,.55);
-}
-
-.battle-panel .btn.primary:active, .battle-panel a.btn.primary:active {
-  transform: translateY(0) scale(0.98);
-}
-
-.battle-panel .btn.ghost, .battle-panel a.btn.ghost, .battle-panel button.btn.ghost, .battle-panel-actions .btn.ghost, .battle-panel-actions button.btn.ghost {
-  background: rgba(30, 24, 48, 0.55);
-  color: #f0eafc;
-  border: 1.5px solid rgba(200,160,240,.4);
-  box-shadow: none;
-}
-
-.battle-panel .btn.ghost:hover, .battle-panel a.btn.ghost:hover, .battle-panel button.btn.ghost:hover, .battle-panel-actions .btn.ghost:hover, .battle-panel-actions button.btn.ghost:hover {
-  border-color: rgba(220,180,255,.75);
-  background: rgba(50, 38, 78, 0.75);
-  color: #fff;
-  transform: translateY(-2px);
-  box-shadow: 0 0 18px rgba(180,140,255,.35);
-  filter: brightness(1.05);
-}
-
-.battle-panel .btn.ghost:active, .battle-panel button.btn.ghost:active {
-  transform: translateY(0) scale(0.98);
+  width: 100%;
 }
 
 .battle-side {

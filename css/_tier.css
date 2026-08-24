@@ -189,23 +189,6 @@
   pointer-events: none;
 }
 
-.pill-btn {
-  padding: 9px 16px;
-  border-radius: 999px;
-  font-size: .78rem;
-  font-weight: 800;
-  letter-spacing: .3px;
-  cursor: pointer;
-  border: 1px solid var(--line);
-  background: #171327;
-  color: var(--text-dim);
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  transition: all .18s;
-  white-space: nowrap;
-}
-
 .pill-btn .ico {
   font-size: 1rem;
   line-height: 1;
@@ -224,16 +207,15 @@
 }
 
 .pill-btn.fill {
-  background: linear-gradient(120deg,#8f6bd8,#c98fe0);
-  color: #1a1226;
-  border: none;
-  box-shadow: 0 0 16px rgba(180,120,240,.3);
+  color: var(--text);
+  border-color: rgba(200,160,240,.4);
 }
 
 .pill-btn.fill:hover {
-  filter: brightness(1.1);
+  border-color: rgba(210,170,255,.9);
+  color: #f4eefc;
+  box-shadow: 0 0 14px rgba(190,140,240,.4), 0 0 28px rgba(160,100,230,.18);
   transform: translateY(-1px);
-  box-shadow: 0 0 22px rgba(200,140,255,.5), 0 0 40px rgba(160,100,230,.22);
 }
 
 .pill-btn.danger {

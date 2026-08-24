@@ -10,6 +10,15 @@
   --text: #f1eefb;
   --text-dim: #a79fc4;
   --accent-grad: linear-gradient(120deg,#b79bf0 0%, #e6a9e8 50%, #cdd6f7 100%);
+  --btn-h: 38px;
+  --btn-radius: 999px;
+  --btn-bg: #171327;
+  --btn-fg: #f4eefc;
+  --btn-line: rgba(200,160,240,.42);
+  --btn-line-hot: rgba(220,180,255,.88);
+  --btn-glow: 0 0 16px rgba(180,120,255,.32);
+  --btn-core: linear-gradient(160deg, #2e2342 0%, #171022 50%, #221832 100%);
+  --btn-holo: linear-gradient(120deg, #b79bf0, #e6a9e8, #8ec5ff, #c9a3ff, #b79bf0);
   --card-w: 64px;
   --card-h: calc(var(--card-w) * 1.35);
   --radius: 14px;

@@ -103,36 +103,6 @@
   flex-wrap: wrap;
 }
 
-.cta.primary, .cta.cta-start {
-  color: #f8f2ff;
-  min-width: 260px;
-  padding: 16px 48px;
-  font-size: 1.05rem;
-  letter-spacing: .04em;
-  border: 2px solid transparent;
-  background: linear-gradient(160deg, #2e2342 0%, #171022 45%, #221832 100%) padding-box,
-    linear-gradient(120deg, #b79bf0, #e6a9e8, #8ec5ff, #c9a3ff, #b79bf0) border-box;
-  background-size: 100% 100%, 220% 100%;
-  background-origin: padding-box, border-box;
-  background-clip: padding-box, border-box;
-  box-shadow: 0 0 0 1px rgba(180,140,255,.2),
-    0 0 28px rgba(180,120,255,.45),
-    0 0 56px rgba(160,100,230,.25),
-    0 8px 24px rgba(0,0,0,.35),
-    inset 0 1px 0 rgba(255,255,255,.1);
-  animation: ctaGlowShift 3.8s linear infinite;
-}
-
-.cta.primary:hover, .cta.cta-start:hover {
-  filter: brightness(1.14) saturate(1.12);
-  transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 0 0 1px rgba(220,180,255,.4),
-    0 0 36px rgba(200,140,255,.65),
-    0 0 72px rgba(180,100,240,.35),
-    0 12px 28px rgba(0,0,0,.4),
-    inset 0 1px 0 rgba(255,255,255,.14);
-}
-
 .tl-card {
   background: var(--panel);
   border: 1px solid var(--line);
@@ -249,23 +219,10 @@
   font-size: .75rem;
   text-decoration: none;
   border: 1px solid var(--line);
-  background: rgba(255,255,255,0.04);
-  color: var(--text);
+  background: var(--btn-bg);
+  color: var(--btn-fg);
   cursor: pointer;
   font-family: inherit;
-  transition: border-color .15s, box-shadow .15s, background .15s, filter .15s;
-}
-
-.tl-actions a.primary, .tl-actions button.primary {
-  background: linear-gradient(120deg,#b79bf0,#e6a9e8);
-  color: #1a1226;
-  border: none;
-  box-shadow: 0 0 12px rgba(180,140,240,.25);
-}
-
-.tl-actions a.primary:hover, .tl-actions button.primary:hover {
-  filter: brightness(1.08);
-  box-shadow: 0 0 18px rgba(180,140,240,.45);
 }
 
 .tl-actions button.danger, .tl-actions a.danger {

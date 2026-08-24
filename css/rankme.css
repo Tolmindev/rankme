@@ -491,12 +491,15 @@ footer.site .footer-social a:hover {
 
 .modal-actions {
   display: flex;
-  gap: 10px;
+  gap: 12px;
   justify-content: center;
+  flex-wrap: nowrap;
 }
 .modal-actions button {
-  flex: 1 1 0;
-  min-width: 0;
+  flex: 1 1 auto;
+  min-width: max-content;
+  width: auto;
+  padding: 0 22px;
 }
 
 .wrap h1 {
@@ -2844,13 +2847,14 @@ body[data-editor="1"] #heroDesc {
 .portals-bar {
   display: flex;
   width: 100%;
-  height: 34px;
-  border-radius: 12px;
-  overflow: visible;
-  margin-bottom: 16px;
-  gap: 3px;
-  padding: 0;
+  align-items: stretch;
+  gap: 6px;
+  margin: 8px 0 12px;
+  padding: 6px 0;
+  box-sizing: border-box;
   background: transparent;
+  border-radius: 0;
+  overflow: visible;
 }
 
 .portals-bar[hidden] {
@@ -2862,31 +2866,29 @@ body[data-editor="1"] #heroDesc {
   min-width: 0;
   position: relative;
   cursor: pointer;
-  border-radius: 8px;
-  min-height: 36px;
-  transition: filter .18s, box-shadow .18s, transform .15s, background .18s, border-color .18s, opacity .18s;
-  border: 2px solid rgba(255,255,255,0.25);
-  opacity: 0.85;
+  height: 34px;
+  min-height: 34px;
+  border-radius: 12px;
+  opacity: 1;
+  box-shadow: inset 0 0 14px var(--glow, rgba(180,140,240,0.25));
+  transition: filter .18s, box-shadow .18s, transform .15s, border-color .18s;
 }
 
 .portal-slot:hover {
-  opacity: 1;
-  filter: brightness(1.1);
-  box-shadow: 0 0 14px var(--glow, rgba(180,140,240,0.35));
+  filter: brightness(1.12) saturate(1.1);
+  transform: translateY(-1px);
+  box-shadow: inset 0 0 16px var(--glow, rgba(180,140,240,0.4)), 0 0 14px var(--glow, rgba(180,140,240,0.45));
 }
 
 .portal-slot.drag-over {
-  opacity: 1;
-  border-color: rgba(255,255,255,0.5);
-  filter: brightness(1.35) saturate(1.3);
-  box-shadow: 0 0 14px var(--glow, rgba(200,160,255,0.7)), 0 0 32px var(--glow, rgba(180,120,255,0.45));
+  filter: brightness(1.28) saturate(1.2);
+  transform: translateY(-1px) scaleY(1.06);
   z-index: 2;
-  transform: scaleY(1.12);
+  box-shadow: inset 0 0 18px var(--glow, rgba(200,160,255,0.5)), 0 0 22px var(--glow, rgba(180,120,255,0.55));
 }
 
 .portal-slot::after {
   content: none;
-  display: none;
 }
 
 .portal-btn {
@@ -5693,9 +5695,11 @@ body > .toast {
   background: #1b1729;
   border: 1px solid var(--line);
   border-radius: 16px;
-  padding: 28px 30px;
-  max-width: 380px;
+  padding: 28px 32px;
+  width: min(440px, 92vw);
+  max-width: 92vw;
   text-align: center;
+  box-sizing: border-box;
 }
 
 .modal h3 {
@@ -5714,12 +5718,6 @@ body > .toast {
   line-height: 1.5;
   margin: 0 0 20px;
   font-weight: 600;
-}
-
-.modal-actions {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
 }
 
 .download-modal {

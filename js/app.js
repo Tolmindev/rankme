@@ -589,10 +589,12 @@ function renderPortals(){
     slot.dataset.tierId = tier.id;
     slot.dataset.tierIndex = idx;
     slot.dataset.label = tier.name;
-    const c1 = `hsl(${tier.hue}, ${Math.min(60, tier.sat)}%, ${Math.min(58, tier.light)}%)`;
-    const c2 = `hsl(${tier.hue}, ${Math.min(50, tier.sat)}%, ${Math.max(28, tier.light-12)}%)`;
-    slot.style.background = `linear-gradient(180deg, ${c1}, ${c2})`;
-    slot.style.setProperty('--glow', `hsla(${tier.hue}, 70%, 60%, 0.65)`);
+    const hue = tier.hue;
+    const sat = Math.min(62, tier.sat);
+    const light = Math.min(58, tier.light);
+    slot.style.background = `linear-gradient(180deg, hsla(${hue}, ${sat}%, ${light}%, 0.4), hsla(${hue}, ${sat}%, ${Math.max(24, light - 14)}%, 0.12))`;
+    slot.style.border = `1.5px solid hsla(${hue}, 70%, 62%, 0.5)`;
+    slot.style.setProperty('--glow', `hsla(${hue}, 70%, 60%, 0.65)`);
     bar.appendChild(slot);
   });
 }
@@ -602,7 +604,7 @@ function portalAt(x, y){
   const slots = document.querySelectorAll('.portal-slot');
   for(const s of slots){
     const b = s.getBoundingClientRect();
-    if(x >= b.left && x <= b.right && y >= b.top && y <= b.bottom) return s;
+    if (x >= b.left && x <= b.right && y >= b.top - 10 && y <= b.bottom + 10) return s;
   }
   return null;
 }

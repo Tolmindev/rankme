@@ -6,7 +6,7 @@
 <title>Account - RankMe</title>
 <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/rankme.css?v=20260824b">
+<link rel="stylesheet" href="css/rankme.css?v=20260824e">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
 <script src="js/supabaseClient.js" defer></script>
 </head>
@@ -74,9 +74,12 @@
   </div>
 </div>
 
+<div class="ach-stage" id="achStage" hidden></div>
+
 <footer id="site-footer" class="site"></footer>
 <script src="js/footer.js" defer></script>
 <script src="js/catalog.js"></script>
+<script src="js/holo-card.js"></script>
 
 <script>
 const panel = document.getElementById('panel');
@@ -262,12 +265,15 @@ async function renderCabinet(user){
       <div class="as-head">
         <div>
           <h2>Achievements</h2>
-          <p class="as-sub">Coming soon</p>
+          <p class="as-sub">Preview</p>
         </div>
       </div>
+      <div class="ach-grid" id="achGrid"></div>
     </section>
 
     <button class="login-btn ghost" id="logout">Log out</button>`;
+
+  if (window.RankMeHolo) RankMeHolo.mount(document.getElementById('achGrid'), document.getElementById('achStage'));
 
   document.getElementById('logout').onclick = async ()=>{
     await rankmeSignOut();

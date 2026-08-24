@@ -57,9 +57,10 @@
       els.top.classList.toggle('is-done', phase === 'done');
     }
     if (els.how) {
-      if (phase === 'play') {
+      if (phase === 'select') {
         els.how.hidden = false;
         els.how.removeAttribute('hidden');
+        els.how.innerHTML = 'Each round you pick a winner. Those picks become a ranking.<br>More rounds - clearer order. You can edit after.';
       } else {
         els.how.hidden = true;
         els.how.setAttribute('hidden', '');
@@ -170,7 +171,6 @@
 
     document.title = 'Battle Mode - ' + (t.title || 'RankMe');
     setChrome('select');
-    if (els.how) { els.how.hidden = true; els.how.setAttribute('hidden', ''); els.how.textContent = ''; }
     historyStack = [];
     if (els.arena) els.arena.style.visibility = '';
 
@@ -288,13 +288,6 @@
     els.progressLabel = document.getElementById('battleProgressLabel');
     var titleEl = document.getElementById('battleTitle');
     if (titleEl) titleEl.textContent = tpl.title || '';
-    if (els.how) {
-      els.how.hidden = false;
-      els.how.removeAttribute('hidden');
-      els.how.innerHTML = mode === 'full'
-        ? 'Full ranking builds a complete order from your picks.<br>Take your time - you can leave and continue later.'
-        : 'Each round you pick a winner. Those picks become a ranking.<br>More rounds - clearer order. You can edit after.';
-    }
     if (els.back) {
       els.back.onclick = function (e) {
         e.preventDefault();

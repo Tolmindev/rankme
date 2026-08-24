@@ -7,6 +7,8 @@ const CARD_SHAPE = (TMPL && TMPL.cardShape) || 'portrait';
 const CARD_ASPECT = (TMPL && TMPL.cardAspect) || (CARD_SHAPE === 'square' ? 1 : 1.35);
 const CARD_FRAME = (TMPL && TMPL.cardFrame) || 'default';
 const DEFAULT_CARD_SIZE = Number(TMPL && TMPL.defaultSize) || (CARD_SHAPE === 'landscape' ? 78 : 64);
+const SIZE_MIN = Number(TMPL && TMPL.sizeMin) || (CARD_SHAPE === 'landscape' ? 50 : 40);
+const SIZE_MAX = Number(TMPL && TMPL.sizeMax) || (CARD_SHAPE === 'landscape' ? 140 : 100);
 const CARD_PATH = (TMPL && TMPL.cardPath) || 'assets/cards/';
 const NO_FACTIONS = !!(TMPL && TMPL.noFactions);
 const TEMPLATE_ID = (TMPL && TMPL.id) || (window.RANKME_BLANK ? 'blank' : 'sf-duel');
@@ -1026,7 +1028,7 @@ function setCardSize(sliderVal){
      Landscape (Dota etc.): map slider to a larger readable width range. */
   var px = +sliderVal;
   if(CARD_SHAPE === 'landscape'){
-    var minS = 50, maxS = 140;
+    var minS = SIZE_MIN, maxS = SIZE_MAX;
     var minPx = 72, maxPx = 260;
     var t = (px - minS) / (maxS - minS);
     if(t < 0) t = 0;
@@ -1498,7 +1500,7 @@ async function exportPNG(returnBlobOnly, blobCb, forceSize){
     : parseInt(sliderEl?.value || '64', 10);
   let cardW;
   if(CARD_SHAPE === 'landscape'){
-    const minS = 50, maxS = 140, minPx = 72, maxPx = 260;
+    const minS = SIZE_MIN, maxS = SIZE_MAX, minPx = 72, maxPx = 260;
     let t = (uiSize - minS) / (maxS - minS);
     if(t < 0) t = 0; if(t > 1) t = 1;
     cardW = Math.round(minPx + t * (maxPx - minPx));
@@ -2104,24 +2106,16 @@ function applyBattleResult(){
 
 (async ()=>{
   if(CARD_SHAPE === 'square') document.body.classList.add('card-square');
-  if(CARD_SHAPE === 'landscape') {
-    document.body.classList.add('card-landscape');
-    const s = document.getElementById('sizeSlider');
-    if(s && !s.dataset.landscapeInit) {
-      s.dataset.landscapeInit = '1';
-      s.min = '50';
-      s.max = '140';
-      s.value = String(DEFAULT_CARD_SIZE);
-      setCardSize(DEFAULT_CARD_SIZE);
-    }
-  } else if (sizeSlider) {
-    if (DEFAULT_CARD_SIZE > 80) sizeSlider.max = String(Math.max(100, DEFAULT_CARD_SIZE + 24));
+  if(CARD_SHAPE === 'landscape') document.body.classList.add('card-landscape');
+  if(CARD_FRAME === 'thin') document.body.classList.add('card-thin');
+  if(THEME_GOLD) document.body.classList.add('theme-gold');
+  if(NO_FACTIONS) document.body.classList.add('no-factions');
+  if (sizeSlider) {
+    sizeSlider.min = String(SIZE_MIN);
+    sizeSlider.max = String(SIZE_MAX);
     sizeSlider.value = String(DEFAULT_CARD_SIZE);
     setCardSize(DEFAULT_CARD_SIZE);
   }
-  if(THEME_GOLD) document.body.classList.add('theme-gold');
-  if(NO_FACTIONS) document.body.classList.add('no-factions');
-  if(CARD_FRAME === 'thin') document.body.classList.add('card-thin');
 
 /* Community ranking UI (public list via ?c=id) */
 async function tryLoadCommunityFromQuery() {

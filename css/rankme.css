@@ -496,9 +496,8 @@ footer.site .footer-social a:hover {
   flex-wrap: nowrap;
 }
 .modal-actions button {
-  flex: 1 1 auto;
+  flex: 1 1 0;
   min-width: max-content;
-  width: auto;
   padding: 0 22px;
 }
 

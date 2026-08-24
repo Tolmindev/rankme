@@ -6,7 +6,7 @@
 <title>Account - RankMe</title>
 <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/rankme.css?v=20260824e">
+<link rel="stylesheet" href="css/rankme.css?v=20260824f">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
 <script src="js/supabaseClient.js" defer></script>
 </head>
@@ -265,7 +265,6 @@ async function renderCabinet(user){
       <div class="as-head">
         <div>
           <h2>Achievements</h2>
-          <p class="as-sub">Preview</p>
         </div>
       </div>
       <div class="ach-grid" id="achGrid"></div>
@@ -464,10 +463,12 @@ async function renderPublicProfile(userId){
       <div class="as-head">
         <div>
           <h2>Achievements</h2>
-          <p class="as-sub">Coming soon</p>
         </div>
       </div>
+      <div class="ach-grid" id="achGrid"></div>
     </section>`;
+
+  if (window.RankMeHolo) RankMeHolo.mount(document.getElementById('achGrid'), document.getElementById('achStage'));
 
   (async function () {
     var el = document.getElementById('statBattles');

@@ -6773,7 +6773,7 @@ body > .toast {
   border-radius: inherit;
 }
 
-/* Soft RankMe foil: blurred rainbow light, no stripes, no color-dodge */
+/* Soft RankMe foil: blurred rainbow light over the art */
 .ach-foil {
   background: radial-gradient(
     130% 90% at var(--mx, 50%) var(--my, 50%),

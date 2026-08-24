@@ -20,8 +20,6 @@
     y = Math.max(0, Math.min(1, y));
     el.style.setProperty('--mx', (x * 100).toFixed(2) + '%');
     el.style.setProperty('--my', (y * 100).toFixed(2) + '%');
-    el.style.setProperty('--posx', ((x - 0.5) * 100).toFixed(2) + '%');
-    el.style.setProperty('--posy', ((y - 0.5) * 100).toFixed(2) + '%');
     el.style.setProperty('--rx', ((x - 0.5) * 28).toFixed(2) + 'deg');
     el.style.setProperty('--ry', ((0.5 - y) * 20).toFixed(2) + 'deg');
   }
@@ -29,8 +27,6 @@
   function resetPointer(el) {
     el.style.setProperty('--mx', '50%');
     el.style.setProperty('--my', '50%');
-    el.style.setProperty('--posx', '0%');
-    el.style.setProperty('--posy', '0%');
     el.style.setProperty('--rx', '0deg');
     el.style.setProperty('--ry', '0deg');
   }

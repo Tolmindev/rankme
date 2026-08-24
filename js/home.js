@@ -90,12 +90,29 @@
     return tokenMatch(hay, q);
   }
 
-  function computeCategoryCounts(items) {
-    var counts = {};
-    items.forEach(function (t) {
-      counts[t.category] = (counts[t.category] || 0) + 1;
+  function renderCategoryChips() {
+    var order = ['games','anime','movies','tv','sports','music','memes','technology','other'];
+    var html = '';
+    html += chipHtml('all', 'All');
+    order.forEach(function (cat) {
+      var meta = state.categoryMeta[cat] || { label: cat };
+      html += chipHtml(cat, meta.label || cat);
     });
-    return counts;
+    els.chips.innerHTML = html;
+    els.chips.querySelectorAll('.cat-chip').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        state.category = btn.getAttribute('data-cat');
+        renderCategoryChips();
+        state.tplVisible = null;
+        renderGrid();
+      });
+    });
+  }
+
+  function chipHtml(cat, label) {
+    var active = state.category === cat ? ' active' : '';
+    return '<button type="button" class="cat-chip' + active + '" data-cat="' + escapeHtml(cat) + '">' +
+      escapeHtml(label) + '</button>';
   }
 
   function sortItems(items, sort) {
@@ -127,34 +144,6 @@
         break;
     }
     return arr;
-  }
-
-  function renderCategoryChips() {
-    var counts = computeCategoryCounts(state.all);
-    var order = ['games','anime','movies','tv','sports','music','memes','technology','other'];
-    var html = '';
-    html += chipHtml('all', 'All', state.all.length);
-    order.forEach(function (cat) {
-      var meta = state.categoryMeta[cat] || { label: cat };
-      var n = counts[cat] || 0;
-      html += chipHtml(cat, meta.label || cat, n);
-    });
-    els.chips.innerHTML = html;
-    els.chips.querySelectorAll('.cat-chip').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        state.category = btn.getAttribute('data-cat');
-        renderCategoryChips();
-        state.tplVisible = null;
-        renderGrid();
-      });
-    });
-  }
-
-  function chipHtml(cat, label, count) {
-    var active = state.category === cat ? ' active' : '';
-    return '<button type="button" class="cat-chip' + active + '" data-cat="' + escapeHtml(cat) + '">' +
-      '<span>' + escapeHtml(label) + '</span>' +
-      '<span class="cnt">' + count + '</span></button>';
   }
 
   function cardHtml(t) {
@@ -193,10 +182,6 @@
       return inCat && matchesQuery(t, q);
     });
     var sorted = sortItems(filtered, state.sort);
-
-    els.meta.innerHTML = '<b>' + sorted.length + '</b>'
-      + (q ? ' "' + escapeHtml(state.query.trim()) + '"' : '')
-      + (state.category !== 'all' ? ' in ' + escapeHtml((state.categoryMeta[state.category] || {}).label || state.category) : '');
 
     if (!sorted.length) {
       els.grid.removeAttribute('aria-busy');
@@ -443,7 +428,6 @@
     els.ddLabel = document.getElementById('sortDdLabel');
     els.ddMenu = document.getElementById('sortDdMenu');
     els.grid = document.getElementById('discoverGrid');
-    els.meta = document.getElementById('resultsMeta');
     els.community = document.getElementById('communityBody');
 
     if (!els.grid) return; // not on homepage

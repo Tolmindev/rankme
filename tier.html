@@ -70,19 +70,6 @@
   </div>
 </section>
 
-<div class="list-actions" id="listActions" hidden>
-  <div class="left-actions">
-    <label class="pill-btn upload-remix" id="remixUploadWrap" hidden>
-      <input type="file" id="remixUpload" accept="image/*" multiple hidden>
-      + Upload
-    </label>
-  </div>
-  <div class="right-actions">
-    <button class="pill-btn remix-btn" id="remixBtn" type="button" title="Remix">Remix</button>
-    <button class="pill-btn save-btn" id="saveAccountBtn" type="button" title="Save">Save</button>
-  </div>
-</div>
-
 <div class="board" id="board" hidden>
   <div class="board-inner" id="boardInner"></div>
 </div>
@@ -110,6 +97,12 @@
       <svg viewBox="0 0 24 24"><path d="M18.9 2H22l-7.6 8.7L23.3 22h-7l-5.5-7.2L4.5 22H1.4l8.1-9.3L1 2h7.2l5 6.6L18.9 2Zm-1.2 18h1.7L7.4 4H5.6L17.7 20Z"/></svg>
     </div>
   </div>
+  <button class="pill-btn remix-btn" id="remixBtn" type="button" title="Remix">Remix</button>
+  <label class="pill-btn upload-remix" id="remixUploadWrap" hidden>
+    <input type="file" id="remixUpload" accept="image/*" multiple hidden>
+    + Upload
+  </label>
+  <button class="pill-btn save-btn" id="saveAccountBtn" type="button" title="Save">Save</button>
   <button class="download-btn" id="downloadBtn">Download PNG</button>
 </div>
 

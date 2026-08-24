@@ -2351,7 +2351,7 @@ function exitCommunityToEditor() {
   setHeroEditable(true);
   var bar = document.getElementById('communityBar');
   if (bar) bar.hidden = true;
-  ['listActions', 'board', 'toolbar', 'poolWrap'].forEach(function (id) {
+  ['board', 'toolbar', 'poolWrap'].forEach(function (id) {
     var el = document.getElementById(id);
     if (!el) return;
     el.hidden = false;
@@ -2366,32 +2366,22 @@ function exitCommunityToEditor() {
 function setupCommunityUI() {
   if (!communityMode || !communityMeta) return;
   enterCommunityView();
-  const listAct = document.getElementById('listActions');
-  if (listAct) {
-    listAct.hidden = false;
-    listAct.removeAttribute('hidden');
-  }
   let bar = document.getElementById('communityBar');
   if (!bar) {
     bar = document.createElement('div');
     bar.id = 'communityBar';
     bar.className = 'community-bar';
-    if (listAct && listAct.parentNode) {
-      let wrap = document.getElementById('communityToolbar');
-      if (!wrap) {
-        wrap = document.createElement('div');
-        wrap.id = 'communityToolbar';
-        wrap.className = 'community-toolbar';
-        listAct.parentNode.insertBefore(wrap, listAct);
-        wrap.appendChild(bar);
-        wrap.appendChild(listAct);
-      } else {
-        wrap.insertBefore(bar, wrap.firstChild);
-      }
+    const hero = document.getElementById('heroSection') || document.querySelector('.hero');
+    let wrap = document.getElementById('communityToolbar');
+    if (!wrap) {
+      wrap = document.createElement('div');
+      wrap.id = 'communityToolbar';
+      wrap.className = 'community-toolbar';
+      wrap.appendChild(bar);
+      if (hero && hero.parentNode) hero.parentNode.insertBefore(wrap, hero.nextSibling);
+      else document.body.appendChild(wrap);
     } else {
-      const hero = document.getElementById('heroSection') || document.querySelector('.hero');
-      if (hero && hero.parentNode) hero.parentNode.insertBefore(bar, hero.nextSibling);
-      else document.body.appendChild(bar);
+      wrap.insertBefore(bar, wrap.firstChild);
     }
   }
   const m = communityMeta;

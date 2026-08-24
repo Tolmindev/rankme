@@ -146,7 +146,7 @@
     if (status) {
       status.remove();
     }
-    ['heroSection', 'listActions', 'board', 'toolbar', 'poolWrap'].forEach((hid) => {
+    ['heroSection', 'board', 'toolbar', 'poolWrap'].forEach((hid) => {
       const el = document.getElementById(hid);
       if (el) {
         el.hidden = false;

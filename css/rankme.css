@@ -422,7 +422,7 @@ footer.site .footer-social a:hover {
 .cta.primary,
 .download-btn,
 .modal-actions button.primary,
-.list-actions .save-btn,
+.save-btn,
 .battle-panel .btn.primary,
 .battle-panel a.btn.primary {
   color: #f8f2ff;
@@ -437,7 +437,7 @@ footer.site .footer-social a:hover {
 .cta.primary:hover,
 .download-btn:hover,
 .modal-actions button.primary:hover,
-.list-actions .save-btn:hover,
+.save-btn:hover,
 .battle-panel .btn.primary:hover,
 .battle-panel a.btn.primary:hover {
   filter: brightness(1.1);
@@ -1262,7 +1262,7 @@ html.rankme-dragging, html.rankme-dragging body, body.rankme-dragging {
 }
 /* RankMe · hero — Tier hero, experts strip, list actions, battle CTA */
 
-body > header.site, body > footer.site, body > #site-footer, body > .toolbar, body > .board, body > .pool-wrap, body > .list-actions, body > .hero, body > .experts-strip, body > .toast-host {
+body > header.site, body > footer.site, body > #site-footer, body > .toolbar, body > .board, body > .pool-wrap, body > .hero, body > .experts-strip, body > .toast-host {
   width: 100%;
   box-sizing: border-box;
   flex-shrink: 0;
@@ -1369,43 +1369,18 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
   height: 14px;
 }
 
-.list-actions .left-actions {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.list-actions .right-actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-left: auto;
-}
-
-.list-actions .pill-btn {
-  padding: 8px 18px;
-  font-size: .8rem;
-  cursor: pointer;
-}
-
-.list-actions .remix-btn {
+.remix-btn {
   color: var(--btn-fg);
 }
 
-.list-actions .remix-btn:hover, .list-actions .remix-btn.active-remix {
+.remix-btn:hover, .remix-btn.active-remix {
   border-color: var(--btn-line-hot);
   color: #fff;
   box-shadow: var(--btn-glow);
   transform: translateY(-1px);
 }
 
-.list-actions .save-btn:hover {
-  filter: brightness(1.1);
-}
-
-.list-actions .upload-remix {
+.upload-remix {
   border-color: rgba(120,200,180,.4);
   color: #b8f0d8;
   cursor: pointer;
@@ -1413,11 +1388,11 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
   align-items: center;
 }
 
-.list-actions .upload-remix[hidden] {
-  display: none !important;
+.upload-remix[hidden] {
+  display: none;
 }
 
-.list-actions .upload-remix:hover {
+.upload-remix:hover {
   border-color: rgba(120,220,180,.8);
   box-shadow: 0 0 14px rgba(100,200,160,.3);
 }
@@ -1808,19 +1783,6 @@ button.btn-battle-hero#battleModeBtn:hover {
   text-align: left;
 }
 
-.list-actions {
-  max-width: 1400px;
-  margin: 0 auto 16px;
-  padding: 0 24px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  flex-wrap: wrap;
-  min-height: 40px;
-  box-sizing: border-box;
-}
-
 .experts-strip {
   display: flex;
   flex-wrap: wrap;
@@ -1867,13 +1829,6 @@ button.btn-battle-hero#battleModeBtn:hover {
     max-width: 100%;
   }
 
-  .list-actions {
-    margin: 8px auto 12px;
-    padding: 0 14px;
-    min-height: 0;
-    gap: 8px;
-  }
-
   .hero .parallax-host {
     width: 100%;
     max-width: 100%;
@@ -1886,10 +1841,6 @@ button.btn-battle-hero#battleModeBtn:hover {
     height: auto;
     margin: 0;
     flex: none;
-  }
-
-  .list-actions .left-actions:empty, .list-actions .upload-remix[hidden] {
-    display: none !important;
   }
 
   .hero-title, .hero .desc {
@@ -2124,8 +2075,8 @@ button.btn-battle-hero#battleModeBtn:hover {
 }
 
 /* Equal Remix / Save size (same hierarchy) */
-.list-actions .remix-btn,
-.list-actions .save-btn {
+.toolbar .remix-btn,
+.toolbar .save-btn {
   min-width: 108px;
   height: var(--btn-h);
   padding: 0 20px;
@@ -2135,18 +2086,13 @@ button.btn-battle-hero#battleModeBtn:hover {
 .community-toolbar {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 12px;
   max-width: 1400px;
   width: 100%;
   margin: 0 auto 14px;
   padding: 0 24px;
   box-sizing: border-box;
-}
-.community-toolbar #listActions {
-  margin: 0 0 0 auto;
-  flex-shrink: 0;
-  width: auto;
 }
 .community-bar {
   display: inline-flex;
@@ -2292,20 +2238,7 @@ a.cb-name:hover { color: #e8d4ff; }
     justify-content: space-between;
     box-sizing: border-box;
   }
-  .community-toolbar #listActions {
-    margin-left: 0;
-    align-self: flex-end;
-    padding: 0;
-    min-height: 0;
-  }
 }
-
-
-
-  100% { transform: scale(1); }
-}
-
-
 
 
 /* mobile-tier-stack — single source of vertical rhythm under hero */
@@ -2346,10 +2279,6 @@ a.cb-name:hover { color: #e8d4ff; }
     height: 0 !important;
     overflow: hidden !important;
   }
-  .list-actions {
-    margin-top: 12px;
-    margin-bottom: 12px;
-  }
   .community-toolbar {
     margin-top: 12px;
   }
@@ -2361,6 +2290,7 @@ body.community-view .experts-block,
 body.community-view .hero-battle-wrap,
 body.community-view #battleModeBtn,
 body.community-view .toolbar-actions,
+body.community-view #remixUploadWrap,
 body.community-view #poolWrap,
 body.community-view #portalBtn,
 body.community-view #factionFilters,

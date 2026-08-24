@@ -6,8 +6,6 @@
   "cardShape": "portrait",
   "cardAspect": 1.45,
   "cardFrame": "thin",
-  "defaultSize": 96,
-  "sizeMax": 120,
   "cardPath": "assets/skullgirls/",
   "theme": "default",
   "noFactions": false,

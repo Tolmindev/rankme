@@ -6097,12 +6097,6 @@ body > .toast {
   font-size: 1.25rem;
   font-weight: 900;
 }
-.as-sub {
-  margin: 4px 0 0;
-  font-size: 0.78rem;
-  color: var(--text-dim);
-  font-weight: 600;
-}
 .as-more {
   display: flex;
   justify-content: center;
@@ -6290,7 +6284,13 @@ body > .toast {
   font-weight: 700;
   color: #9a90b0;
 }
-.sc-status.is-pub { color: #5dce7a; }
+.sc-status.is-pub {
+  color: #e8d4ff;
+  background: linear-gradient(90deg, #f0c4ea, #c4a0f0 50%, #b8d4ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 
 .sc-menu {
   position: relative;
@@ -6394,6 +6394,16 @@ body > .toast {
   width: 18px;
   height: 18px;
 }
+.sc-drop label.sc-drop-pub .toggle-track {
+  background: #3a3452;
+}
+.sc-drop label.sc-drop-pub .toggle-checkbox:checked + .toggle-track {
+  background: linear-gradient(135deg, #f0c4ea 0%, #c4a0f0 42%, #8b6ad8 100%);
+  box-shadow:
+    inset 0 1px 2px rgba(0, 0, 0, 0.2),
+    0 0 12px rgba(200, 150, 255, 0.55),
+    0 0 22px rgba(160, 110, 240, 0.3);
+}
 .sc-drop label.sc-drop-pub .toggle-checkbox:checked + .toggle-track > .toggle-thumb:not(.toggled-once),
 .sc-drop label.sc-drop-pub .toggle-checkbox:checked:not(.toggled-once) + .toggle-track > .toggle-thumb {
   transform: translateX(18px);
@@ -6414,10 +6424,6 @@ body > .toast {
 }
 
 /* Achievements */
-.account-section-ach .as-sub {
-  margin-top: 2px;
-}
-
 .ach-grid {
   display: flex;
   flex-wrap: wrap;
@@ -6615,7 +6621,7 @@ body.ach-focus-open { overflow: hidden; }
   }
 }
 
-/* Squishy switch (CodePen-inspired, RankMe green) */
+/* Squishy switch (CodePen motion, RankMe holofoil) */
 .toggle-container {
   position: relative;
   border-radius: 999px;
@@ -6626,6 +6632,7 @@ body.ach-focus-open { overflow: hidden; }
 .toggle-checkbox {
   -webkit-appearance: none;
   appearance: none;
+  accent-color: #c4a0f0;
   position: absolute;
   z-index: 1;
   border-radius: inherit;
@@ -6643,16 +6650,16 @@ body.ach-focus-open { overflow: hidden; }
   padding: 4px;
   width: 100%;
   height: 100%;
-  background-color: #4a4560;
+  background: #3a3452;
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.35);
-  transition: background-color 0.4s linear, box-shadow 0.3s ease;
+  transition: background 0.4s linear, box-shadow 0.3s ease;
 }
-.toggle-container.green > .toggle-checkbox:checked + .toggle-track {
-  background-color: #4ccf59;
+.toggle-checkbox:checked + .toggle-track {
+  background: linear-gradient(135deg, #f0c4ea 0%, #c4a0f0 42%, #8b6ad8 100%);
   box-shadow:
     inset 0 1px 2px rgba(0, 0, 0, 0.2),
-    0 0 12px rgba(76, 207, 89, 0.45),
-    0 0 22px rgba(76, 207, 89, 0.25);
+    0 0 12px rgba(200, 150, 255, 0.55),
+    0 0 22px rgba(160, 110, 240, 0.3);
 }
 .toggle-thumb {
   position: relative;

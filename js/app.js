@@ -770,14 +770,16 @@ function onDragMove(e){
   drag.floater.style.top = (e.clientY - drag.offY)+'px';
   drag.floater.style.transform = 'none';
 
-  document.querySelectorAll('.tier-row').forEach(r=>r.classList.remove('drag-over'));
   const cont = containerAt(e.clientX, e.clientY);
+  const overRow = (cont && cont.classList.contains('tier-cards'))
+    ? cont.closest('.tier-row')
+    : null;
+  document.querySelectorAll('.tier-row').forEach(r=>{
+    r.classList.toggle('drag-over', r === overRow);
+  });
   document.querySelectorAll('.card.placeholder').forEach(p=>p.remove());
 
   if(cont){
-    if(cont.classList.contains('tier-cards')){
-      cont.closest('.tier-row').classList.add('drag-over');
-    }
     const ph = document.createElement('div');
     ph.className = 'card placeholder';
     ph.innerHTML = '<img src="'+cardSrc(drag.cid)+'">';

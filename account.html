@@ -6,9 +6,9 @@
 <title>Account - RankMe</title>
 <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/rankme.css?v=20260826f">
+<link rel="stylesheet" href="css/rankme.css?v=20260826i">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
-<script src="js/supabaseClient.js?v=20260826f" defer></script>
+<script src="js/supabaseClient.js?v=20260826i" defer></script>
 </head>
 <body class="page-account">
 <header class="site">
@@ -365,21 +365,6 @@ async function renderCabinet(user){
       paintSavedList(rows, { owner: true, user: user });
     }
   }catch(e){
-    const raw = String(e && e.message || '');
-    if(/jwt|expired/i.test(raw)){
-      try{
-        const c = await initSupabase();
-        if(c) await c.auth.refreshSession();
-        const rows = await listMyTierlists();
-        const box = document.getElementById('listBox');
-        const totalLikes = rows.reduce((s,r)=> s + (Number(r.like_count)||0), 0);
-        document.getElementById('statLists').textContent = String(rows.length);
-        document.getElementById('statLikes').textContent = typeof formatCount === 'function' ? formatCount(totalLikes) : String(totalLikes);
-        if(!rows.length) box.innerHTML = emptySavedHtml('Nothing saved yet.');
-        else paintSavedList(rows, { owner: true, user: user });
-        return;
-      }catch(_){}
-    }
     document.getElementById('listBox').innerHTML = `<div class="empty">Could not load lists. <button type="button" class="btn-mini" onclick="location.reload()">Retry</button></div>`;
   }
 }

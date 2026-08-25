@@ -532,10 +532,6 @@
   background: transparent;
 }
 
-.portals-bar[hidden] {
-  display: none;
-}
-
 .portal-slot {
   flex: 1;
   min-width: 0;
@@ -1199,28 +1195,6 @@ body.theme-gold .card img {
     min-width: 0;
   }
 
-}
-
-@media (hover: none) {
-
-  .card:hover {
-    transform: none;
-    filter: none;
-    box-shadow: none;
-  }
-
-  body.card-square .card:hover {
-    transform: none;
-    filter: none;
-  }
-
-  body.theme-gold .card:hover {
-    filter: none;
-  }
-
-}
-
-@media (max-width: 720px) {
   .pool-header {
     flex-direction: column;
     align-items: stretch;
@@ -1245,7 +1219,28 @@ body.theme-gold .card img {
     text-align: center;
     justify-content: center;
   }
+
 }
+
+@media (hover: none) {
+
+  .card:hover {
+    transform: none;
+    filter: none;
+    box-shadow: none;
+  }
+
+  body.card-square .card:hover {
+    transform: none;
+    filter: none;
+  }
+
+  body.theme-gold .card:hover {
+    filter: none;
+  }
+
+}
+
 
 /* Landscape cards (Dota 2) */
 body.card-landscape {

@@ -85,10 +85,6 @@
   text-align: center;
 }
 
-.battle-footer .battle-how[hidden] {
-  display: none;
-}
-
 /* Back — one solid pill style */
 .battle-back,
 button.battle-back,
@@ -712,10 +708,6 @@ button, .cta, .btn, .btn-mini, .pill-btn, .download-btn, .login-btn, a.btn, a.ct
   animation: none;
 }
 
-.battle-card.equal-pick.chosen {
-  animation: equalHoldFade 0.75s ease-out forwards;
-}
-
 .battle-result-list li:nth-child(1) .battle-result-rank, .battle-result-list li:nth-child(2) .battle-result-rank, .battle-result-list li:nth-child(3) .battle-result-rank, .battle-rank-num.gold, .battle-rank-num.silver, .battle-rank-num.bronze, .battle-rank-list li:nth-child(1) .battle-rank-num, .battle-rank-list li:nth-child(2) .battle-rank-num, .battle-rank-list li:nth-child(3) .battle-rank-num {
   color: #ffffff;
   text-shadow: 0 1px 3px rgba(0,0,0,.45);
@@ -1059,14 +1051,6 @@ to { --elec-angle: 360deg; }
 
 0% { background-position: 0% 50%; }
     100% { background-position: 100% 50%; }
-}
-
-@keyframes equalHoldFade {
-
-0%{ opacity: 1; transform: translateZ(0) scale(1); }
-  25%{ opacity: 1; transform: translateZ(0) scale(1.04); }
-  70%{ opacity: 1; transform: translateZ(0) scale(1); }
-  100%{ opacity: 0; transform: translateZ(0) scale(1); }
 }
 
 @media (max-width: 720px) {

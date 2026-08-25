@@ -34,9 +34,9 @@
 .wrap input[type=text], .wrap textarea, .create-card input[type=text], .create-card textarea {
   width: 100%;
   padding: 12px 14px;
-  border-radius: 10px;
-  border: 1px solid rgba(200,160,240,.22);
-  background: #14121f;
+  border-radius: 12px;
+  border: 1.5px solid rgba(200, 160, 240, 0.28);
+  background: #1e1a30;
   color: var(--text);
   font-family: inherit;
   font-weight: 600;
@@ -45,30 +45,41 @@
   outline: none;
   transition: border-color .15s, box-shadow .15s;
   box-sizing: border-box;
+  caret-color: #e6d4ff;
+}
+
+.wrap input[type=text]::placeholder,
+.wrap textarea::placeholder,
+.create-card input[type=text]::placeholder,
+.create-card textarea::placeholder {
+  color: #c9b8ea;
+  -webkit-text-fill-color: #c9b8ea;
+  opacity: 1;
 }
 
 .wrap input[type=text]:focus, .wrap textarea:focus, .create-card input[type=text]:focus, .create-card textarea:focus {
-  border-color: rgba(200,160,240,.65);
-  box-shadow: 0 0 0 3px rgba(180,140,240,.12);
+  border-color: rgba(200, 160, 240, 0.7);
+  box-shadow: 0 0 0 3px rgba(180, 140, 240, 0.16);
 }
 
 .cover-drop {
-  border: 1px dashed rgba(200,160,240,.35);
-  border-radius: 12px;
+  border: 1.5px dashed rgba(180, 140, 255, 0.35);
+  border-radius: 16px;
   padding: 28px 16px;
   text-align: center;
-  color: var(--text-dim);
+  color: #c9b8ea;
   font-weight: 600;
   font-size: .85rem;
   margin-bottom: 18px;
   cursor: pointer;
-  transition: border-color .15s, background .15s;
-  background: rgba(255,255,255,0.02);
+  transition: border-color .15s, background .15s, box-shadow .15s;
+  background: rgba(30, 24, 48, 0.55);
 }
 
 .cover-drop:hover {
-  border-color: rgba(200,160,240,.7);
-  background: rgba(180,120,255,0.06);
+  border-color: rgba(200, 160, 255, 0.75);
+  background: rgba(50, 36, 80, 0.45);
+  box-shadow: 0 0 22px rgba(140, 100, 255, 0.2);
 }
 
 .create-head {

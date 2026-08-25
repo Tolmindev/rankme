@@ -468,9 +468,10 @@ body > .toast {
   font-size: 0.65rem;
   font-weight: 400;
   letter-spacing: 0.02em;
-  line-height: 1.2;
+  line-height: 1.25;
   color: rgba(210, 186, 204, 0.75);
-  margin-top: 4px;
+  margin-top: 12px;
+  padding-left: 2px;
 }
 .ap-hint:not(:empty) {
   display: block;
@@ -550,9 +551,6 @@ body > .toast {
   width: 100%;
   flex-shrink: 0;
 }
-.as-more[hidden] {
-  display: none;
-}
 
 .desktop-only { display: block; }
 .mobile-only { display: none; }
@@ -617,13 +615,6 @@ body > .toast {
 }
 @media (max-width: 720px) {
   .saved-grid > .skel-card:nth-child(n+4) { display: none; }
-}
-
-@media (min-width: 721px) {
-  .desktop-only { display: block; }
-  .mobile-only { display: none; }
-}
-@media (max-width: 720px) {
   .desktop-only { display: none; }
   .mobile-only { display: block; }
   .account-panel { padding: 20px 14px 28px; }
@@ -996,8 +987,6 @@ body > .toast {
   backdrop-filter: blur(14px);
   cursor: pointer;
 }
-.ach-stage[hidden] { display: none; }
-
 .ach-focus-wrap {
   display: flex;
   flex-direction: column;

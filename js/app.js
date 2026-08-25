@@ -22,13 +22,11 @@ const FACTION_ICON_MAP = (TMPL && TMPL.factionIcons) || null;
 
 const BLANK_MODE = !!window.RANKME_BLANK;
 /* Card data lives in templates/*.json only (loaded as window.RANKME_TEMPLATE). */
-const DEFAULT_CARD_META_LIST = [];
-// Blank builder: no stock cards - only user uploads
 const CARD_META_LIST = BLANK_MODE
   ? []
   : ((TMPL && Array.isArray(TMPL.cards) && TMPL.cards.length)
       ? TMPL.cards
-      : (console.warn('[RankMe] No template cards — load via boot.js / templates/*.json'), DEFAULT_CARD_META_LIST));
+      : (console.warn('[RankMe] No template cards — load via boot.js / templates/*.json'), []));
 const CARD_META = {};
 CARD_META_LIST.forEach(c => CARD_META[c.id] = c);
 const N_CARDS = CARD_META_LIST.length;

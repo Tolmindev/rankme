@@ -702,9 +702,6 @@ body.theme-gold {
   background: rgba(255,255,255,.08);
   color: var(--text);
 }
-.search-box .clear-btn[hidden] {
-  display: none;
-}
 
 .no-results {
   grid-column: 1/-1;

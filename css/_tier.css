@@ -69,21 +69,13 @@
   background: rgba(255,255,255,.03);
 }
 .tier-row.drag-over .tier-label-wrap {
-  overflow: visible;
   z-index: 4;
 }
 .tier-row.drag-over .tier-label {
-  background: linear-gradient(105deg,
-    hsla(var(--hue), 90%, 64%, 1) 0%,
-    hsla(var(--hue), 82%, 52%, 1) 50%,
-    hsla(var(--hue), 78%, 42%, .95) 100%
-  );
-  text-shadow: 0 1px 2px rgba(0,0,0,.4);
+  filter: brightness(1.1) saturate(1.06);
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.5),
-    0 0 0 1px hsla(var(--hue), 100%, 78%, .95),
-    0 0 7px hsla(var(--hue), 100%, 62%, 1),
-    0 0 16px hsla(var(--hue), 95%, 58%, .65);
+    inset 0 1px 0 rgba(255,255,255,.3),
+    inset 0 0 18px hsla(var(--hue), 80%, 70%, .25);
 }
 
 .tier-label-wrap {
@@ -121,7 +113,7 @@
   word-break: break-word;
   box-shadow: inset 0 1px 0 rgba(255,255,255,.14),
     inset 0 -1px 0 rgba(0,0,0,.12);
-  transition: box-shadow .18s ease, text-shadow .18s ease, background .18s ease;
+  transition: box-shadow .18s ease, filter .18s ease;
 }
 
 .tier-label[contenteditable]:focus {

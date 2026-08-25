@@ -697,6 +697,16 @@ function beginDragVisual(){
 }
 
 function containerAt(x,y){
+  const el = document.elementFromPoint(x, y);
+  if(el){
+    const hit = el.closest('.tier-cards, .pool');
+    if(hit) return hit;
+    const row = el.closest('.tier-row');
+    if(row){
+      const cards = row.querySelector('.tier-cards');
+      if(cards) return cards;
+    }
+  }
   const rows = document.querySelectorAll('.tier-cards, .pool');
   for(const r of rows){
     const b = r.getBoundingClientRect();
@@ -774,32 +784,34 @@ function onDragMove(e){
   const overRow = (cont && cont.classList.contains('tier-cards'))
     ? cont.closest('.tier-row')
     : null;
-  document.querySelectorAll('.tier-row').forEach(r=>{
-    r.classList.toggle('drag-over', r === overRow);
-  });
-  document.querySelectorAll('.card.placeholder').forEach(p=>p.remove());
+  if(drag.overRow !== overRow){
+    if(drag.overRow) drag.overRow.classList.remove('drag-over');
+    if(overRow) overRow.classList.add('drag-over');
+    drag.overRow = overRow;
+  }
 
   if(cont){
-    const ph = document.createElement('div');
-    ph.className = 'card placeholder';
-    ph.innerHTML = '<img src="'+cardSrc(drag.cid)+'">';
+    let ph = drag.placeholder;
+    if(!ph){
+      ph = document.createElement('div');
+      ph.className = 'card placeholder';
+      ph.innerHTML = '<img src="'+cardSrc(drag.cid)+'">';
+      drag.placeholder = ph;
+    }
     insertPlaceholderAt(cont, ph, e.clientX, e.clientY);
     drag.targetContainer = cont;
-    drag.placeholder = ph;
-  } else {
+  } else if(drag.placeholder){
+    drag.placeholder.remove();
     drag.targetContainer = null;
-    drag.placeholder = null;
   }
 
-  // Portal highlight
-  document.querySelectorAll('.portal-slot').forEach(s=>s.classList.remove('drag-over'));
   const portal = portalAt(e.clientX, e.clientY);
-  if(portal){
-    portal.classList.add('drag-over');
-    drag.targetPortal = portal;
-  } else {
-    drag.targetPortal = null;
+  if(drag.overPortal !== portal){
+    if(drag.overPortal) drag.overPortal.classList.remove('drag-over');
+    if(portal) portal.classList.add('drag-over');
+    drag.overPortal = portal;
   }
+  drag.targetPortal = portal || null;
 }
 
 function cleanupDragSource(source){

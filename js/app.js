@@ -2438,7 +2438,7 @@ function setupCommunityUI() {
           heart.classList.remove('pop');
           void heart.offsetWidth;
           heart.classList.add('pop');
-          setTimeout(function () { heart.classList.remove('pop'); }, 720);
+          setTimeout(function () { heart.classList.remove('pop'); }, 450);
         }
         const n = likeBtn.querySelector('.cb-like-n');
         if (n) n.textContent = typeof formatCount === 'function' ? formatCount(res.like_count) : String(res.like_count || 0);

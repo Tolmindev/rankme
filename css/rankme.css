@@ -122,7 +122,6 @@ body {
     --card-w: 48px;
   }
 }
-
 /* RankMe · chrome — Site chrome: header, footer, page shell, buttons */
 
 body > .page, body > .wrap {
@@ -1209,7 +1208,6 @@ html.rankme-dragging {
   .boot-loading { padding: 20px 14px 32px; }
   .skel-tier-cover { width: 100%; max-width: 100%; }
 }
-
 /* RankMe · hero — Tier hero, experts strip, list actions, battle CTA */
 
 body > header.site, body > footer.site, body > #site-footer, body > .toolbar, body > .board, body > .pool-wrap, body > .hero, body > .experts-strip, body > .toast-host {
@@ -2137,72 +2135,25 @@ a.cb-name:hover { color: #e8d4ff; }
   width: 26px;
   height: 26px;
   transform-origin: center center;
-  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), filter 0.22s ease;
+  transition: transform 0.2s var(--ease-out);
 }
 .cb-like .heart-full { display: none; }
 .cb-like .heart-empty { display: block; }
 .cb-like.on .heart-empty { display: none; }
-.cb-like.on .heart-full {
-  display: block;
-  filter: drop-shadow(0 0 5px rgba(255, 130, 190, 0.55));
-}
+.cb-like.on .heart-full { display: block; }
 .cb-like:hover .cb-heart:not(.pop) .cb-ico {
-  transform: scale(1.12);
-}
-.cb-heart::before,
-.cb-heart::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 6px;
-  height: 6px;
-  margin: -3px 0 0 -3px;
-  border-radius: 50%;
-  pointer-events: none;
-  opacity: 0;
+  transform: scale(1.1);
 }
 .cb-heart.pop .cb-ico {
-  animation: likePop 0.62s cubic-bezier(0.22, 1.35, 0.36, 1) both;
-}
-.cb-heart.pop::before {
-  background: #ff9ad4;
-  box-shadow:
-    -14px -10px 0 0 #ff8ec8,
-    14px -8px 0 0 #c4a0f0,
-    -12px 12px 0 0 #8ec5ff,
-    12px 11px 0 0 #e6a9e8,
-    0 -16px 0 0 #ffb3e0;
-  animation: likeSpark 0.7s ease-out both;
-}
-.cb-heart.pop::after {
-  width: 22px;
-  height: 22px;
-  margin: -11px 0 0 -11px;
-  background: radial-gradient(circle, rgba(255, 160, 210, 0.55) 0%, transparent 68%);
-  animation: likeGlow 0.7s ease-out both;
+  animation: likePop 0.42s var(--ease-out);
 }
 @keyframes likePop {
-  0% { transform: scale(1); }
-  16% { transform: scale(0.82); }
-  42% { transform: scale(1.26); }
-  68% { transform: scale(0.96); }
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.18); }
   100% { transform: scale(1); }
 }
-@keyframes likeSpark {
-  0% { opacity: 0; transform: scale(0.2); }
-  18% { opacity: 1; transform: scale(0.7); }
-  100% { opacity: 0; transform: scale(1.35); }
-}
-@keyframes likeGlow {
-  0% { opacity: 0.85; transform: scale(0.4); }
-  40% { opacity: 0.5; transform: scale(1.15); }
-  100% { opacity: 0; transform: scale(1.7); }
-}
 @media (prefers-reduced-motion: reduce) {
-  .cb-heart.pop .cb-ico { animation-duration: 0.2s; }
-  .cb-heart.pop::before,
-  .cb-heart.pop::after { animation: none; opacity: 0; }
+  .cb-heart.pop .cb-ico { animation: none; }
 }
 /* reserve ~3 chars: 0–999 or 1k */
 .cb-like-n {
@@ -3640,7 +3591,6 @@ body.community-view button.btn-battle-hero {
 body.community-view .toolbar {
   justify-content: center;
 }
-
 /* RankMe · battle — Battle mode UI (loaded with battle-anim overrides) */
 
 .list-actions .battle-launch, #battleModeBtn {
@@ -4805,7 +4755,6 @@ to { --elec-angle: 360deg; }
     max-height: min(38vh, 280px);
   }
 }
-
 /* RankMe · home — Home, discover, template cards, community */
 
 /* Category pills — fill on active, brighter border on hover, no glow/lift */
@@ -5579,7 +5528,6 @@ to { --elec-angle: 360deg; }
     padding-right: 0;
   }
 }
-
 /* RankMe · account — Account, auth, modals, toasts, download */
 
 h1,h2,h3,.tier-label,.brand-name,.faction-btn,.download-btn,.login-btn {
@@ -6739,7 +6687,6 @@ body.ach-focus-open { overflow: hidden; }
 .toggle-checkbox:checked:not(.toggled-once) + .toggle-track > .toggle-thumb {
   transform: translateX(22px);
 }
-
 /* RankMe · create — Create / blank rank flow */
 
 .create-card, .wrap .card {

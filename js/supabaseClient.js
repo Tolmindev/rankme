@@ -61,9 +61,6 @@ function validateDisplayName(raw) {
   if (s.length < 2) return { ok: false, error: 'At least 2 characters' };
   if (s.length > 24) return { ok: false, error: '24 characters max' };
   if (/@|https?:\/\/|www\./i.test(s)) return { ok: false, error: 'No links or @handles' };
-  if (/^(rankme|rank me|admin|official|support|moderator|staff|system)$/i.test(s)) {
-    return { ok: false, error: 'This name is reserved' };
-  }
   return { ok: true, clean: s };
 }
 
@@ -73,12 +70,9 @@ async function setRankmeDisplayName(raw) {
   if (!client || !user) throw new Error('Login required');
   const check = validateDisplayName(raw);
   if (!check.ok) throw new Error(check.error);
-  const prev = Number(localStorage.getItem('rankme_rename_at') || 0);
-  if (prev && Date.now() - prev < 60000) throw new Error('Wait a minute to change it again');
   const { error } = await client.auth.updateUser({ data: { display_name: check.clean } });
   if (error) throw error;
   try {
-    localStorage.setItem('rankme_rename_at', String(Date.now()));
     await client.from('tierlists').update({ author_name: check.clean }).eq('user_id', user.id);
   } catch (e) {}
   return check.clean;

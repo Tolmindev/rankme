@@ -6,7 +6,7 @@
 <title>Account - RankMe</title>
 <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/rankme.css?v=20260824h">
+<link rel="stylesheet" href="css/rankme.css?v=20260825">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
 <script src="js/supabaseClient.js" defer></script>
 </head>
@@ -163,7 +163,7 @@ function savedCardHtml(r, opts){
         <button type="button" class="sc-drop-item" data-share="${r.id}" role="menuitem">Share</button>
         <label class="sc-drop-pub">
           <span>Publish to Community</span>
-          <span class="toggle-container green">
+          <span class="toggle-container">
             <input class="toggle-checkbox" type="checkbox" data-pub="${r.id}" ${pub ? 'checked' : ''} aria-label="Publish to Community">
             <span class="toggle-track"><span class="toggle-thumb"></span></span>
           </span>
@@ -248,11 +248,7 @@ async function renderCabinet(user){
 
     <section class="account-section">
       <div class="as-head">
-        <div>
-          <h2>Saved</h2>
-          <p class="as-sub mobile-only">Saved Exclusive rankings</p>
-        </div>
-        <p class="as-sub desktop-only">Saved Exclusive rankings</p>
+        <h2>Saved</h2>
       </div>
       <div class="saved-grid" id="listBox"></div>
     </section>
@@ -446,11 +442,7 @@ async function renderPublicProfile(userId){
 
     <section class="account-section">
       <div class="as-head">
-        <div>
-          <h2>Published</h2>
-          <p class="as-sub mobile-only">Public rankings</p>
-        </div>
-        <p class="as-sub desktop-only">Public rankings</p>
+        <h2>Published</h2>
       </div>
       <div class="saved-grid" id="listBox"></div>
     </section>

@@ -147,8 +147,7 @@ header.site {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: rgba(14,12,20,0.75);
-  backdrop-filter: blur(14px);
+  background: rgba(14, 12, 20, 0.96);
   overflow: visible;
 }
 
@@ -423,6 +422,8 @@ footer.site .footer-social a:hover {
 .download-btn,
 .modal-actions button.primary,
 .save-btn,
+.show-all-btn,
+.cc-show-all,
 .battle-panel .btn.primary,
 .battle-panel a.btn.primary {
   color: #f8f2ff;
@@ -438,6 +439,8 @@ footer.site .footer-social a:hover {
 .download-btn:hover,
 .modal-actions button.primary:hover,
 .save-btn:hover,
+.show-all-btn:hover,
+.cc-show-all:hover,
 .battle-panel .btn.primary:hover,
 .battle-panel a.btn.primary:hover {
   filter: brightness(1.1);
@@ -910,33 +913,6 @@ body.theme-gold {
   display: flex;
   justify-content: center;
   padding: 16px 0 8px;
-}
-
-.show-all-btn {
-  appearance: none;
-  -webkit-appearance: none;
-  cursor: pointer;
-  font-family: inherit;
-  border: 1.5px solid rgba(200,160,240,.45);
-  background: linear-gradient(165deg, rgba(40,32,58,.95), rgba(18,14,28,.98));
-  color: #f0eafc;
-  font-weight: 800;
-  font-size: 0.85rem;
-  letter-spacing: 0.02em;
-  padding: 12px 28px;
-  border-radius: 999px;
-  min-height: 44px;
-  transition: transform .15s ease, border-color .15s ease, box-shadow .15s ease;
-}
-
-.show-all-btn:hover {
-  transform: translateY(-2px);
-  border-color: rgba(220,180,255,.75);
-  box-shadow: 0 8px 28px rgba(160,100,255,.25);
-}
-
-.show-all-btn:active {
-  transform: translateY(0) scale(0.98);
 }
 
 html.rankme-dragging, html.rankme-dragging body, body.rankme-dragging {

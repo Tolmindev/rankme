@@ -252,6 +252,9 @@ function render(){
     const row = document.createElement('div');
     row.className = 'tier-row';
     row.dataset.tierId = t.id;
+    row.style.setProperty('--hue', t.hue);
+    row.style.setProperty('--sat', t.sat+'%');
+    row.style.setProperty('--light', t.light+'%');
 
     const labelWrap = document.createElement('div');
     labelWrap.className = 'tier-label-wrap';
@@ -260,9 +263,6 @@ function render(){
     label.className = 'tier-label';
     label.contentEditable = (communityMode) ? 'false' : 'true';
     label.spellcheck = false;
-    label.style.setProperty('--hue', t.hue);
-    label.style.setProperty('--sat', t.sat+'%');
-    label.style.setProperty('--light', t.light+'%');
     label.textContent = t.name;
     fitLabelFont(label, t.name);
     label.addEventListener('focus', ()=>{
@@ -989,8 +989,7 @@ function openRowSettings(tierId, anchorBtn){
     setHueThumb(t.hue);
     const row = document.querySelector(`.tier-row[data-tier-id="${tierId}"]`);
     if(row){
-      const lab = row.querySelector('.tier-label');
-      if(lab) lab.style.setProperty('--hue', t.hue);
+      row.style.setProperty('--hue', t.hue);
     }
   });
   pop.querySelector('.clear').addEventListener('click', ()=>{

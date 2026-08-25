@@ -725,6 +725,35 @@ function autoScrollTick(){
   autoScrollRAF = requestAnimationFrame(autoScrollTick);
 }
 
+function visibleDragCards(cont){
+  return [...cont.children].filter(c =>
+    c !== (drag && drag.source) &&
+    !c.classList.contains('placeholder') &&
+    c.style.display !== 'none' &&
+    c.style.visibility !== 'hidden'
+  );
+}
+
+/* Wrapped rows: pick insert by visual row (Y), then left-to-right (X). */
+function insertPlaceholderAt(cont, ph, x, y){
+  if(cont.classList.contains('pool')){
+    cont.appendChild(ph);
+    return;
+  }
+  const slop = 8;
+  const children = visibleDragCards(cont);
+  for(const child of children){
+    const r = child.getBoundingClientRect();
+    if(y >= r.bottom + slop) continue;
+    const sameRow = y >= r.top - slop;
+    if(!sameRow || x < r.left + r.width / 2){
+      cont.insertBefore(ph, child);
+      return;
+    }
+  }
+  cont.appendChild(ph);
+}
+
 function onDragMove(e){
   if(!drag || e.pointerId !== drag.pointerId) return;
   try { e.preventDefault(); } catch(err){}
@@ -733,8 +762,6 @@ function onDragMove(e){
   const dx = Math.abs(e.clientX - drag.startX);
   const dy = Math.abs(e.clientY - drag.startY);
   if(!drag.active){
-    // Decide scroll vs drag by first meaningful movement (no long-press)
-    // Free drag — tiny threshold (touch already started in pointerdown)
     if(dx < 3 && dy < 3) return;
     drag.moved = true;
     try { e.preventDefault(); } catch(err){}
@@ -759,28 +786,7 @@ function onDragMove(e){
     const ph = document.createElement('div');
     ph.className = 'card placeholder';
     ph.innerHTML = '<img src="'+cardSrc(drag.cid)+'">';
-    if(cont.classList.contains('pool')){
-      cont.appendChild(ph);
-    } else {
-      const children = [...cont.children].filter(c =>
-        c !== drag.source &&
-        !c.classList.contains('placeholder') &&
-        c.style.display !== 'none' &&
-        c.style.visibility !== 'hidden'
-      );
-      let inserted = false;
-      // Horizontal tiers: order by X only (left = stronger)
-      for(const child of children){
-        const b = child.getBoundingClientRect();
-        const midX = b.left + b.width / 2;
-        if(e.clientX < midX){
-          cont.insertBefore(ph, child);
-          inserted = true;
-          break;
-        }
-      }
-      if(!inserted) cont.appendChild(ph);
-    }
+    insertPlaceholderAt(cont, ph, e.clientX, e.clientY);
     drag.targetContainer = cont;
     drag.placeholder = ph;
   } else {

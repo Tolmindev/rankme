@@ -6,9 +6,9 @@
 <title>Account - RankMe</title>
 <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/rankme.css?v=20260825a">
+<link rel="stylesheet" href="css/rankme.css?v=20260826a">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
-<script src="js/supabaseClient.js" defer></script>
+<script src="js/supabaseClient.js?v=20260826a" defer></script>
 </head>
 <body class="page-account">
 <header class="site">
@@ -215,12 +215,16 @@ async function renderLogin(){
 }
 
 
-function profileBlock(name, avatarHtml, providerLabel, lists, battles, likes){
+function profileBlock(name, avatarHtml, providerLabel, lists, battles, likes, editable){
+  const safe = name.replace(/</g,'');
+  const nameEl = editable
+    ? `<b class="ap-name is-edit" id="apName" contenteditable="true" spellcheck="false" title="Click to edit">${safe}</b>`
+    : `<b class="ap-name">${safe}</b>`;
   return `
     <div class="account-profile">
       <div class="ap-avatar-wrap">${avatarHtml}</div>
       <div class="ap-text">
-        <b class="ap-name">${name.replace(/</g,'')}</b>
+        ${nameEl}
         <span class="ap-provider">${providerLabel}</span>
       </div>
       <div class="ap-stats" id="apStats">
@@ -232,9 +236,32 @@ function profileBlock(name, avatarHtml, providerLabel, lists, battles, likes){
     </div>`;
 }
 
+function wireNameEdit(){
+  const el = document.getElementById('apName');
+  if(!el || typeof setRankmeDisplayName !== 'function') return;
+  let last = (el.textContent || '').trim();
+  const commit = async ()=>{
+    const next = (el.textContent || '').replace(/\s+/g, ' ').trim();
+    if(next === last){ el.textContent = last; return; }
+    try{
+      const clean = await setRankmeDisplayName(next);
+      last = clean;
+      el.textContent = clean;
+      if(typeof updateNavAuth === 'function') updateNavAuth();
+    }catch(e){
+      el.textContent = last;
+    }
+  };
+  el.addEventListener('keydown', (e)=>{
+    if(e.key === 'Enter'){ e.preventDefault(); el.blur(); }
+    if(e.key === 'Escape'){ el.textContent = last; el.blur(); }
+  });
+  el.addEventListener('blur', commit);
+}
+
 async function renderCabinet(user){
   if (typeof updateNavAuth === 'function') updateNavAuth();
-  const name = user.user_metadata?.full_name || user.user_metadata?.custom_claims?.global_name || user.user_metadata?.name || user.email || 'User';
+  const name = (typeof rankmeDisplayName === 'function' ? rankmeDisplayName(user) : (user.user_metadata?.full_name || user.email || 'User'));
   const avatar = user.user_metadata?.avatar_url || user.user_metadata?.picture || '';
   const provider = resolveProvider(user);
   const providerLabel = ({google:'Google', discord:'Discord', x:'X', twitter:'X'})[provider] || provider;
@@ -244,7 +271,7 @@ async function renderCabinet(user){
 
   panel.removeAttribute('aria-busy');
   panel.innerHTML = `
-    ${profileBlock(name, av, providerLabel, '0', '0', '0')}
+    ${profileBlock(name, av, providerLabel, '0', '0', '0', true)}
 
     <section class="account-section">
       <div class="as-head">
@@ -274,6 +301,7 @@ async function renderCabinet(user){
     await rankmeSignOut();
     location.reload();
   };
+  wireNameEdit();
 
   try{
     const rows = await listMyTierlists();

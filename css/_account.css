@@ -109,9 +109,11 @@ body > .toast {
   background: #1b1729;
   border: 1px solid var(--line);
   border-radius: 16px;
-  padding: 28px 30px;
-  max-width: 380px;
+  padding: 28px 32px;
+  width: min(440px, 92vw);
+  max-width: 92vw;
   text-align: center;
+  box-sizing: border-box;
 }
 
 .modal h3 {
@@ -130,12 +132,6 @@ body > .toast {
   line-height: 1.5;
   margin: 0 0 20px;
   font-weight: 600;
-}
-
-.modal-actions {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
 }
 
 .download-modal {
@@ -440,6 +436,20 @@ body > .toast {
   font-weight: 900;
   color: #fff;
 }
+.ap-name.is-edit {
+  cursor: text;
+  outline: none;
+  border-radius: 8px;
+  padding: 0 6px;
+  margin: 0 -6px;
+}
+.ap-name.is-edit:hover {
+  background: rgba(255,255,255,.05);
+}
+.ap-name.is-edit:focus {
+  background: rgba(180,140,255,.1);
+  box-shadow: inset 0 0 0 1px rgba(200,160,240,.4);
+}
 .ap-provider {
   font-size: 0.78rem;
   color: var(--text-dim);
@@ -512,12 +522,6 @@ body > .toast {
   margin: 0;
   font-size: 1.25rem;
   font-weight: 900;
-}
-.as-sub {
-  margin: 4px 0 0;
-  font-size: 0.78rem;
-  color: var(--text-dim);
-  font-weight: 600;
 }
 .as-more {
   display: flex;
@@ -706,7 +710,13 @@ body > .toast {
   font-weight: 700;
   color: #9a90b0;
 }
-.sc-status.is-pub { color: #5dce7a; }
+.sc-status.is-pub {
+  color: #e8d4ff;
+  background: linear-gradient(90deg, #f0c4ea, #c4a0f0 50%, #b8d4ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 
 .sc-menu {
   position: relative;
@@ -810,6 +820,16 @@ body > .toast {
   width: 18px;
   height: 18px;
 }
+.sc-drop label.sc-drop-pub .toggle-track {
+  background: #3a3452;
+}
+.sc-drop label.sc-drop-pub .toggle-checkbox:checked + .toggle-track {
+  background: linear-gradient(135deg, #f0c4ea 0%, #c4a0f0 42%, #8b6ad8 100%);
+  box-shadow:
+    inset 0 1px 2px rgba(0, 0, 0, 0.2),
+    0 0 12px rgba(200, 150, 255, 0.55),
+    0 0 22px rgba(160, 110, 240, 0.3);
+}
 .sc-drop label.sc-drop-pub .toggle-checkbox:checked + .toggle-track > .toggle-thumb:not(.toggled-once),
 .sc-drop label.sc-drop-pub .toggle-checkbox:checked:not(.toggled-once) + .toggle-track > .toggle-thumb {
   transform: translateX(18px);
@@ -830,10 +850,6 @@ body > .toast {
 }
 
 /* Achievements */
-.account-section-ach .as-sub {
-  margin-top: 2px;
-}
-
 .ach-grid {
   display: flex;
   flex-wrap: wrap;
@@ -997,7 +1013,20 @@ body > .toast {
   font-size: 1.35rem;
   font-weight: 800;
   letter-spacing: 0.01em;
-  color: #f6f0ff;
+  color: transparent;
+  background-image: linear-gradient(
+    125deg,
+    #9b7aef 0%,
+    #c4b5fd 28%,
+    #d8b4fe 50%,
+    #b794f0 72%,
+    #a78bfa 100%
+  );
+  background-size: 170% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: heroTitleShimmer 18s ease-in-out infinite;
 }
 .ach-focus-copy p {
   margin: 0;
@@ -1025,13 +1054,16 @@ body.ach-focus-open { overflow: hidden; }
   .ach-focus-copy {
     transition: none;
   }
+  .ach-focus-copy h3 {
+    animation: none;
+  }
   .ach-card:hover .ach-card-face,
   .ach-card.is-focus .ach-card-face {
     transform: none;
   }
 }
 
-/* Squishy switch (CodePen-inspired, RankMe green) */
+/* Squishy switch (CodePen motion, RankMe holofoil) */
 .toggle-container {
   position: relative;
   border-radius: 999px;
@@ -1042,6 +1074,7 @@ body.ach-focus-open { overflow: hidden; }
 .toggle-checkbox {
   -webkit-appearance: none;
   appearance: none;
+  accent-color: #c4a0f0;
   position: absolute;
   z-index: 1;
   border-radius: inherit;
@@ -1059,16 +1092,16 @@ body.ach-focus-open { overflow: hidden; }
   padding: 4px;
   width: 100%;
   height: 100%;
-  background-color: #4a4560;
+  background: #3a3452;
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.35);
-  transition: background-color 0.4s linear, box-shadow 0.3s ease;
+  transition: background 0.4s linear, box-shadow 0.3s ease;
 }
-.toggle-container.green > .toggle-checkbox:checked + .toggle-track {
-  background-color: #4ccf59;
+.toggle-checkbox:checked + .toggle-track {
+  background: linear-gradient(135deg, #f0c4ea 0%, #c4a0f0 42%, #8b6ad8 100%);
   box-shadow:
     inset 0 1px 2px rgba(0, 0, 0, 0.2),
-    0 0 12px rgba(76, 207, 89, 0.45),
-    0 0 22px rgba(76, 207, 89, 0.25);
+    0 0 12px rgba(200, 150, 255, 0.55),
+    0 0 22px rgba(160, 110, 240, 0.3);
 }
 .toggle-thumb {
   position: relative;

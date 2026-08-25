@@ -34,6 +34,45 @@ async function getSessionUser() {
   return data?.session?.user || null;
 }
 
+function rankmeDisplayName(user) {
+  if (!user) return 'User';
+  const meta = user.user_metadata || {};
+  const fromMeta = (
+    meta.display_name ||
+    meta.full_name ||
+    meta.name ||
+    meta.custom_claims?.global_name ||
+    meta.user_name ||
+    meta.preferred_username ||
+    (meta.given_name && meta.family_name ? (meta.given_name + ' ' + meta.family_name) : null) ||
+    meta.given_name ||
+    (user.email ? user.email.split('@')[0] : null)
+  );
+  const s = String(fromMeta || 'User').replace(/[—–]/g, '-').replace(/\s+/g, ' ').trim();
+  return s || 'User';
+}
+
+function sanitizeDisplayName(raw) {
+  let s = String(raw || '').replace(/[—–]/g, '-').replace(/[<>]/g, '').replace(/\s+/g, ' ').trim();
+  if (s.length > 24) s = s.slice(0, 24).trim();
+  if (s.length < 2) return '';
+  return s;
+}
+
+async function setRankmeDisplayName(raw) {
+  const client = await initSupabase();
+  const user = await getSessionUser();
+  if (!client || !user) throw new Error('Login required');
+  const clean = sanitizeDisplayName(raw);
+  if (!clean) throw new Error('Name must be 2-24 characters');
+  const { error } = await client.auth.updateUser({ data: { display_name: clean } });
+  if (error) throw error;
+  try {
+    await client.from('tierlists').update({ author_name: clean }).eq('user_id', user.id);
+  } catch (e) {}
+  return clean;
+}
+
 async function rankmeSignIn(provider) {
   const client = await initSupabase();
   if (!client) throw new Error('Supabase not ready');
@@ -57,19 +96,8 @@ async function saveExclusiveTierlist({ title, templateId, payload, id }) {
   const client = await initSupabase();
   const user = await getSessionUser();
   if (!client || !user) throw new Error('Login required');
-  const meta = user.user_metadata || {};
-  const authorName = (
-    meta.full_name ||
-    meta.name ||
-    meta.custom_claims?.global_name ||
-    meta.user_name ||
-    meta.preferred_username ||
-    (meta.given_name && meta.family_name ? (meta.given_name + ' ' + meta.family_name) : null) ||
-    meta.given_name ||
-    (user.email ? user.email.split('@')[0] : null) ||
-    'User'
-  );
-  const authorAvatar = meta.avatar_url || meta.picture || meta.avatar || '';
+  const authorName = rankmeDisplayName(user);
+  const authorAvatar = (user.user_metadata || {}).avatar_url || (user.user_metadata || {}).picture || (user.user_metadata || {}).avatar || '';
   const now = new Date().toISOString();
   const row = {
     user_id: user.id,
@@ -127,19 +155,8 @@ async function setTierlistPublic(id, isPublic) {
   const client = await initSupabase();
   const user = await getSessionUser();
   if (!client || !user) throw new Error('Login required');
-  const meta = user.user_metadata || {};
-  const authorName = (
-    meta.full_name ||
-    meta.name ||
-    meta.custom_claims?.global_name ||
-    meta.user_name ||
-    meta.preferred_username ||
-    (meta.given_name && meta.family_name ? (meta.given_name + ' ' + meta.family_name) : null) ||
-    meta.given_name ||
-    (user.email ? user.email.split('@')[0] : null) ||
-    'User'
-  );
-  const authorAvatar = meta.avatar_url || meta.picture || meta.avatar || '';
+  const authorName = rankmeDisplayName(user);
+  const authorAvatar = (user.user_metadata || {}).avatar_url || (user.user_metadata || {}).picture || (user.user_metadata || {}).avatar || '';
   const patch = {
     is_public: !!isPublic,
     updated_at: new Date().toISOString(),
@@ -324,15 +341,7 @@ function updateNavAuth() {
       document.querySelectorAll('[data-auth-account]').forEach(function (el) {
         el.hidden = !user;
       });
-      var displayName = 'Account';
-      if (user) {
-        displayName =
-          user.user_metadata?.full_name ||
-          user.user_metadata?.name ||
-          user.user_metadata?.user_name ||
-          user.email ||
-          'Account';
-      }
+      var displayName = user ? rankmeDisplayName(user) : 'Account';
       document.querySelectorAll('[data-auth-name]').forEach(function (el) {
         el.textContent = displayName;
       });

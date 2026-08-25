@@ -356,39 +356,39 @@
   height: 22px;
   line-height: 1;
   border-radius: 999px;
-  color: #fff;
-  -webkit-text-fill-color: #fff;
-  border: 1px solid transparent;
+  background: rgba(14, 12, 20, 0.78);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: #f2eaff;
+  -webkit-text-fill-color: #f2eaff;
+  border: 1px solid rgba(255, 255, 255, 0.14);
   white-space: nowrap;
   box-sizing: border-box;
 }
 
-.tl-card .cover .badge-row .tag-cat {
-  background: linear-gradient(135deg, #94a3b8, #64748b);
-}
 .tl-card .cover .badge-row .tag-cat[data-cat="games"] {
-  background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+  border-color: rgba(140, 100, 255, 0.5);
 }
 .tl-card .cover .badge-row .tag-cat[data-cat="anime"] {
-  background: linear-gradient(135deg, #ff6b9d, #ff8fab);
+  border-color: rgba(255, 100, 150, 0.5);
 }
 .tl-card .cover .badge-row .tag-cat[data-cat="movies"] {
-  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  border-color: rgba(250, 180, 40, 0.5);
 }
 .tl-card .cover .badge-row .tag-cat[data-cat="tv"] {
-  background: linear-gradient(135deg, #34d399, #10b981);
+  border-color: rgba(50, 200, 150, 0.5);
 }
 .tl-card .cover .badge-row .tag-cat[data-cat="sports"] {
-  background: linear-gradient(135deg, #fb923c, #f97316);
+  border-color: rgba(250, 140, 40, 0.5);
 }
 .tl-card .cover .badge-row .tag-cat[data-cat="music"] {
-  background: linear-gradient(135deg, #818cf8, #6366f1);
+  border-color: rgba(100, 120, 255, 0.5);
 }
 .tl-card .cover .badge-row .tag-cat[data-cat="memes"] {
-  background: linear-gradient(135deg, #f472b6, #e879f9);
+  border-color: rgba(240, 120, 200, 0.5);
 }
 .tl-card .cover .badge-row .tag-cat[data-cat="technology"] {
-  background: linear-gradient(135deg, #22d3ee, #06b6d4);
+  border-color: rgba(40, 200, 230, 0.5);
 }
 
 .tl-card .cat-pill {

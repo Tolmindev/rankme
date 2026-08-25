@@ -53,24 +53,35 @@ function rankmeDisplayName(user) {
 }
 
 function sanitizeDisplayName(raw) {
-  let s = String(raw || '').replace(/[—–]/g, '-').replace(/[<>]/g, '').replace(/\s+/g, ' ').trim();
-  if (s.length > 24) s = s.slice(0, 24).trim();
-  if (s.length < 2) return '';
-  return s;
+  return String(raw || '').replace(/[—–]/g, '-').replace(/[<>]/g, '').replace(/\s+/g, ' ').trim();
+}
+
+function validateDisplayName(raw) {
+  const s = sanitizeDisplayName(raw);
+  if (s.length < 2) return { ok: false, error: 'At least 2 characters' };
+  if (s.length > 24) return { ok: false, error: '24 characters max' };
+  if (/@|https?:\/\/|www\./i.test(s)) return { ok: false, error: 'No links or @handles' };
+  if (/^(rankme|rank me|admin|official|support|moderator|staff|system)$/i.test(s)) {
+    return { ok: false, error: 'This name is reserved' };
+  }
+  return { ok: true, clean: s };
 }
 
 async function setRankmeDisplayName(raw) {
   const client = await initSupabase();
   const user = await getSessionUser();
   if (!client || !user) throw new Error('Login required');
-  const clean = sanitizeDisplayName(raw);
-  if (!clean) throw new Error('Name must be 2-24 characters');
-  const { error } = await client.auth.updateUser({ data: { display_name: clean } });
+  const check = validateDisplayName(raw);
+  if (!check.ok) throw new Error(check.error);
+  const prev = Number(localStorage.getItem('rankme_rename_at') || 0);
+  if (prev && Date.now() - prev < 60000) throw new Error('Wait a minute to change it again');
+  const { error } = await client.auth.updateUser({ data: { display_name: check.clean } });
   if (error) throw error;
   try {
-    await client.from('tierlists').update({ author_name: clean }).eq('user_id', user.id);
+    localStorage.setItem('rankme_rename_at', String(Date.now()));
+    await client.from('tierlists').update({ author_name: check.clean }).eq('user_id', user.id);
   } catch (e) {}
-  return clean;
+  return check.clean;
 }
 
 async function rankmeSignIn(provider) {

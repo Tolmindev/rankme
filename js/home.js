@@ -148,11 +148,8 @@
 
   function cardHtml(t) {
     var meta = state.categoryMeta[t.category] || { label: t.category || 'Other' };
-    var exclusiveTag = t.exclusive ? '<span class="tag tag-exclusive">Exclusive</span>' : '';
     var catTag = t.category ? '<span class="tag tag-cat" data-cat="' + escapeHtml(t.category) + '">' + escapeHtml(meta.label || t.category) + '</span>' : '';
-    var badges = (catTag || exclusiveTag)
-      ? ('<div class="badge-row">' + catTag + exclusiveTag + '</div>')
-      : '';
+    var badges = catTag ? '<div class="badge-row">' + catTag + '</div>' : '';
     var epicClass = t.parallax ? ' epic' : '';
     var uses = t.useCount || 0;
     var metaLine = (t.itemCount ? t.itemCount + ' ' + (t.itemLabel || 'items') : '');

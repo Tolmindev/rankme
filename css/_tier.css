@@ -65,10 +65,10 @@
   border-bottom-left-radius: var(--radius);
 }
 
-.tier-row.drag-over {
+.tier-row.drag-over .tier-cards {
   box-shadow:
-    inset 0 0 0 2px hsla(var(--hue), 75%, 62%, .75),
-    0 0 14px hsla(var(--hue), 80%, 55%, .28);
+    inset 0 0 0 2px hsla(var(--hue), 70%, 62%, .6),
+    inset 0 0 20px hsla(var(--hue), 65%, 50%, .1);
 }
 .tier-row.drag-over .tier-label-wrap {
   z-index: 4;

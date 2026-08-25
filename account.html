@@ -6,9 +6,9 @@
 <title>Account - RankMe</title>
 <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/rankme.css?v=20260826c">
+<link rel="stylesheet" href="css/rankme.css?v=20260826d">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
-<script src="js/supabaseClient.js?v=20260826c" defer></script>
+<script src="js/supabaseClient.js?v=20260826d" defer></script>
 </head>
 <body class="page-account">
 <header class="site">
@@ -218,12 +218,7 @@ async function renderLogin(){
 function profileBlock(name, avatarHtml, providerLabel, lists, battles, likes, editable){
   const safe = name.replace(/</g,'');
   const nameEl = editable
-    ? `<div class="ap-name-row">
-        <b class="ap-name is-edit" id="apName" contenteditable="true" spellcheck="false">${safe}</b>
-        <button type="button" class="ap-edit" id="apEdit" aria-label="Edit name">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
-        </button>
-      </div>
+    ? `<b class="ap-name is-edit" id="apName" contenteditable="true" spellcheck="false">${safe}</b>
       <span class="ap-hint" id="apHint"></span>`
     : `<b class="ap-name">${safe}</b>`;
   return `
@@ -245,24 +240,18 @@ function profileBlock(name, avatarHtml, providerLabel, lists, battles, likes, ed
 function wireNameEdit(){
   const el = document.getElementById('apName');
   const hint = document.getElementById('apHint');
-  const editBtn = document.getElementById('apEdit');
   if(!el || typeof setRankmeDisplayName !== 'function') return;
-  const NAME_MAX = 24;
+  const NAME_MAX = 18;
   let last = (el.textContent || '').trim();
   const showHint = (msg)=>{
     if(!hint) return;
     hint.textContent = msg || '';
   };
-  if(editBtn){
-    editBtn.addEventListener('click', ()=>{
-      el.focus();
-      const range = document.createRange();
-      range.selectNodeContents(el);
-      const sel = window.getSelection();
-      sel.removeAllRanges();
-      sel.addRange(range);
-    });
-  }
+  const flashSaved = ()=>{
+    el.classList.remove('is-saved');
+    void el.offsetWidth;
+    el.classList.add('is-saved');
+  };
   el.addEventListener('beforeinput', (e)=>{
     if(e.inputType === 'insertParagraph' || e.inputType === 'insertLineBreak'){
       e.preventDefault();
@@ -277,8 +266,7 @@ function wireNameEdit(){
     const next = (el.textContent || '').replace(/\s+/g, ' ').trim();
     if(!next || next === last || typeof validateDisplayName !== 'function'){ showHint(''); return; }
     const v = validateDisplayName(next);
-    if(!v.ok && /reserved|links|@/i.test(v.error)) showHint(v.error);
-    else showHint('');
+    showHint((!v.ok && /links|@/i.test(v.error)) ? v.error : '');
   });
   el.addEventListener('keydown', (e)=>{
     if(e.key === 'Enter'){ e.preventDefault(); el.blur(); }
@@ -287,14 +275,20 @@ function wireNameEdit(){
   el.addEventListener('blur', async ()=>{
     const next = (el.textContent || '').replace(/\s+/g, ' ').trim();
     if(next === last){ el.textContent = last; showHint(''); return; }
+    if(typeof validateDisplayName === 'function'){
+      const v = validateDisplayName(next);
+      if(!v.ok){
+        el.textContent = last;
+        showHint(v.error);
+        return;
+      }
+    }
+    flashSaved();
     try{
       const clean = await setRankmeDisplayName(next);
       last = clean;
       el.textContent = clean;
       showHint('');
-      el.classList.remove('is-saved');
-      void el.offsetWidth;
-      el.classList.add('is-saved');
       if(typeof updateNavAuth === 'function') updateNavAuth();
     }catch(e){
       el.textContent = last;

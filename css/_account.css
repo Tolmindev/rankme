@@ -436,54 +436,31 @@ body > .toast {
   font-weight: 900;
   color: #fff;
 }
-.ap-name-row {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  align-self: start;
-  max-width: 100%;
-  min-height: 32px;
-}
 .ap-name.is-edit {
   display: inline-block;
   width: max-content;
   max-width: 100%;
+  align-self: start;
   cursor: text;
   outline: none;
-  padding: 3px 12px;
-  border-radius: 999px;
-  background: rgba(18, 14, 28, 0.55);
-  box-shadow: inset 0 0 0 1px rgba(200, 160, 240, 0.28);
+  padding: 0;
   line-height: 1.3;
   caret-color: rgba(255, 255, 255, 0.32);
 }
 .ap-name.is-edit:focus {
-  box-shadow: inset 0 0 0 1px rgba(210, 170, 255, 0.7);
+  padding: 5px 14px;
+  margin: -5px -14px;
+  border-radius: 999px;
+  background: rgba(18, 14, 28, 0.55);
+  box-shadow: inset 0 0 0 1px rgba(200, 160, 240, 0.4);
 }
 .ap-name.is-saved {
-  animation: apNameSaved 0.7s ease;
+  animation: apNameSaved 0.35s ease;
 }
 @keyframes apNameSaved {
-  0% { box-shadow: inset 0 0 0 1px rgba(210,170,255,.7), 0 0 0 0 rgba(200,160,240,.0); }
-  35% { box-shadow: inset 0 0 0 1px rgba(235,210,255,.95), 0 0 18px rgba(200,160,240,.45); }
-  100% { box-shadow: inset 0 0 0 1px rgba(200,160,240,.28), 0 0 0 0 rgba(200,160,240,0); }
-}
-.ap-edit {
-  flex-shrink: 0;
-  width: 28px;
-  height: 28px;
-  border: 0;
-  padding: 0;
-  display: grid;
-  place-items: center;
-  background: none;
-  color: rgba(210, 190, 240, 0.45);
-  cursor: pointer;
-  border-radius: 50%;
-}
-.ap-edit:hover,
-.ap-name-row:focus-within .ap-edit {
-  color: #e8d6ff;
+  0% { text-shadow: 0 0 0 transparent; }
+  40% { text-shadow: 0 0 14px rgba(220, 180, 255, 0.75); }
+  100% { text-shadow: none; }
 }
 .ap-hint {
   display: block;

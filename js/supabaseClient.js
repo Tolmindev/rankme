@@ -59,7 +59,7 @@ function sanitizeDisplayName(raw) {
 function validateDisplayName(raw) {
   const s = sanitizeDisplayName(raw);
   if (s.length < 2) return { ok: false, error: 'At least 2 characters' };
-  if (s.length > 24) return { ok: false, error: '24 characters max' };
+  if (s.length > 18) return { ok: false, error: '18 characters max' };
   if (/@|https?:\/\/|www\./i.test(s)) return { ok: false, error: 'No links or @handles' };
   return { ok: true, clean: s };
 }

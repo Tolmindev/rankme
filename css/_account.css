@@ -465,13 +465,16 @@ body > .toast {
 }
 .ap-hint {
   display: none;
+  position: absolute;
+  left: 0;
+  top: calc(100% + 10px);
   font-size: 0.65rem;
   font-weight: 400;
   letter-spacing: 0.02em;
   line-height: 1.25;
   color: rgba(210, 186, 204, 0.75);
-  margin-top: 12px;
-  padding-left: 2px;
+  white-space: nowrap;
+  pointer-events: none;
 }
 .ap-hint:not(:empty) {
   display: block;
@@ -623,7 +626,8 @@ body > .toast {
     flex-direction: column;
     text-align: center;
   }
-  .ap-text { align-items: center; flex: none; width: 100%; }
+  .ap-text { align-items: center; flex: none; width: 100%; position: relative; }
+  .ap-hint { left: 50%; transform: translateX(-50%); text-align: center; }
   .ap-avatar { width: 88px; height: 88px; margin: 0 auto; }
   .ap-stats {
     width: 100%;

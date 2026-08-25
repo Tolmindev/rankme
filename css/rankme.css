@@ -2385,8 +2385,8 @@ body[data-editor="1"] #heroDesc {
 .tier-row.drag-over .tier-cards {
   background: linear-gradient(90deg,
     transparent 0%,
-    hsla(var(--hue), 50%, 42%, .1) 14%,
-    hsla(var(--hue), 50%, 42%, .1) 86%,
+    hsla(var(--hue), 50%, 42%, .03) 16%,
+    hsla(var(--hue), 50%, 42%, .03) 84%,
     transparent 100%);
 }
 .tier-row.drag-over .tier-cards::before,
@@ -2398,14 +2398,10 @@ body[data-editor="1"] #heroDesc {
   height: 1px;
   pointer-events: none;
   z-index: 3;
-  background: linear-gradient(90deg,
-    transparent 0%,
-    hsla(var(--hue), 80%, 68%, .2) 10%,
-    hsla(var(--hue), 90%, 70%, .95) 28%,
-    hsla(var(--hue), 90%, 70%, .95) 72%,
-    hsla(var(--hue), 80%, 68%, .2) 90%,
-    transparent 100%);
-  box-shadow: 0 0 8px hsla(var(--hue), 85%, 62%, .4);
+  background: hsla(var(--hue), 90%, 70%, .9);
+  box-shadow: 0 0 8px 1px hsla(var(--hue), 85%, 62%, .45);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 16%, #000 84%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 16%, #000 84%, transparent 100%);
 }
 .tier-row.drag-over .tier-cards::before { top: 0; }
 .tier-row.drag-over .tier-cards::after { bottom: 0; }

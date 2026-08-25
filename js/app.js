@@ -621,28 +621,26 @@ document.getElementById('portalBtn').addEventListener('click', ()=>{
 let drag = null;
 let autoScrollRAF = null;
 
-function lockPageScroll(){
-  try {
-    document.documentElement.classList.add('rankme-dragging');
-    document.body.classList.add('rankme-dragging');
-  } catch(err){}
-}
-function unlockPageScroll(){
-  try {
-    document.documentElement.classList.remove('rankme-dragging');
-    document.body.classList.remove('rankme-dragging');
-  } catch(err){}
-}
 function blockTouchScroll(e){
   if(!drag) return;
   try { e.preventDefault(); } catch(err){}
+}
+
+function lockTouchScroll(){
+  if(!drag || !drag.isTouch) return;
+  document.documentElement.classList.add('rankme-dragging');
+  document.addEventListener('touchmove', blockTouchScroll, { passive: false, capture: true });
+}
+
+function unlockTouchScroll(){
+  document.documentElement.classList.remove('rankme-dragging');
+  document.removeEventListener('touchmove', blockTouchScroll, { capture: true });
 }
 
 function onCardPointerDown(e){
   if (communityMode) return;
 
   if(drag) return;
-  // Mouse: ignore right/middle. Touch/pen: always allow (button can be weird)
   const isTouch = e.pointerType === 'touch' || e.pointerType === 'pen' || e.pointerType === '';
   if(!isTouch && e.button !== undefined && e.button > 0) return;
   try { e.preventDefault(); } catch(err){}
@@ -668,13 +666,10 @@ function onCardPointerDown(e){
   };
 
   try { source.setPointerCapture(e.pointerId); } catch(err){}
-  lockPageScroll();
-  // Critical for mobile: stop page scroll while finger is on a card
-  document.addEventListener('touchmove', blockTouchScroll, { passive: false, capture: true });
+  lockTouchScroll();
   window.addEventListener('pointermove', onDragMove, { passive: false });
   window.addEventListener('pointerup', onDragEnd);
   window.addEventListener('pointercancel', onDragEnd);
-  // Start visual immediately on touch so user feels the grab
   if(isTouch){
     drag.moved = true;
     beginDragVisual();
@@ -818,8 +813,7 @@ function cleanupDragSource(source){
 
 function onDragEnd(e){
   if(!drag || (e.pointerId!==undefined && e.pointerId !== drag.pointerId)) return;
-  document.removeEventListener('touchmove', blockTouchScroll, { capture: true });
-  unlockPageScroll();
+  unlockTouchScroll();
   window.removeEventListener('pointermove', onDragMove);
   window.removeEventListener('pointerup', onDragEnd);
   window.removeEventListener('pointercancel', onDragEnd);

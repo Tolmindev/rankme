@@ -915,8 +915,7 @@ body.theme-gold {
   padding: 16px 0 8px;
 }
 
-html.rankme-dragging, html.rankme-dragging body, body.rankme-dragging {
-  overflow: hidden;
+html.rankme-dragging {
   overscroll-behavior: none;
   touch-action: none;
 }

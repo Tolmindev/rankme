@@ -31,7 +31,13 @@ async function getSessionUser() {
   const client = await initSupabase();
   if (!client) return null;
   const { data } = await client.auth.getSession();
-  return data?.session?.user || null;
+  let session = data?.session || null;
+  const expMs = session && session.expires_at ? session.expires_at * 1000 : 0;
+  if (session && expMs && expMs < Date.now() + 30000) {
+    const { data: refreshed } = await client.auth.refreshSession();
+    session = (refreshed && refreshed.session) || null;
+  }
+  return (session && session.user) || null;
 }
 
 function rankmeDisplayName(user) {
@@ -138,18 +144,18 @@ async function listMyTierlists() {
   const client = await initSupabase();
   const user = await getSessionUser();
   if (!client || !user) return [];
-  const { data, error } = await client
-    .from('tierlists')
-    .select('id, title, template_id, payload, created_at, updated_at, is_public, like_count, view_count, author_name, author_avatar')
-    .eq('user_id', user.id)
-    .order('updated_at', { ascending: false });
+  const selectFull = 'id, title, template_id, payload, created_at, updated_at, is_public, like_count, view_count, author_name, author_avatar';
+  const selectMin = 'id, title, template_id, payload, created_at, updated_at, is_public, like_count';
+  async function query(sel) {
+    return client.from('tierlists').select(sel).eq('user_id', user.id).order('updated_at', { ascending: false });
+  }
+  let { data, error } = await query(selectFull);
+  if (error && /jwt|expired/i.test(error.message || '')) {
+    await client.auth.refreshSession();
+    ({ data, error } = await query(selectFull));
+  }
   if (error) {
-    // fallback without optional columns
-    const { data: d2, error: e2 } = await client
-      .from('tierlists')
-      .select('id, title, template_id, payload, created_at, updated_at, is_public, like_count')
-      .eq('user_id', user.id)
-      .order('updated_at', { ascending: false });
+    const { data: d2, error: e2 } = await query(selectMin);
     if (e2) throw e2;
     return d2 || [];
   }

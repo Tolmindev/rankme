@@ -6011,9 +6011,10 @@ body > .toast {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 2px;
+  gap: 0;
   min-width: 0;
   flex: 1;
+  position: relative;
 }
 .ap-name {
   font-size: 1.15rem;
@@ -6047,21 +6048,16 @@ body > .toast {
   100% { text-shadow: none; }
 }
 .ap-hint {
-  display: block;
-  min-height: 14px;
+  display: none;
   font-size: 0.65rem;
   font-weight: 400;
   letter-spacing: 0.02em;
-  line-height: 14px;
-  color: rgba(210, 186, 204, 0.7);
+  line-height: 1.2;
+  color: rgba(210, 186, 204, 0.75);
+  margin-top: 4px;
 }
-.ap-hint:empty {
-  visibility: hidden;
-}
-.ap-provider {
-  font-size: 0.78rem;
-  color: var(--text-dim);
-  font-weight: 600;
+.ap-hint:not(:empty) {
+  display: block;
 }
 /* Four equal-width cells, same height as avatar row */
 .ap-stats {

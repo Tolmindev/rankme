@@ -2434,11 +2434,11 @@ function setupCommunityUI() {
         const res = await toggleTierlistLike(m.id);
         likeBtn.classList.toggle('on', !!res.liked);
         var heart = likeBtn.querySelector('.cb-heart');
-        if (heart) {
+        if (heart && res.liked) {
           heart.classList.remove('pop');
           void heart.offsetWidth;
           heart.classList.add('pop');
-          setTimeout(function () { heart.classList.remove('pop'); }, 560);
+          setTimeout(function () { heart.classList.remove('pop'); }, 720);
         }
         const n = likeBtn.querySelector('.cb-like-n');
         if (n) n.textContent = typeof formatCount === 'function' ? formatCount(res.like_count) : String(res.like_count || 0);

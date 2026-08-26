@@ -2378,34 +2378,11 @@ body[data-editor="1"] #heroDesc {
 .tier-row.drag-over .tier-cards::before { top: 0; }
 .tier-row.drag-over .tier-cards::after { bottom: 0; }
 
-.tier-row.drag-over .tier-cards {
-  background: linear-gradient(90deg,
-    transparent 0%,
-    hsla(var(--hue), 50%, 42%, .03) 16%,
-    hsla(var(--hue), 50%, 42%, .03) 84%,
-    transparent 100%);
-}
-.tier-row.drag-over .tier-cards::before,
-.tier-row.drag-over .tier-cards::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 1px;
-  pointer-events: none;
-  z-index: 3;
-  background: hsla(var(--hue), 90%, 70%, .9);
-  box-shadow: 0 0 8px 1px hsla(var(--hue), 85%, 62%, .45);
-  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 16%, #000 84%, transparent 100%);
-  mask-image: linear-gradient(90deg, transparent 0%, #000 16%, #000 84%, transparent 100%);
-}
-.tier-row.drag-over .tier-cards::before { top: 0; }
-.tier-row.drag-over .tier-cards::after { bottom: 0; }
-.tier-row.drag-over
 
 .tier-label-wrap {
   width: 130px;
   min-width: 130px;
+  flex-shrink: 0;
   display: flex;
   align-items: stretch;
   position: relative;
@@ -2420,6 +2397,7 @@ body[data-editor="1"] #heroDesc {
   justify-content: center;
   text-align: center;
   padding: 6px 8px;
+  font-size: 1.4rem; /* fallback; JS fitLabelFont overrides */
   line-height: 1.15;
   white-space: pre-wrap;
   text-transform: uppercase;
@@ -3364,13 +3342,14 @@ body.theme-gold .card img {
   }
 
   .tier-label-wrap {
-    width: 64px;
-    min-width: 64px;
+    width: 100px;
+    min-width: 100px;
+    flex-shrink: 0;
   }
 
   .tier-label {
-    font-size: .6rem;
-    padding: 3px 4px;
+    font-size: 1.15rem; /* fallback; JS overrides for S/A/B */
+    padding: 5px 6px;
   }
 
   .tier-side, .tier-row.compact-side .tier-side {

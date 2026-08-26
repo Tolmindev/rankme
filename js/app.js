@@ -338,11 +338,11 @@ function render(){
 
 function labelLineFontSize(line){
   const len = (line || '').replace(/\s+/g, '').length || 1;
-  // Same curve as before — per line
-  if(len <= 1) return 24;
-  if(len === 2) return 18;
-  if(len <= 4) return 15;
-  if(len <= 8) return 13;
+  // Short labels fill the cube; longer names step down
+  if(len <= 1) return 34;
+  if(len === 2) return 26;
+  if(len <= 4) return 18;
+  if(len <= 8) return 14;
   return 12;
 }
 

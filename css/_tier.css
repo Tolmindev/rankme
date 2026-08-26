@@ -102,6 +102,7 @@
 .tier-label-wrap {
   width: 130px;
   min-width: 130px;
+  flex-shrink: 0;
   display: flex;
   align-items: stretch;
   position: relative;
@@ -116,6 +117,7 @@
   justify-content: center;
   text-align: center;
   padding: 6px 8px;
+  font-size: 1.4rem; /* fallback; JS fitLabelFont overrides */
   line-height: 1.15;
   white-space: pre-wrap;
   text-transform: uppercase;
@@ -1065,13 +1067,14 @@ body.theme-gold .card img {
   }
 
   .tier-label-wrap {
-    width: 64px;
-    min-width: 64px;
+    width: 100px;
+    min-width: 100px;
+    flex-shrink: 0;
   }
 
   .tier-label {
-    font-size: .6rem;
-    padding: 3px 4px;
+    font-size: 1.15rem; /* fallback; JS overrides for S/A/B */
+    padding: 5px 6px;
   }
 
   .tier-side, .tier-row.compact-side .tier-side {

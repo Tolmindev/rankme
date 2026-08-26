@@ -6154,9 +6154,16 @@ body > .toast {
   .account-profile {
     flex-wrap: wrap;
     flex-direction: column;
+    align-items: center;
     text-align: center;
   }
+  .ap-avatar-wrap { margin: 0 auto; }
   .ap-text { align-items: center; flex: none; width: 100%; position: relative; }
+  .ap-name,
+  .ap-name.is-edit {
+    align-self: center;
+    text-align: center;
+  }
   .ap-hint { left: 50%; transform: translateX(-50%); text-align: center; }
   .ap-avatar { width: 88px; height: 88px; margin: 0 auto; }
   .ap-stats {

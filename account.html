@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Account - RankMe</title>
 <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/rankme.css?v=20260826a">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/rankme.css?v=20260826m">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
-<script src="js/supabaseClient.js" defer></script>
+<script src="js/supabaseClient.js?v=20260826j" defer></script>
 </head>
 <body class="page-account">
 <header class="site">
@@ -79,8 +79,8 @@
 <footer id="site-footer" class="site"></footer>
 <script src="js/footer.js" defer></script>
 <script src="js/catalog.js"></script>
-<script src="js/holo-card.js?v=20260826a"></script>
-<script src="js/achievements.js?v=20260826a"></script>
+<script src="js/holo-card.js?v=20260826r"></script>
+<script src="js/achievements.js?v=20260826r"></script>
 
 <script>
 const panel = document.getElementById('panel');
@@ -90,19 +90,6 @@ function providerIcon(p){
   if(p==='discord') return `<span class="ico discord"><svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M20 4.4A18 18 0 0 0 15.6 3l-.3.6a15 15 0 0 1 3.8 1.4A16 16 0 0 0 12 3.4 16 16 0 0 0 4.9 5 15 15 0 0 1 8.7 3.6L8.4 3A18 18 0 0 0 4 4.4C1.6 8 1 11.6 1.2 15.1A18 18 0 0 0 6.6 18l.8-1.3a11 11 0 0 1-1.8-.9l.5-.4a13 13 0 0 0 11.8 0l.5.4c-.6.3-1.2.6-1.8.9l.8 1.3a18 18 0 0 0 5.4-2.9C23 11.4 22.1 7.8 20 4.4ZM8.7 13.6c-.8 0-1.5-.8-1.5-1.7s.7-1.7 1.5-1.7 1.5.8 1.5 1.7-.7 1.7-1.5 1.7Zm6.6 0c-.8 0-1.5-.8-1.5-1.7s.7-1.7 1.5-1.7 1.5.8 1.5 1.7-.7 1.7-1.5 1.7Z"/></svg></span>`;
   if(p==='twitter' || p==='x') return `<span class="ico" style="background:#000"><svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M18.9 2H22l-7.6 8.7L23.3 22h-7l-5.5-7.2L4.5 22H1.4l8.1-9.3L1 2h7.2l5 6.6L18.9 2Zm-1.2 18h1.7L7.4 4H5.6L17.7 20Z"/></svg></span>`;
   return `<span class="ico google"><svg width="20" height="20" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18A10.96 10.96 0 0 0 1 12c0 1.77.42 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg></span>`;
-}
-
-function resolveProvider(user){
-  const ids = user?.identities || [];
-  const last = sessionStorage.getItem('rankme_last_provider');
-  if(last && ids.some(i => i.provider === last)) return last === 'twitter' ? 'x' : last;
-  if(ids.length){
-    const sorted = [...ids].sort((a,b)=> new Date(b.last_sign_in_at||b.updated_at||0) - new Date(a.last_sign_in_at||a.updated_at||0));
-    const p = sorted[0]?.provider || 'oauth';
-    return p === 'twitter' ? 'x' : p;
-  }
-  const p = user?.app_metadata?.provider || 'oauth';
-  return p === 'twitter' ? 'x' : p;
 }
 
 function coverForTemplate(tid){
@@ -216,13 +203,17 @@ async function renderLogin(){
 }
 
 
-function profileBlock(name, avatarHtml, providerLabel, lists, battles, likes){
+function profileBlock(name, avatarHtml, lists, battles, likes, editable){
+  const safe = name.replace(/</g,'');
+  const nameEl = editable
+    ? `<b class="ap-name is-edit" id="apName" contenteditable="true" spellcheck="false">${safe}</b>
+      <span class="ap-hint" id="apHint"></span>`
+    : `<b class="ap-name">${safe}</b>`;
   return `
     <div class="account-profile">
       <div class="ap-avatar-wrap">${avatarHtml}</div>
       <div class="ap-text">
-        <b class="ap-name">${name.replace(/</g,'')}</b>
-        <span class="ap-provider">${providerLabel}</span>
+        ${nameEl}
       </div>
       <div class="ap-stats" id="apStats">
         <div class="ap-stat"><b id="statLists">${lists}</b><span>Tier Lists</span></div>
@@ -233,19 +224,92 @@ function profileBlock(name, avatarHtml, providerLabel, lists, battles, likes){
     </div>`;
 }
 
+function wireNameEdit(){
+  const el = document.getElementById('apName');
+  const hint = document.getElementById('apHint');
+  if(!el || typeof setRankmeDisplayName !== 'function') return;
+  const NAME_MAX = 18;
+  let last = (el.textContent || '').trim();
+  const showHint = (msg)=>{
+    if(!hint) return;
+    hint.textContent = msg || '';
+  };
+  const flashSaved = ()=>{
+    el.classList.remove('is-saved');
+    void el.offsetWidth;
+    el.classList.add('is-saved');
+  };
+  el.addEventListener('beforeinput', (e)=>{
+    if(e.inputType === 'insertParagraph' || e.inputType === 'insertLineBreak'){
+      e.preventDefault();
+      return;
+    }
+    if(!e.data) return;
+    const sel = window.getSelection();
+    const selected = sel && sel.toString() ? sel.toString().length : 0;
+    if((el.textContent || '').length - selected + e.data.length > NAME_MAX){
+      e.preventDefault();
+      showHint('18 characters max');
+    }
+  });
+  el.addEventListener('paste', (e)=>{
+    e.preventDefault();
+    const text = ((e.clipboardData || window.clipboardData).getData('text') || '').replace(/\s+/g, ' ').replace(/\n/g, '');
+    const sel = window.getSelection();
+    const selected = sel && sel.toString() ? sel.toString().length : 0;
+    const room = NAME_MAX - ((el.textContent || '').length - selected);
+    if(room <= 0){ showHint('18 characters max'); return; }
+    const slice = text.slice(0, room);
+    document.execCommand('insertText', false, slice);
+    if(text.length > room) showHint('18 characters max');
+  });
+  el.addEventListener('input', ()=>{
+    const next = (el.textContent || '').replace(/\s+/g, ' ').trim();
+    if((el.textContent || '').length >= NAME_MAX) return;
+    if(!next || next === last || typeof validateDisplayName !== 'function'){ showHint(''); return; }
+    const v = validateDisplayName(next);
+    showHint(v.ok ? '' : v.error);
+  });
+  el.addEventListener('keydown', (e)=>{
+    if(e.key === 'Enter'){ e.preventDefault(); el.blur(); }
+    if(e.key === 'Escape'){ el.textContent = last; showHint(''); el.blur(); }
+  });
+  el.addEventListener('blur', async ()=>{
+    const next = (el.textContent || '').replace(/\s+/g, ' ').trim();
+    if(next === last){ el.textContent = last; showHint(''); return; }
+    if(typeof validateDisplayName === 'function'){
+      const v = validateDisplayName(next);
+      if(!v.ok){
+        el.textContent = last;
+        showHint(v.error);
+        return;
+      }
+    }
+    flashSaved();
+    try{
+      const clean = await setRankmeDisplayName(next);
+      last = clean;
+      el.textContent = clean;
+      showHint('');
+      if(typeof updateNavAuth === 'function') updateNavAuth();
+    }catch(e){
+      el.textContent = last;
+      showHint(e.message || 'Could not save');
+    }
+  });
+}
+
 async function renderCabinet(user){
   if (typeof updateNavAuth === 'function') updateNavAuth();
-  const name = user.user_metadata?.full_name || user.user_metadata?.custom_claims?.global_name || user.user_metadata?.name || user.email || 'User';
+  const name = (typeof rankmeDisplayName === 'function' ? rankmeDisplayName(user) : (user.user_metadata?.full_name || user.email || 'User'));
   const avatar = user.user_metadata?.avatar_url || user.user_metadata?.picture || '';
-  const provider = resolveProvider(user);
-  const providerLabel = ({google:'Google', discord:'Discord', x:'X', twitter:'X'})[provider] || provider;
   const av = avatar
     ? `<img class="ap-avatar" src="${avatar}" alt="">`
     : `<div class="ap-avatar ap-fallback">${(name[0]||'U').toUpperCase()}</div>`;
 
   panel.removeAttribute('aria-busy');
   panel.innerHTML = `
-    ${profileBlock(name, av, providerLabel, '0', '0', '0')}
+    ${profileBlock(name, av, '0', '0', '0', true)}
 
     <section class="account-section">
       <div class="as-head">
@@ -275,6 +339,7 @@ async function renderCabinet(user){
     await rankmeSignOut();
     location.reload();
   };
+  wireNameEdit();
 
   try{
     const rows = await listMyTierlists();
@@ -306,7 +371,7 @@ async function renderCabinet(user){
       paintSavedList(rows, { owner: true, user: user });
     }
   }catch(e){
-    document.getElementById('listBox').innerHTML = `<div class="empty">Could not load lists. ${e.message||''}</div>`;
+    document.getElementById('listBox').innerHTML = `<div class="empty">Could not load lists. <button type="button" class="btn-mini" onclick="location.reload()">Retry</button></div>`;
   }
 }
 
@@ -448,7 +513,7 @@ async function renderPublicProfile(userId){
     : `<div class="ap-avatar ap-fallback">${(name[0] || 'U').toUpperCase()}</div>`;
 
   panel.innerHTML = `
-    ${profileBlock(name, av, 'Public profile', String(rows.length), '0', fc(totalLikes))}
+    ${profileBlock(name, av, String(rows.length), '0', fc(totalLikes))}
 
     <section class="account-section">
       <div class="as-head">

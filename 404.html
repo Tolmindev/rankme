@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RankMe</title>
+<link rel="icon" type="image/svg+xml" href="/assets/brand/favicon.svg">
+<style>
+  html,body{margin:0;background:#0e0c14;color:#a79fc4;font-family:Montserrat,system-ui,sans-serif;text-align:center}
+  p{padding:48px 20px 12px}
+  a{color:#e6a9e8}
+</style>
+<script>
+(function () {
+  var reserved = {
+    account:1, battle:1, builder:1, create:1, dmca:1, index:1,
+    privacy:1, terms:1, tier:1, t:1, assets:1, css:1, js:1, templates:1
+  };
+  var path = location.pathname.replace(/\/+$/, '').replace(/\.html$/i, '');
+  var parts = path.split('/').filter(Boolean);
+  var id = '';
+  if (parts.length === 1) id = parts[0];
+  else if (parts.length === 2 && parts[0].toLowerCase() === 't') id = parts[1];
+  id = String(id || '').toLowerCase();
+  if (!id || reserved[id] || !/^[a-z0-9][a-z0-9_-]{0,63}$/.test(id)) return;
+
+  fetch('/templates/' + encodeURIComponent(id) + '.json', { cache: 'no-cache' })
+    .then(function (r) { if (!r.ok) throw new Error('no'); return r.json(); })
+    .then(function () {
+      try { sessionStorage.setItem('rankme_t', id); } catch (e) {}
+      var p = new URLSearchParams(location.search);
+      p.set('t', id);
+      location.replace('/tier.html?' + p.toString() + location.hash);
+    })
+    .catch(function () {});
+})();
+</script>
+</head>
+<body>
+<p>Page not found.</p>
+<p><a href="/index.html">Back to RankMe</a></p>
+</body>
+</html>

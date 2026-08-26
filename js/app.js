@@ -2660,8 +2660,13 @@ document.querySelectorAll('a.expert-name').forEach(a => {
       if(s && s !== 'blank') return s;
     }catch(e){}
     try{
-      var m = location.pathname.match(/\/(sf-duel-ex|sf-duel|lol|sf6)(?:\.html)?/);
-      if(m) return m[1];
+      var path = location.pathname.replace(/\/+$/, '').replace(/\.html$/i, '');
+      var parts = path.split('/').filter(Boolean);
+      var cand = '';
+      if (parts.length === 1) cand = parts[0];
+      else if (parts.length === 2 && parts[0] === 't') cand = parts[1];
+      var skip = { account:1, battle:1, builder:1, create:1, dmca:1, index:1, privacy:1, terms:1, tier:1 };
+      if (cand && !skip[cand] && /^[a-z0-9][a-z0-9_-]{0,63}$/i.test(cand)) return cand;
     }catch(e){}
     return '';
   }

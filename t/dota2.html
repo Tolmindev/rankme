@@ -3,22 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>League of Legends - RankMe</title>
-<link rel="canonical" href="tier.html?t=lol">
-<meta http-equiv="refresh" content="0;url=tier.html?t=lol">
+<title>Dota 2 - RankMe</title>
+<link rel="canonical" href="../tier.html?t=dota2">
+<meta http-equiv="refresh" content="0;url=../tier.html?t=dota2">
 <script>
 (function () {
-  var id = 'lol';
+  var id = "dota2";
   try { sessionStorage.setItem('rankme_t', id); } catch (e) {}
   var p = new URLSearchParams(location.search);
   p.set('t', id);
-  var q = p.toString();
-  location.replace('tier.html?' + q + location.hash);
+  location.replace('../tier.html?' + p.toString() + location.hash);
 })();
 </script>
 </head>
 <body style="margin:0;background:#0e0c14;color:#a79fc4;font-family:system-ui,sans-serif;text-align:center;padding:48px">
-<p>Loading League of Legends…</p>
-<p><a href="tier.html?t=lol" style="color:#e6a9e8">Open tier list</a></p>
+<p>Loading Dota 2…</p>
+<p><a href="../tier.html?t=dota2" style="color:#e6a9e8">Open tier list</a></p>
 </body>
 </html>

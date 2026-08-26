@@ -12,7 +12,6 @@
 | `_account.css` | Account, modals, toasts, download |
 | `_create.css` | Create blank rank |
 | `rankme.css` | **AUTO-GENERATED** concat of `_*.css`. Do not edit. |
-| `rankme.modules.css` | Dev-only `@import` loader |
 
 **Rules**
 - One selector → one block per file context (desktop in the module body; mobile only inside `@media` in the **same** file).

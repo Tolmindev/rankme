@@ -118,24 +118,6 @@ footer.site img.footer-logo {
   margin: 0 0 18px;
 }
 
-footer.site a.donate {
-  display: inline-block;
-  cursor: default;
-  pointer-events: none;
-  opacity: .85;
-}
-
-footer.site a.donate img {
-  height: 44px;
-  transition: filter .35s ease, transform .25s ease;
-}
-
-footer.site a.donate:hover img {
-  transform: translateY(-2px) scale(1.04);
-  filter: drop-shadow(0 0 6px rgba(220,180,250,.95)) drop-shadow(0 0 18px rgba(190,140,240,.7))
-          drop-shadow(0 0 36px rgba(180,120,255,.45)) brightness(1.12);
-}
-
 footer.site .fine {
   color: var(--text-dim);
   font-size: .75rem;

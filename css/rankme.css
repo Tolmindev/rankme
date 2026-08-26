@@ -245,24 +245,6 @@ footer.site img.footer-logo {
   margin: 0 0 18px;
 }
 
-footer.site a.donate {
-  display: inline-block;
-  cursor: default;
-  pointer-events: none;
-  opacity: .85;
-}
-
-footer.site a.donate img {
-  height: 44px;
-  transition: filter .35s ease, transform .25s ease;
-}
-
-footer.site a.donate:hover img {
-  transform: translateY(-2px) scale(1.04);
-  filter: drop-shadow(0 0 6px rgba(220,180,250,.95)) drop-shadow(0 0 18px rgba(190,140,240,.7))
-          drop-shadow(0 0 36px rgba(180,120,255,.45)) brightness(1.12);
-}
-
 footer.site .fine {
   color: var(--text-dim);
   font-size: .75rem;
@@ -1237,7 +1219,7 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  gap: 14px;
+  gap: 10px;
   align-self: center;
   min-height: 0;
 }
@@ -2292,10 +2274,6 @@ body[data-editor="1"] #heroDesc {
   background: rgba(180, 140, 255, 0.1);
   box-shadow: 0 0 0 1.5px rgba(180, 140, 255, 0.35);
 }
-/* keep gap between title / desc when padded */
-.hero > .hero-text {
-  gap: 10px;
-}
 
 /* RankMe · tier — Board, rows, cards, toolbar, filters, portals, pool */
 
@@ -2390,13 +2368,6 @@ body[data-editor="1"] #heroDesc {
 .tier-row.drag-over .tier-label-wrap {
   z-index: 4;
 }
-.tier-row.drag-over .tier-label {
-  filter: brightness(1.14) saturate(1.1);
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.32),
-    inset 0 0 16px hsla(var(--hue), 85%, 72%, .3),
-    0 0 10px hsla(var(--hue), 90%, 58%, .42);
-}
 
 .tier-label-wrap {
   width: 130px;
@@ -2435,7 +2406,6 @@ body[data-editor="1"] #heroDesc {
   word-break: break-word;
   box-shadow: inset 0 1px 0 rgba(255,255,255,.14),
     inset 0 -1px 0 rgba(0,0,0,.12);
-  transition: box-shadow .18s ease, filter .18s ease;
 }
 
 .tier-label[contenteditable]:focus {
@@ -2560,14 +2530,6 @@ body[data-editor="1"] #heroDesc {
   color: #ffd0d0;
   box-shadow: 0 0 14px rgba(255,100,120,.35), 0 0 28px rgba(255,80,100,.15);
   transform: translateY(-1px);
-}
-
-.card img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  pointer-events: none;
 }
 
 .card:hover {
@@ -2989,11 +2951,6 @@ body.card-square {
   --card-h: var(--card-w);
 }
 
-body.card-square .card img {
-  object-fit: cover;
-  background: transparent;
-}
-
 body.card-square .card:hover {
   transform: translateY(-4px) scale(1.08);
   filter: brightness(1.18) saturate(1.25);
@@ -3020,15 +2977,6 @@ body.card-square .card.placeholder {
 
 body.no-factions .faction-filters {
   display: none;
-}
-
-body.theme-gold .card img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center center;
-  display: block;
-  background: none;
 }
 
 body.theme-gold .card:hover, body.theme-gold .card.floating {
@@ -3298,6 +3246,7 @@ body.theme-gold .card {
 }
 
 body.theme-gold .card img {
+  object-position: center center;
   border-radius: 7px;
   background: transparent;
 }
@@ -4591,17 +4540,6 @@ button, .cta, .btn, .btn-mini, .pill-btn, .download-btn, .login-btn, a.btn, a.ct
   gap: 16px;
   width: min(280px, 36vw);
   overflow: visible;
-}
-
-.battle-card-frame {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: radial-gradient(circle at 50% 30%, rgba(255,255,255,0.05), transparent 60%),
-    linear-gradient(160deg, #241d38, #150f22);
-  width: 100%;
 }
 
 @keyframes confettiFall {

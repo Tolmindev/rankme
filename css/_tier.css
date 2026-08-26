@@ -91,13 +91,6 @@
 .tier-row.drag-over .tier-label-wrap {
   z-index: 4;
 }
-.tier-row.drag-over .tier-label {
-  filter: brightness(1.14) saturate(1.1);
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.32),
-    inset 0 0 16px hsla(var(--hue), 85%, 72%, .3),
-    0 0 10px hsla(var(--hue), 90%, 58%, .42);
-}
 
 .tier-label-wrap {
   width: 130px;
@@ -136,7 +129,6 @@
   word-break: break-word;
   box-shadow: inset 0 1px 0 rgba(255,255,255,.14),
     inset 0 -1px 0 rgba(0,0,0,.12);
-  transition: box-shadow .18s ease, filter .18s ease;
 }
 
 .tier-label[contenteditable]:focus {
@@ -261,14 +253,6 @@
   color: #ffd0d0;
   box-shadow: 0 0 14px rgba(255,100,120,.35), 0 0 28px rgba(255,80,100,.15);
   transform: translateY(-1px);
-}
-
-.card img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  pointer-events: none;
 }
 
 .card:hover {
@@ -690,11 +674,6 @@ body.card-square {
   --card-h: var(--card-w);
 }
 
-body.card-square .card img {
-  object-fit: cover;
-  background: transparent;
-}
-
 body.card-square .card:hover {
   transform: translateY(-4px) scale(1.08);
   filter: brightness(1.18) saturate(1.25);
@@ -721,15 +700,6 @@ body.card-square .card.placeholder {
 
 body.no-factions .faction-filters {
   display: none;
-}
-
-body.theme-gold .card img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center center;
-  display: block;
-  background: none;
 }
 
 body.theme-gold .card:hover, body.theme-gold .card.floating {
@@ -999,6 +969,7 @@ body.theme-gold .card {
 }
 
 body.theme-gold .card img {
+  object-position: center center;
   border-radius: 7px;
   background: transparent;
 }

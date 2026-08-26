@@ -1474,7 +1474,7 @@ document.getElementById('saveAccountBtn')?.addEventListener('click', async ()=>{
     showToast('Ranking Saved');
   }catch(e){
     console.error(e);
-    showToast(e.message || 'Save failed - check Supabase table');
+    showToast('Could not save. Try again in a moment.');
   }
 });
 
@@ -1697,7 +1697,7 @@ async function exportPNG(returnBlobOnly, blobCb, forceSize){
 
   // Center logo
   try {
-    const flogo = await loadImage('assets/brand/Footer_logo.png');
+    const flogo = await loadImage('assets/brand/Footer_logo.webp');
     const lh = 36;
     const lw = lh * (flogo.naturalWidth || flogo.width) / (flogo.naturalHeight || flogo.height || 1);
     ctx.drawImage(flogo, (width - lw) / 2, midY - lh / 2, lw, lh);
@@ -2586,12 +2586,11 @@ render();
 window.addEventListener('hashchange', ()=>{
   if(location.hash && location.hash.length > 1){
     applyHashState();
-    showToast('Expert tier list loaded');
   }
 });
 
 // ElDuD (and any expert link): always apply, even if hash is already the same
-document.querySelectorAll('a.expert-name, #eldudLink').forEach(a => {
+document.querySelectorAll('a.expert-name').forEach(a => {
   a.addEventListener('click', (e) => {
     const href = a.getAttribute('href') || '';
     try{
@@ -2613,7 +2612,6 @@ document.querySelectorAll('a.expert-name, #eldudLink').forEach(a => {
     e.preventDefault();
     if(location.hash === hash){
       applyHashState();
-      showToast('Expert tier list loaded');
     } else {
       location.hash = hash;
     }

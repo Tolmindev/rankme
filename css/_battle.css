@@ -971,17 +971,6 @@ button, .cta, .btn, .btn-mini, .pill-btn, .download-btn, .login-btn, a.btn, a.ct
   overflow: visible;
 }
 
-.battle-card-frame {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: radial-gradient(circle at 50% 30%, rgba(255,255,255,0.05), transparent 60%),
-    linear-gradient(160deg, #241d38, #150f22);
-  width: 100%;
-}
-
 @keyframes confettiFall {
 
 0%{ transform: translateY(0) rotate(0deg); opacity: 1; }

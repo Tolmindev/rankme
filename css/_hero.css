@@ -17,7 +17,7 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  gap: 14px;
+  gap: 10px;
   align-self: center;
   min-height: 0;
 }
@@ -1071,9 +1071,5 @@ body[data-editor="1"] #heroDesc {
 .hero .desc.is-editable:focus {
   background: rgba(180, 140, 255, 0.1);
   box-shadow: 0 0 0 1.5px rgba(180, 140, 255, 0.35);
-}
-/* keep gap between title / desc when padded */
-.hero > .hero-text {
-  gap: 10px;
 }
 

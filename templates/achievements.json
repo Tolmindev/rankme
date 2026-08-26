@@ -1,0 +1,18 @@
+{
+  "achievements": [
+    {
+      "id": "not-an-alien",
+      "title": "Not An Alien",
+      "desc": "You're in. Welcome to RankMe - make yourself at home.",
+      "img": "assets/achievements/achiev_1.webp",
+      "unlock": "login"
+    },
+    {
+      "id": "certified-sheep",
+      "title": "Certified Sheep",
+      "desc": "Published your first tier list. Welcome to the club.",
+      "img": "assets/achievements/achiev_2.webp",
+      "unlock": "first-publish"
+    }
+  ]
+}

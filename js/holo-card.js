@@ -1,16 +1,8 @@
-/* RankMe achievements — holo tilt, focus zoom, unlocks.
-   First unlock: any signed-in user has "Not An Alien". */
+/* RankMe achievement cards — tilt + focus zoom. No unlock logic. */
 (function (global) {
   'use strict';
 
-  var CARDS = [
-    {
-      id: 'not-an-alien',
-      title: 'Not An Alien',
-      desc: "You're in. Welcome to RankMe - make yourself at home.",
-      img: 'assets/achievements/achiev_1.webp'
-    }
-  ];
+  var closeTimer = 0;
 
   function setPointer(el, e) {
     var r = el.getBoundingClientRect();
@@ -33,10 +25,10 @@
 
   function esc(s) {
     return String(s)
-      .replace(/&/g, '&')
-      .replace(/</g, '<')
-      .replace(/>/g, '>')
-      .replace(/"/g, '"');
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
   }
 
   function cardHtml(item) {
@@ -60,8 +52,6 @@
       openStage(el, stage, item);
     });
   }
-
-  var closeTimer = 0;
 
   function openStage(source, stage, item) {
     if (closeTimer) { clearTimeout(closeTimer); closeTimer = 0; }
@@ -108,6 +98,7 @@
     var card = stage.querySelector('.ach-card');
     var wrap = stage.querySelector('.ach-focus-wrap');
     var source = stage._source;
+    if (wrap) wrap.classList.remove('is-in');
     if (!card || !source) {
       stage.hidden = true;
       stage.innerHTML = '';
@@ -119,7 +110,6 @@
     var dx = to.left + to.width / 2 - (from.left + from.width / 2);
     var dy = to.top + to.height / 2 - (from.top + from.height / 2);
     var s = to.width / from.width;
-    if (wrap) wrap.classList.remove('is-in');
     card.style.transition = 'transform 0.38s cubic-bezier(0.4, 0, 0.2, 1)';
     card.style.transform = 'translate(' + dx + 'px,' + dy + 'px) scale(' + s + ')';
     closeTimer = setTimeout(function () {
@@ -130,12 +120,13 @@
     }, 380);
   }
 
-  function mount(grid, stage) {
+  function mount(grid, stage, items) {
     if (!grid || !stage) return;
-    grid.innerHTML = CARDS.map(cardHtml).join('');
+    items = items || [];
+    grid.innerHTML = items.map(cardHtml).join('');
     grid.querySelectorAll('.ach-card').forEach(function (el) {
       var id = el.getAttribute('data-ach');
-      var item = CARDS.filter(function (c) { return c.id === id; })[0];
+      var item = items.filter(function (c) { return c.id === id; })[0];
       resetPointer(el);
       bindCard(el, stage, item);
     });
@@ -146,9 +137,7 @@
       });
       stage._bound = true;
     }
-    var stat = document.getElementById('statAch');
-    if (stat) stat.textContent = String(CARDS.length);
   }
 
-  global.RankMeHolo = { mount: mount, CARDS: CARDS };
+  global.RankMeHolo = { mount: mount };
 })(window);

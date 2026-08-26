@@ -331,6 +331,14 @@ function render(){
 
 function labelLineFontSize(line){
   const len = (line || '').replace(/\s+/g, '').length || 1;
+  const mobile = window.matchMedia && window.matchMedia('(max-width: 720px)').matches;
+  if(mobile){
+    if(len <= 1) return 18;
+    if(len === 2) return 14;
+    if(len <= 4) return 11;
+    if(len <= 8) return 9;
+    return 8;
+  }
   if(len <= 1) return 34;
   if(len === 2) return 26;
   if(len <= 4) return 18;

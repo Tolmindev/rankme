@@ -2387,7 +2387,6 @@ body[data-editor="1"] #heroDesc {
   justify-content: center;
   text-align: center;
   padding: 6px 8px;
-  font-size: 1.4rem;
   line-height: 1.15;
   white-space: pre-wrap;
   text-transform: uppercase;
@@ -3315,14 +3314,14 @@ body.theme-gold .card img {
   }
 
   .tier-label-wrap {
-    width: 100px;
-    min-width: 100px;
+    width: 64px;
+    min-width: 64px;
     flex-shrink: 0;
   }
 
   .tier-label {
-    font-size: 1.15rem;
-    padding: 5px 6px;
+    font-size: .6rem;
+    padding: 3px 4px;
   }
 
   .tier-side, .tier-row.compact-side .tier-side {

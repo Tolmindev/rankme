@@ -46,20 +46,7 @@ const cardSrc = id => {
   return CARD_PATH + `card_${String(id).padStart(3,'0')}.webp`;
 };
 
-const DEFAULT_TIERS = [
-  {id:'t1', name:'GOD',            hue:255, sat:55, light:82},
-  {id:'t2', name:'BOSSES META',    hue:355, sat:70, light:65},
-  {id:'t3', name:'PVP META',       hue:28,  sat:65, light:62},
-  {id:'t4', name:'ASSISTANT META', hue:320, sat:65, light:65},
-  {id:'t5', name:'GOOD',           hue:268, sat:50, light:62},
-  {id:'t6', name:'ASSISTANT',      hue:220, sat:35, light:52},
-  {id:'t7', name:'TOWERS',         hue:172, sat:50, light:52},
-  {id:'t8', name:'DECENT',         hue:135, sat:38, light:48},
-  {id:'t9', name:'DISAPPOINTED',   hue:110, sat:55, light:70},
-  {id:'t10',name:'BAD',            hue:100, sat:55, light:82},
-];
-
-const EXPERT_PRESETS = Object.assign({}, {"eldud":{"tiers":[{"id":"t1","hue":255,"sat":55,"name":"GOD","light":82},{"id":"t2","hue":355,"sat":70,"name":"BOSSES META","light":65},{"id":"t3","hue":28,"sat":65,"name":"PVP META","light":62},{"id":"t4","hue":320,"sat":65,"name":"ASSISTANT META","light":65},{"id":"t5","hue":268,"sat":50,"name":"GOOD","light":62},{"id":"t6","hue":220,"sat":35,"name":"ASSISTANT","light":52},{"id":"t7","hue":172,"sat":50,"name":"SUPREME FIST","light":52},{"id":"t8","hue":135,"sat":38,"name":"DECENT","light":48},{"id":"t9","hue":110,"sat":55,"name":"DISAPPOINTED","light":70},{"id":"t10","hue":100,"sat":55,"name":"BAD","light":82}],"assignment":{"t1":[46,23,118,41,12,95,99,115,62,21],"t2":[116,6,100,19,77,17,42,81,13,65,121],"t3":[50,83,38,8,7,15,3,63,26,51,39,16,69],"t4":[40,24,49,34,89,71,54,61,27,1],"t5":[14,35,82,45,117,10,105,119,30,70,33,11,9,72,29],"t6":[120,36,4,78,20,18,44,92,74,31,108,104,109,102,57,58,101],"t7":[86,93,97,64,53,94,84,76,67,66,68,52,96,90,88,85,98,80,75],"t8":[47,43,113,114,110,106,59,111,73,112,123,56],"t9":[25,107,37,22,32,5,103,48],"t10":[2,55,28,91,79,87,60]}}}, (window.RANKME_EXPERT_PRESETS || {}));
+const EXPERT_PRESETS = Object.assign({}, window.RANKME_EXPERT_PRESETS || {});
 
 const BLANK_TIERS = [
   {id:'t1', name:'S', hue:0,   sat:70, light:62},
@@ -338,7 +325,6 @@ function render(){
 
 function labelLineFontSize(line){
   const len = (line || '').replace(/\s+/g, '').length || 1;
-  // Short labels fill the cube; longer names step down
   if(len <= 1) return 34;
   if(len === 2) return 26;
   if(len <= 4) return 18;

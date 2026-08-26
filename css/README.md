@@ -11,12 +11,13 @@
 | `_home.css` | Home / discover / community |
 | `_account.css` | Account, modals, toasts, download |
 | `_create.css` | Create blank rank |
-| `rankme.css` | Production bundle = concat of `_*.css` (no `@import`) |
+| `rankme.css` | **AUTO-GENERATED** concat of `_*.css`. Do not edit. |
 | `rankme.modules.css` | Dev-only `@import` loader |
 
 **Rules**
 - One selector → one block per file context (desktop in the module body; mobile only inside `@media` in the **same** file).
-- Rebuild `rankme.css` after editing any `_*.css`.
+- After editing any `_*.css`: `node css/build.js`
+- Never paste patches into `rankme.css`. That is how glow / cubes / like animation silently vanished.
 - Do not add `!important`. Exception: `[hidden] { display: none !important }` in `_tokens.css` (HTML attribute must beat later `display:flex/grid`).
 
 `battle.html` keeps:
@@ -24,3 +25,5 @@
 <link rel="stylesheet" href="css/rankme.css">
 <link rel="stylesheet" href="css/battle-anim.css">
 ```
+
+Pick animations live only in `battle-anim.css`. Do not duplicate `.battle-card` / `.chosen` rules in `_battle.css`.

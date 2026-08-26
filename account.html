@@ -6,9 +6,9 @@
 <title>Account - RankMe</title>
 <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/rankme.css?v=20260826m">
+<link rel="stylesheet" href="css/rankme.css?v=20260827a">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
-<script src="js/supabaseClient.js?v=20260826j" defer></script>
+<script src="js/supabaseClient.js?v=20260827a" defer></script>
 </head>
 <body class="page-account">
 <header class="site">
@@ -77,10 +77,10 @@
 <div class="ach-stage" id="achStage" hidden></div>
 
 <footer id="site-footer" class="site"></footer>
-<script src="js/footer.js" defer></script>
-<script src="js/catalog.js"></script>
-<script src="js/holo-card.js?v=20260826r"></script>
-<script src="js/achievements.js?v=20260826r"></script>
+<script src="js/footer.js?v=20260827a" defer></script>
+<script src="js/catalog.js?v=20260827a"></script>
+<script src="js/holo-card.js?v=20260827a"></script>
+<script src="js/achievements.js?v=20260827a"></script>
 
 <script>
 const panel = document.getElementById('panel');
@@ -333,8 +333,6 @@ async function renderCabinet(user){
 
     <button class="login-btn ghost" id="logout">Log out</button>`;
 
-  if (window.RankMeAch) RankMeAch.paint(user);
-
   document.getElementById('logout').onclick = async ()=>{
     await rankmeSignOut();
     location.reload();
@@ -360,18 +358,21 @@ async function renderCabinet(user){
     })();
     document.getElementById('statLikes').textContent = typeof formatCount === 'function' ? formatCount(totalLikes) : String(totalLikes);
 
-    if (window.RankMeAch && rows.some(function (r) { return r.is_public; })) {
-      await RankMeAch.onPublish(user, { toast: false });
-      RankMeAch.paint(user);
-    }
-
     if(!rows.length){
       box.innerHTML = emptySavedHtml('Nothing saved yet.');
     } else {
       paintSavedList(rows, { owner: true, user: user });
     }
+    if (window.RankMeAch) {
+      await RankMeAch.onLogin(user);
+      if (rows.some(function(r){ return r.is_public; })) {
+        await RankMeAch.onPublish(user, { toast: false });
+      }
+      RankMeAch.paint(user);
+    }
   }catch(e){
     document.getElementById('listBox').innerHTML = `<div class="empty">Could not load lists. <button type="button" class="btn-mini" onclick="location.reload()">Retry</button></div>`;
+    if (window.RankMeAch) RankMeAch.paint(user);
   }
 }
 
@@ -535,9 +536,11 @@ async function renderPublicProfile(userId){
       <div class="ach-grid" id="achGrid"></div>
     </section>`;
 
+  var extra = rows.length ? ['certified-sheep'] : [];
+  var viewer = window.__rankmeUser;
   if (window.RankMeAch) {
-    var extra = rows.some(function (r) { return r.is_public; }) ? ['certified-sheep'] : [];
-    RankMeAch.paint(null, extra);
+    if (viewer && String(viewer.id) === String(userId)) RankMeAch.paint(viewer);
+    else RankMeAch.paint(null, extra);
   }
 
   (async function () {
@@ -627,8 +630,8 @@ async function bootAccount(){
     return;
   }
   try {
-    if (window.RankMeAch) await RankMeAch.load();
     if (window.RankMeCatalog) await RankMeCatalog.load();
+    if (window.RankMeAch) await RankMeAch.load();
     await initSupabase();
     if (typeof updateNavAuth === 'function') updateNavAuth();
 
@@ -649,7 +652,6 @@ async function bootAccount(){
           return;
         }
       } catch (e) {}
-      if (window.RankMeAch) await RankMeAch.onLogin(user);
       await renderCabinet(user);
     } else {
       await renderLogin();

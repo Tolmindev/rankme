@@ -52,9 +52,14 @@ No new HTML page required. `boot.js` loads `templates/<id>.json` automatically.
   "id": "eldud",
   "name": "ElDuD",
   "youtube": "https://youtube.com/@ElDuD89",
-  "assignment": { "t1": [1,2], "t2": [3] }
+  "preset": {
+    "tiers": [{ "id": "t1", "name": "S", "hue": 0, "sat": 70, "light": 62 }],
+    "assignment": { "t1": [1, 2] }
+  }
 }]
 ```
+
+`boot.js` copies `experts[].preset` onto `window.RANKME_EXPERT_PRESETS`. Do not hardcode presets in `app.js`.
 
 ## Checklist before ship
 
@@ -70,3 +75,26 @@ No new HTML page required. `boot.js` loads `templates/<id>.json` automatically.
 - Create per-game HTML (use `tier.html?t=`)
 - Put huge PNGs in repo without compress
 - Hardcode card lists in `app.js`
+
+## Achievements
+
+Logic lives in `js/achievements.js` (`RankMeAch`). Cards render in `js/holo-card.js` (`RankMeHolo`). **Do not add achievement code to `app.js`.**
+
+### Quick add
+
+1. Art → `assets/achievements/<file>.webp`
+2. One object in `templates/achievements.json`
+3. If the unlock already exists (`login`, `first-publish`) — done
+4. New trigger → add `unlock` string, a `RankMeAch.onX` method, one call at the event
+
+```json
+{
+  "id": "slug",
+  "title": "Title",
+  "desc": "One line.",
+  "img": "assets/achievements/achiev_3.webp",
+  "unlock": "first-publish"
+}
+```
+
+Known `unlock` values: `login`, `first-publish`. Persist is `user_metadata.ach` + `localStorage` (survives delete/unpublish). Toast is Discord-style, bottom of the account page.

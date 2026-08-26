@@ -98,7 +98,6 @@
     var card = stage.querySelector('.ach-card');
     var wrap = stage.querySelector('.ach-focus-wrap');
     var source = stage._source;
-    if (wrap) wrap.classList.remove('is-in');
     if (!card || !source) {
       stage.hidden = true;
       stage.innerHTML = '';
@@ -110,6 +109,7 @@
     var dx = to.left + to.width / 2 - (from.left + from.width / 2);
     var dy = to.top + to.height / 2 - (from.top + from.height / 2);
     var s = to.width / from.width;
+    if (wrap) wrap.classList.remove('is-in');
     card.style.transition = 'transform 0.38s cubic-bezier(0.4, 0, 0.2, 1)';
     card.style.transform = 'translate(' + dx + 'px,' + dy + 'px) scale(' + s + ')';
     closeTimer = setTimeout(function () {
@@ -122,13 +122,14 @@
 
   function mount(grid, stage, items) {
     if (!grid || !stage) return;
-    items = items || [];
-    grid.innerHTML = items.map(cardHtml).join('');
+    var show = items || [];
+    grid.innerHTML = show.map(cardHtml).join('');
     grid.querySelectorAll('.ach-card').forEach(function (el) {
       var id = el.getAttribute('data-ach');
-      var item = items.filter(function (c) { return c.id === id; })[0];
+      var item = null;
+      for (var i = 0; i < show.length; i++) if (show[i].id === id) { item = show[i]; break; }
       resetPointer(el);
-      bindCard(el, stage, item);
+      if (item) bindCard(el, stage, item);
     });
     if (!stage._bound) {
       stage.addEventListener('click', function () { closeStage(stage); });

@@ -53,8 +53,12 @@
     return out;
   }
 
-  function idsByUnlock(kind) {
-    return catalog.filter(function (c) { return c.unlock === kind; }).map(function (c) { return c.id; });
+  function loginIds() {
+    return catalog.filter(function (c) { return c.unlock === 'login'; }).map(function (c) { return c.id; });
+  }
+
+  function publishIds() {
+    return catalog.filter(function (c) { return c.unlock === 'first-publish'; }).map(function (c) { return c.id; });
   }
 
   function storageKey(user) {
@@ -75,7 +79,7 @@
   }
 
   function read(user) {
-    var ids = idsByUnlock('login');
+    var ids = loginIds();
     if (!user) return uniqueIds(ids);
     var meta = user.user_metadata && user.user_metadata.ach;
     if (!Array.isArray(meta)) meta = [];
@@ -153,11 +157,11 @@
   }
 
   async function onLogin(user) {
-    return grantMany(user, idsByUnlock('login'), { toast: false });
+    return grantMany(user, loginIds(), { toast: false });
   }
 
   async function onPublish(user, opts) {
-    return grantMany(user, idsByUnlock('first-publish'), { toast: !!(opts && opts.toast) });
+    return grantMany(user, publishIds(), { toast: !!(opts && opts.toast) });
   }
 
   function itemsFor(ids) {

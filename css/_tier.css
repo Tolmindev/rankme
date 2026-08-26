@@ -117,7 +117,7 @@
   justify-content: center;
   text-align: center;
   padding: 6px 8px;
-  font-size: 1.4rem; /* fallback; JS fitLabelFont overrides */
+  font-size: 1.4rem;
   line-height: 1.15;
   white-space: pre-wrap;
   text-transform: uppercase;
@@ -1073,7 +1073,7 @@ body.theme-gold .card img {
   }
 
   .tier-label {
-    font-size: 1.15rem; /* fallback; JS overrides for S/A/B */
+    font-size: 1.15rem;
     padding: 5px 6px;
   }
 
@@ -1213,28 +1213,6 @@ body.theme-gold .card img {
     min-width: 0;
   }
 
-}
-
-@media (hover: none) {
-
-  .card:hover {
-    transform: none;
-    filter: none;
-    box-shadow: none;
-  }
-
-  body.card-square .card:hover {
-    transform: none;
-    filter: none;
-  }
-
-  body.theme-gold .card:hover {
-    filter: none;
-  }
-
-}
-
-@media (max-width: 720px) {
   .pool-header {
     flex-direction: column;
     align-items: stretch;
@@ -1259,7 +1237,28 @@ body.theme-gold .card img {
     text-align: center;
     justify-content: center;
   }
+
 }
+
+@media (hover: none) {
+
+  .card:hover {
+    transform: none;
+    filter: none;
+    box-shadow: none;
+  }
+
+  body.card-square .card:hover {
+    transform: none;
+    filter: none;
+  }
+
+  body.theme-gold .card:hover {
+    filter: none;
+  }
+
+}
+
 
 /* Landscape cards (Dota 2) */
 body.card-landscape {

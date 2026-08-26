@@ -711,8 +711,14 @@ body.theme-gold {
 }
 
 .no-results .big {
-  font-size: 2rem;
   margin-bottom: 10px;
+  color: #c4b6e8;
+}
+.no-results .big svg {
+  width: 36px;
+  height: 36px;
+  display: block;
+  margin: 0 auto;
 }
 
 .no-results .reset-link {

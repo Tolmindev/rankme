@@ -187,10 +187,10 @@
         '<h1 class="battle-question">Battle Mode</h1>' +
         '<p class="battle-sub">' + esc(t.title || 'Template') + ' · ' + n + ' items</p>' +
         '<div class="battle-mode-cards">' +
-          modeCardHtml('quick', '⚡', 'Quick', qN, qMin,
+          modeCardHtml('quick', ICONS.bolt, 'Quick', qN, qMin,
             'Fast draft ranking. Great for a first look.',
             savedQ) +
-          modeCardHtml('full', '🏆', 'Full Ranking', fN, fMin,
+          modeCardHtml('full', ICONS.trophy, 'Full Ranking', fN, fMin,
             'Complete order from your picks. For real fans.',
             savedF, true) +
         '</div>' +
@@ -221,6 +221,11 @@
       els.back.onclick = function (e) { e.preventDefault(); location.href = 'index.html'; };
     }
   }
+
+  var ICONS = {
+    bolt: '<svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true"><path fill="currentColor" d="M13 2 4 13.5h6.2L9 22l11-13.2h-6.5L13 2z"/></svg>',
+    trophy: '<svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true"><path fill="currentColor" d="M6 4h12v2.2c2.3.4 4 2.2 4 4.4 0 2.4-1.8 4.4-4.1 4.8A5.5 5.5 0 0 1 12.5 19v1.2H16v1.6H8v-1.6h3.5V19A5.5 5.5 0 0 1 6.1 15.4C3.8 15 2 13 2 10.6c0-2.2 1.7-4 4-4.4V4zm0 3.8c-1.2.3-2 1.4-2 2.8s.8 2.5 2 2.8V7.8zm12 0v5.6c1.2-.3 2-1.4 2-2.8s-.8-2.5-2-2.8z"/></svg>'
+  };
 
   function modeCardHtml(modeKey, icon, title, count, mins, desc, saved, isFull) {
     var hasSave = !!(saved && saved.completed > 0);
@@ -586,7 +591,7 @@
 
     if (els.arena) els.arena.style.visibility = 'hidden';
     openOverlay(
-      '<div class="icon">🏆</div>' +
+      '<div class="icon">' + ICONS.trophy + '</div>' +
       '<h2>Battle Complete!</h2>' +
       '<p>Your ranking is ready.</p>' +
       '<ul class="battle-result-list">' + listHtml + '</ul>' +

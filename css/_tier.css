@@ -1232,7 +1232,7 @@ body.theme-gold .card img {
 
   body.community-view .toolbar {
     display: grid;
-    grid-template-columns: 1fr auto;
+    grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
     column-gap: 10px;
     row-gap: 12px;
@@ -1244,10 +1244,19 @@ body.theme-gold .card img {
     grid-template-columns: none;
     justify-content: flex-end;
     width: auto;
+    flex: none;
   }
   body.community-view .tb-share {
     display: flex;
     grid-template-columns: none;
+    gap: 6px;
+    flex: none;
+  }
+  body.community-view .tb-share .pill-btn {
+    flex: 0 0 48px;
+    width: 48px;
+    min-width: 48px;
+    max-width: 48px;
   }
   body.community-view .tb-row2 {
     display: contents;
@@ -1255,6 +1264,10 @@ body.theme-gold .card img {
   body.community-view .size-ctrl {
     grid-column: 1;
     grid-row: 1;
+    min-width: 0;
+  }
+  body.community-view .size-ctrl input[type=range] {
+    max-width: 132px;
   }
   body.community-view .download-btn {
     grid-column: 1 / -1;

@@ -67,6 +67,10 @@
         els.how.textContent = '';
       }
     }
+    if (window.RankMeStars) {
+      if (phase === 'play' || phase === 'done') window.RankMeStars.start();
+      else window.RankMeStars.stop();
+    }
   }
 
   function openOverlay(html) {

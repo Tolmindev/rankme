@@ -43,23 +43,9 @@ No new HTML page required. `boot.js` loads `templates/<id>.json` automatically.
 | `exportName` | no | Default PNG filename |
 | `parallax` | no | |
 | `noFactions` | no | Hide faction filters |
-| `factions` / `theme` / `experts` | no | Optional filters & expert presets |
+| `factions` / `theme` | no | Optional filters |
 
-## Experts (optional)
-
-```json
-"experts": [{
-  "id": "eldud",
-  "name": "ElDuD",
-  "youtube": "https://youtube.com/@ElDuD89",
-  "preset": {
-    "tiers": [{ "id": "t1", "name": "S", "hue": 0, "sat": 70, "light": 62 }],
-    "assignment": { "t1": [1, 2] }
-  }
-}]
-```
-
-`boot.js` copies `experts[].preset` onto `window.RANKME_EXPERT_PRESETS`. Do not hardcode presets in `app.js`.
+Expert rankings live in Community (public lists flagged `is_expert`), not inside the template page.
 
 ## Checklist before ship
 

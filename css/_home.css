@@ -444,12 +444,41 @@
 
 
 /* Community Rankings — compact cards, no panel chrome */
+.community-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 0 0 18px;
+}
 .community-rankings-title {
   font-size: 1.15rem;
   font-weight: 800;
   color: #f2eaff;
-  margin: 0 0 18px;
+  margin: 0;
   letter-spacing: 0.2px;
+}
+.community-pills {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.community-pills .cat-chip[data-csort="hot"].active {
+  background: linear-gradient(135deg, #a78bfa, #8b5cf6);
+  border-color: transparent;
+  color: #fff;
+}
+.community-pills .cat-chip[data-csort="new"].active {
+  background: linear-gradient(135deg, #818cf8, #6366f1);
+  border-color: transparent;
+  color: #fff;
+}
+.community-pills .cat-chip[data-csort="experts"].active {
+  background: linear-gradient(135deg, #e6a9e8, #b79bf0);
+  border-color: transparent;
+  color: #fff;
 }
 
 #communityBody {
@@ -685,9 +714,15 @@
   .cc-title {
     font-size: 0.88rem;
   }
+  .community-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
   .community-rankings-title {
     text-align: left;
-    margin-bottom: 14px;
+    margin: 0;
   }
 
   .home-wrap {

@@ -1,36 +1,5 @@
 /* RankMe · battle — Battle mode UI (loaded with battle-anim overrides) */
 
-.list-actions .battle-launch, #battleModeBtn {
-  pointer-events: auto;
-  cursor: pointer;
-  position: relative;
-  z-index: 5;
-  border: 1.5px solid rgba(200,160,240,.55);
-  background: linear-gradient(135deg, rgba(100,70,160,.4), rgba(70,45,120,.3));
-  color: #f2e9ff;
-  box-shadow: 0 0 14px rgba(160,100,255,.22);
-  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease, background .15s ease, color .15s ease, filter .15s ease;
-}
-
-.list-actions .battle-launch:hover, #battleModeBtn:hover {
-  border-color: transparent;
-  background: linear-gradient(120deg, #a78bfa, #e6a9e8);
-  color: #1a1226;
-  box-shadow: 0 0 22px rgba(190,140,255,.55), 0 0 40px rgba(160,100,255,.28);
-  transform: translateY(-2px);
-  filter: brightness(1.06);
-}
-
-.list-actions .battle-launch:active, #battleModeBtn:active {
-  transform: translateY(0) scale(0.97);
-  box-shadow: 0 0 12px rgba(190,140,255,.35);
-  filter: brightness(0.98);
-}
-
-.list-actions .battle-launch {
-  display: none;
-}
-
 .battle-page {
   width: 100%;
   max-width: 1100px;

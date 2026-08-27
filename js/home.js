@@ -16,6 +16,7 @@
     tplVisible: null,
     communityVisible: null,
     communityRows: null,
+    communitySort: 'hot',
     hayById: {},
   };
 
@@ -88,6 +89,75 @@
       (state.hayById && state.hayById[row.template_id]) || ''
     ].join(' ').toLowerCase();
     return tokenMatch(hay, q);
+  }
+
+  function isExpertRow(row) {
+    if (!row) return false;
+    if (row.is_expert === true) return true;
+    var p = row.payload;
+    if (!p) return false;
+    try {
+      if (typeof p === 'string') p = JSON.parse(p);
+    } catch (e) { return false; }
+    return !!(p && (p.is_expert === true || p.expert === true));
+  }
+
+  function communityHotScore(row) {
+    var likes = Number(row.like_count) || 0;
+    var views = Number(row.view_count) || 0;
+    var raw = likes * 4 + views;
+    var ts = new Date(row.updated_at || row.created_at).getTime();
+    if (isNaN(ts)) return raw;
+    var days = Math.max(0, (Date.now() - ts) / 86400000);
+    return raw / Math.pow(days + 2, 0.7);
+  }
+
+  function sortCommunityRows(rows, sort) {
+    var arr = rows.slice();
+    if (sort === 'new') {
+      arr.sort(function (a, b) {
+        return new Date(b.created_at || b.updated_at || 0) - new Date(a.created_at || a.updated_at || 0);
+      });
+      return arr;
+    }
+    arr.sort(function (a, b) {
+      return communityHotScore(b) - communityHotScore(a);
+    });
+    return arr;
+  }
+
+  function communityPillsHtml() {
+    var opts = [
+      ['hot', 'Hot'],
+      ['new', 'New'],
+      ['experts', 'Experts']
+    ];
+    return '<div class="community-pills" role="tablist" aria-label="Community sort">' +
+      opts.map(function (o) {
+        var on = state.communitySort === o[0] ? ' active' : '';
+        return '<button type="button" class="cat-chip' + on + '" data-csort="' + o[0] + '">' + o[1] + '</button>';
+      }).join('') +
+      '</div>';
+  }
+
+  function communityHeadHtml() {
+    return '<div class="community-head">' +
+      '<h2 class="community-rankings-title">Community Rankings</h2>' +
+      communityPillsHtml() +
+      '</div>';
+  }
+
+  function wireCommunityPills(root) {
+    if (!root) return;
+    root.querySelectorAll('[data-csort]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var next = btn.getAttribute('data-csort');
+        if (!next || next === state.communitySort) return;
+        state.communitySort = next;
+        state.communityVisible = null;
+        paintCommunity();
+      });
+    });
   }
 
   function renderCategoryChips() {
@@ -334,18 +404,25 @@
     var all = state.communityRows || [];
     if (!all.length) {
       els.community.innerHTML =
-        '<h2 class="community-rankings-title">Community Rankings</h2>' +
+        communityHeadHtml() +
         '<div class="community-empty"><p>No public lists yet</p></div>';
+      wireCommunityPills(els.community);
       return;
     }
     var q = (state.query || '').trim();
     var rows = all.filter(function (row) {
       return matchesCommunityQuery(row, q);
     });
+    if (state.communitySort === 'experts') {
+      rows = rows.filter(isExpertRow);
+    }
+    rows = sortCommunityRows(rows, state.communitySort === 'new' ? 'new' : 'hot');
     if (!rows.length) {
+      var empty = state.communitySort === 'experts' ? 'No expert rankings yet' : 'No matches';
       els.community.innerHTML =
-        '<h2 class="community-rankings-title">Community Rankings</h2>' +
-        '<div class="community-empty"><p>No matches</p></div>';
+        communityHeadHtml() +
+        '<div class="community-empty"><p>' + empty + '</p></div>';
+      wireCommunityPills(els.community);
       return;
     }
     var isMobile = window.matchMedia && window.matchMedia('(max-width: 720px)').matches;
@@ -357,12 +434,13 @@
     if (state.communityVisible > rows.length) state.communityVisible = rows.length;
     var visible = rows.slice(0, state.communityVisible);
     var html =
-      '<h2 class="community-rankings-title">Community Rankings</h2>' +
+      communityHeadHtml() +
       '<div class="community-grid">' + visible.map(communityCardHtml).join('') + '</div>';
     if (state.communityVisible < rows.length) {
       html += '<button type="button" class="cc-show-all" id="communityShowMore">Show more</button>';
     }
     els.community.innerHTML = html;
+    wireCommunityPills(els.community);
     wireCommunityCards(els.community);
     var showBtn = document.getElementById('communityShowMore');
     if (showBtn) {
@@ -385,8 +463,9 @@
     } catch (e) {
       state.communityRows = null;
       els.community.innerHTML =
-        '<h2 class="community-rankings-title">Community Rankings</h2>' +
+        communityHeadHtml() +
         '<div class="community-empty"><p>No public lists yet</p></div>';
+      wireCommunityPills(els.community);
     }
   }
 

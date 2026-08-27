@@ -1,6 +1,6 @@
-/* RankMe · hero — Tier hero, experts strip, list actions, battle CTA */
+/* RankMe · hero — Tier hero, list actions */
 
-body > header.site, body > footer.site, body > #site-footer, body > .toolbar, body > .board, body > .pool-wrap, body > .hero, body > .experts-strip, body > .toast-host {
+body > header.site, body > footer.site, body > #site-footer, body > .toolbar, body > .board, body > .pool-wrap, body > .hero, body > .toast-host {
   width: 100%;
   box-sizing: border-box;
   flex-shrink: 0;
@@ -32,9 +32,6 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
   max-width: 100%;
 }
 
-.hero > .hero-text .hero-battle-wrap {
-  margin: 4px 0 0;
-}
 
 .hero .parallax-host {
   display: block;
@@ -76,36 +73,6 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
   color: var(--text);
 }
 
-.experts-heading {
-  font-size: .72rem;
-  font-weight: 800;
-  letter-spacing: .6px;
-  text-transform: uppercase;
-  color: var(--text-dim);
-  margin: 0 0 8px;
-}
-
-.expert-card:hover {
-  border-color: rgba(210, 170, 255, 0.65);
-  box-shadow: 0 0 16px rgba(160, 120, 220, 0.32);
-  transform: translateY(-1px);
-  background: linear-gradient(145deg, rgba(64, 48, 98, 0.98), rgba(40, 30, 68, 0.98));
-}
-
-.expert-name:hover {
-  color: #fff;
-}
-
-.expert-yt:hover {
-  background: rgba(255,40,40,0.28);
-  color: #fff;
-  transform: scale(1.06);
-}
-
-.expert-yt svg {
-  width: 14px;
-  height: 14px;
-}
 
 .remix-btn {
   color: var(--btn-fg);
@@ -341,104 +308,6 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
   padding: 0;
 }
 
-.expert-name {
-  font-size: 0.82rem;
-  font-weight: 800;
-  color: #e6a9e8;
-  text-decoration: none;
-  border-bottom: none;
-  transition: color .15s;
-  line-height: 1;
-}
-
-.expert-yt {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: rgba(255,40,40,0.12);
-  color: #ff6b6b;
-  border: 1px solid rgba(255,80,80,0.25);
-  transition: background .15s, transform .15s, color .15s;
-  text-decoration: none;
-  flex-shrink: 0;
-}
-
-.hero-battle-wrap {
-  margin: 14px 0 8px;
-}
-
-.btn-battle-hero {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 48px;
-  padding: 12px 28px;
-  border-radius: 999px;
-  font-weight: 900;
-  font-size: 0.95rem;
-  font-family: inherit;
-  text-decoration: none;
-  cursor: pointer;
-  border: 1.5px solid rgba(200, 160, 240, 0.55);
-  background: linear-gradient(160deg, #2a2238 0%, #161022 50%, #1e1830 100%);
-  color: #f8f2ff;
-  box-shadow:
-    0 0 0 1px rgba(180, 140, 255, 0.12),
-    0 0 20px rgba(160, 120, 255, 0.22),
-    inset 0 1px 0 rgba(255, 255, 255, 0.06);
-  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease, filter 0.15s ease;
-}
-.btn-battle-hero:hover {
-  transform: translateY(-2px);
-  border-color: rgba(220, 180, 255, 0.8);
-  filter: brightness(1.1);
-  box-shadow:
-    0 0 0 1px rgba(200, 160, 255, 0.25),
-    0 0 28px rgba(180, 140, 255, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-}
-
-.hero-text .hero-battle-wrap {
-  margin: 14px 0 0;
-  display: block;
-  width: 100%;
-}
-
-.hero-text .btn-battle-hero,
-button.btn-battle-hero#battleModeBtn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 48px;
-  padding: 12px 32px;
-  border-radius: 999px;
-  font-weight: 900;
-  font-size: 0.95rem;
-  font-family: inherit;
-  text-decoration: none;
-  cursor: pointer;
-  border: 1.5px solid rgba(200, 160, 240, 0.55);
-  background: linear-gradient(160deg, #2a2238 0%, #161022 50%, #1e1830 100%);
-  color: #f8f2ff;
-  box-shadow:
-    0 0 0 1px rgba(180, 140, 255, 0.12),
-    0 0 20px rgba(160, 120, 255, 0.22),
-    inset 0 1px 0 rgba(255, 255, 255, 0.06);
-  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease, filter 0.15s ease;
-}
-.hero-text .btn-battle-hero:hover,
-button.btn-battle-hero#battleModeBtn:hover {
-  transform: translateY(-2px);
-  border-color: rgba(220, 180, 255, 0.85);
-  filter: brightness(1.1);
-  box-shadow:
-    0 0 0 1px rgba(200, 160, 255, 0.25),
-    0 0 28px rgba(180, 140, 255, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-}
 
 #listTitle, .hero-text #listTitle, h1#listTitle {
   color: #f4eefc;
@@ -485,13 +354,6 @@ button.btn-battle-hero#battleModeBtn:hover {
   box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
 }
 
-.experts-block {
-  flex: 0 0 100%;
-  width: 100%;
-  max-width: 100%;
-  margin-top: 16px;
-  margin-bottom: 0;
-}
 
 .hero {
   max-width: 1400px;
@@ -506,32 +368,6 @@ button.btn-battle-hero#battleModeBtn:hover {
   text-align: left;
 }
 
-.experts-strip {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 10px;
-  width: 100%;
-  padding: 10px 12px;
-  border-radius: 18px;
-  background: linear-gradient(160deg, rgba(36, 28, 58, 0.42), rgba(22, 16, 38, 0.48));
-  border: 1.5px solid rgba(160, 120, 220, 0.2);
-  box-sizing: border-box;
-  box-shadow: inset 0 1px 0 rgba(200, 170, 255, 0.04);
-}
-
-.expert-card {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 12px 6px 14px;
-  border-radius: 999px;
-  min-height: 34px;
-  background: linear-gradient(145deg, rgba(52, 40, 82, 0.55), rgba(32, 24, 54, 0.6));
-  border: 1.5px solid rgba(180, 140, 240, 0.32);
-  box-shadow: 0 0 10px rgba(140, 100, 220, 0.08);
-  transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s, background 0.15s;
-}
 
 @media (max-width: 720px) {
   .blank-cover-card, .hero .parallax-host {
@@ -593,19 +429,6 @@ button.btn-battle-hero#battleModeBtn:hover {
     line-height: 1.5;
   }
 
-  .hero > .hero-text .hero-battle-wrap, .hero-battle-wrap {
-    margin: 4px 0 0;
-    padding: 0;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-  }
-
-  .hero > .experts-block, .experts-block {
-    width: 100%;
-    margin: 8px 0 0;
-    padding: 0;
-  }
 
   .hero .parallax-host, .blank-cover-card {
     width: 100%;
@@ -625,15 +448,6 @@ button.btn-battle-hero#battleModeBtn:hover {
     aspect-ratio: 16/9;
   }
 
-  .hero-battle-wrap {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-  }
-
-  .btn-battle-hero {
-    width: min(100%,320px);
-  }
 
   .hero-text, .hero > .hero-text, .hero-text.blank-hero-text {
     align-items: center;
@@ -665,9 +479,6 @@ button.btn-battle-hero#battleModeBtn:hover {
     min-width: 0;
   }
 
-  .hero-text .hero-battle-wrap {
-    margin-top: 16px;
-  }
 
   section.hero#heroSection.hero, section.hero#heroSection, .hero {
     display: flex;
@@ -703,15 +514,6 @@ button.btn-battle-hero#battleModeBtn:hover {
     margin: 0;
   }
 
-  .hero > .hero-text .hero-battle-wrap {
-    margin: 2px 0 0;
-    padding: 0;
-  }
-
-  .hero > .experts-block {
-    flex: 0 0 100%;
-    width: 100%;
-  }
 
 }
 

@@ -90,39 +90,6 @@
     const desc = document.getElementById('heroDesc');
     if (desc) desc.textContent = t.description || '';
 
-    const block = document.getElementById('expertsBlock');
-    const strip = document.getElementById('expertsStrip');
-    if (block && strip && Array.isArray(t.experts) && t.experts.length) {
-      strip.innerHTML = '';
-      t.experts.forEach((ex) => {
-        if (!ex || !ex.name) return;
-        const card = document.createElement('div');
-        card.className = 'expert-card';
-        const name = document.createElement('a');
-        name.className = 'expert-name';
-        name.textContent = ex.name;
-        name.href =
-          'tier.html?t=' +
-          encodeURIComponent(t.id) +
-          (ex.id ? '&e=' + encodeURIComponent(ex.id) : '');
-        if (ex.id) name.dataset.expertId = ex.id;
-        card.appendChild(name);
-        if (ex.youtube) {
-          const yt = document.createElement('a');
-          yt.className = 'expert-yt';
-          yt.href = ex.youtube;
-          yt.target = '_blank';
-          yt.rel = 'noopener';
-          yt.title = 'YouTube ' + ex.name;
-          yt.innerHTML =
-            '<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.5 31.5 0 0 0 0 12a31.5 31.5 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31.5 31.5 0 0 0 24 12a31.5 31.5 0 0 0-.5-5.8zM9.8 15.5v-7l6.2 3.5-6.2 3.5z"/></svg>';
-          card.appendChild(yt);
-        }
-        strip.appendChild(card);
-      });
-      block.hidden = false;
-    }
-
     const isMobile =
       window.matchMedia && window.matchMedia('(max-width: 720px), (hover: none)').matches;
     if (!isMobile && t.parallax !== false && host && img) {
@@ -163,16 +130,10 @@
     .then((t) => {
       if (!t || !t.id) throw new Error('Bad template');
       window.RANKME_TEMPLATE = t;
-      if (Array.isArray(t.experts)) {
-        window.RANKME_EXPERT_PRESETS = window.RANKME_EXPERT_PRESETS || {};
-        t.experts.forEach((ex) => {
-          if (ex && ex.id && ex.preset) window.RANKME_EXPERT_PRESETS[ex.id] = ex.preset;
-        });
-      }
       applyHero(t);
       showApp();
       const s = document.createElement('script');
-      s.src = 'js/app.js?v=20260827n';
+      s.src = 'js/app.js?v=20260827p';
       s.onerror = () => fail('Failed to load app.js');
       document.body.appendChild(s);
     })

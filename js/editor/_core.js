@@ -1,4 +1,4 @@
-/* RankMe editor · core: template, state, hash, expert */
+/* RankMe editor · core: template, state, hash */
 
 /* ---- Template override (EX-Move etc.) ---- */
 const TMPL = window.RANKME_TEMPLATE || null;
@@ -45,7 +45,6 @@ const cardSrc = id => {
   return CARD_PATH + `card_${String(id).padStart(3,'0')}.webp`;
 };
 
-const EXPERT_PRESETS = Object.assign({}, window.RANKME_EXPERT_PRESETS || {});
 
 const BLANK_TIERS = [
   {id:'t1', name:'S', hue:0,   sat:70, light:62},
@@ -56,7 +55,7 @@ const BLANK_TIERS = [
 ];
 
 let state = {
-  // Exclusive opens with standard S-D strips; ElDuD hash loads expert layout
+  // Exclusive opens with standard S-D strips
   tiers: JSON.parse(JSON.stringify(BLANK_TIERS)),
   assignment: {},
   pool: [],
@@ -144,31 +143,6 @@ function sanitizeState(){
     const id = +k;
     if(!seen.has(id) && !state.pool.includes(id)) state.pool.push(id);
   });
-}
-
-function applyExpertPreset(id){
-  const data = EXPERT_PRESETS && EXPERT_PRESETS[String(id).toLowerCase()];
-  if(!data || !data.tiers || !data.assignment) return false;
-  state.tiers = JSON.parse(JSON.stringify(data.tiers));
-  state.assignment = JSON.parse(JSON.stringify(data.assignment));
-  const used = new Set();
-  Object.values(state.assignment).forEach(arr => arr.forEach(x => used.add(x)));
-  state.pool = freshPool().filter(id => !used.has(id));
-  state.rowIdSeq = 1 + Math.max(0, ...state.tiers.map(t => parseInt((t.id||'t0').replace('t',''))||0));
-  window.__rankmeFromCabinet = true;
-  activeFilter = 'ALL';
-  portalsOn = false;
-  const pb = document.getElementById('portalBtn');
-  if(pb) pb.classList.remove('active');
-  sanitizeState();
-  // clean URL
-  try{
-    const u = new URL(location.href);
-    u.searchParams.set('e', String(id).toLowerCase());
-    u.hash = '';
-    history.replaceState(null, '', u.pathname + u.search);
-  }catch(e){}
-  return true;
 }
 
 function applyHashState(){

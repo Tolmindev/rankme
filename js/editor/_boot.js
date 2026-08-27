@@ -1,4 +1,4 @@
-/* RankMe editor · init, community, blank upload, expert clicks */
+/* RankMe editor · init, community, blank upload */
 
 /* ---------------- Init ---------------- */
 // Open from cabinet
@@ -356,10 +356,6 @@ function enterCommunityView() {
   var pb = document.getElementById('portalBtn');
   if (pb) pb.classList.remove('active');
   if (typeof renderPortals === 'function') renderPortals();
-  var battle = document.getElementById('battleModeBtn');
-  var battleWrap = document.querySelector('.hero-battle-wrap');
-  if (battle) { battle.hidden = true; battle.setAttribute('hidden', ''); }
-  if (battleWrap) { battleWrap.hidden = true; battleWrap.setAttribute('hidden', ''); }
 }
 
 function exitCommunityToEditor() {
@@ -375,10 +371,6 @@ function exitCommunityToEditor() {
     el.hidden = false;
     el.removeAttribute('hidden');
   });
-  var battle = document.getElementById('battleModeBtn');
-  var battleWrap = document.querySelector('.hero-battle-wrap');
-  if (battle) { battle.hidden = false; battle.removeAttribute('hidden'); }
-  if (battleWrap) { battleWrap.hidden = false; battleWrap.removeAttribute('hidden'); }
 }
 
 function setupCommunityUI() {
@@ -461,10 +453,6 @@ function setupCommunityUI() {
   }
   // Battle Mode → Open ranking
   applyBattleResult();
-  const expertId = new URLSearchParams(location.search).get('e');
-  if(expertId && applyExpertPreset(expertId)){
-    // expert loaded
-  }
   const sc = new URLSearchParams(location.search).get('s');
   if(sc && typeof loadShortLink === 'function'){
     try{
@@ -606,33 +594,4 @@ window.addEventListener('hashchange', ()=>{
   if(location.hash && location.hash.length > 1){
     applyHashState();
   }
-});
-
-// ElDuD (and any expert link): always apply, even if hash is already the same
-document.querySelectorAll('a.expert-name').forEach(a => {
-  a.addEventListener('click', (e) => {
-    const href = a.getAttribute('href') || '';
-    try{
-      const u = new URL(href, location.href);
-      const eid = u.searchParams.get('e');
-      if(eid && EXPERT_PRESETS[eid.toLowerCase()]){
-        e.preventDefault();
-        if(applyExpertPreset(eid)){
-          render();
-          if(!BLANK_MODE) renderFactionFilters();
-          renderPortals();
-          showToast('Expert tier list loaded');
-        }
-        return;
-      }
-    }catch(err){}
-    const hash = href.includes('#') ? href.slice(href.indexOf('#')) : '';
-    if(!hash || hash.length < 2) return;
-    e.preventDefault();
-    if(location.hash === hash){
-      applyHashState();
-    } else {
-      location.hash = hash;
-    }
-  });
 });

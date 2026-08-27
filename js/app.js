@@ -3,7 +3,7 @@
 (function(){
 "use strict";
 
-/* RankMe editor · core: template, state, hash, expert */
+/* RankMe editor · core: template, state, hash */
 
 /* ---- Template override (EX-Move etc.) ---- */
 const TMPL = window.RANKME_TEMPLATE || null;
@@ -50,7 +50,6 @@ const cardSrc = id => {
   return CARD_PATH + `card_${String(id).padStart(3,'0')}.webp`;
 };
 
-const EXPERT_PRESETS = Object.assign({}, window.RANKME_EXPERT_PRESETS || {});
 
 const BLANK_TIERS = [
   {id:'t1', name:'S', hue:0,   sat:70, light:62},
@@ -61,7 +60,7 @@ const BLANK_TIERS = [
 ];
 
 let state = {
-  // Exclusive opens with standard S-D strips; ElDuD hash loads expert layout
+  // Exclusive opens with standard S-D strips
   tiers: JSON.parse(JSON.stringify(BLANK_TIERS)),
   assignment: {},
   pool: [],
@@ -149,31 +148,6 @@ function sanitizeState(){
     const id = +k;
     if(!seen.has(id) && !state.pool.includes(id)) state.pool.push(id);
   });
-}
-
-function applyExpertPreset(id){
-  const data = EXPERT_PRESETS && EXPERT_PRESETS[String(id).toLowerCase()];
-  if(!data || !data.tiers || !data.assignment) return false;
-  state.tiers = JSON.parse(JSON.stringify(data.tiers));
-  state.assignment = JSON.parse(JSON.stringify(data.assignment));
-  const used = new Set();
-  Object.values(state.assignment).forEach(arr => arr.forEach(x => used.add(x)));
-  state.pool = freshPool().filter(id => !used.has(id));
-  state.rowIdSeq = 1 + Math.max(0, ...state.tiers.map(t => parseInt((t.id||'t0').replace('t',''))||0));
-  window.__rankmeFromCabinet = true;
-  activeFilter = 'ALL';
-  portalsOn = false;
-  const pb = document.getElementById('portalBtn');
-  if(pb) pb.classList.remove('active');
-  sanitizeState();
-  // clean URL
-  try{
-    const u = new URL(location.href);
-    u.searchParams.set('e', String(id).toLowerCase());
-    u.hash = '';
-    history.replaceState(null, '', u.pathname + u.search);
-  }catch(e){}
-  return true;
 }
 
 function applyHashState(){
@@ -2021,7 +1995,7 @@ document.getElementById('leaveBtn')?.addEventListener('click', ()=>{
   window.location.href = pendingNav;
 });
 
-/* RankMe editor · init, community, blank upload, expert clicks */
+/* RankMe editor · init, community, blank upload */
 
 /* ---------------- Init ---------------- */
 // Open from cabinet
@@ -2379,10 +2353,6 @@ function enterCommunityView() {
   var pb = document.getElementById('portalBtn');
   if (pb) pb.classList.remove('active');
   if (typeof renderPortals === 'function') renderPortals();
-  var battle = document.getElementById('battleModeBtn');
-  var battleWrap = document.querySelector('.hero-battle-wrap');
-  if (battle) { battle.hidden = true; battle.setAttribute('hidden', ''); }
-  if (battleWrap) { battleWrap.hidden = true; battleWrap.setAttribute('hidden', ''); }
 }
 
 function exitCommunityToEditor() {
@@ -2398,10 +2368,6 @@ function exitCommunityToEditor() {
     el.hidden = false;
     el.removeAttribute('hidden');
   });
-  var battle = document.getElementById('battleModeBtn');
-  var battleWrap = document.querySelector('.hero-battle-wrap');
-  if (battle) { battle.hidden = false; battle.removeAttribute('hidden'); }
-  if (battleWrap) { battleWrap.hidden = false; battleWrap.removeAttribute('hidden'); }
 }
 
 function setupCommunityUI() {
@@ -2484,10 +2450,6 @@ function setupCommunityUI() {
   }
   // Battle Mode → Open ranking
   applyBattleResult();
-  const expertId = new URLSearchParams(location.search).get('e');
-  if(expertId && applyExpertPreset(expertId)){
-    // expert loaded
-  }
   const sc = new URLSearchParams(location.search).get('s');
   if(sc && typeof loadShortLink === 'function'){
     try{
@@ -2631,103 +2593,4 @@ window.addEventListener('hashchange', ()=>{
   }
 });
 
-// ElDuD (and any expert link): always apply, even if hash is already the same
-document.querySelectorAll('a.expert-name').forEach(a => {
-  a.addEventListener('click', (e) => {
-    const href = a.getAttribute('href') || '';
-    try{
-      const u = new URL(href, location.href);
-      const eid = u.searchParams.get('e');
-      if(eid && EXPERT_PRESETS[eid.toLowerCase()]){
-        e.preventDefault();
-        if(applyExpertPreset(eid)){
-          render();
-          if(!BLANK_MODE) renderFactionFilters();
-          renderPortals();
-          showToast('Expert tier list loaded');
-        }
-        return;
-      }
-    }catch(err){}
-    const hash = href.includes('#') ? href.slice(href.indexOf('#')) : '';
-    if(!hash || hash.length < 2) return;
-    e.preventDefault();
-    if(location.hash === hash){
-      applyHashState();
-    } else {
-      location.hash = hash;
-    }
-  });
-});
-
-})();
-
-/* RankMe editor · Battle Mode button on tier page */
-
-/* Battle Mode launch from tier page — under description */
-(function(){
-  function resolveId(){
-    try{
-      if(typeof TEMPLATE_ID !== 'undefined' && TEMPLATE_ID && TEMPLATE_ID !== 'blank') return String(TEMPLATE_ID);
-    }catch(e){}
-    try{
-      if(window.RANKME_TEMPLATE && window.RANKME_TEMPLATE.id && window.RANKME_TEMPLATE.id !== 'blank')
-        return String(window.RANKME_TEMPLATE.id);
-    }catch(e){}
-    try{
-      var p = new URLSearchParams(location.search);
-      var t = (p.get('t') || '').trim();
-      if(t && t !== 'blank') return t;
-    }catch(e){}
-    try{
-      var s = sessionStorage.getItem('rankme_t');
-      if(s && s !== 'blank') return s;
-    }catch(e){}
-    try{
-      var path = location.pathname.replace(/\/+$/, '').replace(/\.html$/i, '');
-      var parts = path.split('/').filter(Boolean);
-      var cand = '';
-      if (parts.length === 1) cand = parts[0];
-      else if (parts.length === 2 && parts[0] === 't') cand = parts[1];
-      var skip = { account:1, battle:1, builder:1, create:1, dmca:1, index:1, privacy:1, terms:1, tier:1 };
-      if (cand && !skip[cand] && /^[a-z0-9][a-z0-9_-]{0,63}$/i.test(cand)) return cand;
-    }catch(e){}
-    return '';
-  }
-  function goBattle(e){
-    if(e){ e.preventDefault(); e.stopPropagation(); }
-    var id = resolveId();
-    if(!id){
-      console.warn('Battle: no template id');
-      alert('Open a template first, then start Battle Mode.');
-      return;
-    }
-    try{ sessionStorage.setItem('rankme_t', id); }catch(err){}
-    try{
-      window.allowLeave = true;
-      sessionStorage.setItem('rankme_nav_ok', '1');
-    }catch(err){}
-    window.location.assign('battle.html?t=' + encodeURIComponent(id));
-  }
-  function bind(){
-    var btn = document.getElementById('battleModeBtn');
-    if(!btn) return;
-    var id = resolveId();
-    if(!id){
-      btn.style.display = 'none';
-      return;
-    }
-    btn.style.display = '';
-    btn.style.pointerEvents = 'auto';
-    btn.style.cursor = 'pointer';
-    btn.disabled = false;
-    btn.onclick = goBattle;
-  }
-  bind();
-  if(document.readyState === 'loading'){
-    document.addEventListener('DOMContentLoaded', bind);
-  }
-  setTimeout(bind, 0);
-  setTimeout(bind, 200);
-  setTimeout(bind, 800);
 })();

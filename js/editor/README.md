@@ -4,7 +4,7 @@ Source of truth for the tier editor. `js/app.js` is **generated**.
 
 | File | Role |
 |------|------|
-| `_core.js` | Template, state, hash, expert preset |
+| `_core.js` | Template, state, hash |
 | `_render.js` | Board, labels, pool, filters, portals |
 | `_drag.js` | Pointer drag / drop |
 | `_ui.js` | Row settings, size, confirm, share, download |
@@ -12,7 +12,6 @@ Source of truth for the tier editor. `js/app.js` is **generated**.
 | `_export.js` | PNG export |
 | `_leave.js` | Unsaved leave guard |
 | `_boot.js` | Init, community, blank uploads |
-| `_battle-cta.js` | Battle Mode button (own IIFE) |
 
 After editing any `_*.js`:
 

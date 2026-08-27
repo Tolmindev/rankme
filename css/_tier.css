@@ -257,7 +257,9 @@
 .card:hover {
   transform: translateY(-2px) scale(1.04);
   filter: brightness(1.12) saturate(1.15);
-  box-shadow: inset 0 0 0 2px rgba(230,200,255,0.95), 0 0 0 2px rgba(180,130,230,0.55), 0 10px 28px rgba(160,100,220,0.45);
+  box-shadow:
+    0 0 0 1.5px rgba(210, 180, 255, 0.9),
+    0 10px 28px rgba(160, 100, 220, 0.4);
   z-index: 5;
 }
 
@@ -271,7 +273,9 @@
   z-index: 999;
   opacity: 1;
   filter: brightness(1.08) saturate(1.1);
-  box-shadow: inset 0 0 0 2.5px rgba(245,230,255,1), 0 0 0 3px rgba(200,150,255,0.85), 0 16px 44px rgba(160,100,230,0.6);
+  box-shadow:
+    0 0 0 2px rgba(230, 210, 255, 0.95),
+    0 16px 40px rgba(160, 100, 230, 0.5);
   transform: scale(1.06);
 }
 
@@ -690,13 +694,19 @@ body.card-square {
 body.card-square .card:hover {
   transform: translateY(-4px) scale(1.08);
   filter: brightness(1.18) saturate(1.25);
-  box-shadow: 0 0 0 2px rgba(230,200,140,.9), 0 0 18px rgba(200,160,255,.55), 0 10px 28px rgba(180,120,230,.5);
+  box-shadow:
+    0 0 0 1.5px rgba(230, 200, 140, 0.9),
+    0 0 18px rgba(200, 160, 255, 0.45),
+    0 10px 28px rgba(180, 120, 230, 0.45);
   z-index: 6;
 }
 
 body.card-square .card.floating {
   filter: brightness(1.25) saturate(1.3);
-  box-shadow: 0 0 0 3px rgba(255,220,160,.95), 0 0 24px rgba(200,160,255,.7), 0 16px 44px rgba(0,0,0,.55);
+  box-shadow:
+    0 0 0 2px rgba(255, 220, 160, 0.95),
+    0 0 20px rgba(200, 160, 255, 0.5),
+    0 16px 40px rgba(0, 0, 0, 0.5);
   transform: scale(1.1);
 }
 
@@ -715,8 +725,17 @@ body.no-factions .faction-filters {
   display: none;
 }
 
-body.theme-gold .card:hover, body.theme-gold .card.floating {
-  box-shadow: inset 0 0 0 2.5px rgba(230,200,255,1), 0 0 0 3px rgba(201,168,240,0.9), 0 14px 40px rgba(180,120,230,0.5);
+body.theme-gold .card:hover {
+  box-shadow:
+    0 0 0 1.5px rgba(220, 195, 255, 0.95),
+    0 10px 26px rgba(180, 120, 230, 0.4);
+  filter: brightness(1.08);
+}
+
+body.theme-gold .card.floating {
+  box-shadow:
+    0 0 0 2px rgba(230, 210, 255, 0.95),
+    0 14px 36px rgba(180, 120, 230, 0.45);
   filter: brightness(1.08);
 }
 

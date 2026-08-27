@@ -271,17 +271,15 @@ function render(){
       } catch (err) {}
     });
     label.addEventListener('input', ()=>{
-      t.name = (label.innerText || '').replace(/\u00a0/g, ' ');
-      // Resize lines in place — do not rebuild DOM (rebuild ate spaces)
+      t.name = labelRawText(label);
       sizeLabelLinesInPlace(label);
     });
     label.addEventListener('keydown', (e)=>{
       if(e.key === 'Enter'){
         e.preventDefault();
         e.stopPropagation();
-        // Insert \n at caret, then reflow per-line sizes (no execCommand)
         const off = getLabelCaretOffset(label);
-        const text = (label.innerText || '').replace(/\u00a0/g, ' ');
+        const text = labelRawText(label);
         const next = text.slice(0, off) + '\n' + text.slice(off);
         t.name = next;
         fitLabelFont(label, next, true);
@@ -289,7 +287,7 @@ function render(){
       }
     });
     label.addEventListener('blur', ()=>{
-      let name = (label.innerText || '').replace(/\u00a0/g, ' ').replace(/\n+$/,'');
+      let name = labelRawText(label).replace(/\n+$/,'');
       if(!name.trim()) name = 'ROW';
       t.name = name;
       fitLabelFont(label, name);
@@ -330,20 +328,24 @@ function render(){
 }
 
 function labelLineFontSize(line){
-  const len = (line || '').replace(/\s+/g, '').length || 1;
+  const len = (line || '').replace(/\s+/g, '').replace(/[\u00a0\u200B]/g, '').length || 1;
   const mobile = window.matchMedia && window.matchMedia('(max-width: 720px)').matches;
   if(mobile){
-    if(len <= 1) return 18;
-    if(len === 2) return 14;
+    if(len <= 1) return 16;
+    if(len === 2) return 13;
     if(len <= 4) return 11;
     if(len <= 8) return 9;
     return 8;
   }
-  if(len <= 1) return 34;
-  if(len === 2) return 26;
-  if(len <= 4) return 18;
-  if(len <= 8) return 14;
+  if(len <= 1) return 30;
+  if(len === 2) return 24;
+  if(len <= 4) return 17;
+  if(len <= 8) return 13;
   return 12;
+}
+
+function labelRawText(el){
+  return String((el && el.innerText) || '').replace(/[\u00a0\u200B]/g, '');
 }
 
 function getLabelCaretOffset(el){
@@ -385,14 +387,13 @@ function sizeLabelLinesInPlace(el){
   const spans = el.querySelectorAll('.tier-label-line');
   if(spans.length){
     spans.forEach(function(span){
-      let line = (span.textContent || '').replace(/\u00a0/g, ' ');
-      if(line === '\u00a0' || line === '\xa0') line = '';
+      let line = (span.textContent || '').replace(/[\u00a0\u200B]/g, '');
       span.style.fontSize = labelLineFontSize(line) + 'px';
     });
     return;
   }
   // Plain text fallback while editing
-  const text = (el.innerText || '').replace(/\u00a0/g, ' ');
+  const text = labelRawText(el);
   const lines = text.split('\n');
   let maxLen = 1;
   lines.forEach(function(line){
@@ -405,14 +406,14 @@ function sizeLabelLinesInPlace(el){
 function fitLabelFontLive(el){
   // Per-line sizes while typing; keep trailing empty line so Enter works
   const off = getLabelCaretOffset(el);
-  const text = (el.innerText || '').replace(/\u00a0/g, ' ');
+  const text = labelRawText(el);
   const norm = normalizeLabelText(text, true);
   fitLabelFont(el, norm.raw, true);
   setLabelCaretOffset(el, Math.min(off, norm.raw.length));
 }
 
 function normalizeLabelText(text, keepTrailingEmpty){
-  let raw = String(text == null ? '' : text).replace(/\r/g, '');
+  let raw = String(text == null ? '' : text).replace(/\r/g, '').replace(/[\u00a0\u200B]/g, '');
   const lines = raw.split('\n');
   if(!keepTrailingEmpty){
     // Blur / final: drop trailing empty lines (fixes "SS" shifted up after Enter+Backspace)
@@ -447,7 +448,7 @@ function fitLabelFont(el, text, keepTrailingEmpty){
   lines.forEach(function(line){
     const span = document.createElement('span');
     span.className = 'tier-label-line';
-    span.textContent = line.length ? line : '\u00a0';
+    span.textContent = line.length ? line : '\u200B';
     span.style.fontSize = labelLineFontSize(line) + 'px';
     el.appendChild(span);
   });

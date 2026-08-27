@@ -355,13 +355,13 @@ button, .cta, .btn, .btn-mini, .pill-btn, .download-btn, .login-btn, a.btn, a.ct
 .download-modal-actions, .battle-panel-actions {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
   width: 100%;
 }
 
 .download-modal-actions .btn, .download-modal-actions button, .battle-panel-actions .btn, .battle-panel-actions a.btn, .battle-panel-actions button {
   width: 100%;
-  min-height: 44px;
+  min-height: 40px;
   margin: 0;
   border-radius: 999px;
   display: flex;

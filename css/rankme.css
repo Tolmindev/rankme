@@ -2342,8 +2342,8 @@ body[data-editor="1"] #heroDesc {
 }
 
 .tier-label-wrap {
-  width: 130px;
-  min-width: 130px;
+  width: 118px;
+  min-width: 118px;
   flex-shrink: 0;
   display: flex;
   align-items: stretch;
@@ -3538,8 +3538,8 @@ body.theme-gold .card img {
   }
 
   .tier-label-wrap {
-    width: 64px;
-    min-width: 64px;
+    width: 56px;
+    min-width: 56px;
     flex-shrink: 0;
   }
 
@@ -4159,13 +4159,13 @@ button, .cta, .btn, .btn-mini, .pill-btn, .download-btn, .login-btn, a.btn, a.ct
 .download-modal-actions, .battle-panel-actions {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
   width: 100%;
 }
 
 .download-modal-actions .btn, .download-modal-actions button, .battle-panel-actions .btn, .battle-panel-actions a.btn, .battle-panel-actions button {
   width: 100%;
-  min-height: 44px;
+  min-height: 40px;
   margin: 0;
   border-radius: 999px;
   display: flex;
@@ -5787,16 +5787,16 @@ body > .toast {
   background: #1b1729;
   border: 1px solid var(--line);
   border-radius: 16px;
-  padding: 28px 32px;
-  width: min(440px, 92vw);
+  padding: 20px 24px 18px;
+  width: min(400px, 92vw);
   max-width: 92vw;
   text-align: center;
   box-sizing: border-box;
 }
 
 .modal h3 {
-  margin: 0 0 10px;
-  font-size: 1.1rem;
+  margin: 0 0 6px;
+  font-size: 1.05rem;
   font-weight: 800;
   color: var(--text);
   background: transparent;
@@ -5806,38 +5806,38 @@ body > .toast {
 
 .modal p {
   color: var(--text-dim);
-  font-size: .88rem;
-  line-height: 1.5;
-  margin: 0 0 20px;
+  font-size: .82rem;
+  line-height: 1.4;
+  margin: 0 0 14px;
   font-weight: 600;
 }
 
 .download-modal {
-  max-width: 440px;
-  width: min(440px,92vw);
-  padding: 32px 36px;
+  max-width: 360px;
+  width: min(360px, 92vw);
+  padding: 20px 24px 16px;
 }
 
 .download-modal h3 {
-  font-size: 1.25rem;
-  margin-bottom: 8px;
+  font-size: 1.08rem;
+  margin-bottom: 4px;
 }
 
 .download-modal p {
-  margin-bottom: 24px;
-  font-size: .95rem;
+  margin-bottom: 14px;
+  font-size: .82rem;
 }
 
 .download-modal-actions {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
 }
 
 .download-modal-actions .dl-std, .download-modal-actions .dl-max {
-  min-height: 48px;
+  min-height: 40px;
   border-radius: 999px;
-  font-size: .95rem;
+  font-size: .88rem;
   width: 100%;
   display: flex;
   align-items: center;
@@ -5846,10 +5846,10 @@ body > .toast {
 }
 
 .download-modal-actions .dl-std {
-  padding: 12px 22px;
+  padding: 8px 18px;
   border-radius: 999px;
   font-weight: 800;
-  font-size: .88rem;
+  font-size: .84rem;
   cursor: pointer;
   border: 1px solid rgba(200,160,240,.35);
   background: #171327;
@@ -5865,10 +5865,10 @@ body > .toast {
 
 .download-modal-actions .dl-max {
   position: relative;
-  padding: 14px 22px;
+  padding: 8px 18px;
   border-radius: 999px;
   font-weight: 800;
-  font-size: .9rem;
+  font-size: .84rem;
   cursor: pointer;
   color: #f8f4ff;
   overflow: hidden;
@@ -5896,12 +5896,12 @@ body > .toast {
 }
 
 .download-modal-actions .dl-cancel {
-  padding: 10px;
+  padding: 4px;
   border: none;
   background: transparent;
   color: var(--text-dim);
   font-weight: 700;
-  font-size: .82rem;
+  font-size: .78rem;
   cursor: pointer;
 }
 
@@ -6011,7 +6011,7 @@ body > .toast {
 }
 
 #delModal .modal-actions {
-  margin-top: 18px;
+  margin-top: 12px;
 }
 
 @media (max-width: 720px) {

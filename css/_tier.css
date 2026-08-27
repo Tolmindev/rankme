@@ -93,8 +93,8 @@
 }
 
 .tier-label-wrap {
-  width: 130px;
-  min-width: 130px;
+  width: 118px;
+  min-width: 118px;
   flex-shrink: 0;
   display: flex;
   align-items: stretch;
@@ -1289,8 +1289,8 @@ body.theme-gold .card img {
   }
 
   .tier-label-wrap {
-    width: 64px;
-    min-width: 64px;
+    width: 56px;
+    min-width: 56px;
     flex-shrink: 0;
   }
 

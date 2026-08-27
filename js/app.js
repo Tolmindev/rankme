@@ -679,8 +679,14 @@ function beginDragVisual(){
   document.body.appendChild(floater);
   drag.floater = floater;
   source.classList.add('dragging');
-  source.style.opacity = '0.25';
-  source.style.pointerEvents = 'none';
+  source.style.display = 'none';
+
+  const ph = document.createElement('div');
+  ph.className = 'card placeholder';
+  ph.innerHTML = '<img src="'+cardSrc(drag.cid)+'">';
+  drag.placeholder = ph;
+  if(source.parentNode) source.parentNode.insertBefore(ph, source);
+  drag.targetContainer = source.parentElement;
 }
 
 function containerAt(x,y){
@@ -726,24 +732,74 @@ function visibleDragCards(cont){
   );
 }
 
-/* Wrapped rows: pick insert by visual row (Y), then left-to-right (X). */
+function isDragGhost(n){
+  return !n || n === (drag && drag.source) || n.classList.contains('placeholder') || n.style.display === 'none';
+}
+
+function nextDragCard(el){
+  let n = el.nextElementSibling;
+  while(n && isDragGhost(n)) n = n.nextElementSibling;
+  return n;
+}
+
+function sameRow(a, b, slop){
+  return a.top < b.bottom + slop && a.bottom > b.top - slop;
+}
+
+function placePlaceholder(cont, ph, ref){
+  if(ref){
+    if(ph.parentNode !== cont || nextDragCard(ph) !== ref) cont.insertBefore(ph, ref);
+  } else if(ph.parentNode !== cont || nextDragCard(ph) !== null){
+    cont.appendChild(ph);
+  }
+}
+
+/* Swap as soon as the pointer overlaps a neighbor. Placeholder hole stays put
+   while the pointer is still inside it, so the original slot does not jump. */
 function insertPlaceholderAt(cont, ph, x, y){
   if(cont.classList.contains('pool')){
-    cont.appendChild(ph);
+    if(ph.parentNode !== cont) cont.appendChild(ph);
     return;
   }
   const slop = 8;
-  const children = visibleDragCards(cont);
-  for(const child of children){
+  const cards = visibleDragCards(cont);
+  if(!cards.length){
+    if(ph.parentNode !== cont) cont.appendChild(ph);
+    return;
+  }
+
+  const phHere = ph.parentNode === cont;
+  const phRect = phHere ? ph.getBoundingClientRect() : null;
+  if(phRect && x >= phRect.left && x <= phRect.right && y >= phRect.top && y <= phRect.bottom){
+    return;
+  }
+
+  let over = null;
+  for(const child of cards){
     const r = child.getBoundingClientRect();
-    if(y >= r.bottom + slop) continue;
-    const sameRow = y >= r.top - slop;
-    if(!sameRow || x < r.left + r.width / 2){
-      cont.insertBefore(ph, child);
-      return;
+    if(x >= r.left && x <= r.right && y >= r.top && y <= r.bottom){
+      over = child;
+      break;
     }
   }
-  cont.appendChild(ph);
+
+  if(over){
+    const r = over.getBoundingClientRect();
+    const toRight = phRect && sameRow(r, phRect, slop) && r.left >= (phRect.left + phRect.right) / 2;
+    placePlaceholder(cont, ph, toRight ? nextDragCard(over) : over);
+    return;
+  }
+
+  let ref = null;
+  for(const child of cards){
+    const r = child.getBoundingClientRect();
+    if(y >= r.bottom + slop) continue;
+    if(y < r.top - slop || x < r.left){
+      ref = child;
+      break;
+    }
+  }
+  placePlaceholder(cont, ph, ref);
 }
 
 function onDragMove(e){

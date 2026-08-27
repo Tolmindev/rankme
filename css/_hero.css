@@ -118,10 +118,6 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
   transform: translateY(-1px);
 }
 
-.upload-remix {
-  cursor: pointer;
-}
-
 .hero-home {
   text-align: center;
   margin-bottom: 48px;

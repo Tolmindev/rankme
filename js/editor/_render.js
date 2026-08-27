@@ -304,20 +304,26 @@ function renderFactionFilters(){
   wrap.innerHTML = '';
   if(NO_FACTIONS){ wrap.style.display = 'none'; return; }
   wrap.style.display = '';
+  wrap.classList.toggle('icon-only', !!FACTION_ICON_ONLY);
   const mkBtn = (key, label, icon, hue) => {
     const b = document.createElement('button');
+    const hideLabel = !!(FACTION_ICON_ONLY && icon && key !== 'ALL');
     let extra = '';
     if(key==='LEGENDARY') extra += ' legendary';
     if(key==='MASTER') extra += ' master';
     if(key==='ALL') extra += ' all-mix';
+    if(hideLabel) extra += ' icon-only';
     b.className = 'faction-btn' + (activeFilter===key ? ' active' : '') + (!icon ? ' no-icon' : '') + extra;
+    b.type = 'button';
+    b.title = label;
+    b.setAttribute('aria-label', label);
     if(hue!==undefined) b.style.setProperty('--fhue', hue);
     if(icon){
       const img = document.createElement('img');
       img.src = icon; img.alt='';
       b.appendChild(img);
     }
-    b.appendChild(document.createTextNode(label));
+    if(!hideLabel) b.appendChild(document.createTextNode(label));
     b.addEventListener('click', ()=>{ activeFilter = key; renderFactionFilters(); renderPool(); });
     wrap.appendChild(b);
   };

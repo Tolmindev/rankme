@@ -133,6 +133,29 @@
       "exclusive": true,
       "parallax": true,
       "coverThumb": "assets/brand/Skullgirls_Cover_thumb.webp"
+    },
+    {
+      "id": "marvel-tokon",
+      "title": "MARVEL Tōkon: Fighting Souls",
+      "description": "Experience the world of MARVEL Tōkon: Fighting Souls before stepping into the fight.",
+      "cover": "assets/brand/Marvel_TOKON_Cover.webp",
+      "href": "tier.html?t=marvel-tokon",
+      "category": "games",
+      "tags": [
+        "games",
+        "fighting",
+        "marvel",
+        "tokon",
+        "playstation"
+      ],
+      "itemCount": 20,
+      "itemLabel": "fighters",
+      "creator": "RankMe",
+      "createdAt": "2026-08-27",
+      "featured": true,
+      "exclusive": true,
+      "parallax": true,
+      "coverThumb": "assets/brand/Marvel_TOKON_Cover_thumb.webp"
     }
   ],
   "categoryMeta": {

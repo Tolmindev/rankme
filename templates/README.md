@@ -43,7 +43,8 @@ No new HTML page required. `boot.js` loads `templates/<id>.json` automatically.
 | `exportName` | no | Default PNG filename |
 | `parallax` | no | |
 | `noFactions` | no | Hide faction filters |
-| `factions` / `theme` | no | Optional filters |
+| `factionOrder` / `factionIcons` / `factionHues` | no | Filter order, SVG paths, active colors |
+| `factionIconOnly` | no | Show filter icons without text (long names) |
 
 Expert rankings live in Community (public lists flagged `is_expert`), not inside the template page.
 

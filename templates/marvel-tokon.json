@@ -1,0 +1,218 @@
+{
+  "id": "marvel-tokon",
+  "title": "MARVEL Tōkon: Fighting Souls",
+  "footerLabel": "MARVEL Tōkon",
+  "exportName": "rankme-marvel-tokon-tierlist.png",
+  "cardShape": "portrait",
+  "cardAspect": 1.545,
+  "cardPath": "assets/marvel-tokon/",
+  "theme": "default",
+  "noFactions": false,
+  "factionIconOnly": true,
+  "factionOrder": [
+    "Amazing Guardians",
+    "Fighting Avengers",
+    "Samurai Outriders",
+    "Unbreakable X-Men",
+    "Knights of Doom"
+  ],
+  "factionIcons": {
+    "Amazing Guardians": "assets/factions/tokonAmazingGuardians.svg",
+    "Fighting Avengers": "assets/factions/tokonFightingAvengers.svg",
+    "Knights of Doom": "assets/factions/tokonKnightsOfDoom.svg",
+    "Samurai Outriders": "assets/factions/tokonSamuraiOutriders.svg",
+    "Unbreakable X-Men": "assets/factions/tokonUnbreakableXMen.svg"
+  },
+  "factionHues": {
+    "Amazing Guardians": 355,
+    "Fighting Avengers": 200,
+    "Samurai Outriders": 205,
+    "Unbreakable X-Men": 36,
+    "Knights of Doom": 160
+  },
+  "cover": "assets/brand/Marvel_TOKON_Cover.webp",
+  "description": "Experience the world of MARVEL Tōkon: Fighting Souls before stepping into the fight.",
+  "parallax": true,
+  "cards": [
+    {
+      "id": 1,
+      "file": "Ms-Marvel.webp",
+      "name": "Ms. Marvel",
+      "faction": "Amazing Guardians",
+      "roles": [
+        "Amazing Guardians"
+      ]
+    },
+    {
+      "id": 2,
+      "file": "Peni-Parker.webp",
+      "name": "Peni Parker",
+      "faction": "Amazing Guardians",
+      "roles": [
+        "Amazing Guardians"
+      ]
+    },
+    {
+      "id": 3,
+      "file": "Spider-Man.webp",
+      "name": "Spider-Man",
+      "faction": "Amazing Guardians",
+      "roles": [
+        "Amazing Guardians"
+      ]
+    },
+    {
+      "id": 4,
+      "file": "Star-Lord.webp",
+      "name": "Star-Lord",
+      "faction": "Amazing Guardians",
+      "roles": [
+        "Amazing Guardians"
+      ]
+    },
+    {
+      "id": 5,
+      "file": "Black-Panther.webp",
+      "name": "Black Panther",
+      "faction": "Fighting Avengers",
+      "roles": [
+        "Fighting Avengers"
+      ]
+    },
+    {
+      "id": 6,
+      "file": "Captain-America.webp",
+      "name": "Captain America",
+      "faction": "Fighting Avengers",
+      "roles": [
+        "Fighting Avengers"
+      ]
+    },
+    {
+      "id": 7,
+      "file": "Hulk.webp",
+      "name": "Hulk",
+      "faction": "Fighting Avengers",
+      "roles": [
+        "Fighting Avengers"
+      ]
+    },
+    {
+      "id": 8,
+      "file": "Iron-Man.webp",
+      "name": "Iron Man",
+      "faction": "Fighting Avengers",
+      "roles": [
+        "Fighting Avengers"
+      ]
+    },
+    {
+      "id": 9,
+      "file": "Blade.webp",
+      "name": "Blade",
+      "faction": "Samurai Outriders",
+      "roles": [
+        "Samurai Outriders"
+      ]
+    },
+    {
+      "id": 10,
+      "file": "Deadpool.webp",
+      "name": "Deadpool",
+      "faction": "Samurai Outriders",
+      "roles": [
+        "Samurai Outriders"
+      ]
+    },
+    {
+      "id": 11,
+      "file": "Ghost-Rider.webp",
+      "name": "Ghost Rider",
+      "faction": "Samurai Outriders",
+      "roles": [
+        "Samurai Outriders"
+      ]
+    },
+    {
+      "id": 12,
+      "file": "Loki.webp",
+      "name": "Loki",
+      "faction": "Samurai Outriders",
+      "roles": [
+        "Samurai Outriders"
+      ]
+    },
+    {
+      "id": 13,
+      "file": "Danger.webp",
+      "name": "Danger",
+      "faction": "Unbreakable X-Men",
+      "roles": [
+        "Unbreakable X-Men"
+      ]
+    },
+    {
+      "id": 14,
+      "file": "Magik.webp",
+      "name": "Magik",
+      "faction": "Unbreakable X-Men",
+      "roles": [
+        "Unbreakable X-Men"
+      ]
+    },
+    {
+      "id": 15,
+      "file": "Storm.webp",
+      "name": "Storm",
+      "faction": "Unbreakable X-Men",
+      "roles": [
+        "Unbreakable X-Men"
+      ]
+    },
+    {
+      "id": 16,
+      "file": "Wolverine.webp",
+      "name": "Wolverine",
+      "faction": "Unbreakable X-Men",
+      "roles": [
+        "Unbreakable X-Men"
+      ]
+    },
+    {
+      "id": 17,
+      "file": "Carnage.webp",
+      "name": "Carnage",
+      "faction": "Knights of Doom",
+      "roles": [
+        "Knights of Doom"
+      ]
+    },
+    {
+      "id": 18,
+      "file": "Doctor-Doom.webp",
+      "name": "Doctor Doom",
+      "faction": "Knights of Doom",
+      "roles": [
+        "Knights of Doom"
+      ]
+    },
+    {
+      "id": 19,
+      "file": "Green-Goblin.webp",
+      "name": "Green Goblin",
+      "faction": "Knights of Doom",
+      "roles": [
+        "Knights of Doom"
+      ]
+    },
+    {
+      "id": 20,
+      "file": "Magneto.webp",
+      "name": "Magneto",
+      "faction": "Knights of Doom",
+      "roles": [
+        "Knights of Doom"
+      ]
+    }
+  ]
+}

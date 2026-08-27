@@ -18,6 +18,7 @@ const TEMPLATE_FOOTER = (TMPL && TMPL.footerLabel) || null;
 const THEME_GOLD = !!(TMPL && TMPL.theme === 'gold');
 const FACTION_ORDER = (TMPL && TMPL.factionOrder) || null;
 const FACTION_ICON_MAP = (TMPL && TMPL.factionIcons) || null;
+const FACTION_ICON_ONLY = !!(TMPL && TMPL.factionIconOnly);
 
 const BLANK_MODE = !!window.RANKME_BLANK;
 /* Card data lives in templates/*.json only (loaded as window.RANKME_TEMPLATE). */
@@ -32,7 +33,12 @@ const N_CARDS = CARD_META_LIST.length;
 const FACTIONS = NO_FACTIONS ? [] : (
   FACTION_ORDER || [...new Set(CARD_META_LIST.flatMap(c => Array.isArray(c.roles) ? c.roles : [c.faction]))]
 );
-const FACTION_HUE = {MASTER:210, INFERNAL:275, WIND:210, THUNDER:48, FLAME:8, LEGENDARY:290, 'A+':32, Fighter:30, Tank:200, Mage:270, Assassin:0, Marksman:50, Support:160, Strength:270, Agility:280, Intelligence:265, Universal:275, Bronze:22, Silver:210, Gold:42, Diamond:300};
+const FACTION_HUE = Object.assign({
+  MASTER:210, INFERNAL:275, WIND:210, THUNDER:48, FLAME:8, LEGENDARY:290, 'A+':32,
+  Fighter:30, Tank:200, Mage:270, Assassin:0, Marksman:50, Support:160,
+  Strength:270, Agility:280, Intelligence:265, Universal:275,
+  Bronze:22, Silver:210, Gold:42, Diamond:300
+}, (TMPL && TMPL.factionHues) || {});
 const FACTION_ICON = {};
 FACTIONS.forEach(f => {
   FACTION_ICON[f] = (FACTION_ICON_MAP && FACTION_ICON_MAP[f]) || (`assets/factions/${f}_icon.svg`);

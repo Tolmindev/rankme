@@ -628,6 +628,20 @@ body:not(.theme-gold) .faction-btn img {
   padding-left: 14px;
 }
 
+.faction-btn.icon-only {
+  padding: 6px 8px;
+  gap: 0;
+}
+
+.faction-btn.icon-only img {
+  width: 22px;
+  height: 22px;
+}
+
+body:not(.theme-gold) .faction-btn.icon-only img {
+  clip-path: none;
+}
+
 .faction-btn:hover {
   color: var(--text);
 }

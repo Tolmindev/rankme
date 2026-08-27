@@ -1230,6 +1230,20 @@ async function shareLinkOrImage(kind){
     }
   }catch(e){}
   const text = caption;
+  if(kind === 'native'){
+    if(navigator.share){
+      try{
+        await navigator.share({ title: text, text: text, url: url });
+        showToast('Link Ready');
+        return;
+      }catch(e){
+        if(e && e.name === 'AbortError') return;
+      }
+    }
+    navigator.clipboard?.writeText(url).then(()=> showToast('Link copied'))
+      .catch(()=> showToast(url));
+    return;
+  }
   if(kind === 'discord'){
     navigator.clipboard?.writeText(url).then(()=> showToast('Link copied'))
       .catch(()=> showToast(url));
@@ -1243,6 +1257,7 @@ async function shareLinkOrImage(kind){
 document.getElementById('shareDiscord')?.addEventListener('click', ()=> shareLinkOrImage('discord'));
 document.getElementById('shareTelegram')?.addEventListener('click', ()=> shareLinkOrImage('telegram'));
 document.getElementById('shareX')?.addEventListener('click', ()=> shareLinkOrImage('x'));
+document.getElementById('shareBtn')?.addEventListener('click', ()=> shareLinkOrImage('native'));
 
 document.getElementById('downloadBtn')?.addEventListener('click', ()=> openDownloadModal());
 

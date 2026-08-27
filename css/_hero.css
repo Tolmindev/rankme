@@ -119,16 +119,7 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
 }
 
 .upload-remix {
-  border-color: rgba(120,200,180,.4);
-  color: #b8f0d8;
   cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-}
-
-.upload-remix:hover {
-  border-color: rgba(120,220,180,.8);
-  box-shadow: 0 0 14px rgba(100,200,160,.3);
 }
 
 .hero-home {
@@ -1008,6 +999,7 @@ body.community-view .experts-block,
 body.community-view .hero-battle-wrap,
 body.community-view #battleModeBtn,
 body.community-view .toolbar-actions,
+body.community-view .tb-split,
 body.community-view #remixUploadWrap,
 body.community-view #poolWrap,
 body.community-view #portalBtn,

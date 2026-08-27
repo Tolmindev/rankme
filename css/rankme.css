@@ -407,6 +407,7 @@ footer.site .footer-social a:hover {
 .download-btn,
 .modal-actions button.primary,
 .save-btn,
+.upload-remix,
 .show-all-btn,
 .cc-show-all,
 .battle-panel .btn.primary,
@@ -424,6 +425,7 @@ footer.site .footer-social a:hover {
 .download-btn:hover,
 .modal-actions button.primary:hover,
 .save-btn:hover,
+.upload-remix:hover,
 .show-all-btn:hover,
 .cc-show-all:hover,
 .battle-panel .btn.primary:hover,
@@ -1321,16 +1323,7 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
 }
 
 .upload-remix {
-  border-color: rgba(120,200,180,.4);
-  color: #b8f0d8;
   cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-}
-
-.upload-remix:hover {
-  border-color: rgba(120,220,180,.8);
-  box-shadow: 0 0 14px rgba(100,200,160,.3);
 }
 
 .hero-home {
@@ -2210,6 +2203,7 @@ body.community-view .experts-block,
 body.community-view .hero-battle-wrap,
 body.community-view #battleModeBtn,
 body.community-view .toolbar-actions,
+body.community-view .tb-split,
 body.community-view #remixUploadWrap,
 body.community-view #poolWrap,
 body.community-view #portalBtn,
@@ -3263,6 +3257,23 @@ body.theme-gold .card img {
   border-radius: var(--radius);
   box-sizing: border-box;
 }
+.tb-icons,
+.tb-row2,
+.tb-share {
+  display: contents;
+}
+.tb-g,
+.tb-split,
+#shareBtn {
+  display: none;
+}
+.toolbar-actions { order: 1; }
+.share-group { order: 2; }
+.remix-btn { order: 3; }
+.toolbar .upload-remix { order: 4; }
+.save-btn { order: 5; }
+.size-ctrl { order: 6; }
+.toolbar .download-btn { order: 7; }
 
 .board {
   width: 100%;
@@ -3296,10 +3307,198 @@ body.theme-gold .card img {
 
   .toolbar {
     margin: 0 auto 12px;
-    padding: 10px 12px;
-    justify-content: center;
+    padding: 12px 12px 14px;
+    justify-content: stretch;
+    align-items: stretch;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 12px;
+  }
+
+  .tb-icons,
+  .tb-row2,
+  .tb-share {
+    display: flex;
     align-items: center;
-    gap: 10px;
+  }
+  .tb-icons {
+    width: 100%;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .tb-split {
+    display: block;
+    width: 1px;
+    align-self: stretch;
+    min-height: 36px;
+    background: rgba(200, 170, 255, 0.22);
+    flex-shrink: 0;
+  }
+  .tb-share {
+    gap: 8px;
+    margin-left: 0;
+  }
+  .tb-row2 {
+    width: 100%;
+    gap: 12px;
+  }
+  .share-group {
+    display: none;
+  }
+  #shareBtn {
+    display: inline-flex;
+  }
+
+  .toolbar .pill-btn:not(.upload-remix) {
+    flex: 1 1 0;
+    min-width: 40px;
+    max-width: 56px;
+    width: auto;
+    height: 52px;
+    padding: 6px 2px 4px;
+    flex-direction: column;
+    gap: 4px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.045);
+    border: 1px solid rgba(180, 140, 255, 0.12);
+    box-shadow: none;
+    color: #cbb6f2;
+    transform: none;
+    filter: none;
+  }
+  .toolbar .pill-btn .ico {
+    display: none;
+  }
+  .toolbar .tb-g {
+    display: block;
+    width: 22px;
+    height: 22px;
+    background: currentColor;
+    -webkit-mask: center / contain no-repeat;
+    mask: center / contain no-repeat;
+  }
+  .toolbar .pill-btn.add .tb-g {
+    -webkit-mask-image: url("../assets/icons/tb-add.svg");
+    mask-image: url("../assets/icons/tb-add.svg");
+  }
+  .toolbar .pill-btn.fill .tb-g {
+    -webkit-mask-image: url("../assets/icons/tb-fill.svg");
+    mask-image: url("../assets/icons/tb-fill.svg");
+  }
+  .toolbar .pill-btn.danger .tb-g {
+    -webkit-mask-image: url("../assets/icons/tb-clear.svg");
+    mask-image: url("../assets/icons/tb-clear.svg");
+  }
+  .toolbar #shareBtn .tb-g {
+    -webkit-mask-image: url("../assets/icons/tb-share.svg");
+    mask-image: url("../assets/icons/tb-share.svg");
+  }
+  .toolbar .remix-btn .tb-g {
+    -webkit-mask-image: url("../assets/icons/tb-remix.svg");
+    mask-image: url("../assets/icons/tb-remix.svg");
+  }
+  .toolbar .save-btn .tb-g {
+    -webkit-mask-image: url("../assets/icons/tb-save.svg");
+    mask-image: url("../assets/icons/tb-save.svg");
+  }
+  .toolbar .tb-t {
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: 1.15;
+    text-align: center;
+    white-space: nowrap;
+    color: var(--text-dim);
+  }
+  .toolbar .pill-btn.danger {
+    color: #f0b4c4;
+    background: rgba(255, 255, 255, 0.045);
+    border-color: rgba(180, 140, 255, 0.12);
+  }
+  .toolbar .save-btn {
+    color: #e4ccff;
+    min-width: 0;
+    height: 52px;
+    padding: 6px 2px 4px;
+    background: rgba(255, 255, 255, 0.045);
+    border: 1px solid rgba(180, 140, 255, 0.12);
+    box-shadow: 0 0 12px rgba(180, 120, 255, 0.28);
+  }
+  .toolbar .remix-btn {
+    min-width: 0;
+    height: 52px;
+    padding: 6px 2px 4px;
+  }
+  .toolbar .pill-btn:not(.upload-remix):hover,
+  .toolbar .pill-btn.danger:hover,
+  .toolbar .save-btn:hover,
+  .toolbar .remix-btn:hover {
+    transform: none;
+    filter: brightness(1.12);
+    border-color: rgba(210, 170, 255, 0.45);
+    box-shadow: none;
+  }
+  .toolbar .save-btn:hover {
+    box-shadow: 0 0 16px rgba(180, 120, 255, 0.4);
+  }
+  .toolbar .pill-btn:active {
+    transform: scale(0.96);
+  }
+
+  .size-ctrl {
+    flex: 1 1 auto;
+    min-width: 0;
+    order: unset;
+  }
+  .size-ctrl input[type=range] {
+    flex: 1 1 auto;
+    width: auto;
+    min-width: 0;
+  }
+  .toolbar .download-btn {
+    flex: 0 1 48%;
+    min-width: 140px;
+    height: 40px;
+    padding: 0 14px;
+    font-size: 0.82rem;
+  }
+  .toolbar .upload-remix {
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    height: 40px;
+    padding: 0 14px;
+    flex-direction: row;
+    border-radius: 999px;
+    font-size: 0.82rem;
+  }
+
+  body.community-view .toolbar {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    column-gap: 10px;
+    row-gap: 12px;
+  }
+  body.community-view .tb-icons {
+    grid-column: 2;
+    grid-row: 1;
+    justify-content: flex-end;
+    width: auto;
+  }
+  body.community-view .tb-row2 {
+    display: contents;
+  }
+  body.community-view .size-ctrl {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  body.community-view .download-btn {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    flex: none;
+    width: 100%;
+    min-width: 0;
   }
 
   .pool-wrap {
@@ -3343,13 +3542,10 @@ body.theme-gold .card img {
   }
 
   .toolbar-actions {
-    order: 1;
-    width: 100%;
-    justify-content: center;
-  }
-
-  .size-ctrl {
-    order: 2;
+    width: auto;
+    justify-content: flex-start;
+    gap: 8px;
+    flex-wrap: nowrap;
   }
 
   .faction-filters::-webkit-scrollbar {

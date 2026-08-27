@@ -1065,9 +1065,10 @@ body.ach-focus-open { overflow: hidden; }
   z-index: 800;
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 10px 18px 10px 10px;
-  max-width: min(420px, calc(100vw - 24px));
+  gap: 14px;
+  padding: 10px 20px 10px 10px;
+  width: min(520px, calc(100vw - 24px));
+  box-sizing: border-box;
   background: #161224;
   border: 1px solid rgba(180, 140, 240, 0.38);
   border-radius: 14px;
@@ -1092,6 +1093,7 @@ body.ach-focus-open { overflow: hidden; }
   display: block;
 }
 .ach-toast-copy {
+  flex: 1 1 auto;
   min-width: 0;
 }
 .ach-toast b {
@@ -1112,13 +1114,17 @@ body.ach-focus-open { overflow: hidden; }
 
 @media (max-width: 720px) {
   .ach-toast {
-    bottom: 18px;
-    padding: 8px 14px 8px 8px;
-    gap: 10px;
+    left: 16px;
+    right: 16px;
+    width: auto;
+    bottom: 20px;
+    padding: 12px 16px 12px 12px;
+    gap: 12px;
+    transform: translateY(14px);
   }
-  .ach-toast img { width: 44px; height: 44px; border-radius: 8px; }
-  .ach-toast b { font-size: 0.86rem; }
-  .ach-toast span { font-size: 0.68rem; }
+  .ach-toast.show {
+    transform: translateY(0);
+  }
   .ach-card {
     width: 112px;
     flex-basis: 112px;

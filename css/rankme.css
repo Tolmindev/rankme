@@ -3352,10 +3352,10 @@ body.theme-gold .card img {
     flex-direction: column;
     gap: 4px;
     border-radius: 12px;
-    background: rgba(255, 255, 255, 0.045);
-    border: 1px solid rgba(180, 140, 255, 0.12);
+    background: var(--btn-bg);
+    border: 1px solid var(--btn-line);
     box-shadow: none;
-    color: #cbb6f2;
+    color: var(--btn-fg);
     transform: none;
     filter: none;
   }
@@ -3381,8 +3381,8 @@ body.theme-gold .card img {
   .toolbar .pill-btn.danger .tb-g {
     -webkit-mask-image: url("../assets/icons/tb-clear.svg");
     mask-image: url("../assets/icons/tb-clear.svg");
-    -webkit-mask-size: 130%;
-    mask-size: 130%;
+    -webkit-mask-size: 118%;
+    mask-size: 118%;
   }
   .toolbar #shareBtn .tb-g {
     -webkit-mask-image: url("../assets/icons/tb-share.svg");
@@ -3395,8 +3395,6 @@ body.theme-gold .card img {
   .toolbar .save-btn .tb-g {
     -webkit-mask-image: url("../assets/icons/tb-save.svg");
     mask-image: url("../assets/icons/tb-save.svg");
-    -webkit-mask-size: 128%;
-    mask-size: 128%;
   }
   .toolbar .tb-t {
     font-size: 8px;
@@ -3408,17 +3406,17 @@ body.theme-gold .card img {
     color: var(--text-dim);
   }
   .toolbar .pill-btn.danger {
-    color: #f0b4c4;
-    background: rgba(255, 255, 255, 0.045);
-    border-color: rgba(180, 140, 255, 0.12);
+    color: #ffb3b3;
+    background: var(--btn-bg);
+    border-color: rgba(255, 110, 110, 0.42);
   }
   .toolbar .save-btn {
-    color: #e4ccff;
+    color: var(--btn-fg);
     min-width: 0;
     height: 52px;
     padding: 6px 2px 4px;
-    background: rgba(255, 255, 255, 0.045);
-    border: 1px solid rgba(180, 140, 255, 0.12);
+    background: var(--btn-bg);
+    border: 1px solid var(--btn-line);
     box-shadow: 0 0 12px rgba(180, 120, 255, 0.28);
   }
   .toolbar .remix-btn {
@@ -3427,13 +3425,20 @@ body.theme-gold .card img {
     padding: 6px 2px 4px;
   }
   .toolbar .pill-btn:not(.upload-remix):hover,
-  .toolbar .pill-btn.danger:hover,
   .toolbar .save-btn:hover,
   .toolbar .remix-btn:hover {
     transform: none;
     filter: brightness(1.12);
-    border-color: rgba(210, 170, 255, 0.45);
+    border-color: var(--btn-line-hot);
     box-shadow: none;
+  }
+  .toolbar .pill-btn.danger:hover {
+    transform: none;
+    filter: none;
+    background: rgba(255, 90, 90, 0.12);
+    border-color: rgba(255, 130, 130, 0.85);
+    color: #ffd0d0;
+    box-shadow: 0 0 14px rgba(255, 100, 120, 0.32);
   }
   .toolbar .save-btn:hover {
     box-shadow: 0 0 16px rgba(180, 120, 255, 0.4);

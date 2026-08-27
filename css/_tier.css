@@ -1527,12 +1527,28 @@ body.card-thin .card img {
   white-space: pre-wrap;
 }
 
-/* community-view cascade last (wins over mobile display:flex) */
+/* community-view — one hide list, last in cascade */
+body.community-view #expertsBlock,
+body.community-view .experts-block,
 body.community-view .hero-battle-wrap,
 body.community-view #battleModeBtn,
-body.community-view button.btn-battle-hero {
+body.community-view button.btn-battle-hero,
+body.community-view .toolbar-actions,
+body.community-view .tb-split,
+body.community-view #remixUploadWrap,
+body.community-view #poolWrap,
+body.community-view #portalBtn,
+body.community-view #factionFilters,
+body.community-view .tier-side {
   display: none;
 }
-body.community-view .toolbar {
-  justify-content: center;
+body.community-view .card {
+  pointer-events: none;
+  cursor: default;
+}
+body.community-view .tier-label {
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: default;
 }

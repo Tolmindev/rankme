@@ -534,75 +534,9 @@ button.btn-battle-hero#battleModeBtn:hover {
 }
 
 @media (max-width: 720px) {
-  .hero {
-    flex-direction: column;
-    align-items: stretch;
-    text-align: center;
-    padding: 16px 16px 0;
-    gap: 10px;
-    margin: 0 auto;
-    justify-content: flex-start;
-    min-height: 0;
-    height: auto;
-    margin-bottom: 0;
-  }
-
   .blank-cover-card, .hero .parallax-host {
     width: 100%;
     max-width: 100%;
-  }
-
-  .hero .parallax-host {
-    width: 100%;
-    max-width: 100%;
-  }
-
-  .hero img.title-logo, .hero img.title-logo.cover-card, .hero img.title-logo.ex-logo, body.card-square .hero img.title-logo.ex-logo {
-    display: block;
-    width: 100%;
-    max-width: 100%;
-    height: auto;
-    margin: 0;
-    flex: none;
-  }
-
-  .hero-title, .hero .desc {
-    text-align: center;
-  }
-
-  .hero .parallax-host, .hero .title-logo, .hero img.cover-card {
-    margin-bottom: 0;
-  }
-
-  .hero h1, #listTitle {
-    margin: 0 0 8px;
-  }
-
-  .hero .desc {
-    text-align: center;
-    max-width: 100%;
-    width: 100%;
-    margin: 0;
-    padding: 0 0 4px;
-    flex: 0 0 auto;
-    align-self: stretch;
-    font-size: 0.88rem;
-    line-height: 1.4;
-  }
-
-  .hero-text {
-    width: 100%;
-    text-align: center;
-  }
-
-  .hero-text .hero-battle-wrap {
-    display: flex;
-    justify-content: center;
-    margin: 10px 0 0;
-  }
-
-  .hero-text .btn-battle-hero, button.btn-battle-hero#battleModeBtn {
-    width: min(100%, 320px);
   }
 
   section.hero#heroSection, .hero {
@@ -949,7 +883,7 @@ a.cb-name:hover { color: #e8d4ff; }
     width: 100%;
     max-width: 1400px;
     padding: 0 14px;
-    margin: 12px auto 12px;
+    margin: 12px auto;
     gap: 10px;
     box-sizing: border-box;
   }
@@ -959,63 +893,9 @@ a.cb-name:hover { color: #e8d4ff; }
     justify-content: space-between;
     box-sizing: border-box;
   }
-  .hero {
-    margin-bottom: 0;
-    padding-bottom: 0;
-    gap: 10px;
-  }
-  .hero > .hero-text,
-  .hero-text,
-  .hero-text.blank-hero-text {
-    flex: 0 0 auto;
-    min-height: 0;
-    height: auto;
-    margin: 0;
-    padding-bottom: 0;
-  }
-  .hero-text.blank-hero-text {
-    gap: 12px;
-  }
-  .hero .desc,
-  .hero > .hero-text .desc {
-    flex: 0 0 auto;
-    margin: 0;
-  }
-  .hero-battle-wrap {
-    margin: 10px 0 0;
-  }
-  .community-toolbar {
-    margin-top: 12px;
-  }
 }
 
-/* Community ranking — body.community-view (read-only public) */
-body.community-view #expertsBlock,
-body.community-view .experts-block,
-body.community-view .hero-battle-wrap,
-body.community-view #battleModeBtn,
-body.community-view .toolbar-actions,
-body.community-view .tb-split,
-body.community-view #remixUploadWrap,
-body.community-view #poolWrap,
-body.community-view #portalBtn,
-body.community-view #factionFilters,
-body.community-view .tier-side {
-  display: none;
-}
-body.community-view .card {
-  pointer-events: none;
-  cursor: default;
-}
-body.community-view .tier-label {
-  pointer-events: none;
-  user-select: none;
-  -webkit-user-select: none;
-  cursor: default;
-}
-body.community-view .toolbar {
-  justify-content: center;
-}
+/* Community ranking — read-only. Hide list is in _tier.css (loads last). */
 
 /* Hero title/desc edit — body[data-editor] only */
 body[data-editor="0"] #heroTitle,

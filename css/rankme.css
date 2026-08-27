@@ -1094,7 +1094,6 @@ html.rankme-dragging {
 }
 
 .skel,
-.skel-block,
 .skel-line {
   background: linear-gradient(
     90deg,
@@ -1115,7 +1114,6 @@ html.rankme-dragging {
 }
 
 .skel-line-title { width: 62%; height: 14px; }
-.skel-line-sub { width: 88%; }
 .skel-sm { width: 42%; height: 10px; opacity: 0.85; border-radius: 999px; }
 .skel-pill {
   height: 38px;
@@ -1130,7 +1128,6 @@ html.rankme-dragging {
   flex: 0 0 auto;
   display: block;
 }
-.skel-round,
 .ap-avatar.skel {
   border-radius: 50%;
 }
@@ -1143,14 +1140,13 @@ html.rankme-dragging {
 
 @media (prefers-reduced-motion: reduce) {
   .skel,
-  .skel-block,
   .skel-line {
     animation: none;
     background: rgba(48, 40, 68, 0.9);
   }
 }
 
-/* Tier boot — same hero + rows as the real page */
+/* Tier boot — hero + board + toolbar + pool */
 .boot-loading {
   max-width: 1400px;
   margin: 0 auto;
@@ -1190,14 +1186,122 @@ html.rankme-dragging {
   flex: none;
   height: 42px;
 }
+.skel-board {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--panel);
+}
 .skel-row {
-  height: 64px;
-  border-radius: 12px;
+  height: var(--card-h);
+  border-radius: 0;
   width: 100%;
+  border-top: 1px solid var(--line);
+}
+.skel-row:first-child { border-top: none; }
+.skel-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-sizing: border-box;
+}
+.skel-tb-icons { display: contents; }
+.skel-tb-btn {
+  width: 108px;
+  height: 38px;
+  border-radius: 999px;
+}
+.skel-tb-row2 { display: contents; }
+.skel-tb-size {
+  width: 180px;
+  height: 10px;
+  border-radius: 999px;
+}
+.skel-tb-dl {
+  width: 168px;
+  height: 38px;
+  border-radius: 999px;
+}
+.skel-pool {
+  padding: 16px 18px 20px;
+  box-sizing: border-box;
+  background:
+    radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(165deg, rgba(42, 34, 68, 0.75) 0%, rgba(22, 18, 36, 0.88) 100%);
+  background-size: 14px 14px, 100% 100%;
+  border: 1px solid rgba(180, 140, 255, 0.16);
+  border-radius: var(--radius);
+}
+.skel-filters {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.skel-portal {
+  height: 40px;
+  width: 100%;
+  border-radius: 999px;
+  margin-bottom: 14px;
+}
+.skel-pool-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.skel-pcard {
+  width: var(--card-w);
+  height: var(--card-h);
+  border-radius: 10px;
 }
 @media (max-width: 720px) {
-  .boot-loading { padding: 20px 14px 32px; }
+  .boot-loading { padding: 14px 14px 32px; }
+  .skel-tier-hero {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
   .skel-tier-cover { width: 100%; max-width: 100%; }
+  .skel-tier-copy { align-items: center; }
+  .skel-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 12px 12px 14px;
+    gap: 12px;
+  }
+  .skel-tb-icons {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    width: 100%;
+    gap: 6px;
+  }
+  .skel-tb-btn {
+    width: 100%;
+    height: 52px;
+    border-radius: 12px;
+  }
+  .skel-tb-row2 {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 12px;
+  }
+  .skel-tb-size {
+    flex: 1 1 auto;
+    width: auto;
+    min-width: 0;
+    height: 40px;
+  }
+  .skel-tb-dl {
+    flex: 0 1 48%;
+    min-width: 140px;
+    width: auto;
+    height: 40px;
+  }
 }
 
 /* RankMe · hero — Tier hero, experts strip, list actions, battle CTA */
@@ -1736,75 +1840,9 @@ button.btn-battle-hero#battleModeBtn:hover {
 }
 
 @media (max-width: 720px) {
-  .hero {
-    flex-direction: column;
-    align-items: stretch;
-    text-align: center;
-    padding: 16px 16px 0;
-    gap: 10px;
-    margin: 0 auto;
-    justify-content: flex-start;
-    min-height: 0;
-    height: auto;
-    margin-bottom: 0;
-  }
-
   .blank-cover-card, .hero .parallax-host {
     width: 100%;
     max-width: 100%;
-  }
-
-  .hero .parallax-host {
-    width: 100%;
-    max-width: 100%;
-  }
-
-  .hero img.title-logo, .hero img.title-logo.cover-card, .hero img.title-logo.ex-logo, body.card-square .hero img.title-logo.ex-logo {
-    display: block;
-    width: 100%;
-    max-width: 100%;
-    height: auto;
-    margin: 0;
-    flex: none;
-  }
-
-  .hero-title, .hero .desc {
-    text-align: center;
-  }
-
-  .hero .parallax-host, .hero .title-logo, .hero img.cover-card {
-    margin-bottom: 0;
-  }
-
-  .hero h1, #listTitle {
-    margin: 0 0 8px;
-  }
-
-  .hero .desc {
-    text-align: center;
-    max-width: 100%;
-    width: 100%;
-    margin: 0;
-    padding: 0 0 4px;
-    flex: 0 0 auto;
-    align-self: stretch;
-    font-size: 0.88rem;
-    line-height: 1.4;
-  }
-
-  .hero-text {
-    width: 100%;
-    text-align: center;
-  }
-
-  .hero-text .hero-battle-wrap {
-    display: flex;
-    justify-content: center;
-    margin: 10px 0 0;
-  }
-
-  .hero-text .btn-battle-hero, button.btn-battle-hero#battleModeBtn {
-    width: min(100%, 320px);
   }
 
   section.hero#heroSection, .hero {
@@ -2151,7 +2189,7 @@ a.cb-name:hover { color: #e8d4ff; }
     width: 100%;
     max-width: 1400px;
     padding: 0 14px;
-    margin: 12px auto 12px;
+    margin: 12px auto;
     gap: 10px;
     box-sizing: border-box;
   }
@@ -2161,63 +2199,9 @@ a.cb-name:hover { color: #e8d4ff; }
     justify-content: space-between;
     box-sizing: border-box;
   }
-  .hero {
-    margin-bottom: 0;
-    padding-bottom: 0;
-    gap: 10px;
-  }
-  .hero > .hero-text,
-  .hero-text,
-  .hero-text.blank-hero-text {
-    flex: 0 0 auto;
-    min-height: 0;
-    height: auto;
-    margin: 0;
-    padding-bottom: 0;
-  }
-  .hero-text.blank-hero-text {
-    gap: 12px;
-  }
-  .hero .desc,
-  .hero > .hero-text .desc {
-    flex: 0 0 auto;
-    margin: 0;
-  }
-  .hero-battle-wrap {
-    margin: 10px 0 0;
-  }
-  .community-toolbar {
-    margin-top: 12px;
-  }
 }
 
-/* Community ranking — body.community-view (read-only public) */
-body.community-view #expertsBlock,
-body.community-view .experts-block,
-body.community-view .hero-battle-wrap,
-body.community-view #battleModeBtn,
-body.community-view .toolbar-actions,
-body.community-view .tb-split,
-body.community-view #remixUploadWrap,
-body.community-view #poolWrap,
-body.community-view #portalBtn,
-body.community-view #factionFilters,
-body.community-view .tier-side {
-  display: none;
-}
-body.community-view .card {
-  pointer-events: none;
-  cursor: default;
-}
-body.community-view .tier-label {
-  pointer-events: none;
-  user-select: none;
-  -webkit-user-select: none;
-  cursor: default;
-}
-body.community-view .toolbar {
-  justify-content: center;
-}
+/* Community ranking — read-only. Hide list is in _tier.css (loads last). */
 
 /* Hero title/desc edit — body[data-editor] only */
 body[data-editor="0"] #heroTitle,
@@ -3792,14 +3776,30 @@ body.card-thin .card img {
   white-space: pre-wrap;
 }
 
-/* community-view cascade last (wins over mobile display:flex) */
+/* community-view — one hide list, last in cascade */
+body.community-view #expertsBlock,
+body.community-view .experts-block,
 body.community-view .hero-battle-wrap,
 body.community-view #battleModeBtn,
-body.community-view button.btn-battle-hero {
+body.community-view button.btn-battle-hero,
+body.community-view .toolbar-actions,
+body.community-view .tb-split,
+body.community-view #remixUploadWrap,
+body.community-view #poolWrap,
+body.community-view #portalBtn,
+body.community-view #factionFilters,
+body.community-view .tier-side {
   display: none;
 }
-body.community-view .toolbar {
-  justify-content: center;
+body.community-view .card {
+  pointer-events: none;
+  cursor: default;
+}
+body.community-view .tier-label {
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: default;
 }
 
 /* RankMe · battle — Battle mode UI (loaded with battle-anim overrides) */

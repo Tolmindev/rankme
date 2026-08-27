@@ -509,7 +509,7 @@
     if (!els.grid) return; // not on homepage
 
     initHeroFlashlight();
-    state.sort = 'featured';
+    state.sort = 'newest';
 
     var onSearch = debounce(function () {
       state.query = els.search.value;

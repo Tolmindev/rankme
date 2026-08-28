@@ -15,9 +15,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/rankme.css?v=20260827w">
+<link rel="stylesheet" href="css/rankme.css?v=20260827y">
 </head>
-<body>
+<body class="blank-mode">
 
 <header class="site">
   <a class="brand" href="index.html">
@@ -137,10 +137,6 @@
         <span class="tb-g" aria-hidden="true"></span>
         <span class="tb-t">Share</span>
       </button>
-      <button class="pill-btn remove" id="removeCardsBtn" type="button" title="Remove cards" aria-pressed="false">
-        <span class="tb-g" aria-hidden="true"></span>
-        <span class="tb-t">Remove</span>
-      </button>
     </div>
   </div>
   <div class="tb-row2">
@@ -157,6 +153,10 @@
 
 <div class="pool-wrap">
   <div class="pool-header">
+    <button class="pool-remove" id="removeCardsBtn" type="button" title="Remove cards" aria-pressed="false">
+      <span class="pool-remove-ico" aria-hidden="true"></span>
+      Remove
+    </button>
     <div class="faction-filters" id="factionFilters"></div>
     <button class="portal-btn" id="portalBtn" type="button" title="Portals">TELEPORTATION</button>
   </div>
@@ -195,6 +195,6 @@
 <canvas id="exportCanvas" style="display:none"></canvas>
 
 <script>window.RANKME_BLANK=true;</script>
-<script src="js/app.js?v=20260827w"></script>
+<script src="js/app.js?v=20260827y"></script>
 </body>
 </html>

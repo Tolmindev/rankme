@@ -1197,7 +1197,7 @@ document.getElementById('clearAllBtn').addEventListener('click', ()=>{
 });
 
 document.getElementById('removeCardsBtn')?.addEventListener('click', ()=>{
-  if(communityMode) return;
+  if(communityMode || !BLANK_MODE) return;
   setPoolDeleteMode(!poolDeleteMode);
   showToast(poolDeleteMode ? 'Tap a pool card to remove' : 'Done');
 });

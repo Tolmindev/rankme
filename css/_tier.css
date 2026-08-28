@@ -1179,12 +1179,13 @@ body.theme-gold .card img {
 }
 @media (min-width: 721px) {
   .toolbar-actions { order: 1; }
-  .share-group { order: 2; }
-  .remix-btn { order: 3; }
+  .size-ctrl { order: 2; }
+  .remix-btn { order: 3; margin-left: auto; }
   .toolbar .upload-remix { order: 4; }
   .save-btn { order: 5; }
-  .size-ctrl { order: 6; }
+  .share-group { order: 6; margin-left: 0; }
   .toolbar .download-btn { order: 7; }
+  body.blank-mode .share-group { margin-left: auto; }
 }
 
 .board {

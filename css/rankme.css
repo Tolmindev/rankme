@@ -4796,9 +4796,12 @@ to { --elec-angle: 360deg; }
 .cat-chip {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
-  padding: 6px 14px;
+  padding: 0 14px;
+  height: 32px;
   min-height: 32px;
+  box-sizing: border-box;
   border-radius: 999px;
   border: 1.5px solid var(--line);
   background: rgba(22, 18, 36, 0.9);
@@ -4806,9 +4809,18 @@ to { --elec-angle: 360deg; }
   font-family: inherit;
   font-weight: 700;
   font-size: 0.72rem;
+  line-height: 1;
   white-space: nowrap;
   cursor: pointer;
-  transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+  transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+}
+.cat-chip .chip-ico {
+  width: 14px;
+  height: 14px;
+  flex: 0 0 14px;
+  display: block;
+  object-fit: contain;
+  pointer-events: none;
 }
 
 .cat-chip:hover,
@@ -5156,12 +5168,16 @@ to { --elec-angle: 360deg; }
   flex-wrap: wrap;
 }
 .community-pills .cat-chip {
-  gap: 8px;
-  background: rgba(22, 18, 36, 0.92);
-  border: 1.5px solid rgba(255, 255, 255, 0.12);
+  border-color: transparent;
+  background:
+    linear-gradient(rgba(22, 18, 36, 0.92), rgba(22, 18, 36, 0.92)) padding-box,
+    var(--ring) border-box;
+  background-origin: padding-box, border-box;
+  background-clip: padding-box, border-box;
   color: #f4eefc;
   -webkit-text-fill-color: #f4eefc;
   box-shadow: none;
+  animation: none;
 }
 .community-pills .cat-chip[data-csort="hot"] {
   --ring: linear-gradient(120deg, #ff6b3d, #ffd24a, #ff6b9d, #ff8a3d, #ff6b3d);

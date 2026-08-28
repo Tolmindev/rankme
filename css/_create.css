@@ -313,7 +313,18 @@
   box-shadow: 0 0 12px rgba(150,110,255,.3);
 }
 
-.create-card .row .btn {
-  flex: 1 1 0;
-  min-width: 0;
+.create-actions {
+  display: flex;
+  gap: 12px;
+  align-items: stretch;
+  margin-top: 16px;
+}
+.create-actions .btn {
+  width: 128px;
+  height: 40px;
+  min-height: 40px;
+  padding: 0 18px;
+  box-sizing: border-box;
+  line-height: 1;
+  text-decoration: none;
 }

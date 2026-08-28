@@ -15,7 +15,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/rankme.css?v=20260827z">
+<link rel="stylesheet" href="css/rankme.css?v=20260828a">
 </head>
 <body class="blank-mode">
 
@@ -41,14 +41,8 @@
     <input type="file" id="coverEditInput" accept="image/*" hidden>
   </div>
   <div class="hero-text blank-hero-text">
-    <h1 class="hero-title" id="listTitle" contenteditable="true">My Rank</h1>
-    <p class="desc">Upload, rank, export PNG.</p>
-    <div class="blank-upload-row">
-      <label class="pill-btn add" for="uploadImgs">
-        <input type="file" id="uploadImgs" accept="image/*" multiple hidden>
-        + Upload images
-      </label>
-    </div>
+    <h1 class="hero-title" id="heroTitle">My Rank</h1>
+    <p class="desc" id="heroDesc">Upload, rank, export PNG.</p>
   </div>
 </section>
 <script>
@@ -74,7 +68,7 @@
     var cover = sessionStorage.getItem('rankme_blank_cover');
     var title = sessionStorage.getItem('rankme_blank_title') || localStorage.getItem('rankme_draft_title');
     if (title) {
-      var h = document.getElementById('listTitle');
+      var h = document.getElementById('heroTitle');
       if (h) h.textContent = title;
       try { localStorage.setItem('rankme_draft_title', title); } catch (e2) {}
     }
@@ -151,6 +145,10 @@
     </div>
     <button class="download-btn" id="downloadBtn" type="button">Download PNG</button>
   </div>
+  <label class="pill-btn upload-remix" id="blankUploadWrap">
+    <input type="file" id="uploadImgs" accept="image/*" multiple hidden>
+    + Add Images
+  </label>
 </div>
 
 
@@ -199,6 +197,6 @@
 <canvas id="exportCanvas" style="display:none"></canvas>
 
 <script>window.RANKME_BLANK=true;</script>
-<script src="js/app.js?v=20260827z"></script>
+<script src="js/app.js?v=20260828a"></script>
 </body>
 </html>

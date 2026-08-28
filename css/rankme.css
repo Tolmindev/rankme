@@ -2579,19 +2579,17 @@ body.pool-delete .pool .card { cursor: pointer; }
   border-radius: 8px;
   min-height: 36px;
   transition: filter .18s, box-shadow .18s, transform .15s, background .18s, border-color .18s, opacity .18s;
-  border: 2px solid rgba(255,255,255,0.25);
-  opacity: 0.85;
+  border: 1.5px solid rgba(255,255,255,0.55);
+  opacity: 1;
 }
 
 .portal-slot:hover {
-  opacity: 1;
   filter: brightness(1.1);
   box-shadow: 0 0 14px var(--glow, rgba(180,140,240,0.35));
 }
 
 .portal-slot.drag-over {
-  opacity: 1;
-  border-color: rgba(255,255,255,0.5);
+  border-color: rgba(255,255,255,0.85);
   filter: brightness(1.35) saturate(1.3);
   box-shadow: 0 0 14px var(--glow, rgba(200,160,255,0.7)), 0 0 32px var(--glow, rgba(180,120,255,0.45));
   z-index: 2;

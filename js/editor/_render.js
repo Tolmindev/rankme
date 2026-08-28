@@ -396,8 +396,8 @@ function renderPortals(){
     const sat = Math.min(62, tier.sat);
     const light = Math.min(58, tier.light);
     slot.style.background = `linear-gradient(180deg, hsla(${hue}, ${sat}%, ${light}%, 0.4), hsla(${hue}, ${sat}%, ${Math.max(24, light - 14)}%, 0.12))`;
-    slot.style.border = `1.5px solid hsla(${hue}, 70%, 62%, 0.5)`;
-    slot.style.setProperty('--glow', `hsla(${hue}, 70%, 60%, 0.65)`);
+    slot.style.border = `1.5px solid hsla(${hue}, 78%, 68%, 0.92)`;
+    slot.style.setProperty('--glow', `hsla(${hue}, 78%, 62%, 0.75)`);
     bar.appendChild(slot);
   });
 }

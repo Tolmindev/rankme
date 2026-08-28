@@ -133,7 +133,7 @@
       applyHero(t);
       showApp();
       const s = document.createElement('script');
-      s.src = 'js/app.js?v=20260827y';
+      s.src = 'js/app.js?v=20260827z';
       s.onerror = () => fail('Failed to load app.js');
       document.body.appendChild(s);
     })

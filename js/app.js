@@ -92,11 +92,10 @@ function removeCardFromRanking(cid){
 function setPoolDeleteMode(on){
   poolDeleteMode = !!on;
   document.body.classList.toggle('pool-delete', poolDeleteMode);
-  const btn = document.getElementById('removeCardsBtn');
-  if(btn){
+  document.querySelectorAll('.js-remove-cards').forEach(function (btn) {
     btn.classList.toggle('on', poolDeleteMode);
     btn.setAttribute('aria-pressed', poolDeleteMode ? 'true' : 'false');
-  }
+  });
 }
 
 function freshPool(){
@@ -1196,10 +1195,12 @@ document.getElementById('clearAllBtn').addEventListener('click', ()=>{
   });
 });
 
-document.getElementById('removeCardsBtn')?.addEventListener('click', ()=>{
-  if(communityMode || !BLANK_MODE) return;
-  setPoolDeleteMode(!poolDeleteMode);
-  showToast(poolDeleteMode ? 'Tap a pool card to remove' : 'Done');
+document.querySelectorAll('.js-remove-cards').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    if(communityMode || !BLANK_MODE) return;
+    setPoolDeleteMode(!poolDeleteMode);
+    showToast(poolDeleteMode ? 'Tap a pool card to remove' : 'Done');
+  });
 });
 
 document.getElementById('fillAllBtn').addEventListener('click', ()=>{

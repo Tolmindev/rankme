@@ -87,11 +87,10 @@ function removeCardFromRanking(cid){
 function setPoolDeleteMode(on){
   poolDeleteMode = !!on;
   document.body.classList.toggle('pool-delete', poolDeleteMode);
-  const btn = document.getElementById('removeCardsBtn');
-  if(btn){
+  document.querySelectorAll('.js-remove-cards').forEach(function (btn) {
     btn.classList.toggle('on', poolDeleteMode);
     btn.setAttribute('aria-pressed', poolDeleteMode ? 'true' : 'false');
-  }
+  });
 }
 
 function freshPool(){

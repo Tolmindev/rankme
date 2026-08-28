@@ -293,7 +293,7 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
   margin-bottom: 16px;
 }
 
-.hero h1, #listTitle, .hero .list-title {
+.hero h1 {
   margin: 0 0 10px;
 }
 
@@ -308,27 +308,11 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
   padding: 0;
 }
 
-
-#listTitle, .hero-text #listTitle, h1#listTitle {
-  color: #f4eefc;
-  background: none;
-}
-
 .hero .parallax-host, .blank-cover-card {
   width: 420px;
   max-width: min(420px, 100%);
   aspect-ratio: 16 / 9;
   flex: 0 0 auto;
-}
-
-.hero-text.blank-hero-text, .hero > .hero-text {
-  flex: 0 1 auto;
-  max-width: 520px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  text-align: left;
-  gap: 10px;
 }
 
 .hero-text, .hero > .hero-text, .hero-text.blank-hero-text {

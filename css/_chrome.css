@@ -792,13 +792,6 @@ html.rankme-dragging {
   filter: brightness(0.95);
 }
 
-.blank-upload-row {
-  display: flex;
-  justify-content: flex-start;
-  width: 100%;
-  margin-top: 10px;
-}
-
 @media (max-width: 720px) {
 
   header.site {
@@ -924,12 +917,6 @@ html.rankme-dragging {
 
   footer.site img.footer-logo {
     height: 40px;
-  }
-
-  .blank-upload-row {
-    justify-content: center;
-    margin-top: 16px;
-    margin-bottom: 4px;
   }
   .hero-text.blank-hero-text {
     gap: 12px;

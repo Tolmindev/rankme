@@ -18,20 +18,7 @@ function wireRemixUpload(){
   input.dataset.bound = '1';
   input.addEventListener('change', async (e)=>{
     const files = [...(e.target.files||[])];
-    let n = 0;
-    for(const f of files){
-      if(!f.type.startsWith('image/')) continue;
-      const src = await new Promise((res,rej)=>{
-        const r = new FileReader();
-        r.onload = ()=>res(r.result);
-        r.onerror = rej;
-        r.readAsDataURL(f);
-      });
-      const id = customIdSeq++;
-      state.customCards[id] = { src, name: f.name.replace(/\.[^.]+$/,'') };
-      state.pool.push(id);
-      n++;
-    }
+    const n = await addCustomImagesFromFiles(files);
     renderPool();
     showToast(n + ' added');
     e.target.value = '';
@@ -127,7 +114,7 @@ function stashDraftBeforeLogin(opts){
       pool: state.pool,
       templateId: TEMPLATE_ID,
       remixFlag: !!remixFlag,
-      title: (document.getElementById('heroTitle')?.textContent || document.getElementById('listTitle')?.textContent || '').trim() || null,
+      title: (document.getElementById('heroTitle')?.textContent || '').trim() || null,
       subtitle: (document.getElementById('heroDesc')?.textContent || '').trim() || null
     }));
   }catch(e){ console.warn('stash draft', e); }
@@ -153,7 +140,7 @@ function restoreDraftIfAny(){
       window.__rankmeFromCabinet = true;
       sanitizeState();
       if(data.title){
-        const h = document.getElementById('heroTitle') || document.getElementById('listTitle');
+        const h = document.getElementById('heroTitle');
         if(h) h.textContent = data.title;
       }
       if(data.subtitle){

@@ -93,6 +93,51 @@ function setPoolDeleteMode(on){
   });
 }
 
+function fitImageDataUrl(dataUrl, maxEdge, quality){
+  return new Promise(function (resolve) {
+    var img = new Image();
+    img.onload = function () {
+      var w = img.naturalWidth || 1, h = img.naturalHeight || 1;
+      var scale = Math.min(1, (maxEdge || 640) / Math.max(w, h));
+      if (scale === 1 && String(dataUrl).length < 280000) { resolve(dataUrl); return; }
+      var cw = Math.max(1, Math.round(w * scale));
+      var ch = Math.max(1, Math.round(h * scale));
+      var c = document.createElement('canvas');
+      c.width = cw; c.height = ch;
+      var g = c.getContext('2d');
+      g.fillStyle = '#1a1528';
+      g.fillRect(0, 0, cw, ch);
+      g.drawImage(img, 0, 0, cw, ch);
+      try { resolve(c.toDataURL('image/jpeg', quality || 0.82)); }
+      catch (err) { resolve(dataUrl); }
+    };
+    img.onerror = function () { resolve(dataUrl); };
+    img.src = dataUrl;
+  });
+}
+
+async function addCustomImagesFromFiles(fileList){
+  var list = Array.prototype.slice.call(fileList || []);
+  var n = 0;
+  for (var i = 0; i < list.length; i++) {
+    var f = list[i];
+    if (!f || !f.type || f.type.indexOf('image/') !== 0) continue;
+    var raw = await new Promise(function (res, rej) {
+      var r = new FileReader();
+      r.onload = function () { res(r.result); };
+      r.onerror = rej;
+      r.readAsDataURL(f);
+    });
+    var src = await fitImageDataUrl(raw, 640, 0.82);
+    var id = customIdSeq++;
+    if (!state.customCards) state.customCards = {};
+    state.customCards[id] = { src: src, name: String(f.name || 'image').replace(/\.[^.]+$/, '') };
+    if (state.pool.indexOf(id) < 0) state.pool.push(id);
+    n++;
+  }
+  return n;
+}
+
 function freshPool(){
   if(BLANK_MODE) return [];
   // Preserve template card order (not numeric id sort) so new legendaries stay after their peers
@@ -216,7 +261,7 @@ function initState(){
     let title = null;
     try { title = sessionStorage.getItem('rankme_blank_title'); } catch(e){}
     if(!title){ try { title = localStorage.getItem('rankme_draft_title'); } catch(e){} }
-    const el = (document.getElementById('heroTitle') || document.getElementById('listTitle'));
+    const el = document.getElementById('heroTitle');
     if(el){
       if(title && title !== 'My tier list') el.textContent = title;
       else el.textContent = 'My Rank';

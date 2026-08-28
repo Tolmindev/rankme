@@ -8,7 +8,7 @@
 <script src="js/supabaseClient.js?v=20260827q" defer></script>
 <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/rankme.css?v=20260828a">
+<link rel="stylesheet" href="css/rankme.css?v=20260828e">
 </head>
 <body>
 <header class="site">
@@ -25,10 +25,7 @@
 <div class="wrap narrow">
   <div class="panel-card">
     <div class="create-head">
-      <div>
-        <h1>New Rank</h1>
-        
-      </div>
+      <h1>New Rank</h1>
       <div class="tag-dd" id="tagDd">
         <button type="button" class="tag-dd-btn" id="tagDdBtn">Other</button>
         <div class="tag-dd-menu" id="tagDdMenu" role="listbox">
@@ -36,10 +33,10 @@
           <button type="button" class="tag-dd-item" data-value="anime">Anime</button>
           <button type="button" class="tag-dd-item" data-value="movies">Movies</button>
           <button type="button" class="tag-dd-item" data-value="tv">TV</button>
-          <button type="button" class="tag-dd-item" data-value="music">Music</button>
           <button type="button" class="tag-dd-item" data-value="sports">Sports</button>
-          <button type="button" class="tag-dd-item" data-value="food">Food</button>
-          <button type="button" class="tag-dd-item" data-value="tech">Technology</button>
+          <button type="button" class="tag-dd-item" data-value="music">Music</button>
+          <button type="button" class="tag-dd-item" data-value="memes">Memes</button>
+          <button type="button" class="tag-dd-item" data-value="technology">Technology</button>
           <button type="button" class="tag-dd-item active" data-value="other">Other</button>
         </div>
         <input type="hidden" id="tagSelect" value="other">
@@ -47,7 +44,7 @@
     </div>
 
     <label>Title</label>
-    <input type="text" id="title" placeholder="My Rank" maxlength="60">
+    <input type="text" id="title" placeholder="My Rank" maxlength="48">
 
     <label>Cover</label>
     <div class="cover-drop" id="coverDrop">Drop image or click · 1200×630</div>
@@ -135,21 +132,22 @@
     });
   }
 
+  function applyCover(url, name) {
+    coverDataUrl = url;
+    coverDrop.innerHTML = '';
+    var img = document.createElement('img');
+    img.src = url;
+    img.alt = name || 'Cover';
+    coverDrop.appendChild(img);
+  }
+
   coverDrop.onclick = function () { coverFile.click(); };
   coverFile.onchange = function (e) {
     var f = e.target.files && e.target.files[0];
     if (!f) return;
     readFile(f).then(function (url) {
       return fitDataUrl(url, 1200, 0.84);
-    }).then(function (url) {
-      coverDataUrl = url;
-      coverDrop.innerHTML = '';
-      var img = document.createElement('img');
-      img.src = url;
-      img.alt = f.name;
-      img.style.cssText = 'max-width:100%;max-height:160px;border-radius:10px;display:block;margin:0 auto';
-      coverDrop.appendChild(img);
-    });
+    }).then(function (url) { applyCover(url, f.name); });
   };
   ;['dragenter','dragover'].forEach(function (ev) {
     coverDrop.addEventListener(ev, function (e) {
@@ -166,15 +164,7 @@
     if (!f || !f.type.startsWith('image/')) return;
     readFile(f).then(function (url) {
       return fitDataUrl(url, 1200, 0.84);
-    }).then(function (url) {
-      coverDataUrl = url;
-      coverDrop.innerHTML = '';
-      var img = document.createElement('img');
-      img.src = url;
-      img.alt = f.name;
-      img.style.cssText = 'max-width:100%;max-height:160px;border-radius:10px;display:block;margin:0 auto';
-      coverDrop.appendChild(img);
-    });
+    }).then(function (url) { applyCover(url, f.name); });
   });
 
   function refreshPreview() {
@@ -243,7 +233,7 @@
   });
 
   document.getElementById('startBlank').onclick = function () {
-    var title = (document.getElementById('title').value || 'My Rank').trim().slice(0, 60);
+    var title = (document.getElementById('title').value || 'My Rank').trim().slice(0, 48);
     var tag = (tagSelect.value || '').trim();
     try {
       sessionStorage.setItem('rankme_blank_title', title);

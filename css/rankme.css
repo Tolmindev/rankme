@@ -919,13 +919,6 @@ html.rankme-dragging {
   filter: brightness(0.95);
 }
 
-.blank-upload-row {
-  display: flex;
-  justify-content: flex-start;
-  width: 100%;
-  margin-top: 10px;
-}
-
 @media (max-width: 720px) {
 
   header.site {
@@ -1051,12 +1044,6 @@ html.rankme-dragging {
 
   footer.site img.footer-logo {
     height: 40px;
-  }
-
-  .blank-upload-row {
-    justify-content: center;
-    margin-top: 16px;
-    margin-bottom: 4px;
   }
   .hero-text.blank-hero-text {
     gap: 12px;
@@ -1599,7 +1586,7 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
   margin-bottom: 16px;
 }
 
-.hero h1, #listTitle, .hero .list-title {
+.hero h1 {
   margin: 0 0 10px;
 }
 
@@ -1614,27 +1601,11 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
   padding: 0;
 }
 
-
-#listTitle, .hero-text #listTitle, h1#listTitle {
-  color: #f4eefc;
-  background: none;
-}
-
 .hero .parallax-host, .blank-cover-card {
   width: 420px;
   max-width: min(420px, 100%);
   aspect-ratio: 16 / 9;
   flex: 0 0 auto;
-}
-
-.hero-text.blank-hero-text, .hero > .hero-text {
-  flex: 0 1 auto;
-  max-width: 520px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  text-align: left;
-  gap: 10px;
 }
 
 .hero-text, .hero > .hero-text, .hero-text.blank-hero-text {
@@ -2348,7 +2319,7 @@ body[data-editor="1"] #heroDesc {
 .card-del::after { transform: rotate(-45deg); }
 body.pool-delete .pool .card-del { display: block; }
 body.pool-delete .pool .card { cursor: pointer; }
-body.community-view #removeCardsBtn { display: none; }
+body.community-view .js-remove-cards { display: none; }
 
 .card:hover {
   transform: translateY(-2px) scale(1.04);
@@ -6969,20 +6940,13 @@ body.ach-focus-open { overflow: hidden; }
 
 /* RankMe · create — Create / blank rank flow */
 
-.create-card, .wrap .card {
-  background: var(--panel);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  padding: 28px 28px 24px;
-}
-
-.wrap h1, .create-card h1 {
+.wrap h1 {
   margin: 0 0 8px;
   font-size: 1.4rem;
   font-weight: 900;
 }
 
-.wrap .sub, .create-card .sub {
+.wrap .sub {
   color: var(--text-dim);
   font-weight: 600;
   font-size: .88rem;
@@ -6990,7 +6954,7 @@ body.ach-focus-open { overflow: hidden; }
   line-height: 1.5;
 }
 
-.wrap label, .create-card label {
+.wrap label {
   display: block;
   font-size: .72rem;
   font-weight: 800;
@@ -7000,7 +6964,7 @@ body.ach-focus-open { overflow: hidden; }
   margin: 0 0 8px;
 }
 
-.wrap input[type=text], .wrap textarea, .create-card input[type=text], .create-card textarea {
+.wrap input[type=text], .wrap textarea {
   width: 100%;
   padding: 12px 14px;
   border-radius: 12px;
@@ -7018,15 +6982,13 @@ body.ach-focus-open { overflow: hidden; }
 }
 
 .wrap input[type=text]::placeholder,
-.wrap textarea::placeholder,
-.create-card input[type=text]::placeholder,
-.create-card textarea::placeholder {
+.wrap textarea::placeholder {
   color: #c9b8ea;
   -webkit-text-fill-color: #c9b8ea;
   opacity: 1;
 }
 
-.wrap input[type=text]:focus, .wrap textarea:focus, .create-card input[type=text]:focus, .create-card textarea:focus {
+.wrap input[type=text]:focus, .wrap textarea:focus {
   border-color: rgba(200, 160, 240, 0.7);
   box-shadow: 0 0 0 3px rgba(180, 140, 240, 0.16);
 }
@@ -7050,6 +7012,13 @@ body.ach-focus-open { overflow: hidden; }
   background: rgba(50, 36, 80, 0.45);
   box-shadow: 0 0 22px rgba(140, 100, 255, 0.2);
 }
+.cover-drop img {
+  max-width: 100%;
+  max-height: 160px;
+  border-radius: 10px;
+  display: block;
+  margin: 0 auto;
+}
 
 .create-head {
   display: flex;
@@ -7062,29 +7031,6 @@ body.ach-focus-open { overflow: hidden; }
 
 .create-head h1 {
   margin: 0;
-}
-
-.create-tag-select {
-  appearance: none;
-  -webkit-appearance: none;
-  border-radius: 999px;
-  border: 1.5px solid rgba(120,200,220,.45);
-  background: rgba(20,28,40,.9);
-  color: #c8f0ff;
-  font-weight: 800;
-  font-size: 0.78rem;
-  padding: 8px 36px 8px 14px;
-  cursor: pointer;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%2390d8f0' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 12px center;
-  min-width: 130px;
-}
-
-.create-tag-select:focus {
-  outline: none;
-  border-color: rgba(160,220,255,.8);
-  box-shadow: 0 0 14px rgba(80,180,220,.25);
 }
 
 .images-drop {

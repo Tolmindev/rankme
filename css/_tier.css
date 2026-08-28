@@ -297,7 +297,7 @@
 .card-del::after { transform: rotate(-45deg); }
 body.pool-delete .pool .card-del { display: block; }
 body.pool-delete .pool .card { cursor: pointer; }
-body.community-view #removeCardsBtn { display: none; }
+body.community-view .js-remove-cards { display: none; }
 
 .card:hover {
   transform: translateY(-2px) scale(1.04);

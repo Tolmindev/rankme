@@ -236,7 +236,7 @@ async function exportPNG(returnBlobOnly, blobCb, forceSize){
   }
 
   // Right: title stays in its column — never crosses the logo
-  const listTitleEl = (document.getElementById('heroTitle') || document.getElementById('listTitle'));
+  const listTitleEl = document.getElementById('heroTitle');
   const customTitle = (listTitleEl && listTitleEl.textContent || '').trim();
   const rightLabel = BLANK_MODE
     ? (customTitle || 'Custom Tier List')

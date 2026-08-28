@@ -576,21 +576,10 @@ if(BLANK_MODE){
   if(upload){
     upload.addEventListener('change', async (e)=>{
       const files = [...(e.target.files||[])];
-      for(const f of files){
-        if(!f.type.startsWith('image/')) continue;
-        const src = await new Promise((res,rej)=>{
-          const r = new FileReader();
-          r.onload = ()=>res(r.result);
-          r.onerror = rej;
-          r.readAsDataURL(f);
-        });
-        const id = customIdSeq++;
-        state.customCards[id] = { src, name: f.name.replace(/\.[^.]+$/, '') };
-        state.pool.push(id);
-      }
+      const n = await addCustomImagesFromFiles(files);
       await autoFitCardShape();
       renderPool();
-      showToast(files.length + ' image(s) added');
+      showToast(n + ' image(s) added');
       e.target.value = '';
     });
   }

@@ -465,20 +465,56 @@
   gap: 8px;
   flex-wrap: wrap;
 }
-.community-pills .cat-chip[data-csort="hot"].active {
-  background: linear-gradient(135deg, #a78bfa, #8b5cf6);
-  border-color: transparent;
-  color: #fff;
+.community-pills .cat-chip {
+  gap: 8px;
+  background: rgba(22, 18, 36, 0.92);
+  border: 1.5px solid rgba(255, 255, 255, 0.12);
+  color: #f4eefc;
+  -webkit-text-fill-color: #f4eefc;
+  box-shadow: none;
 }
-.community-pills .cat-chip[data-csort="new"].active {
-  background: linear-gradient(135deg, #818cf8, #6366f1);
-  border-color: transparent;
-  color: #fff;
+.community-pills .cat-chip[data-csort="hot"] {
+  --ring: linear-gradient(120deg, #ff6b3d, #ffd24a, #ff6b9d, #ff8a3d, #ff6b3d);
+  --glow: rgba(255, 140, 70, 0.45);
 }
+.community-pills .cat-chip[data-csort="new"] {
+  --ring: linear-gradient(120deg, #34d399, #22d3ee, #60a5fa, #2dd4bf, #34d399);
+  --glow: rgba(45, 210, 200, 0.42);
+}
+.community-pills .cat-chip[data-csort="experts"] {
+  --ring: linear-gradient(120deg, #f4fbff, #9ad8ff, #c9b6ff, #ffffff, #7ee7ff, #f4fbff);
+  --glow: rgba(180, 220, 255, 0.5);
+}
+.community-pills .cat-chip:hover,
+.community-pills .cat-chip.active,
+.community-pills .cat-chip.active:hover {
+  border-color: transparent;
+  background:
+    linear-gradient(#161224, #161224) padding-box,
+    var(--ring) border-box;
+  background-origin: padding-box, border-box;
+  background-clip: padding-box, border-box;
+  background-size: auto, 220% 100%;
+  color: #fff;
+  -webkit-text-fill-color: #fff;
+  animation: portalRgb 2.8s linear infinite alternate;
+}
+.community-pills .cat-chip:hover {
+  box-shadow: 0 0 12px var(--glow);
+}
+.community-pills .cat-chip.active,
+.community-pills .cat-chip[data-csort="hot"].active,
+.community-pills .cat-chip[data-csort="new"].active,
 .community-pills .cat-chip[data-csort="experts"].active {
-  background: linear-gradient(135deg, #e6a9e8, #b79bf0);
+  background:
+    linear-gradient(#161224, #161224) padding-box,
+    var(--ring) border-box;
+  background-origin: padding-box, border-box;
+  background-clip: padding-box, border-box;
+  background-size: auto, 220% 100%;
   border-color: transparent;
-  color: #fff;
+  box-shadow: 0 0 18px var(--glow), 0 0 2px rgba(255, 255, 255, 0.35);
+  animation: portalRgb 1.8s linear infinite alternate;
 }
 
 #communityBody {

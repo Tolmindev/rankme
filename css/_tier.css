@@ -721,6 +721,49 @@ body:not(.theme-gold) .faction-btn.icon-only img {
   box-shadow: none;
 }
 
+/* Icon-only filters (Marvel Tōkon, etc.): ring only, icons stay clear */
+.faction-filters.icon-only .faction-btn {
+  background: #171327;
+  border: 1.5px solid rgba(180, 140, 255, 0.28);
+  box-shadow: none;
+}
+.faction-filters.icon-only .faction-btn:hover {
+  color: var(--text);
+  border-color: transparent;
+  background:
+    linear-gradient(#171327, #171327) padding-box,
+    hsl(var(--fhue), 72%, 62%) border-box;
+  background-origin: padding-box, border-box;
+  background-clip: padding-box, border-box;
+}
+.faction-filters.icon-only .faction-btn.active,
+.faction-filters.icon-only .faction-btn.active.legendary,
+.faction-filters.icon-only .faction-btn.active.master,
+.faction-filters.icon-only .faction-btn.active.all-mix {
+  color: #fff;
+  background:
+    linear-gradient(#171327, #171327) padding-box,
+    hsl(var(--fhue), 80%, 64%) border-box;
+  background-origin: padding-box, border-box;
+  background-clip: padding-box, border-box;
+  border-color: transparent;
+  box-shadow: 0 0 12px hsla(var(--fhue), 80%, 58%, 0.42);
+}
+.faction-filters.icon-only .faction-btn.all-mix:hover,
+.faction-filters.icon-only .faction-btn.active.all-mix {
+  background:
+    linear-gradient(#171327, #171327) padding-box,
+    linear-gradient(120deg, #b79bf0, #8ec5ff, #e6a9e8, #c9a3ff, #b79bf0) border-box;
+  background-origin: padding-box, border-box;
+  background-clip: padding-box, border-box;
+  background-size: auto, 220% 100%;
+  border-color: transparent;
+}
+.faction-filters.icon-only .faction-btn.active.all-mix {
+  animation: portalRgb 5s linear infinite alternate;
+  box-shadow: 0 0 14px rgba(180, 130, 255, 0.4);
+}
+
 .pool {
   display: flex;
   flex-wrap: wrap;
@@ -1469,7 +1512,10 @@ body.theme-gold .card img {
     flex: 0 0 auto;
   }
 
-  .faction-btn, .faction-btn.active, .faction-btn:hover, .faction-btn:focus, .faction-filters .faction-btn, .faction-filters .faction-btn.active {
+  .faction-filters:not(.icon-only) .faction-btn,
+  .faction-filters:not(.icon-only) .faction-btn.active,
+  .faction-filters:not(.icon-only) .faction-btn:hover,
+  .faction-filters:not(.icon-only) .faction-btn:focus {
     box-shadow: none;
     filter: none;
     outline: none;

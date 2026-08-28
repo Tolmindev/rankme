@@ -4792,19 +4792,21 @@ to { --elec-angle: 360deg; }
 
 /* RankMe · home — Home, discover, template cards, community */
 
-/* Category pills — fill on active, brighter border on hover, no glow/lift */
+/* Category + community pills — one size */
 .cat-chip {
+  --chip-w: 7.5rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 6px;
-  padding: 0 14px;
+  width: var(--chip-w);
+  flex: 0 0 var(--chip-w);
+  padding: 0 10px;
   height: 32px;
-  min-height: 32px;
   box-sizing: border-box;
   border-radius: 999px;
   border: 1.5px solid var(--line);
-  background: rgba(22, 18, 36, 0.9);
+  background: #161224;
   color: #f8f2ff;
   font-family: inherit;
   font-weight: 700;
@@ -4812,6 +4814,7 @@ to { --elec-angle: 360deg; }
   line-height: 1;
   white-space: nowrap;
   cursor: pointer;
+  overflow: hidden;
   transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
 }
 .cat-chip .chip-ico {
@@ -4823,13 +4826,11 @@ to { --elec-angle: 360deg; }
   pointer-events: none;
 }
 
-.cat-chip:hover,
-.cat-chip[data-cat]:hover {
+.cat-chip:hover {
   border-color: rgba(220, 190, 255, 0.75);
 }
 
-.cat-chip.active:hover,
-.cat-chip[data-cat].active:hover {
+.cat-chip.active:hover {
   border-color: transparent;
 }
 
@@ -5019,9 +5020,6 @@ to { --elec-angle: 360deg; }
 .discover-toolbar .chip-scroll::-webkit-scrollbar {
   display: none;
 }
-.discover-toolbar .chip-scroll .cat-chip {
-  flex: 0 0 auto;
-}
 
 .discover-toolbar .sort-dd {
   flex: 0 0 auto;
@@ -5167,33 +5165,31 @@ to { --elec-angle: 360deg; }
   gap: 8px;
   flex-wrap: wrap;
 }
-.community-pills .cat-chip {
-  border-color: transparent;
-  background:
-    linear-gradient(rgba(22, 18, 36, 0.92), rgba(22, 18, 36, 0.92)) padding-box,
-    var(--ring) border-box;
-  background-origin: padding-box, border-box;
-  background-clip: padding-box, border-box;
-  color: #f4eefc;
-  -webkit-text-fill-color: #f4eefc;
-  box-shadow: none;
-  animation: none;
-}
 .community-pills .cat-chip[data-csort="hot"] {
   --ring: linear-gradient(120deg, #ff6b3d, #ffd24a, #ff6b9d, #ff8a3d, #ff6b3d);
   --glow: rgba(255, 140, 70, 0.45);
+  --idle: rgba(255, 122, 58, 0.55);
 }
 .community-pills .cat-chip[data-csort="new"] {
   --ring: linear-gradient(120deg, #34d399, #22d3ee, #60a5fa, #2dd4bf, #34d399);
   --glow: rgba(45, 210, 200, 0.42);
+  --idle: rgba(50, 196, 188, 0.55);
 }
 .community-pills .cat-chip[data-csort="experts"] {
   --ring: linear-gradient(120deg, #f4fbff, #9ad8ff, #c9b6ff, #ffffff, #7ee7ff, #f4fbff);
   --glow: rgba(180, 220, 255, 0.5);
+  --idle: rgba(176, 210, 255, 0.55);
+}
+.community-pills .cat-chip {
+  background: #161224;
+  border: 1.5px solid var(--idle);
+  box-shadow: none;
+  animation: none;
+  color: #f4eefc;
+  -webkit-text-fill-color: #f4eefc;
 }
 .community-pills .cat-chip:hover,
-.community-pills .cat-chip.active,
-.community-pills .cat-chip.active:hover {
+.community-pills .cat-chip.active {
   border-color: transparent;
   background:
     linear-gradient(#161224, #161224) padding-box,
@@ -5206,21 +5202,11 @@ to { --elec-angle: 360deg; }
   animation: portalRgb 2.8s linear infinite alternate;
 }
 .community-pills .cat-chip:hover {
-  box-shadow: 0 0 12px var(--glow);
+  box-shadow: 0 0 10px var(--glow);
 }
-.community-pills .cat-chip.active,
-.community-pills .cat-chip[data-csort="hot"].active,
-.community-pills .cat-chip[data-csort="new"].active,
-.community-pills .cat-chip[data-csort="experts"].active {
-  background:
-    linear-gradient(#161224, #161224) padding-box,
-    var(--ring) border-box;
-  background-origin: padding-box, border-box;
-  background-clip: padding-box, border-box;
-  background-size: auto, 220% 100%;
-  border-color: transparent;
-  box-shadow: 0 0 18px var(--glow), 0 0 2px rgba(255, 255, 255, 0.35);
-  animation: portalRgb 1.8s linear infinite alternate;
+.community-pills .cat-chip.active {
+  box-shadow: 0 0 16px var(--glow);
+  animation-duration: 1.8s;
 }
 
 #communityBody {

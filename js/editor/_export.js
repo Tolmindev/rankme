@@ -218,31 +218,34 @@ async function exportPNG(returnBlobOnly, blobCb, forceSize){
   ctx.fillText('RANKME.LOL', 36, midY);
 
   // Center logo
+  let logoW = 88;
   try {
     const flogo = await loadImage('assets/brand/Footer_logo.webp');
     const lh = 36;
     const lw = lh * (flogo.naturalWidth || flogo.width) / (flogo.naturalHeight || flogo.height || 1);
+    logoW = lw;
     ctx.drawImage(flogo, (width - lw) / 2, midY - lh / 2, lw, lh);
   } catch(e) {
     try {
       const flogo = await loadImage('assets/brand/Footer_logo.svg');
       const lh = 36;
       const lw = lh * (flogo.naturalWidth || flogo.width || 2) / (flogo.naturalHeight || flogo.height || 1);
+      logoW = lw;
       ctx.drawImage(flogo, (width - lw) / 2, midY - lh / 2, lw, lh);
     } catch(e2) {}
   }
 
-  // Right: title + exclusive badge
+  // Right: title stays in its column — never crosses the logo
   const listTitleEl = (document.getElementById('heroTitle') || document.getElementById('listTitle'));
   const customTitle = (listTitleEl && listTitleEl.textContent || '').trim();
   const rightLabel = BLANK_MODE
     ? (customTitle || 'Custom Tier List')
     : (TEMPLATE_FOOTER || TEMPLATE_TITLE || 'RankMe');
-  ctx.font = '800 14px Montserrat, system-ui, sans-serif';
-  ctx.textAlign = 'right';
-  ctx.textBaseline = 'middle';
+  const rightX = width - 36;
+  const logoRight = (width + logoW) / 2;
+  const titleMaxW = Math.min(280, Math.max(96, rightX - logoRight - 16));
   ctx.fillStyle = '#f0eafc';
-  ctx.fillText(rightLabel, width - 36, midY - (BLANK_MODE ? 0 : 11));
+  drawRightFitted(ctx, rightLabel, rightX, midY - (BLANK_MODE ? 0 : 11), titleMaxW, 11, 14, BLANK_MODE ? 2 : 1);
 
   if(!BLANK_MODE){
     const badge = 'EXCLUSIVE';
@@ -280,6 +283,74 @@ async function exportPNG(returnBlobOnly, blobCb, forceSize){
     a.click();
     showToast('PNG downloaded');
   }, 'image/png', 0.95);
+}
+
+function drawRightFitted(ctx, text, x, y, maxW, minSize, maxSize, maxLines){
+  const raw = String(text || '').replace(/\s+/g, ' ').trim() || 'RankMe';
+  let size = maxSize;
+  let lines = [raw];
+  while(size >= minSize){
+    ctx.font = '800 ' + size + 'px Montserrat, system-ui, sans-serif';
+    lines = wrapFooterLines(ctx, raw, maxW, maxLines);
+    const ok = lines.length <= maxLines && lines.every(function (l) {
+      return ctx.measureText(l).width <= maxW + 0.5;
+    });
+    if(ok) break;
+    size--;
+  }
+  ctx.font = '800 ' + size + 'px Montserrat, system-ui, sans-serif';
+  lines = wrapFooterLines(ctx, raw, maxW, maxLines);
+  const lh = size * 1.18;
+  const startY = y - ((lines.length - 1) * lh) / 2;
+  ctx.textAlign = 'right';
+  ctx.textBaseline = 'middle';
+  lines.forEach(function (l, i) { ctx.fillText(l, x, startY + i * lh); });
+}
+
+function wrapFooterLines(ctx, text, maxW, maxLines){
+  function fits(s){ return ctx.measureText(s).width <= maxW; }
+  function ellipsize(s){
+    if(fits(s)) return s;
+    var t = s;
+    while(t.length > 1 && !fits(t + '…')) t = t.slice(0, -1);
+    return (t || s.slice(0, 1)) + '…';
+  }
+  var words = String(text).split(/\s+/).filter(Boolean);
+  var lines = [];
+  var cur = '';
+  function push(s){
+    if(!s) return;
+    if(lines.length >= maxLines) return;
+    if(lines.length === maxLines - 1 && !fits(s)) lines.push(ellipsize(s));
+    else lines.push(s);
+  }
+  for(var w = 0; w < words.length; w++){
+    if(lines.length >= maxLines) break;
+    var word = words[w];
+    var trial = cur ? cur + ' ' + word : word;
+    if(fits(trial)){ cur = trial; continue; }
+    if(cur){
+      push(cur);
+      cur = '';
+      if(lines.length >= maxLines) break;
+    }
+    if(fits(word)){ cur = word; continue; }
+    var rest = word;
+    while(rest && lines.length < maxLines){
+      var i = rest.length;
+      while(i > 1 && !fits(rest.slice(0, i))) i--;
+      if(lines.length === maxLines - 1){
+        push(rest);
+        rest = '';
+        break;
+      }
+      lines.push(rest.slice(0, i));
+      rest = rest.slice(i);
+    }
+  }
+  if(cur && lines.length < maxLines) push(cur);
+  if(!lines.length) lines.push(ellipsize(text));
+  return lines.map(ellipsize);
 }
 
 function fitAndWrap(ctx, text, x, y, maxWidth, minSize, maxSize){

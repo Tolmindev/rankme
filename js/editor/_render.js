@@ -5,6 +5,12 @@
 const boardInner = document.getElementById('boardInner');
 const poolEl = document.getElementById('pool');
 
+const TIER_LABEL_MAX = 48;
+
+function clampLabelName(text){
+  return String(text == null ? '' : text).slice(0, TIER_LABEL_MAX);
+}
+
 function render(){
   boardInner.innerHTML = '';
   state.tiers.forEach((t, idx)=>{
@@ -22,6 +28,7 @@ function render(){
     label.className = 'tier-label';
     label.contentEditable = (communityMode) ? 'false' : 'true';
     label.spellcheck = false;
+    t.name = clampLabelName(t.name);
     label.textContent = t.name;
     fitLabelFont(label, t.name);
     label.addEventListener('focus', ()=>{
@@ -38,8 +45,33 @@ function render(){
         sel.addRange(range);
       } catch (err) {}
     });
+    label.addEventListener('beforeinput', (e)=>{
+      if (communityMode) return;
+      const cur = labelRawText(label);
+      if (cur.length >= TIER_LABEL_MAX && e.inputType && e.inputType.indexOf('insert') === 0 && e.inputType !== 'insertFromPaste' && e.inputType !== 'insertFromDrop') {
+        e.preventDefault();
+      }
+    });
+    label.addEventListener('paste', (e)=>{
+      if (communityMode) return;
+      e.preventDefault();
+      const clip = ((e.clipboardData || window.clipboardData).getData('text/plain') || '').replace(/\r/g, '');
+      const off = getLabelCaretOffset(label);
+      const cur = labelRawText(label);
+      const next = clampLabelName(cur.slice(0, off) + clip + cur.slice(off));
+      t.name = next;
+      fitLabelFont(label, next, true);
+      setLabelCaretOffset(label, Math.min(off + clip.length, TIER_LABEL_MAX));
+    });
     label.addEventListener('input', ()=>{
-      t.name = labelRawText(label);
+      let next = clampLabelName(labelRawText(label));
+      t.name = next;
+      if (labelRawText(label) !== next) {
+        const off = getLabelCaretOffset(label);
+        fitLabelFont(label, next, true);
+        setLabelCaretOffset(label, Math.min(off, TIER_LABEL_MAX));
+        return;
+      }
       sizeLabelLinesInPlace(label);
     });
     label.addEventListener('keydown', (e)=>{
@@ -48,14 +80,15 @@ function render(){
         e.stopPropagation();
         const off = getLabelCaretOffset(label);
         const text = labelRawText(label);
-        const next = text.slice(0, off) + '\n' + text.slice(off);
+        if (text.length >= TIER_LABEL_MAX) return;
+        const next = clampLabelName(text.slice(0, off) + '\n' + text.slice(off));
         t.name = next;
         fitLabelFont(label, next, true);
         setLabelCaretOffset(label, off + 1);
       }
     });
     label.addEventListener('blur', ()=>{
-      let name = labelRawText(label).replace(/\n+$/,'');
+      let name = clampLabelName(labelRawText(label).replace(/\n+$/,''));
       if(!name.trim()) name = 'ROW';
       t.name = name;
       fitLabelFont(label, name);

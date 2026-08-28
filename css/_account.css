@@ -11,22 +11,25 @@ body > .toast {
 
 /* Pill Account button (guest / text label) */
 .login-btn:not(.login-btn-avatar) {
+  appearance: none;
+  -webkit-appearance: none;
   padding: 8px 16px;
   border-radius: 999px;
   font-size: .85rem;
   font-weight: 800;
-  background: transparent;
-  color: var(--text-dim);
-  border: 1px solid var(--line);
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  border: 1.5px solid var(--btn-line);
   cursor: pointer;
   box-shadow: none;
-  transition: color .15s, border-color .15s, background .15s;
+  transition: color .15s, border-color .15s, background .15s, box-shadow .15s;
 }
 
 .login-btn:not(.login-btn-avatar):hover {
-  color: var(--text);
-  border-color: rgba(200,160,240,.45);
-  background: rgba(255,255,255,0.04);
+  color: #fff;
+  border-color: var(--btn-line-hot);
+  background: var(--btn-bg);
+  box-shadow: var(--btn-glow);
   filter: none;
 }
 
@@ -287,6 +290,17 @@ body > .toast {
 
 .login-btn.ghost {
   margin-top: 8px;
+  appearance: none;
+  -webkit-appearance: none;
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  border: 1.5px solid var(--btn-line);
+}
+.login-btn.ghost:hover {
+  color: #fff;
+  border-color: var(--btn-line-hot);
+  background: var(--btn-bg);
+  box-shadow: var(--btn-glow);
 }
 
 #delModal .modal-actions {
@@ -1135,12 +1149,25 @@ body.ach-focus-open { overflow: hidden; }
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.35);
   transition: background 0.4s linear, box-shadow 0.3s ease;
 }
+.toggle-container:hover .toggle-track {
+  box-shadow:
+    inset 0 1px 2px rgba(0, 0, 0, 0.35),
+    0 0 0 1.5px rgba(210, 170, 255, 0.55),
+    0 0 10px rgba(180, 140, 255, 0.35);
+}
 .toggle-checkbox:checked + .toggle-track {
   background: linear-gradient(135deg, #f0c4ea 0%, #c4a0f0 42%, #8b6ad8 100%);
   box-shadow:
     inset 0 1px 2px rgba(0, 0, 0, 0.2),
     0 0 12px rgba(200, 150, 255, 0.55),
     0 0 22px rgba(160, 110, 240, 0.3);
+}
+.toggle-container:hover .toggle-checkbox:checked + .toggle-track {
+  box-shadow:
+    inset 0 1px 2px rgba(0, 0, 0, 0.2),
+    0 0 0 1.5px rgba(230, 200, 255, 0.7),
+    0 0 14px rgba(200, 150, 255, 0.6),
+    0 0 24px rgba(160, 110, 240, 0.35);
 }
 .toggle-thumb {
   position: relative;

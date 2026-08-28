@@ -471,9 +471,9 @@ footer.site .footer-social a:hover {
 
 .share-ico:hover {
   transform: translateY(-2px) scale(1.06);
-  background: linear-gradient(135deg, rgba(183,155,240,.25), rgba(230,169,232,.2));
-  border-color: rgba(200,160,240,.7);
-  box-shadow: 0 0 14px rgba(190,140,240,.35);
+  background: #171327;
+  border-color: rgba(200,160,240,.75);
+  box-shadow: 0 0 14px rgba(190,140,240,.4);
 }
 
 .share-ico:hover svg {

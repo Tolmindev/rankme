@@ -166,6 +166,12 @@ document.getElementById('clearAllBtn').addEventListener('click', ()=>{
   });
 });
 
+document.getElementById('removeCardsBtn')?.addEventListener('click', ()=>{
+  if(communityMode) return;
+  setPoolDeleteMode(!poolDeleteMode);
+  showToast(poolDeleteMode ? 'Tap a pool card to remove' : 'Done');
+});
+
 document.getElementById('fillAllBtn').addEventListener('click', ()=>{
   showConfirm('Fill randomly?', 'Cards in the pool go to random rows.', ()=>{
     const shuffled = [...state.pool].sort(()=>Math.random()-0.5);

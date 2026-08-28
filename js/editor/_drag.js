@@ -24,6 +24,15 @@ function unlockTouchScroll(){
 function onCardPointerDown(e){
   if (communityMode) return;
 
+  if(poolDeleteMode){
+    const inPool = e.currentTarget.parentElement && e.currentTarget.parentElement.classList.contains('pool');
+    if(inPool){
+      try { e.preventDefault(); } catch(err){}
+      removeCardFromRanking(e.currentTarget.dataset.cardId);
+      return;
+    }
+  }
+
   if(drag) return;
   const isTouch = e.pointerType === 'touch' || e.pointerType === 'pen' || e.pointerType === '';
   if(!isTouch && e.button !== undefined && e.button > 0) return;

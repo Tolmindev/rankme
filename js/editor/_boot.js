@@ -479,6 +479,7 @@ function setupCommunityUI() {
   initState();
   // Restore draft after login redirect (Save / Account while ranking)
   restoreDraftIfAny();
+  var ingested = ingestCreateImages();
   // If still only sync-hash (legacy eyJ / r...), ensure rendered
   if(location.hash && location.hash.length > 2){
     applyHashState();
@@ -486,6 +487,12 @@ function setupCommunityUI() {
   render();
   if(!BLANK_MODE) renderFactionFilters();
   renderPortals();
+  if(ingested){
+    autoFitCardShape().then(function () {
+      renderPool();
+      if(typeof showToast === 'function') showToast(ingested + ' image(s) added');
+    });
+  }
   applyOpenHeroMeta();
   setHeroEditable(!communityMode);
   try {
@@ -504,46 +511,69 @@ function setupCommunityUI() {
   }
 })();
 
+function loadImageSize(src){
+  return new Promise((resolve)=>{
+    const img = new Image();
+    img.onload = ()=> resolve({ w: img.naturalWidth || 1, h: img.naturalHeight || 1 });
+    img.onerror = ()=> resolve({ w: 1, h: 1 });
+    img.src = src;
+  });
+}
+
+async function autoFitCardShape(){
+  if(!BLANK_MODE) return;
+  const ids = Object.keys(state.customCards || {});
+  if(!ids.length) return;
+  let square = 0, portrait = 0, landscape = 0;
+  for(const id of ids){
+    const src = state.customCards[id].src;
+    if(!src) continue;
+    const { w, h } = await loadImageSize(src);
+    const r = w / h;
+    if(r >= 0.85 && r <= 1.15) square++;
+    else if(r < 0.85) portrait++;
+    else landscape++;
+  }
+  const useSquare = square >= portrait && square >= landscape;
+  document.body.classList.toggle('card-square', useSquare);
+  const px = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--card-w')) || 64;
+  if(useSquare){
+    document.documentElement.style.setProperty('--card-h', px + 'px');
+  } else {
+    document.documentElement.style.setProperty('--card-h', Math.round(px * 1.35) + 'px');
+  }
+}
+
+function ingestCreateImages(){
+  if(!BLANK_MODE) return 0;
+  let n = 0;
+  try{
+    const raw = sessionStorage.getItem('rankme_blank_images');
+    if(!raw) return 0;
+    const list = JSON.parse(raw);
+    sessionStorage.removeItem('rankme_blank_images');
+    if(!Array.isArray(list)) return 0;
+    list.forEach(it=>{
+      if(!it || !it.dataUrl) return;
+      const id = customIdSeq++;
+      state.customCards[id] = { src: it.dataUrl, name: (it.name||'image').replace(/\.[^.]+$/, '') };
+      if(state.pool.indexOf(id) < 0) state.pool.push(id);
+      n++;
+    });
+  }catch(err){}
+  try{
+    const tag = sessionStorage.getItem('rankme_blank_tag');
+    if(tag) sessionStorage.setItem('rankme_list_tag', tag);
+  }catch(err){}
+  return n;
+}
+
 if(BLANK_MODE){
+  document.body.classList.add('blank-mode');
   const ff = document.getElementById('factionFilters');
   if(ff) ff.style.display = 'none';
-  const portalBtn = document.getElementById('portalBtn');
-  // portals still useful in blank
   const upload = document.getElementById('uploadImgs');
   if(upload){
-    function loadImageSize(src){
-      return new Promise((resolve)=>{
-        const img = new Image();
-        img.onload = ()=> resolve({ w: img.naturalWidth || 1, h: img.naturalHeight || 1 });
-        img.onerror = ()=> resolve({ w: 1, h: 1 });
-        img.src = src;
-      });
-    }
-    async function autoFitCardShape(){
-      // Only for blank / custom uploads — majority rules
-      const ids = Object.keys(state.customCards || {});
-      if(!ids.length) return;
-      let square = 0, portrait = 0, landscape = 0;
-      for(const id of ids){
-        const src = state.customCards[id].src;
-        if(!src) continue;
-        const { w, h } = await loadImageSize(src);
-        const r = w / h;
-        if(r >= 0.85 && r <= 1.15) square++;
-        else if(r < 0.85) portrait++;
-        else landscape++;
-      }
-      // prefer square if most are square-ish; else portrait frame
-      const useSquare = square >= portrait && square >= landscape;
-      document.body.classList.toggle('card-square', useSquare);
-      const px = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--card-w')) || 64;
-      if(useSquare){
-        document.documentElement.style.setProperty('--card-h', px + 'px');
-      } else {
-        const aspect = 1.35;
-        document.documentElement.style.setProperty('--card-h', Math.round(px * aspect) + 'px');
-      }
-    }
     upload.addEventListener('change', async (e)=>{
       const files = [...(e.target.files||[])];
       for(const f of files){
@@ -564,27 +594,6 @@ if(BLANK_MODE){
       e.target.value = '';
     });
   }
-  // Preload images chosen on Create page
-  try{
-    const raw = sessionStorage.getItem('rankme_blank_images');
-    if(raw){
-      const list = JSON.parse(raw);
-      if(Array.isArray(list)){
-        list.forEach(it=>{
-          if(!it || !it.dataUrl) return;
-          const id = customIdSeq++;
-          state.customCards[id] = { src: it.dataUrl, name: (it.name||'image').replace(/\.[^.]+$/, '') };
-          state.pool.push(id);
-        });
-        sessionStorage.removeItem('rankme_blank_images');
-        autoFitCardShape().then(()=>{ renderPool(); if(list.length) showToast(list.length + ' image(s) added'); });
-      }
-    }
-  }catch(err){}
-  try{
-    const tag = sessionStorage.getItem('rankme_blank_tag');
-    if(tag) sessionStorage.setItem('rankme_list_tag', tag);
-  }catch(err){}
 } else {
   renderFactionFilters();
 }

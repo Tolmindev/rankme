@@ -8,7 +8,7 @@
 <script src="js/supabaseClient.js?v=20260827q" defer></script>
 <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/rankme.css?v=20260827q">
+<link rel="stylesheet" href="css/rankme.css?v=20260827w">
 </head>
 <body>
 <header class="site">
@@ -113,11 +113,35 @@
     });
   }
 
+  function fitDataUrl(dataUrl, maxEdge, quality) {
+    return new Promise(function (resolve) {
+      var img = new Image();
+      img.onload = function () {
+        var w = img.naturalWidth || 1, h = img.naturalHeight || 1;
+        var scale = Math.min(1, maxEdge / Math.max(w, h));
+        if (scale === 1 && dataUrl.length < 280000) { resolve(dataUrl); return; }
+        var cw = Math.max(1, Math.round(w * scale));
+        var ch = Math.max(1, Math.round(h * scale));
+        var c = document.createElement('canvas');
+        c.width = cw; c.height = ch;
+        var g = c.getContext('2d');
+        g.fillStyle = '#1a1528';
+        g.fillRect(0, 0, cw, ch);
+        g.drawImage(img, 0, 0, cw, ch);
+        resolve(c.toDataURL('image/jpeg', quality || 0.82));
+      };
+      img.onerror = function () { resolve(dataUrl); };
+      img.src = dataUrl;
+    });
+  }
+
   coverDrop.onclick = function () { coverFile.click(); };
   coverFile.onchange = function (e) {
     var f = e.target.files && e.target.files[0];
     if (!f) return;
     readFile(f).then(function (url) {
+      return fitDataUrl(url, 1200, 0.84);
+    }).then(function (url) {
       coverDataUrl = url;
       coverDrop.innerHTML = '';
       var img = document.createElement('img');
@@ -141,6 +165,8 @@
     var f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
     if (!f || !f.type.startsWith('image/')) return;
     readFile(f).then(function (url) {
+      return fitDataUrl(url, 1200, 0.84);
+    }).then(function (url) {
       coverDataUrl = url;
       coverDrop.innerHTML = '';
       var img = document.createElement('img');
@@ -153,11 +179,26 @@
 
   function refreshPreview() {
     imagesPreview.innerHTML = '';
-    imageFiles.forEach(function (it) {
+    imageFiles.forEach(function (it, idx) {
+      var wrap = document.createElement('div');
+      wrap.className = 'img-chip';
       var img = document.createElement('img');
       img.src = it.dataUrl;
       img.alt = it.name;
-      imagesPreview.appendChild(img);
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'img-chip-x';
+      btn.setAttribute('aria-label', 'Remove image');
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        imageFiles.splice(idx, 1);
+        refreshPreview();
+      });
+      wrap.appendChild(img);
+      wrap.appendChild(btn);
+      imagesPreview.appendChild(wrap);
+    });
     });
     if (imageFiles.length) {
       imagesCount.hidden = false;
@@ -173,6 +214,8 @@
     if (!list.length) return;
     Promise.all(list.map(function (f) {
       return readFile(f).then(function (url) {
+        return fitDataUrl(url, 640, 0.82);
+      }).then(function (url) {
         return { name: f.name, dataUrl: url };
       });
     })).then(function (items) {

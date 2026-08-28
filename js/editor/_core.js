@@ -70,6 +70,29 @@ let state = {
 };
 
 let customIdSeq = 10000;
+let poolDeleteMode = false;
+
+function removeCardFromRanking(cid){
+  const id = +cid;
+  if(!id) return;
+  state.pool = state.pool.filter(x => x !== id);
+  Object.keys(state.assignment || {}).forEach(k => {
+    state.assignment[k] = (state.assignment[k] || []).filter(x => x !== id);
+  });
+  if(state.customCards && state.customCards[id]) delete state.customCards[id];
+  if(typeof markDirty === 'function') markDirty();
+  if(typeof render === 'function') render();
+}
+
+function setPoolDeleteMode(on){
+  poolDeleteMode = !!on;
+  document.body.classList.toggle('pool-delete', poolDeleteMode);
+  const btn = document.getElementById('removeCardsBtn');
+  if(btn){
+    btn.classList.toggle('on', poolDeleteMode);
+    btn.setAttribute('aria-pressed', poolDeleteMode ? 'true' : 'false');
+  }
+}
 
 function freshPool(){
   if(BLANK_MODE) return [];
@@ -186,6 +209,10 @@ function initState(){
   state.assignment = {};
   state.tiers.forEach(t=> state.assignment[t.id] = []);
   state.pool = freshPool();
+  Object.keys(state.customCards || {}).forEach(function (k) {
+    var id = +k;
+    if (id && state.pool.indexOf(id) < 0) state.pool.push(id);
+  });
   if(BLANK_MODE){
     let title = null;
     try { title = sessionStorage.getItem('rankme_blank_title'); } catch(e){}

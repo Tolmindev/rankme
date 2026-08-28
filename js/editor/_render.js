@@ -290,6 +290,12 @@ function makeCard(cid){
   img.onerror = function(){ this.onerror = null; this.style.opacity = '0.35'; };
   el.title = custom ? custom.name : (meta ? meta.name : '');
   el.appendChild(img);
+  const del = document.createElement('button');
+  del.type = 'button';
+  del.className = 'card-del';
+  del.setAttribute('aria-label', 'Remove');
+  del.tabIndex = -1;
+  el.appendChild(del);
   el.addEventListener('pointerdown', onCardPointerDown, { passive: false });
   // iOS Safari: block native scroll/gesture on the card itself
   el.addEventListener('touchstart', function(ev){

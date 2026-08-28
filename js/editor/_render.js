@@ -171,15 +171,6 @@ function sizeLabelLinesInPlace(el){
   el.style.fontSize = labelLineFontSize(maxLen <= 1 ? 'A' : 'A'.repeat(maxLen)) + 'px';
 }
 
-function fitLabelFontLive(el){
-  // Per-line sizes while typing; keep trailing empty line so Enter works
-  const off = getLabelCaretOffset(el);
-  const text = labelRawText(el);
-  const norm = normalizeLabelText(text, true);
-  fitLabelFont(el, norm.raw, true);
-  setLabelCaretOffset(el, Math.min(off, norm.raw.length));
-}
-
 function normalizeLabelText(text, keepTrailingEmpty){
   let raw = String(text == null ? '' : text).replace(/\r/g, '').replace(/[\u00a0\u200B]/g, '');
   const lines = raw.split('\n');

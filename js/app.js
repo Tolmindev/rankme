@@ -268,18 +268,11 @@ function initState(){
     if(!title){ try { title = localStorage.getItem('rankme_draft_title'); } catch(e){} }
     const el = document.getElementById('heroTitle');
     if(el){
-      if(title && title !== 'My tier list') el.textContent = title;
-      else el.textContent = 'My Rank';
+      el.textContent = title || 'My Rank';
       try { localStorage.setItem('rankme_draft_title', el.textContent); } catch(e){}
     }
   }
 }
-
-function lighten(t, delta){
-  const l = Math.min(95, t.light+delta);
-  return `hsl(${t.hue}, ${t.sat}%, ${l}%)`;
-}
-function hsl(t){ return `hsl(${t.hue}, ${t.sat}%, ${t.light}%)`; }
 
 /* RankMe editor · board, labels, pool, filters, portals */
 
@@ -452,15 +445,6 @@ function sizeLabelLinesInPlace(el){
     if(n > maxLen) maxLen = n;
   });
   el.style.fontSize = labelLineFontSize(maxLen <= 1 ? 'A' : 'A'.repeat(maxLen)) + 'px';
-}
-
-function fitLabelFontLive(el){
-  // Per-line sizes while typing; keep trailing empty line so Enter works
-  const off = getLabelCaretOffset(el);
-  const text = labelRawText(el);
-  const norm = normalizeLabelText(text, true);
-  fitLabelFont(el, norm.raw, true);
-  setLabelCaretOffset(el, Math.min(off, norm.raw.length));
 }
 
 function normalizeLabelText(text, keepTrailingEmpty){
@@ -2073,32 +2057,6 @@ function loadImage(src){
   });
 }
 
-// Strict match only - never substring match on id (was causing wrong/dupe cards in PNG)
-function getCardImage(cid){
-  const meta = CARD_META[cid];
-  const custom = state.customCards && state.customCards[cid];
-  if(custom && custom.src){
-    const els = document.querySelectorAll('img');
-    for(const el of els){
-      if(el.complete && el.naturalWidth > 0 && el.getAttribute('src') === custom.src) return el;
-    }
-    return null;
-  }
-  if(!meta) return null;
-  const file = meta.file; // e.g. card_046.webp
-  const els = document.querySelectorAll('img');
-  for(const el of els){
-    if(!el.complete || el.naturalWidth <= 0) continue;
-    const attr = el.getAttribute('src') || '';
-    if(attr === cardSrc(cid) || attr.endsWith('/'+file) || attr.endsWith(file)) return el;
-    try{
-      const u = new URL(el.src, location.href);
-      if(u.pathname.endsWith('/'+file) || u.pathname.endsWith(file)) return el;
-    }catch(e){}
-  }
-  return null;
-}
-
 /* RankMe editor · unsaved leave guard */
 
 /* ---------------- Leave warning ---------------- */
@@ -2777,10 +2735,6 @@ function ingestCreateImages(){
       if(state.pool.indexOf(id) < 0) state.pool.push(id);
       n++;
     });
-  }catch(err){}
-  try{
-    const tag = sessionStorage.getItem('rankme_blank_tag');
-    if(tag) sessionStorage.setItem('rankme_list_tag', tag);
   }catch(err){}
   return n;
 }

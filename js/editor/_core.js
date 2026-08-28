@@ -263,15 +263,8 @@ function initState(){
     if(!title){ try { title = localStorage.getItem('rankme_draft_title'); } catch(e){} }
     const el = document.getElementById('heroTitle');
     if(el){
-      if(title && title !== 'My tier list') el.textContent = title;
-      else el.textContent = 'My Rank';
+      el.textContent = title || 'My Rank';
       try { localStorage.setItem('rankme_draft_title', el.textContent); } catch(e){}
     }
   }
 }
-
-function lighten(t, delta){
-  const l = Math.min(95, t.light+delta);
-  return `hsl(${t.hue}, ${t.sat}%, ${l}%)`;
-}
-function hsl(t){ return `hsl(${t.hue}, ${t.sat}%, ${t.light}%)`; }

@@ -154,11 +154,6 @@ button.battle-back:active {
   text-align: center;
 }
 
-.battle-card.chosen .battle-check {
-  opacity: 1;
-  transform: scale(1);
-}
-
 .battle-vs-row.entering {
   opacity: 0;
   transform: translateY(10px) scale(.98);
@@ -529,31 +524,6 @@ button, .cta, .btn, .btn-mini, .pill-btn, .download-btn, .login-btn, a.btn, a.ct
 
 
 
-.battle-rank-row:nth-child(1) .battle-rank-num, .battle-rank-num.gold {
-  background: linear-gradient(145deg, #ffe566 0%, #f5b800 45%, #d49200 100%);
-  color: #3a2800;
-  box-shadow: 0 0 14px rgba(255,200,40,.75),
-    0 0 28px rgba(255,170,0,.4),
-    inset 0 1px 0 rgba(255,255,220,.7);
-  text-shadow: 0 1px 0 rgba(255,255,200,.5);
-}
-
-.battle-rank-row:nth-child(2) .battle-rank-num, .battle-rank-num.silver {
-  background: linear-gradient(145deg, #f0f4f8 0%, #c0c8d4 45%, #8a94a4 100%);
-  color: #2a3038;
-  box-shadow: 0 0 12px rgba(200,210,230,.55),
-    0 0 24px rgba(160,175,200,.3),
-    inset 0 1px 0 rgba(255,255,255,.8);
-}
-
-.battle-rank-row:nth-child(3) .battle-rank-num, .battle-rank-num.bronze {
-  background: linear-gradient(145deg, #f0b888 0%, #d08040 45%, #a05820 100%);
-  color: #2e1808;
-  box-shadow: 0 0 12px rgba(220,140,60,.55),
-    0 0 24px rgba(180,100,30,.3),
-    inset 0 1px 0 rgba(255,220,180,.55);
-}
-
 .battle-vs-row {
   display: flex;
   align-items: center;
@@ -640,11 +610,6 @@ button, .cta, .btn, .btn-mini, .pill-btn, .download-btn, .login-btn, a.btn, a.ct
   animation: none;
 }
 
-.battle-result-list li:nth-child(1) .battle-result-rank, .battle-result-list li:nth-child(2) .battle-result-rank, .battle-result-list li:nth-child(3) .battle-result-rank, .battle-rank-num.gold, .battle-rank-num.silver, .battle-rank-num.bronze, .battle-rank-list li:nth-child(1) .battle-rank-num, .battle-rank-list li:nth-child(2) .battle-rank-num, .battle-rank-list li:nth-child(3) .battle-rank-num {
-  color: #ffffff;
-  text-shadow: 0 1px 3px rgba(0,0,0,.45);
-}
-
 .battle-mode-card .bmc-icon {
   margin: 0 0 6px;
   line-height: 0;
@@ -686,8 +651,7 @@ button, .cta, .btn, .btn-mini, .pill-btn, .download-btn, .login-btn, a.btn, a.ct
 
 /* Start / Continue — single source */
 .battle-mode-card .bmc-resume,
-.bmc-resume,
-.bmc-new {
+.bmc-resume {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -715,8 +679,7 @@ button, .cta, .btn, .btn-mini, .pill-btn, .download-btn, .login-btn, a.btn, a.ct
   transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease, filter 0.15s ease;
 }
 .battle-mode-card .bmc-resume:hover,
-.bmc-resume:hover,
-.bmc-new:hover {
+.bmc-resume:hover {
   transform: translateY(-2px);
   border-color: rgba(220, 180, 255, 0.8);
   filter: brightness(1.1);

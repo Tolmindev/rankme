@@ -17,13 +17,6 @@
   transform: translateZ(0);
 }
 
-.battle-card-inner{
-  position: absolute;
-  inset: 0;
-  border-radius: 16px;
-  overflow: hidden;
-}
-
 .battle-card-frame{
   position: absolute;
   inset: 0;
@@ -64,15 +57,6 @@
   pointer-events: none;
 }
 
-.battle-electric{
-  position: absolute;
-  inset: 0;
-  border-radius: 18px;
-  pointer-events: none;
-  opacity: 0;
-  z-index: 1;
-}
-
 /* Hover */
 .battle-side:hover .battle-card:not(.chosen):not(.rejected),
 .battle-card:hover:not(.chosen):not(.rejected){
@@ -100,11 +84,6 @@
     0 0 56px rgba(125, 211, 252, 0.25);
   filter: brightness(1.06);
   animation: winnerHoldFade 0.85s ease-out forwards;
-}
-
-.battle-card.chosen .battle-electric{
-  opacity: 1;
-  animation: electricFadeOut 0.85s ease forwards;
 }
 
 /* Loser: shrink + fade */
@@ -144,11 +123,6 @@
     transform: translateZ(0) scale(0.8);
     filter: brightness(0.55);
   }
-}
-
-@keyframes electricFadeOut{
-  0%, 35%{ opacity: 1; }
-  100%{ opacity: 0; }
 }
 
 /* Keep pick feedback visible even when OS asks for less motion.

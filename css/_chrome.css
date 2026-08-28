@@ -732,19 +732,6 @@ body.theme-gold {
   gap: 12px;
 }
 
-.section-head .view-all {
-  font-size: .8rem;
-  font-weight: 700;
-  color: #e8d4ff;
-  text-decoration: none;
-}
-
-.section-head .view-all:hover {
-  text-decoration: none;
-  color: #ffffff;
-  filter: brightness(1.1);
-}
-
 .search-box input {
   flex: 1;
   background: transparent;
@@ -899,11 +886,6 @@ html.rankme-dragging {
     border-color: rgba(220, 180, 255, 0.9);
     background: #1a1728;
     filter: none;
-  }
-
-  nav.main .search-ico {
-    width: 16px;
-    height: 16px;
   }
 
   .share-group {

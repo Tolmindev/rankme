@@ -1,6 +1,6 @@
 /* RankMe · tier — Board, rows, cards, toolbar, filters, portals, pool */
 
-.page, main, .wrap, .board-wrap, .tier-shell, .pool-wrap {
+.page, main, .wrap, .pool-wrap {
   flex: 1 0 auto;
 }
 
@@ -297,7 +297,6 @@
 .card-del::after { transform: rotate(-45deg); }
 body.pool-delete .pool .card-del { display: block; }
 body.pool-delete .pool .card { cursor: pointer; }
-body.community-view .js-remove-cards { display: none; }
 
 .card:hover {
   transform: translateY(-2px) scale(1.04);
@@ -1467,7 +1466,7 @@ body.theme-gold .card img {
     overflow-x: hidden;
   }
 
-  .board, .toolbar, .pool-wrap, footer.site, .action-bar {
+  .board, .toolbar, .pool-wrap, footer.site {
     padding-left: 14px;
     padding-right: 14px;
   }

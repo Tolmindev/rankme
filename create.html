@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
 <title>Create tier list - RankMe</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
-<script src="js/supabaseClient.js?v=20260827q" defer></script>
+<script src="js/supabaseClient.js?v=20260828f" defer></script>
 <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/rankme.css?v=20260828e">
+<link rel="stylesheet" href="css/rankme.css?v=20260828f">
 </head>
 <body>
 <header class="site">
@@ -144,7 +144,7 @@
   coverDrop.onclick = function () { coverFile.click(); };
   coverFile.onchange = function (e) {
     var f = e.target.files && e.target.files[0];
-    if (!f) return;
+    if (!f || !f.type || f.type.indexOf('image/') !== 0) return;
     readFile(f).then(function (url) {
       return fitDataUrl(url, 1200, 0.84);
     }).then(function (url) { applyCover(url, f.name); });
@@ -197,10 +197,19 @@
     }
   }
 
+  var MAX_CREATE_IMAGES = 200;
+
   function addImageFiles(fileList) {
     var list = Array.prototype.slice.call(fileList || []);
     list = list.filter(function (f) { return f && f.type && f.type.startsWith('image/'); });
     if (!list.length) return;
+    var room = MAX_CREATE_IMAGES - imageFiles.length;
+    if (room <= 0) {
+      alert('Max ' + MAX_CREATE_IMAGES + ' images. Remove some first.');
+      return;
+    }
+    var clipped = list.length > room;
+    if (clipped) list = list.slice(0, room);
     Promise.all(list.map(function (f) {
       return readFile(f).then(function (url) {
         return fitDataUrl(url, 640, 0.82);
@@ -210,6 +219,7 @@
     })).then(function (items) {
       imageFiles = imageFiles.concat(items);
       refreshPreview();
+      if (clipped) alert('Added ' + items.length + '. Max is ' + MAX_CREATE_IMAGES + '.');
     });
   }
 
@@ -242,7 +252,7 @@
       if (tag) sessionStorage.setItem('rankme_blank_tag', tag);
       else sessionStorage.removeItem('rankme_blank_tag');
       if (imageFiles.length) {
-        sessionStorage.setItem('rankme_blank_images', JSON.stringify(imageFiles.slice(0, 200)));
+        sessionStorage.setItem('rankme_blank_images', JSON.stringify(imageFiles));
       } else {
         sessionStorage.removeItem('rankme_blank_images');
       }

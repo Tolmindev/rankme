@@ -561,10 +561,6 @@ function ingestCreateImages(){
       n++;
     });
   }catch(err){}
-  try{
-    const tag = sessionStorage.getItem('rankme_blank_tag');
-    if(tag) sessionStorage.setItem('rankme_list_tag', tag);
-  }catch(err){}
   return n;
 }
 

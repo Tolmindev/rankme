@@ -433,29 +433,3 @@ function loadImage(src){
     img.src = src;
   });
 }
-
-// Strict match only - never substring match on id (was causing wrong/dupe cards in PNG)
-function getCardImage(cid){
-  const meta = CARD_META[cid];
-  const custom = state.customCards && state.customCards[cid];
-  if(custom && custom.src){
-    const els = document.querySelectorAll('img');
-    for(const el of els){
-      if(el.complete && el.naturalWidth > 0 && el.getAttribute('src') === custom.src) return el;
-    }
-    return null;
-  }
-  if(!meta) return null;
-  const file = meta.file; // e.g. card_046.webp
-  const els = document.querySelectorAll('img');
-  for(const el of els){
-    if(!el.complete || el.naturalWidth <= 0) continue;
-    const attr = el.getAttribute('src') || '';
-    if(attr === cardSrc(cid) || attr.endsWith('/'+file) || attr.endsWith(file)) return el;
-    try{
-      const u = new URL(el.src, location.href);
-      if(u.pathname.endsWith('/'+file) || u.pathname.endsWith(file)) return el;
-    }catch(e){}
-  }
-  return null;
-}

@@ -1,6 +1,6 @@
 /* RankMe · account — Account, auth, modals, toasts, download */
 
-h1,h2,h3,.tier-label,.brand-name,.faction-btn,.download-btn,.login-btn {
+h1,h2,h3,.tier-label,.faction-btn,.download-btn,.login-btn {
   font-weight: 800;
 }
 
@@ -37,7 +37,7 @@ body > .toast {
   background: linear-gradient(#12101a, #12101a) padding-box,
     linear-gradient(90deg,#b79bf0,#e6a9e8,#cdd6f7,#b79bf0,#e6a9e8) border-box;
   background-size: 100% 100%, 220% 100%;
-  animation: accountShimmer 4s linear infinite;
+  animation: portalRgb 4s linear infinite;
   color: var(--text);
 }
 
@@ -289,49 +289,6 @@ body > .toast {
   margin-top: 8px;
 }
 
-.profile .avatar-wrap {
-  position: relative;
-  width: 56px;
-  height: 56px;
-  flex: 0 0 56px;
-  margin: 0;
-}
-
-.profile .avatar-wrap .holo-ring {
-  position: absolute;
-  inset: -3px;
-  border-radius: 50%;
-  background: linear-gradient(135deg,#b79bf0,#e6a9e8,#cdd6f7,#b79bf0);
-  background-size: 200% 100%;
-  opacity: .9;
-  z-index: 0;
-  animation: accountShimmer 4s linear infinite;
-  pointer-events: none;
-}
-
-.profile .avatar-wrap .avatar, .profile .avatar-wrap .avatar-fallback {
-  position: relative;
-  z-index: 1;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  object-fit: cover;
-  display: block;
-  background: #1a1728;
-  border: 2px solid #12101a;
-  box-sizing: border-box;
-  margin: 0;
-}
-
-.profile .avatar-wrap .avatar-fallback {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 900;
-  font-size: 1.15rem;
-  color: #e8d4ff;
-}
-
 #delModal .modal-actions {
   margin-top: 12px;
 }
@@ -555,9 +512,6 @@ body > .toast {
   flex-shrink: 0;
 }
 
-.desktop-only { display: block; }
-.mobile-only { display: none; }
-
 @keyframes ghostFloat {
   0%, 100% { transform: translate3d(0, 0, 0); }
   50% { transform: translate3d(0, -7px, 0); }
@@ -618,8 +572,6 @@ body > .toast {
 }
 @media (max-width: 720px) {
   .saved-grid > .skel-card:nth-child(n+4) { display: none; }
-  .desktop-only { display: none; }
-  .mobile-only { display: block; }
   .account-panel { padding: 20px 14px 28px; }
   .account-profile {
     flex-wrap: wrap;

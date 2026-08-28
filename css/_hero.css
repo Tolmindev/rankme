@@ -1,6 +1,6 @@
 /* RankMe · hero — Tier hero, list actions */
 
-body > header.site, body > footer.site, body > #site-footer, body > .toolbar, body > .board, body > .pool-wrap, body > .hero, body > .toast-host {
+body > header.site, body > footer.site, body > #site-footer, body > .toolbar, body > .board, body > .pool-wrap, body > .hero {
   width: 100%;
   box-sizing: border-box;
   flex-shrink: 0;
@@ -271,10 +271,6 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
   display: block;
 }
 
-.hero-v2 .cta-row {
-  justify-content: flex-start;
-}
-
 .hero-text {
   flex: 0 1 auto;
   min-width: 0;
@@ -438,10 +434,6 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
     text-align: center;
     max-width: 100%;
     width: 100%;
-  }
-
-  .hero-v2 .cta-row {
-    justify-content: center;
   }
 }
 

@@ -363,7 +363,7 @@ function updateNavAuth() {
       /* Shared header: avatar circle when logged in, label when guest */
       var loginBtn = document.getElementById('loginBtn');
       if (loginBtn) {
-        loginBtn.classList.toggle('is-logged-in', !!user);
+        loginBtn.classList.toggle('logged-in', !!user);
         var avatarUrl = user && (user.user_metadata?.avatar_url || user.user_metadata?.picture);
         if (user && avatarUrl) {
           loginBtn.classList.add('login-btn-avatar');
@@ -550,24 +550,4 @@ async function reportCardBattle(templateId, winnerId, loserId) {
     loser: String(loserId),
   });
   if (error) console.warn('[RankMe] reportCardBattle', error.message);
-}
-
-async function fetchCardStats(templateId) {
-  const client = await initSupabase();
-  if (!client || !templateId) return {};
-  try {
-    const { data, error } = await client
-      .from('card_stats')
-      .select('card_id, wins, losses, rating')
-      .eq('template_id', templateId);
-    if (error || !data) return {};
-    const map = {};
-    data.forEach(function (r) {
-      map[String(r.card_id)] = r;
-    });
-    return map;
-  } catch (e) {
-    console.warn('[RankMe] fetchCardStats', e);
-    return {};
-  }
 }

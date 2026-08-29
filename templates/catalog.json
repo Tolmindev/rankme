@@ -156,6 +156,29 @@
       "exclusive": true,
       "parallax": true,
       "coverThumb": "assets/brand/Marvel_TOKON_Cover_thumb.webp"
+    },
+    {
+      "id": "wow-expansions",
+      "title": "World of Warcraft Expansions",
+      "description": "Looking for a complete list of all of the World of Warcraft expansions?",
+      "cover": "assets/brand/WoW_Expansions_Cover.webp",
+      "href": "tier.html?t=wow-expansions",
+      "category": "games",
+      "tags": [
+        "games",
+        "mmorpg",
+        "warcraft",
+        "wow",
+        "blizzard"
+      ],
+      "itemCount": 13,
+      "itemLabel": "expansions",
+      "creator": "RankMe",
+      "createdAt": "2026-08-29",
+      "featured": true,
+      "exclusive": true,
+      "parallax": true,
+      "coverThumb": "assets/brand/WoW_Expansions_Cover_thumb.webp"
     }
   ],
   "categoryMeta": {

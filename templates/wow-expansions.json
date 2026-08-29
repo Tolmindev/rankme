@@ -1,0 +1,94 @@
+{
+  "id": "wow-expansions",
+  "title": "World of Warcraft Expansions",
+  "footerLabel": "WoW Expansions",
+  "exportName": "rankme-wow-expansions-tierlist.png",
+  "cardShape": "portrait",
+  "cardAspect": 1.416,
+  "cardPath": "assets/wow-expansions/",
+  "theme": "default",
+  "noFactions": true,
+  "cover": "assets/brand/WoW_Expansions_Cover.webp",
+  "description": "Looking for a complete list of all of the World of Warcraft expansions?",
+  "parallax": true,
+  "cards": [
+    {
+      "id": 1,
+      "file": "01_Vanilla.webp",
+      "name": "Vanilla",
+      "faction": "ALL"
+    },
+    {
+      "id": 2,
+      "file": "02_The_Burning_Crusade.webp",
+      "name": "The Burning Crusade",
+      "faction": "ALL"
+    },
+    {
+      "id": 3,
+      "file": "03_Wrath_of_the_Lich_King.webp",
+      "name": "Wrath of the Lich King",
+      "faction": "ALL"
+    },
+    {
+      "id": 4,
+      "file": "04_Cataclysm.webp",
+      "name": "Cataclysm",
+      "faction": "ALL"
+    },
+    {
+      "id": 5,
+      "file": "05_Mists_of_Pandaria.webp",
+      "name": "Mists of Pandaria",
+      "faction": "ALL"
+    },
+    {
+      "id": 6,
+      "file": "06_Warlords_of_Draenor.webp",
+      "name": "Warlords of Draenor",
+      "faction": "ALL"
+    },
+    {
+      "id": 7,
+      "file": "07_Legion.webp",
+      "name": "Legion",
+      "faction": "ALL"
+    },
+    {
+      "id": 8,
+      "file": "08_Battle_for_Azeroth.webp",
+      "name": "Battle for Azeroth",
+      "faction": "ALL"
+    },
+    {
+      "id": 9,
+      "file": "09_Shadowlands.webp",
+      "name": "Shadowlands",
+      "faction": "ALL"
+    },
+    {
+      "id": 10,
+      "file": "10_Dragonflight.webp",
+      "name": "Dragonflight",
+      "faction": "ALL"
+    },
+    {
+      "id": 11,
+      "file": "11_The_War_Within.webp",
+      "name": "The War Within",
+      "faction": "ALL"
+    },
+    {
+      "id": 12,
+      "file": "12_Midnight.webp",
+      "name": "Midnight",
+      "faction": "ALL"
+    },
+    {
+      "id": 13,
+      "file": "13_The_Last_Titan.webp",
+      "name": "The Last Titan",
+      "faction": "ALL"
+    }
+  ]
+}

@@ -404,9 +404,9 @@ function render(){
   renderPortals();
 }
 
-function labelLineFontSize(line){
+function labelLineFontSize(line, desktop){
   const len = (line || '').replace(/\s+/g, '').replace(/[\u00a0\u200B]/g, '').length || 1;
-  const mobile = window.matchMedia && window.matchMedia('(max-width: 720px)').matches;
+  const mobile = !desktop && window.matchMedia && window.matchMedia('(max-width: 720px)').matches;
   if(mobile){
     if(len <= 1) return 16;
     if(len === 2) return 13;
@@ -1725,6 +1725,8 @@ async function exportPNG(returnBlobOnly, blobCb, forceSize){
   canvas.height = height * scale;
   const ctx = canvas.getContext('2d');
   ctx.setTransform(scale, 0, 0, scale, 0, 0);
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = 'high';
 
   // Clean dark background
   ctx.fillStyle = '#0e0c14';
@@ -1739,30 +1741,10 @@ async function exportPNG(returnBlobOnly, blobCb, forceSize){
   for(let i = 0; i < state.tiers.length; i++){
     const tier = state.tiers[i];
     const rh = rowHeights[i];
-
-    // Premium label: rich color, muted neon (lower sat, deeper stops)
-    const baseSat = Number(tier.sat);
-    const baseLight = Number(tier.light);
-    const sat = Math.min(52, Math.max(32, Math.round((Number.isFinite(baseSat) ? baseSat : 50) * 0.72)));
-    const lightTop = Math.min(52, Math.max(42, Math.round((Number.isFinite(baseLight) ? baseLight : 55) * 0.55 + 18)));
-    const lightMid = Math.max(36, lightTop - 6);
-    const lightBot = Math.max(28, lightTop - 14);
-    const satMid = Math.max(28, sat - 4);
-    const satBot = Math.max(26, sat - 6);
-    const grad = ctx.createLinearGradient(0, y, 0, y + rh);
-    grad.addColorStop(0, `hsl(${tier.hue}, ${sat}%, ${lightTop}%)`);
-    grad.addColorStop(0.55, `hsl(${tier.hue}, ${satMid}%, ${lightMid}%)`);
-    grad.addColorStop(1, `hsl(${tier.hue}, ${satBot}%, ${lightBot}%)`);
-    ctx.fillStyle = grad;
-    ctx.fillRect(0, y, labelW, rh);
-
-    ctx.fillStyle = '#ffffff';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    fitAndWrap(ctx, tier.name, labelW/2, y + rh/2, labelW - 16, 11, Math.min(22, Math.round(cardW*0.28)));
-
-    ctx.fillStyle = 'rgba(255,255,255,0.025)';
-    ctx.fillRect(labelW, y, width - labelW, rh);
+    ctx.fillStyle = '#1a1728';
+    ctx.fillRect(0, y, width, rh);
+    fillTierCube(ctx, 0, y, labelW, rh, tier);
+    drawTierName(ctx, tier.name, labelW / 2, y + rh / 2, labelW - 20, rh - 12);
 
     ctx.strokeStyle = 'rgba(255,255,255,0.05)';
     ctx.lineWidth = 1;
@@ -1779,50 +1761,8 @@ async function exportPNG(returnBlobOnly, blobCb, forceSize){
     for(const cid of ids){
       const img = imgCache[Number(cid)] || imgCache[cid];
       if(img){
-        try {
-          const r = CARD_SHAPE === 'landscape'
-            ? Math.max(2, Math.min(4, Math.round(cardW * 0.015)))
-            : Math.max(6, Math.round(cardW * (CARD_SHAPE === 'square' ? 0.14 : 0.12)));
-          ctx.save();
-          ctx.beginPath();
-          if(ctx.roundRect) ctx.roundRect(x, cy, cardW, cardH, r);
-          else ctx.rect(x, cy, cardW, cardH);
-          if(CARD_SHAPE === 'square' || THEME_GOLD){
-            ctx.fillStyle = 'rgba(24,18,36,0.95)';
-            ctx.fill();
-          } else {
-            ctx.fillStyle = 'rgba(255,255,255,0.04)';
-            ctx.fill();
-          }
-          ctx.clip();
-          // contain: keep image aspect, center in card (no stretch)
-          (function(){
-            const iw = img.naturalWidth || img.width || 1;
-            const ih = img.naturalHeight || img.height || 1;
-            const ir = iw / ih;
-            const br = cardW / cardH;
-            let dw, dh, dx, dy;
-            if(ir > br){
-              dw = cardW; dh = cardW / ir;
-              dx = x; dy = cy + (cardH - dh) / 2;
-            } else {
-              dh = cardH; dw = cardH * ir;
-              dx = x + (cardW - dw) / 2; dy = cy;
-            }
-            ctx.drawImage(img, dx, dy, dw, dh);
-          })();
-          ctx.restore();
-          if(CARD_SHAPE === 'square' || THEME_GOLD){
-            ctx.save();
-            ctx.beginPath();
-            if(ctx.roundRect) ctx.roundRect(x + 0.5, cy + 0.5, cardW - 1, cardH - 1, CARD_SHAPE === 'landscape' ? r : Math.max(5, r - 1));
-            else ctx.rect(x + 0.5, cy + 0.5, cardW - 1, cardH - 1);
-            ctx.strokeStyle = THEME_GOLD ? 'rgba(201,168,240,0.55)' : 'rgba(220,180,120,0.4)';
-            ctx.lineWidth = Math.max(1, Math.min(1.5, cardW * 0.012));
-            ctx.stroke();
-            ctx.restore();
-          }
-        } catch(e){}
+        try { drawExportCard(ctx, x, cy, cardW, cardH, img, isSquareCard); }
+        catch(e){}
       }
       col++;
       if(col >= cardsPerLine){
@@ -2009,76 +1949,143 @@ function wrapFooterLines(ctx, text, maxW, maxLines){
   return lines.map(ellipsize);
 }
 
-function fitAndWrap(ctx, text, x, y, maxWidth, minSize, maxSize){
-  const raw = String(text || '').replace(/\r/g, '').trim() || 'ROW';
-  // Explicit newlines from editor → one canvas line each, own size
-  if(raw.includes('\n')){
-    const parts = raw.split('\n');
-    const sized = parts.map(function(line){
-      let size = labelLineFontSize(line);
-      size = Math.max(minSize, Math.min(maxSize, size));
-      ctx.font = '800 ' + size + 'px Montserrat, system-ui, sans-serif';
-      // Shrink if a single line is wider than label
-      while(size > minSize && ctx.measureText(line).width > maxWidth){
-        size -= 1;
-        ctx.font = '800 ' + size + 'px Montserrat, system-ui, sans-serif';
-      }
-      return { line: line.length ? line : ' ', size };
-    });
-    const totalH = sized.reduce(function(a, s){ return a + s.size * 1.15; }, 0);
-    let cy = y - totalH / 2;
-    sized.forEach(function(s){
-      ctx.font = '800 ' + s.size + 'px Montserrat, system-ui, sans-serif';
-      cy += s.size * 1.15 / 2;
-      ctx.fillText(s.line, x, cy);
-      cy += s.size * 1.15 / 2;
-    });
-    return;
-  }
-  let size = maxSize;
-  let lines = [raw];
-  while(size >= minSize){
-    ctx.font = `800 ${size}px Montserrat, system-ui, sans-serif`;
-    lines = wrapLines(ctx, raw, maxWidth);
-    if(lines.length <= 3) break;
-    size--;
-  }
-  ctx.font = `800 ${size}px Montserrat, system-ui, sans-serif`;
-  lines = wrapLines(ctx, raw, maxWidth);
-  const lh = size * 1.12;
-  const startY = y - ((lines.length - 1) * lh) / 2;
-  lines.forEach((l, i) => ctx.fillText(l, x, startY + i * lh));
+function cssAngleGradient(ctx, x, y, w, h, deg){
+  const r = deg * Math.PI / 180;
+  const vx = Math.sin(r);
+  const vy = -Math.cos(r);
+  const cx = x + w / 2;
+  const cy = y + h / 2;
+  const half = 0.5 * (Math.abs(w * vx) + Math.abs(h * vy));
+  return ctx.createLinearGradient(cx - vx * half, cy - vy * half, cx + vx * half, cy + vy * half);
 }
-function wrapLines(ctx, text, maxWidth){
-  const words = String(text).split(/\s+/).filter(Boolean);
-  const lines = [];
-  let line = '';
-  const pushChunk = (chunk)=>{
-    if(!chunk) return;
-    if(ctx.measureText(chunk).width <= maxWidth){
-      if(line && ctx.measureText(line + ' ' + chunk).width <= maxWidth){
-        line = line + ' ' + chunk;
-      } else {
-        if(line) lines.push(line);
-        line = chunk;
-      }
-      return;
-    }
-    // Long unbroken string - split by characters
-    if(line){ lines.push(line); line = ''; }
-    let buf = '';
-    for(const ch of chunk){
-      const t = buf + ch;
-      if(ctx.measureText(t).width > maxWidth && buf){
-        lines.push(buf);
-        buf = ch;
-      } else buf = t;
-    }
-    if(buf) line = buf;
+
+function fillTierCube(ctx, x, y, w, h, tier){
+  const hue = Number(tier.hue) || 0;
+  const sat = Number.isFinite(Number(tier.sat)) ? Number(tier.sat) : 50;
+  const light = Number.isFinite(Number(tier.light)) ? Number(tier.light) : 55;
+  const color = function(a){
+    return 'hsla(' + hue + ', ' + sat + '%, ' + light + '%, ' + a + ')';
   };
-  for(const w of words) pushChunk(w);
-  if(line) lines.push(line);
-  return lines.length ? lines : [''];
+  const g = cssAngleGradient(ctx, x, y, w, h, 105);
+  g.addColorStop(0, color(0.95));
+  g.addColorStop(0.48, color(0.72));
+  g.addColorStop(1, color(0.42));
+  ctx.fillStyle = g;
+  ctx.fillRect(x, y, w, h);
+  ctx.fillStyle = 'rgba(255,255,255,0.14)';
+  ctx.fillRect(x, y, w, 1);
+  ctx.fillStyle = 'rgba(0,0,0,0.12)';
+  ctx.fillRect(x, y + h - 1, w, 1);
+}
+
+function drawTierName(ctx, name, cx, cy, maxW, maxH){
+  const raw = String(name || '').replace(/\r/g, '').trim() || 'ROW';
+  const parts = raw.split('\n');
+  const sized = parts.map(function(line){
+    let size = labelLineFontSize(line, true);
+    const text = (line || ' ').toUpperCase();
+    ctx.font = '800 ' + size + 'px Montserrat, system-ui, sans-serif';
+    while(size > 8 && ctx.measureText(text).width > maxW){
+      size -= 1;
+      ctx.font = '800 ' + size + 'px Montserrat, system-ui, sans-serif';
+    }
+    return { text: line.length ? text : ' ', size: size };
+  });
+  const lead = 1.15;
+  let totalH = sized.reduce(function(a, s){ return a + s.size * lead; }, 0);
+  if(totalH > maxH){
+    const k = maxH / totalH;
+    sized.forEach(function(s){ s.size = Math.max(8, Math.round(s.size * k)); });
+    totalH = sized.reduce(function(a, s){ return a + s.size * lead; }, 0);
+  }
+  ctx.fillStyle = '#fff';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.shadowColor = 'rgba(0,0,0,0.35)';
+  ctx.shadowBlur = 2;
+  ctx.shadowOffsetY = 1;
+  let ty = cy - totalH / 2;
+  sized.forEach(function(s){
+    ctx.font = '800 ' + s.size + 'px Montserrat, system-ui, sans-serif';
+    ty += s.size * lead / 2;
+    ctx.fillText(s.text, cx, ty);
+    ty += s.size * lead / 2;
+  });
+  ctx.shadowColor = 'transparent';
+  ctx.shadowBlur = 0;
+  ctx.shadowOffsetY = 0;
+}
+
+function exportRound(ctx, x, y, w, h, r){
+  r = Math.max(0, Math.min(r, w / 2, h / 2));
+  if(ctx.roundRect) ctx.roundRect(x, y, w, h, r);
+  else ctx.rect(x, y, w, h);
+}
+
+function drawContained(ctx, img, x, y, w, h){
+  const iw = img.naturalWidth || img.width || 1;
+  const ih = img.naturalHeight || img.height || 1;
+  const ir = iw / ih;
+  const br = w / h;
+  let dw, dh, dx, dy;
+  if(ir > br){
+    dw = w; dh = w / ir;
+    dx = x; dy = y + (h - dh) / 2;
+  } else {
+    dh = h; dw = h * ir;
+    dx = x + (w - dw) / 2; dy = y;
+  }
+  ctx.drawImage(img, dx, dy, dw, dh);
+}
+
+function drawExportCard(ctx, x, y, w, h, img, isSquare){
+  const landscape = CARD_SHAPE === 'landscape';
+  const inset = landscape ? Math.max(2, Math.round(w * 0.02)) : 3;
+  const r = landscape
+    ? Math.max(3, Math.round(w * 0.04))
+    : Math.max(6, Math.round(w * (isSquare ? 0.14 : 0.12)));
+  const ir = Math.max(2, r - inset);
+  const plate = ctx.createLinearGradient(x, y, x + w * 0.15, y + h);
+  if(THEME_GOLD){
+    plate.addColorStop(0, '#1e1a2c');
+    plate.addColorStop(1, '#100e18');
+  } else if(isSquare){
+    plate.addColorStop(0, '#2e2640');
+    plate.addColorStop(1, '#16121f');
+  } else {
+    plate.addColorStop(0, '#322a52');
+    plate.addColorStop(0.55, '#1a1528');
+    plate.addColorStop(1, '#12101a');
+  }
+  ctx.save();
+  ctx.shadowColor = 'rgba(0,0,0,0.4)';
+  ctx.shadowBlur = 8;
+  ctx.shadowOffsetY = 3;
+  ctx.beginPath();
+  exportRound(ctx, x, y, w, h, r);
+  ctx.fillStyle = plate;
+  ctx.fill();
+  ctx.restore();
+
+  const ix = x + inset, iy = y + inset, iw = Math.max(1, w - inset * 2), ih = Math.max(1, h - inset * 2);
+  ctx.save();
+  ctx.beginPath();
+  exportRound(ctx, ix, iy, iw, ih, ir);
+  ctx.clip();
+  drawContained(ctx, img, ix, iy, iw, ih);
+  ctx.restore();
+
+  ctx.save();
+  ctx.beginPath();
+  exportRound(ctx, x + 0.5, y + 0.5, w - 1, h - 1, r);
+  ctx.strokeStyle = THEME_GOLD
+    ? 'rgba(201,168,240,0.55)'
+    : isSquare
+      ? 'rgba(220,180,120,0.5)'
+      : 'rgba(180,140,240,0.38)';
+  ctx.lineWidth = THEME_GOLD ? 1.5 : 1;
+  ctx.stroke();
+  ctx.restore();
 }
 
 function loadImage(src){

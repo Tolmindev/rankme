@@ -30,7 +30,7 @@ async function exportPNG(returnBlobOnly, blobCb, forceSize){
   }
   const isSquareCard = CARD_SHAPE === 'square' || document.body.classList.contains('card-square');
   const cardH = Math.round(cardW * (isSquareCard ? 1 : (CARD_ASPECT || 1.35)));
-  const cardGap = 8;
+  const cardGap = 6;
   const padX = 14;
   const padY = 12;
   const labelW = 150;
@@ -106,7 +106,7 @@ async function exportPNG(returnBlobOnly, blobCb, forceSize){
       const img = imgCache[Number(cid)] || imgCache[cid];
       if(img){
         try { drawExportCard(ctx, x, cy, cardW, cardH, img, isSquareCard); }
-        catch(e){}
+        catch(e){ console.warn('export card', cid, e); }
       }
       col++;
       if(col >= cardsPerLine){
@@ -389,7 +389,7 @@ function drawExportCard(ctx, x, y, w, h, img, isSquare){
     ? Math.max(3, Math.round(w * 0.04))
     : Math.max(6, Math.round(w * (isSquare ? 0.14 : 0.12)));
   const ir = Math.max(2, r - inset);
-  const plate = ctx.createLinearGradient(x, y, x + w * 0.15, y + h);
+  const plate = ctx.createLinearGradient(x, y, x + w * 0.2, y + h);
   if(THEME_GOLD){
     plate.addColorStop(0, '#1e1a2c');
     plate.addColorStop(1, '#100e18');

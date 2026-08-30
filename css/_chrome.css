@@ -19,7 +19,7 @@ header.site {
   align-items: center;
   justify-content: space-between;
   padding: 16px 40px;
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid rgba(176, 148, 230, 0.22);
   position: sticky;
   top: 0;
   z-index: 50;

@@ -76,49 +76,48 @@ body {
 .aurora span {
   position: absolute;
   display: block;
-  border-radius: 50%;
-  will-change: transform;
+  will-change: transform, opacity;
 }
 .aurora span:nth-child(1) {
-  width: 90vw;
-  height: 70vh;
-  left: -18vw;
-  top: -32vh;
-  background: radial-gradient(ellipse at center, rgba(160, 120, 220, 0.2), transparent 58%);
-  animation: auroraA 22s ease-in-out infinite alternate;
+  width: 92vw;
+  height: 58vh;
+  left: -32vw;
+  top: -30vh;
+  background: radial-gradient(ellipse 50% 50% at 50% 50%, rgba(168, 128, 235, 0.32), transparent 62%);
+  animation: auroraA 18s ease-in-out infinite alternate;
 }
 .aurora span:nth-child(2) {
-  width: 70vw;
-  height: 55vh;
-  right: -16vw;
-  top: -10vh;
-  background: radial-gradient(ellipse at center, rgba(100, 140, 220, 0.12), transparent 52%);
-  animation: auroraB 26s ease-in-out infinite alternate;
+  width: 72vw;
+  height: 48vh;
+  left: 52vw;
+  top: -16vh;
+  background: radial-gradient(ellipse 50% 50% at 50% 50%, rgba(110, 170, 255, 0.22), transparent 58%);
+  animation: auroraB 24s ease-in-out infinite alternate;
 }
 .aurora span:nth-child(3) {
-  width: 84vw;
-  height: 52vh;
-  left: 8vw;
-  bottom: -30vh;
-  background: radial-gradient(ellipse at center, rgba(130, 90, 190, 0.1), transparent 55%);
+  width: 86vw;
+  height: 54vh;
+  left: 6vw;
+  top: 72vh;
+  background: radial-gradient(ellipse 50% 50% at 50% 50%, rgba(230, 140, 210, 0.2), transparent 60%);
   animation: auroraC 30s ease-in-out infinite alternate;
 }
 
 @keyframes auroraA {
-  from { transform: translate3d(0, 0, 0); }
-  to { transform: translate3d(4.5vw, 3vh, 0); }
+  from { transform: translate3d(0, 0, 0) scale(1); opacity: 0.72; }
+  to { transform: translate3d(6vw, 3vh, 0) scale(1.14); opacity: 1; }
 }
 @keyframes auroraB {
-  from { transform: translate3d(0, 0, 0); }
-  to { transform: translate3d(-3.5vw, 2.8vh, 0); }
+  from { transform: translate3d(0, 0, 0) scale(1.08); opacity: 1; }
+  to { transform: translate3d(-5.5vw, 2.6vh, 0) scale(1); opacity: 0.7; }
 }
 @keyframes auroraC {
-  from { transform: translate3d(0, 0, 0); }
-  to { transform: translate3d(3vw, -3.2vh, 0); }
+  from { transform: translate3d(0, 0, 0) scale(1); opacity: 0.75; }
+  to { transform: translate3d(4.5vw, -4vh, 0) scale(1.16); opacity: 1; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .aurora span { animation: none; }
+  .aurora span { animation: none; opacity: 0.9; }
 }
 body:has(#battleStars) .aurora span {
   animation: none;

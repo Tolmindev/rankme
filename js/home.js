@@ -314,6 +314,7 @@
         if (Math.abs(tx - cx) > 0.04 || Math.abs(ty - cy) > 0.04) raf = requestAnimationFrame(tick); else raf = 0;
       }
       host.addEventListener('pointermove', function (e) {
+        if (e.pointerType && e.pointerType !== 'mouse') return;
         var r = host.getBoundingClientRect();
         tx = -((e.clientX - r.left) / r.width - 0.5) * max * 2;
         ty = -((e.clientY - r.top) / r.height - 0.5) * max * 2;
@@ -352,7 +353,7 @@
     } catch (e) {}
     return (
       '<article class="cc-card" data-href="' + escapeHtml(href) + '" data-cid="' + escapeHtml(String(row.id)) + '" role="link" tabindex="0">' +
-        '<div class="cc-cover"><img src="' + escapeHtml(cover) + '" alt="" loading="lazy"></div>' +
+        '<div class="cc-cover"><img src="' + escapeHtml(cover) + '" alt="" loading="lazy" decoding="async"></div>' +
         '<div class="cc-body">' +
           '<div class="cc-title"><span class="cc-title-text">' + title + '</span></div>' +
           '<div class="cc-stats">' +
@@ -487,6 +488,7 @@
       setPos(e.clientX, e.clientY);
     });
     el.addEventListener('pointermove', function (e) {
+      if (e.pointerType && e.pointerType !== 'mouse') return;
       setPos(e.clientX, e.clientY);
     });
     el.addEventListener('pointerleave', function () {

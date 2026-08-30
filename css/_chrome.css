@@ -27,6 +27,13 @@ header.site {
   overflow: visible;
 }
 
+body > header,
+body > main,
+body > footer {
+  position: relative;
+  z-index: 1;
+}
+
 .brand {
   display: flex;
   align-items: center;

@@ -117,12 +117,6 @@
   flex-direction: column;
 }
 
-.tl-card:hover {
-  transform: translateY(-3px);
-  border-color: rgba(200,160,240,.35);
-  box-shadow: 0 12px 32px rgba(0,0,0,.35);
-}
-
 .tl-card.exclusive {
   --rgb: linear-gradient(90deg,#ff6b6b,#f7c948,#7bed9f,#70a1ff,#a29bfe,#ff6b81,#ff6b6b);
   border: 2px solid transparent;
@@ -136,9 +130,16 @@
   position: relative;
 }
 
-.tl-card.exclusive:hover {
-  box-shadow: 0 0 36px rgba(180,120,255,.4);
-  filter: brightness(1.03);
+@media (hover: hover) {
+  .tl-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(200,160,240,.35);
+    box-shadow: 0 12px 32px rgba(0,0,0,.35);
+  }
+  .tl-card.exclusive:hover {
+    box-shadow: 0 0 36px rgba(180,120,255,.4);
+    filter: brightness(1.03);
+  }
 }
 
 .tl-card .cover img.cover-art {
@@ -443,17 +444,20 @@
   gap: 12px;
   padding: 10px;
   border-radius: 14px;
-  background: rgba(22, 18, 36, 0.92);
+  background: #161224;
   border: 1.5px solid rgba(160, 130, 220, 0.28);
   cursor: pointer;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
   min-width: 0;
   box-sizing: border-box;
+  contain: layout paint;
 }
 
-.cc-card:hover {
-  border-color: rgba(200, 170, 255, 0.55);
-  box-shadow: 0 6px 20px rgba(80, 40, 140, 0.25);
+@media (hover: hover) {
+  .cc-card:hover {
+    border-color: rgba(200, 170, 255, 0.55);
+    box-shadow: 0 6px 20px rgba(80, 40, 140, 0.25);
+  }
 }
 
 .cc-cover {

@@ -328,16 +328,6 @@ body > .toast {
   position: relative;
   min-height: 100vh;
 }
-.account-bg {
-  pointer-events: none;
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  background:
-    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(140, 100, 220, 0.18), transparent 55%),
-    radial-gradient(ellipse 60% 40% at 80% 60%, rgba(180, 120, 255, 0.08), transparent 50%),
-    radial-gradient(ellipse 50% 35% at 15% 70%, rgba(100, 80, 180, 0.1), transparent 50%);
-}
 .account-wrap {
   position: relative;
   z-index: 1;

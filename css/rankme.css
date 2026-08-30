@@ -58,19 +58,72 @@ body {
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  isolation: isolate;
   background-color: #0e0c14;
-  background-image: radial-gradient(ellipse 90% 55% at 15% -5%, rgba(160,120,220,0.20), transparent 58%),
-    radial-gradient(ellipse 70% 45% at 92% 8%, rgba(100,140,220,0.12), transparent 52%),
-    radial-gradient(ellipse 80% 50% at 50% 110%, rgba(130,90,190,0.10), transparent 55%);
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  background-attachment: fixed;
   color: var(--text);
   font-family: 'Montserrat', system-ui, sans-serif;
   overflow-x: hidden;
   overflow-anchor: none;
   -webkit-user-select: none;
   user-select: none;
+}
+
+.aurora {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+.aurora span {
+  position: absolute;
+  display: block;
+  border-radius: 50%;
+  will-change: transform;
+}
+.aurora span:nth-child(1) {
+  width: 90vw;
+  height: 70vh;
+  left: -18vw;
+  top: -32vh;
+  background: radial-gradient(ellipse at center, rgba(160, 120, 220, 0.2), transparent 58%);
+  animation: auroraA 22s ease-in-out infinite alternate;
+}
+.aurora span:nth-child(2) {
+  width: 70vw;
+  height: 55vh;
+  right: -16vw;
+  top: -10vh;
+  background: radial-gradient(ellipse at center, rgba(100, 140, 220, 0.12), transparent 52%);
+  animation: auroraB 26s ease-in-out infinite alternate;
+}
+.aurora span:nth-child(3) {
+  width: 84vw;
+  height: 52vh;
+  left: 8vw;
+  bottom: -30vh;
+  background: radial-gradient(ellipse at center, rgba(130, 90, 190, 0.1), transparent 55%);
+  animation: auroraC 30s ease-in-out infinite alternate;
+}
+
+@keyframes auroraA {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(4.5vw, 3vh, 0); }
+}
+@keyframes auroraB {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-3.5vw, 2.8vh, 0); }
+}
+@keyframes auroraC {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(3vw, -3.2vh, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aurora span { animation: none; }
+}
+body:has(#battleStars) .aurora span {
+  animation: none;
 }
 [contenteditable="true"],
 [contenteditable=""],
@@ -5861,16 +5914,6 @@ body > .toast {
 .page-account {
   position: relative;
   min-height: 100vh;
-}
-.account-bg {
-  pointer-events: none;
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  background:
-    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(140, 100, 220, 0.18), transparent 55%),
-    radial-gradient(ellipse 60% 40% at 80% 60%, rgba(180, 120, 255, 0.08), transparent 50%),
-    radial-gradient(ellipse 50% 35% at 15% 70%, rgba(100, 80, 180, 0.1), transparent 50%);
 }
 .account-wrap {
   position: relative;

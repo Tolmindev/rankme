@@ -619,16 +619,20 @@ async function getMyExpertRequest() {
   return res.data || null;
 }
 
-function isHttpUrl(s) {
+function normalizeHttpUrl(s) {
+  var raw = String(s || '').trim();
+  if (!raw) return '';
+  if (!/^https?:\/\//i.test(raw)) raw = 'https://' + raw;
   try {
-    var u = new URL(String(s || '').trim());
-    return u.protocol === 'http:' || u.protocol === 'https:';
-  } catch (e) { return false; }
+    var u = new URL(raw);
+    if (u.protocol !== 'http:' && u.protocol !== 'https:') return '';
+    return u.href;
+  } catch (e) { return ''; }
 }
 
 async function submitExpertRequest(socialLink) {
-  var link = String(socialLink || '').trim();
-  if (!isHttpUrl(link)) throw new Error('Paste a valid http(s) link');
+  var link = normalizeHttpUrl(socialLink);
+  if (!link) throw new Error('Paste a valid link');
   var user = await getSessionUser();
   if (!user) throw new Error('Log in first');
   var client = await initSupabase();
@@ -636,10 +640,10 @@ async function submitExpertRequest(socialLink) {
   var existing = await getMyExpertRequest();
   if (existing && existing.status === 'approved') throw new Error('Already an Expert');
   if (existing && existing.status === 'pending') throw new Error('Application already sent');
-  var row = { user_id: user.id, social_link: link, status: 'pending', updated_at: new Date().toISOString() };
+  var row = { social_link: link, status: 'pending' };
   var res;
   if (existing) {
-    res = await client.from('expert_requests').update(row).eq('user_id', user.id).eq('status', 'rejected');
+    res = await client.from('expert_requests').update(row).eq('user_id', user.id);
   } else {
     res = await client.from('expert_requests').insert(row);
   }

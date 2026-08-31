@@ -1175,6 +1175,28 @@ html.rankme-dragging {
 }
 .expert-badge.is-btn {
   cursor: pointer;
+  transition: transform 0.18s ease;
+}
+.expert-badge.is-off.is-btn::after {
+  content: "";
+  position: absolute;
+  inset: -7px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(180, 150, 255, 0.4), transparent 70%);
+  opacity: 0;
+  transform: scale(0.78);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  pointer-events: none;
+  z-index: -1;
+}
+@media (hover: hover) {
+  .expert-badge.is-off.is-btn:hover {
+    transform: scale(1.16);
+  }
+  .expert-badge.is-off.is-btn:hover::after {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 .expert-badge svg {
   width: 100%;
@@ -1185,40 +1207,12 @@ html.rankme-dragging {
 .expert-badge.is-on {
   cursor: default;
 }
-.expert-badge.is-on::after {
-  content: "";
-  position: absolute;
-  inset: -5px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(198, 232, 249, 0.45), transparent 70%);
-  animation: expertHalo 2.6s ease-in-out infinite alternate;
-  pointer-events: none;
-  z-index: -1;
-}
-.expert-badge.is-on .eb-a {
-  animation: expertStopA 3.2s ease-in-out infinite alternate;
-}
-.expert-badge.is-on .eb-b {
-  animation: expertStopB 3.2s ease-in-out infinite alternate;
-}
 .expert-badge.is-on .eb-gem {
-  fill: #f7fbff;
-  filter: drop-shadow(0 0 1px #fff) drop-shadow(0 0 3px #9ad8ff);
-  animation: expertGem 2.2s ease-in-out infinite alternate;
-}
-@keyframes expertStopA {
-  from { stop-color: #8f7ef4; }
-  to { stop-color: #f0c4ea; }
-}
-@keyframes expertStopB {
-  from { stop-color: #c6e8f9; }
-  to { stop-color: #8f7ef4; }
+  fill: #e8edfd;
+  filter: drop-shadow(0 0 1.2px rgba(198, 232, 249, 0.55));
+  animation: expertGem 2.8s ease-in-out infinite alternate;
 }
 @keyframes expertGem {
-  from { filter: drop-shadow(0 0 0.6px #fff) drop-shadow(0 0 2px #8f7ef4); }
-  to { filter: drop-shadow(0 0 2px #fff) drop-shadow(0 0 5px #c6e8f9); }
-}
-@keyframes expertHalo {
-  from { opacity: 0.3; transform: scale(0.86); }
-  to { opacity: 0.85; transform: scale(1.1); }
+  from { filter: drop-shadow(0 0 0.8px rgba(198, 232, 249, 0.35)); }
+  to { filter: drop-shadow(0 0 2px rgba(198, 232, 249, 0.8)); }
 }

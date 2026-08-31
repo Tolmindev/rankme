@@ -1350,7 +1350,7 @@ body.ach-focus-open { overflow: hidden; }
   display: none;
   color: #ff9aa4;
   font-size: 0.75rem;
-  font-weight: 700;
+  font-weight: 400;
   margin: 0 0 10px;
 }
 .expert-modal .expert-err:not(:empty) {

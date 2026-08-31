@@ -708,7 +708,7 @@ body.theme-gold {
 
 .err {
   color: #ff8a8a;
-  font-weight: 700;
+  font-weight: 400;
   font-size: .85rem;
   margin-top: 10px;
 }
@@ -6974,7 +6974,7 @@ body.ach-focus-open { overflow: hidden; }
   display: none;
   color: #ff9aa4;
   font-size: 0.75rem;
-  font-weight: 700;
+  font-weight: 400;
   margin: 0 0 10px;
 }
 .expert-modal .expert-err:not(:empty) {

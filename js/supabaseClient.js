@@ -558,14 +558,11 @@ function expertOnSvg() {
   var n = (window.__rmEbg = (window.__rmEbg || 0) + 1);
   var id = 'eog' + n;
   return '<svg viewBox="0 0 27.723 27.723" aria-hidden="true">' +
-    '<defs><linearGradient id="' + id + '" x1="-100%" y1="0%" x2="100%" y2="100%">' +
-    '<stop offset="0%" stop-color="#b79bf0"/>' +
-    '<stop offset="25%" stop-color="#e6a9e8"/>' +
-    '<stop offset="50%" stop-color="#8ec5ff"/>' +
-    '<stop offset="75%" stop-color="#c9a3ff"/>' +
-    '<stop offset="100%" stop-color="#b79bf0"/>' +
-    '<animate attributeName="x1" values="-100%;0%;-100%" dur="3.8s" repeatCount="indefinite"/>' +
-    '<animate attributeName="x2" values="100%;200%;100%" dur="3.8s" repeatCount="indefinite"/>' +
+    '<defs><linearGradient id="' + id + '" x1="0%" y1="0%" x2="100%" y2="100%">' +
+    '<stop offset="0" stop-color="#b79bf0"/>' +
+    '<stop offset="1" stop-color="#8ec5ff"/>' +
+    '<animate attributeName="x1" values="0%;80%;0%" dur="6s" repeatCount="indefinite"/>' +
+    '<animate attributeName="y1" values="20%;80%;20%" dur="6s" repeatCount="indefinite"/>' +
     '</linearGradient></defs>' +
     '<g transform="translate(-158.75,-172.244)">' +
     '<g transform="matrix(0.41720145,0,0,0.41720145,201.74914,-293.58769)">' +

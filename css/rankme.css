@@ -6935,13 +6935,10 @@ body.ach-focus-open { overflow: hidden; }
 }
 .expert-modal .expert-cancel {
   width: 100%;
+  min-width: 0;
   height: 46px;
-  border-radius: 999px;
-  background: transparent;
-  color: #fff;
-  font: inherit;
-  font-weight: 800;
-  cursor: pointer;
+  min-height: 46px;
+  margin: 6px 0 10px;
 }
 .expert-modal .expert-note {
   margin: 0 0 12px;
@@ -6969,13 +6966,6 @@ body.ach-focus-open { overflow: hidden; }
   background: linear-gradient(165deg, #b79bf0, #8ec5ff);
   -webkit-mask: url("../assets/icons/expert-sent.svg") center / contain no-repeat;
   mask: url("../assets/icons/expert-sent.svg") center / contain no-repeat;
-}
-.expert-modal .expert-cancel {
-  border: 1.5px solid rgba(255, 130, 150, 0.55);
-  margin: 6px 0 10px;
-}
-.expert-modal .expert-cancel:hover {
-  border-color: rgba(255, 160, 175, 0.9);
 }
 .expert-modal .expert-err {
   display: none;

@@ -554,21 +554,6 @@ async function reportCardBattle(templateId, winnerId, loserId) {
 
 /* ---- Expert badge ---- */
 
-function expertOnSvg() {
-  var n = (window.__rmEbg = (window.__rmEbg || 0) + 1);
-  var id = 'eog' + n;
-  return '<svg viewBox="0 0 27.723 27.723" aria-hidden="true">' +
-    '<defs><linearGradient id="' + id + '" x1="6" y1="3" x2="22" y2="25" gradientUnits="userSpaceOnUse">' +
-    '<stop class="eb-a" offset="0" stop-color="#8f7ef4"/>' +
-    '<stop class="eb-b" offset="1" stop-color="#c6e8f9"/>' +
-    '</linearGradient></defs>' +
-    '<g transform="translate(-158.75,-172.244)">' +
-    '<g transform="matrix(0.41720145,0,0,0.41720145,201.74914,-293.58769)">' +
-    '<path class="eb-seal" fill="url(#' + id + ')" d="m -67.794441,1117.2673 c -1.202062,-0.94 -2.889897,-0.94 -4.091958,0 l -5.513292,4.3093 -6.929006,-0.9753 c -1.511074,-0.2176 -2.972656,0.6345 -3.544,2.0459 l -2.619861,6.4884 -6.488374,2.6206 c -1.41499,0.5711 -2.258816,2.0323 -2.04616,3.5434 l 0.975264,6.929 -4.309142,5.514 c -0.93964,1.2011 -0.93964,2.8898 0,4.0918 l 4.309142,5.5131 -0.975264,6.9281 c -0.212112,1.512 0.631805,2.9732 2.04616,3.5452 l 6.488374,2.6197 2.619861,6.4875 c 0.571072,1.4159 2.032926,2.2598 3.544,2.0468 l 6.929006,-0.9753 5.513292,4.3093 c 1.202061,0.9391 2.889896,0.9391 4.091958,0 l 5.51311,-4.3093 6.929097,0.9753 c 1.511165,0.2176 2.972747,-0.6345 3.544181,-2.0468 l 2.619861,-6.4875 6.488193,-2.6197 c 1.41508,-0.5711 2.258998,-2.0332 2.046342,-3.5452 l -0.975446,-6.9281 4.309327,-5.5131 c 0.93955,-1.202 0.93955,-2.8907 0,-4.0918 l -4.309327,-5.514 0.975446,-6.929 c 0.212112,-1.5111 -0.630899,-2.9723 -2.046342,-3.5434 l -6.488193,-2.6206 -2.619861,-6.4884 c -0.571071,-1.4141 -2.033016,-2.2589 -3.544181,-2.0459 l -6.929097,0.9753 z"/>' +
-    '<path class="eb-gem" d="m -77.515561,1139.0393 -7.878153,8.8271 15.553308,18.6283 15.553307,-18.6283 -7.878152,-8.8271 h -7.675155 z"/>' +
-    '</g></g></svg>';
-}
-
 function expertBadgeHtml(opts) {
   opts = opts || {};
   var on = !!opts.on;
@@ -576,7 +561,8 @@ function expertBadgeHtml(opts) {
   if (!on && !clickable) return '';
   var cls = 'expert-badge' + (on ? ' is-on' : ' is-off');
   var label = on ? 'RankMe Expert' : 'Become a RankMe Expert';
-  var inner = on ? expertOnSvg() : '<img src="assets/icons/expert-badge-off.svg" alt="">';
+  var src = on ? 'assets/icons/expert-badge.svg' : 'assets/icons/expert-badge-off.svg';
+  var inner = '<img src="' + src + '" alt="">';
   if (on) {
     return '<span class="' + cls + '" title="' + label + '" aria-label="' + label + '">' + inner + '</span>';
   }

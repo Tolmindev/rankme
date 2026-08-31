@@ -1301,46 +1301,30 @@ html.rankme-dragging {
 }
 .expert-badge.is-btn {
   cursor: pointer;
+  overflow: visible;
   transition: transform 0.18s ease;
-}
-.expert-badge.is-off.is-btn::after {
-  content: "";
-  position: absolute;
-  inset: -7px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(180, 150, 255, 0.4), transparent 70%);
-  opacity: 0;
-  transform: scale(0.78);
-  transition: opacity 0.18s ease, transform 0.18s ease;
-  pointer-events: none;
-  z-index: -1;
 }
 @media (hover: hover) {
   .expert-badge.is-off.is-btn:hover {
-    transform: scale(1.16);
+    transform: scale(1.14);
   }
-  .expert-badge.is-off.is-btn:hover::after {
-    opacity: 1;
-    transform: scale(1);
+  .expert-badge.is-off.is-btn:hover img {
+    filter:
+      drop-shadow(0 0 0.6px rgba(210, 190, 255, 0.95))
+      drop-shadow(0 0 5px rgba(160, 140, 255, 0.5));
   }
-}
-.expert-badge svg {
-  width: 100%;
-  height: 100%;
-  display: block;
-  overflow: visible;
 }
 .expert-badge.is-on {
   cursor: default;
+  overflow: visible;
 }
-.expert-badge.is-on .eb-gem {
-  fill: #e8edfd;
-  filter: drop-shadow(0 0 1.2px rgba(198, 232, 249, 0.55));
-  animation: expertGem 2.8s ease-in-out infinite alternate;
+.expert-badge.is-on img {
+  filter: drop-shadow(0 0 3px rgba(170, 200, 255, 0.55));
+  animation: expertGlow 3.2s ease-in-out infinite alternate;
 }
-@keyframes expertGem {
-  from { filter: drop-shadow(0 0 0.8px rgba(198, 232, 249, 0.35)); }
-  to { filter: drop-shadow(0 0 2px rgba(198, 232, 249, 0.8)); }
+@keyframes expertGlow {
+  from { filter: drop-shadow(0 0 2px rgba(143, 126, 244, 0.4)); }
+  to { filter: drop-shadow(0 0 6px rgba(198, 232, 249, 0.7)); }
 }
 
 /* RankMe · hero — Tier hero, list actions */
@@ -6854,14 +6838,18 @@ body.ach-focus-open { overflow: hidden; }
   width: min(440px, 92vw);
   padding: 28px 26px 22px;
   background:
-    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(160, 130, 230, 0.22), transparent 60%),
+    radial-gradient(ellipse 100% 55% at 50% -18%, rgba(176, 150, 230, 0.14), transparent 72%),
     #161224;
-  border: 1px solid rgba(180, 150, 230, 0.28);
+  border: 1px solid rgba(180, 150, 230, 0.22);
 }
 .expert-modal .expert-preview {
   width: 72px;
   height: 72px;
   margin: 0 auto 14px;
+  overflow: visible;
+}
+.expert-modal .expert-preview img {
+  filter: drop-shadow(0 0 8px rgba(170, 200, 255, 0.55));
 }
 .expert-modal h3 {
   font-size: 1.28rem;
@@ -6913,10 +6901,10 @@ body.ach-focus-open { overflow: hidden; }
   font-size: 0.88rem;
   box-sizing: border-box;
   outline: none;
-  margin-bottom: 14px;
+  margin-bottom: 12px;
 }
 .expert-modal .expert-input::placeholder {
-  color: #6e6688;
+  color: #8a82a8;
   font-weight: 500;
   opacity: 1;
 }
@@ -6982,11 +6970,14 @@ body.ach-focus-open { overflow: hidden; }
   border-color: rgba(255, 160, 175, 0.9);
 }
 .expert-modal .expert-err {
+  display: none;
   color: #ff9aa4;
   font-size: 0.75rem;
   font-weight: 700;
-  min-height: 1.1em;
-  margin: 0 0 8px;
+  margin: 0 0 10px;
+}
+.expert-modal .expert-err:not(:empty) {
+  display: block;
 }
 
 /* RankMe · create — Create / blank rank flow */

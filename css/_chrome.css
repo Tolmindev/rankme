@@ -1175,44 +1175,28 @@ html.rankme-dragging {
 }
 .expert-badge.is-btn {
   cursor: pointer;
+  overflow: visible;
   transition: transform 0.18s ease;
-}
-.expert-badge.is-off.is-btn::after {
-  content: "";
-  position: absolute;
-  inset: -7px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(180, 150, 255, 0.4), transparent 70%);
-  opacity: 0;
-  transform: scale(0.78);
-  transition: opacity 0.18s ease, transform 0.18s ease;
-  pointer-events: none;
-  z-index: -1;
 }
 @media (hover: hover) {
   .expert-badge.is-off.is-btn:hover {
-    transform: scale(1.16);
+    transform: scale(1.14);
   }
-  .expert-badge.is-off.is-btn:hover::after {
-    opacity: 1;
-    transform: scale(1);
+  .expert-badge.is-off.is-btn:hover img {
+    filter:
+      drop-shadow(0 0 0.6px rgba(210, 190, 255, 0.95))
+      drop-shadow(0 0 5px rgba(160, 140, 255, 0.5));
   }
-}
-.expert-badge svg {
-  width: 100%;
-  height: 100%;
-  display: block;
-  overflow: visible;
 }
 .expert-badge.is-on {
   cursor: default;
+  overflow: visible;
 }
-.expert-badge.is-on .eb-gem {
-  fill: #e8edfd;
-  filter: drop-shadow(0 0 1.2px rgba(198, 232, 249, 0.55));
-  animation: expertGem 2.8s ease-in-out infinite alternate;
+.expert-badge.is-on img {
+  filter: drop-shadow(0 0 3px rgba(170, 200, 255, 0.55));
+  animation: expertGlow 3.2s ease-in-out infinite alternate;
 }
-@keyframes expertGem {
-  from { filter: drop-shadow(0 0 0.8px rgba(198, 232, 249, 0.35)); }
-  to { filter: drop-shadow(0 0 2px rgba(198, 232, 249, 0.8)); }
+@keyframes expertGlow {
+  from { filter: drop-shadow(0 0 2px rgba(143, 126, 244, 0.4)); }
+  to { filter: drop-shadow(0 0 6px rgba(198, 232, 249, 0.7)); }
 }

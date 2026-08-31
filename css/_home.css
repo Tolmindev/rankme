@@ -552,6 +552,20 @@
   max-width: 100%;
   margin-top: 2px;
 }
+.cc-author-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+  color: inherit;
+  text-decoration: none;
+}
+.cc-author-link:hover { color: #fff; }
+.cc-author .expert-badge {
+  width: 16px;
+  height: 16px;
+  flex-basis: 16px;
+}
 
 .cc-author:hover {
   color: #fff;

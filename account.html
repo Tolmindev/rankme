@@ -6,9 +6,9 @@
 <title>Account - RankMe</title>
 <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/rankme.css?v=20260830g">
+<link rel="stylesheet" href="css/rankme.css?v=20260831b">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
-<script src="js/supabaseClient.js?v=20260828f" defer></script>
+<script src="js/supabaseClient.js?v=20260831b" defer></script>
 </head>
 <body class="page-account">
 <div class="aurora" aria-hidden="true"></div>
@@ -70,6 +70,33 @@
       <button type="button" class="primary" id="delCancel">Cancel</button>
       <button type="button" class="danger" id="delOk">Delete</button>
     </div>
+  </div>
+</div>
+
+<div class="modal-back" id="expertApplyModal">
+  <div class="modal expert-modal">
+    <span class="expert-badge is-on expert-preview" id="expertPreview" aria-hidden="true"></span>
+    <h3>Become a RankMe Expert</h3>
+    <ul class="expert-perks">
+      <li>Get a verified badge next to your name</li>
+      <li>Community Experts section</li>
+    </ul>
+    <label for="expertLink">Link to your channel</label>
+    <input class="expert-input" id="expertLink" type="url" inputmode="url" autocomplete="url" placeholder="https://">
+    <p class="expert-err" id="expertApplyErr"></p>
+    <button type="button" class="expert-apply" id="expertApplyBtn">Apply</button>
+    <p class="expert-note">We review applications within a few days</p>
+    <button type="button" class="expert-close" id="expertApplyClose">Close</button>
+  </div>
+</div>
+
+<div class="modal-back" id="expertSentModal">
+  <div class="modal expert-modal">
+    <div class="expert-sent-ico" aria-hidden="true"></div>
+    <h3>Application sent</h3>
+    <p>We'll review it and notify you here once approved</p>
+    <button type="button" class="expert-cancel" id="expertCancelBtn">Cancel Application</button>
+    <button type="button" class="expert-close" id="expertSentClose">Close</button>
   </div>
 </div>
 
@@ -202,17 +229,18 @@ async function renderLogin(){
 }
 
 
-function profileBlock(name, avatarHtml, lists, battles, likes, editable){
+function profileBlock(name, avatarHtml, lists, battles, likes, editable, expertHtml){
   const safe = name.replace(/</g,'');
-  const nameEl = editable
-    ? `<b class="ap-name is-edit" id="apName" contenteditable="true" spellcheck="false">${safe}</b>
-      <span class="ap-hint" id="apHint"></span>`
+  const nameTag = editable
+    ? `<b class="ap-name is-edit" id="apName" contenteditable="true" spellcheck="false">${safe}</b>`
     : `<b class="ap-name">${safe}</b>`;
+  const hint = editable ? `<span class="ap-hint" id="apHint"></span>` : '';
   return `
     <div class="account-profile">
       <div class="ap-avatar-wrap">${avatarHtml}</div>
       <div class="ap-text">
-        ${nameEl}
+        <div class="ap-name-row">${nameTag}${expertHtml || ''}</div>
+        ${hint}
       </div>
       <div class="ap-stats" id="apStats">
         <div class="ap-stat"><b id="statLists">${lists}</b><span>Tier Lists</span></div>
@@ -298,6 +326,93 @@ function wireNameEdit(){
   });
 }
 
+function closeExpertModals(){
+  var a = document.getElementById('expertApplyModal');
+  var s = document.getElementById('expertSentModal');
+  if (a) a.classList.remove('open');
+  if (s) s.classList.remove('open');
+}
+
+function openExpertModal(kind){
+  closeExpertModals();
+  var id = kind === 'pending' ? 'expertSentModal' : 'expertApplyModal';
+  var m = document.getElementById(id);
+  if (m) m.classList.add('open');
+}
+
+async function expertHtmlFor(userId, own){
+  if (typeof expertBadgeHtml !== 'function') return '';
+  var status = '';
+  if (own && typeof getMyExpertRequest === 'function') {
+    var mine = await getMyExpertRequest();
+    status = (mine && mine.status) || '';
+  } else if (typeof fetchApprovedExpertIds === 'function') {
+    await fetchApprovedExpertIds();
+    status = (typeof isApprovedExpert === 'function' && isApprovedExpert(userId)) ? 'approved' : '';
+  }
+  var on = status === 'approved';
+  var html = expertBadgeHtml({ on: on, clickable: !!own && !on });
+  if (own && status === 'pending') {
+    html = html.replace('data-expert-btn="1"', 'data-expert-btn="1" data-expert-status="pending"');
+  }
+  return html;
+}
+
+async function refreshExpertBadge(){
+  var row = document.querySelector('.ap-name-row');
+  if (!row) return;
+  var user = typeof getSessionUser === 'function' ? await getSessionUser() : null;
+  var html = await expertHtmlFor(user && user.id, true);
+  var old = row.querySelector('.expert-badge');
+  if (old) old.outerHTML = html;
+  else row.insertAdjacentHTML('beforeend', html);
+}
+
+function wireExpertUi(){
+  if (window.__rmExpertUiBound) return;
+  window.__rmExpertUiBound = true;
+  var applyM = document.getElementById('expertApplyModal');
+  var sentM = document.getElementById('expertSentModal');
+  var closeA = document.getElementById('expertApplyClose');
+  var closeS = document.getElementById('expertSentClose');
+  if (closeA) closeA.onclick = closeExpertModals;
+  if (closeS) closeS.onclick = closeExpertModals;
+  var preview = document.getElementById('expertPreview');
+  if (preview && typeof expertOnSvg === 'function') preview.innerHTML = expertOnSvg();
+  if (applyM) applyM.addEventListener('click', function (e) { if (e.target === applyM) closeExpertModals(); });
+  if (sentM) sentM.addEventListener('click', function (e) { if (e.target === sentM) closeExpertModals(); });
+  var applyBtn = document.getElementById('expertApplyBtn');
+  if (applyBtn) applyBtn.onclick = async function () {
+    var err = document.getElementById('expertApplyErr');
+    var input = document.getElementById('expertLink');
+    if (err) err.textContent = '';
+    applyBtn.disabled = true;
+    try {
+      await submitExpertRequest(input && input.value);
+      closeExpertModals();
+      if (sentM) sentM.classList.add('open');
+      await refreshExpertBadge();
+    } catch (e) {
+      if (err) err.textContent = e.message || 'Could not send';
+    }
+    applyBtn.disabled = false;
+  };
+  var cancelBtn = document.getElementById('expertCancelBtn');
+  if (cancelBtn) cancelBtn.onclick = async function () {
+    try {
+      await cancelExpertRequest();
+      closeExpertModals();
+      await refreshExpertBadge();
+    } catch (e) {}
+  };
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('[data-expert-btn]');
+    if (!btn) return;
+    e.preventDefault();
+    openExpertModal(btn.getAttribute('data-expert-status') === 'pending' ? 'pending' : 'none');
+  });
+}
+
 async function renderCabinet(user){
   if (typeof updateNavAuth === 'function') updateNavAuth();
   const name = (typeof rankmeDisplayName === 'function' ? rankmeDisplayName(user) : (user.user_metadata?.full_name || user.email || 'User'));
@@ -307,8 +422,9 @@ async function renderCabinet(user){
     : `<div class="ap-avatar ap-fallback">${(name[0]||'U').toUpperCase()}</div>`;
 
   panel.removeAttribute('aria-busy');
+  const badge = await expertHtmlFor(user.id, true);
   panel.innerHTML = `
-    ${profileBlock(name, av, '0', '0', '0', true)}
+    ${profileBlock(name, av, '0', '0', '0', true, badge)}
 
     <section class="account-section">
       <div class="as-head">
@@ -511,9 +627,12 @@ async function renderPublicProfile(userId){
   const av = avatar
     ? `<img class="ap-avatar" src="${String(avatar).replace(/"/g, '')}" alt="">`
     : `<div class="ap-avatar ap-fallback">${(name[0] || 'U').toUpperCase()}</div>`;
+  var viewer = typeof getSessionUser === 'function' ? await getSessionUser() : null;
+  var own = !!(viewer && String(viewer.id) === String(userId));
+  const badge = await expertHtmlFor(userId, own);
 
   panel.innerHTML = `
-    ${profileBlock(name, av, String(rows.length), '0', fc(totalLikes))}
+    ${profileBlock(name, av, String(rows.length), '0', fc(totalLikes), false, badge)}
 
     <section class="account-section">
       <div class="as-head">
@@ -633,6 +752,7 @@ async function bootAccount(){
     if (window.RankMeAch) await RankMeAch.load();
     await initSupabase();
     if (typeof updateNavAuth === 'function') updateNavAuth();
+    wireExpertUi();
 
     const params = new URLSearchParams(location.search);
     const publicUid = params.get('u');

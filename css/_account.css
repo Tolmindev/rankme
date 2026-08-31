@@ -608,7 +608,7 @@ body > .toast {
   gap: 12px;
   padding: 10px;
   border-radius: 14px;
-  background: rgba(22, 18, 36, 0.92);
+  background: #161224;
   border: 1.5px solid rgba(160, 130, 220, 0.28);
   min-width: 0;
   box-sizing: border-box;
@@ -1199,4 +1199,150 @@ body.ach-focus-open { overflow: hidden; }
 .toggle-checkbox:checked + .toggle-track > .toggle-thumb:not(.toggled-once),
 .toggle-checkbox:checked:not(.toggled-once) + .toggle-track > .toggle-thumb {
   transform: translateX(22px);
+}
+
+.ap-name-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.ap-name-row .expert-badge {
+  width: 26px;
+  height: 26px;
+  flex-basis: 26px;
+}
+
+.expert-modal {
+  width: min(440px, 92vw);
+  padding: 28px 26px 22px;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(160, 130, 230, 0.22), transparent 60%),
+    #161224;
+  border: 1px solid rgba(180, 150, 230, 0.28);
+}
+.expert-modal .expert-preview {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 14px;
+}
+.expert-modal .expert-preview.expert-badge.is-on::after {
+  inset: -10px;
+}
+.expert-modal h3 {
+  font-size: 1.28rem;
+  font-weight: 900;
+  margin-bottom: 12px;
+}
+.expert-modal .expert-perks {
+  list-style: none;
+  margin: 0 0 16px;
+  padding: 0;
+  text-align: left;
+}
+.expert-modal .expert-perks li {
+  position: relative;
+  padding: 3px 0 3px 16px;
+  color: #dcd4f0;
+  font-size: 0.88rem;
+  font-weight: 650;
+  line-height: 1.35;
+}
+.expert-modal .expert-perks li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #9ad0ff;
+  box-shadow: 0 0 8px rgba(154, 208, 255, 0.8);
+}
+.expert-modal label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-dim);
+  margin-bottom: 6px;
+}
+.expert-modal .expert-input {
+  width: 100%;
+  height: 44px;
+  border-radius: 999px;
+  border: 1.5px solid rgba(160, 130, 220, 0.28);
+  background: #12101c;
+  color: var(--text);
+  padding: 0 18px;
+  font: inherit;
+  font-weight: 650;
+  box-sizing: border-box;
+  outline: none;
+  margin-bottom: 14px;
+}
+.expert-modal .expert-input:focus {
+  border-color: rgba(180, 150, 255, 0.7);
+}
+.expert-modal .expert-apply,
+.expert-modal .expert-cancel {
+  width: 100%;
+  height: 46px;
+  border-radius: 999px;
+  background: transparent;
+  color: #fff;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+.expert-modal .expert-apply {
+  border: 1.5px solid rgba(180, 160, 255, 0.55);
+  margin-bottom: 8px;
+}
+.expert-modal .expert-apply:hover {
+  border-color: rgba(210, 190, 255, 0.9);
+}
+.expert-modal .expert-apply[disabled] {
+  opacity: 0.55;
+  cursor: default;
+}
+.expert-modal .expert-note {
+  margin: 0 0 12px;
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  font-weight: 600;
+}
+.expert-modal .expert-close {
+  display: block;
+  width: 100%;
+  background: none;
+  border: 0;
+  color: #9a90b4;
+  font: inherit;
+  font-weight: 700;
+  font-size: 0.88rem;
+  cursor: pointer;
+  padding: 8px 0 0;
+}
+.expert-modal .expert-close:hover { color: #fff; }
+.expert-modal .expert-sent-ico {
+  width: 88px;
+  height: 72px;
+  margin: 0 auto 12px;
+  background: linear-gradient(165deg, #b79bf0, #8ec5ff);
+  -webkit-mask: url("../assets/icons/expert-sent.svg") center / contain no-repeat;
+  mask: url("../assets/icons/expert-sent.svg") center / contain no-repeat;
+}
+.expert-modal .expert-cancel {
+  border: 1.5px solid rgba(255, 130, 150, 0.55);
+  margin: 6px 0 10px;
+}
+.expert-modal .expert-cancel:hover {
+  border-color: rgba(255, 160, 175, 0.9);
+}
+.expert-modal .expert-err {
+  color: #ff9aa4;
+  font-size: 0.75rem;
+  font-weight: 700;
+  min-height: 1.1em;
+  margin: 0 0 8px;
 }

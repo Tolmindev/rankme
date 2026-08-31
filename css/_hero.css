@@ -557,12 +557,22 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
   gap: 0;
   min-width: 0;
 }
+.cb-name-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
 .cb-name {
   font-size: 0.86rem;
   font-weight: 800;
   color: #fff;
   text-decoration: none;
   line-height: 1.2;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 a.cb-name:hover { color: #e8d4ff; }
 .cb-av-link {

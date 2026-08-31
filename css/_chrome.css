@@ -1152,3 +1152,73 @@ html.rankme-dragging {
     height: 40px;
   }
 }
+
+.expert-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: 0;
+  background: none;
+  flex: 0 0 22px;
+  position: relative;
+  line-height: 0;
+  text-decoration: none;
+  color: inherit;
+}
+.expert-badge img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.expert-badge.is-btn {
+  cursor: pointer;
+}
+.expert-badge svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+}
+.expert-badge.is-on {
+  cursor: default;
+}
+.expert-badge.is-on::after {
+  content: "";
+  position: absolute;
+  inset: -5px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(198, 232, 249, 0.45), transparent 70%);
+  animation: expertHalo 2.6s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: -1;
+}
+.expert-badge.is-on .eb-a {
+  animation: expertStopA 3.2s ease-in-out infinite alternate;
+}
+.expert-badge.is-on .eb-b {
+  animation: expertStopB 3.2s ease-in-out infinite alternate;
+}
+.expert-badge.is-on .eb-gem {
+  fill: #f7fbff;
+  filter: drop-shadow(0 0 1px #fff) drop-shadow(0 0 3px #9ad8ff);
+  animation: expertGem 2.2s ease-in-out infinite alternate;
+}
+@keyframes expertStopA {
+  from { stop-color: #8f7ef4; }
+  to { stop-color: #f0c4ea; }
+}
+@keyframes expertStopB {
+  from { stop-color: #c6e8f9; }
+  to { stop-color: #8f7ef4; }
+}
+@keyframes expertGem {
+  from { filter: drop-shadow(0 0 0.6px #fff) drop-shadow(0 0 2px #8f7ef4); }
+  to { filter: drop-shadow(0 0 2px #fff) drop-shadow(0 0 5px #c6e8f9); }
+}
+@keyframes expertHalo {
+  from { opacity: 0.3; transform: scale(0.86); }
+  to { opacity: 0.85; transform: scale(1.1); }
+}

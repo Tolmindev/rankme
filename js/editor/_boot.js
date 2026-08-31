@@ -405,9 +405,11 @@ function setupCommunityUI() {
   const nameHtml = profileHref
     ? ('<a class="cb-name" href="' + profileHref + '">' + String(m.authorName || 'User').replace(/</g, '') + '</a>')
     : ('<b class="cb-name">' + String(m.authorName || 'User').replace(/</g, '') + '</b>');
+  var on = typeof isApprovedExpert === 'function' && isApprovedExpert(m.userId);
+  var badge = (on && typeof expertBadgeHtml === 'function') ? expertBadgeHtml({ on: true }) : '';
   bar.innerHTML =
     '<div class="cb-left">' + (profileHref ? ('<a class="cb-av-link" href="' + profileHref + '">' + av + '</a>') : av) +
-      '<div class="cb-meta">' + nameHtml +
+      '<div class="cb-meta"><div class="cb-name-row">' + nameHtml + badge + '</div>' +
       (ago ? '<span class="cb-ago">Updated ' + ago + '</span>' : '') + '</div></div>' +
     '<div class="cb-stats">' +
       '<span class="cb-stat" title="Views"><img src="assets/icons/view.svg" alt="" class="cb-ico"> ' + views + '</span>' +
@@ -418,6 +420,16 @@ function setupCommunityUI() {
         '</span>' +
         '<span class="cb-like-n">' + likes + '</span></button></div>';
   bar.hidden = false;
+  if (typeof fetchApprovedExpertIds === 'function') {
+    fetchApprovedExpertIds().then(function () {
+      if (!communityMeta || typeof expertBadgeHtml !== 'function') return;
+      var slot = bar.querySelector('.expert-badge');
+      if (!slot) return;
+      var on = typeof isApprovedExpert === 'function' && isApprovedExpert(communityMeta.userId);
+      if (!on) { slot.remove(); return; }
+      slot.outerHTML = expertBadgeHtml({ on: true });
+    });
+  }
   const likeBtn = document.getElementById('communityLikeBtn');
   if (likeBtn) {
     if (typeof getMyLikedIds === 'function') {

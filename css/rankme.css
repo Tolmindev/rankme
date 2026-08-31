@@ -1279,6 +1279,76 @@ html.rankme-dragging {
   }
 }
 
+.expert-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: 0;
+  background: none;
+  flex: 0 0 22px;
+  position: relative;
+  line-height: 0;
+  text-decoration: none;
+  color: inherit;
+}
+.expert-badge img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.expert-badge.is-btn {
+  cursor: pointer;
+}
+.expert-badge svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+}
+.expert-badge.is-on {
+  cursor: default;
+}
+.expert-badge.is-on::after {
+  content: "";
+  position: absolute;
+  inset: -5px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(198, 232, 249, 0.45), transparent 70%);
+  animation: expertHalo 2.6s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: -1;
+}
+.expert-badge.is-on .eb-a {
+  animation: expertStopA 3.2s ease-in-out infinite alternate;
+}
+.expert-badge.is-on .eb-b {
+  animation: expertStopB 3.2s ease-in-out infinite alternate;
+}
+.expert-badge.is-on .eb-gem {
+  fill: #f7fbff;
+  filter: drop-shadow(0 0 1px #fff) drop-shadow(0 0 3px #9ad8ff);
+  animation: expertGem 2.2s ease-in-out infinite alternate;
+}
+@keyframes expertStopA {
+  from { stop-color: #8f7ef4; }
+  to { stop-color: #f0c4ea; }
+}
+@keyframes expertStopB {
+  from { stop-color: #c6e8f9; }
+  to { stop-color: #8f7ef4; }
+}
+@keyframes expertGem {
+  from { filter: drop-shadow(0 0 0.6px #fff) drop-shadow(0 0 2px #8f7ef4); }
+  to { filter: drop-shadow(0 0 2px #fff) drop-shadow(0 0 5px #c6e8f9); }
+}
+@keyframes expertHalo {
+  from { opacity: 0.3; transform: scale(0.86); }
+  to { opacity: 0.85; transform: scale(1.1); }
+}
+
 /* RankMe · hero — Tier hero, list actions */
 
 body > header.site, body > footer.site, body > #site-footer, body > .toolbar, body > .board, body > .pool-wrap, body > .hero {
@@ -1838,12 +1908,22 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
   gap: 0;
   min-width: 0;
 }
+.cb-name-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
 .cb-name {
   font-size: 0.86rem;
   font-weight: 800;
   color: #fff;
   text-decoration: none;
   line-height: 1.2;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 a.cb-name:hover { color: #e8d4ff; }
 .cb-av-link {
@@ -5353,6 +5433,20 @@ to { --elec-angle: 360deg; }
   max-width: 100%;
   margin-top: 2px;
 }
+.cc-author-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+  color: inherit;
+  text-decoration: none;
+}
+.cc-author-link:hover { color: #fff; }
+.cc-author .expert-badge {
+  width: 16px;
+  height: 16px;
+  flex-basis: 16px;
+}
 
 .cc-author:hover {
   color: #fff;
@@ -6157,7 +6251,7 @@ body > .toast {
   gap: 12px;
   padding: 10px;
   border-radius: 14px;
-  background: rgba(22, 18, 36, 0.92);
+  background: #161224;
   border: 1.5px solid rgba(160, 130, 220, 0.28);
   min-width: 0;
   box-sizing: border-box;
@@ -6748,6 +6842,152 @@ body.ach-focus-open { overflow: hidden; }
 .toggle-checkbox:checked + .toggle-track > .toggle-thumb:not(.toggled-once),
 .toggle-checkbox:checked:not(.toggled-once) + .toggle-track > .toggle-thumb {
   transform: translateX(22px);
+}
+
+.ap-name-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.ap-name-row .expert-badge {
+  width: 26px;
+  height: 26px;
+  flex-basis: 26px;
+}
+
+.expert-modal {
+  width: min(440px, 92vw);
+  padding: 28px 26px 22px;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(160, 130, 230, 0.22), transparent 60%),
+    #161224;
+  border: 1px solid rgba(180, 150, 230, 0.28);
+}
+.expert-modal .expert-preview {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 14px;
+}
+.expert-modal .expert-preview.expert-badge.is-on::after {
+  inset: -10px;
+}
+.expert-modal h3 {
+  font-size: 1.28rem;
+  font-weight: 900;
+  margin-bottom: 12px;
+}
+.expert-modal .expert-perks {
+  list-style: none;
+  margin: 0 0 16px;
+  padding: 0;
+  text-align: left;
+}
+.expert-modal .expert-perks li {
+  position: relative;
+  padding: 3px 0 3px 16px;
+  color: #dcd4f0;
+  font-size: 0.88rem;
+  font-weight: 650;
+  line-height: 1.35;
+}
+.expert-modal .expert-perks li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #9ad0ff;
+  box-shadow: 0 0 8px rgba(154, 208, 255, 0.8);
+}
+.expert-modal label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-dim);
+  margin-bottom: 6px;
+}
+.expert-modal .expert-input {
+  width: 100%;
+  height: 44px;
+  border-radius: 999px;
+  border: 1.5px solid rgba(160, 130, 220, 0.28);
+  background: #12101c;
+  color: var(--text);
+  padding: 0 18px;
+  font: inherit;
+  font-weight: 650;
+  box-sizing: border-box;
+  outline: none;
+  margin-bottom: 14px;
+}
+.expert-modal .expert-input:focus {
+  border-color: rgba(180, 150, 255, 0.7);
+}
+.expert-modal .expert-apply,
+.expert-modal .expert-cancel {
+  width: 100%;
+  height: 46px;
+  border-radius: 999px;
+  background: transparent;
+  color: #fff;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+.expert-modal .expert-apply {
+  border: 1.5px solid rgba(180, 160, 255, 0.55);
+  margin-bottom: 8px;
+}
+.expert-modal .expert-apply:hover {
+  border-color: rgba(210, 190, 255, 0.9);
+}
+.expert-modal .expert-apply[disabled] {
+  opacity: 0.55;
+  cursor: default;
+}
+.expert-modal .expert-note {
+  margin: 0 0 12px;
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  font-weight: 600;
+}
+.expert-modal .expert-close {
+  display: block;
+  width: 100%;
+  background: none;
+  border: 0;
+  color: #9a90b4;
+  font: inherit;
+  font-weight: 700;
+  font-size: 0.88rem;
+  cursor: pointer;
+  padding: 8px 0 0;
+}
+.expert-modal .expert-close:hover { color: #fff; }
+.expert-modal .expert-sent-ico {
+  width: 88px;
+  height: 72px;
+  margin: 0 auto 12px;
+  background: linear-gradient(165deg, #b79bf0, #8ec5ff);
+  -webkit-mask: url("../assets/icons/expert-sent.svg") center / contain no-repeat;
+  mask: url("../assets/icons/expert-sent.svg") center / contain no-repeat;
+}
+.expert-modal .expert-cancel {
+  border: 1.5px solid rgba(255, 130, 150, 0.55);
+  margin: 6px 0 10px;
+}
+.expert-modal .expert-cancel:hover {
+  border-color: rgba(255, 160, 175, 0.9);
+}
+.expert-modal .expert-err {
+  color: #ff9aa4;
+  font-size: 0.75rem;
+  font-weight: 700;
+  min-height: 1.1em;
+  margin: 0 0 8px;
 }
 
 /* RankMe · create — Create / blank rank flow */

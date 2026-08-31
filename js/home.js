@@ -93,6 +93,7 @@
 
   function isExpertRow(row) {
     if (!row) return false;
+    if (row.user_id && window.__rmExpertIds && window.__rmExpertIds.has(row.user_id)) return true;
     if (row.is_expert === true) return true;
     var p = row.payload;
     if (!p) return false;
@@ -344,9 +345,14 @@
     var profileHref = row.user_id
       ? 'account.html?u=' + encodeURIComponent(String(row.user_id))
       : '';
+    var on = typeof isApprovedExpert === 'function' && isApprovedExpert(row.user_id);
+    var badge = (on && typeof expertBadgeHtml === 'function') ? expertBadgeHtml({ on: true }) : '';
     var authorBlock = profileHref
-      ? '<a class="cc-author" href="' + profileHref + '" data-profile="1">' + av + '<span class="cc-author-name">' + author + '</span></a>'
-      : '<div class="cc-author">' + av + '<span class="cc-author-name">' + author + '</span></div>';
+      ? '<div class="cc-author">' +
+          '<a class="cc-author-link" href="' + profileHref + '" data-profile="1">' + av + '<span class="cc-author-name">' + author + '</span></a>' +
+          badge +
+        '</div>'
+      : '<div class="cc-author">' + av + '<span class="cc-author-name">' + author + '</span>' + badge + '</div>';
     try {
       if (!window.__rmCommunityRows) window.__rmCommunityRows = {};
       window.__rmCommunityRows[String(row.id)] = row;
@@ -383,7 +389,7 @@
         if (href) location.href = href;
       }
       card.addEventListener('click', function (ev) {
-        if (ev.target.closest && ev.target.closest('[data-profile]')) return;
+        if (ev.target.closest && ev.target.closest('[data-profile], .expert-badge')) return;
         ev.preventDefault();
         openCard();
       });
@@ -458,6 +464,9 @@
     if (!els.community) return;
     try {
       if (typeof listPublicTierlists !== 'function') throw new Error('no api');
+      if (typeof fetchApprovedExpertIds === 'function') {
+        await fetchApprovedExpertIds();
+      }
       var rows = await listPublicTierlists(48);
       if (!rows || !rows.length) throw new Error('empty');
       state.communityRows = rows;

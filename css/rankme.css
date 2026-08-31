@@ -1314,17 +1314,20 @@ html.rankme-dragging {
       drop-shadow(0 0 5px rgba(160, 140, 255, 0.5));
   }
 }
+.expert-badge svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+}
 .expert-badge.is-on {
   cursor: default;
   overflow: visible;
+  filter: drop-shadow(0 0 6px rgba(180, 120, 255, 0.42));
 }
-.expert-badge.is-on img {
-  filter: drop-shadow(0 0 3px rgba(170, 200, 255, 0.55));
-  animation: expertGlow 3.2s ease-in-out infinite alternate;
-}
-@keyframes expertGlow {
-  from { filter: drop-shadow(0 0 2px rgba(143, 126, 244, 0.4)); }
-  to { filter: drop-shadow(0 0 6px rgba(198, 232, 249, 0.7)); }
+.expert-badge.is-on .eb-gem {
+  fill: #eef4ff;
+  filter: drop-shadow(0 0 1.4px rgba(232, 237, 253, 0.85));
 }
 
 /* RankMe · hero — Tier hero, list actions */
@@ -6847,9 +6850,7 @@ body.ach-focus-open { overflow: hidden; }
   height: 72px;
   margin: 0 auto 14px;
   overflow: visible;
-}
-.expert-modal .expert-preview img {
-  filter: drop-shadow(0 0 8px rgba(170, 200, 255, 0.55));
+  filter: drop-shadow(0 0 10px rgba(180, 120, 255, 0.4));
 }
 .expert-modal h3 {
   font-size: 1.28rem;

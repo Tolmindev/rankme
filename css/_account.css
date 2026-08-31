@@ -1226,9 +1226,7 @@ body.ach-focus-open { overflow: hidden; }
   height: 72px;
   margin: 0 auto 14px;
   overflow: visible;
-}
-.expert-modal .expert-preview img {
-  filter: drop-shadow(0 0 8px rgba(170, 200, 255, 0.55));
+  filter: drop-shadow(0 0 10px rgba(180, 120, 255, 0.4));
 }
 .expert-modal h3 {
   font-size: 1.28rem;

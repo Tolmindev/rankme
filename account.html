@@ -6,7 +6,7 @@
 <title>Account - RankMe</title>
 <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/rankme.css?v=20260901w">
+<link rel="stylesheet" href="css/rankme.css?v=20260901y">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
 <script src="js/supabaseClient.js?v=20260901q" defer></script>
 </head>
@@ -353,7 +353,7 @@ function handleRowHtml(profile, opts){
   var own = !!opts.own;
   var handle = (profile && profile.handle) || '';
   if (!handle && !own) return '';
-  var edit = own ? ' contenteditable="true" spellcheck="false"' : '';
+  var edit = own ? ' contenteditable="true" spellcheck="false" inputmode="text" enterkeyhint="done"' : '';
   var copy = handle
     ? '<button type="button" class="ap-handle-copy" id="apHandleCopy" aria-label="Copy RankMe link"></button>'
     : '';
@@ -391,6 +391,21 @@ function wireHandleEdit(profile){
   var cleanRaw = function () {
     return (el.textContent || '').replace(/\s+/g, '').trim().toLowerCase();
   };
+  var restore = function () {
+    el.style.minWidth = '';
+    el.textContent = last || HANDLE_PLACEHOLDER;
+    el.classList.toggle('is-empty', !last);
+  };
+  var caretIn = function () {
+    el.focus();
+    var s = window.getSelection();
+    if (!s) return;
+    var r = document.createRange();
+    r.selectNodeContents(el);
+    r.collapse(true);
+    s.removeAllRanges();
+    s.addRange(r);
+  };
 
   el.addEventListener('mousedown', function (e) {
     if (!own) return;
@@ -401,9 +416,12 @@ function wireHandleEdit(profile){
   });
   el.addEventListener('focus', function () {
     if (!own || waiting()) return;
-    if (!last) {
+    if (!last && (el.textContent || '').trim() === HANDLE_PLACEHOLDER) {
+      var w = el.offsetWidth;
+      if (w) el.style.minWidth = w + 'px';
       el.textContent = '';
       el.classList.remove('is-empty');
+      caretIn();
     }
   });
   el.addEventListener('beforeinput', function (e) {
@@ -453,8 +471,7 @@ function wireHandleEdit(profile){
     if (e.key === 'Enter') { e.preventDefault(); el.blur(); }
     if (e.key === 'Escape') {
       e.preventDefault();
-      el.textContent = last || HANDLE_PLACEHOLDER;
-      el.classList.toggle('is-empty', !last);
+      restore();
       apHint('');
       el.blur();
     }
@@ -463,29 +480,25 @@ function wireHandleEdit(profile){
     if (!own || handleConfirmWait) return;
     var raw = cleanRaw();
     if (!raw || raw === last) {
-      el.textContent = last || HANDLE_PLACEHOLDER;
-      el.classList.toggle('is-empty', !last);
+      restore();
       apHint('');
       return;
     }
     if (typeof validateHandle === 'function') {
       var v = validateHandle(raw);
       if (!v.ok) {
-        el.textContent = last || HANDLE_PLACEHOLDER;
-        el.classList.toggle('is-empty', !last);
+        restore();
         apHint(v.error);
         return;
       }
       raw = v.clean;
     }
     if (typeof isHandleTaken === 'function' && await isHandleTaken(raw)) {
-      el.textContent = last || HANDLE_PLACEHOLDER;
-      el.classList.toggle('is-empty', !last);
+      restore();
       apHint('Taken');
       return;
     }
-    el.textContent = last || HANDLE_PLACEHOLDER;
-    el.classList.toggle('is-empty', !last);
+    restore();
     var ok = await askHandleConfirm(raw);
     if (!ok) return;
     try {
@@ -495,8 +508,7 @@ function wireHandleEdit(profile){
       paint();
       apHint('');
     } catch (e) {
-      el.textContent = last || HANDLE_PLACEHOLDER;
-      el.classList.toggle('is-empty', !last);
+      restore();
       apHint(e.message || 'Could not save');
     }
   });

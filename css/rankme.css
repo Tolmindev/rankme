@@ -6892,17 +6892,12 @@ body.ach-focus-open { overflow: hidden; }
 .ap-handle.is-empty {
   opacity: 0.85;
 }
-.ap-handle:focus {
-  width: 16ch;
-  min-width: 16ch;
-  max-width: 16ch;
-  padding: 4px 14px;
+.ap-handle[contenteditable="true"]:focus {
+  background: rgba(180, 140, 255, 0.1);
+  box-shadow: 0 0 0 1.5px rgba(180, 140, 255, 0.35);
+  color: var(--text);
   overflow: hidden;
   white-space: nowrap;
-  border-radius: 999px;
-  background: rgba(18, 14, 28, 0.55);
-  box-shadow: inset 0 0 0 1px rgba(200, 160, 240, 0.4);
-  color: var(--text);
 }
 .ap-handle-copy {
   flex: 0 0 auto;

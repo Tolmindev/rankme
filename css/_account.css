@@ -609,10 +609,6 @@ body > .toast {
     justify-content: center;
   }
   .ap-handle-row { margin-top: 0; }
-  .ap-handle-field.is-on {
-    width: min(16ch, 72vw);
-    text-align: center;
-  }
   .ap-hint {
     position: static;
     left: auto;
@@ -1255,43 +1251,35 @@ body.ach-focus-open { overflow: hidden; }
   margin-top: 2px;
 }
 .ap-handle {
-  appearance: none;
-  background: none;
-  border: 0;
-  padding: 0;
-  font-family: inherit;
+  display: inline-block;
+  flex: 0 0 auto;
+  width: max-content;
+  max-width: 100%;
+  min-height: 20px;
   font-size: 0.78rem;
   font-weight: 400;
   color: var(--text-dim);
   letter-spacing: 0.01em;
   line-height: 20px;
   cursor: text;
+  outline: none;
+  caret-color: rgba(255, 255, 255, 0.32);
+  box-sizing: content-box;
 }
 .ap-handle.is-empty {
   opacity: 0.85;
 }
-.ap-handle-field {
-  display: none;
-  box-sizing: content-box;
+.ap-handle:focus {
   width: 16ch;
-  height: 20px;
+  min-width: 16ch;
+  max-width: 16ch;
   padding: 4px 14px;
-  margin: 0;
-  border: 0;
+  overflow: hidden;
+  white-space: nowrap;
   border-radius: 999px;
   background: rgba(18, 14, 28, 0.55);
   box-shadow: inset 0 0 0 1px rgba(200, 160, 240, 0.4);
   color: var(--text);
-  font-family: inherit;
-  font-size: 0.78rem;
-  font-weight: 400;
-  line-height: 20px;
-  letter-spacing: 0.01em;
-  outline: none;
-  caret-color: rgba(255, 255, 255, 0.32);
-}
-.ap-handle-field.is-on {
-  display: block;
 }
 .ap-handle-copy {
   flex: 0 0 auto;

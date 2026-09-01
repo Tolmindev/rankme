@@ -6,7 +6,7 @@
 <title>Account - RankMe</title>
 <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/rankme.css?v=20260901q">
+<link rel="stylesheet" href="css/rankme.css?v=20260901s">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
 <script src="js/supabaseClient.js?v=20260901q" defer></script>
 </head>
@@ -401,8 +401,11 @@ function wireHandleEdit(profile){
   el.addEventListener('focus', function () {
     if (!own || waiting()) return;
     if (!last) {
-      el.textContent = '';
-      el.classList.remove('is-empty');
+      var r = document.createRange();
+      r.selectNodeContents(el);
+      var s = window.getSelection();
+      s.removeAllRanges();
+      s.addRange(r);
     }
   });
   el.addEventListener('beforeinput', function (e) {
@@ -434,6 +437,7 @@ function wireHandleEdit(profile){
   var takenSeq = 0;
   el.addEventListener('input', function () {
     var raw = cleanRaw();
+    if (!last) el.classList.toggle('is-empty', !raw);
     if (!raw) { apHint(''); return; }
     if (typeof validateHandle === 'function') {
       var v = validateHandle(raw);

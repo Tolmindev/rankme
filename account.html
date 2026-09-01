@@ -6,9 +6,9 @@
 <title>Account - RankMe</title>
 <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/rankme.css?v=20260901m">
+<link rel="stylesheet" href="css/rankme.css?v=20260901o">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
-<script src="js/supabaseClient.js?v=20260901m" defer></script>
+<script src="js/supabaseClient.js?v=20260901o" defer></script>
 </head>
 <body class="page-account">
 <div class="aurora" aria-hidden="true"></div>
@@ -118,7 +118,7 @@
 <script src="js/footer.js?v=20260827q" defer></script>
 <script src="js/catalog.js?v=20260827q"></script>
 <script src="js/holo-card.js?v=20260827q"></script>
-<script src="js/achievements.js?v=20260901m"></script>
+<script src="js/achievements.js?v=20260901o"></script>
 
 <script>
 const panel = document.getElementById('panel');
@@ -883,10 +883,10 @@ async function renderPublicProfile(userId, profile){
 
   wireHandleEdit(profile || { handle: null });
 
-  var achIds = (profile && Array.isArray(profile.ach) && profile.ach.length)
-    ? profile.ach
-    : (rows.length ? ['certified-sheep'] : []);
-  if (window.RankMeAch) RankMeAch.paint(null, achIds, { exact: true });
+  if (window.RankMeAch) {
+    if (own) RankMeAch.paint(viewer);
+    else RankMeAch.paint(null, rows.length ? ['certified-sheep'] : []);
+  }
 
   (async function () {
     var el = document.getElementById('statBattles');

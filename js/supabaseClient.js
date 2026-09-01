@@ -824,9 +824,6 @@ async function syncMyProfile(user, nameOverride) {
     if (!client) return;
     var name = nameOverride || (typeof rankmeDisplayName === 'function' ? rankmeDisplayName(user) : '');
     var av = (user.user_metadata && (user.user_metadata.avatar_url || user.user_metadata.picture)) || '';
-    var ach = [];
-    if (window.RankMeAch && typeof RankMeAch.read === 'function') ach = RankMeAch.read(user);
-    else if (user.user_metadata && Array.isArray(user.user_metadata.ach)) ach = user.user_metadata.ach;
-    await client.rpc('sync_my_profile', { p_name: name || null, p_avatar: av || null, p_ach: ach });
+    await client.rpc('sync_my_profile', { p_name: name || null, p_avatar: av || null });
   } catch (e) {}
 }

@@ -1306,6 +1306,23 @@ body.ach-focus-open { overflow: hidden; }
 .ap-handle-copy:hover {
   color: #fff;
 }
+@media (min-width: 721px) {
+  .ap-name.is-edit,
+  .ap-handle[contenteditable="true"] {
+    border-radius: 10px;
+    transition: background 0.15s ease, box-shadow 0.15s ease;
+  }
+  .ap-name.is-edit:hover:not(:focus) {
+    padding: 5px 10px;
+    margin: -5px -10px;
+    background: rgba(180, 140, 255, 0.06);
+  }
+  .ap-handle[contenteditable="true"]:hover:not(:focus) {
+    padding: 4px 10px;
+    margin: -4px -10px;
+    background: rgba(180, 140, 255, 0.06);
+  }
+}
 
 .expert-modal {
   position: relative;

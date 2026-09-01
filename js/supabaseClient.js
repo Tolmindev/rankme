@@ -560,8 +560,8 @@ function expertOnSvg() {
   var id = 'eog' + n;
   return '<svg viewBox="0 0 27.723 27.723" aria-hidden="true">' +
     '<defs><linearGradient id="' + id + '" x1="0%" y1="0%" x2="100%" y2="100%">' +
-    '<stop offset="0" stop-color="#b79bf0"/>' +
-    '<stop offset="1" stop-color="#8ec5ff"/>' +
+    '<stop offset="0" stop-color="#e4c8ff"/>' +
+    '<stop offset="1" stop-color="#6ec8ff"/>' +
     '<animate attributeName="x1" values="0%;80%;0%" dur="6s" repeatCount="indefinite"/>' +
     '<animate attributeName="y1" values="20%;80%;20%" dur="6s" repeatCount="indefinite"/>' +
     '</linearGradient></defs>' +

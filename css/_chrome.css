@@ -1178,12 +1178,29 @@ html.rankme-dragging {
   overflow: visible;
   transition: transform 0.18s ease;
 }
+.expert-badge.is-off.is-btn::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1.5px solid transparent;
+  background:
+    linear-gradient(transparent, transparent) padding-box,
+    var(--btn-holo) border-box;
+  background-origin: padding-box, border-box;
+  background-clip: padding-box, border-box;
+  background-size: 100% 100%, 220% 100%;
+  opacity: 0;
+  pointer-events: none;
+  animation: ctaGlowShift 3.8s linear infinite;
+  transition: opacity 0.18s ease;
+}
 @media (hover: hover) {
   .expert-badge.is-off.is-btn:hover {
-    transform: scale(1.14);
+    transform: scale(1.1);
   }
-  .expert-badge.is-off.is-btn:hover img {
-    filter: drop-shadow(0 0 0.45px #e6d9ff) drop-shadow(0 0 0.45px #e6d9ff);
+  .expert-badge.is-off.is-btn:hover::after {
+    opacity: 1;
   }
 }
 .expert-badge svg {
@@ -1196,7 +1213,10 @@ html.rankme-dragging {
   cursor: default;
   overflow: visible;
 }
+.expert-badge.is-on svg {
+  filter: drop-shadow(0 0 2px rgba(190, 150, 255, 0.45));
+}
 .expert-badge.is-on .eb-gem {
-  fill: #eef4ff;
-  filter: drop-shadow(0 0 1.4px rgba(232, 237, 253, 0.85));
+  fill: #fff;
+  filter: drop-shadow(0 0 2.2px rgba(255, 255, 255, 0.95)) drop-shadow(0 0 5px rgba(140, 200, 255, 0.55));
 }

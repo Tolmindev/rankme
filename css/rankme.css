@@ -5978,6 +5978,9 @@ body > .toast {
   height: auto;
   line-height: 1.15;
 }
+.account-profile.is-public .ap-name-row {
+  gap: 8px;
+}
 .account-profile.is-public .ap-handle-row {
   min-height: 0;
   margin-top: 0;

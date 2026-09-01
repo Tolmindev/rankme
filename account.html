@@ -6,9 +6,9 @@
 <title>Account - RankMe</title>
 <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/rankme.css?v=20260901c">
+<link rel="stylesheet" href="css/rankme.css?v=20260901d">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
-<script src="js/supabaseClient.js?v=20260901c" defer></script>
+<script src="js/supabaseClient.js?v=20260901d" defer></script>
 </head>
 <body class="page-account">
 <div class="aurora" aria-hidden="true"></div>
@@ -327,97 +327,49 @@ function wireNameEdit(){
   });
 }
 
-var HANDLE_PENCIL = '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>';
+var HANDLE_COPY = '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+var HANDLE_MAX = 16;
 
 function handleRowHtml(profile, opts){
   opts = opts || {};
   var own = !!opts.own;
   var handle = profile && profile.handle;
   if (!handle && !own) return '';
-  var input = '<input class="ap-handle-input" id="apHandleInput" maxlength="16" autocomplete="off" spellcheck="false" hidden>';
-  if (!handle) {
-    return '<div class="ap-handle-row" id="apHandleRow">' +
-      '<button type="button" class="ap-handle is-empty" id="apHandleCta">Set your profile link</button>' +
-      input + '</div>';
-  }
-  var wait = own && typeof handleCooldownMs === 'function' && handleCooldownMs(profile.handle_changed_at) > 0;
-  var waitLbl = wait && typeof handleWaitLabel === 'function' ? handleWaitLabel(profile.handle_changed_at) : '';
-  var pencil = '';
-  if (own) {
-    pencil = '<button type="button" class="ap-handle-edit' + (wait ? ' is-wait' : '') + '" id="apHandleEdit" aria-label="' +
-      (wait ? waitLbl : 'Change handle') + '"' + (wait ? ' disabled' : '') + '>' + HANDLE_PENCIL + '</button>';
-  }
+  var slash = '<span class="ap-handle-slash"' + (handle ? '' : ' hidden') + '>/</span>';
+  var edit = own ? ' contenteditable="true" spellcheck="false"' : '';
+  var copy = handle
+    ? '<button type="button" class="ap-handle-copy" id="apHandleCopy" aria-label="Copy profile link">' + HANDLE_COPY + '</button>'
+    : '';
   return '<div class="ap-handle-row" id="apHandleRow">' +
-    '<button type="button" class="ap-handle" id="apHandleCopy" data-handle="' + handle + '">rankme.lol/u/' + handle + '</button>' +
-    pencil + input + '</div>';
+    slash +
+    '<span class="ap-handle' + (handle ? '' : ' is-empty') + '" id="apHandle"' + edit + '>' +
+      (handle || 'Set your profile link') +
+    '</span>' + copy + '</div>';
 }
 
 function wireHandleEdit(profile){
-  var row = document.getElementById('apHandleRow');
-  var input = document.getElementById('apHandleInput');
+  var el = document.getElementById('apHandle');
+  var slash = document.querySelector('#apHandleRow .ap-handle-slash');
   var hint = document.getElementById('apHint');
-  if (!row || !input) return;
-  var state = {
-    handle: (profile && profile.handle) || '',
-    changed: (profile && profile.handle_changed_at) || null
-  };
+  if (!el) return;
+  var own = el.isContentEditable;
+  var last = (profile && profile.handle) || '';
+  var changed = (profile && profile.handle_changed_at) || null;
   var showHint = function (msg) {
     if (hint) hint.textContent = msg || '';
   };
-  var idle = function () {
-    row.outerHTML = handleRowHtml({ handle: state.handle, handle_changed_at: state.changed }, { own: true });
-    wireHandleEdit({ handle: state.handle, handle_changed_at: state.changed });
+  var waiting = function () {
+    return !!(last && typeof handleCooldownMs === 'function' && handleCooldownMs(changed) > 0);
   };
-  var startEdit = function () {
-    if (state.handle && typeof handleCooldownMs === 'function' && handleCooldownMs(state.changed) > 0) {
-      showHint(typeof handleWaitLabel === 'function' ? handleWaitLabel(state.changed) : 'Wait to change');
-      return;
-    }
-    var cta = document.getElementById('apHandleCta');
-    var copy = document.getElementById('apHandleCopy');
-    var pen = document.getElementById('apHandleEdit');
-    if (cta) cta.hidden = true;
-    if (copy) copy.hidden = true;
-    if (pen) pen.hidden = true;
-    input.hidden = false;
-    input.value = state.handle || '';
-    input.focus();
-    input.select();
+  var paint = function () {
+    var row = document.getElementById('apHandleRow');
+    if (!row) return;
+    row.outerHTML = handleRowHtml({ handle: last, handle_changed_at: changed }, { own: true });
+    wireHandleEdit({ handle: last, handle_changed_at: changed });
   };
-  var finish = async function (save) {
-    if (input.hidden) return;
-    var raw = (input.value || '').replace(/\s+/g, '').trim();
-    if (!save || (!raw && !state.handle) || raw === state.handle) {
-      idle();
-      showHint('');
-      return;
-    }
-    if (typeof validateHandle === 'function') {
-      var v = validateHandle(raw);
-      if (!v.ok) {
-        showHint(v.error);
-        input.focus();
-        return;
-      }
-      raw = v.clean;
-    }
-    try {
-      var saved = await setProfileHandle(raw);
-      state.handle = saved.handle;
-      state.changed = saved.handle_changed_at || new Date().toISOString();
-      idle();
-      showHint('');
-    } catch (e) {
-      showHint(e.message || 'Could not save');
-      input.focus();
-    }
-  };
-  var cta = document.getElementById('apHandleCta');
-  var copy = document.getElementById('apHandleCopy');
-  var pen = document.getElementById('apHandleEdit');
-  if (cta) cta.addEventListener('click', startEdit);
-  if (copy) copy.addEventListener('click', async function () {
-    var url = typeof publicHandleUrl === 'function' ? publicHandleUrl(state.handle) : ('https://rankme.lol/u/' + state.handle);
+  var copyUrl = async function () {
+    if (!last) return;
+    var url = typeof publicHandleUrl === 'function' ? publicHandleUrl(last) : ('https://rankme.lol/u/' + last);
     try {
       await navigator.clipboard.writeText(url);
       showHint('Copied');
@@ -425,20 +377,118 @@ function wireHandleEdit(profile){
     } catch (e) {
       showHint('Could not copy');
     }
+  };
+  var cleanRaw = function () {
+    return (el.textContent || '').replace(/^\/+/, '').replace(/\s+/g, '').trim().toLowerCase();
+  };
+
+  el.addEventListener('mousedown', function (e) {
+    if (!own) return;
+    if (waiting()) {
+      e.preventDefault();
+      showHint(typeof handleWaitLabel === 'function' ? handleWaitLabel(changed) : 'Wait to change');
+    }
   });
-  if (pen) pen.addEventListener('click', function (e) {
+  el.addEventListener('focus', function () {
+    if (!own || waiting()) return;
+    if (!last) {
+      el.textContent = '';
+      el.classList.remove('is-empty');
+      if (slash) slash.hidden = false;
+    }
+  });
+  el.addEventListener('beforeinput', function (e) {
+    if (e.inputType === 'insertParagraph' || e.inputType === 'insertLineBreak') {
+      e.preventDefault();
+      return;
+    }
+    if (!e.data) return;
+    var sel = window.getSelection();
+    var selected = sel && sel.toString() ? sel.toString().length : 0;
+    if ((el.textContent || '').length - selected + e.data.length > HANDLE_MAX) {
+      e.preventDefault();
+      showHint('16 characters max');
+    }
+  });
+  el.addEventListener('paste', function (e) {
     e.preventDefault();
-    startEdit();
+    var text = ((e.clipboardData || window.clipboardData).getData('text') || '')
+      .replace(/^https?:\/\/rankme\.lol\/u\//i, '')
+      .replace(/^\/+/, '')
+      .replace(/\s+/g, '');
+    var sel = window.getSelection();
+    var selected = sel && sel.toString() ? sel.toString().length : 0;
+    var room = HANDLE_MAX - ((el.textContent || '').length - selected);
+    if (room <= 0) { showHint('16 characters max'); return; }
+    document.execCommand('insertText', false, text.slice(0, room));
+    if (text.length > room) showHint('16 characters max');
   });
-  input.addEventListener('keydown', function (e) {
-    if (e.key === 'Enter') { e.preventDefault(); input.blur(); }
-    if (e.key === 'Escape') { e.preventDefault(); finish(false); }
+  el.addEventListener('input', function () {
+    var raw = cleanRaw();
+    if ((el.textContent || '').length >= HANDLE_MAX) return;
+    if (!raw) { showHint(''); return; }
+    if (typeof validateHandle === 'function') {
+      var v = validateHandle(raw);
+      showHint(v.ok || raw === last ? '' : v.error);
+    }
   });
-  input.addEventListener('input', function () {
-    if (input.value.length >= 16) showHint('16 characters max');
-    else if (hint && hint.textContent === '16 characters max') showHint('');
+  el.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') { e.preventDefault(); el.blur(); }
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      el.textContent = last || 'Set your profile link';
+      el.classList.toggle('is-empty', !last);
+      if (slash) slash.hidden = !last;
+      showHint('');
+      el.blur();
+    }
   });
-  input.addEventListener('blur', function () { finish(true); });
+  el.addEventListener('blur', async function () {
+    if (!own) return;
+    var raw = cleanRaw();
+    if (!raw) {
+      el.textContent = last || 'Set your profile link';
+      el.classList.toggle('is-empty', !last);
+      if (slash) slash.hidden = !last;
+      showHint('');
+      return;
+    }
+    if (raw === last) {
+      el.textContent = last;
+      showHint('');
+      return;
+    }
+    if (typeof validateHandle === 'function') {
+      var v = validateHandle(raw);
+      if (!v.ok) {
+        el.textContent = last || 'Set your profile link';
+        el.classList.toggle('is-empty', !last);
+        if (slash) slash.hidden = !last;
+        showHint(v.error);
+        return;
+      }
+      raw = v.clean;
+    }
+    try {
+      var saved = await setProfileHandle(raw);
+      last = saved.handle;
+      changed = saved.handle_changed_at || new Date().toISOString();
+      paint();
+      showHint('');
+    } catch (e) {
+      el.textContent = last || 'Set your profile link';
+      el.classList.toggle('is-empty', !last);
+      if (slash) slash.hidden = !last;
+      showHint(e.message || 'Could not save');
+    }
+  });
+
+  var copyBtn = document.getElementById('apHandleCopy');
+  if (copyBtn) copyBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    copyUrl();
+  });
 }
 
 function closeExpertModals(){

@@ -734,7 +734,7 @@ function handleCooldownMs(changedAt) {
 
 function handleWaitLabel(changedAt) {
   var t = new Date(new Date(changedAt).getTime() + 30 * 24 * 60 * 60 * 1000);
-  return 'again ' + t.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  return 'Change again ' + t.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 }
 
 async function getProfileByUserId(userId) {

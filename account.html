@@ -6,7 +6,7 @@
 <title>Account - RankMe</title>
 <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/rankme.css?v=20260901i">
+<link rel="stylesheet" href="css/rankme.css?v=20260901j">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
 <script src="js/supabaseClient.js?v=20260901d" defer></script>
 </head>
@@ -97,6 +97,18 @@
     <p>We'll review it and notify you here once approved</p>
     <button type="button" class="btn expert-cancel" id="expertCancelBtn">Cancel Application</button>
     <button type="button" class="expert-close" id="expertSentClose">Close</button>
+  </div>
+</div>
+
+<div class="modal-back" id="handleModal">
+  <div class="modal expert-modal">
+    <h3>Confirm your link</h3>
+    <p class="handle-preview">rankme.lol/u/<b id="handleModalName"></b></p>
+    <p>You can change this once every 30 days</p>
+    <div class="modal-actions">
+      <button type="button" id="handleModalCancel">Cancel</button>
+      <button type="button" class="primary" id="handleModalOk">Confirm</button>
+    </div>
   </div>
 </div>
 
@@ -438,7 +450,7 @@ function wireHandleEdit(profile){
     }
   });
   el.addEventListener('blur', async function () {
-    if (!own) return;
+    if (!own || handleConfirmWait) return;
     var raw = cleanRaw();
     if (!raw || raw === last) {
       el.textContent = last || 'Set your profile link';
@@ -456,6 +468,10 @@ function wireHandleEdit(profile){
       }
       raw = v.clean;
     }
+    el.textContent = last || 'Set your profile link';
+    el.classList.toggle('is-empty', !last);
+    var ok = await askHandleConfirm(raw);
+    if (!ok) return;
     try {
       var saved = await setProfileHandle(raw);
       last = saved.handle;
@@ -475,6 +491,44 @@ function wireHandleEdit(profile){
     e.stopPropagation();
     copyUrl();
   });
+}
+
+var handleConfirmWait = null;
+
+function finishHandleConfirm(ok){
+  var m = document.getElementById('handleModal');
+  if (m) m.classList.remove('open');
+  if (handleConfirmWait) {
+    var r = handleConfirmWait;
+    handleConfirmWait = null;
+    r(!!ok);
+  }
+}
+
+function askHandleConfirm(handle){
+  var m = document.getElementById('handleModal');
+  var name = document.getElementById('handleModalName');
+  if (!m) return Promise.resolve(false);
+  if (name) name.textContent = handle;
+  m.classList.add('open');
+  return new Promise(function (resolve) { handleConfirmWait = resolve; });
+}
+
+function wireHandleModal(){
+  if (window.__rmHandleModal) return;
+  window.__rmHandleModal = true;
+  var m = document.getElementById('handleModal');
+  var ok = document.getElementById('handleModalOk');
+  var cancel = document.getElementById('handleModalCancel');
+  if (ok) ok.onclick = function () { finishHandleConfirm(true); };
+  if (cancel) cancel.onclick = function () { finishHandleConfirm(false); };
+  if (m) {
+    var press = false;
+    m.addEventListener('pointerdown', function (e) { press = e.target === m; });
+    m.addEventListener('click', function (e) {
+      if (press && e.target === m) finishHandleConfirm(false);
+    });
+  }
 }
 
 function closeExpertModals(){
@@ -921,6 +975,7 @@ async function bootAccount(){
     await initSupabase();
     if (typeof updateNavAuth === 'function') updateNavAuth();
     wireExpertUi();
+    wireHandleModal();
 
     const params = new URLSearchParams(location.search);
     const publicKey = params.get('u');

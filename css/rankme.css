@@ -7074,6 +7074,20 @@ body.ach-focus-open { overflow: hidden; }
   cursor: pointer;
   padding: 8px 0 0;
 }
+.handle-preview {
+  margin: 6px 0 10px;
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: var(--text-dim);
+  word-break: break-all;
+}
+.handle-preview b {
+  color: #fff;
+  font-weight: 800;
+}
+#handleModal .modal-actions {
+  margin-top: 8px;
+}
 .expert-modal .expert-close:hover { color: #fff; }
 .expert-modal .expert-sent-ico {
   width: 88px;

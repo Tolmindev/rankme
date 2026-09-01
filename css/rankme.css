@@ -1307,44 +1307,29 @@ html.rankme-dragging {
 .expert-badge.is-off.is-btn::after {
   content: "";
   position: absolute;
-  inset: -4px;
+  inset: -3px;
   border-radius: 50%;
-  border: 1.5px solid transparent;
-  background:
-    linear-gradient(transparent, transparent) padding-box,
-    var(--btn-holo) border-box;
-  background-origin: padding-box, border-box;
-  background-clip: padding-box, border-box;
-  background-size: 100% 100%, 220% 100%;
+  padding: 1px;
+  background: var(--btn-holo);
+  background-size: 220% 100%;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
   opacity: 0;
   pointer-events: none;
-  animation: ctaGlowShift 3.8s linear infinite;
-  transition: opacity 0.18s ease;
+  transition: opacity 0.15s ease;
 }
 @media (hover: hover) {
   .expert-badge.is-off.is-btn:hover {
-    transform: scale(1.1);
+    transform: scale(1.08);
   }
   .expert-badge.is-off.is-btn:hover::after {
     opacity: 1;
   }
 }
-.expert-badge svg {
-  width: 100%;
-  height: 100%;
-  display: block;
-  overflow: visible;
-}
 .expert-badge.is-on {
   cursor: default;
-  overflow: visible;
-}
-.expert-badge.is-on svg {
-  filter: drop-shadow(0 0 2px rgba(190, 150, 255, 0.45));
-}
-.expert-badge.is-on .eb-gem {
-  fill: #fff;
-  filter: drop-shadow(0 0 2.2px rgba(255, 255, 255, 0.95)) drop-shadow(0 0 5px rgba(140, 200, 255, 0.55));
 }
 
 /* RankMe · hero — Tier hero, list actions */
@@ -6957,8 +6942,8 @@ body.ach-focus-open { overflow: hidden; }
 .expert-modal {
   position: relative;
   isolation: isolate;
-  width: min(440px, 92vw);
-  padding: 28px 26px 22px;
+  width: min(380px, 92vw);
+  padding: 22px 22px 16px;
   overflow: hidden;
   border: 1.5px solid transparent;
   background:
@@ -6977,85 +6962,73 @@ body.ach-focus-open { overflow: hidden; }
   border-radius: inherit;
   pointer-events: none;
   z-index: 0;
-  background: linear-gradient(155deg, rgba(214, 196, 255, 0.08) 0%, transparent 42%, transparent 58%, rgba(142, 197, 255, 0.06) 100%);
-}
-.expert-modal::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  pointer-events: none;
-  z-index: 2;
-  opacity: 0.14;
-  mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size: 160px 160px;
+  background: linear-gradient(155deg, rgba(214, 196, 255, 0.07) 0%, transparent 40%);
 }
 .expert-modal > * {
   position: relative;
   z-index: 1;
 }
 .expert-modal .expert-preview {
-  width: 72px;
-  height: 72px;
-  margin: 0 auto 14px;
-  overflow: visible;
+  width: 52px;
+  height: 52px;
+  margin: 0 auto 10px;
 }
 .expert-modal h3 {
-  font-size: 1.28rem;
+  font-size: 1.42rem;
   font-weight: 900;
-  margin-bottom: 12px;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin: 0 0 10px;
 }
 .expert-modal .expert-perks {
   list-style: none;
-  margin: 0 0 16px;
+  margin: 0 0 14px;
   padding: 0;
   text-align: left;
 }
 .expert-modal .expert-perks li {
   position: relative;
-  padding: 3px 0 3px 16px;
-  color: #c8c0dc;
-  font-size: 0.88rem;
+  padding: 1px 0 1px 14px;
+  color: #b8b0c8;
+  font-size: 0.78rem;
   font-weight: 400;
-  line-height: 1.35;
+  line-height: 1.4;
 }
 .expert-modal .expert-perks li::before {
   content: "";
   position: absolute;
   left: 0;
-  top: 0.72em;
-  width: 6px;
-  height: 6px;
+  top: 0.62em;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
   background: #9ad0ff;
-  box-shadow: 0 0 8px rgba(154, 208, 255, 0.8);
 }
 .expert-modal label {
   display: block;
-  font-size: 0.72rem;
-  font-weight: 700;
+  font-size: 0.68rem;
+  font-weight: 400;
   color: var(--text-dim);
   margin-bottom: 6px;
 }
 .expert-modal .expert-input {
   width: 100%;
-  height: 44px;
+  height: 42px;
   border-radius: 999px;
   border: 1.5px solid rgba(160, 130, 220, 0.35);
   background: #12101c;
   color: var(--text);
-  padding: 0 18px;
+  padding: 0 16px;
   font: inherit;
-  font-weight: 500;
-  font-size: 0.88rem;
+  font-weight: 400;
+  font-size: 0.84rem;
   box-sizing: border-box;
   outline: none;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 .expert-modal .expert-input::placeholder {
   color: #8a82a8;
-  font-weight: 500;
+  font-weight: 400;
   opacity: 1;
 }
 .expert-modal .expert-input:focus {
@@ -7064,8 +7037,8 @@ body.ach-focus-open { overflow: hidden; }
 .expert-modal .expert-apply.cta {
   width: 100%;
   min-width: 0;
-  min-height: 48px;
-  height: 48px;
+  min-height: 46px;
+  height: 46px;
   padding: 0 24px;
   margin-bottom: 8px;
   font-size: 1rem;
@@ -7078,15 +7051,15 @@ body.ach-focus-open { overflow: hidden; }
 .expert-modal .expert-cancel {
   width: 100%;
   min-width: 0;
-  height: 46px;
-  min-height: 46px;
-  margin: 6px 0 10px;
+  height: 44px;
+  min-height: 44px;
+  margin: 6px 0 8px;
 }
 .expert-modal .expert-note {
-  margin: 0 0 12px;
-  font-size: 0.72rem;
+  margin: 0 0 8px;
+  font-size: 0.68rem;
   color: var(--text-dim);
-  font-weight: 600;
+  font-weight: 400;
 }
 .expert-modal .expert-close {
   display: block;
@@ -7095,10 +7068,10 @@ body.ach-focus-open { overflow: hidden; }
   border: 0;
   color: #9a90b4;
   font: inherit;
-  font-weight: 700;
-  font-size: 0.88rem;
+  font-weight: 500;
+  font-size: 0.82rem;
   cursor: pointer;
-  padding: 8px 0 0;
+  padding: 4px 0 0;
 }
 .handle-preview {
   margin: 6px 0 10px;

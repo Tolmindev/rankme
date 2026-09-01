@@ -6,9 +6,9 @@
 <title>Account - RankMe</title>
 <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/rankme.css?v=20260901z">
+<link rel="stylesheet" href="css/rankme.css?v=20260901aa">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
-<script src="js/supabaseClient.js?v=20260901z" defer></script>
+<script src="js/supabaseClient.js?v=20260901aa" defer></script>
 </head>
 <body class="page-account">
 <div class="aurora" aria-hidden="true"></div>
@@ -75,7 +75,7 @@
 
 <div class="modal-back" id="expertApplyModal">
   <div class="modal expert-modal">
-    <span class="expert-badge is-on expert-preview" id="expertPreview" aria-hidden="true"></span>
+    <span class="expert-badge is-on expert-preview" aria-hidden="true"><img src="assets/icons/expert-badge.svg" alt=""></span>
     <h3>Become a RankMe Expert</h3>
     <ul class="expert-perks">
       <li>Get a verified badge</li>
@@ -615,8 +615,6 @@ function wireExpertUi(){
   var closeS = document.getElementById('expertSentClose');
   if (closeA) closeA.onclick = closeExpertModals;
   if (closeS) closeS.onclick = closeExpertModals;
-  var preview = document.getElementById('expertPreview');
-  if (preview && typeof expertOnSvg === 'function') preview.innerHTML = expertOnSvg();
   function bindBackdrop(el) {
     if (!el) return;
     var press = false;

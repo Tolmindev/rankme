@@ -590,12 +590,10 @@ button, .cta, .btn, .btn-mini, .pill-btn, .download-btn, .login-btn, a.btn, a.ct
 .battle-panel .icon {
   margin-bottom: 6px;
   line-height: 0;
-  color: #ffe9a8;
-  filter: drop-shadow(0 0 12px rgba(255, 200, 80, 0.55));
 }
-.battle-panel .icon svg {
-  width: 40px;
-  height: 40px;
+.battle-panel .icon img {
+  width: 64px;
+  height: 64px;
   display: block;
   margin: 0 auto;
 }
@@ -611,13 +609,12 @@ button, .cta, .btn, .btn-mini, .pill-btn, .download-btn, .login-btn, a.btn, a.ct
 }
 
 .battle-mode-card .bmc-icon {
-  margin: 0 0 6px;
+  margin: 0 0 8px;
   line-height: 0;
-  color: #e8d4ff;
 }
-.battle-mode-card .bmc-icon svg {
-  width: 28px;
-  height: 28px;
+.battle-mode-card .bmc-icon img {
+  width: 56px;
+  height: 56px;
   display: block;
 }
 

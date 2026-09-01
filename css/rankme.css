@@ -825,17 +825,6 @@ body.theme-gold {
   color: var(--text-dim);
 }
 
-.no-results .big {
-  margin-bottom: 10px;
-  color: #c4b6e8;
-}
-.no-results .big svg {
-  width: 36px;
-  height: 36px;
-  display: block;
-  margin: 0 auto;
-}
-
 .no-results .reset-link {
   color: #e8d4ff;
   text-decoration: none;
@@ -4398,12 +4387,10 @@ button, .cta, .btn, .btn-mini, .pill-btn, .download-btn, .login-btn, a.btn, a.ct
 .battle-panel .icon {
   margin-bottom: 6px;
   line-height: 0;
-  color: #ffe9a8;
-  filter: drop-shadow(0 0 12px rgba(255, 200, 80, 0.55));
 }
-.battle-panel .icon svg {
-  width: 40px;
-  height: 40px;
+.battle-panel .icon img {
+  width: 64px;
+  height: 64px;
   display: block;
   margin: 0 auto;
 }
@@ -4419,13 +4406,12 @@ button, .cta, .btn, .btn-mini, .pill-btn, .download-btn, .login-btn, a.btn, a.ct
 }
 
 .battle-mode-card .bmc-icon {
-  margin: 0 0 6px;
+  margin: 0 0 8px;
   line-height: 0;
-  color: #e8d4ff;
 }
-.battle-mode-card .bmc-icon svg {
-  width: 28px;
-  height: 28px;
+.battle-mode-card .bmc-icon img {
+  width: 56px;
+  height: 56px;
   display: block;
 }
 
@@ -6939,7 +6925,7 @@ body.ach-focus-open { overflow: hidden; }
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: margin-left 0.18s ease, transform 0.15s ease;
+  transition: margin-left 0.18s ease, color 0.15s ease, transform 0.15s ease;
 }
 .ap-handle-copy::before {
   content: "";
@@ -6950,8 +6936,8 @@ body.ach-focus-open { overflow: hidden; }
   mask: url("../assets/icons/copy.svg") center / contain no-repeat;
 }
 @media (hover: hover) {
-  .ap-handle-copy:hover::before {
-    background: var(--btn-holo);
+  .ap-handle-copy:hover {
+    color: #c4b6e8;
   }
 }
 .ap-handle-copy:active {

@@ -699,17 +699,6 @@ body.theme-gold {
   color: var(--text-dim);
 }
 
-.no-results .big {
-  margin-bottom: 10px;
-  color: #c4b6e8;
-}
-.no-results .big svg {
-  width: 36px;
-  height: 36px;
-  display: block;
-  margin: 0 auto;
-}
-
 .no-results .reset-link {
   color: #e8d4ff;
   text-decoration: none;

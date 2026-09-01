@@ -257,7 +257,6 @@
       els.grid.removeAttribute('aria-busy');
       els.grid.innerHTML =
         '<div class="no-results">' +
-          '<div class="big"><svg viewBox="0 0 24 24" width="36" height="36" aria-hidden="true"><path fill="currentColor" d="M10.5 3a7.5 7.5 0 0 1 5.9 12.1l4.2 4.3-1.4 1.4-4.3-4.2A7.5 7.5 0 1 1 10.5 3zm0 2a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11z"/></svg></div>' +
           '<div>No results</div>' +
           '<button type="button" class="reset-link" id="resetFilters">Clear</button>' +
         '</div>';

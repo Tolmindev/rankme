@@ -1316,7 +1316,7 @@ body.ach-focus-open { overflow: hidden; }
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: margin-left 0.18s ease, transform 0.15s ease;
+  transition: margin-left 0.18s ease, color 0.15s ease, transform 0.15s ease;
 }
 .ap-handle-copy::before {
   content: "";
@@ -1327,8 +1327,8 @@ body.ach-focus-open { overflow: hidden; }
   mask: url("../assets/icons/copy.svg") center / contain no-repeat;
 }
 @media (hover: hover) {
-  .ap-handle-copy:hover::before {
-    background: var(--btn-holo);
+  .ap-handle-copy:hover {
+    color: #c4b6e8;
   }
 }
 .ap-handle-copy:active {

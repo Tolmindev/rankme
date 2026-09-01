@@ -6053,7 +6053,7 @@ body > .toast {
 .ap-hint {
   display: none;
   position: absolute;
-  left: 0;
+  left: 10px;
   top: calc(100% + 3px);
   font-size: 0.65rem;
   font-weight: 400;

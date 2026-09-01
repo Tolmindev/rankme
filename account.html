@@ -6,7 +6,7 @@
 <title>Account - RankMe</title>
 <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/rankme.css?v=20260901t">
+<link rel="stylesheet" href="css/rankme.css?v=20260901w">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
 <script src="js/supabaseClient.js?v=20260901q" defer></script>
 </head>
@@ -346,6 +346,7 @@ function wireNameEdit(){
 }
 
 var HANDLE_MAX = 16;
+var HANDLE_PLACEHOLDER = 'Set your RankMe link';
 
 function handleRowHtml(profile, opts){
   opts = opts || {};
@@ -354,11 +355,11 @@ function handleRowHtml(profile, opts){
   if (!handle && !own) return '';
   var edit = own ? ' contenteditable="true" spellcheck="false"' : '';
   var copy = handle
-    ? '<button type="button" class="ap-handle-copy" id="apHandleCopy" aria-label="Copy profile link"></button>'
+    ? '<button type="button" class="ap-handle-copy" id="apHandleCopy" aria-label="Copy RankMe link"></button>'
     : '';
   return '<div class="ap-handle-row" id="apHandleRow">' +
     '<span class="ap-handle' + (handle ? '' : ' is-empty') + '" id="apHandle"' + edit + '>' +
-      (handle || 'Set your profile link') +
+      (handle || HANDLE_PLACEHOLDER) +
     '</span>' + copy + '</div>';
 }
 
@@ -401,11 +402,8 @@ function wireHandleEdit(profile){
   el.addEventListener('focus', function () {
     if (!own || waiting()) return;
     if (!last) {
-      var r = document.createRange();
-      r.selectNodeContents(el);
-      var s = window.getSelection();
-      s.removeAllRanges();
-      s.addRange(r);
+      el.textContent = '';
+      el.classList.remove('is-empty');
     }
   });
   el.addEventListener('beforeinput', function (e) {
@@ -455,7 +453,7 @@ function wireHandleEdit(profile){
     if (e.key === 'Enter') { e.preventDefault(); el.blur(); }
     if (e.key === 'Escape') {
       e.preventDefault();
-      el.textContent = last || 'Set your profile link';
+      el.textContent = last || HANDLE_PLACEHOLDER;
       el.classList.toggle('is-empty', !last);
       apHint('');
       el.blur();
@@ -465,7 +463,7 @@ function wireHandleEdit(profile){
     if (!own || handleConfirmWait) return;
     var raw = cleanRaw();
     if (!raw || raw === last) {
-      el.textContent = last || 'Set your profile link';
+      el.textContent = last || HANDLE_PLACEHOLDER;
       el.classList.toggle('is-empty', !last);
       apHint('');
       return;
@@ -473,7 +471,7 @@ function wireHandleEdit(profile){
     if (typeof validateHandle === 'function') {
       var v = validateHandle(raw);
       if (!v.ok) {
-        el.textContent = last || 'Set your profile link';
+        el.textContent = last || HANDLE_PLACEHOLDER;
         el.classList.toggle('is-empty', !last);
         apHint(v.error);
         return;
@@ -481,12 +479,12 @@ function wireHandleEdit(profile){
       raw = v.clean;
     }
     if (typeof isHandleTaken === 'function' && await isHandleTaken(raw)) {
-      el.textContent = last || 'Set your profile link';
+      el.textContent = last || HANDLE_PLACEHOLDER;
       el.classList.toggle('is-empty', !last);
       apHint('Taken');
       return;
     }
-    el.textContent = last || 'Set your profile link';
+    el.textContent = last || HANDLE_PLACEHOLDER;
     el.classList.toggle('is-empty', !last);
     var ok = await askHandleConfirm(raw);
     if (!ok) return;
@@ -497,7 +495,7 @@ function wireHandleEdit(profile){
       paint();
       apHint('');
     } catch (e) {
-      el.textContent = last || 'Set your profile link';
+      el.textContent = last || HANDLE_PLACEHOLDER;
       el.classList.toggle('is-empty', !last);
       apHint(e.message || 'Could not save');
     }

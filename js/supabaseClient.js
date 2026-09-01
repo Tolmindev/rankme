@@ -588,21 +588,19 @@ function expertBadgeHtml(opts) {
 
 async function fetchApprovedExpertIds() {
   if (window.__rmExpertIds instanceof Set) return window.__rmExpertIds;
-  var empty = new Set();
   try {
     var client = await initSupabase();
-    if (!client) { window.__rmExpertIds = empty; return empty; }
+    if (!client) return new Set();
     var res = await client.from('expert_requests').select('user_id').eq('status', 'approved');
     if (res.error) {
       console.warn('[RankMe] expert_requests', res.error.message);
-      window.__rmExpertIds = empty;
-      return empty;
+      return new Set();
     }
     window.__rmExpertIds = new Set((res.data || []).map(function (r) { return r.user_id; }));
+    return window.__rmExpertIds;
   } catch (e) {
-    window.__rmExpertIds = empty;
+    return new Set();
   }
-  return window.__rmExpertIds;
 }
 
 function isApprovedExpert(userId) {
@@ -701,7 +699,7 @@ var HANDLE_RESERVED = {
   static:1, auth:1, settings:1, rankme:1, 'null':1, undefined:1
 };
 window.__rmHandles = window.__rmHandles || {};
-var PROFILE_COLS = 'user_id, handle, handle_changed_at, display_name, avatar_url, ach';
+var PROFILE_COLS = 'user_id, handle, handle_changed_at, display_name, avatar_url';
 
 function sanitizeHandle(raw) {
   return String(raw || '').trim().toLowerCase();

@@ -17,6 +17,13 @@
       desc: 'Published your first tier list. Welcome to the club.',
       img: 'assets/achievements/achiev_2.webp',
       unlock: 'first-publish'
+    },
+    {
+      id: 'main-character',
+      title: 'Main Character',
+      desc: 'The community actually listens to this person. For some reason.',
+      img: 'assets/achievements/achiev_3.webp',
+      unlock: 'expert'
     }
   ];
 
@@ -59,6 +66,10 @@
 
   function publishIds() {
     return catalog.filter(function (c) { return c.unlock === 'first-publish'; }).map(function (c) { return c.id; });
+  }
+
+  function expertIds() {
+    return catalog.filter(function (c) { return c.unlock === 'expert'; }).map(function (c) { return c.id; });
   }
 
   function storageKey(user) {
@@ -164,6 +175,18 @@
     return grantMany(user, publishIds(), { toast: !!(opts && opts.toast) });
   }
 
+  async function sync(user) {
+    if (!user) return;
+    await onLogin(user);
+    if (typeof getMyExpertRequest !== 'function') return;
+    try {
+      var req = await getMyExpertRequest();
+      if (req && req.status === 'approved') {
+        await grantMany(user, expertIds(), { toast: true });
+      }
+    } catch (e) {}
+  }
+
   function itemsFor(ids) {
     var map = {};
     ids.forEach(function (id) { map[id] = true; });
@@ -189,6 +212,7 @@
     grant: grant,
     onLogin: onLogin,
     onPublish: onPublish,
+    sync: sync,
     paint: paint,
     toast: toast
   };

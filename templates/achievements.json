@@ -13,6 +13,13 @@
       "desc": "Published your first tier list. Welcome to the club.",
       "img": "assets/achievements/achiev_2.webp",
       "unlock": "first-publish"
+    },
+    {
+      "id": "main-character",
+      "title": "Main Character",
+      "desc": "The community actually listens to this person. For some reason.",
+      "img": "assets/achievements/achiev_3.webp",
+      "unlock": "expert"
     }
   ]
 }

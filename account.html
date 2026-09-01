@@ -7,7 +7,7 @@
 <title>Account - RankMe</title>
 <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;500;600;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/rankme.css?v=20260901ak">
+<link rel="stylesheet" href="css/rankme.css?v=20260901al">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
 <script src="js/supabaseClient.js?v=20260901ah" defer></script>
 </head>
@@ -119,7 +119,7 @@
 <script src="js/footer.js?v=20260827q" defer></script>
 <script src="js/catalog.js?v=20260827q"></script>
 <script src="js/holo-card.js?v=20260827q"></script>
-<script src="js/achievements.js?v=20260901p"></script>
+<script src="js/achievements.js?v=20260901al"></script>
 
 <script>
 const panel = document.getElementById('panel');
@@ -742,7 +742,7 @@ async function renderCabinet(user){
       paintSavedList(rows, { owner: true, user: user });
     }
     if (window.RankMeAch) {
-      await RankMeAch.onLogin(user);
+      await RankMeAch.sync(user);
       if (rows.some(function(r){ return r.is_public; })) {
         await RankMeAch.onPublish(user, { toast: false });
       }
@@ -922,7 +922,16 @@ async function renderPublicProfile(userId, profile){
 
   if (window.RankMeAch) {
     if (own) RankMeAch.paint(viewer);
-    else RankMeAch.paint(null, rows.length ? ['certified-sheep'] : []);
+    else {
+      var extra = rows.length ? ['certified-sheep'] : [];
+      if (typeof fetchApprovedExpertIds === 'function') {
+        try {
+          var experts = await fetchApprovedExpertIds();
+          if (experts && experts.has(userId)) extra.push('main-character');
+        } catch (e) {}
+      }
+      RankMeAch.paint(null, extra);
+    }
   }
 
   (async function () {

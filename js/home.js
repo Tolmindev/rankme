@@ -623,6 +623,15 @@
       catalog = mergeUseCounts(catalog, stats);
       await indexTemplateCards(catalog.templates || []);
       init(catalog);
+      if (window.RankMeAch && typeof getSessionUser === 'function') {
+        try {
+          var u = await getSessionUser();
+          if (u) {
+            await RankMeAch.load();
+            await RankMeAch.sync(u);
+          }
+        } catch (e) {}
+      }
     })
     .catch(function (e) {
       console.error('Failed to load catalog', e);

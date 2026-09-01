@@ -1176,18 +1176,27 @@ html.rankme-dragging {
 .expert-badge.is-btn {
   cursor: pointer;
   overflow: visible;
-  transition: transform 0.18s ease;
+}
+.expert-badge.is-off.is-btn img {
+  position: relative;
+  z-index: 1;
+}
+.expert-badge.is-off.is-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(135deg, #d4c4ff, #b8d4ff);
+  -webkit-mask: url("../assets/icons/expert-badge-off.svg") center / contain no-repeat;
+  mask: url("../assets/icons/expert-badge-off.svg") center / contain no-repeat;
+  transform: scale(1.1);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
 }
 @media (hover: hover) {
-  .expert-badge.is-off.is-btn:hover {
-    transform: scale(1.08);
-  }
-  .expert-badge.is-off.is-btn:hover img {
-    filter:
-      drop-shadow(0.7px 0 0 #d2c0ff)
-      drop-shadow(-0.7px 0 0 #d2c0ff)
-      drop-shadow(0 0.7px 0 #b9d6ff)
-      drop-shadow(0 -0.7px 0 #b9d6ff);
+  .expert-badge.is-off.is-btn:hover::after {
+    opacity: 1;
   }
 }
 .expert-badge.is-on {

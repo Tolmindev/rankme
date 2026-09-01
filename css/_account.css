@@ -1350,9 +1350,9 @@ body.ach-focus-open { overflow: hidden; }
   margin: 0 auto 14px;
 }
 .expert-modal h3 {
-  font-size: 1.38rem;
+  font-size: 1.52rem;
   font-weight: 900;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.03em;
   line-height: 1.15;
   margin: 0 0 10px;
 }
@@ -1450,7 +1450,7 @@ body.ach-focus-open { overflow: hidden; }
   padding: 4px 0 0;
 }
 .handle-preview {
-  margin: 6px 0 10px;
+  margin: 8px 0 6px;
   font-size: 0.95rem;
   font-weight: 400;
   color: var(--text-dim);
@@ -1460,14 +1460,20 @@ body.ach-focus-open { overflow: hidden; }
   color: #fff;
   font-weight: 800;
 }
+#handleModal .handle-preview {
+  margin: 8px 0 6px;
+}
 .modal p.handle-note {
-  margin: 0 0 4px;
+  display: block;
+  width: 100%;
+  margin: 0 0 18px;
   font-size: 0.82rem;
   font-weight: 200;
   color: var(--text-dim);
+  text-align: center;
 }
 #handleModal .modal-actions {
-  margin-top: 8px;
+  margin-top: 0;
 }
 .expert-modal .expert-close:hover { color: #fff; }
 .expert-modal .expert-sent-ico {

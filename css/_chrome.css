@@ -1182,6 +1182,9 @@ html.rankme-dragging {
   .expert-badge.is-off.is-btn:hover {
     transform: scale(1.14);
   }
+  .expert-badge.is-off.is-btn:hover img {
+    filter: drop-shadow(0 0 0.45px #e6d9ff) drop-shadow(0 0 0.45px #e6d9ff);
+  }
 }
 .expert-badge svg {
   width: 100%;

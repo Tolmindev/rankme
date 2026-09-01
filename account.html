@@ -6,9 +6,9 @@
 <title>Account - RankMe</title>
 <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/rankme.css?v=20260901b">
+<link rel="stylesheet" href="css/rankme.css?v=20260901c">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
-<script src="js/supabaseClient.js?v=20260901a" defer></script>
+<script src="js/supabaseClient.js?v=20260901c" defer></script>
 </head>
 <body class="page-account">
 <div class="aurora" aria-hidden="true"></div>
@@ -334,10 +334,11 @@ function handleRowHtml(profile, opts){
   var own = !!opts.own;
   var handle = profile && profile.handle;
   if (!handle && !own) return '';
+  var input = '<input class="ap-handle-input" id="apHandleInput" maxlength="16" autocomplete="off" spellcheck="false" hidden>';
   if (!handle) {
     return '<div class="ap-handle-row" id="apHandleRow">' +
-      '<span class="ap-handle is-empty" id="apHandle" contenteditable="true" spellcheck="false" data-empty="1">Set your profile link</span>' +
-      '</div>';
+      '<button type="button" class="ap-handle is-empty" id="apHandleCta">Set your profile link</button>' +
+      input + '</div>';
   }
   var wait = own && typeof handleCooldownMs === 'function' && handleCooldownMs(profile.handle_changed_at) > 0;
   var waitLbl = wait && typeof handleWaitLabel === 'function' ? handleWaitLabel(profile.handle_changed_at) : '';
@@ -347,27 +348,75 @@ function handleRowHtml(profile, opts){
       (wait ? waitLbl : 'Change handle') + '"' + (wait ? ' disabled' : '') + '>' + HANDLE_PENCIL + '</button>';
   }
   return '<div class="ap-handle-row" id="apHandleRow">' +
-    '<span class="ap-handle" id="apHandle" data-handle="' + handle + '">rankme.lol/u/' + handle + '</span>' +
-    pencil + '</div>';
+    '<button type="button" class="ap-handle" id="apHandleCopy" data-handle="' + handle + '">rankme.lol/u/' + handle + '</button>' +
+    pencil + input + '</div>';
 }
 
 function wireHandleEdit(profile){
-  var el = document.getElementById('apHandle');
+  var row = document.getElementById('apHandleRow');
+  var input = document.getElementById('apHandleInput');
   var hint = document.getElementById('apHint');
-  if (!el) return;
-  var state = profile && profile.handle ? { handle: profile.handle, changed: profile.handle_changed_at } : { handle: '', changed: null };
-  var editing = false;
+  if (!row || !input) return;
+  var state = {
+    handle: (profile && profile.handle) || '',
+    changed: (profile && profile.handle_changed_at) || null
+  };
   var showHint = function (msg) {
     if (hint) hint.textContent = msg || '';
   };
-  var paintSet = function () {
-    var row = document.getElementById('apHandleRow');
-    if (!row) return;
+  var idle = function () {
     row.outerHTML = handleRowHtml({ handle: state.handle, handle_changed_at: state.changed }, { own: true });
     wireHandleEdit({ handle: state.handle, handle_changed_at: state.changed });
   };
-  var copyHandle = async function () {
-    if (!state.handle) return;
+  var startEdit = function () {
+    if (state.handle && typeof handleCooldownMs === 'function' && handleCooldownMs(state.changed) > 0) {
+      showHint(typeof handleWaitLabel === 'function' ? handleWaitLabel(state.changed) : 'Wait to change');
+      return;
+    }
+    var cta = document.getElementById('apHandleCta');
+    var copy = document.getElementById('apHandleCopy');
+    var pen = document.getElementById('apHandleEdit');
+    if (cta) cta.hidden = true;
+    if (copy) copy.hidden = true;
+    if (pen) pen.hidden = true;
+    input.hidden = false;
+    input.value = state.handle || '';
+    input.focus();
+    input.select();
+  };
+  var finish = async function (save) {
+    if (input.hidden) return;
+    var raw = (input.value || '').replace(/\s+/g, '').trim();
+    if (!save || (!raw && !state.handle) || raw === state.handle) {
+      idle();
+      showHint('');
+      return;
+    }
+    if (typeof validateHandle === 'function') {
+      var v = validateHandle(raw);
+      if (!v.ok) {
+        showHint(v.error);
+        input.focus();
+        return;
+      }
+      raw = v.clean;
+    }
+    try {
+      var saved = await setProfileHandle(raw);
+      state.handle = saved.handle;
+      state.changed = saved.handle_changed_at || new Date().toISOString();
+      idle();
+      showHint('');
+    } catch (e) {
+      showHint(e.message || 'Could not save');
+      input.focus();
+    }
+  };
+  var cta = document.getElementById('apHandleCta');
+  var copy = document.getElementById('apHandleCopy');
+  var pen = document.getElementById('apHandleEdit');
+  if (cta) cta.addEventListener('click', startEdit);
+  if (copy) copy.addEventListener('click', async function () {
     var url = typeof publicHandleUrl === 'function' ? publicHandleUrl(state.handle) : ('https://rankme.lol/u/' + state.handle);
     try {
       await navigator.clipboard.writeText(url);
@@ -376,118 +425,20 @@ function wireHandleEdit(profile){
     } catch (e) {
       showHint('Could not copy');
     }
-  };
-  var startEdit = function () {
-    if (editing) return;
-    var wait = state.handle && typeof handleCooldownMs === 'function' && handleCooldownMs(state.changed) > 0;
-    if (wait) {
-      showHint(typeof handleWaitLabel === 'function' ? handleWaitLabel(state.changed) : 'Wait to change');
-      return;
-    }
-    editing = true;
-    el.classList.remove('is-empty');
-    el.classList.add('is-editing');
-    el.setAttribute('contenteditable', 'true');
-    el.textContent = state.handle || '';
-    el.focus();
-    var sel = window.getSelection();
-    if (sel) {
-      var r = document.createRange();
-      r.selectNodeContents(el);
-      sel.removeAllRanges();
-      sel.addRange(r);
-    }
-  };
-  var finish = async function (save) {
-    if (!editing && !el.getAttribute('data-empty')) return;
-    var raw = (el.textContent || '').replace(/\s+/g, '').trim();
-    editing = false;
-    if (!save) {
-      paintSet();
-      showHint('');
-      return;
-    }
-    if (!raw && !state.handle) {
-      el.textContent = 'Set your profile link';
-      el.classList.add('is-empty');
-      el.setAttribute('data-empty', '1');
-      showHint('');
-      return;
-    }
-    if (raw === state.handle) {
-      paintSet();
-      showHint('');
-      return;
-    }
-    if (typeof validateHandle === 'function') {
-      var v = validateHandle(raw);
-      if (!v.ok) {
-        showHint(v.error);
-        el.focus();
-        editing = true;
-        return;
-      }
-      raw = v.clean;
-    }
-    try {
-      var row = await setProfileHandle(raw);
-      state.handle = row.handle;
-      state.changed = row.handle_changed_at || new Date().toISOString();
-      paintSet();
-      showHint('');
-    } catch (e) {
-      showHint(e.message || 'Could not save');
-      editing = true;
-      el.focus();
-    }
-  };
-
-  el.addEventListener('click', function (e) {
-    if (el.getAttribute('data-empty')) return;
-    if (editing) return;
+  });
+  if (pen) pen.addEventListener('click', function (e) {
     e.preventDefault();
-    copyHandle();
+    startEdit();
   });
-  el.addEventListener('focus', function () {
-    if (el.getAttribute('data-empty')) {
-      el.textContent = '';
-      el.classList.remove('is-empty');
-      el.removeAttribute('data-empty');
-      editing = true;
-    }
-  });
-  el.addEventListener('beforeinput', function (e) {
-    if (e.inputType === 'insertParagraph' || e.inputType === 'insertLineBreak') {
-      e.preventDefault();
-      return;
-    }
-    if (!e.data) return;
-    var sel = window.getSelection();
-    var selected = sel && sel.toString() ? sel.toString().length : 0;
-    var next = (el.textContent || '').length - selected + e.data.length;
-    if (next > 16) {
-      e.preventDefault();
-      showHint('16 characters max');
-    }
-  });
-  el.addEventListener('keydown', function (e) {
-    if (e.key === 'Enter') { e.preventDefault(); el.blur(); }
+  input.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') { e.preventDefault(); input.blur(); }
     if (e.key === 'Escape') { e.preventDefault(); finish(false); }
   });
-  el.addEventListener('blur', function () { finish(true); });
-
-  var pen = document.getElementById('apHandleEdit');
-  if (pen) {
-    pen.addEventListener('click', function (e) {
-      e.preventDefault();
-      e.stopPropagation();
-      if (pen.classList.contains('is-wait')) {
-        showHint(pen.getAttribute('aria-label') || '');
-        return;
-      }
-      startEdit();
-    });
-  }
+  input.addEventListener('input', function () {
+    if (input.value.length >= 16) showHint('16 characters max');
+    else if (hint && hint.textContent === '16 characters max') showHint('');
+  });
+  input.addEventListener('blur', function () { finish(true); });
 }
 
 function closeExpertModals(){
@@ -578,6 +529,10 @@ function wireExpertUi(){
       await refreshExpertBadge();
     } catch (e) {}
   };
+  document.addEventListener('mousedown', function (e) {
+    var btn = e.target.closest && e.target.closest('[data-expert-btn]');
+    if (btn) e.preventDefault();
+  });
   document.addEventListener('click', function (e) {
     var btn = e.target.closest && e.target.closest('[data-expert-btn]');
     if (!btn) return;

@@ -1308,6 +1308,9 @@ html.rankme-dragging {
   .expert-badge.is-off.is-btn:hover {
     transform: scale(1.14);
   }
+  .expert-badge.is-off.is-btn:hover img {
+    filter: drop-shadow(0 0 0.45px #e6d9ff) drop-shadow(0 0 0.45px #e6d9ff);
+  }
 }
 .expert-badge svg {
   width: 100%;
@@ -6029,7 +6032,7 @@ body > .toast {
 }
 .ap-name.is-edit:focus {
   padding: 5px 14px;
-  margin: -5px -14px;
+  margin: -5px 0;
   border-radius: 999px;
   background: rgba(18, 14, 28, 0.55);
   box-shadow: inset 0 0 0 1px rgba(200, 160, 240, 0.4);
@@ -6829,10 +6832,8 @@ body.ach-focus-open { overflow: hidden; }
   width: 26px;
   height: 26px;
   flex-basis: 26px;
-  transition: margin-left 0.18s ease, transform 0.18s ease;
-}
-.ap-name-row:focus-within .expert-badge {
-  margin-left: 16px;
+  position: relative;
+  z-index: 1;
 }
 .ap-handle-row {
   display: flex;
@@ -6841,29 +6842,42 @@ body.ach-focus-open { overflow: hidden; }
   min-width: 0;
   margin-top: 4px;
 }
-.ap-handle {
+.ap-handle,
+.ap-handle-input {
   font-size: 0.78rem;
   font-weight: 400;
   color: var(--text-dim);
   letter-spacing: 0.01em;
   line-height: 1.3;
   min-width: 0;
+}
+.ap-handle {
+  appearance: none;
+  background: none;
+  border: 0;
+  padding: 0;
+  font-family: inherit;
+  text-align: left;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   cursor: pointer;
-  outline: none;
 }
 .ap-handle.is-empty {
   cursor: text;
   opacity: 0.85;
-}
-.ap-handle.is-editing,
-.ap-handle.is-empty:focus {
-  color: var(--text);
-  cursor: text;
   overflow: visible;
-  text-overflow: unset;
+}
+.ap-handle-input {
+  width: 16ch;
+  max-width: 100%;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: var(--text);
+  font-family: inherit;
+  outline: none;
+  caret-color: rgba(255, 255, 255, 0.4);
 }
 .ap-handle-edit {
   flex: 0 0 auto;

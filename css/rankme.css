@@ -6018,21 +6018,27 @@ body > .toast {
   font-size: 1.15rem;
   font-weight: 900;
   color: #fff;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  height: 26px;
 }
 .ap-name.is-edit {
-  display: inline-block;
+  display: inline-flex;
   width: max-content;
   max-width: 100%;
   align-self: start;
   cursor: text;
   outline: none;
   padding: 0;
-  line-height: 1.3;
+  line-height: 1;
   caret-color: rgba(255, 255, 255, 0.32);
 }
 .ap-name.is-edit:focus {
   padding: 5px 14px;
   margin: -5px 0;
+  height: auto;
+  min-height: 26px;
   border-radius: 999px;
   background: rgba(18, 14, 28, 0.55);
   box-shadow: inset 0 0 0 1px rgba(200, 160, 240, 0.4);
@@ -6049,7 +6055,7 @@ body > .toast {
   display: none;
   position: absolute;
   left: 0;
-  top: calc(100% + 10px);
+  top: calc(100% + 3px);
   font-size: 0.65rem;
   font-weight: 400;
   letter-spacing: 0.02em;
@@ -6203,15 +6209,35 @@ body > .toast {
     flex-direction: column;
     align-items: center;
     text-align: center;
+    gap: 18px;
   }
   .ap-avatar-wrap { margin: 0 auto; }
-  .ap-text { align-items: center; flex: none; width: 100%; position: relative; }
+  .ap-text {
+    align-items: center;
+    flex: none;
+    width: 100%;
+    position: relative;
+    gap: 6px;
+    padding-bottom: 4px;
+  }
   .ap-name,
   .ap-name.is-edit {
     align-self: center;
     text-align: center;
   }
-  .ap-hint { left: 50%; transform: translateX(-50%); text-align: center; }
+  .ap-name-row,
+  .ap-handle-row {
+    justify-content: center;
+  }
+  .ap-handle-row { margin-top: 0; }
+  .ap-hint {
+    position: static;
+    left: auto;
+    top: auto;
+    transform: none;
+    margin-top: 2px;
+    text-align: center;
+  }
   .ap-avatar { width: 88px; height: 88px; margin: 0 auto; }
   .ap-stats {
     width: 100%;
@@ -6838,26 +6864,21 @@ body.ach-focus-open { overflow: hidden; }
 .ap-handle-row {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   min-width: 0;
-  margin-top: 4px;
-}
-.ap-handle-slash {
-  flex: 0 0 auto;
-  font-size: 0.78rem;
-  font-weight: 400;
-  color: var(--text-dim);
-  line-height: 1.3;
+  margin-top: 1px;
 }
 .ap-handle {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   width: max-content;
   max-width: 100%;
+  height: 20px;
   font-size: 0.78rem;
   font-weight: 400;
   color: var(--text-dim);
   letter-spacing: 0.01em;
-  line-height: 1.3;
+  line-height: 1;
   cursor: text;
   outline: none;
   caret-color: rgba(255, 255, 255, 0.32);
@@ -6869,6 +6890,8 @@ body.ach-focus-open { overflow: hidden; }
   padding: 4px 12px;
   margin: -4px -12px;
   min-width: 8ch;
+  height: auto;
+  min-height: 20px;
   border-radius: 999px;
   background: rgba(18, 14, 28, 0.55);
   box-shadow: inset 0 0 0 1px rgba(200, 160, 240, 0.4);
@@ -6876,17 +6899,25 @@ body.ach-focus-open { overflow: hidden; }
 }
 .ap-handle-copy {
   flex: 0 0 auto;
-  width: 22px;
-  height: 22px;
+  width: 18px;
+  height: 18px;
   padding: 0;
   border: 0;
-  border-radius: 6px;
+  border-radius: 5px;
   background: none;
   color: var(--text-dim);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+}
+.ap-handle-copy::before {
+  content: "";
+  width: 13px;
+  height: 13px;
+  background: currentColor;
+  -webkit-mask: url("../assets/icons/copy.svg") center / contain no-repeat;
+  mask: url("../assets/icons/copy.svg") center / contain no-repeat;
 }
 .ap-handle-copy:hover {
   color: #fff;

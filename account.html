@@ -6,7 +6,7 @@
 <title>Account - RankMe</title>
 <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/rankme.css?v=20260901d">
+<link rel="stylesheet" href="css/rankme.css?v=20260901f">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
 <script src="js/supabaseClient.js?v=20260901d" defer></script>
 </head>
@@ -327,7 +327,6 @@ function wireNameEdit(){
   });
 }
 
-var HANDLE_COPY = '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
 var HANDLE_MAX = 16;
 
 function handleRowHtml(profile, opts){
@@ -335,13 +334,11 @@ function handleRowHtml(profile, opts){
   var own = !!opts.own;
   var handle = profile && profile.handle;
   if (!handle && !own) return '';
-  var slash = '<span class="ap-handle-slash"' + (handle ? '' : ' hidden') + '>/</span>';
   var edit = own ? ' contenteditable="true" spellcheck="false"' : '';
   var copy = handle
-    ? '<button type="button" class="ap-handle-copy" id="apHandleCopy" aria-label="Copy profile link">' + HANDLE_COPY + '</button>'
+    ? '<button type="button" class="ap-handle-copy" id="apHandleCopy" aria-label="Copy profile link"></button>'
     : '';
   return '<div class="ap-handle-row" id="apHandleRow">' +
-    slash +
     '<span class="ap-handle' + (handle ? '' : ' is-empty') + '" id="apHandle"' + edit + '>' +
       (handle || 'Set your profile link') +
     '</span>' + copy + '</div>';
@@ -349,7 +346,6 @@ function handleRowHtml(profile, opts){
 
 function wireHandleEdit(profile){
   var el = document.getElementById('apHandle');
-  var slash = document.querySelector('#apHandleRow .ap-handle-slash');
   var hint = document.getElementById('apHint');
   if (!el) return;
   var own = el.isContentEditable;
@@ -394,7 +390,6 @@ function wireHandleEdit(profile){
     if (!last) {
       el.textContent = '';
       el.classList.remove('is-empty');
-      if (slash) slash.hidden = false;
     }
   });
   el.addEventListener('beforeinput', function (e) {
@@ -438,7 +433,6 @@ function wireHandleEdit(profile){
       e.preventDefault();
       el.textContent = last || 'Set your profile link';
       el.classList.toggle('is-empty', !last);
-      if (slash) slash.hidden = !last;
       showHint('');
       el.blur();
     }
@@ -449,7 +443,6 @@ function wireHandleEdit(profile){
     if (!raw) {
       el.textContent = last || 'Set your profile link';
       el.classList.toggle('is-empty', !last);
-      if (slash) slash.hidden = !last;
       showHint('');
       return;
     }
@@ -463,7 +456,6 @@ function wireHandleEdit(profile){
       if (!v.ok) {
         el.textContent = last || 'Set your profile link';
         el.classList.toggle('is-empty', !last);
-        if (slash) slash.hidden = !last;
         showHint(v.error);
         return;
       }
@@ -478,7 +470,6 @@ function wireHandleEdit(profile){
     } catch (e) {
       el.textContent = last || 'Set your profile link';
       el.classList.toggle('is-empty', !last);
-      if (slash) slash.hidden = !last;
       showHint(e.message || 'Could not save');
     }
   });

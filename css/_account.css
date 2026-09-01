@@ -1458,6 +1458,12 @@ body.ach-focus-open { overflow: hidden; }
   color: #fff;
   font-weight: 800;
 }
+.handle-note {
+  margin: 0 0 4px;
+  font-size: 0.82rem;
+  font-weight: 300;
+  color: var(--text-dim);
+}
 #handleModal .modal-actions {
   margin-top: 8px;
 }

@@ -6,9 +6,9 @@
 <title>Account - RankMe</title>
 <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;500;600;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/rankme.css?v=20260901ag">
+<link rel="stylesheet" href="css/rankme.css?v=20260901ah">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
-<script src="js/supabaseClient.js?v=20260901aa" defer></script>
+<script src="js/supabaseClient.js?v=20260901ah" defer></script>
 </head>
 <body class="page-account">
 <div class="aurora" aria-hidden="true"></div>
@@ -154,10 +154,20 @@ function bindSquishy(root){
 }
 
 function bindSavedMarquee(root){
-  (root || document).querySelectorAll('.sc-title').forEach(titleEl=>{
-    const textEl = titleEl.querySelector('.sc-title-text');
-    if (textEl && textEl.scrollWidth > titleEl.clientWidth + 2) titleEl.classList.add('is-long');
-  });
+  var run = function () {
+    (root || document).querySelectorAll('.sc-title').forEach(function (titleEl) {
+      var textEl = titleEl.querySelector('.sc-title-text');
+      if (!textEl) return;
+      titleEl.classList.remove('is-long');
+      var cap = textEl.style.maxWidth;
+      textEl.style.maxWidth = 'none';
+      var long = textEl.scrollWidth > titleEl.clientWidth + 2;
+      textEl.style.maxWidth = cap;
+      if (long) titleEl.classList.add('is-long');
+    });
+  };
+  run();
+  requestAnimationFrame(run);
 }
 
 function closeSavedMenus(except){
@@ -354,7 +364,7 @@ function handleRowHtml(profile, opts){
   var handle = (profile && profile.handle) || '';
   if (!handle && !own) return '';
   var edit = own ? ' contenteditable="true" spellcheck="false" inputmode="text" enterkeyhint="done"' : '';
-  var copy = handle
+  var copy = (own && handle)
     ? '<button type="button" class="ap-handle-copy" id="apHandleCopy" aria-label="Copy RankMe link"></button>'
     : '';
   return '<div class="ap-handle-row" id="apHandleRow">' +
@@ -881,8 +891,8 @@ async function renderPublicProfile(userId, profile){
     : `<div class="ap-avatar ap-fallback">${(name[0] || 'U').toUpperCase()}</div>`;
   var viewer = typeof getSessionUser === 'function' ? await getSessionUser() : null;
   var own = !!(viewer && String(viewer.id) === String(userId));
-  const badge = await expertHtmlFor(userId, own);
-  const handleHtml = handleRowHtml(profile || { handle: null }, { own: own });
+  const badge = await expertHtmlFor(userId, false);
+  const handleHtml = handleRowHtml(profile || { handle: null }, { own: false });
 
   panel.innerHTML = `
     ${profileBlock(name, av, String(rows.length), '0', fc(totalLikes), false, badge, handleHtml)}
@@ -1019,6 +1029,10 @@ async function bootAccount(){
         return;
       }
       await renderPublicProfile(resolved.userId, resolved);
+      if (resolved.handle && history.replaceState) {
+        var pretty = '/u/' + encodeURIComponent(resolved.handle);
+        if (location.pathname !== pretty) history.replaceState(null, '', pretty + location.hash);
+      }
       return;
     }
 

@@ -716,7 +716,7 @@ async function isHandleTaken(handle) {
 function profileHrefFor(userId) {
   if (!userId) return '';
   var h = window.__rmHandles[userId];
-  if (h) return 'account.html?u=' + encodeURIComponent(h);
+  if (h) return '/u/' + encodeURIComponent(h);
   return 'account.html?u=' + encodeURIComponent(String(userId));
 }
 

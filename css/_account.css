@@ -362,6 +362,17 @@ body > .toast {
   margin: 0 0 28px;
   padding: 0;
 }
+.account-profile.is-public .ap-text {
+  gap: 2px;
+}
+.account-profile.is-public .ap-name {
+  height: auto;
+  line-height: 1.15;
+}
+.account-profile.is-public .ap-handle-row {
+  min-height: 0;
+  margin-top: 0;
+}
 .ap-avatar-wrap {
   flex-shrink: 0;
 }
@@ -596,6 +607,10 @@ body > .toast {
     position: relative;
     gap: 6px;
     padding-bottom: 4px;
+  }
+  .account-profile.is-public .ap-text {
+    gap: 2px;
+    padding-bottom: 0;
   }
   .ap-name,
   .ap-name.is-edit {
@@ -1301,7 +1316,7 @@ body.ach-focus-open { overflow: hidden; }
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: margin-left 0.18s ease;
+  transition: margin-left 0.18s ease, transform 0.15s ease;
 }
 .ap-handle-copy::before {
   content: "";
@@ -1311,8 +1326,13 @@ body.ach-focus-open { overflow: hidden; }
   -webkit-mask: url("../assets/icons/copy.svg") center / contain no-repeat;
   mask: url("../assets/icons/copy.svg") center / contain no-repeat;
 }
-.ap-handle-copy:hover {
-  color: #fff;
+@media (hover: hover) {
+  .ap-handle-copy:hover::before {
+    background: var(--btn-holo);
+  }
+}
+.ap-handle-copy:active {
+  transform: scale(1.2);
 }
 @media (min-width: 721px) {
   .ap-name.is-edit:hover,

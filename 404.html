@@ -20,8 +20,10 @@
   var parts = path.split('/').filter(Boolean);
   if (parts.length === 2 && parts[0].toLowerCase() === 'u') {
     var handle = String(parts[1] || '').toLowerCase();
-    if (/^[a-z0-9_]{3,16}$/.test(handle)) {
-      location.replace('/account.html?u=' + encodeURIComponent(handle) + location.search + location.hash);
+    if (/^[a-z0-9_]{3,16}$/.test(handle) && !reserved[handle]) {
+      var q = new URLSearchParams(location.search);
+      q.set('u', handle);
+      location.replace('/account.html?' + q.toString() + location.hash);
       return;
     }
   }

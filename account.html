@@ -6,9 +6,9 @@
 <title>Account - RankMe</title>
 <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/rankme.css?v=20260901j">
+<link rel="stylesheet" href="css/rankme.css?v=20260901m">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
-<script src="js/supabaseClient.js?v=20260901d" defer></script>
+<script src="js/supabaseClient.js?v=20260901m" defer></script>
 </head>
 <body class="page-account">
 <div class="aurora" aria-hidden="true"></div>
@@ -118,7 +118,7 @@
 <script src="js/footer.js?v=20260827q" defer></script>
 <script src="js/catalog.js?v=20260827q"></script>
 <script src="js/holo-card.js?v=20260827q"></script>
-<script src="js/achievements.js?v=20260827q"></script>
+<script src="js/achievements.js?v=20260901m"></script>
 
 <script>
 const panel = document.getElementById('panel');
@@ -551,9 +551,14 @@ async function expertHtmlFor(userId, own){
   if (own && typeof getMyExpertRequest === 'function') {
     var mine = await getMyExpertRequest();
     status = (mine && mine.status) || '';
-  } else if (typeof fetchApprovedExpertIds === 'function') {
-    await fetchApprovedExpertIds();
-    status = (typeof isApprovedExpert === 'function' && isApprovedExpert(userId)) ? 'approved' : '';
+  } else if (userId) {
+    try {
+      var client = typeof initSupabase === 'function' ? await initSupabase() : null;
+      if (client) {
+        var res = await client.from('expert_requests').select('user_id').eq('user_id', userId).eq('status', 'approved').maybeSingle();
+        if (res.data) status = 'approved';
+      }
+    } catch (e) {}
   }
   var on = status === 'approved';
   var html = expertBadgeHtml({ on: on, clickable: !!own && !on });
@@ -633,6 +638,7 @@ function wireExpertUi(){
 
 async function renderCabinet(user){
   if (typeof updateNavAuth === 'function') updateNavAuth();
+  if (typeof syncMyProfile === 'function') syncMyProfile(user);
   const name = (typeof rankmeDisplayName === 'function' ? rankmeDisplayName(user) : (user.user_metadata?.full_name || user.email || 'User'));
   const avatar = user.user_metadata?.avatar_url || user.user_metadata?.picture || '';
   const av = avatar
@@ -840,8 +846,8 @@ async function renderPublicProfile(userId, profile){
   }
 
   const first = rows[0] || {};
-  const name = (first.author_name || (profile && profile.handle) || 'User').replace(/</g, '');
-  const avatar = first.author_avatar || '';
+  const name = ((profile && profile.display_name) || first.author_name || (profile && profile.handle) || 'User').replace(/</g, '');
+  const avatar = (profile && profile.avatar_url) || first.author_avatar || '';
   const totalLikes = rows.reduce((s, r) => s + (Number(r.like_count) || 0), 0);
   const fc = typeof formatCount === 'function' ? formatCount : String;
   const av = avatar
@@ -877,12 +883,10 @@ async function renderPublicProfile(userId, profile){
 
   wireHandleEdit(profile || { handle: null });
 
-  var extra = rows.length ? ['certified-sheep'] : [];
-  var viewer = window.__rankmeUser;
-  if (window.RankMeAch) {
-    if (viewer && String(viewer.id) === String(userId)) RankMeAch.paint(viewer);
-    else RankMeAch.paint(null, extra);
-  }
+  var achIds = (profile && Array.isArray(profile.ach) && profile.ach.length)
+    ? profile.ach
+    : (rows.length ? ['certified-sheep'] : []);
+  if (window.RankMeAch) RankMeAch.paint(null, achIds, { exact: true });
 
   (async function () {
     var el = document.getElementById('statBattles');
@@ -980,6 +984,8 @@ async function bootAccount(){
     const params = new URLSearchParams(location.search);
     const publicKey = params.get('u');
     if (publicKey) {
+      var me = typeof getSessionUser === 'function' ? await getSessionUser() : null;
+      if (me && typeof syncMyProfile === 'function') await syncMyProfile(me);
       var resolved = typeof resolveProfileKey === 'function' ? await resolveProfileKey(publicKey) : { userId: publicKey };
       if (!resolved || !resolved.userId) {
         panel.removeAttribute('aria-busy');

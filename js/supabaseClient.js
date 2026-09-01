@@ -81,6 +81,7 @@ async function setRankmeDisplayName(raw) {
   try {
     await client.from('tierlists').update({ author_name: check.clean }).eq('user_id', user.id);
   } catch (e) {}
+  try { await syncMyProfile(user, check.clean); } catch (e) {}
   return check.clean;
 }
 
@@ -700,6 +701,7 @@ var HANDLE_RESERVED = {
   static:1, auth:1, settings:1, rankme:1, 'null':1, undefined:1
 };
 window.__rmHandles = window.__rmHandles || {};
+var PROFILE_COLS = 'user_id, handle, handle_changed_at, display_name, avatar_url, ach';
 
 function sanitizeHandle(raw) {
   return String(raw || '').trim().toLowerCase();
@@ -742,7 +744,7 @@ async function getProfileByUserId(userId) {
   try {
     var client = await initSupabase();
     if (!client) return null;
-    var res = await client.from('profiles').select('user_id, handle, handle_changed_at').eq('user_id', userId).maybeSingle();
+    var res = await client.from('profiles').select(PROFILE_COLS).eq('user_id', userId).maybeSingle();
     if (res.error) return null;
     var row = res.data || null;
     if (row && row.handle) window.__rmHandles[row.user_id] = row.handle;
@@ -756,7 +758,7 @@ async function getProfileByHandle(handle) {
   try {
     var client = await initSupabase();
     if (!client) return null;
-    var res = await client.from('profiles').select('user_id, handle, handle_changed_at').eq('handle', h).maybeSingle();
+    var res = await client.from('profiles').select(PROFILE_COLS).eq('handle', h).maybeSingle();
     if (res.error || !res.data) return null;
     window.__rmHandles[res.data.user_id] = res.data.handle;
     return res.data;
@@ -768,11 +770,11 @@ async function resolveProfileKey(u) {
   if (!raw) return null;
   if (UUID_RE.test(raw)) {
     var byId = await getProfileByUserId(raw);
-    return { userId: raw, handle: (byId && byId.handle) || null, handle_changed_at: (byId && byId.handle_changed_at) || null };
+    return { userId: raw, handle: (byId && byId.handle) || null, handle_changed_at: (byId && byId.handle_changed_at) || null, display_name: (byId && byId.display_name) || null, avatar_url: (byId && byId.avatar_url) || null };
   }
   var byH = await getProfileByHandle(raw);
   if (!byH) return null;
-  return { userId: byH.user_id, handle: byH.handle, handle_changed_at: byH.handle_changed_at };
+  return { userId: byH.user_id, handle: byH.handle, handle_changed_at: byH.handle_changed_at, display_name: byH.display_name, avatar_url: byH.avatar_url };
 }
 
 async function fetchProfileHandles(ids) {
@@ -813,4 +815,18 @@ async function setProfileHandle(raw) {
   }
   window.__rmHandles[user.id] = row.handle;
   return row;
+}
+
+async function syncMyProfile(user, nameOverride) {
+  if (!user) return;
+  try {
+    var client = await initSupabase();
+    if (!client) return;
+    var name = nameOverride || (typeof rankmeDisplayName === 'function' ? rankmeDisplayName(user) : '');
+    var av = (user.user_metadata && (user.user_metadata.avatar_url || user.user_metadata.picture)) || '';
+    var ach = [];
+    if (window.RankMeAch && typeof RankMeAch.read === 'function') ach = RankMeAch.read(user);
+    else if (user.user_metadata && Array.isArray(user.user_metadata.ach)) ach = user.user_metadata.ach;
+    await client.rpc('sync_my_profile', { p_name: name || null, p_avatar: av || null, p_ach: ach });
+  } catch (e) {}
 }

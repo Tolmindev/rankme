@@ -98,6 +98,9 @@
       if (!client) return;
       await client.auth.updateUser({ data: { ach: ids } });
     } catch (e) {}
+    if (typeof syncMyProfile === 'function') {
+      try { await syncMyProfile(user); } catch (e) {}
+    }
   }
 
   function esc(s) {
@@ -170,11 +173,14 @@
     return catalog.filter(function (c) { return map[c.id]; });
   }
 
-  function paint(user, extraIds) {
-    var ids = read(user);
-    (extraIds || []).forEach(function (id) {
-      if (ids.indexOf(id) < 0) ids.push(id);
-    });
+  function paint(user, extraIds, opts) {
+    var exact = !!(opts && opts.exact);
+    var ids = exact ? uniqueIds(extraIds || []) : read(user);
+    if (!exact) {
+      (extraIds || []).forEach(function (id) {
+        if (ids.indexOf(id) < 0) ids.push(id);
+      });
+    }
     var items = itemsFor(ids);
     var grid = document.getElementById('achGrid');
     var stage = document.getElementById('achStage');

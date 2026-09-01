@@ -6939,9 +6939,10 @@ body.ach-focus-open { overflow: hidden; }
 .expert-modal {
   position: relative;
   isolation: isolate;
-  width: min(380px, 92vw);
-  padding: 22px 22px 16px;
+  width: min(400px, 92vw);
+  padding: 28px 36px 20px;
   overflow: hidden;
+  text-align: center;
   border: 1.5px solid transparent;
   background:
     linear-gradient(#161224, #161224) padding-box,
@@ -6966,28 +6967,29 @@ body.ach-focus-open { overflow: hidden; }
   z-index: 1;
 }
 .expert-modal .expert-preview {
-  width: 52px;
-  height: 52px;
-  margin: 0 auto 10px;
+  width: 72px;
+  height: 72px;
+  flex: 0 0 72px;
+  margin: 0 auto 14px;
 }
 .expert-modal h3 {
-  font-size: 1.42rem;
+  font-size: 1.22rem;
   font-weight: 900;
   letter-spacing: -0.02em;
-  line-height: 1.15;
-  margin: 0 0 10px;
+  line-height: 1.2;
+  margin: 0 0 12px;
 }
 .expert-modal .expert-perks {
   list-style: none;
-  margin: 0 0 14px;
+  margin: 0 0 16px;
   padding: 0;
   text-align: left;
 }
 .expert-modal .expert-perks li {
   position: relative;
-  padding: 1px 0 1px 14px;
+  padding: 2px 0 2px 14px;
   color: #b8b0c8;
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   font-weight: 400;
   line-height: 1.4;
 }
@@ -6995,7 +6997,7 @@ body.ach-focus-open { overflow: hidden; }
   content: "";
   position: absolute;
   left: 0;
-  top: 0.62em;
+  top: 0.65em;
   width: 5px;
   height: 5px;
   border-radius: 50%;
@@ -7004,13 +7006,13 @@ body.ach-focus-open { overflow: hidden; }
 .expert-modal label {
   display: block;
   font-size: 0.68rem;
-  font-weight: 400;
+  font-weight: 200;
   color: var(--text-dim);
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 .expert-modal .expert-input {
   width: 100%;
-  height: 42px;
+  height: 44px;
   border-radius: 999px;
   border: 1.5px solid rgba(160, 130, 220, 0.35);
   background: #12101c;
@@ -7021,7 +7023,7 @@ body.ach-focus-open { overflow: hidden; }
   font-size: 0.84rem;
   box-sizing: border-box;
   outline: none;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 .expert-modal .expert-input::placeholder {
   color: #8a82a8;
@@ -7034,10 +7036,10 @@ body.ach-focus-open { overflow: hidden; }
 .expert-modal .expert-apply.cta {
   width: 100%;
   min-width: 0;
-  min-height: 46px;
-  height: 46px;
+  min-height: 48px;
+  height: 48px;
   padding: 0 24px;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   font-size: 1rem;
 }
 .expert-modal .expert-apply[disabled] {
@@ -7053,10 +7055,10 @@ body.ach-focus-open { overflow: hidden; }
   margin: 6px 0 8px;
 }
 .expert-modal .expert-note {
-  margin: 0 0 8px;
+  margin: 0 0 10px;
   font-size: 0.68rem;
   color: var(--text-dim);
-  font-weight: 400;
+  font-weight: 200;
 }
 .expert-modal .expert-close {
   display: block;
@@ -7065,7 +7067,7 @@ body.ach-focus-open { overflow: hidden; }
   border: 0;
   color: #9a90b4;
   font: inherit;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 0.82rem;
   cursor: pointer;
   padding: 4px 0 0;
@@ -7084,7 +7086,7 @@ body.ach-focus-open { overflow: hidden; }
 .handle-note {
   margin: 0 0 4px;
   font-size: 0.82rem;
-  font-weight: 300;
+  font-weight: 200;
   color: var(--text-dim);
 }
 #handleModal .modal-actions {

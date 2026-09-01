@@ -6,9 +6,9 @@
 <title>Account - RankMe</title>
 <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/rankme.css?v=20260901p">
+<link rel="stylesheet" href="css/rankme.css?v=20260901q">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
-<script src="js/supabaseClient.js?v=20260901p" defer></script>
+<script src="js/supabaseClient.js?v=20260901q" defer></script>
 </head>
 <body class="page-account">
 <div class="aurora" aria-hidden="true"></div>
@@ -431,13 +431,21 @@ function wireHandleEdit(profile){
     document.execCommand('insertText', false, text.slice(0, room));
     if (text.length > room) apHint('16 characters max');
   });
+  var takenSeq = 0;
   el.addEventListener('input', function () {
     var raw = cleanRaw();
     if (!raw) { apHint(''); return; }
     if (typeof validateHandle === 'function') {
       var v = validateHandle(raw);
-      apHint(v.ok || raw === last ? '' : v.error, 0);
+      if (raw === last) { apHint(''); return; }
+      if (!v.ok) { apHint(v.error, 0); return; }
     }
+    var seq = ++takenSeq;
+    if (typeof isHandleTaken !== 'function') return;
+    isHandleTaken(raw).then(function (taken) {
+      if (seq !== takenSeq || cleanRaw() !== raw) return;
+      apHint(taken ? 'Taken' : '', 0);
+    });
   });
   el.addEventListener('keydown', function (e) {
     if (e.key === 'Enter') { e.preventDefault(); el.blur(); }
@@ -467,6 +475,12 @@ function wireHandleEdit(profile){
         return;
       }
       raw = v.clean;
+    }
+    if (typeof isHandleTaken === 'function' && await isHandleTaken(raw)) {
+      el.textContent = last || 'Set your profile link';
+      el.classList.toggle('is-empty', !last);
+      apHint('Taken');
+      return;
     }
     el.textContent = last || 'Set your profile link';
     el.classList.toggle('is-empty', !last);

@@ -714,6 +714,21 @@ function validateHandle(raw) {
   return { ok: true, clean: h };
 }
 
+async function isHandleTaken(handle) {
+  var h = sanitizeHandle(handle);
+  if (!h) return false;
+  try {
+    var client = await initSupabase();
+    if (!client) return false;
+    var res = await client.from('profiles').select('user_id').eq('handle', h).maybeSingle();
+    if (res.error || !res.data) return false;
+    var user = await getSessionUser();
+    return !user || String(res.data.user_id) !== String(user.id);
+  } catch (e) {
+    return false;
+  }
+}
+
 function profileHrefFor(userId) {
   if (!userId) return '';
   var h = window.__rmHandles[userId];

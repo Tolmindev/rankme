@@ -6940,7 +6940,7 @@ body.ach-focus-open { overflow: hidden; }
   position: relative;
   isolation: isolate;
   width: min(400px, 92vw);
-  padding: 28px 36px 20px;
+  padding: 28px 28px 20px;
   overflow: hidden;
   text-align: center;
   border: 1.5px solid transparent;
@@ -6973,15 +6973,15 @@ body.ach-focus-open { overflow: hidden; }
   margin: 0 auto 14px;
 }
 .expert-modal h3 {
-  font-size: 1.22rem;
+  font-size: 1.38rem;
   font-weight: 900;
-  letter-spacing: -0.02em;
-  line-height: 1.2;
-  margin: 0 0 12px;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  margin: 0 0 10px;
 }
 .expert-modal .expert-perks {
   list-style: none;
-  margin: 0 0 16px;
+  margin: 0 0 12px;
   padding: 0;
   text-align: left;
 }
@@ -7083,7 +7083,7 @@ body.ach-focus-open { overflow: hidden; }
   color: #fff;
   font-weight: 800;
 }
-.handle-note {
+.modal p.handle-note {
   margin: 0 0 4px;
   font-size: 0.82rem;
   font-weight: 200;

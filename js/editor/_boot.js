@@ -401,7 +401,9 @@ function setupCommunityUI() {
   const av = m.authorAvatar
     ? '<img class="cb-avatar" src="' + String(m.authorAvatar).replace(/"/g, '') + '" alt="">'
     : '<div class="cb-avatar cb-fallback">' + String(m.authorName || 'U').charAt(0).toUpperCase() + '</div>';
-  const profileHref = m.userId ? ('account.html?u=' + encodeURIComponent(String(m.userId))) : '';
+  const profileHref = m.userId
+    ? ((typeof profileHrefFor === 'function' ? profileHrefFor(m.userId) : '') || ('account.html?u=' + encodeURIComponent(String(m.userId))))
+    : '';
   const nameHtml = profileHref
     ? ('<a class="cb-name" href="' + profileHref + '">' + String(m.authorName || 'User').replace(/</g, '') + '</a>')
     : ('<b class="cb-name">' + String(m.authorName || 'User').replace(/</g, '') + '</b>');
@@ -420,6 +422,13 @@ function setupCommunityUI() {
         '</span>' +
         '<span class="cb-like-n">' + likes + '</span></button></div>';
   bar.hidden = false;
+  if (m.userId && typeof fetchProfileHandles === 'function') {
+    fetchProfileHandles([m.userId]).then(function () {
+      var href = typeof profileHrefFor === 'function' ? profileHrefFor(m.userId) : '';
+      if (!href) return;
+      bar.querySelectorAll('a[href^="account.html"]').forEach(function (a) { a.setAttribute('href', href); });
+    });
+  }
   if (typeof fetchApprovedExpertIds === 'function') {
     fetchApprovedExpertIds().then(function () {
       if (!communityMeta || typeof expertBadgeHtml !== 'function') return;

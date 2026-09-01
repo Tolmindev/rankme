@@ -668,17 +668,149 @@ async function cancelExpertRequest() {
 
 function notifyExpertApplication(user, link) {
   var name = rankmeDisplayName(user);
-  var profile = 'https://rankme.lol/account.html?u=' + encodeURIComponent(user.id);
-  fetch('https://formsubmit.co/ajax/lolrankme@gmail.com', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-    body: JSON.stringify({
-      _subject: 'RankMe Expert application — ' + name,
-      _template: 'box',
-      name: name,
-      profile: profile,
-      channel: link,
-      user_id: user.id,
-    }),
-  }).catch(function () {});
+  function send(profile) {
+    fetch('https://formsubmit.co/ajax/lolrankme@gmail.com', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({
+        _subject: 'RankMe Expert application — ' + name,
+        _template: 'box',
+        name: name,
+        profile: profile,
+        channel: link,
+        user_id: user.id,
+      }),
+    }).catch(function () {});
+  }
+  getProfileByUserId(user.id).then(function (p) {
+    send((p && p.handle) ? ('https://rankme.lol/u/' + p.handle) : ('https://rankme.lol/account.html?u=' + encodeURIComponent(user.id)));
+  }).catch(function () {
+    send('https://rankme.lol/account.html?u=' + encodeURIComponent(user.id));
+  });
+}
+
+/* ---- Profile handles ---- */
+
+var HANDLE_RE = /^[a-z0-9_]{3,16}$/;
+var UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+var HANDLE_RESERVED = {
+  admin:1, api:1, css:1, js:1, account:1, battle:1, builder:1, create:1, dmca:1,
+  index:1, privacy:1, terms:1, tier:1, t:1, assets:1, templates:1, u:1, login:1,
+  logout:1, profile:1, profiles:1, expert:1, experts:1, support:1, help:1, www:1,
+  static:1, auth:1, settings:1, rankme:1, 'null':1, undefined:1
+};
+window.__rmHandles = window.__rmHandles || {};
+
+function sanitizeHandle(raw) {
+  return String(raw || '').trim().toLowerCase();
+}
+
+function validateHandle(raw) {
+  var h = sanitizeHandle(raw);
+  if (h.length < 3) return { ok: false, error: 'At least 3 characters' };
+  if (h.length > 16) return { ok: false, error: '16 characters max' };
+  if (!/^[a-z0-9_]+$/.test(h)) return { ok: false, error: 'Letters, numbers, _' };
+  if (HANDLE_RESERVED[h]) return { ok: false, error: 'This handle is reserved' };
+  return { ok: true, clean: h };
+}
+
+function profileHrefFor(userId) {
+  if (!userId) return '';
+  var h = window.__rmHandles[userId];
+  if (h) return 'account.html?u=' + encodeURIComponent(h);
+  return 'account.html?u=' + encodeURIComponent(String(userId));
+}
+
+function publicHandleUrl(handle) {
+  return 'https://rankme.lol/u/' + handle;
+}
+
+function handleCooldownMs(changedAt) {
+  if (!changedAt) return 0;
+  var t = new Date(changedAt).getTime();
+  if (!isFinite(t)) return 0;
+  return Math.max(0, t + 30 * 24 * 60 * 60 * 1000 - Date.now());
+}
+
+function handleWaitLabel(changedAt) {
+  var t = new Date(new Date(changedAt).getTime() + 30 * 24 * 60 * 60 * 1000);
+  return 'again ' + t.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+}
+
+async function getProfileByUserId(userId) {
+  if (!userId) return null;
+  try {
+    var client = await initSupabase();
+    if (!client) return null;
+    var res = await client.from('profiles').select('user_id, handle, handle_changed_at').eq('user_id', userId).maybeSingle();
+    if (res.error) return null;
+    var row = res.data || null;
+    if (row && row.handle) window.__rmHandles[row.user_id] = row.handle;
+    return row;
+  } catch (e) { return null; }
+}
+
+async function getProfileByHandle(handle) {
+  var h = sanitizeHandle(handle);
+  if (!HANDLE_RE.test(h)) return null;
+  try {
+    var client = await initSupabase();
+    if (!client) return null;
+    var res = await client.from('profiles').select('user_id, handle, handle_changed_at').eq('handle', h).maybeSingle();
+    if (res.error || !res.data) return null;
+    window.__rmHandles[res.data.user_id] = res.data.handle;
+    return res.data;
+  } catch (e) { return null; }
+}
+
+async function resolveProfileKey(u) {
+  var raw = String(u || '').trim();
+  if (!raw) return null;
+  if (UUID_RE.test(raw)) {
+    var byId = await getProfileByUserId(raw);
+    return { userId: raw, handle: (byId && byId.handle) || null, handle_changed_at: (byId && byId.handle_changed_at) || null };
+  }
+  var byH = await getProfileByHandle(raw);
+  if (!byH) return null;
+  return { userId: byH.user_id, handle: byH.handle, handle_changed_at: byH.handle_changed_at };
+}
+
+async function fetchProfileHandles(ids) {
+  var list = [];
+  var seen = {};
+  (ids || []).forEach(function (id) {
+    if (!id || seen[id] || Object.prototype.hasOwnProperty.call(window.__rmHandles, id)) return;
+    seen[id] = 1;
+    list.push(id);
+  });
+  if (!list.length) return window.__rmHandles;
+  try {
+    var client = await initSupabase();
+    if (!client) return window.__rmHandles;
+    var res = await client.from('profiles').select('user_id, handle').in('user_id', list);
+    list.forEach(function (id) {
+      if (window.__rmHandles[id] == null) window.__rmHandles[id] = '';
+    });
+    (res.data || []).forEach(function (r) {
+      if (r.handle) window.__rmHandles[r.user_id] = r.handle;
+    });
+  } catch (e) {}
+  return window.__rmHandles;
+}
+
+async function setProfileHandle(raw) {
+  var check = validateHandle(raw);
+  if (!check.ok) throw new Error(check.error);
+  var user = await getSessionUser();
+  if (!user) throw new Error('Log in first');
+  var client = await initSupabase();
+  if (!client) throw new Error('Could not reach server');
+  var res = await client.rpc('set_profile_handle', { new_handle: check.clean });
+  if (res.error) throw new Error(res.error.message || 'Could not save');
+  var row = res.data || { handle: check.clean };
+  if (typeof row === 'string') {
+    try { row = JSON.parse(row); } catch (e) { row = { handle: check.clean }; }
+  }
+  window.__rmHandles[user.id] = row.handle;
+  return row;
 }

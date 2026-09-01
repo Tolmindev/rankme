@@ -343,7 +343,7 @@
       ? '<img class="cc-av" src="' + escapeHtml(row.author_avatar) + '" alt="">'
       : '<span class="cc-av cc-av-fallback">' + author.charAt(0).toUpperCase() + '</span>';
     var profileHref = row.user_id
-      ? 'account.html?u=' + encodeURIComponent(String(row.user_id))
+      ? ((typeof profileHrefFor === 'function') ? profileHrefFor(row.user_id) : ('account.html?u=' + encodeURIComponent(String(row.user_id))))
       : '';
     var on = typeof isApprovedExpert === 'function' && isApprovedExpert(row.user_id);
     var badge = (on && typeof expertBadgeHtml === 'function') ? expertBadgeHtml({ on: true }) : '';
@@ -469,6 +469,9 @@
       }
       var rows = await listPublicTierlists(48);
       if (!rows || !rows.length) throw new Error('empty');
+      if (typeof fetchProfileHandles === 'function') {
+        await fetchProfileHandles(rows.map(function (r) { return r.user_id; }));
+      }
       state.communityRows = rows;
       state.communityVisible = null;
       paintCommunity();

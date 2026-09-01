@@ -6,9 +6,9 @@
 <title>Account - RankMe</title>
 <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/rankme.css?v=20260831j">
+<link rel="stylesheet" href="css/rankme.css?v=20260901a">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
-<script src="js/supabaseClient.js?v=20260831g" defer></script>
+<script src="js/supabaseClient.js?v=20260901a" defer></script>
 </head>
 <body class="page-account">
 <div class="aurora" aria-hidden="true"></div>
@@ -229,17 +229,18 @@ async function renderLogin(){
 }
 
 
-function profileBlock(name, avatarHtml, lists, battles, likes, editable, expertHtml){
+function profileBlock(name, avatarHtml, lists, battles, likes, editable, expertHtml, handleHtml){
   const safe = name.replace(/</g,'');
   const nameTag = editable
     ? `<b class="ap-name is-edit" id="apName" contenteditable="true" spellcheck="false">${safe}</b>`
     : `<b class="ap-name">${safe}</b>`;
-  const hint = editable ? `<span class="ap-hint" id="apHint"></span>` : '';
+  const hint = editable ? `<span class="ap-hint" id="apHint"></span>` : `<span class="ap-hint" id="apHint"></span>`;
   return `
     <div class="account-profile">
       <div class="ap-avatar-wrap">${avatarHtml}</div>
       <div class="ap-text">
         <div class="ap-name-row">${nameTag}${expertHtml || ''}</div>
+        ${handleHtml || ''}
         ${hint}
       </div>
       <div class="ap-stats" id="apStats">
@@ -324,6 +325,169 @@ function wireNameEdit(){
       showHint(e.message || 'Could not save');
     }
   });
+}
+
+var HANDLE_PENCIL = '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>';
+
+function handleRowHtml(profile, opts){
+  opts = opts || {};
+  var own = !!opts.own;
+  var handle = profile && profile.handle;
+  if (!handle && !own) return '';
+  if (!handle) {
+    return '<div class="ap-handle-row" id="apHandleRow">' +
+      '<span class="ap-handle is-empty" id="apHandle" contenteditable="true" spellcheck="false" data-empty="1">Set your profile link</span>' +
+      '</div>';
+  }
+  var wait = own && typeof handleCooldownMs === 'function' && handleCooldownMs(profile.handle_changed_at) > 0;
+  var waitLbl = wait && typeof handleWaitLabel === 'function' ? handleWaitLabel(profile.handle_changed_at) : '';
+  var pencil = '';
+  if (own) {
+    pencil = '<button type="button" class="ap-handle-edit' + (wait ? ' is-wait' : '') + '" id="apHandleEdit" aria-label="' +
+      (wait ? waitLbl : 'Change handle') + '"' + (wait ? ' disabled' : '') + '>' + HANDLE_PENCIL + '</button>';
+  }
+  return '<div class="ap-handle-row" id="apHandleRow">' +
+    '<span class="ap-handle" id="apHandle" data-handle="' + handle + '">rankme.lol/u/' + handle + '</span>' +
+    pencil + '</div>';
+}
+
+function wireHandleEdit(profile){
+  var el = document.getElementById('apHandle');
+  var hint = document.getElementById('apHint');
+  if (!el) return;
+  var state = profile && profile.handle ? { handle: profile.handle, changed: profile.handle_changed_at } : { handle: '', changed: null };
+  var editing = false;
+  var showHint = function (msg) {
+    if (hint) hint.textContent = msg || '';
+  };
+  var paintSet = function () {
+    var row = document.getElementById('apHandleRow');
+    if (!row) return;
+    row.outerHTML = handleRowHtml({ handle: state.handle, handle_changed_at: state.changed }, { own: true });
+    wireHandleEdit({ handle: state.handle, handle_changed_at: state.changed });
+  };
+  var copyHandle = async function () {
+    if (!state.handle) return;
+    var url = typeof publicHandleUrl === 'function' ? publicHandleUrl(state.handle) : ('https://rankme.lol/u/' + state.handle);
+    try {
+      await navigator.clipboard.writeText(url);
+      showHint('Copied');
+      setTimeout(function () { if (hint && hint.textContent === 'Copied') showHint(''); }, 1400);
+    } catch (e) {
+      showHint('Could not copy');
+    }
+  };
+  var startEdit = function () {
+    if (editing) return;
+    var wait = state.handle && typeof handleCooldownMs === 'function' && handleCooldownMs(state.changed) > 0;
+    if (wait) {
+      showHint(typeof handleWaitLabel === 'function' ? handleWaitLabel(state.changed) : 'Wait to change');
+      return;
+    }
+    editing = true;
+    el.classList.remove('is-empty');
+    el.classList.add('is-editing');
+    el.setAttribute('contenteditable', 'true');
+    el.textContent = state.handle || '';
+    el.focus();
+    var sel = window.getSelection();
+    if (sel) {
+      var r = document.createRange();
+      r.selectNodeContents(el);
+      sel.removeAllRanges();
+      sel.addRange(r);
+    }
+  };
+  var finish = async function (save) {
+    if (!editing && !el.getAttribute('data-empty')) return;
+    var raw = (el.textContent || '').replace(/\s+/g, '').trim();
+    editing = false;
+    if (!save) {
+      paintSet();
+      showHint('');
+      return;
+    }
+    if (!raw && !state.handle) {
+      el.textContent = 'Set your profile link';
+      el.classList.add('is-empty');
+      el.setAttribute('data-empty', '1');
+      showHint('');
+      return;
+    }
+    if (raw === state.handle) {
+      paintSet();
+      showHint('');
+      return;
+    }
+    if (typeof validateHandle === 'function') {
+      var v = validateHandle(raw);
+      if (!v.ok) {
+        showHint(v.error);
+        el.focus();
+        editing = true;
+        return;
+      }
+      raw = v.clean;
+    }
+    try {
+      var row = await setProfileHandle(raw);
+      state.handle = row.handle;
+      state.changed = row.handle_changed_at || new Date().toISOString();
+      paintSet();
+      showHint('');
+    } catch (e) {
+      showHint(e.message || 'Could not save');
+      editing = true;
+      el.focus();
+    }
+  };
+
+  el.addEventListener('click', function (e) {
+    if (el.getAttribute('data-empty')) return;
+    if (editing) return;
+    e.preventDefault();
+    copyHandle();
+  });
+  el.addEventListener('focus', function () {
+    if (el.getAttribute('data-empty')) {
+      el.textContent = '';
+      el.classList.remove('is-empty');
+      el.removeAttribute('data-empty');
+      editing = true;
+    }
+  });
+  el.addEventListener('beforeinput', function (e) {
+    if (e.inputType === 'insertParagraph' || e.inputType === 'insertLineBreak') {
+      e.preventDefault();
+      return;
+    }
+    if (!e.data) return;
+    var sel = window.getSelection();
+    var selected = sel && sel.toString() ? sel.toString().length : 0;
+    var next = (el.textContent || '').length - selected + e.data.length;
+    if (next > 16) {
+      e.preventDefault();
+      showHint('16 characters max');
+    }
+  });
+  el.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') { e.preventDefault(); el.blur(); }
+    if (e.key === 'Escape') { e.preventDefault(); finish(false); }
+  });
+  el.addEventListener('blur', function () { finish(true); });
+
+  var pen = document.getElementById('apHandleEdit');
+  if (pen) {
+    pen.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      if (pen.classList.contains('is-wait')) {
+        showHint(pen.getAttribute('aria-label') || '');
+        return;
+      }
+      startEdit();
+    });
+  }
 }
 
 function closeExpertModals(){
@@ -432,8 +596,9 @@ async function renderCabinet(user){
 
   panel.removeAttribute('aria-busy');
   const badge = await expertHtmlFor(user.id, true);
+  const mine = typeof getProfileByUserId === 'function' ? await getProfileByUserId(user.id) : null;
   panel.innerHTML = `
-    ${profileBlock(name, av, '0', '0', '0', true, badge)}
+    ${profileBlock(name, av, '0', '0', '0', true, badge, handleRowHtml(mine, { own: true }))}
 
     <section class="account-section">
       <div class="as-head">
@@ -462,6 +627,7 @@ async function renderCabinet(user){
     location.reload();
   };
   wireNameEdit();
+  wireHandleEdit(mine);
 
   try{
     const rows = await listMyTierlists();
@@ -614,7 +780,7 @@ if (!window.__rmSavedMenuBound) {
   });
 }
 
-async function renderPublicProfile(userId){
+async function renderPublicProfile(userId, profile){
   panel.removeAttribute('aria-busy');
   document.title = 'Profile - RankMe';
 
@@ -629,7 +795,7 @@ async function renderPublicProfile(userId){
   }
 
   const first = rows[0] || {};
-  const name = (first.author_name || 'User').replace(/</g, '');
+  const name = (first.author_name || (profile && profile.handle) || 'User').replace(/</g, '');
   const avatar = first.author_avatar || '';
   const totalLikes = rows.reduce((s, r) => s + (Number(r.like_count) || 0), 0);
   const fc = typeof formatCount === 'function' ? formatCount : String;
@@ -639,9 +805,10 @@ async function renderPublicProfile(userId){
   var viewer = typeof getSessionUser === 'function' ? await getSessionUser() : null;
   var own = !!(viewer && String(viewer.id) === String(userId));
   const badge = await expertHtmlFor(userId, own);
+  const handleHtml = handleRowHtml(profile || { handle: null }, { own: own });
 
   panel.innerHTML = `
-    ${profileBlock(name, av, String(rows.length), '0', fc(totalLikes), false, badge)}
+    ${profileBlock(name, av, String(rows.length), '0', fc(totalLikes), false, badge, handleHtml)}
 
     <section class="account-section">
       <div class="as-head">
@@ -663,6 +830,8 @@ async function renderPublicProfile(userId){
       <div class="ach-grid" id="achGrid"></div>
     </section>`;
 
+  wireHandleEdit(profile || { handle: null });
+
   var extra = rows.length ? ['certified-sheep'] : [];
   var viewer = window.__rankmeUser;
   if (window.RankMeAch) {
@@ -674,8 +843,7 @@ async function renderPublicProfile(userId){
     var el = document.getElementById('statBattles');
     if (!el || typeof getUserBattleCount !== 'function') return;
     try {
-      var uid = new URLSearchParams(location.search).get('u');
-      if (uid) el.textContent = String(await getUserBattleCount(uid));
+      el.textContent = String(await getUserBattleCount(userId));
     } catch (e) {}
   })();
 
@@ -764,9 +932,15 @@ async function bootAccount(){
     wireExpertUi();
 
     const params = new URLSearchParams(location.search);
-    const publicUid = params.get('u');
-    if (publicUid) {
-      await renderPublicProfile(publicUid);
+    const publicKey = params.get('u');
+    if (publicKey) {
+      var resolved = typeof resolveProfileKey === 'function' ? await resolveProfileKey(publicKey) : { userId: publicKey };
+      if (!resolved || !resolved.userId) {
+        panel.removeAttribute('aria-busy');
+        panel.innerHTML = '<div class="empty">Profile not found.</div>';
+        return;
+      }
+      await renderPublicProfile(resolved.userId, resolved);
       return;
     }
 

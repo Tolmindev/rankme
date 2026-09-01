@@ -1216,6 +1216,60 @@ body.ach-focus-open { overflow: hidden; }
 .ap-name-row:focus-within .expert-badge {
   transform: translateX(16px);
 }
+.ap-handle-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  margin-top: 4px;
+}
+.ap-handle {
+  font-size: 0.78rem;
+  font-weight: 400;
+  color: var(--text-dim);
+  letter-spacing: 0.01em;
+  line-height: 1.3;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+  outline: none;
+}
+.ap-handle.is-empty {
+  cursor: text;
+  opacity: 0.85;
+}
+.ap-handle.is-editing,
+.ap-handle.is-empty:focus {
+  color: var(--text);
+  cursor: text;
+  overflow: visible;
+  text-overflow: unset;
+}
+.ap-handle-edit {
+  flex: 0 0 auto;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  background: none;
+  color: var(--text-dim);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.ap-handle-edit:hover {
+  color: #fff;
+}
+.ap-handle-edit.is-wait,
+.ap-handle-edit:disabled {
+  opacity: 0.38;
+  cursor: default;
+  color: var(--text-dim);
+}
 
 .expert-modal {
   width: min(440px, 92vw);

@@ -18,6 +18,13 @@
   };
   var path = location.pathname.replace(/\/+$/, '').replace(/\.html$/i, '');
   var parts = path.split('/').filter(Boolean);
+  if (parts.length === 2 && parts[0].toLowerCase() === 'u') {
+    var handle = String(parts[1] || '').toLowerCase();
+    if (/^[a-z0-9_]{3,16}$/.test(handle)) {
+      location.replace('/account.html?u=' + encodeURIComponent(handle) + location.search + location.hash);
+      return;
+    }
+  }
   var id = '';
   if (parts.length === 1) id = parts[0];
   else if (parts.length === 2 && parts[0].toLowerCase() === 't') id = parts[1];

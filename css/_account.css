@@ -873,10 +873,16 @@ body > .toast {
 
 /* Achievements */
 .ach-grid {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 12px;
   margin-top: 14px;
+}
+@media (max-width: 720px) {
+  .ach-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+  }
 }
 
 .ach-card {
@@ -886,8 +892,8 @@ body > .toast {
   background: none;
   cursor: pointer;
   display: block;
-  width: 148px;
-  flex: 0 0 148px;
+  width: 100%;
+  min-width: 0;
   perspective: 800px;
   -webkit-tap-highlight-color: transparent;
 }
@@ -1124,10 +1130,6 @@ body.ach-focus-open { overflow: hidden; }
   }
   .ach-toast.show {
     transform: translateY(0);
-  }
-  .ach-card {
-    width: 112px;
-    flex-basis: 112px;
   }
   .ach-focus-wrap .ach-card { width: min(78vw, 260px); }
 }

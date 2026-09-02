@@ -64,6 +64,8 @@ const BLANK_TIERS = [
   {id:'t4', name:'C', hue:140, sat:40, light:50},
   {id:'t5', name:'D', hue:220, sat:35, light:48},
 ];
+const ROW_SAT = 70;
+const ROW_LIGHT = 62;
 
 let state = {
   // Exclusive opens with standard S-D strips
@@ -669,8 +671,8 @@ function renderPortals(){
     slot.dataset.tierIndex = idx;
     slot.dataset.label = tier.name;
     const hue = tier.hue;
-    const sat = Math.min(62, tier.sat);
-    const light = Math.min(58, tier.light);
+    const sat = Number.isFinite(Number(tier.sat)) ? Number(tier.sat) : ROW_SAT;
+    const light = Number.isFinite(Number(tier.light)) ? Number(tier.light) : ROW_LIGHT;
     slot.style.background = `linear-gradient(180deg, hsla(${hue}, ${sat}%, ${light}%, 0.4), hsla(${hue}, ${sat}%, ${Math.max(24, light - 14)}%, 0.12))`;
     slot.style.border = `1.5px solid hsla(${hue}, 78%, 68%, 0.92)`;
     slot.style.setProperty('--glow', `hsla(${hue}, 78%, 62%, 0.75)`);
@@ -1142,16 +1144,20 @@ function openRowSettings(tierId, anchorBtn){
 
   const hueInput = pop.querySelector('.hue-slider');
   const setHueThumb = (v)=>{
-    hueInput.style.setProperty('--thumb', `hsl(${v}, 90%, 58%)`);
-    hueInput.style.setProperty('--thumb-glow', `hsla(${v}, 95%, 62%, .65)`);
+    hueInput.style.setProperty('--thumb', `hsl(${v}, ${ROW_SAT}%, ${ROW_LIGHT}%)`);
+    hueInput.style.setProperty('--thumb-glow', `hsla(${v}, ${ROW_SAT}%, ${ROW_LIGHT}%, .65)`);
   };
   setHueThumb(t.hue);
   hueInput.addEventListener('input', (e)=>{
     t.hue = parseInt(e.target.value, 10);
+    t.sat = ROW_SAT;
+    t.light = ROW_LIGHT;
     setHueThumb(t.hue);
     const row = document.querySelector(`.tier-row[data-tier-id="${tierId}"]`);
     if(row){
       row.style.setProperty('--hue', t.hue);
+      row.style.setProperty('--sat', t.sat+'%');
+      row.style.setProperty('--light', t.light+'%');
     }
   });
   pop.querySelector('.clear').addEventListener('click', ()=>{
@@ -1177,7 +1183,7 @@ function outsideClose(e){
 
 document.getElementById('addRowBtn').addEventListener('click', ()=>{
   const id = 't'+(state.rowIdSeq++);
-  state.tiers.push({id, name:'NEW ROW', hue:200, sat:50, light:60});
+  state.tiers.push({id, name:'NEW ROW', hue:200, sat:ROW_SAT, light:ROW_LIGHT});
   state.assignment[id] = [];
   render();
 });
@@ -1961,8 +1967,8 @@ function cssAngleGradient(ctx, x, y, w, h, deg){
 
 function fillTierCube(ctx, x, y, w, h, tier){
   const hue = Number(tier.hue) || 0;
-  const sat = Number.isFinite(Number(tier.sat)) ? Number(tier.sat) : 50;
-  const light = Number.isFinite(Number(tier.light)) ? Number(tier.light) : 55;
+  const sat = Number.isFinite(Number(tier.sat)) ? Number(tier.sat) : ROW_SAT;
+  const light = Number.isFinite(Number(tier.light)) ? Number(tier.light) : ROW_LIGHT;
   const color = function(a){
     return 'hsla(' + hue + ', ' + sat + '%, ' + light + '%, ' + a + ')';
   };

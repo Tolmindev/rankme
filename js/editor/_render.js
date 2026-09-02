@@ -128,9 +128,9 @@ function render(){
   renderPortals();
 }
 
-function labelLineFontSize(line){
+function labelLineFontSize(line, desktop){
   const len = (line || '').replace(/\s+/g, '').replace(/[\u00a0\u200B]/g, '').length || 1;
-  const mobile = window.matchMedia && window.matchMedia('(max-width: 720px)').matches;
+  const mobile = !desktop && window.matchMedia && window.matchMedia('(max-width: 720px)').matches;
   if(mobile){
     if(len <= 1) return 16;
     if(len === 2) return 13;
@@ -393,8 +393,8 @@ function renderPortals(){
     slot.dataset.tierIndex = idx;
     slot.dataset.label = tier.name;
     const hue = tier.hue;
-    const sat = Math.min(62, tier.sat);
-    const light = Math.min(58, tier.light);
+    const sat = Number.isFinite(Number(tier.sat)) ? Number(tier.sat) : ROW_SAT;
+    const light = Number.isFinite(Number(tier.light)) ? Number(tier.light) : ROW_LIGHT;
     slot.style.background = `linear-gradient(180deg, hsla(${hue}, ${sat}%, ${light}%, 0.4), hsla(${hue}, ${sat}%, ${Math.max(24, light - 14)}%, 0.12))`;
     slot.style.border = `1.5px solid hsla(${hue}, 78%, 68%, 0.92)`;
     slot.style.setProperty('--glow', `hsla(${hue}, 78%, 62%, 0.75)`);

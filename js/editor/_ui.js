@@ -51,16 +51,20 @@ function openRowSettings(tierId, anchorBtn){
 
   const hueInput = pop.querySelector('.hue-slider');
   const setHueThumb = (v)=>{
-    hueInput.style.setProperty('--thumb', `hsl(${v}, 90%, 58%)`);
-    hueInput.style.setProperty('--thumb-glow', `hsla(${v}, 95%, 62%, .65)`);
+    hueInput.style.setProperty('--thumb', `hsl(${v}, ${ROW_SAT}%, ${ROW_LIGHT}%)`);
+    hueInput.style.setProperty('--thumb-glow', `hsla(${v}, ${ROW_SAT}%, ${ROW_LIGHT}%, .65)`);
   };
   setHueThumb(t.hue);
   hueInput.addEventListener('input', (e)=>{
     t.hue = parseInt(e.target.value, 10);
+    t.sat = ROW_SAT;
+    t.light = ROW_LIGHT;
     setHueThumb(t.hue);
     const row = document.querySelector(`.tier-row[data-tier-id="${tierId}"]`);
     if(row){
       row.style.setProperty('--hue', t.hue);
+      row.style.setProperty('--sat', t.sat+'%');
+      row.style.setProperty('--light', t.light+'%');
     }
   });
   pop.querySelector('.clear').addEventListener('click', ()=>{
@@ -86,7 +90,7 @@ function outsideClose(e){
 
 document.getElementById('addRowBtn').addEventListener('click', ()=>{
   const id = 't'+(state.rowIdSeq++);
-  state.tiers.push({id, name:'NEW ROW', hue:200, sat:50, light:60});
+  state.tiers.push({id, name:'NEW ROW', hue:200, sat:ROW_SAT, light:ROW_LIGHT});
   state.assignment[id] = [];
   render();
 });

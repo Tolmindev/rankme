@@ -59,6 +59,8 @@ const BLANK_TIERS = [
   {id:'t4', name:'C', hue:140, sat:40, light:50},
   {id:'t5', name:'D', hue:220, sat:35, light:48},
 ];
+const ROW_SAT = 70;
+const ROW_LIGHT = 62;
 
 let state = {
   // Exclusive opens with standard S-D strips

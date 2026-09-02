@@ -305,8 +305,8 @@ function cssAngleGradient(ctx, x, y, w, h, deg){
 
 function fillTierCube(ctx, x, y, w, h, tier){
   const hue = Number(tier.hue) || 0;
-  const sat = Number.isFinite(Number(tier.sat)) ? Number(tier.sat) : 50;
-  const light = Number.isFinite(Number(tier.light)) ? Number(tier.light) : 55;
+  const sat = Number.isFinite(Number(tier.sat)) ? Number(tier.sat) : ROW_SAT;
+  const light = Number.isFinite(Number(tier.light)) ? Number(tier.light) : ROW_LIGHT;
   const color = function(a){
     return 'hsla(' + hue + ', ' + sat + '%, ' + light + '%, ' + a + ')';
   };

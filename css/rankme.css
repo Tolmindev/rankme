@@ -1321,21 +1321,13 @@ html.rankme-dragging {
 }
 .expert-badge.is-on {
   cursor: default;
-  overflow: visible;
 }
-.expert-badge.is-on::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: var(--holo-ice);
-  background-size: 220% 100%;
-  animation: portalRgb 2.8s linear infinite alternate;
-  -webkit-mask: url("../assets/icons/expert-badge.svg?v=20260902a") center / contain no-repeat;
-  mask: url("../assets/icons/expert-badge.svg?v=20260902a") center / contain no-repeat;
-  mix-blend-mode: soft-light;
-  opacity: 0.72;
-  pointer-events: none;
+.expert-badge.is-on img {
+  animation: expertIceShift 4.2s ease-in-out infinite alternate;
+}
+@keyframes expertIceShift {
+  from { filter: hue-rotate(-10deg); }
+  to { filter: hue-rotate(14deg); }
 }
 
 /* RankMe · hero — Tier hero, list actions */
@@ -6019,6 +6011,13 @@ body > .toast {
     linear-gradient(135deg, #c4a0f0, #8b6ad8, #e6a9e8) border-box;
   display: block;
 }
+.ap-avatar-wrap.is-expert .ap-avatar {
+  background:
+    linear-gradient(#1a1728, #1a1728) padding-box,
+    var(--holo-ice) border-box;
+  background-origin: padding-box, border-box;
+  background-clip: padding-box, border-box;
+}
 .ap-fallback {
   display: grid;
   place-items: center;
@@ -6775,7 +6774,7 @@ body.ach-focus-open { overflow: hidden; }
   .ach-focus-copy h3 {
     animation: none;
   }
-  .expert-badge.is-on::after,
+  .expert-badge.is-on img,
   .expert-badge.is-off.is-btn:hover::after,
   .expert-modal,
   .expert-modal .expert-apply.cta {
@@ -6998,7 +6997,7 @@ body.ach-focus-open { overflow: hidden; }
   background-clip: padding-box, border-box;
   background-size: auto, 220% 100%;
   animation: portalRgb 2.8s linear infinite alternate;
-  box-shadow: 0 0 18px var(--holo-ice-glow);
+  box-shadow: 0 0 12px rgba(160, 210, 255, 0.16);
 }
 .expert-modal > * {
   position: relative;
@@ -7010,7 +7009,7 @@ body.ach-focus-open { overflow: hidden; }
   flex: 0 0 72px;
   margin: 0 auto 14px;
   overflow: visible;
-  filter: drop-shadow(0 0 8px rgba(180, 220, 255, 0.38));
+  filter: drop-shadow(0 0 6px rgba(180, 220, 255, 0.22));
 }
 .expert-modal .expert-preview img {
   position: relative;

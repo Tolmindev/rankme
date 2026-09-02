@@ -7,9 +7,9 @@
 <title>Account - RankMe</title>
 <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;500;600;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/rankme.css?v=20260901am">
+<link rel="stylesheet" href="css/rankme.css?v=20260902e">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
-<script src="js/supabaseClient.js?v=20260901am" defer></script>
+<script src="js/supabaseClient.js?v=20260902e" defer></script>
 </head>
 <body class="page-account">
 <div class="aurora" aria-hidden="true"></div>
@@ -76,7 +76,7 @@
 
 <div class="modal-back" id="expertApplyModal">
   <div class="modal expert-modal">
-    <span class="expert-badge is-on expert-preview" aria-hidden="true"><img src="assets/icons/expert-badge.svg?v=20260901am" alt=""></span>
+    <span class="expert-badge is-on expert-preview" aria-hidden="true"><img src="assets/icons/expert-badge.svg?v=20260902e" alt=""></span>
     <h3>Become a RankMe Expert</h3>
     <ul class="expert-perks">
       <li>Get a verified badge</li>
@@ -257,9 +257,10 @@ function profileBlock(name, avatarHtml, lists, battles, likes, editable, expertH
   const nameTag = editable
     ? `<b class="ap-name is-edit" id="apName" contenteditable="true" spellcheck="false">${safe}</b>`
     : `<b class="ap-name">${safe}</b>`;
+  const expertOn = !!(expertHtml && expertHtml.indexOf('is-on') !== -1);
   return `
     <div class="account-profile${editable ? '' : ' is-public'}">
-      <div class="ap-avatar-wrap">${avatarHtml}</div>
+      <div class="ap-avatar-wrap${expertOn ? ' is-expert' : ''}">${avatarHtml}</div>
       <div class="ap-text">
         <div class="ap-name-row">${nameTag}${expertHtml || ''}</div>
         ${handleHtml || ''}

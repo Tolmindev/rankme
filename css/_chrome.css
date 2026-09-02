@@ -1192,19 +1192,11 @@ html.rankme-dragging {
 }
 .expert-badge.is-on {
   cursor: default;
-  overflow: visible;
 }
-.expert-badge.is-on::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: var(--holo-ice);
-  background-size: 220% 100%;
-  animation: portalRgb 2.8s linear infinite alternate;
-  -webkit-mask: url("../assets/icons/expert-badge.svg?v=20260902a") center / contain no-repeat;
-  mask: url("../assets/icons/expert-badge.svg?v=20260902a") center / contain no-repeat;
-  mix-blend-mode: soft-light;
-  opacity: 0.72;
-  pointer-events: none;
+.expert-badge.is-on img {
+  animation: expertIceShift 4.2s ease-in-out infinite alternate;
+}
+@keyframes expertIceShift {
+  from { filter: hue-rotate(-10deg); }
+  to { filter: hue-rotate(14deg); }
 }

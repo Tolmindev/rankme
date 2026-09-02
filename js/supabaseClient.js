@@ -562,7 +562,7 @@ function expertBadgeHtml(opts) {
   if (!on && !clickable) return '';
   var cls = 'expert-badge' + (on ? ' is-on' : ' is-off');
   var label = on ? 'RankMe Expert' : 'Become a RankMe Expert';
-  var src = on ? 'assets/icons/expert-badge.svg?v=20260901ap' : 'assets/icons/expert-badge-off.svg';
+  var src = on ? 'assets/icons/expert-badge.svg?v=20260902e' : 'assets/icons/expert-badge-off.svg?v=20260902a';
   var inner = '<img src="' + src + '" alt="">';
   if (on) {
     return '<span class="' + cls + '" title="' + label + '" aria-label="' + label + '">' + inner + '</span>';

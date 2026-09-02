@@ -689,7 +689,7 @@ button, .cta, .btn, .btn-mini, .pill-btn, .download-btn, .login-btn, a.btn, a.ct
   border-color: transparent;
   background:
     linear-gradient(160deg, #2a2238 0%, #161022 50%, #1e1830 100%) padding-box,
-    linear-gradient(115deg, #ff4d8d 0%, #ff7a45 35%, #ffc94a 68%, #ff6b4a 100%) border-box;
+    var(--holo-warm) border-box;
   background-origin: padding-box, border-box;
   background-clip: padding-box, border-box;
   box-shadow:

@@ -1175,7 +1175,7 @@ html.rankme-dragging {
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: linear-gradient(135deg, #ffe500, #ff5595);
+  background: var(--holo-warm);
   -webkit-mask: url("../assets/icons/expert-badge-off.svg?v=20260902a") center / contain no-repeat;
   mask: url("../assets/icons/expert-badge-off.svg?v=20260902a") center / contain no-repeat;
   transform: scale(1.1);

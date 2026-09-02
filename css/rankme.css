@@ -22,6 +22,7 @@
   --btn-glow: 0 0 16px rgba(180,120,255,.32);
   --btn-core: linear-gradient(160deg, #2e2342 0%, #171022 50%, #221832 100%);
   --btn-holo: linear-gradient(120deg, #b79bf0, #e6a9e8, #8ec5ff, #c9a3ff, #b79bf0);
+  --holo-warm: linear-gradient(115deg, #ff4d8d 0%, #ff7a45 35%, #ffc94a 68%, #ff6b4a 100%);
   --card-w: 64px;
   --card-h: calc(var(--card-w) * 1.35);
   --radius: 14px;
@@ -1301,7 +1302,7 @@ html.rankme-dragging {
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: linear-gradient(135deg, #ffe500, #ff5595);
+  background: var(--holo-warm);
   -webkit-mask: url("../assets/icons/expert-badge-off.svg?v=20260902a") center / contain no-repeat;
   mask: url("../assets/icons/expert-badge-off.svg?v=20260902a") center / contain no-repeat;
   transform: scale(1.1);
@@ -4486,7 +4487,7 @@ button, .cta, .btn, .btn-mini, .pill-btn, .download-btn, .login-btn, a.btn, a.ct
   border-color: transparent;
   background:
     linear-gradient(160deg, #2a2238 0%, #161022 50%, #1e1830 100%) padding-box,
-    linear-gradient(115deg, #ff4d8d 0%, #ff7a45 35%, #ffc94a 68%, #ff6b4a 100%) border-box;
+    var(--holo-warm) border-box;
   background-origin: padding-box, border-box;
   background-clip: padding-box, border-box;
   box-shadow:
@@ -6967,10 +6968,13 @@ body.ach-focus-open { overflow: hidden; }
   border: 1.5px solid transparent;
   background:
     linear-gradient(#161224, #161224) padding-box,
-    linear-gradient(120deg, #ffe500, #ff7a5a, #ff5595) border-box;
+    var(--holo-warm) border-box;
   background-origin: padding-box, border-box;
   background-clip: padding-box, border-box;
-  box-shadow: 0 0 28px rgba(255, 85, 149, 0.16), 0 0 52px rgba(255, 200, 40, 0.08);
+  box-shadow:
+    0 0 0 1px rgba(255, 120, 70, 0.18),
+    0 0 22px rgba(255, 80, 140, 0.22),
+    0 0 40px rgba(255, 170, 50, 0.12);
 }
 .expert-modal > * {
   position: relative;
@@ -7018,7 +7022,7 @@ body.ach-focus-open { overflow: hidden; }
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: #9ad0ff;
+  background: #ffc94a;
 }
 .expert-modal label {
   display: block;
@@ -7058,15 +7062,28 @@ body.ach-focus-open { overflow: hidden; }
   padding: 0 24px;
   margin-bottom: 10px;
   font-size: 1rem;
-  background: var(--btn-core) padding-box, linear-gradient(120deg, #ffe500, #ff7a5a, #ff5595, #ffe500) border-box;
+  animation: none;
+  border-color: transparent;
+  background:
+    linear-gradient(160deg, #2a2238 0%, #161022 50%, #1e1830 100%) padding-box,
+    var(--holo-warm) border-box;
   background-origin: padding-box, border-box;
   background-clip: padding-box, border-box;
-  background-size: 100% 100%, 220% 100%;
-  box-shadow: 0 0 16px rgba(255, 85, 149, 0.26), inset 0 1px 0 rgba(255,255,255,.08);
+  box-shadow:
+    0 0 0 1px rgba(255, 120, 70, 0.25),
+    0 0 16px rgba(255, 80, 140, 0.4),
+    0 0 28px rgba(255, 170, 50, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  color: #fff8f2;
 }
 .expert-modal .expert-apply.cta:hover {
-  box-shadow: 0 0 22px rgba(255, 85, 149, 0.42), inset 0 1px 0 rgba(255,255,255,.12);
-  filter: brightness(1.08);
+  border-color: transparent;
+  filter: brightness(1.1);
+  box-shadow:
+    0 0 0 1px rgba(255, 150, 90, 0.4),
+    0 0 22px rgba(255, 90, 150, 0.5),
+    0 0 36px rgba(255, 190, 60, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 .expert-modal .expert-apply[disabled] {
   opacity: 0.55;

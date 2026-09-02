@@ -20,6 +20,7 @@
   --btn-glow: 0 0 16px rgba(180,120,255,.32);
   --btn-core: linear-gradient(160deg, #2e2342 0%, #171022 50%, #221832 100%);
   --btn-holo: linear-gradient(120deg, #b79bf0, #e6a9e8, #8ec5ff, #c9a3ff, #b79bf0);
+  --holo-warm: linear-gradient(115deg, #ff4d8d 0%, #ff7a45 35%, #ffc94a 68%, #ff6b4a 100%);
   --card-w: 64px;
   --card-h: calc(var(--card-w) * 1.35);
   --radius: 14px;

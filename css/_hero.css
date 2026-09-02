@@ -87,7 +87,7 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
 
 .hero-home {
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 48px;
   overflow: visible;
 }
 
@@ -178,17 +178,10 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
   50% { background-position: 100% 50%; }
 }
 @media (max-width: 720px) {
-  .hero-home {
-    margin-bottom: 28px;
-  }
   .hero-home .hero-title-mesh {
     --spot: 5.5rem;
     font-size: clamp(1.85rem, 9.5vw, 2.45rem);
     letter-spacing: -0.025em;
-    margin-bottom: 4px;
-  }
-  .hero-home .cta-row {
-    margin-top: 18px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -208,12 +201,9 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
   color: #f8f2ff;
   font-weight: 600;
   max-width: 520px;
-  margin: 0 auto;
-  line-height: 1.45;
+  margin: 0 auto 28px;
+  line-height: 1.6;
   font-size: clamp(0.92rem, 2.2vw, 1.05rem);
-}
-.hero-home .cta-row {
-  margin-top: 22px;
 }
 
 @media (max-width: 720px) {

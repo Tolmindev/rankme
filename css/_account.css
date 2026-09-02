@@ -1154,7 +1154,9 @@ body.ach-focus-open { overflow: hidden; }
     animation: none;
   }
   .expert-badge.is-off.is-btn:hover::after,
-  .expert-modal .expert-apply.cta {
+  .expert-modal .expert-apply.cta,
+  .expert-modal::before,
+  .expert-modal::after {
     animation: none;
   }
   .ach-card:hover .ach-card-face,
@@ -1362,36 +1364,54 @@ body.ach-focus-open { overflow: hidden; }
 
 .expert-modal {
   position: relative;
-  isolation: isolate;
-  overflow: hidden;
+  overflow: visible;
   width: min(400px, 92vw);
   padding: 28px 28px 20px;
   text-align: center;
   border: 0;
   box-shadow: none;
   background: #161224;
-  --xPos: 50%;
-  --yPos: 50%;
-}
-.expert-modal:hover {
-  background: radial-gradient(
-    22rem circle at var(--xPos) var(--yPos),
-    rgba(255, 201, 74, 0.7),
-    rgba(255, 77, 141, 0.45) 12%,
-    transparent 18%
-  );
 }
 .expert-modal::before {
-  display: none;
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 18px;
+  z-index: 2;
+  pointer-events: none;
+  background: conic-gradient(
+    from var(--expert-angle),
+    transparent 0%,
+    #ffc94a 10%,
+    #ff7a45 24%,
+    #ff4d8d 38%,
+    transparent 55%
+  );
+  padding: 2px;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: expertBorderSpin 4s linear infinite;
 }
 .expert-modal::after {
   content: "";
   position: absolute;
-  inset: 2px;
-  border-radius: 14px;
-  background: #161224;
+  inset: -8px;
+  border-radius: 24px;
+  z-index: -1;
   pointer-events: none;
-  z-index: 0;
+  background: conic-gradient(
+    from var(--expert-angle),
+    transparent 0%,
+    #ffc94a 10%,
+    #ff7a45 24%,
+    transparent 50%
+  );
+  filter: blur(14px);
+  opacity: 0.32;
+  animation: expertBorderSpin 4s linear infinite;
 }
 .expert-modal > * {
   position: relative;

@@ -119,6 +119,15 @@ body {
   100%{ background-position: 0 0, 200% 50%; }
 }
 
+@property --expert-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+@keyframes expertBorderSpin {
+  to { --expert-angle: 360deg; }
+}
+
 @media (max-width: 720px) {
   :root {
     --card-w: 48px;

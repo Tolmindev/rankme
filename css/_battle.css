@@ -810,8 +810,7 @@ button, .cta, .btn, .btn-mini, .pill-btn, .download-btn, .login-btn, a.btn, a.ct
   line-height: 1.4;
   flex: 1 1 auto;
   max-width: none;
-  margin: 0 0 14px;
-  margin-bottom: 18px;
+  margin: 0 0 18px;
   width: 100%;
 }
 

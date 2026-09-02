@@ -50,7 +50,7 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
   box-shadow: 0 0 28px rgba(180,120,255,.28);
 }
 
-.hero .parallax-host img, .hero .parallax-host img.title-logo, .hero .parallax-host img.cover-card, .hero .parallax-host img.ex-logo, .hero img.title-logo, .hero img.title-logo.cover-card, .hero img.title-logo.ex-logo {
+.hero .parallax-host img, .hero img.title-logo, .hero img.title-logo.cover-card {
   width: 100%;
   max-width: none;
   height: 100%;

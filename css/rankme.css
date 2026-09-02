@@ -100,12 +100,6 @@ body {
   100%{ background-position: 0 0, 100% 50%; }
 }
 
-@keyframes evaporate {
-  0%{ opacity:1; transform: scale(1.06); filter: brightness(1.2) saturate(1.2); }
-  40%{ opacity:0.7; transform: scale(1.15) rotate(4deg); filter: brightness(1.4) blur(1px); }
-  100%{ opacity:0; transform: scale(0.4) rotate(12deg) translateY(-30px); filter: brightness(1.8) blur(6px); }
-}
-
 @keyframes portalRgb {
   0%{ background-position: 0 0, 0% 50%; }
   100%{ background-position: 0 0, 100% 50%; }
@@ -1384,7 +1378,7 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
   box-shadow: 0 0 28px rgba(180,120,255,.28);
 }
 
-.hero .parallax-host img, .hero .parallax-host img.title-logo, .hero .parallax-host img.cover-card, .hero .parallax-host img.ex-logo, .hero img.title-logo, .hero img.title-logo.cover-card, .hero img.title-logo.ex-logo {
+.hero .parallax-host img, .hero img.title-logo, .hero img.title-logo.cover-card {
   width: 100%;
   max-width: none;
   height: 100%;
@@ -2404,11 +2398,6 @@ body.pool-delete .pool .card { cursor: pointer; }
   transform: scale(1.06);
 }
 
-.card.evaporate {
-  animation: evaporate 0.42s ease-out forwards;
-  pointer-events: none;
-}
-
 .card.placeholder {
   opacity: 0.45;
   outline: 2px dashed rgba(200,160,240,0.7);
@@ -3032,12 +3021,6 @@ body.theme-gold .faction-btn img {
   text-align: center;
   margin: 4px 0;
   padding: 10px 14px;
-}
-
-.card.drag-armed {
-  outline: 2px solid rgba(200,160,240,0.65);
-  outline-offset: 2px;
-  box-shadow: 0 0 16px rgba(160,100,255,0.35);
 }
 
 .card, .card * {
@@ -4637,8 +4620,7 @@ button, .cta, .btn, .btn-mini, .pill-btn, .download-btn, .login-btn, a.btn, a.ct
   line-height: 1.4;
   flex: 1 1 auto;
   max-width: none;
-  margin: 0 0 14px;
-  margin-bottom: 18px;
+  margin: 0 0 18px;
   width: 100%;
 }
 
@@ -5026,13 +5008,6 @@ to { --elec-angle: 360deg; }
   filter: none;
 }
 
-.tl-card .cover img.logo-only {
-  max-height: 90px;
-  max-width: 90%;
-  object-fit: contain;
-  filter: drop-shadow(0 6px 16px rgba(0,0,0,.4));
-}
-
 .tl-card .meta {
   color: var(--text-dim);
   font-size: .75rem;
@@ -5062,7 +5037,7 @@ to { --elec-angle: 360deg; }
   will-change: transform;
 }
 
-/* /* HOMEPAGE v2 */
+/* Homepage */
 .home-wrap {
   width: 100%;
   max-width: 1180px;
@@ -6321,9 +6296,9 @@ body > .toast {
   z-index: 6;
 }
 .sc-cover {
-  flex: 0 0 36%;
-  max-width: 128px;
-  min-width: 84px;
+  flex: 0 0 42%;
+  max-width: 150px;
+  min-width: 96px;
   aspect-ratio: 16 / 10;
   border-radius: 10px;
   overflow: hidden;

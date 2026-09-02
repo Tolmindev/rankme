@@ -673,9 +673,9 @@ body > .toast {
   z-index: 6;
 }
 .sc-cover {
-  flex: 0 0 36%;
-  max-width: 128px;
-  min-width: 84px;
+  flex: 0 0 42%;
+  max-width: 150px;
+  min-width: 96px;
   aspect-ratio: 16 / 10;
   border-radius: 10px;
   overflow: hidden;

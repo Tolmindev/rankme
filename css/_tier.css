@@ -323,11 +323,6 @@ body.pool-delete .pool .card { cursor: pointer; }
   transform: scale(1.06);
 }
 
-.card.evaporate {
-  animation: evaporate 0.42s ease-out forwards;
-  pointer-events: none;
-}
-
 .card.placeholder {
   opacity: 0.45;
   outline: 2px dashed rgba(200,160,240,0.7);
@@ -951,12 +946,6 @@ body.theme-gold .faction-btn img {
   text-align: center;
   margin: 4px 0;
   padding: 10px 14px;
-}
-
-.card.drag-armed {
-  outline: 2px solid rgba(200,160,240,0.65);
-  outline-offset: 2px;
-  box-shadow: 0 0 16px rgba(160,100,255,0.35);
 }
 
 .card, .card * {

@@ -149,13 +149,6 @@
   filter: none;
 }
 
-.tl-card .cover img.logo-only {
-  max-height: 90px;
-  max-width: 90%;
-  object-fit: contain;
-  filter: drop-shadow(0 6px 16px rgba(0,0,0,.4));
-}
-
 .tl-card .meta {
   color: var(--text-dim);
   font-size: .75rem;
@@ -185,7 +178,7 @@
   will-change: transform;
 }
 
-/* /* HOMEPAGE v2 */
+/* Homepage */
 .home-wrap {
   width: 100%;
   max-width: 1180px;

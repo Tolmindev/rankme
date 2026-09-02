@@ -1866,10 +1866,29 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
   gap: 10px;
   min-width: 0;
 }
+.cb-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid transparent;
+  background:
+    linear-gradient(#1a1728, #1a1728) padding-box,
+    linear-gradient(135deg, #c4a0f0, #8b6ad8) border-box;
+  flex-shrink: 0;
+}
 .community-bar.is-expert .cb-avatar {
   background:
     linear-gradient(#1a1728, #1a1728) padding-box,
     var(--holo-warm) border-box;
+}
+.cb-fallback {
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  color: #e8d4ff;
+  background: #2a2438;
+  border: 2px solid rgba(180, 140, 255, 0.5);
 }
 .community-bar.is-expert .cb-fallback {
   border-color: transparent;
@@ -1881,6 +1900,12 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
   display: flex;
   flex-direction: column;
   gap: 0;
+  min-width: 0;
+}
+.cb-name-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   min-width: 0;
 }
 .cb-name-row .expert-badge {

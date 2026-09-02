@@ -1175,7 +1175,7 @@ html.rankme-dragging {
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: var(--holo-ice);
+  background: var(--holo-warm);
   background-size: 220% 100%;
   -webkit-mask: url("../assets/icons/expert-badge-off.svg?v=20260902a") center / contain no-repeat;
   mask: url("../assets/icons/expert-badge-off.svg?v=20260902a") center / contain no-repeat;
@@ -1192,11 +1192,4 @@ html.rankme-dragging {
 }
 .expert-badge.is-on {
   cursor: default;
-}
-.expert-badge.is-on img {
-  animation: expertIceShift 4.2s ease-in-out infinite alternate;
-}
-@keyframes expertIceShift {
-  from { filter: hue-rotate(-10deg); }
-  to { filter: hue-rotate(14deg); }
 }

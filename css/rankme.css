@@ -1304,7 +1304,7 @@ html.rankme-dragging {
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: var(--holo-ice);
+  background: var(--holo-warm);
   background-size: 220% 100%;
   -webkit-mask: url("../assets/icons/expert-badge-off.svg?v=20260902a") center / contain no-repeat;
   mask: url("../assets/icons/expert-badge-off.svg?v=20260902a") center / contain no-repeat;
@@ -1321,13 +1321,6 @@ html.rankme-dragging {
 }
 .expert-badge.is-on {
   cursor: default;
-}
-.expert-badge.is-on img {
-  animation: expertIceShift 4.2s ease-in-out infinite alternate;
-}
-@keyframes expertIceShift {
-  from { filter: hue-rotate(-10deg); }
-  to { filter: hue-rotate(14deg); }
 }
 
 /* RankMe · hero — Tier hero, list actions */
@@ -6014,7 +6007,7 @@ body > .toast {
 .ap-avatar-wrap.is-expert .ap-avatar {
   background:
     linear-gradient(#1a1728, #1a1728) padding-box,
-    var(--holo-ice) border-box;
+    var(--holo-warm) border-box;
   background-origin: padding-box, border-box;
   background-clip: padding-box, border-box;
 }
@@ -6774,9 +6767,7 @@ body.ach-focus-open { overflow: hidden; }
   .ach-focus-copy h3 {
     animation: none;
   }
-  .expert-badge.is-on img,
   .expert-badge.is-off.is-btn:hover::after,
-  .expert-modal,
   .expert-modal .expert-apply.cta {
     animation: none;
   }
@@ -6896,7 +6887,7 @@ body.ach-focus-open { overflow: hidden; }
   transition: margin-left 0.18s ease;
 }
 .ap-name-row .expert-badge.is-on {
-  filter: drop-shadow(0 0 3px rgba(180, 220, 255, 0.42));
+  filter: drop-shadow(0 0 3px rgba(255, 90, 140, 0.4));
 }
 .ap-name.is-edit:focus + .expert-badge {
   margin-left: 10px;
@@ -6992,12 +6983,13 @@ body.ach-focus-open { overflow: hidden; }
   border: 1.5px solid transparent;
   background:
     linear-gradient(#161224, #161224) padding-box,
-    var(--holo-ice) border-box;
+    var(--holo-warm) border-box;
   background-origin: padding-box, border-box;
   background-clip: padding-box, border-box;
-  background-size: auto, 220% 100%;
-  animation: portalRgb 2.8s linear infinite alternate;
-  box-shadow: 0 0 12px rgba(160, 210, 255, 0.16);
+  box-shadow:
+    0 0 0 1px rgba(255, 120, 70, 0.18),
+    0 0 16px rgba(255, 80, 140, 0.22),
+    0 0 28px rgba(255, 170, 50, 0.12);
 }
 .expert-modal > * {
   position: relative;
@@ -7009,7 +7001,7 @@ body.ach-focus-open { overflow: hidden; }
   flex: 0 0 72px;
   margin: 0 auto 14px;
   overflow: visible;
-  filter: drop-shadow(0 0 6px rgba(180, 220, 255, 0.22));
+  filter: drop-shadow(0 0 6px rgba(255, 90, 140, 0.28));
 }
 .expert-modal .expert-preview img {
   position: relative;
@@ -7045,7 +7037,7 @@ body.ach-focus-open { overflow: hidden; }
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: #9ad8ff;
+  background: #ffc94a;
 }
 .expert-modal label {
   display: block;
@@ -7085,21 +7077,28 @@ body.ach-focus-open { overflow: hidden; }
   padding: 0 24px;
   margin-bottom: 10px;
   font-size: 1rem;
-  animation: portalRgb 1.8s linear infinite alternate;
+  animation: none;
   border-color: transparent;
   background:
-    linear-gradient(#161224, #161224) padding-box,
-    var(--holo-ice) border-box;
+    linear-gradient(160deg, #2a2238 0%, #161022 50%, #1e1830 100%) padding-box,
+    var(--holo-warm) border-box;
   background-origin: padding-box, border-box;
   background-clip: padding-box, border-box;
-  background-size: auto, 220% 100%;
-  box-shadow: 0 0 16px var(--holo-ice-glow);
-  color: #f8fbff;
+  box-shadow:
+    0 0 0 1px rgba(255, 120, 70, 0.25),
+    0 0 16px rgba(255, 80, 140, 0.4),
+    0 0 28px rgba(255, 170, 50, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  color: #fff8f2;
 }
 .expert-modal .expert-apply.cta:hover {
   border-color: transparent;
-  filter: brightness(1.08);
-  box-shadow: 0 0 22px var(--holo-ice-glow);
+  filter: brightness(1.1);
+  box-shadow:
+    0 0 0 1px rgba(255, 150, 90, 0.4),
+    0 0 22px rgba(255, 90, 150, 0.5),
+    0 0 36px rgba(255, 190, 60, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 .expert-modal .expert-apply[disabled] {
   opacity: 0.55;

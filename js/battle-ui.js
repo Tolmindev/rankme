@@ -12,8 +12,8 @@
   var els = {
     arena: document.getElementById('battleArena'),
     vsRow: document.getElementById('battleVsRow'),
-    fill: document.getElementById('battleFill'),
-    progressLabel: document.getElementById('battleProgressLabel'),
+    fill: null,
+    progressLabel: null,
     back: document.getElementById('battleBack'),
     how: document.getElementById('battleHow'),
     overlay: document.getElementById('battleOverlay'),
@@ -77,9 +77,6 @@
     if (!els.panel || !els.overlay) return;
     els.panel.innerHTML = html;
     els.overlay.classList.add('open');
-  }
-  function closeOverlay() {
-    if (els.overlay) els.overlay.classList.remove('open');
   }
 
   function lookupItem(id) {

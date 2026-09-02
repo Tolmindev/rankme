@@ -118,6 +118,11 @@ body {
   initial-value: 0deg;
   inherits: false;
 }
+@property --elec-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
 @keyframes expertBorderSpin {
   to { --expert-angle: 360deg; }
 }

@@ -591,14 +591,9 @@ async function expertHtmlFor(userId, own){
   if (own && typeof getMyExpertRequest === 'function') {
     var mine = await getMyExpertRequest();
     status = (mine && mine.status) || '';
-  } else if (userId) {
-    try {
-      var client = typeof initSupabase === 'function' ? await initSupabase() : null;
-      if (client) {
-        var res = await client.from('expert_requests').select('user_id').eq('user_id', userId).eq('status', 'approved').maybeSingle();
-        if (res.data) status = 'approved';
-      }
-    } catch (e) {}
+  } else if (userId && typeof fetchApprovedExpertIds === 'function') {
+    await fetchApprovedExpertIds();
+    if (typeof isApprovedExpert === 'function' && isApprovedExpert(userId)) status = 'approved';
   }
   var on = status === 'approved';
   var html = expertBadgeHtml({ on: on, clickable: !!own && !on });

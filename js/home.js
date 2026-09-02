@@ -92,15 +92,8 @@
   }
 
   function isExpertRow(row) {
-    if (!row) return false;
-    if (row.user_id && window.__rmExpertIds && window.__rmExpertIds.has(row.user_id)) return true;
-    if (row.is_expert === true) return true;
-    var p = row.payload;
-    if (!p) return false;
-    try {
-      if (typeof p === 'string') p = JSON.parse(p);
-    } catch (e) { return false; }
-    return !!(p && (p.is_expert === true || p.expert === true));
+    if (!row || !row.user_id) return false;
+    return !!(window.__rmExpertIds && window.__rmExpertIds.has(row.user_id));
   }
 
   function communityHotScore(row) {

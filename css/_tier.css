@@ -941,7 +941,7 @@ body.theme-gold .faction-btn img {
   transform: translateX(-50%) translateY(0) scale(1);
 }
 
-.dd-menu li, .dd-menu button, .dd-menu .dd-item {
+.dd-menu li, .dd-menu button {
   border-radius: 999px;
   text-align: center;
   margin: 4px 0;
@@ -1602,11 +1602,6 @@ body.theme-gold .card img {
     min-width: 0;
   }
 
-  .pool-header {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
-  }
   .pool-header .faction-filters,
   .pool-header #factionFilters {
     flex: 0 0 auto;

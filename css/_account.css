@@ -449,6 +449,12 @@ body > .toast {
   40% { text-shadow: 0 0 14px rgba(220, 180, 255, 0.75); }
   100% { text-shadow: none; }
 }
+.ap-hint {
+  display: none;
+  position: absolute;
+  left: 10px;
+  top: calc(100% + 3px);
+  font-size: 0.65rem;
   font-weight: 200;
   letter-spacing: 0.02em;
   line-height: 1.25;
@@ -1595,6 +1601,10 @@ body.ach-focus-open { overflow: hidden; }
   -webkit-mask: url("../assets/icons/expert-sent.svg") center / contain no-repeat;
   mask: url("../assets/icons/expert-sent.svg") center / contain no-repeat;
 }
+.expert-modal .expert-err {
+  display: none;
+  color: #ff9aa4;
+  font-size: 0.75rem;
   font-weight: 200;
   margin: 0 0 10px;
 }

@@ -1363,19 +1363,42 @@ body.ach-focus-open { overflow: hidden; }
 .expert-modal {
   position: relative;
   isolation: isolate;
+  overflow: hidden;
   width: min(400px, 92vw);
   padding: 28px 28px 20px;
   text-align: center;
-  border: 1.5px solid transparent;
-  background:
-    linear-gradient(#161224, #161224) padding-box,
-    var(--holo-warm) border-box;
-  background-origin: padding-box, border-box;
-  background-clip: padding-box, border-box;
-  box-shadow:
-    0 0 0 1px rgba(255, 120, 70, 0.18),
-    0 0 16px rgba(255, 80, 140, 0.22),
-    0 0 28px rgba(255, 170, 50, 0.12);
+  border: 0;
+  background: #161224;
+  box-shadow: none;
+  --x: 50%;
+  --y: 14%;
+  --clr: #ff7a45;
+}
+.expert-modal::before {
+  content: "";
+  position: absolute;
+  top: var(--y);
+  left: var(--x);
+  translate: -50% -50%;
+  width: 520px;
+  height: 520px;
+  background: radial-gradient(circle, #ffc94a 0%, #ff7a45 32%, #ff4d8d 52%, transparent 68%);
+  opacity: 0.72;
+  transition: opacity 0.45s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+.expert-modal:hover::before {
+  opacity: 1;
+}
+.expert-modal::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  border-radius: 14px;
+  background: #161224;
+  pointer-events: none;
+  z-index: 0;
 }
 .expert-modal > * {
   position: relative;

@@ -578,6 +578,15 @@
   object-fit: cover;
   border: 1.5px solid rgba(180, 140, 255, 0.45);
   flex-shrink: 0;
+  box-sizing: border-box;
+}
+.cc-author.is-expert .cc-av {
+  border-color: transparent;
+  background:
+    linear-gradient(#161224, #161224) padding-box,
+    var(--holo-warm) border-box;
+  background-origin: padding-box, border-box;
+  background-clip: padding-box, border-box;
 }
 
 .cc-av-fallback {

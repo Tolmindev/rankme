@@ -1857,24 +1857,16 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
   gap: 10px;
   min-width: 0;
 }
-.cb-avatar {
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid transparent;
+.community-bar.is-expert .cb-avatar {
   background:
     linear-gradient(#1a1728, #1a1728) padding-box,
-    linear-gradient(135deg, #c4a0f0, #8b6ad8) border-box;
-  flex-shrink: 0;
+    var(--holo-warm) border-box;
 }
-.cb-fallback {
-  display: grid;
-  place-items: center;
-  font-weight: 900;
-  color: #e8d4ff;
-  background: #2a2438;
-  border: 2px solid rgba(180, 140, 255, 0.5);
+.community-bar.is-expert .cb-fallback {
+  border-color: transparent;
+  background:
+    linear-gradient(#2a2438, #2a2438) padding-box,
+    var(--holo-warm) border-box;
 }
 .cb-meta {
   display: flex;
@@ -1882,11 +1874,10 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
   gap: 0;
   min-width: 0;
 }
-.cb-name-row {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  min-width: 0;
+.cb-name-row .expert-badge {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
 }
 .cb-name {
   font-size: 0.86rem;
@@ -5430,6 +5421,15 @@ to { --elec-angle: 360deg; }
   object-fit: cover;
   border: 1.5px solid rgba(180, 140, 255, 0.45);
   flex-shrink: 0;
+  box-sizing: border-box;
+}
+.cc-author.is-expert .cc-av {
+  border-color: transparent;
+  background:
+    linear-gradient(#161224, #161224) padding-box,
+    var(--holo-warm) border-box;
+  background-origin: padding-box, border-box;
+  background-clip: padding-box, border-box;
 }
 
 .cc-av-fallback {
@@ -6977,19 +6977,42 @@ body.ach-focus-open { overflow: hidden; }
 .expert-modal {
   position: relative;
   isolation: isolate;
+  overflow: hidden;
   width: min(400px, 92vw);
   padding: 28px 28px 20px;
   text-align: center;
-  border: 1.5px solid transparent;
-  background:
-    linear-gradient(#161224, #161224) padding-box,
-    var(--holo-warm) border-box;
-  background-origin: padding-box, border-box;
-  background-clip: padding-box, border-box;
-  box-shadow:
-    0 0 0 1px rgba(255, 120, 70, 0.18),
-    0 0 16px rgba(255, 80, 140, 0.22),
-    0 0 28px rgba(255, 170, 50, 0.12);
+  border: 0;
+  background: #161224;
+  box-shadow: none;
+  --x: 50%;
+  --y: 14%;
+  --clr: #ff7a45;
+}
+.expert-modal::before {
+  content: "";
+  position: absolute;
+  top: var(--y);
+  left: var(--x);
+  translate: -50% -50%;
+  width: 520px;
+  height: 520px;
+  background: radial-gradient(circle, #ffc94a 0%, #ff7a45 32%, #ff4d8d 52%, transparent 68%);
+  opacity: 0.72;
+  transition: opacity 0.45s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+.expert-modal:hover::before {
+  opacity: 1;
+}
+.expert-modal::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  border-radius: 14px;
+  background: #161224;
+  pointer-events: none;
+  z-index: 0;
 }
 .expert-modal > * {
   position: relative;

@@ -2624,6 +2624,7 @@ function setupCommunityUI() {
     : ('<b class="cb-name">' + String(m.authorName || 'User').replace(/</g, '') + '</b>');
   var on = typeof isApprovedExpert === 'function' && isApprovedExpert(m.userId);
   var badge = (on && typeof expertBadgeHtml === 'function') ? expertBadgeHtml({ on: true }) : '';
+  bar.classList.toggle('is-expert', !!on);
   bar.innerHTML =
     '<div class="cb-left">' + (profileHref ? ('<a class="cb-av-link" href="' + profileHref + '">' + av + '</a>') : av) +
       '<div class="cb-meta"><div class="cb-name-row">' + nameHtml + badge + '</div>' +
@@ -2647,11 +2648,17 @@ function setupCommunityUI() {
   if (typeof fetchApprovedExpertIds === 'function') {
     fetchApprovedExpertIds().then(function () {
       if (!communityMeta || typeof expertBadgeHtml !== 'function') return;
-      var slot = bar.querySelector('.expert-badge');
-      if (!slot) return;
       var on = typeof isApprovedExpert === 'function' && isApprovedExpert(communityMeta.userId);
-      if (!on) { slot.remove(); return; }
-      slot.outerHTML = expertBadgeHtml({ on: true });
+      bar.classList.toggle('is-expert', !!on);
+      var row = bar.querySelector('.cb-name-row');
+      var slot = bar.querySelector('.expert-badge');
+      if (on) {
+        var html = expertBadgeHtml({ on: true });
+        if (slot) slot.outerHTML = html;
+        else if (row) row.insertAdjacentHTML('beforeend', html);
+      } else if (slot) {
+        slot.remove();
+      }
     });
   }
   const likeBtn = document.getElementById('communityLikeBtn');

@@ -7,7 +7,7 @@
 <title>Account - RankMe</title>
 <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;500;600;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/rankme.css?v=20260902f">
+<link rel="stylesheet" href="css/rankme.css?v=20260902g">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
 <script src="js/supabaseClient.js?v=20260902f" defer></script>
 </head>
@@ -621,6 +621,15 @@ async function refreshExpertBadge(){
 function wireExpertUi(){
   if (window.__rmExpertUiBound) return;
   window.__rmExpertUiBound = true;
+  document.querySelectorAll('.expert-modal').forEach(function (el) {
+    if (el.dataset.glowBound) return;
+    el.dataset.glowBound = '1';
+    el.addEventListener('pointermove', function (e) {
+      var r = el.getBoundingClientRect();
+      el.style.setProperty('--x', (e.clientX - r.left) + 'px');
+      el.style.setProperty('--y', (e.clientY - r.top) + 'px');
+    });
+  });
   var applyM = document.getElementById('expertApplyModal');
   var sentM = document.getElementById('expertSentModal');
   var closeA = document.getElementById('expertApplyClose');

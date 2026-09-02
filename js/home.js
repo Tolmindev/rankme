@@ -347,11 +347,11 @@
     var on = typeof isApprovedExpert === 'function' && isApprovedExpert(row.user_id);
     var badge = (on && typeof expertBadgeHtml === 'function') ? expertBadgeHtml({ on: true }) : '';
     var authorBlock = profileHref
-      ? '<div class="cc-author">' +
+      ? '<div class="cc-author' + (on ? ' is-expert' : '') + '">' +
           '<a class="cc-author-link" href="' + profileHref + '" data-profile="1">' + av + '<span class="cc-author-name">' + author + '</span></a>' +
           badge +
         '</div>'
-      : '<div class="cc-author">' + av + '<span class="cc-author-name">' + author + '</span>' + badge + '</div>';
+      : '<div class="cc-author' + (on ? ' is-expert' : '') + '">' + av + '<span class="cc-author-name">' + author + '</span>' + badge + '</div>';
     try {
       if (!window.__rmCommunityRows) window.__rmCommunityRows = {};
       window.__rmCommunityRows[String(row.id)] = row;

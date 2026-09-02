@@ -23,6 +23,8 @@
   --btn-core: linear-gradient(160deg, #2e2342 0%, #171022 50%, #221832 100%);
   --btn-holo: linear-gradient(120deg, #b79bf0, #e6a9e8, #8ec5ff, #c9a3ff, #b79bf0);
   --holo-warm: linear-gradient(115deg, #ff4d8d 0%, #ff7a45 35%, #ffc94a 68%, #ff6b4a 100%);
+  --holo-ice: linear-gradient(120deg, #f4fbff, #9ad8ff, #c9b6ff, #ffffff, #7ee7ff, #f4fbff);
+  --holo-ice-glow: rgba(180, 220, 255, 0.48);
   --card-w: 64px;
   --card-h: calc(var(--card-w) * 1.35);
   --radius: 14px;
@@ -1302,10 +1304,11 @@ html.rankme-dragging {
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: var(--holo-warm);
+  background: var(--holo-ice);
+  background-size: 220% 100%;
   -webkit-mask: url("../assets/icons/expert-badge-off.svg?v=20260902a") center / contain no-repeat;
   mask: url("../assets/icons/expert-badge-off.svg?v=20260902a") center / contain no-repeat;
-  transform: scale(1.1);
+  transform: scale(1.08);
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.15s ease;
@@ -1313,10 +1316,26 @@ html.rankme-dragging {
 @media (hover: hover) {
   .expert-badge.is-off.is-btn:hover::after {
     opacity: 1;
+    animation: portalRgb 2.8s linear infinite alternate;
   }
 }
 .expert-badge.is-on {
   cursor: default;
+  overflow: visible;
+}
+.expert-badge.is-on::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: var(--holo-ice);
+  background-size: 220% 100%;
+  animation: portalRgb 2.8s linear infinite alternate;
+  -webkit-mask: url("../assets/icons/expert-badge.svg?v=20260902a") center / contain no-repeat;
+  mask: url("../assets/icons/expert-badge.svg?v=20260902a") center / contain no-repeat;
+  mix-blend-mode: soft-light;
+  opacity: 0.72;
+  pointer-events: none;
 }
 
 /* RankMe · hero — Tier hero, list actions */
@@ -5236,8 +5255,8 @@ to { --elec-angle: 360deg; }
   --idle: rgba(50, 196, 188, 0.55);
 }
 .community-pills .cat-chip[data-csort="experts"] {
-  --ring: linear-gradient(120deg, #f4fbff, #9ad8ff, #c9b6ff, #ffffff, #7ee7ff, #f4fbff);
-  --glow: rgba(180, 220, 255, 0.5);
+  --ring: var(--holo-ice);
+  --glow: var(--holo-ice-glow);
   --idle: rgba(176, 210, 255, 0.55);
 }
 .community-pills .cat-chip {
@@ -6756,6 +6775,12 @@ body.ach-focus-open { overflow: hidden; }
   .ach-focus-copy h3 {
     animation: none;
   }
+  .expert-badge.is-on::after,
+  .expert-badge.is-off.is-btn:hover::after,
+  .expert-modal,
+  .expert-modal .expert-apply.cta {
+    animation: none;
+  }
   .ach-card:hover .ach-card-face,
   .ach-card.is-focus .ach-card-face {
     transform: none;
@@ -6872,7 +6897,7 @@ body.ach-focus-open { overflow: hidden; }
   transition: margin-left 0.18s ease;
 }
 .ap-name-row .expert-badge.is-on {
-  filter: drop-shadow(0 0 3px rgba(255, 110, 140, 0.38));
+  filter: drop-shadow(0 0 3px rgba(180, 220, 255, 0.42));
 }
 .ap-name.is-edit:focus + .expert-badge {
   margin-left: 10px;
@@ -6968,13 +6993,12 @@ body.ach-focus-open { overflow: hidden; }
   border: 1.5px solid transparent;
   background:
     linear-gradient(#161224, #161224) padding-box,
-    var(--holo-warm) border-box;
+    var(--holo-ice) border-box;
   background-origin: padding-box, border-box;
   background-clip: padding-box, border-box;
-  box-shadow:
-    0 0 0 1px rgba(255, 120, 70, 0.18),
-    0 0 22px rgba(255, 80, 140, 0.22),
-    0 0 40px rgba(255, 170, 50, 0.12);
+  background-size: auto, 220% 100%;
+  animation: portalRgb 2.8s linear infinite alternate;
+  box-shadow: 0 0 18px var(--holo-ice-glow);
 }
 .expert-modal > * {
   position: relative;
@@ -6986,7 +7010,7 @@ body.ach-focus-open { overflow: hidden; }
   flex: 0 0 72px;
   margin: 0 auto 14px;
   overflow: visible;
-  filter: drop-shadow(0 0 8px rgba(255, 110, 130, 0.34));
+  filter: drop-shadow(0 0 8px rgba(180, 220, 255, 0.38));
 }
 .expert-modal .expert-preview img {
   position: relative;
@@ -7022,7 +7046,7 @@ body.ach-focus-open { overflow: hidden; }
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: #ffc94a;
+  background: #9ad8ff;
 }
 .expert-modal label {
   display: block;
@@ -7062,28 +7086,21 @@ body.ach-focus-open { overflow: hidden; }
   padding: 0 24px;
   margin-bottom: 10px;
   font-size: 1rem;
-  animation: none;
+  animation: portalRgb 1.8s linear infinite alternate;
   border-color: transparent;
   background:
-    linear-gradient(160deg, #2a2238 0%, #161022 50%, #1e1830 100%) padding-box,
-    var(--holo-warm) border-box;
+    linear-gradient(#161224, #161224) padding-box,
+    var(--holo-ice) border-box;
   background-origin: padding-box, border-box;
   background-clip: padding-box, border-box;
-  box-shadow:
-    0 0 0 1px rgba(255, 120, 70, 0.25),
-    0 0 16px rgba(255, 80, 140, 0.4),
-    0 0 28px rgba(255, 170, 50, 0.28),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
-  color: #fff8f2;
+  background-size: auto, 220% 100%;
+  box-shadow: 0 0 16px var(--holo-ice-glow);
+  color: #f8fbff;
 }
 .expert-modal .expert-apply.cta:hover {
   border-color: transparent;
-  filter: brightness(1.1);
-  box-shadow:
-    0 0 0 1px rgba(255, 150, 90, 0.4),
-    0 0 22px rgba(255, 90, 150, 0.5),
-    0 0 36px rgba(255, 190, 60, 0.35),
-    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  filter: brightness(1.08);
+  box-shadow: 0 0 22px var(--holo-ice-glow);
 }
 .expert-modal .expert-apply[disabled] {
   opacity: 0.55;

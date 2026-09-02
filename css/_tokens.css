@@ -21,6 +21,8 @@
   --btn-core: linear-gradient(160deg, #2e2342 0%, #171022 50%, #221832 100%);
   --btn-holo: linear-gradient(120deg, #b79bf0, #e6a9e8, #8ec5ff, #c9a3ff, #b79bf0);
   --holo-warm: linear-gradient(115deg, #ff4d8d 0%, #ff7a45 35%, #ffc94a 68%, #ff6b4a 100%);
+  --holo-ice: linear-gradient(120deg, #f4fbff, #9ad8ff, #c9b6ff, #ffffff, #7ee7ff, #f4fbff);
+  --holo-ice-glow: rgba(180, 220, 255, 0.48);
   --card-w: 64px;
   --card-h: calc(var(--card-w) * 1.35);
   --radius: 14px;

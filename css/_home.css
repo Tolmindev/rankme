@@ -388,8 +388,8 @@
   --idle: rgba(50, 196, 188, 0.55);
 }
 .community-pills .cat-chip[data-csort="experts"] {
-  --ring: linear-gradient(120deg, #f4fbff, #9ad8ff, #c9b6ff, #ffffff, #7ee7ff, #f4fbff);
-  --glow: rgba(180, 220, 255, 0.5);
+  --ring: var(--holo-ice);
+  --glow: var(--holo-ice-glow);
   --idle: rgba(176, 210, 255, 0.55);
 }
 .community-pills .cat-chip {

@@ -1175,10 +1175,11 @@ html.rankme-dragging {
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: var(--holo-warm);
+  background: var(--holo-ice);
+  background-size: 220% 100%;
   -webkit-mask: url("../assets/icons/expert-badge-off.svg?v=20260902a") center / contain no-repeat;
   mask: url("../assets/icons/expert-badge-off.svg?v=20260902a") center / contain no-repeat;
-  transform: scale(1.1);
+  transform: scale(1.08);
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.15s ease;
@@ -1186,8 +1187,24 @@ html.rankme-dragging {
 @media (hover: hover) {
   .expert-badge.is-off.is-btn:hover::after {
     opacity: 1;
+    animation: portalRgb 2.8s linear infinite alternate;
   }
 }
 .expert-badge.is-on {
   cursor: default;
+  overflow: visible;
+}
+.expert-badge.is-on::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: var(--holo-ice);
+  background-size: 220% 100%;
+  animation: portalRgb 2.8s linear infinite alternate;
+  -webkit-mask: url("../assets/icons/expert-badge.svg?v=20260902a") center / contain no-repeat;
+  mask: url("../assets/icons/expert-badge.svg?v=20260902a") center / contain no-repeat;
+  mix-blend-mode: soft-light;
+  opacity: 0.72;
+  pointer-events: none;
 }

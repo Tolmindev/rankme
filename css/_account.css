@@ -1368,28 +1368,21 @@ body.ach-focus-open { overflow: hidden; }
   padding: 28px 28px 20px;
   text-align: center;
   border: 0;
-  background: #161224;
   box-shadow: none;
-  --x: 50%;
-  --y: 14%;
-  --clr: #ff7a45;
+  background: #161224;
+  --xPos: 50%;
+  --yPos: 50%;
+}
+.expert-modal:hover {
+  background: radial-gradient(
+    22rem circle at var(--xPos) var(--yPos),
+    rgba(255, 201, 74, 0.7),
+    rgba(255, 77, 141, 0.45) 12%,
+    transparent 18%
+  );
 }
 .expert-modal::before {
-  content: "";
-  position: absolute;
-  top: var(--y);
-  left: var(--x);
-  translate: -50% -50%;
-  width: 520px;
-  height: 520px;
-  background: radial-gradient(circle, #ffc94a 0%, #ff7a45 32%, #ff4d8d 52%, transparent 68%);
-  opacity: 0.72;
-  transition: opacity 0.45s ease;
-  pointer-events: none;
-  z-index: 0;
-}
-.expert-modal:hover::before {
-  opacity: 1;
+  display: none;
 }
 .expert-modal::after {
   content: "";
@@ -1410,7 +1403,7 @@ body.ach-focus-open { overflow: hidden; }
   flex: 0 0 72px;
   margin: 0 auto 14px;
   overflow: visible;
-  filter: drop-shadow(0 0 6px rgba(255, 90, 140, 0.28));
+  filter: none;
 }
 .expert-modal .expert-preview img {
   position: relative;

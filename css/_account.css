@@ -673,9 +673,9 @@ body > .toast {
   z-index: 6;
 }
 .sc-cover {
-  flex: 0 0 42%;
-  max-width: 150px;
-  min-width: 96px;
+  flex: 0 0 36%;
+  max-width: 128px;
+  min-width: 84px;
   aspect-ratio: 16 / 10;
   border-radius: 10px;
   overflow: hidden;
@@ -715,20 +715,31 @@ body > .toast {
   animation: cc-marquee 10s linear infinite;
 }
 .sc-stats {
-  display: flex;
-  flex-wrap: nowrap;
+  display: grid;
+  grid-template-columns: minmax(0, auto) auto auto;
+  justify-content: start;
   align-items: center;
-  gap: 10px;
-  font-size: 0.72rem;
+  gap: 6px;
+  min-width: 0;
+  font-size: 0.68rem;
   font-weight: 600;
   color: #b9a8d4;
 }
-.sc-ago { flex-shrink: 0; }
+.sc-ago {
+  font-size: 0.58rem;
+  font-weight: 400;
+  color: #9a90b0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
 .sc-stat {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 3px;
   flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
 }
 .sc-stat img {
   width: 12px;

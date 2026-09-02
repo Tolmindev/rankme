@@ -6399,6 +6399,7 @@ body > .toast {
   position: relative;
   flex-shrink: 0;
   align-self: center;
+  margin-left: 8px;
 }
 .sc-dots {
   width: 32px;
@@ -7112,7 +7113,7 @@ body.ach-focus-open { overflow: hidden; }
 .expert-modal label {
   display: block;
   font-size: 0.68rem;
-  font-weight: 200;
+  font-weight: 400;
   color: var(--text-dim);
   margin-bottom: 8px;
 }
@@ -7135,6 +7136,10 @@ body.ach-focus-open { overflow: hidden; }
   color: #8a82a8;
   font-weight: 400;
   opacity: 1;
+}
+.expert-modal .expert-input:focus::placeholder {
+  color: transparent;
+  opacity: 0;
 }
 .expert-modal .expert-input:focus {
   border-color: rgba(180, 150, 255, 0.7);

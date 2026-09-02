@@ -6961,24 +6961,24 @@ body.ach-focus-open { overflow: hidden; }
   margin-top: 2px;
 }
 .ap-handle {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   flex: 0 0 auto;
   width: max-content;
   max-width: 100%;
-  min-height: 20px;
+  min-height: 24px;
   font-size: 0.78rem;
   font-weight: 400;
   color: var(--text-dim);
   letter-spacing: 0.01em;
   line-height: 20px;
   outline: none;
-  box-sizing: content-box;
+  box-sizing: border-box;
   border-radius: 8px;
-  padding: 0;
+  padding: 2px 8px;
   transition: background 0.15s ease, box-shadow 0.15s ease;
 }
 .ap-handle[contenteditable="true"] {
-  padding: 0 4px 0 10px;
   cursor: text;
   caret-color: rgba(255, 255, 255, 0.32);
 }
@@ -6986,7 +6986,6 @@ body.ach-focus-open { overflow: hidden; }
   opacity: 0.85;
 }
 .ap-handle[contenteditable="true"]:focus {
-  padding: 0 10px;
   background: rgba(180, 140, 255, 0.1);
   box-shadow: 0 0 0 1.5px rgba(180, 140, 255, 0.35);
   color: var(--text);
@@ -6994,7 +6993,7 @@ body.ach-focus-open { overflow: hidden; }
   white-space: nowrap;
 }
 .ap-handle[contenteditable="true"]:focus + .ap-handle-copy {
-  margin-left: 8px;
+  margin-left: 6px;
 }
 .ap-handle-copy {
   flex: 0 0 auto;

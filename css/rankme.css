@@ -6340,6 +6340,7 @@ body > .toast {
 .sc-body {
   flex: 1 1 auto;
   min-width: 0;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -6397,9 +6398,10 @@ body > .toast {
 
 .sc-menu {
   position: relative;
-  flex-shrink: 0;
+  flex: 0 0 32px;
+  width: 32px;
+  margin-left: 4px;
   align-self: center;
-  margin-left: 8px;
 }
 .sc-dots {
   width: 32px;

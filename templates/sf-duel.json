@@ -328,6 +328,12 @@
       "name": "Cold-Hearted Adon"
     },
     {
+      "id": 132,
+      "file": "card_132.webp",
+      "faction": "INFERNAL",
+      "name": "Infernal Karma Dhalsim"
+    },
+    {
       "id": 52,
       "file": "card_052.webp",
       "faction": "WIND",

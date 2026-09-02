@@ -258,6 +258,12 @@
       "file": "42_Shadow_Judgment.webp",
       "name": "Shadow Judgment",
       "faction": "EX"
+    },
+    {
+      "id": 43,
+      "file": "43_Poison_Scorpion_Prison.webp",
+      "name": "Poison Scorpion Prison",
+      "faction": "EX"
     }
   ],
   "cover": "assets/brand/SFD_EX_Cover.webp",

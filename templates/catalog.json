@@ -1,20 +1,7 @@
 {
   "templates": [
     {
-      "id": "sf-duel",
-      "title": "Street Fighter: Duel",
-      "description": "Collect iconic Street Fighters, upgrade your team, and enter epic battles in this idle RPG twist on the Street Fighter universe.",
-      "cover": "assets/brand/SF_Cover_1.webp",
-      "href": "tier.html?t=sf-duel",
-      "category": "games",
-      "tags": [
-        "games",
-        "fighting",
-        "mobile",
-        "street fighter",
-        "capcom"
-      ],
-      "itemCount": 131,
+      "itemCount": 132,
       "itemLabel": "fighters",
       "creator": "RankMe",
       "createdAt": "2024-11-02",
@@ -24,20 +11,7 @@
       "coverThumb": "assets/brand/SF_Cover_1_thumb.webp"
     },
     {
-      "id": "sf-duel-ex",
-      "title": "Street Fighter: Duel EX-Move",
-      "description": "Unlockable battle skills with base and exclusive stats.",
-      "cover": "assets/brand/SFD_EX_Cover.webp",
-      "href": "tier.html?t=sf-duel-ex",
-      "category": "games",
-      "tags": [
-        "games",
-        "fighting",
-        "mobile",
-        "street fighter",
-        "ex-move"
-      ],
-      "itemCount": 42,
+      "itemCount": 43,
       "itemLabel": "EX skills",
       "creator": "RankMe",
       "createdAt": "2024-11-10",

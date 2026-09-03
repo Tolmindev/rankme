@@ -198,6 +198,7 @@
 .discover-toolbar > .search-box {
   width: 100%;
   margin-bottom: 0;
+  padding-right: 4px;
 }
 
 .discover-toolbar .filter-row {
@@ -229,7 +230,7 @@
 .discover-toolbar .sort-dd {
   flex: 0 0 auto;
   position: relative;
-  margin: 0 0 0 2px;
+  margin: 0;
 }
 .search-box .sort-trigger {
   width: 36px;
@@ -248,10 +249,14 @@
 .search-box .sort-trigger:hover,
 .search-box .sort-dd.open .sort-trigger {
   color: var(--text);
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(183, 155, 240, 0.16);
   box-shadow: none;
   filter: none;
   border: 0;
+}
+.search-box .sort-dd .dd-menu li[aria-selected="true"] {
+  background: linear-gradient(135deg, #b79bf0, #c9a3ff);
+  color: #1a1226;
 }
 .search-box .sort-menu-ico {
   display: block;
@@ -722,7 +727,7 @@
     height: 44px;
     margin-bottom: 0;
     box-sizing: border-box;
-    padding-right: 6px;
+    padding-right: 3px;
   }
 
   .discover-toolbar .filter-row {

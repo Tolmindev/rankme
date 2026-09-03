@@ -402,7 +402,23 @@
     if (animateIn) {
       requestAnimationFrame(function () {
         requestAnimationFrame(function () {
+          if (!els.vsRow) return;
           els.vsRow.classList.add('enter-active');
+          var card = els.vsRow.querySelector('.battle-card');
+          var done = false;
+          var finish = function () {
+            if (done || !els.vsRow) return;
+            done = true;
+            els.vsRow.classList.remove('entering', 'enter-active');
+          };
+          if (card) {
+            card.addEventListener('transitionend', function onEnd(e) {
+              if (e.target !== card) return;
+              card.removeEventListener('transitionend', onEnd);
+              finish();
+            });
+          }
+          setTimeout(finish, 500);
         });
       });
     }

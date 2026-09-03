@@ -642,7 +642,7 @@ body.theme-gold {
   background: rgba(255,255,255,0.04);
   border: 1px solid var(--line);
   border-radius: 999px;
-  padding: 0 18px;
+  padding: 0 8px 0 18px;
   margin-bottom: 16px;
   transition: border-color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out), background var(--dur-base) var(--ease-out);
 }
@@ -653,13 +653,13 @@ body.theme-gold {
   box-shadow: var(--glow-accent);
 }
 
-.search-box svg {
+.search-box > svg {
   flex-shrink: 0;
   opacity: .65;
   transition: opacity var(--dur-fast) var(--ease-out);
 }
 
-.search-box:focus-within svg {
+.search-box:focus-within > svg {
   opacity: 1;
   color: #e8d4ff;
 }
@@ -750,6 +750,10 @@ body.theme-gold {
 .search-box input::placeholder {
   color: rgba(190, 175, 220, 0.45);
   -webkit-text-fill-color: rgba(190, 175, 220, 0.45);
+}
+.search-box input:focus::placeholder {
+  color: transparent;
+  -webkit-text-fill-color: transparent;
 }
 
 .show-all-wrap {

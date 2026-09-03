@@ -154,15 +154,23 @@ button.battle-back:active {
   text-align: center;
 }
 
-.battle-vs-row.entering {
+.battle-vs-row.entering .battle-card {
   opacity: 0;
-  transform: translateY(10px) scale(.98);
+  transform: translate3d(0, 6px, 0);
 }
 
-.battle-vs-row.enter-active {
+.battle-vs-row.enter-active .battle-card {
   opacity: 1;
-  transform: translateY(0) scale(1);
-  transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out);
+  transform: translate3d(0, 0, 0);
+  transition: opacity 0.42s var(--ease-out), transform 0.42s var(--ease-out);
+}
+@media (prefers-reduced-motion: reduce) {
+  .battle-vs-row.entering .battle-card,
+  .battle-vs-row.enter-active .battle-card {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
 
 .battle-overlay {

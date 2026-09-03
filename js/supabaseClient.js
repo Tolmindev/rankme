@@ -375,10 +375,18 @@ function updateNavAuth() {
           loginBtn.classList.remove('login-btn-avatar');
           loginBtn.textContent = displayName;
         } else {
-          loginBtn.classList.remove('login-btn-avatar');
+          loginBtn.classList.remove('login-btn-avatar', 'is-expert');
           if (loginBtn.tagName === 'A' || loginBtn.tagName === 'BUTTON') {
             loginBtn.textContent = 'Account';
           }
+        }
+        if (user && typeof fetchApprovedExpertIds === 'function') {
+          fetchApprovedExpertIds().then(function () {
+            var on = typeof isApprovedExpert === 'function' && isApprovedExpert(user.id);
+            loginBtn.classList.toggle('is-expert', !!on);
+          });
+        } else {
+          loginBtn.classList.remove('is-expert');
         }
       }
     } catch (e) {

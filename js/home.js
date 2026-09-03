@@ -509,7 +509,6 @@
     els.chips = document.getElementById('categoryChips');
     els.dd = document.getElementById('sortDd');
     els.ddTrigger = document.getElementById('sortDdTrigger');
-    els.ddLabel = document.getElementById('sortDdLabel');
     els.ddMenu = document.getElementById('sortDdMenu');
     els.grid = document.getElementById('discoverGrid');
     els.community = document.getElementById('communityBody');
@@ -555,7 +554,7 @@
       li.addEventListener('click', function () {
         state.sort = li.getAttribute('data-value');
         state.tplVisible = null;
-        els.ddLabel.textContent = li.textContent;
+        if (els.ddTrigger) els.ddTrigger.setAttribute('aria-label', 'Sort: ' + li.textContent);
         els.ddMenu.querySelectorAll('li').forEach(function (o) { o.setAttribute('aria-selected', 'false'); });
         li.setAttribute('aria-selected', 'true');
         closeDd();

@@ -78,6 +78,19 @@ body > .toast {
   background: #1a1728;
 }
 
+.login-btn.login-btn-avatar.is-expert {
+  border-color: transparent;
+  background:
+    linear-gradient(#1a1728, #1a1728) padding-box,
+    var(--holo-warm) border-box;
+  background-origin: padding-box, border-box;
+  background-clip: padding-box, border-box;
+}
+.login-btn.login-btn-avatar.is-expert:hover {
+  border-color: transparent;
+  box-shadow: 0 0 12px rgba(255, 120, 80, 0.35);
+}
+
 .login-btn.login-btn-avatar .nav-avatar {
   width: 100%;
   height: 100%;

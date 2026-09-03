@@ -1256,7 +1256,7 @@ body.theme-gold .card img {
     max-width: none;
     width: 100%;
     height: 52px;
-    padding: 6px 2px 4px;
+    padding: 6px 4px 4px;
     flex-direction: column;
     gap: 4px;
     border-radius: 12px;
@@ -1272,8 +1272,9 @@ body.theme-gold .card img {
   }
   .toolbar .tb-g {
     display: block;
-    width: 22px;
-    height: 22px;
+    width: 24px;
+    height: 24px;
+    flex: 0 0 24px;
     background: currentColor;
     -webkit-mask: center / contain no-repeat;
     mask: center / contain no-repeat;
@@ -1289,8 +1290,6 @@ body.theme-gold .card img {
   .toolbar .pill-btn.danger .tb-g {
     -webkit-mask-image: url("../assets/icons/tb-clear.svg");
     mask-image: url("../assets/icons/tb-clear.svg");
-    -webkit-mask-size: 118%;
-    mask-size: 118%;
   }
   .toolbar .pill-btn.remove .tb-g {
     -webkit-mask-image: url("../assets/icons/tb-remove.svg");
@@ -1308,8 +1307,8 @@ body.theme-gold .card img {
     mask-image: url("../assets/icons/tb-remix.svg");
   }
   .toolbar .save-btn .tb-g {
-    -webkit-mask-image: url("../assets/icons/tb-save.svg");
-    mask-image: url("../assets/icons/tb-save.svg");
+    -webkit-mask-image: url("../assets/icons/tb-save.svg?v=2");
+    mask-image: url("../assets/icons/tb-save.svg?v=2");
   }
   .toolbar .tb-t {
     font-size: 8px;
@@ -1325,14 +1324,16 @@ body.theme-gold .card img {
     background: var(--btn-bg);
     border-color: rgba(255, 110, 110, 0.42);
   }
-  .toolbar .save-btn {
+  .toolbar .pill-btn.save-btn {
     color: var(--btn-fg);
     min-width: 0;
     height: 52px;
     padding: 6px 2px 4px;
-    background: var(--btn-bg);
-    border: 1px solid var(--btn-line);
-    box-shadow: 0 0 12px rgba(180, 120, 255, 0.28);
+    border: 1.5px solid transparent;
+    background: var(--btn-core) padding-box, var(--btn-holo) border-box;
+    background-origin: padding-box, border-box;
+    background-clip: padding-box, border-box;
+    box-shadow: var(--btn-glow);
   }
   .toolbar .remix-btn {
     min-width: 0;
@@ -1356,8 +1357,10 @@ body.theme-gold .card img {
     color: #ffd0d0;
     box-shadow: 0 0 14px rgba(255, 100, 120, 0.32);
   }
-  .toolbar .save-btn:hover {
-    box-shadow: 0 0 16px rgba(180, 120, 255, 0.4);
+  .toolbar .pill-btn.save-btn:hover {
+    filter: brightness(1.1);
+    border-color: transparent;
+    box-shadow: 0 0 22px rgba(190, 140, 255, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.12);
   }
   .toolbar .pill-btn:active {
     transform: scale(0.96);

@@ -29,7 +29,12 @@
 
   var catalog = FALLBACK.slice();
   var pending = null;
+  var toastQueue = [];
   var toastTimer = 0;
+  var toastBusy = false;
+  var toastShowing = null;
+  var TOAST_MS = 4200;
+  var TOAST_GAP = 420;
 
   function load() {
     if (pending) return pending;
@@ -120,7 +125,24 @@
   }
 
   function toast(item) {
-    if (!item) return;
+    if (!item || !item.id) return;
+    if (toastShowing && toastShowing.id === item.id) return;
+    for (var i = 0; i < toastQueue.length; i++) {
+      if (toastQueue[i].id === item.id) return;
+    }
+    toastQueue.push(item);
+    playToastQueue();
+  }
+
+  function playToastQueue() {
+    if (toastBusy) return;
+    var item = toastQueue.shift();
+    if (!item) {
+      toastShowing = null;
+      return;
+    }
+    toastBusy = true;
+    toastShowing = item;
     var el = document.getElementById('achToast');
     if (!el) {
       el = document.createElement('div');
@@ -139,7 +161,14 @@
     void el.offsetWidth;
     el.classList.add('show');
     clearTimeout(toastTimer);
-    toastTimer = setTimeout(function () { el.classList.remove('show'); }, 4200);
+    toastTimer = setTimeout(function () {
+      el.classList.remove('show');
+      toastTimer = setTimeout(function () {
+        toastBusy = false;
+        toastShowing = null;
+        playToastQueue();
+      }, TOAST_GAP);
+    }, TOAST_MS);
   }
 
   async function grant(user, id, opts) {
@@ -155,20 +184,16 @@
 
   async function grantMany(user, ids, opts) {
     var any = false;
-    var last = null;
+    var show = !!(opts && opts.toast);
     for (var i = 0; i < ids.length; i++) {
-      var fresh = await grant(user, ids[i], { toast: false });
-      if (fresh) {
-        any = true;
-        last = byId(ids[i]);
-      }
+      var fresh = await grant(user, ids[i], { toast: show });
+      if (fresh) any = true;
     }
-    if (any && opts && opts.toast && last) toast(last);
     return any;
   }
 
   async function onLogin(user) {
-    return grantMany(user, loginIds(), { toast: false });
+    return grantMany(user, loginIds(), { toast: true });
   }
 
   async function onPublish(user, opts) {

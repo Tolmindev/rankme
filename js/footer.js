@@ -5,7 +5,7 @@
 
   root.className = 'site';
   root.innerHTML =
-    '<img class="footer-logo" src="assets/brand/Footer_logo.svg" alt="RankMe">' +
+    '<img class="footer-logo" src="assets/brand/Footer_logo.svg?v=2" alt="RankMe">' +
     '<div class="footer-legal">© 2026 rankme.lol | ' +
       '<a href="privacy.html">Privacy Policy</a> | ' +
       '<a href="terms.html">Terms of Use</a> | ' +

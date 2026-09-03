@@ -9,10 +9,10 @@
   var fadeTimer = 0;
 
   var COLORS = [
-    [196, 170, 240],
-    [176, 150, 230],
-    [214, 186, 248],
-    [168, 186, 240]
+    [150, 118, 210],
+    [132, 108, 196],
+    [164, 128, 214],
+    [120, 138, 210]
   ];
 
   function reduced() {
@@ -86,7 +86,7 @@
       var near = 1 - st.z;
       st.tw += 0.012;
       var tw = 0.72 + 0.28 * Math.sin(st.tw);
-      var a = (0.08 + near * 0.32) * tw;
+      var a = (0.04 + near * 0.16) * tw;
       var r = st.s * (0.45 + near * 1.05);
       var col = COLORS[st.c];
       ctx.fillStyle = 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',' + a.toFixed(3) + ')';

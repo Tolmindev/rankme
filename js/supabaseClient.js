@@ -10,6 +10,7 @@ window.RANKME_SB = {
 };
 
 window.sb = null;
+var sessionWait = null;
 
 async function initSupabase() {
   if (window.sb) return window.sb;
@@ -30,14 +31,18 @@ async function initSupabase() {
 async function getSessionUser() {
   const client = await initSupabase();
   if (!client) return null;
-  const { data } = await client.auth.getSession();
-  let session = data?.session || null;
-  const expMs = session && session.expires_at ? session.expires_at * 1000 : 0;
-  if (session && expMs && expMs < Date.now() + 30000) {
-    const { data: refreshed } = await client.auth.refreshSession();
-    session = (refreshed && refreshed.session) || null;
-  }
-  return (session && session.user) || null;
+  if (sessionWait) return sessionWait;
+  sessionWait = (async function () {
+    const { data } = await client.auth.getSession();
+    let session = data?.session || null;
+    const expMs = session && session.expires_at ? session.expires_at * 1000 : 0;
+    if (session && expMs && expMs < Date.now() + 30000) {
+      const { data: refreshed } = await client.auth.refreshSession();
+      session = (refreshed && refreshed.session) || null;
+    }
+    return (session && session.user) || null;
+  })().finally(function () { sessionWait = null; });
+  return sessionWait;
 }
 
 function rankmeDisplayName(user) {
@@ -186,6 +191,7 @@ async function setTierlistPublic(id, isPublic) {
 async function listPublicTierlists(limit) {
   const client = await initSupabase();
   if (!client) return [];
+  await getSessionUser();
   const { data, error } = await client
     .from('tierlists')
     .select('id, title, template_id, updated_at, created_at, user_id, is_public, like_count, view_count, author_name, author_avatar, payload')
@@ -209,6 +215,7 @@ async function listPublicTierlists(limit) {
 async function listPublicTierlistsByUser(userId, limit) {
   const client = await initSupabase();
   if (!client || !userId) return [];
+  await getSessionUser();
   const { data, error } = await client
     .from('tierlists')
     .select('id, title, template_id, updated_at, created_at, user_id, is_public, like_count, view_count, author_name, author_avatar, payload')
@@ -412,12 +419,15 @@ function bindAccountButton() {
 
 
 if (typeof document !== 'undefined') {
-  document.addEventListener('DOMContentLoaded', function () {
+  function bootNav() {
     bindAccountButton();
     updateNavAuth();
-  });
-  bindAccountButton();
-  updateNavAuth();
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bootNav);
+  } else {
+    bootNav();
+  }
 }
 
 /* ---- Social: likes (RPC only — atomic, RLS-safe) ---- */
@@ -468,6 +478,7 @@ async function trackTemplateUse(templateId, kind) {
 async function fetchTemplateStats() {
   const client = await initSupabase();
   if (!client) return {};
+  await getSessionUser();
   try {
     const { data, error } = await client
       .from('template_stats')
@@ -578,9 +589,16 @@ function expertBadgeHtml(opts) {
   return '<button type="button" class="' + cls + ' is-btn" data-expert-btn="1" aria-label="' + label + '">' + inner + '</button>';
 }
 
+var expertWait = null;
+var myExpertWait = null;
+var myExpertCached = undefined;
+var myExpertUid = '';
+
 async function fetchApprovedExpertIds() {
   if (window.__rmExpertIds instanceof Set) return window.__rmExpertIds;
-  try {
+  if (expertWait) return expertWait;
+  expertWait = (async function () {
+    await getSessionUser();
     var client = await initSupabase();
     if (!client) return new Set();
     var res = await client.from('expert_requests').select('user_id').eq('status', 'approved');
@@ -590,9 +608,8 @@ async function fetchApprovedExpertIds() {
     }
     window.__rmExpertIds = new Set((res.data || []).map(function (r) { return r.user_id; }));
     return window.__rmExpertIds;
-  } catch (e) {
-    return new Set();
-  }
+  })().finally(function () { expertWait = null; });
+  return expertWait;
 }
 
 function isApprovedExpert(userId) {
@@ -602,14 +619,26 @@ function isApprovedExpert(userId) {
 async function getMyExpertRequest() {
   var user = await getSessionUser();
   if (!user) return null;
-  var client = await initSupabase();
-  if (!client) return null;
-  var res = await client.from('expert_requests').select('user_id, social_link, status, created_at').eq('user_id', user.id).maybeSingle();
-  if (res.error) {
-    console.warn('[RankMe] getMyExpertRequest', res.error.message);
-    return null;
-  }
-  return res.data || null;
+  if (myExpertUid === user.id && myExpertCached !== undefined) return myExpertCached;
+  if (myExpertWait && myExpertUid === user.id) return myExpertWait;
+  myExpertUid = user.id;
+  myExpertWait = (async function () {
+    var client = await initSupabase();
+    if (!client) return null;
+    var res = await client.from('expert_requests').select('user_id, social_link, status, created_at').eq('user_id', user.id).maybeSingle();
+    if (res.error) {
+      console.warn('[RankMe] getMyExpertRequest', res.error.message);
+      return null;
+    }
+    myExpertCached = res.data || null;
+    return myExpertCached;
+  })().finally(function () { myExpertWait = null; });
+  return myExpertWait;
+}
+
+function clearMyExpertCache() {
+  myExpertCached = undefined;
+  myExpertUid = '';
 }
 
 function normalizeHttpUrl(s) {
@@ -643,6 +672,7 @@ async function submitExpertRequest(socialLink) {
     res = await client.from('expert_requests').insert(row);
   }
   if (res.error) throw new Error(res.error.message || 'Could not send');
+  clearMyExpertCache();
   notifyExpertApplication(user, link);
   return true;
 }
@@ -654,6 +684,7 @@ async function cancelExpertRequest() {
   if (!client) throw new Error('Could not reach server');
   var res = await client.from('expert_requests').delete().eq('user_id', user.id).eq('status', 'pending');
   if (res.error) throw new Error(res.error.message || 'Could not cancel');
+  clearMyExpertCache();
   return true;
 }
 

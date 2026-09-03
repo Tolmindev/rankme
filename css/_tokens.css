@@ -72,7 +72,7 @@ body {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  background: radial-gradient(ellipse 130% 90% at 50% 18%, rgba(176, 148, 224, 0.14), transparent 68%);
+  background: radial-gradient(ellipse 130% 90% at 50% 18%, rgba(183, 155, 240, 0.16), transparent 68%);
 }
 
 [contenteditable="true"],

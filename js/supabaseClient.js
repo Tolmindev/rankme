@@ -691,6 +691,7 @@ var HANDLE_RESERVED = {
   static:1, auth:1, settings:1, rankme:1, 'null':1, undefined:1
 };
 window.__rmHandles = window.__rmHandles || {};
+window.__rmAvatars = window.__rmAvatars || {};
 var PROFILE_COLS = 'user_id, handle, handle_changed_at, display_name, avatar_url';
 
 function sanitizeHandle(raw) {
@@ -728,6 +729,11 @@ function profileHrefFor(userId) {
   return 'account.html?u=' + encodeURIComponent(String(userId));
 }
 
+function profileAvatar(userId, fallback) {
+  var live = userId && window.__rmAvatars && window.__rmAvatars[userId];
+  return live || fallback || '';
+}
+
 function publicHandleUrl(handle) {
   return 'https://rankme.lol/u/' + handle;
 }
@@ -753,6 +759,7 @@ async function getProfileByUserId(userId) {
     if (res.error) return null;
     var row = res.data || null;
     if (row && row.handle) window.__rmHandles[row.user_id] = row.handle;
+    if (row && row.avatar_url) window.__rmAvatars[row.user_id] = row.avatar_url;
     return row;
   } catch (e) { return null; }
 }
@@ -766,6 +773,7 @@ async function getProfileByHandle(handle) {
     var res = await client.from('profiles').select(PROFILE_COLS).eq('handle', h).maybeSingle();
     if (res.error || !res.data) return null;
     window.__rmHandles[res.data.user_id] = res.data.handle;
+    if (res.data.avatar_url) window.__rmAvatars[res.data.user_id] = res.data.avatar_url;
     return res.data;
   } catch (e) { return null; }
 }
@@ -786,7 +794,9 @@ async function fetchProfileHandles(ids) {
   var list = [];
   var seen = {};
   (ids || []).forEach(function (id) {
-    if (!id || seen[id] || Object.prototype.hasOwnProperty.call(window.__rmHandles, id)) return;
+    if (!id || seen[id]) return;
+    if (Object.prototype.hasOwnProperty.call(window.__rmHandles, id) &&
+        Object.prototype.hasOwnProperty.call(window.__rmAvatars, id)) return;
     seen[id] = 1;
     list.push(id);
   });
@@ -794,12 +804,14 @@ async function fetchProfileHandles(ids) {
   try {
     var client = await initSupabase();
     if (!client) return window.__rmHandles;
-    var res = await client.from('profiles').select('user_id, handle').in('user_id', list);
+    var res = await client.from('profiles').select('user_id, handle, avatar_url').in('user_id', list);
     list.forEach(function (id) {
       if (window.__rmHandles[id] == null) window.__rmHandles[id] = '';
+      if (window.__rmAvatars[id] == null) window.__rmAvatars[id] = '';
     });
     (res.data || []).forEach(function (r) {
       if (r.handle) window.__rmHandles[r.user_id] = r.handle;
+      if (r.avatar_url) window.__rmAvatars[r.user_id] = r.avatar_url;
     });
   } catch (e) {}
   return window.__rmHandles;

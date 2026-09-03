@@ -2619,8 +2619,9 @@ function setupCommunityUI() {
   const ago = typeof timeAgo === 'function' ? timeAgo(m.updatedAt) : '';
   const likes = typeof formatCount === 'function' ? formatCount(m.likes) : String(m.likes || 0);
   const views = typeof formatCount === 'function' ? formatCount(m.views) : String(m.views || 0);
-  const av = m.authorAvatar
-    ? '<img class="cb-avatar" src="' + String(m.authorAvatar).replace(/"/g, '') + '" alt="">'
+  const avUrl = (typeof profileAvatar === 'function' ? profileAvatar(m.userId, m.authorAvatar) : m.authorAvatar);
+  const av = avUrl
+    ? '<img class="cb-avatar" src="' + String(avUrl).replace(/"/g, '') + '" alt="">'
     : '<div class="cb-avatar cb-fallback">' + String(m.authorName || 'U').charAt(0).toUpperCase() + '</div>';
   const profileHref = m.userId
     ? ((typeof profileHrefFor === 'function' ? profileHrefFor(m.userId) : '') || ('account.html?u=' + encodeURIComponent(String(m.userId))))
@@ -2647,8 +2648,13 @@ function setupCommunityUI() {
   if (m.userId && typeof fetchProfileHandles === 'function') {
     fetchProfileHandles([m.userId]).then(function () {
       var href = typeof profileHrefFor === 'function' ? profileHrefFor(m.userId) : '';
-      if (!href) return;
-      bar.querySelectorAll('a[href^="account.html"]').forEach(function (a) { a.setAttribute('href', href); });
+      if (href) bar.querySelectorAll('a[href^="account.html"]').forEach(function (a) { a.setAttribute('href', href); });
+      var live = typeof profileAvatar === 'function' ? profileAvatar(m.userId, '') : '';
+      if (live) {
+        communityMeta.authorAvatar = live;
+        var img = bar.querySelector('.cb-avatar');
+        if (img && img.tagName === 'IMG') img.src = live;
+      }
     });
   }
   if (typeof fetchApprovedExpertIds === 'function') {

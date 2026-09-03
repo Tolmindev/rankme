@@ -331,8 +331,9 @@
     var likes = typeof formatCount === 'function' ? formatCount(row.like_count) : String(row.like_count || 0);
     var views = typeof formatCount === 'function' ? formatCount(row.view_count) : String(row.view_count || 0);
     var author = escapeHtml(row.author_name || 'User');
-    var av = row.author_avatar
-      ? '<img class="cc-av" src="' + escapeHtml(row.author_avatar) + '" alt="">'
+    var avUrl = (typeof profileAvatar === 'function' ? profileAvatar(row.user_id, row.author_avatar) : row.author_avatar);
+    var av = avUrl
+      ? '<img class="cc-av" src="' + escapeHtml(avUrl) + '" alt="">'
       : '<span class="cc-av cc-av-fallback">' + author.charAt(0).toUpperCase() + '</span>';
     var profileHref = row.user_id
       ? ((typeof profileHrefFor === 'function') ? profileHrefFor(row.user_id) : ('account.html?u=' + encodeURIComponent(String(row.user_id))))

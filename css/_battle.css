@@ -15,6 +15,23 @@
   opacity: 1;
 }
 
+.battle-glow {
+  position: fixed;
+  left: 50%;
+  bottom: -22%;
+  width: 130vw;
+  height: 58vh;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(141, 100, 255, 0.3) 0%,
+    rgba(115, 83, 255, 0.12) 46%,
+    transparent 72%
+  );
+}
+
 .battle-page,
 .battle-overlay {
   position: relative;

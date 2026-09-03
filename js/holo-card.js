@@ -32,8 +32,9 @@
   }
 
   function cardHtml(item) {
+    var rare = item && item.rarity === 'legendary' ? ' is-legendary' : '';
     return (
-      '<button type="button" class="ach-card" data-ach="' + esc(item.id) + '" aria-label="' + esc(item.title) + '">' +
+      '<button type="button" class="ach-card' + rare + '" data-ach="' + esc(item.id) + '" aria-label="' + esc(item.title) + '">' +
         '<span class="ach-card-face">' +
           '<img class="ach-art" src="' + item.img + '" alt="">' +
           '<span class="ach-foil" aria-hidden="true"></span>' +

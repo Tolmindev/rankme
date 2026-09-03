@@ -19,7 +19,8 @@
       "title": "Main Character",
       "desc": "The community actually listens to this person. For some reason.",
       "img": "assets/achievements/achiev_3.webp",
-      "unlock": "expert"
+      "unlock": "expert",
+      "rarity": "legendary"
     }
   ]
 }

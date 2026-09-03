@@ -23,7 +23,8 @@
       title: 'Main Character',
       desc: 'The community actually listens to this person. For some reason.',
       img: 'assets/achievements/achiev_3.webp',
-      unlock: 'expert'
+      unlock: 'expert',
+      rarity: 'legendary'
     }
   ];
 
@@ -147,10 +148,10 @@
     if (!el) {
       el = document.createElement('div');
       el.id = 'achToast';
-      el.className = 'ach-toast';
       el.setAttribute('role', 'status');
       document.body.appendChild(el);
     }
+    el.className = 'ach-toast' + (item.rarity === 'legendary' ? ' is-legendary' : '');
     el.innerHTML =
       '<img src="' + item.img + '" alt="">' +
       '<div class="ach-toast-copy">' +

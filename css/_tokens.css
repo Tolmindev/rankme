@@ -68,15 +68,6 @@ body {
   user-select: none;
 }
 
-.aurora {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(ellipse 85% 70% at 18% 6%, rgba(160, 124, 228, 0.2), transparent 74%),
-    radial-gradient(ellipse 75% 65% at 86% 10%, rgba(108, 158, 240, 0.14), transparent 72%),
-    radial-gradient(ellipse 95% 60% at 48% 98%, rgba(196, 122, 210, 0.12), transparent 70%);
-}
 [contenteditable="true"],
 [contenteditable=""],
 .is-editable {

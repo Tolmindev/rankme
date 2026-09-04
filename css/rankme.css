@@ -4924,15 +4924,6 @@ to { --elec-angle: 360deg; }
   cursor: pointer;
   transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
 }
-.cat-chip .chip-ico {
-  width: 14px;
-  height: 14px;
-  flex: 0 0 14px;
-  display: block;
-  object-fit: contain;
-  pointer-events: none;
-}
-
 .cat-chip:focus,
 .cat-chip:focus-visible {
   outline: none;
@@ -5293,7 +5284,7 @@ to { --elec-angle: 360deg; }
   display: flex;
   align-items: center;
   gap: 8px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 .community-pills .cat-chip[data-csort="hot"] {
   --ring: linear-gradient(120deg, #ff6b3d, #ffd24a, #ff6b9d, #ff8a3d, #ff6b3d);
@@ -5311,12 +5302,21 @@ to { --elec-angle: 360deg; }
   --idle: rgba(176, 210, 255, 0.55);
 }
 .community-pills .cat-chip {
+  height: 20px;
+  width: 3.9rem;
+  flex: 0 0 3.9rem;
+  padding: 0;
+  gap: 0;
+  box-sizing: border-box;
   background: #161224;
   border: 1.5px solid var(--idle);
   box-shadow: none;
   animation: none;
   color: #f4eefc;
-  -webkit-text-fill-color: #f4eefc;
+  font-size: 0.55rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  line-height: 1;
 }
 .community-pills .cat-chip:hover,
 .community-pills .cat-chip.active {
@@ -5328,7 +5328,6 @@ to { --elec-angle: 360deg; }
   background-clip: padding-box, border-box;
   background-size: auto, 220% 100%;
   color: #fff;
-  -webkit-text-fill-color: #fff;
   animation: portalRgb 2.8s linear infinite alternate;
 }
 .community-pills .cat-chip:hover {
@@ -5596,13 +5595,17 @@ to { --elec-angle: 360deg; }
   }
   .community-head {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
     gap: 10px;
     margin-bottom: 14px;
   }
   .community-rankings-title {
     text-align: left;
     margin: 0;
+  }
+  .community-pills {
+    justify-content: flex-end;
+    width: 100%;
   }
 
   .home-wrap {

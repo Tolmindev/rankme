@@ -122,15 +122,14 @@
 
   function communityPillsHtml() {
     var opts = [
-      ['hot', 'Hot', 'assets/icons/chip-hot.svg'],
-      ['new', 'New', 'assets/icons/chip-new.svg'],
-      ['experts', 'Experts', 'assets/icons/chip-expert.svg']
+      ['hot', 'Hot'],
+      ['new', 'New'],
+      ['experts', 'Experts']
     ];
     return '<div class="community-pills" role="tablist" aria-label="Community sort">' +
       opts.map(function (o) {
         var on = state.communitySort === o[0] ? ' active' : '';
         return '<button type="button" class="cat-chip' + on + '" data-csort="' + o[0] + '">' +
-          '<img class="chip-ico" src="' + o[2] + '" alt="" width="14" height="14">' +
           o[1] + '</button>';
       }).join('') +
       '</div>';

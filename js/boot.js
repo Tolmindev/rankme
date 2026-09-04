@@ -70,17 +70,17 @@
   }
 
   function applyHero(t) {
-    document.title = (t.title || 'Ranking') + ' - RankMe';
     const title = (t.title || 'Ranking') + ' - RankMe';
-    const desc = t.description || 'The easiest way to rank what you love.';
+    document.title = title;
+    const ogDesc = t.description || 'The easiest way to rank what you love.';
     const ogImg = t.cover
       ? 'https://rankme.lol/' + String(t.cover).replace(/^\//, '')
       : 'https://rankme.lol/assets/brand/Share_RankMe.webp';
     setMeta('metaOgTitle', 'content', title);
-    setMeta('metaOgDesc', 'content', desc);
+    setMeta('metaOgDesc', 'content', ogDesc);
     setMeta('metaOgImage', 'content', ogImg);
     setMeta('metaTwTitle', 'content', title);
-    setMeta('metaTwDesc', 'content', desc);
+    setMeta('metaTwDesc', 'content', ogDesc);
     setMeta('metaTwImage', 'content', ogImg);
 
     const img = document.getElementById('coverImg');
@@ -91,8 +91,8 @@
     }
     const titleEl = document.getElementById('heroTitle');
     if (titleEl) titleEl.textContent = t.title || '';
-    const desc = document.getElementById('heroDesc');
-    if (desc) desc.textContent = t.description || '';
+    const descEl = document.getElementById('heroDesc');
+    if (descEl) descEl.textContent = t.description || '';
 
     const isMobile =
       window.matchMedia && window.matchMedia('(max-width: 720px), (hover: none)').matches;
@@ -134,7 +134,7 @@
     .then((t) => {
       if (!t || !t.id) throw new Error('Bad template');
       window.RANKME_TEMPLATE = t;
-      applyHero(t);
+      try { applyHero(t); } catch (e) { console.error(e); }
       showApp();
       const s = document.createElement('script');
       s.src = 'js/app.js?v=20260903f';

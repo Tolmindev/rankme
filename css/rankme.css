@@ -4932,68 +4932,84 @@ to { --elec-angle: 360deg; }
   outline: none;
 }
 
-.cat-chip[data-cat="all"] { border-color: rgba(180, 140, 255, 0.45); }
-.cat-chip[data-cat="games"] { border-color: rgba(140, 100, 255, 0.45); }
-.cat-chip[data-cat="anime"] { border-color: rgba(255, 100, 150, 0.45); }
-.cat-chip[data-cat="movies"] { border-color: rgba(250, 180, 40, 0.45); }
-.cat-chip[data-cat="tv"] { border-color: rgba(50, 200, 150, 0.45); }
-.cat-chip[data-cat="sports"] { border-color: rgba(250, 140, 40, 0.45); }
-.cat-chip[data-cat="music"] { border-color: rgba(100, 120, 255, 0.45); }
-.cat-chip[data-cat="memes"] { border-color: rgba(240, 120, 200, 0.45); }
-.cat-chip[data-cat="technology"] { border-color: rgba(40, 200, 230, 0.45); }
-.cat-chip[data-cat="other"] { border-color: rgba(140, 150, 170, 0.45); }
-
-.cat-chip[data-cat="all"]:hover { border-color: rgba(180, 140, 255, 0.9); }
-.cat-chip[data-cat="games"]:hover { border-color: rgba(140, 100, 255, 0.9); }
-.cat-chip[data-cat="anime"]:hover { border-color: rgba(255, 100, 150, 0.9); }
-.cat-chip[data-cat="movies"]:hover { border-color: rgba(250, 180, 40, 0.9); }
-.cat-chip[data-cat="tv"]:hover { border-color: rgba(50, 200, 150, 0.9); }
-.cat-chip[data-cat="sports"]:hover { border-color: rgba(250, 140, 40, 0.9); }
-.cat-chip[data-cat="music"]:hover { border-color: rgba(100, 120, 255, 0.9); }
-.cat-chip[data-cat="memes"]:hover { border-color: rgba(240, 120, 200, 0.9); }
-.cat-chip[data-cat="technology"]:hover { border-color: rgba(40, 200, 230, 0.9); }
-.cat-chip[data-cat="other"]:hover { border-color: rgba(140, 150, 170, 0.9); }
-
-.cat-chip.active {
+.discover-toolbar .filter-row {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  overflow: visible;
+}
+.discover-toolbar .chip-scroll {
+  flex: 0 1 auto;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  max-width: 100%;
+  padding: 8px 2px;
+  overflow-x: auto;
+  overflow-y: visible;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.discover-toolbar .chip-scroll::-webkit-scrollbar { display: none; }
+.discover-toolbar .skel-chip {
+  height: 20px;
+  width: 68px;
+  flex: 0 0 68px;
+  border-radius: 999px;
+}
+.discover-toolbar .cat-chip {
+  height: 20px;
+  min-width: 4.5rem;
+  flex: 0 0 auto;
+  padding: 0 11px;
+  border: 0;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
   color: #fff;
   -webkit-text-fill-color: #fff;
-  border-color: transparent;
+  background: var(--chip);
+  box-shadow: none;
+  transform: scale(1);
+  transform-origin: center center;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
-.cat-chip[data-cat].active:hover {
-  border-color: transparent;
+.discover-toolbar .cat-chip[data-cat="all"]         { --chip: #8b6cf7; --glow: rgba(139, 108, 247, 0.55); }
+.discover-toolbar .cat-chip[data-cat="games"]       { --chip: #7c5ce8; --glow: rgba(124, 92, 232, 0.5); }
+.discover-toolbar .cat-chip[data-cat="anime"]       { --chip: #e85a9a; --glow: rgba(232, 90, 154, 0.5); }
+.discover-toolbar .cat-chip[data-cat="movies"]      { --chip: #e8b44a; --glow: rgba(232, 180, 74, 0.5); }
+.discover-toolbar .cat-chip[data-cat="tv"]          { --chip: #5dce6a; --glow: rgba(93, 206, 106, 0.5); }
+.discover-toolbar .cat-chip[data-cat="sports"]      { --chip: #3db87a; --glow: rgba(61, 184, 122, 0.5); }
+.discover-toolbar .cat-chip[data-cat="music"]       { --chip: #3db8c8; --glow: rgba(61, 184, 200, 0.5); }
+.discover-toolbar .cat-chip[data-cat="memes"]       { --chip: #4a8eef; --glow: rgba(74, 142, 239, 0.5); }
+.discover-toolbar .cat-chip[data-cat="technology"]  { --chip: #e878b0; --glow: rgba(232, 120, 176, 0.5); }
+.discover-toolbar .cat-chip[data-cat="other"]       { --chip: #9b8ec8; --glow: rgba(155, 142, 200, 0.5); }
+.discover-toolbar .cat-chip.active {
+  z-index: 1;
+  transform: scale(1.1);
+  box-shadow: 0 0 10px var(--glow), 0 0 20px var(--glow);
 }
-
-.cat-chip[data-cat="all"].active {
-  background: linear-gradient(135deg, #a78bfa, #8b5cf6);
+@media (hover: hover) {
+  .discover-toolbar .cat-chip:hover {
+    z-index: 1;
+    transform: scale(1.07);
+  }
+  .discover-toolbar .cat-chip.active:hover {
+    transform: scale(1.12);
+  }
 }
-.cat-chip[data-cat="games"].active {
-  background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+@media (prefers-reduced-motion: reduce) {
+  .discover-toolbar .cat-chip,
+  .discover-toolbar .cat-chip:hover,
+  .discover-toolbar .cat-chip.active,
+  .discover-toolbar .cat-chip.active:hover {
+    transition: none;
+    transform: none;
+  }
 }
-.cat-chip[data-cat="anime"].active {
-  background: linear-gradient(135deg, #ff6b9d, #ff8fab);
-}
-.cat-chip[data-cat="movies"].active {
-  background: linear-gradient(135deg, #fbbf24, #f59e0b);
-}
-.cat-chip[data-cat="tv"].active {
-  background: linear-gradient(135deg, #34d399, #10b981);
-}
-.cat-chip[data-cat="sports"].active {
-  background: linear-gradient(135deg, #fb923c, #f97316);
-}
-.cat-chip[data-cat="music"].active {
-  background: linear-gradient(135deg, #818cf8, #6366f1);
-}
-.cat-chip[data-cat="memes"].active {
-  background: linear-gradient(135deg, #f472b6, #e879f9);
-}
-.cat-chip[data-cat="technology"].active {
-  background: linear-gradient(135deg, #22d3ee, #06b6d4);
-}
-.cat-chip[data-cat="other"].active {
-  background: linear-gradient(135deg, #94a3b8, #64748b);
-}
-
 
 .cta-row {
   display: flex;
@@ -5096,32 +5112,6 @@ to { --elec-angle: 360deg; }
   width: 100%;
   margin-bottom: 0;
   padding-right: 4px;
-}
-
-.discover-toolbar .filter-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  width: 100%;
-  flex-wrap: nowrap;
-}
-
-.discover-toolbar .chip-scroll {
-  flex: 1 1 auto;
-  min-width: 0;
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: center;
-  gap: 8px;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-}
-.discover-toolbar .chip-scroll::-webkit-scrollbar {
-  display: none;
-}
-.discover-toolbar .chip-scroll .cat-chip {
-  flex: 0 0 auto;
 }
 
 .discover-toolbar .sort-dd {
@@ -5628,13 +5618,15 @@ to { --elec-angle: 360deg; }
   }
 
   .discover-toolbar .filter-row {
-    display: block;
+    display: flex;
+    justify-content: flex-start;
     width: 100%;
   }
 
   .discover-toolbar .chip-scroll {
     width: 100%;
     min-width: 0;
+    justify-content: flex-start;
   }
 
   .discover-toolbar .sort-dd {

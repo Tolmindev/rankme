@@ -47,12 +47,12 @@
   flex-wrap: nowrap;
   justify-content: center;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   min-width: 0;
   max-width: 100%;
-  padding: 8px 2px;
+  padding: 18px 10px;
   overflow-x: auto;
-  overflow-y: visible;
+  overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
 }
@@ -64,6 +64,7 @@
   border-radius: 999px;
 }
 .discover-toolbar .cat-chip {
+  --s: 1;
   height: 20px;
   min-width: 4.5rem;
   flex: 0 0 auto;
@@ -71,14 +72,17 @@
   border: 0;
   font-size: 0.62rem;
   font-weight: 800;
-  letter-spacing: 0.02em;
+  letter-spacing: 0;
+  line-height: 20px;
   color: #fff;
   -webkit-text-fill-color: #fff;
   background: var(--chip);
   box-shadow: none;
-  transform: scale(1);
+  transform: translateZ(0) scale(var(--s));
   transform-origin: center center;
-  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.22s ease;
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 .discover-toolbar .cat-chip[data-cat="all"]         { --chip: #8b6cf7; --glow: rgba(139, 108, 247, 0.55); }
 .discover-toolbar .cat-chip[data-cat="games"]       { --chip: #7c5ce8; --glow: rgba(124, 92, 232, 0.5); }
@@ -92,16 +96,17 @@
 .discover-toolbar .cat-chip[data-cat="other"]       { --chip: #9b8ec8; --glow: rgba(155, 142, 200, 0.5); }
 .discover-toolbar .cat-chip.active {
   z-index: 1;
-  transform: scale(1.1);
-  box-shadow: 0 0 10px var(--glow), 0 0 20px var(--glow);
+  --s: 1.16;
+  box-shadow: 0 0 8px 1px var(--glow);
 }
 @media (hover: hover) {
   .discover-toolbar .cat-chip:hover {
     z-index: 1;
-    transform: scale(1.07);
+    --s: 1.14;
   }
   .discover-toolbar .cat-chip.active:hover {
-    transform: scale(1.12);
+    --s: 1.2;
+    box-shadow: 0 0 10px 2px var(--glow);
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -110,7 +115,7 @@
   .discover-toolbar .cat-chip.active,
   .discover-toolbar .cat-chip.active:hover {
     transition: none;
-    transform: none;
+    --s: 1;
   }
 }
 
@@ -730,6 +735,8 @@
     width: 100%;
     min-width: 0;
     justify-content: flex-start;
+    padding: 18px 10px;
+  }
   }
 
   .discover-toolbar .sort-dd {

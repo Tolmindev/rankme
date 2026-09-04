@@ -971,7 +971,15 @@ html.rankme-dragging {
   display: block;
 }
 .ap-avatar.skel {
-  border-radius: 50%;
+  border: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(40, 34, 58, 0.95) 0%,
+    rgba(70, 58, 100, 0.55) 45%,
+    rgba(40, 34, 58, 0.95) 90%
+  );
+  background-size: 200% 100%;
+  animation: skelShimmer 1.35s ease-in-out infinite;
 }
 
 .skel-actions {

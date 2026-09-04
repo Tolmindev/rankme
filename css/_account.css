@@ -596,6 +596,11 @@ body > .toast {
 }
 
 .skel-account { pointer-events: none; }
+.skel-account .account-profile { gap: 16px 28px; }
+.skel-account .ap-text { gap: 8px; }
+.skel-account .skel-ap-name { width: 132px; height: 16px; }
+.skel-account .skel-ap-handle { width: 96px; height: 9px; opacity: 0.7; }
+.skel-account .skel-as-title { width: 92px; height: 16px; }
 .skel-account .ap-stat {
   gap: 8px;
 }
@@ -606,6 +611,11 @@ body > .toast {
 .skel-account .ap-stat .skel-sm {
   width: 52px;
 }
+.skel-ach {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 16px;
+}
 .saved-card.skel-card {
   cursor: default;
 }
@@ -614,6 +624,7 @@ body > .toast {
 }
 @media (max-width: 720px) {
   .saved-grid > .skel-card:nth-child(n+4) { display: none; }
+  .skel-account .ach-grid > .skel-ach:nth-child(n+4) { display: none; }
   .account-panel { padding: 20px 14px 28px; }
   .account-profile {
     flex-wrap: wrap;

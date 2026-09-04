@@ -1106,7 +1106,15 @@ html.rankme-dragging {
   display: block;
 }
 .ap-avatar.skel {
-  border-radius: 50%;
+  border: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(40, 34, 58, 0.95) 0%,
+    rgba(70, 58, 100, 0.55) 45%,
+    rgba(40, 34, 58, 0.95) 90%
+  );
+  background-size: 200% 100%;
+  animation: skelShimmer 1.35s ease-in-out infinite;
 }
 
 .skel-actions {
@@ -6244,6 +6252,11 @@ body > .toast {
 }
 
 .skel-account { pointer-events: none; }
+.skel-account .account-profile { gap: 16px 28px; }
+.skel-account .ap-text { gap: 8px; }
+.skel-account .skel-ap-name { width: 132px; height: 16px; }
+.skel-account .skel-ap-handle { width: 96px; height: 9px; opacity: 0.7; }
+.skel-account .skel-as-title { width: 92px; height: 16px; }
 .skel-account .ap-stat {
   gap: 8px;
 }
@@ -6254,6 +6267,11 @@ body > .toast {
 .skel-account .ap-stat .skel-sm {
   width: 52px;
 }
+.skel-ach {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 16px;
+}
 .saved-card.skel-card {
   cursor: default;
 }
@@ -6262,6 +6280,7 @@ body > .toast {
 }
 @media (max-width: 720px) {
   .saved-grid > .skel-card:nth-child(n+4) { display: none; }
+  .skel-account .ach-grid > .skel-ach:nth-child(n+4) { display: none; }
   .account-panel { padding: 20px 14px 28px; }
   .account-profile {
     flex-wrap: wrap;

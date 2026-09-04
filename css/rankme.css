@@ -5270,7 +5270,7 @@ to { --elec-angle: 360deg; }
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   margin: 0 0 18px;
 }
 .community-rankings-title {
@@ -5279,6 +5279,9 @@ to { --elec-angle: 360deg; }
   color: #f2eaff;
   margin: 0;
   letter-spacing: 0.2px;
+  white-space: nowrap;
+  flex: 0 1 auto;
+  min-width: 0;
 }
 .community-pills {
   display: flex;
@@ -5594,18 +5597,12 @@ to { --elec-angle: 360deg; }
     font-size: 0.88rem;
   }
   .community-head {
-    flex-direction: column;
-    align-items: stretch;
     gap: 10px;
     margin-bottom: 14px;
   }
   .community-rankings-title {
     text-align: left;
     margin: 0;
-  }
-  .community-pills {
-    justify-content: flex-end;
-    width: 100%;
   }
 
   .home-wrap {

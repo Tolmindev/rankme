@@ -137,7 +137,7 @@
 
   function communityHeadHtml() {
     return '<div class="community-head">' +
-      '<h2 class="community-rankings-title">Community Rankings</h2>' +
+      '<h2 class="community-rankings-title">Community</h2>' +
       communityPillsHtml() +
       '</div>';
   }

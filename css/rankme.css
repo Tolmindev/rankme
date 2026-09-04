@@ -5264,7 +5264,7 @@ to { --elec-angle: 360deg; }
 }
 
 
-/* Community Rankings — compact cards, no panel chrome */
+/* Community — compact cards, no panel chrome */
 .community-head {
   display: flex;
   align-items: center;

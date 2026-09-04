@@ -16,9 +16,9 @@ const skip = new Set(['catalog.json', 'achievements.json']);
 
 function esc(s) {
   return String(s || '')
-    .replace(/&/g, '&')
-    .replace(/"/g, '"')
-    .replace(/</g, '<');
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;');
 }
 
 function shell(id, title, description, cover) {

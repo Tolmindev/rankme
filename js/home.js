@@ -628,6 +628,6 @@
     .catch(function (e) {
       console.error('Failed to load catalog', e);
       var grid = document.getElementById('discoverGrid');
-      if (grid) grid.innerHTML = '<div class="no-results"><div class="big">⚠️</div><div>Could not load templates. Please refresh.</div></div>';
+      if (grid) grid.innerHTML = '<div class="no-results"><div>Could not load templates. Please refresh.</div></div>';
     });
 })();

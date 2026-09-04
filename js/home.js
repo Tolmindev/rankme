@@ -183,9 +183,6 @@
   function sortItems(items, sort) {
     var arr = items.slice();
     switch (sort) {
-      case 'alphabetical':
-        arr.sort(function (a, b) { return a.title.localeCompare(b.title); });
-        break;
       case 'newest':
         arr.sort(function (a, b) { return new Date(b.createdAt) - new Date(a.createdAt); });
         break;

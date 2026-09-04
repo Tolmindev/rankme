@@ -73,7 +73,9 @@
     document.title = (t.title || 'Ranking') + ' - RankMe';
     const title = (t.title || 'Ranking') + ' - RankMe';
     const desc = t.description || 'The easiest way to rank what you love.';
-    const ogImg = 'https://rankme.lol/assets/brand/og-' + id + '.jpg';
+    const ogImg = t.cover
+      ? 'https://rankme.lol/' + String(t.cover).replace(/^\//, '')
+      : 'https://rankme.lol/assets/brand/Share_RankMe.webp';
     setMeta('metaOgTitle', 'content', title);
     setMeta('metaOgDesc', 'content', desc);
     setMeta('metaOgImage', 'content', ogImg);

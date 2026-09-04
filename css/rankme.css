@@ -1608,6 +1608,7 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
   filter: brightness(1.1);
 }
 
+.blank-cover-edit img,
 .blank-cover-edit svg {
   width: 18px;
   height: 18px;
@@ -4949,60 +4950,67 @@ to { --elec-angle: 360deg; }
   gap: 8px;
   min-width: 0;
   max-width: 100%;
-  padding: 20px 12px;
+  padding: 10px 8px;
   overflow: visible;
-  overflow-clip-margin: 24px;
   scrollbar-width: none;
 }
 .discover-toolbar .chip-scroll::-webkit-scrollbar { display: none; }
 .discover-toolbar .skel-chip {
   height: 20px;
-  width: 68px;
-  flex: 0 0 68px;
+  width: 5rem;
+  flex: 0 0 5rem;
   border-radius: 999px;
 }
 .discover-toolbar .cat-chip {
   height: 20px;
-  min-width: 4.5rem;
-  flex: 0 0 auto;
-  padding: 0 11px;
-  border: 0;
+  width: 5rem;
+  flex: 0 0 5rem;
+  padding: 0 6px;
+  box-sizing: border-box;
+  border: 1.5px solid var(--idle);
+  background: #161224;
+  color: #fff;
+  -webkit-text-fill-color: #fff;
   font-size: 0.62rem;
   font-weight: 800;
   letter-spacing: 0;
-  line-height: 20px;
-  color: #fff;
-  -webkit-text-fill-color: #fff;
-  background: var(--chip);
+  line-height: 17px;
   box-shadow: none;
-  transition: box-shadow 0.2s ease;
+  transform: scale(1);
+  transform-origin: center center;
+  transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.15s ease, background 0.15s ease, box-shadow 0.2s ease;
 }
-.discover-toolbar .cat-chip[data-cat="all"]         { --chip: #16141c; --glow: rgba(160, 140, 230, 0.35); }
-.discover-toolbar .cat-chip[data-cat="games"]       { --chip: linear-gradient(90deg, #6356c4, #4a6cb8); --glow: rgba(90, 90, 200, 0.35); }
-.discover-toolbar .cat-chip[data-cat="anime"]       { --chip: linear-gradient(90deg, #c45690, #c44868); --glow: rgba(200, 80, 120, 0.35); }
-.discover-toolbar .cat-chip[data-cat="movies"]      { --chip: linear-gradient(90deg, #d4983a, #c87820); --glow: rgba(200, 140, 40, 0.35); }
-.discover-toolbar .cat-chip[data-cat="tv"]          { --chip: linear-gradient(90deg, #2aaa88, #1a9478); --glow: rgba(30, 160, 120, 0.35); }
-.discover-toolbar .cat-chip[data-cat="sports"]      { --chip: linear-gradient(90deg, #34b068, #1e9860); --glow: rgba(40, 160, 90, 0.35); }
-.discover-toolbar .cat-chip[data-cat="music"]       { --chip: linear-gradient(90deg, #2aa8b8, #1a90a8); --glow: rgba(40, 160, 180, 0.35); }
-.discover-toolbar .cat-chip[data-cat="memes"]       { --chip: linear-gradient(90deg, #3a78c8, #2a5cb0); --glow: rgba(50, 110, 200, 0.35); }
-.discover-toolbar .cat-chip[data-cat="technology"]  { --chip: linear-gradient(90deg, #c456a8, #b04080); --glow: rgba(200, 80, 150, 0.35); }
-.discover-toolbar .cat-chip[data-cat="other"]       { --chip: linear-gradient(90deg, #7a64c8, #6858b8); --glow: rgba(120, 100, 200, 0.35); }
+.discover-toolbar .cat-chip[data-cat="all"]         { --chip: #16141c; --idle: rgba(183, 155, 240, 0.7); --glow: rgba(183, 155, 240, 0.4); }
+.discover-toolbar .cat-chip[data-cat="games"]       { --chip: linear-gradient(90deg, #6356c4, #4a6cb8); --idle: #6a72d0; --glow: rgba(90, 90, 200, 0.4); }
+.discover-toolbar .cat-chip[data-cat="anime"]       { --chip: linear-gradient(90deg, #c45690, #c44868); --idle: #c45690; --glow: rgba(200, 80, 120, 0.4); }
+.discover-toolbar .cat-chip[data-cat="movies"]      { --chip: linear-gradient(90deg, #d4983a, #c87820); --idle: #d4983a; --glow: rgba(200, 140, 40, 0.4); }
+.discover-toolbar .cat-chip[data-cat="tv"]          { --chip: linear-gradient(90deg, #2aaa88, #1a9478); --idle: #2aaa88; --glow: rgba(30, 160, 120, 0.4); }
+.discover-toolbar .cat-chip[data-cat="sports"]      { --chip: linear-gradient(90deg, #34b068, #1e9860); --idle: #34b068; --glow: rgba(40, 160, 90, 0.4); }
+.discover-toolbar .cat-chip[data-cat="music"]       { --chip: linear-gradient(90deg, #2aa8b8, #1a90a8); --idle: #2aa8b8; --glow: rgba(40, 160, 180, 0.4); }
+.discover-toolbar .cat-chip[data-cat="memes"]       { --chip: linear-gradient(90deg, #3a78c8, #2a5cb0); --idle: #3a78c8; --glow: rgba(50, 110, 200, 0.4); }
+.discover-toolbar .cat-chip[data-cat="technology"]  { --chip: linear-gradient(90deg, #c456a8, #b04080); --idle: #c456a8; --glow: rgba(200, 80, 150, 0.4); }
+.discover-toolbar .cat-chip[data-cat="other"]       { --chip: linear-gradient(90deg, #8b849c, #6e6878); --idle: #8b849c; --glow: rgba(150, 140, 170, 0.35); }
 .discover-toolbar .cat-chip.active {
   z-index: 1;
-  box-shadow: 0 0 12px var(--glow);
+  background: var(--chip);
+  border-color: transparent;
+  box-shadow: 0 0 10px var(--glow);
+}
+.discover-toolbar .cat-chip[data-cat="all"].active {
+  border-color: rgba(183, 155, 240, 0.75);
+  background: #16141c;
 }
 @media (hover: hover) {
   .discover-toolbar .cat-chip:hover {
     z-index: 1;
-    box-shadow: 0 0 10px var(--glow);
-  }
-  .discover-toolbar .cat-chip.active:hover {
-    box-shadow: 0 0 12px var(--glow);
+    transform: scale(1.05);
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .discover-toolbar .cat-chip {
+  .discover-toolbar .cat-chip,
+  .discover-toolbar .cat-chip:hover {
     transition: none;
+    transform: none;
   }
 }
 
@@ -5626,8 +5634,7 @@ to { --elec-angle: 360deg; }
     justify-content: flex-start;
     overflow-x: auto;
     overflow-y: clip;
-    overflow-clip-margin: 24px;
-    padding: 20px 12px;
+    padding: 10px 8px;
     -webkit-overflow-scrolling: touch;
   }
 

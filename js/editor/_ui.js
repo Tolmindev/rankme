@@ -240,13 +240,20 @@ async function decodeSharePayload(h){
 async function buildShareUrl(){
   const data = { tiers: state.tiers, assignment: state.assignment };
   const payload = await encodeSharePayload(data);
-  return location.origin + location.pathname + '#' + payload;
+  return prettyShareBase() + '#' + payload;
+}
+
+function prettyShareBase(){
+  if (!BLANK_MODE && TEMPLATE_ID && TEMPLATE_ID !== 'blank') {
+    return location.origin + '/t/' + encodeURIComponent(TEMPLATE_ID) + '.html';
+  }
+  return location.origin + location.pathname;
 }
 
 function shareCaption(){
-  if(BLANK_MODE) return 'My Rank on RankMe - create yours at rankme.lol';
+  if(BLANK_MODE) return 'My ranking on RankMe';
   const t = (typeof TEMPLATE_TITLE === 'string' && TEMPLATE_TITLE) ? TEMPLATE_TITLE : 'RankMe';
-  return 'My ' + t + ' tier list on RankMe - rankme.lol';
+  return 'My ' + t + ' ranking on RankMe';
 }
 
 function showToast(msg){
@@ -290,9 +297,12 @@ async function shareLinkOrImage(kind){
     if(typeof createShortLink === 'function'){
       const code = await createShortLink({ tiers: state.tiers, assignment: state.assignment });
       if(code){
-        const su = new URL(location.href);
+        const su = new URL(prettyShareBase());
+        const cur = new URL(location.href);
+        const cid = cur.searchParams.get('c');
+        if (cid) su.searchParams.set('c', cid);
         su.searchParams.set('s', code);
-        url = su.origin + su.pathname + '?' + su.searchParams.toString();
+        url = su.toString();
       }
     }
   }catch(e){}

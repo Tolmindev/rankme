@@ -70,14 +70,16 @@
   }
 
   function applyHero(t) {
-    document.title = (t.title || 'Tier List') + ' - RankMe';
-    setMeta('metaOgTitle', 'content', (t.title || 'Tier List') + ' - RankMe');
-    setMeta('metaOgDesc', 'content', t.description || 'Drag, rank, share on RankMe.');
-    const coverAbs = t.cover ? 'https://rankme.lol/' + t.cover.replace(/^\//, '') : '';
-    if (coverAbs) {
-      setMeta('metaOgImage', 'content', coverAbs);
-      setMeta('metaTwImage', 'content', coverAbs);
-    }
+    document.title = (t.title || 'Ranking') + ' - RankMe';
+    const title = (t.title || 'Ranking') + ' - RankMe';
+    const desc = t.description || 'The easiest way to rank what you love.';
+    const ogImg = 'https://rankme.lol/assets/brand/og-' + id + '.jpg';
+    setMeta('metaOgTitle', 'content', title);
+    setMeta('metaOgDesc', 'content', desc);
+    setMeta('metaOgImage', 'content', ogImg);
+    setMeta('metaTwTitle', 'content', title);
+    setMeta('metaTwDesc', 'content', desc);
+    setMeta('metaTwImage', 'content', ogImg);
 
     const img = document.getElementById('coverImg');
     const host = document.getElementById('coverHost');

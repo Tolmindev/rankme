@@ -12,7 +12,7 @@
     categoryMeta: {},
     category: 'all',
     query: '',
-    sort: 'newest',
+    sort: 'popular',
     tplVisible: null,
     communityVisible: null,
     communityRows: null,
@@ -516,7 +516,11 @@
     if (!els.grid) return; // not on homepage
 
     initHeroFlashlight();
-    state.sort = 'newest';
+    var selected = els.ddMenu && els.ddMenu.querySelector('[aria-selected="true"]');
+    state.sort = (selected && selected.getAttribute('data-value')) || 'popular';
+    if (els.ddTrigger && selected) {
+      els.ddTrigger.setAttribute('aria-label', 'Sort: ' + selected.textContent.trim());
+    }
 
     var onSearch = debounce(function () {
       state.query = els.search.value;

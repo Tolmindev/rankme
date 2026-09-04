@@ -64,7 +64,7 @@ body {
   background-color: #0e0c14;
   color: var(--text);
   font-family: 'Montserrat', system-ui, sans-serif;
-  overflow-x: hidden;
+  overflow-x: clip;
   overflow-anchor: none;
   -webkit-user-select: none;
   user-select: none;
@@ -4936,6 +4936,8 @@ to { --elec-angle: 360deg; }
   display: flex;
   justify-content: center;
   width: 100%;
+  position: relative;
+  z-index: 2;
   overflow: visible;
 }
 .discover-toolbar .chip-scroll {
@@ -4947,10 +4949,9 @@ to { --elec-angle: 360deg; }
   gap: 8px;
   min-width: 0;
   max-width: 100%;
-  padding: 18px 10px;
-  overflow-x: auto;
-  overflow-y: hidden;
-  -webkit-overflow-scrolling: touch;
+  padding: 20px 12px;
+  overflow: visible;
+  overflow-clip-margin: 24px;
   scrollbar-width: none;
 }
 .discover-toolbar .chip-scroll::-webkit-scrollbar { display: none; }
@@ -4961,7 +4962,6 @@ to { --elec-angle: 360deg; }
   border-radius: 999px;
 }
 .discover-toolbar .cat-chip {
-  --s: 1;
   height: 20px;
   min-width: 4.5rem;
   flex: 0 0 auto;
@@ -4975,35 +4975,36 @@ to { --elec-angle: 360deg; }
   -webkit-text-fill-color: #fff;
   background: var(--chip);
   box-shadow: none;
-  transform: translateZ(0) scale(var(--s));
+  transform: translateZ(0) scale(1);
   transform-origin: center center;
   transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.22s ease;
   backface-visibility: hidden;
   -webkit-font-smoothing: antialiased;
 }
-.discover-toolbar .cat-chip[data-cat="all"]         { --chip: #8b6cf7; --glow: rgba(139, 108, 247, 0.55); }
-.discover-toolbar .cat-chip[data-cat="games"]       { --chip: #7c5ce8; --glow: rgba(124, 92, 232, 0.5); }
-.discover-toolbar .cat-chip[data-cat="anime"]       { --chip: #e85a9a; --glow: rgba(232, 90, 154, 0.5); }
-.discover-toolbar .cat-chip[data-cat="movies"]      { --chip: #e8b44a; --glow: rgba(232, 180, 74, 0.5); }
-.discover-toolbar .cat-chip[data-cat="tv"]          { --chip: #5dce6a; --glow: rgba(93, 206, 106, 0.5); }
-.discover-toolbar .cat-chip[data-cat="sports"]      { --chip: #3db87a; --glow: rgba(61, 184, 122, 0.5); }
-.discover-toolbar .cat-chip[data-cat="music"]       { --chip: #3db8c8; --glow: rgba(61, 184, 200, 0.5); }
-.discover-toolbar .cat-chip[data-cat="memes"]       { --chip: #4a8eef; --glow: rgba(74, 142, 239, 0.5); }
-.discover-toolbar .cat-chip[data-cat="technology"]  { --chip: #e878b0; --glow: rgba(232, 120, 176, 0.5); }
-.discover-toolbar .cat-chip[data-cat="other"]       { --chip: #9b8ec8; --glow: rgba(155, 142, 200, 0.5); }
+.discover-toolbar .cat-chip[data-cat="all"]         { --chip: #16141c; --glow: rgba(176, 156, 255, 0.5); }
+.discover-toolbar .cat-chip[data-cat="games"]       { --chip: linear-gradient(90deg, #7b4dff, #4f7cff); --glow: rgba(110, 90, 255, 0.5); }
+.discover-toolbar .cat-chip[data-cat="anime"]       { --chip: linear-gradient(90deg, #ff5fa8, #ff3d6e); --glow: rgba(255, 80, 140, 0.5); }
+.discover-toolbar .cat-chip[data-cat="movies"]      { --chip: linear-gradient(90deg, #ffb02e, #ff8a00); --glow: rgba(255, 160, 40, 0.5); }
+.discover-toolbar .cat-chip[data-cat="tv"]          { --chip: linear-gradient(90deg, #2ecf9a, #12b88a); --glow: rgba(30, 200, 150, 0.5); }
+.discover-toolbar .cat-chip[data-cat="sports"]      { --chip: linear-gradient(90deg, #3ddc78, #1db954); --glow: rgba(40, 210, 100, 0.5); }
+.discover-toolbar .cat-chip[data-cat="music"]       { --chip: linear-gradient(90deg, #2ad4e0, #1aaed8); --glow: rgba(40, 200, 220, 0.5); }
+.discover-toolbar .cat-chip[data-cat="memes"]       { --chip: linear-gradient(90deg, #3b8bff, #2563eb); --glow: rgba(50, 130, 255, 0.5); }
+.discover-toolbar .cat-chip[data-cat="technology"]  { --chip: linear-gradient(90deg, #ff5ac8, #e83e8c); --glow: rgba(255, 80, 180, 0.5); }
+.discover-toolbar .cat-chip[data-cat="other"]       { --chip: linear-gradient(90deg, #9b6dff, #7c5cff); --glow: rgba(150, 110, 255, 0.5); }
 .discover-toolbar .cat-chip.active {
   z-index: 1;
-  --s: 1.16;
-  box-shadow: 0 0 8px 1px var(--glow);
+  transform: translateZ(0) scale(1.08);
+  box-shadow: 0 0 12px var(--glow);
 }
 @media (hover: hover) {
   .discover-toolbar .cat-chip:hover {
     z-index: 1;
-    --s: 1.14;
+    transform: translateZ(0) scale(1.06);
+    box-shadow: 0 0 10px var(--glow);
   }
   .discover-toolbar .cat-chip.active:hover {
-    --s: 1.2;
-    box-shadow: 0 0 10px 2px var(--glow);
+    transform: translateZ(0) scale(1.08);
+    box-shadow: 0 0 12px var(--glow);
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -5012,7 +5013,7 @@ to { --elec-angle: 360deg; }
   .discover-toolbar .cat-chip.active,
   .discover-toolbar .cat-chip.active:hover {
     transition: none;
-    --s: 1;
+    transform: none;
   }
 }
 
@@ -5109,7 +5110,7 @@ to { --elec-angle: 360deg; }
   margin: 8px 0 22px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 4px;
   width: 100%;
 }
 
@@ -5117,6 +5118,8 @@ to { --elec-angle: 360deg; }
   width: 100%;
   margin-bottom: 0;
   padding-right: 4px;
+  position: relative;
+  z-index: 0;
 }
 
 .discover-toolbar .sort-dd {
@@ -5632,8 +5635,11 @@ to { --elec-angle: 360deg; }
     width: 100%;
     min-width: 0;
     justify-content: flex-start;
-    padding: 18px 10px;
-  }
+    overflow-x: auto;
+    overflow-y: clip;
+    overflow-clip-margin: 24px;
+    padding: 20px 12px;
+    -webkit-overflow-scrolling: touch;
   }
 
   .discover-toolbar .sort-dd {

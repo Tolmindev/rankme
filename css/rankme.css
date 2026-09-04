@@ -7117,7 +7117,7 @@ body.ach-focus-open { overflow: hidden; }
     linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
-  animation: expertBorderSpin 4s linear infinite;
+  animation: expertBorderSpin 8s linear infinite;
 }
 .expert-modal::after {
   content: "";
@@ -7135,7 +7135,7 @@ body.ach-focus-open { overflow: hidden; }
   );
   filter: blur(14px);
   opacity: 0.32;
-  animation: expertBorderSpin 4s linear infinite;
+  animation: expertBorderSpin 8s linear infinite;
 }
 .expert-modal > * {
   position: relative;

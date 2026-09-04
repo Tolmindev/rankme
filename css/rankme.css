@@ -172,6 +172,7 @@ body > footer {
 .brand {
   display: flex;
   align-items: center;
+  flex: 0 0 auto;
   text-decoration: none;
   color: inherit;
   padding: 12px 20px;
@@ -187,8 +188,8 @@ body > footer {
   transition: filter .35s ease, transform .25s ease;
   mix-blend-mode: normal;
 }
-.brand .brand-mark { display: none; height: 28px; width: auto; }
-.brand .brand-full { display: block; }
+header.site .brand > .brand-mark { display: none; }
+header.site .brand > .brand-full { display: block; }
 
 .brand:hover img {
   transform: scale(1.04);
@@ -201,6 +202,8 @@ nav.main {
   display: flex;
   align-items: center;
   gap: 30px;
+  flex: 0 0 auto;
+  margin-left: auto;
 }
 
 nav.main a {
@@ -934,8 +937,10 @@ html.rankme-dragging {
     width: auto;
     height: auto;
   }
-  .brand .brand-full { display: none; }
-  .brand .brand-mark {
+  .brand .brand-full,
+  header.site .brand > .brand-full { display: none; }
+  .brand .brand-mark,
+  header.site .brand > .brand-mark {
     display: block;
     height: 28px;
     width: auto;

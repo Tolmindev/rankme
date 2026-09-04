@@ -3,7 +3,8 @@
    New exclusive: add templates/<id>.json + assets, then: node t/build.js
 
    These pages are the share URL. Twitter/Facebook bots do not run JS and
-   must see OG tags here — do not meta-refresh to tier.html (bots follow it). */
+   must see OG tags here — do not meta-refresh to tier.html (bots follow it).
+   og:image uses the existing cover, not a third copy. */
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -20,11 +21,11 @@ function esc(s) {
     .replace(/</g, '<');
 }
 
-function shell(id, title, description) {
+function shell(id, title, description, cover) {
   const name = esc(title || id);
   const desc = esc(description || 'The easiest way to rank what you love.');
   const page = `https://rankme.lol/t/${id}.html`;
-  const img = `https://rankme.lol/assets/brand/og-${id}.jpg`;
+  const img = 'https://rankme.lol/' + String(cover || 'assets/brand/Share_RankMe.webp').replace(/^\//, '');
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,9 +40,7 @@ function shell(id, title, description) {
 <meta property="og:title" content="${name} - RankMe">
 <meta property="og:description" content="${desc}">
 <meta property="og:image" content="${img}">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:type" content="image/webp">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="${name} - RankMe">
 <meta name="twitter:description" content="${desc}">
@@ -78,7 +77,12 @@ for (const id of ids) {
   const meta = byId[id] || {};
   fs.writeFileSync(
     path.join(outDir, id + '.html'),
-    shell(id, meta.title || data.title || id, meta.description || data.description || '')
+    shell(
+      id,
+      meta.title || data.title || id,
+      meta.description || data.description || '',
+      meta.cover || data.cover || ''
+    )
   );
 }
 

@@ -124,27 +124,27 @@ async function exportPNG(returnBlobOnly, blobCb, forceSize){
   const footY = y;
   const midY = footY + footH / 2;
   // deep base
-  ctx.fillStyle = '#161222';
+  ctx.fillStyle = '#12101a';
   ctx.fillRect(0, footY, width, footH);
-  // soft horizontal brand wash — new logo: #bc6dfc → #fcbcfe → #b2ccfd
+  // quiet brand wash — cooler, less pink
   const wash = ctx.createLinearGradient(0, footY, width, footY);
-  wash.addColorStop(0, 'rgba(188,109,252,0.14)');
-  wash.addColorStop(0.5, 'rgba(252,188,254,0.07)');
-  wash.addColorStop(1, 'rgba(178,204,253,0.13)');
+  wash.addColorStop(0, 'rgba(150,120,210,0.08)');
+  wash.addColorStop(0.5, 'rgba(180,160,220,0.04)');
+  wash.addColorStop(1, 'rgba(140,160,210,0.07)');
   ctx.fillStyle = wash;
   ctx.fillRect(0, footY, width, footH);
-  // gentle center bloom under the mark
-  const bloom = ctx.createRadialGradient(width/2, midY, 6, width/2, midY, Math.max(110, width*0.2));
-  bloom.addColorStop(0, 'rgba(252,188,254,0.22)');
-  bloom.addColorStop(0.45, 'rgba(188,109,252,0.10)');
-  bloom.addColorStop(1, 'rgba(178,204,253,0)');
+  // soft center bloom under the mark
+  const bloom = ctx.createRadialGradient(width/2, midY, 12, width/2, midY, Math.max(140, width*0.24));
+  bloom.addColorStop(0, 'rgba(190,170,230,0.10)');
+  bloom.addColorStop(0.5, 'rgba(150,130,200,0.04)');
+  bloom.addColorStop(1, 'rgba(150,130,200,0)');
   ctx.fillStyle = bloom;
   ctx.fillRect(0, footY, width, footH);
-  // thin top edge glow
+  // thin top edge
   const edge = ctx.createLinearGradient(0, footY, width, footY);
-  edge.addColorStop(0, 'rgba(188,109,252,0)');
-  edge.addColorStop(0.5, 'rgba(252,188,254,0.42)');
-  edge.addColorStop(1, 'rgba(178,204,253,0)');
+  edge.addColorStop(0, 'rgba(160,140,210,0)');
+  edge.addColorStop(0.5, 'rgba(190,175,225,0.22)');
+  edge.addColorStop(1, 'rgba(160,140,210,0)');
   ctx.fillStyle = edge;
   ctx.fillRect(0, footY, width, 1.5);
 

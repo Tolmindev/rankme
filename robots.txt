@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /sql/
+
+Sitemap: https://rankme.lol/sitemap.xml

@@ -82,6 +82,17 @@
     setMeta('metaTwTitle', 'content', title);
     setMeta('metaTwDesc', 'content', ogDesc);
     setMeta('metaTwImage', 'content', ogImg);
+    setMeta('metaDesc', 'content', ogDesc);
+    if (t.id) {
+      var canon = document.getElementById('metaCanonical');
+      if (!canon) {
+        canon = document.createElement('link');
+        canon.rel = 'canonical';
+        canon.id = 'metaCanonical';
+        document.head.appendChild(canon);
+      }
+      canon.href = 'https://rankme.lol/t/' + t.id + '.html';
+    }
 
     const img = document.getElementById('coverImg');
     const host = document.getElementById('coverHost');

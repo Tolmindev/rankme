@@ -92,3 +92,23 @@ for (const f of fs.readdirSync(outDir)) {
 }
 
 console.log('wrote t/ (' + ids.length + '): ' + ids.join(', '));
+
+function url(loc, extra) {
+  return '  <url>\n    <loc>' + loc + '</loc>\n' + extra + '  </url>\n';
+}
+const weekly = '    <changefreq>weekly</changefreq>\n';
+const monthly = '    <changefreq>monthly</changefreq>\n';
+let sm = '<?xml version="1.0" encoding="UTF-8"?>\n';
+sm += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
+sm += url('https://rankme.lol/', weekly);
+sm += url('https://rankme.lol/create.html', weekly);
+sm += url('https://rankme.lol/battle.html', monthly);
+ids.sort().forEach(function (id) {
+  sm += url('https://rankme.lol/t/' + id + '.html', weekly);
+});
+sm += url('https://rankme.lol/privacy.html', monthly);
+sm += url('https://rankme.lol/terms.html', monthly);
+sm += url('https://rankme.lol/dmca.html', monthly);
+sm += '</urlset>\n';
+fs.writeFileSync(path.join(root, 'sitemap.xml'), sm);
+console.log('wrote sitemap.xml (' + (3 + ids.length + 3) + ' urls)');

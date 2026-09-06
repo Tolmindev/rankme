@@ -975,6 +975,14 @@ html.rankme-dragging {
   flex: 0 0 auto;
   display: block;
 }
+.cover.skel img,
+.cc-cover.skel img,
+.sc-cover.skel img,
+.cover.is-fallback img,
+.cc-cover.is-fallback img,
+.sc-cover.is-fallback img {
+  opacity: 0;
+}
 .ap-avatar.skel {
   border: 0;
   background: linear-gradient(

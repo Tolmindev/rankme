@@ -386,6 +386,12 @@
   gap: 8px;
   flex-wrap: nowrap;
 }
+.community-pills .skel-chip {
+  height: 20px;
+  width: 3.9rem;
+  flex: 0 0 3.9rem;
+  border-radius: 999px;
+}
 .community-pills .cat-chip[data-csort="hot"] {
   --ring: linear-gradient(120deg, #ff6b3d, #ffd24a, #ff6b9d, #ff8a3d, #ff6b3d);
   --glow: rgba(255, 140, 70, 0.45);
@@ -695,7 +701,7 @@
   }
   .community-head {
     gap: 10px;
-    margin-bottom: 14px;
+    margin-bottom: 18px;
   }
   .community-rankings-title {
     text-align: left;

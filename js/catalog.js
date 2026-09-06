@@ -41,5 +41,32 @@
     return raw || base;
   }
 
-  global.RankMeCatalog = { load: load, get: get, cover: cover, title: title };
+  function revealCovers(root) {
+    var scope = root || document;
+    var hosts = scope.querySelectorAll('.cover, .cc-cover, .sc-cover');
+    for (var i = 0; i < hosts.length; i++) {
+      (function (host) {
+        var img = host.querySelector('img');
+        if (!img || host.classList.contains('is-ready') || host.classList.contains('is-fallback')) return;
+        function show() {
+          host.classList.remove('skel');
+          host.classList.add('is-ready');
+        }
+        function fail() {
+          host.classList.remove('skel');
+          host.classList.add('is-fallback');
+        }
+        if (img.complete) {
+          if (img.naturalWidth) show();
+          else fail();
+          return;
+        }
+        host.classList.add('skel');
+        img.addEventListener('load', show, { once: true });
+        img.addEventListener('error', fail, { once: true });
+      })(hosts[i]);
+    }
+  }
+
+  global.RankMeCatalog = { load: load, get: get, cover: cover, title: title, revealCovers: revealCovers };
 })(window);

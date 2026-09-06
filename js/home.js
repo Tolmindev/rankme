@@ -285,6 +285,7 @@
       });
     }
     bindCardStashAndParallax();
+    if (window.RankMeCatalog && RankMeCatalog.revealCovers) RankMeCatalog.revealCovers(els.grid);
   }
 
   function bindCardStashAndParallax() {
@@ -440,6 +441,7 @@
     els.community.innerHTML = html;
     wireCommunityPills(els.community);
     wireCommunityCards(els.community);
+    if (window.RankMeCatalog && RankMeCatalog.revealCovers) RankMeCatalog.revealCovers(els.community);
     var showBtn = document.getElementById('communityShowMore');
     if (showBtn) {
       showBtn.addEventListener('click', function () {

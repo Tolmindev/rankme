@@ -55,7 +55,7 @@ function shell(id, title, description, cover) {
 })();
 </script>
 </head>
-<body style="margin:0;background:#0e0c14;color:#a79fc4;font-family:system-ui,sans-serif;text-align:center;padding:48px">
+<body style="margin:0;background:#0b0912;color:#a79fc4;font-family:system-ui,sans-serif;text-align:center;padding:48px">
 <p>Loading ${name}…</p>
 <p><a href="../tier.html?t=${id}" style="color:#e6a9e8">Open on RankMe</a></p>
 </body>

@@ -296,6 +296,15 @@
       ]
     },
     {
+      "id": 304,
+      "file": "Beowulf_Diamond_Baba Yaga.webp",
+      "name": "Beowulf - Baba Yaga",
+      "faction": "Diamond",
+      "roles": [
+        "Diamond"
+      ]
+    },
+    {
       "id": 31,
       "file": "Beowulf_Diamond_Beast King.webp",
       "name": "Beowulf - Beast King",
@@ -686,6 +695,15 @@
       "id": 74,
       "file": "Cerebella_Gold_Armed Forces.webp",
       "name": "Cerebella - Armed Forces",
+      "faction": "Gold",
+      "roles": [
+        "Gold"
+      ]
+    },
+    {
+      "id": 305,
+      "file": "Cerebella_Gold_Bellarina.webp",
+      "name": "Cerebella - Bellarina",
       "faction": "Gold",
       "roles": [
         "Gold"

@@ -29,6 +29,12 @@
       "faction": "ALL"
     },
     {
+      "id": 32,
+      "file": "Arjun.webp",
+      "name": "Arjun",
+      "faction": "ALL"
+    },
+    {
       "id": 4,
       "file": "Blanka.webp",
       "name": "Blanka",

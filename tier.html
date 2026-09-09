@@ -26,10 +26,23 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;500;600;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/rankme.css?v=20260906d">
+<link rel="stylesheet" href="css/rankme.css?v=20260910e">
 <style>
   .boot-error{max-width:420px;margin:48px auto;padding:24px;border-radius:14px;background:#1a1728;border:1px solid rgba(255,100,100,.35);color:#ffb3b3;font-weight:700;text-align:center}
 </style>
+<script>
+(function () {
+  try {
+    var p = new URLSearchParams(location.search);
+    if (p.get('play') === 'one' || p.get('play') === 'classic' || p.get('c') || p.get('battle') === '1') return;
+    if (location.hash && location.hash.length > 2) return;
+    if (sessionStorage.getItem('rankme_open_payload')) return;
+    var t = (p.get('t') || '').trim();
+    if (!t) t = (sessionStorage.getItem('rankme_t') || '').trim();
+    if (t) location.replace('play.html?t=' + encodeURIComponent(t));
+  } catch (e) {}
+})();
+</script>
 </head>
 <body>
 <div class="aurora" aria-hidden="true"></div>
@@ -43,6 +56,21 @@
     <a class="login-btn" id="loginBtn" href="account.html">Account</a>
   </nav>
 </header>
+
+<div class="obo" id="oneByOne" hidden>
+  <div class="obo-glow" id="oboGlow" aria-hidden="true"></div>
+  <h1 class="obo-title" id="oboTitle"></h1>
+  <div class="battle-progress-wrap">
+    <div class="battle-progress-bar"><div class="fill" id="oboFill"></div></div>
+    <div class="battle-progress-label" id="oboProgress">0 / 0</div>
+  </div>
+  <div class="obo-stage">
+    <div class="obo-card" id="oboCard" hidden></div>
+    <div class="obo-complete" id="oboComplete" hidden>TIER LIST COMPLETE</div>
+  </div>
+  <div class="obo-portals" id="oboPortals"></div>
+  <p class="obo-hint">Push a portal to place the card.</p>
+</div>
 
 <div id="bootStatus" class="boot-loading" aria-busy="true" aria-label="Loading">
   <div class="skel-tier-boot" aria-hidden="true">
@@ -206,6 +234,6 @@
 <div class="toast" id="toast"></div>
 <canvas id="exportCanvas" style="display:none"></canvas>
 
-<script src="js/boot.js?v=20260906f"></script>
+<script src="js/boot.js?v=20260910e"></script>
 </body>
 </html>

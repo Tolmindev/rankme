@@ -55,7 +55,7 @@ function doRemix() {
       sessionStorage.removeItem('rankme_saved_id');
       var tid = TEMPLATE_ID || 'sf-duel';
       setAllowLeave(true);
-      location.href = 'tier.html?t=' + encodeURIComponent(tid);
+      location.href = 'tier.html?t=' + encodeURIComponent(tid) + '&play=classic';
       return;
     }
 

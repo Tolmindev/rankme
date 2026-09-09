@@ -524,6 +524,7 @@ function setupCommunityUI() {
   if(ingested){
     autoFitCardShape().then(function () {
       renderPool();
+      if (typeof refreshOneByOne === 'function') refreshOneByOne();
       if(typeof showToast === 'function') showToast(ingested + ' image(s) added');
     });
   }
@@ -543,6 +544,7 @@ function setupCommunityUI() {
     markDirty();
     showToast('Remix ready');
   }
+  if (typeof initOneByOne === 'function') initOneByOne();
 })();
 
 function loadImageSize(src){

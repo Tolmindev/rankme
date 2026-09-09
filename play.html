@@ -3,23 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
-<title>Battle Mode - RankMe</title>
+<title>Choose Mode - RankMe</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
 <script src="js/supabaseClient.js?v=20260903i" defer></script>
-<meta name="description" content="Quick head-to-head comparisons that build your ranking automatically.">
+<meta name="description" content="Choose how you want to rank — classic board or one card at a time.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="RankMe">
-<meta property="og:title" content="Battle Mode - RankMe">
-<meta property="og:description" content="Quick head-to-head comparisons that build your ranking automatically.">
+<meta property="og:title" content="Choose Mode - RankMe">
+<meta property="og:description" content="Choose how you want to rank — classic board or one card at a time.">
 <meta property="og:image" content="https://rankme.lol/assets/brand/Share_RankMe.webp">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:type" content="image/webp">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Battle Mode - RankMe">
-<meta name="twitter:description" content="Quick head-to-head comparisons that build your ranking automatically.">
+<meta name="twitter:title" content="Choose Mode - RankMe">
+<meta name="twitter:description" content="Choose how you want to rank — classic board or one card at a time.">
 <meta name="twitter:image" content="https://rankme.lol/assets/brand/Share_RankMe.webp">
-<link rel="canonical" href="https://rankme.lol/battle.html">
+<link rel="canonical" href="https://rankme.lol/play.html">
 <link rel="icon" href="favicon.ico" sizes="48x48">
 <link rel="icon" type="image/png" sizes="48x48" href="assets/brand/favicon-48.png">
 <link rel="icon" type="image/png" sizes="192x192" href="assets/brand/favicon-192.png">
@@ -28,11 +28,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;500;600;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/rankme.css?v=20260910e">
-<link rel="stylesheet" href="css/battle-anim.css?v=20260828f">
 </head>
 <body>
-<div class="battle-glow" aria-hidden="true"></div>
-<canvas id="battleStars" aria-hidden="true"></canvas>
+<div class="aurora" aria-hidden="true"></div>
 
 <header class="site">
   <a class="brand" href="index.html">
@@ -46,26 +44,16 @@
 </header>
 
 <main class="battle-page">
-  <div class="battle-arena" id="battleArena">
-    <h1 class="battle-question">Who wins?</h1>
-    <p class="battle-sub">Pick one · <span id="battleTitle"></span></p>
-    <div class="battle-vs-row" id="battleVsRow"></div>
-  </div>
+  <div class="battle-arena" id="battleArena"></div>
   <div class="battle-footer">
     <p class="battle-how" id="battleHow" hidden></p>
     <button class="battle-back" id="battleBack" type="button">Back</button>
   </div>
 </main>
 
-<div class="battle-overlay" id="battleOverlay">
-  <div class="battle-panel" id="battlePanel"></div>
-</div>
-
 <footer id="site-footer" class="site"></footer>
 <script src="js/footer.js?v=20260903a" defer></script>
-<script src="js/battle.js?v=20260827q"></script>
-<script src="js/battle-stars.js?v=20260903f" defer></script>
-<script src="js/battle-ui.js?v=20260902u" defer></script>
-
+<script src="js/catalog.js?v=20260906b"></script>
+<script src="js/play-ui.js?v=20260910e" defer></script>
 </body>
 </html>

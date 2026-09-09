@@ -212,21 +212,22 @@
     var meta = state.categoryMeta[t.category] || { label: t.category || 'Other' };
     var catTag = t.category ? '<span class="tag tag-cat" data-cat="' + escapeHtml(t.category) + '">' + escapeHtml(meta.label || t.category) + '</span>' : '';
     var badges = catTag ? '<div class="badge-row">' + catTag + '</div>' : '';
+    var playHref = 'play.html?t=' + encodeURIComponent(t.id);
     var epicClass = t.parallax ? ' epic' : '';
     var uses = t.useCount || 0;
     var metaLine = (t.itemCount ? t.itemCount + ' ' + (t.itemLabel || 'items') : '');
     if (uses > 0) metaLine = (metaLine ? metaLine + ' · ' : '') + uses + ' used';
     return (
       '<div class="tl-card exclusive' + epicClass + '" data-id="' + escapeHtml(t.id) + '">' +
-        '<a class="cover" href="' + escapeHtml(t.href) + '" data-stash="' + escapeHtml(t.id) + '">' +
+        '<a class="cover" href="' + playHref + '" data-stash="' + escapeHtml(t.id) + '">' +
           badges +
           '<img class="cover-art" src="' + escapeHtml(t.coverThumb || t.cover) + '" alt="' + escapeHtml(t.title) + '" loading="lazy">' +
         '</a>' +
         '<div class="body">' +
-          '<a class="title" href="' + escapeHtml(t.href) + '" data-stash="' + escapeHtml(t.id) + '">' + escapeHtml(t.title) + '</a>' +
+          '<a class="title" href="' + playHref + '" data-stash="' + escapeHtml(t.id) + '">' + escapeHtml(t.title) + '</a>' +
           '<div class="meta">' + escapeHtml(metaLine) + '</div>' +
           '<div class="card-actions">' +
-            '<a class="btn-mini primary" href="' + escapeHtml(t.href) + '" data-stash="' + escapeHtml(t.id) + '">Open</a>' +
+            '<a class="btn-mini primary" href="' + playHref + '" data-stash="' + escapeHtml(t.id) + '">Open</a>' +
             '<a class="btn-mini open-outline" href="battle.html?t=' + encodeURIComponent(t.id) + '" data-stash="' + escapeHtml(t.id) + '">Battle Mode</a>' +
           '</div>' +
         '</div>' +

@@ -839,6 +839,37 @@ button, .cta, .btn, .btn-mini, .pill-btn, .download-btn, .login-btn, a.btn, a.ct
   width: 100%;
 }
 
+.play-pick .battle-mode-cards {
+  align-items: start;
+}
+.play-pick .battle-mode-card {
+  padding: 28px 26px 24px;
+  justify-content: flex-start;
+}
+.play-pick .bmc-icon {
+  margin: 0 0 16px;
+}
+.play-pick .bmc-icon img {
+  width: 118px;
+  height: 72px;
+  object-fit: contain;
+}
+.play-pick .bmc-title {
+  font-size: 1.22rem;
+  margin: 0 0 8px;
+}
+.play-pick .bmc-desc {
+  flex: none;
+  margin: 0 0 18px;
+}
+.play-pick .bmc-actions {
+  margin-top: 0;
+  min-height: 0;
+}
+.play-pick .bmc-resume {
+  margin-top: 0;
+}
+
 .battle-result-list {
   list-style: none;
   margin: 0 0 20px;

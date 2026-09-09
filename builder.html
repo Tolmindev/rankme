@@ -27,7 +27,15 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;500;600;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/rankme.css?v=20260906d">
+<link rel="stylesheet" href="css/rankme.css?v=20260910e">
+<script>
+(function () {
+  try {
+    var p = new URLSearchParams(location.search).get('play');
+    if (p !== 'one' && p !== 'classic') location.replace('play.html?blank=1');
+  } catch (e) {}
+})();
+</script>
 </head>
 <body class="blank-mode">
 <div class="aurora" aria-hidden="true"></div>
@@ -42,6 +50,21 @@
     <a class="login-btn" id="loginBtn" href="account.html">Account</a>
   </nav>
 </header>
+
+<div class="obo" id="oneByOne" hidden>
+  <div class="obo-glow" id="oboGlow" aria-hidden="true"></div>
+  <h1 class="obo-title" id="oboTitle"></h1>
+  <div class="battle-progress-wrap">
+    <div class="battle-progress-bar"><div class="fill" id="oboFill"></div></div>
+    <div class="battle-progress-label" id="oboProgress">0 / 0</div>
+  </div>
+  <div class="obo-stage">
+    <div class="obo-card" id="oboCard" hidden></div>
+    <div class="obo-complete" id="oboComplete" hidden>TIER LIST COMPLETE</div>
+  </div>
+  <div class="obo-portals" id="oboPortals"></div>
+  <p class="obo-hint">Push a portal to place the card.</p>
+</div>
 
 <section class="hero">
   <div class="blank-cover-card is-placeholder" id="blankCoverHost">
@@ -208,6 +231,6 @@
 <canvas id="exportCanvas" style="display:none"></canvas>
 
 <script>window.RANKME_BLANK=true;</script>
-<script src="js/app.js?v=20260906f"></script>
+<script src="js/app.js?v=20260910e"></script>
 </body>
 </html>

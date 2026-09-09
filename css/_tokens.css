@@ -121,6 +121,11 @@ body {
   initial-value: 0deg;
   inherits: false;
 }
+@property --obo-flash {
+  syntax: "<color>";
+  initial-value: rgba(141, 100, 255, 0.12);
+  inherits: false;
+}
 @keyframes expertBorderSpin {
   to { --expert-angle: 360deg; }
 }

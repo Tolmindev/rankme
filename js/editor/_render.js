@@ -126,6 +126,7 @@ function render(){
   });
   renderPool();
   renderPortals();
+  if (typeof refreshOneByOne === 'function') refreshOneByOne();
 }
 
 function labelLineFontSize(line, desktop){

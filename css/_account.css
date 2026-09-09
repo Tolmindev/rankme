@@ -1666,6 +1666,27 @@ body.ach-focus-open { overflow: hidden; }
 #handleModal .modal-actions {
   margin-top: 0;
 }
+#handleModal .expert-modal::before {
+  background: conic-gradient(
+    from var(--expert-angle),
+    transparent 0%,
+    #b79bf0 10%,
+    #e6a9e8 24%,
+    #8ec5ff 38%,
+    transparent 55%
+  );
+}
+#handleModal .expert-modal::after {
+  background: conic-gradient(
+    from var(--expert-angle),
+    transparent 0%,
+    #b79bf0 10%,
+    #8ec5ff 28%,
+    transparent 50%
+  );
+  filter: blur(12px);
+  opacity: 0.28;
+}
 .expert-modal .expert-close:hover { color: #fff; }
 .expert-modal .expert-sent-ico {
   width: 88px;

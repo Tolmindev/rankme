@@ -62,6 +62,20 @@
     }
   } catch (e) {}
 
+  try {
+    const p = new URLSearchParams(location.search);
+    const play = p.get('play');
+    let skipPick = play === 'one' || play === 'classic' || p.get('c') || p.get('battle') === '1';
+    if (!skipPick && location.hash && location.hash.length > 2) skipPick = true;
+    if (!skipPick) {
+      try { if (sessionStorage.getItem('rankme_open_payload')) skipPick = true; } catch (e) {}
+    }
+    if (!skipPick) {
+      location.replace('play.html?t=' + encodeURIComponent(id) + (location.hash || ''));
+      return;
+    }
+  } catch (e) {}
+
   const status = document.getElementById('bootStatus');
 
   function setMeta(sel, attr, val) {
@@ -125,6 +139,13 @@
 
   function showApp() {
     try { document.body.classList.remove('booting'); } catch (e) {}
+    try {
+      if (new URLSearchParams(location.search).get('play') === 'one') {
+        document.body.classList.add('play-one');
+        var obo = document.getElementById('oneByOne');
+        if (obo) { obo.hidden = false; obo.removeAttribute('hidden'); }
+      }
+    } catch (e) {}
     if (status) {
       status.remove();
     }
@@ -148,7 +169,7 @@
       try { applyHero(t); } catch (e) { console.error(e); }
       showApp();
       const s = document.createElement('script');
-      s.src = 'js/app.js?v=20260906f';
+      s.src = 'js/app.js?v=20260910e';
       s.onerror = () => fail('Failed to load app.js');
       document.body.appendChild(s);
     })

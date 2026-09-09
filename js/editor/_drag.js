@@ -337,11 +337,7 @@ function onDragEnd(e){
     cleanupDragSource(drag.source);
     const tierId = targetPortal.dataset.tierId;
     const label = targetPortal.dataset.label || 'tier';
-    removeFromAllData(cid);
-    if(!state.assignment[tierId]) state.assignment[tierId] = [];
-    markDirty();
-    if(!state.assignment[tierId].includes(cid)) state.assignment[tierId].push(cid);
-    state.pool = state.pool.filter(id => id !== cid);
+    placeCardInTier(cid, tierId);
     floater.style.transition = 'transform .25s ease, opacity .25s ease';
     floater.style.transform = 'scale(0.3)';
     floater.style.opacity = '0';
@@ -390,4 +386,11 @@ function removeFromAllData(cid){
   Object.keys(state.assignment).forEach(k=>{
     state.assignment[k] = state.assignment[k].filter(id=>id!==cid);
   });
+}
+
+function placeCardInTier(cid, tierId){
+  removeFromAllData(cid);
+  if(!state.assignment[tierId]) state.assignment[tierId] = [];
+  markDirty();
+  if(!state.assignment[tierId].includes(cid)) state.assignment[tierId].push(cid);
 }

@@ -23,12 +23,12 @@
   try { sessionStorage.setItem('rankme_t', id); } catch (e) {}
   var p = new URLSearchParams(location.search);
   p.set('t', id);
-  location.replace('../tier.html?' + p.toString() + location.hash);
+  location.replace('../play.html?' + p.toString() + location.hash);
 })();
 </script>
 </head>
-<body style="margin:0;background:#0e0c14;color:#a79fc4;font-family:system-ui,sans-serif;text-align:center;padding:48px">
+<body style="margin:0;background:#0b0912;color:#a79fc4;font-family:system-ui,sans-serif;text-align:center;padding:48px">
 <p>Loading League of Legends…</p>
-<p><a href="../tier.html?t=lol" style="color:#e6a9e8">Open on RankMe</a></p>
+<p><a href="../play.html?t=lol" style="color:#e6a9e8">Open on RankMe</a></p>
 </body>
 </html>

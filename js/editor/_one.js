@@ -139,10 +139,24 @@ function sendOboCard(tierId) {
   }, 480);
 }
 
+var oboStarsBound = false;
+
+function oboStarsSync() {
+  if (!window.RankMeStars) return;
+  var desk = window.matchMedia && window.matchMedia('(min-width: 721px)').matches;
+  if (desk && document.body.classList.contains('play-one')) window.RankMeStars.start();
+  else window.RankMeStars.stop();
+}
+
 function initOneByOne() {
   if (!isPlayOne() || communityMode) return;
   document.body.classList.add('play-one');
   var wrap = document.getElementById('oneByOne');
   if (wrap) wrap.hidden = false;
   refreshOneByOne();
+  requestAnimationFrame(function () { oboStarsSync(); });
+  if (!oboStarsBound) {
+    oboStarsBound = true;
+    window.addEventListener('resize', oboStarsSync);
+  }
 }

@@ -169,7 +169,7 @@
       try { applyHero(t); } catch (e) { console.error(e); }
       showApp();
       const s = document.createElement('script');
-      s.src = 'js/app.js?v=20260910l';
+      s.src = 'js/app.js?v=20260910s';
       s.onerror = () => fail('Failed to load app.js');
       document.body.appendChild(s);
     })

@@ -20,7 +20,9 @@
   }
 
   function starCount() {
-    var short = Math.min(window.innerWidth, window.innerHeight);
+    var short = (canvas && canvas.id === 'oboStars' && w && h)
+      ? Math.min(w, h)
+      : Math.min(window.innerWidth, window.innerHeight);
     if (short < 520) return 80;
     if (short < 860) return 140;
     return 220;
@@ -45,8 +47,15 @@
   function resize() {
     if (!canvas) return;
     dpr = Math.min(1.5, window.devicePixelRatio || 1);
-    w = window.innerWidth;
-    h = window.innerHeight;
+    if (canvas.id === 'oboStars' && canvas.parentElement) {
+      w = canvas.parentElement.clientWidth;
+      h = canvas.parentElement.clientHeight;
+    } else {
+      w = window.innerWidth;
+      h = window.innerHeight;
+    }
+    if (w < 2) w = 2;
+    if (h < 2) h = 2;
     canvas.width = Math.round(w * dpr);
     canvas.height = Math.round(h * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -54,7 +63,7 @@
 
   function ensure() {
     if (ctx) return;
-    canvas = document.getElementById('battleStars');
+    canvas = document.getElementById('oboStars') || document.getElementById('battleStars');
     if (!canvas) return;
     ctx = canvas.getContext('2d', { alpha: true });
     resize();

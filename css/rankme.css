@@ -1852,6 +1852,13 @@ body > header.site, body > footer.site, body > #site-footer, body > .toolbar, bo
     margin: 0;
   }
 
+  .hero .parallax-host,
+  .hero .title-logo,
+  .hero img.cover-card,
+  .blank-cover-card {
+    margin-bottom: 0;
+  }
+
 
 }
 
@@ -3988,7 +3995,7 @@ body.play-one #portalsBar {
 body.play-one .hero,
 body.play-one #heroSection {
   margin-bottom: 0;
-  padding-bottom: 8px;
+  padding-bottom: 0;
 }
 @media (max-width: 720px) {
   .obo {

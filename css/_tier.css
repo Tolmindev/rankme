@@ -1879,7 +1879,7 @@ body.play-one #portalsBar {
 body.play-one .hero,
 body.play-one #heroSection {
   margin-bottom: 0;
-  padding-bottom: 8px;
+  padding-bottom: 0;
 }
 @media (max-width: 720px) {
   .obo {

@@ -66,6 +66,9 @@ function openRowSettings(tierId, anchorBtn){
       row.style.setProperty('--sat', t.sat+'%');
       row.style.setProperty('--light', t.light+'%');
     }
+    document.querySelectorAll('.portal-slot[data-tier-id="'+tierId+'"]').forEach(function(slot){
+      if (typeof paintPortalSlot === 'function') paintPortalSlot(slot, t);
+    });
   });
   pop.querySelector('.clear').addEventListener('click', ()=>{
     state.pool.push(...state.assignment[tierId]);

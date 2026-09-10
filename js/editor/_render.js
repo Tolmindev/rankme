@@ -378,6 +378,16 @@ function moveRow(idx, dir){
 /* ---------------- Magic Portals ---------------- */
 let portalsOn = false;
 
+function paintPortalSlot(el, tier){
+  if(!el || !tier) return;
+  const hue = Number(tier.hue) || 0;
+  const sat = Number.isFinite(Number(tier.sat)) ? Number(tier.sat) : ROW_SAT;
+  const light = Number.isFinite(Number(tier.light)) ? Number(tier.light) : ROW_LIGHT;
+  el.style.background = `linear-gradient(180deg, hsla(${hue}, ${sat}%, ${light}%, 0.4), hsla(${hue}, ${sat}%, ${Math.max(24, light - 14)}%, 0.12))`;
+  el.style.border = `1.5px solid hsla(${hue}, 78%, 68%, 0.92)`;
+  el.style.setProperty('--glow', `hsla(${hue}, 78%, 62%, 0.75)`);
+}
+
 function renderPortals(){
   const bar = document.getElementById('portalsBar');
   if(!bar) return;
@@ -393,12 +403,7 @@ function renderPortals(){
     slot.dataset.tierId = tier.id;
     slot.dataset.tierIndex = idx;
     slot.dataset.label = tier.name;
-    const hue = tier.hue;
-    const sat = Number.isFinite(Number(tier.sat)) ? Number(tier.sat) : ROW_SAT;
-    const light = Number.isFinite(Number(tier.light)) ? Number(tier.light) : ROW_LIGHT;
-    slot.style.background = `linear-gradient(180deg, hsla(${hue}, ${sat}%, ${light}%, 0.4), hsla(${hue}, ${sat}%, ${Math.max(24, light - 14)}%, 0.12))`;
-    slot.style.border = `1.5px solid hsla(${hue}, 78%, 68%, 0.92)`;
-    slot.style.setProperty('--glow', `hsla(${hue}, 78%, 62%, 0.75)`);
+    paintPortalSlot(slot, tier);
     bar.appendChild(slot);
   });
 }

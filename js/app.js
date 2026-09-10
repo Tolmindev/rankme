@@ -656,6 +656,16 @@ function moveRow(idx, dir){
 /* ---------------- Magic Portals ---------------- */
 let portalsOn = false;
 
+function paintPortalSlot(el, tier){
+  if(!el || !tier) return;
+  const hue = Number(tier.hue) || 0;
+  const sat = Number.isFinite(Number(tier.sat)) ? Number(tier.sat) : ROW_SAT;
+  const light = Number.isFinite(Number(tier.light)) ? Number(tier.light) : ROW_LIGHT;
+  el.style.background = `linear-gradient(180deg, hsla(${hue}, ${sat}%, ${light}%, 0.4), hsla(${hue}, ${sat}%, ${Math.max(24, light - 14)}%, 0.12))`;
+  el.style.border = `1.5px solid hsla(${hue}, 78%, 68%, 0.92)`;
+  el.style.setProperty('--glow', `hsla(${hue}, 78%, 62%, 0.75)`);
+}
+
 function renderPortals(){
   const bar = document.getElementById('portalsBar');
   if(!bar) return;
@@ -671,12 +681,7 @@ function renderPortals(){
     slot.dataset.tierId = tier.id;
     slot.dataset.tierIndex = idx;
     slot.dataset.label = tier.name;
-    const hue = tier.hue;
-    const sat = Number.isFinite(Number(tier.sat)) ? Number(tier.sat) : ROW_SAT;
-    const light = Number.isFinite(Number(tier.light)) ? Number(tier.light) : ROW_LIGHT;
-    slot.style.background = `linear-gradient(180deg, hsla(${hue}, ${sat}%, ${light}%, 0.4), hsla(${hue}, ${sat}%, ${Math.max(24, light - 14)}%, 0.12))`;
-    slot.style.border = `1.5px solid hsla(${hue}, 78%, 68%, 0.92)`;
-    slot.style.setProperty('--glow', `hsla(${hue}, 78%, 62%, 0.75)`);
+    paintPortalSlot(slot, tier);
     bar.appendChild(slot);
   });
 }
@@ -1163,6 +1168,9 @@ function openRowSettings(tierId, anchorBtn){
       row.style.setProperty('--sat', t.sat+'%');
       row.style.setProperty('--light', t.light+'%');
     }
+    document.querySelectorAll('.portal-slot[data-tier-id="'+tierId+'"]').forEach(function(slot){
+      if (typeof paintPortalSlot === 'function') paintPortalSlot(slot, t);
+    });
   });
   pop.querySelector('.clear').addEventListener('click', ()=>{
     state.pool.push(...state.assignment[tierId]);
@@ -2357,20 +2365,20 @@ function refreshOneByOne() {
       slot.type = 'button';
       slot.className = 'portal-slot';
       slot.dataset.tierId = tier.id;
-      var hue = tier.hue;
-      var sat = Number.isFinite(Number(tier.sat)) ? Number(tier.sat) : ROW_SAT;
-      var light = Number.isFinite(Number(tier.light)) ? Number(tier.light) : ROW_LIGHT;
-      slot.style.background = 'linear-gradient(180deg, hsla(' + hue + ', ' + sat + '%, ' + light + '%, 0.4), hsla(' + hue + ', ' + sat + '%, ' + Math.max(24, light - 14) + '%, 0.12))';
-      slot.style.border = '1.5px solid hsla(' + hue + ', 78%, 68%, 0.92)';
-      slot.style.setProperty('--glow', 'hsla(' + hue + ', 78%, 62%, 0.75)');
-      slot.addEventListener('click', function () { sendOboCard(tier.id, hue, sat, light); });
+      paintPortalSlot(slot, tier);
+      slot.addEventListener('click', function () { sendOboCard(tier.id); });
       bar.appendChild(slot);
     });
   }
 }
 
-function sendOboCard(tierId, hue, sat, light) {
+function sendOboCard(tierId) {
   if (oboBusy || communityMode || !state.pool.length) return;
+  var tier = (state.tiers || []).find(function (t) { return t.id === tierId; });
+  if (!tier) return;
+  var hue = Number(tier.hue);
+  var sat = Number.isFinite(Number(tier.sat)) ? Number(tier.sat) : ROW_SAT;
+  var light = Number.isFinite(Number(tier.light)) ? Number(tier.light) : ROW_LIGHT;
   var cid = state.pool[0];
   var cardEl = document.getElementById('oboCard');
   var instant = oboReduceMotion();

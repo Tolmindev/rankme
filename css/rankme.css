@@ -3866,14 +3866,14 @@ body.community-view .tier-label {
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
-  padding: 4px 24px 32px;
+  padding: 4px 24px 40px;
 }
 .obo > *:not(.obo-glow) {
   position: relative;
   z-index: 1;
 }
 .obo .battle-progress-wrap {
-  margin: 0 auto 18px;
+  margin: 14px auto 0;
   max-width: 400px;
 }
 .obo-stage {
@@ -3971,7 +3971,7 @@ body.community-view .tier-label {
   gap: 10px;
   justify-content: center;
   width: min(420px, 92vw);
-  margin: 22px auto 10px;
+  margin: 22px auto 0;
 }
 .obo-portals .portal-slot {
   flex: 1 1 0;
@@ -3980,12 +3980,6 @@ body.community-view .tier-label {
   min-height: 28px;
   border-radius: 999px;
   cursor: pointer;
-}
-.obo-hint {
-  margin: 0;
-  font-size: 0.72rem;
-  font-weight: 500;
-  color: rgba(180, 170, 200, 0.72);
 }
 body.play-one #portalBtn,
 body.play-one #portalsBar {
@@ -3997,7 +3991,7 @@ body.play-one #heroSection {
 }
 @media (max-width: 720px) {
   .obo {
-    padding: 8px 14px 24px;
+    padding: 8px 14px 32px;
   }
   .obo-card {
     width: min(240px, 58vw);

@@ -89,20 +89,20 @@ function refreshOneByOne() {
       slot.type = 'button';
       slot.className = 'portal-slot';
       slot.dataset.tierId = tier.id;
-      var hue = tier.hue;
-      var sat = Number.isFinite(Number(tier.sat)) ? Number(tier.sat) : ROW_SAT;
-      var light = Number.isFinite(Number(tier.light)) ? Number(tier.light) : ROW_LIGHT;
-      slot.style.background = 'linear-gradient(180deg, hsla(' + hue + ', ' + sat + '%, ' + light + '%, 0.4), hsla(' + hue + ', ' + sat + '%, ' + Math.max(24, light - 14) + '%, 0.12))';
-      slot.style.border = '1.5px solid hsla(' + hue + ', 78%, 68%, 0.92)';
-      slot.style.setProperty('--glow', 'hsla(' + hue + ', 78%, 62%, 0.75)');
-      slot.addEventListener('click', function () { sendOboCard(tier.id, hue, sat, light); });
+      paintPortalSlot(slot, tier);
+      slot.addEventListener('click', function () { sendOboCard(tier.id); });
       bar.appendChild(slot);
     });
   }
 }
 
-function sendOboCard(tierId, hue, sat, light) {
+function sendOboCard(tierId) {
   if (oboBusy || communityMode || !state.pool.length) return;
+  var tier = (state.tiers || []).find(function (t) { return t.id === tierId; });
+  if (!tier) return;
+  var hue = Number(tier.hue);
+  var sat = Number.isFinite(Number(tier.sat)) ? Number(tier.sat) : ROW_SAT;
+  var light = Number.isFinite(Number(tier.light)) ? Number(tier.light) : ROW_LIGHT;
   var cid = state.pool[0];
   var cardEl = document.getElementById('oboCard');
   var instant = oboReduceMotion();

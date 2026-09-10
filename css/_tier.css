@@ -1753,16 +1753,19 @@ body.community-view .tier-label {
   position: relative;
   overflow: visible;
   text-align: center;
-  padding: 8px 16px 28px;
-  max-width: 720px;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1400px;
   margin: 0 auto;
+  padding: 4px 24px 32px;
 }
 .obo > *:not(.obo-glow) {
   position: relative;
   z-index: 1;
 }
 .obo .battle-progress-wrap {
-  margin: 0 auto 16px;
+  margin: 0 auto 18px;
+  max-width: 400px;
 }
 .obo-stage {
   min-height: 180px;
@@ -1773,7 +1776,7 @@ body.community-view .tier-label {
 }
 .obo-card {
   position: relative;
-  width: min(256px, 58vw);
+  width: min(280px, 36vw);
   aspect-ratio: 1 / var(--obo-aspect, 1.35);
   border-radius: 18px;
   overflow: hidden;
@@ -1878,6 +1881,18 @@ body.community-view .tier-label {
 body.play-one #portalBtn,
 body.play-one #portalsBar {
   display: none;
+}
+body.play-one .hero,
+body.play-one #heroSection {
+  margin-bottom: 0;
+}
+@media (max-width: 720px) {
+  .obo {
+    padding: 8px 14px 24px;
+  }
+  .obo-card {
+    width: min(240px, 58vw);
+  }
 }
 @media (prefers-reduced-motion: reduce) {
   .obo-glow { transition: none; }

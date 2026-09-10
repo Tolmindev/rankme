@@ -1735,17 +1735,17 @@ body.community-view .tier-label {
 .obo-glow {
   position: absolute;
   left: 50%;
-  top: 8%;
-  width: 110vw;
-  height: 90%;
-  transform: translateX(-50%);
+  top: 42%;
+  width: min(520px, 70vw);
+  height: 58%;
+  transform: translate(-50%, -40%);
   pointer-events: none;
   z-index: 0;
   --obo-flash: rgba(141, 100, 255, 0.12);
   background: radial-gradient(
-    ellipse at 50% 42%,
+    ellipse at 50% 46%,
     var(--obo-flash) 0%,
-    transparent 66%
+    transparent 68%
   );
   transition: --obo-flash 0.35s ease;
 }
@@ -1757,7 +1757,7 @@ body.community-view .tier-label {
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
-  padding: 36px 24px 40px;
+  padding: 72px 24px 40px;
 }
 .obo > *:not(.obo-glow) {
   position: relative;
@@ -1880,10 +1880,11 @@ body.play-one .hero,
 body.play-one #heroSection {
   margin-bottom: 0;
   padding-bottom: 0;
+  align-items: flex-start;
 }
 @media (max-width: 720px) {
   .obo {
-    padding: 28px 14px 32px;
+    padding: 48px 14px 32px;
   }
   .obo-card {
     width: min(240px, 58vw);

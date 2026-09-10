@@ -3998,6 +3998,35 @@ body.play-one #heroSection {
   padding-bottom: 0;
   align-items: flex-start;
 }
+@media (min-width: 721px) {
+  body.play-one .obo::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 210px;
+    width: 2px;
+    height: 2px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.32);
+    pointer-events: none;
+    z-index: 0;
+    box-shadow:
+      -520px -30px 0 0 rgba(255, 255, 255, 0.22),
+      -430px 40px 0 0.4px rgba(220, 210, 255, 0.2),
+      -560px 140px 0 0 rgba(255, 255, 255, 0.14),
+      -380px 210px 0 0 rgba(200, 190, 255, 0.18),
+      -500px 300px 0 0.5px rgba(255, 255, 255, 0.16),
+      -610px 90px 0 0 rgba(230, 220, 255, 0.12),
+      500px -20px 0 0 rgba(255, 255, 255, 0.22),
+      420px 55px 0 0.4px rgba(220, 210, 255, 0.18),
+      560px 150px 0 0 rgba(255, 255, 255, 0.14),
+      370px 230px 0 0 rgba(200, 190, 255, 0.18),
+      510px 310px 0 0.5px rgba(255, 255, 255, 0.16),
+      620px 80px 0 0 rgba(230, 220, 255, 0.12),
+      -300px 120px 0 0 rgba(255, 255, 255, 0.1),
+      310px 180px 0 0 rgba(255, 255, 255, 0.1);
+  }
+}
 @media (max-width: 720px) {
   .obo {
     padding: 48px 14px 32px;

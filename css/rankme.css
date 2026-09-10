@@ -3866,7 +3866,7 @@ body.community-view .tier-label {
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
-  padding: 4px 24px 40px;
+  padding: 36px 24px 40px;
 }
 .obo > *:not(.obo-glow) {
   position: relative;
@@ -3988,10 +3988,11 @@ body.play-one #portalsBar {
 body.play-one .hero,
 body.play-one #heroSection {
   margin-bottom: 0;
+  padding-bottom: 8px;
 }
 @media (max-width: 720px) {
   .obo {
-    padding: 8px 14px 32px;
+    padding: 28px 14px 32px;
   }
   .obo-card {
     width: min(240px, 58vw);

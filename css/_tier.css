@@ -1735,53 +1735,62 @@ body.community-view .tier-label {
 .obo-glow {
   position: absolute;
   left: 50%;
-  top: 18%;
-  width: 140vw;
-  height: 70vh;
+  bottom: -10%;
+  width: 120vw;
+  height: 58%;
   transform: translateX(-50%);
   pointer-events: none;
   z-index: 0;
   --obo-flash: rgba(141, 100, 255, 0.12);
   background: radial-gradient(
-    ellipse at 50% 42%,
+    ellipse at 50% 72%,
     var(--obo-flash) 0%,
-    transparent 66%
+    transparent 70%
   );
   transition: --obo-flash 0.35s ease;
 }
 .obo {
   position: relative;
-  overflow: visible;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: calc(100vh - 72px);
+  min-height: calc(100dvh - 72px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  padding: 20px 24px 36px;
   text-align: center;
-  padding: 8px 16px 32px;
-  max-width: 720px;
-  margin: 0 auto;
+  overflow: visible;
 }
 .obo > *:not(.obo-glow) {
   position: relative;
   z-index: 1;
 }
 .obo-title {
-  font-size: clamp(1.15rem, 3.4vw, 1.55rem);
+  font-size: clamp(1.25rem, 3.2vw, 1.6rem);
   font-weight: 900;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.02em;
   text-transform: uppercase;
-  margin: 6px 0 16px;
+  margin: 0 0 10px;
   line-height: 1.2;
+  max-width: 18em;
 }
 .obo .battle-progress-wrap {
-  margin: 0 auto 18px;
+  margin: 0 auto 22px;
+  max-width: 400px;
 }
 .obo-stage {
-  min-height: 180px;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: visible;
+  flex: 0 0 auto;
 }
 .obo-card {
   position: relative;
-  width: min(220px, 58vw);
+  width: min(300px, 42vw, calc(46dvh / var(--obo-aspect, 1.35)));
   aspect-ratio: 1 / var(--obo-aspect, 1.35);
   border-radius: 18px;
   overflow: hidden;
@@ -1842,10 +1851,10 @@ body.community-view .tier-label {
   right: 0;
   bottom: 0;
   z-index: 2;
-  padding: 6px 8px 8px;
+  padding: 8px 10px 10px;
   background: linear-gradient(0deg, rgba(6, 4, 10, 0.82), transparent);
   font-weight: 600;
-  font-size: 0.62rem;
+  font-size: 0.72rem;
   line-height: 1.2;
   color: rgba(255, 255, 255, 0.92);
   text-align: center;
@@ -1856,7 +1865,7 @@ body.community-view .tier-label {
   font-weight: 900;
   letter-spacing: 0.04em;
   line-height: 1.1;
-  margin: 24px 0;
+  margin: 12px 0;
   background: var(--accent-grad);
   -webkit-background-clip: text;
   background-clip: text;
@@ -1866,8 +1875,8 @@ body.community-view .tier-label {
   display: flex;
   gap: 10px;
   justify-content: center;
-  width: min(420px, 92vw);
-  margin: 22px auto 10px;
+  width: min(460px, 86vw);
+  margin: 28px auto 10px;
 }
 .obo-portals .portal-slot {
   flex: 1 1 0;
@@ -1886,6 +1895,36 @@ body.community-view .tier-label {
 body.play-one #portalBtn,
 body.play-one #portalsBar {
   display: none;
+}
+body.play-one .hero,
+body.play-one #heroSection {
+  padding-top: 36px;
+}
+@media (max-width: 720px) {
+  .obo {
+    min-height: calc(100vh - 52px);
+    min-height: calc(100dvh - 52px);
+    padding: 12px 14px 28px;
+  }
+  .obo-title {
+    font-size: 1.2rem;
+    margin: 0 0 8px;
+    max-width: 16em;
+  }
+  .obo .battle-progress-wrap {
+    margin: 0 auto 16px;
+  }
+  .obo-card {
+    width: min(250px, 58vw, calc(42dvh / var(--obo-aspect, 1.35)));
+  }
+  .obo-portals {
+    width: min(420px, 92vw);
+    margin: 20px auto 8px;
+  }
+  body.play-one .hero,
+  body.play-one #heroSection {
+    padding-top: 22px;
+  }
 }
 @media (prefers-reduced-motion: reduce) {
   .obo-glow { transition: none; }

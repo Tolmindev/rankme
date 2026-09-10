@@ -1,8 +1,86 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 35 21" fill="none">
-  <rect x="13.2" y="1.1" width="8.6" height="12.1" rx="1.1" fill="#584673"/>
-  <rect x="1.2" y="15.4" width="5.7" height="3.4" rx="1.7" fill="#e2696a"/>
-  <rect x="7.6" y="15.4" width="5.7" height="3.4" rx="1.7" fill="#e2a169"/>
-  <rect x="14" y="15.4" width="5.7" height="3.4" rx="1.7" fill="#e1c969"/>
-  <rect x="20.4" y="15.4" width="5.7" height="3.4" rx="1.7" fill="#68e091"/>
-  <rect x="26.8" y="15.4" width="5.7" height="3.4" rx="1.7" fill="#6890e1"/>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 35 21"
+   fill="none"
+   version="1.1"
+   id="svg6"
+   sodipodi:docname="one-by-one.svg"
+   inkscape:version="1.4.4 (dcaf3e7, 2026-05-05)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs6" />
+  <sodipodi:namedview
+     id="namedview6"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="14.154762"
+     inkscape:cx="16.037006"
+     inkscape:cy="-0.95374264"
+     inkscape:window-width="2560"
+     inkscape:window-height="1369"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg6" />
+  <rect
+     x="12.547239"
+     y="1.1"
+     width="9.9055214"
+     height="13.936838"
+     rx="1.2669853"
+     fill="#584673"
+     id="rect1"
+     style="stroke-width:1.1518" />
+  <g
+     id="g6"
+     transform="translate(0.65000045,2.2000003)">
+    <rect
+       x="1.2"
+       y="15.4"
+       width="5.6999998"
+       height="3.4000001"
+       rx="1.7"
+       fill="#e2696a"
+       id="rect2" />
+    <rect
+       x="7.5999999"
+       y="15.4"
+       width="5.6999998"
+       height="3.4000001"
+       rx="1.7"
+       fill="#e2a169"
+       id="rect3" />
+    <rect
+       x="14"
+       y="15.4"
+       width="5.6999998"
+       height="3.4000001"
+       rx="1.7"
+       fill="#e1c969"
+       id="rect4" />
+    <rect
+       x="20.4"
+       y="15.4"
+       width="5.6999998"
+       height="3.4000001"
+       rx="1.7"
+       fill="#68e091"
+       id="rect5" />
+    <rect
+       x="26.799999"
+       y="15.4"
+       width="5.6999998"
+       height="3.4000001"
+       rx="1.7"
+       fill="#6890e1"
+       id="rect6" />
+  </g>
 </svg>

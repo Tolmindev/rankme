@@ -1,7 +1,5 @@
 /* RankMe editor · unsaved leave guard */
 
-/* ---------------- Leave warning ---------------- */
-
 function hasProgress(){
   return Object.values(state.assignment || {}).some(function (arr) {
     return arr && arr.length > 0;
@@ -10,11 +8,15 @@ function hasProgress(){
 
 /** True only when user has unsaved edits (not community view, not after Save). */
 let rankingDirty = false;
+let leaveTrapOn = false;
+let pendingNav = '#';
+window.allowLeave = false;
 
 function markDirty() {
   if (communityMode) return;
   rankingDirty = true;
   setAllowLeave(false);
+  armLeaveTrap();
 }
 
 function markClean() {
@@ -29,10 +31,6 @@ function needsLeaveWarn() {
   return hasProgress();
 }
 
-let pendingNav = '#';
-window.allowLeave = false;
-
-/** Allow leaving page without native browser dialog */
 function setAllowLeave(v){
   window.allowLeave = !!v;
   try{
@@ -42,6 +40,20 @@ function setAllowLeave(v){
 }
 window.setAllowLeave = setAllowLeave;
 
+function armLeaveTrap() {
+  if (leaveTrapOn || communityMode) return;
+  try {
+    history.pushState({ rankmeTrap: 1 }, '', location.href);
+    leaveTrapOn = true;
+  } catch (_) {}
+}
+
+function openLeaveModal(nav) {
+  pendingNav = nav;
+  var modal = document.getElementById('leaveModal');
+  if (modal) modal.classList.add('open');
+}
+
 function rankmeBeforeUnload(e){
   try{ if(sessionStorage.getItem('rankme_nav_ok') === '1') return; }catch(_){}
   if (!needsLeaveWarn()) return;
@@ -50,11 +62,30 @@ function rankmeBeforeUnload(e){
 }
 window.addEventListener('beforeunload', rankmeBeforeUnload);
 
+window.addEventListener('popstate', function () {
+  var wasTrap = leaveTrapOn;
+  leaveTrapOn = false;
+  if (needsLeaveWarn()) {
+    armLeaveTrap();
+    openLeaveModal('__back__');
+    return;
+  }
+  if (wasTrap) {
+    setTimeout(function () { history.back(); }, 0);
+  }
+});
+
+window.addEventListener('pageshow', function (e) {
+  if (e.persisted && needsLeaveWarn()) {
+    leaveTrapOn = false;
+    armLeaveTrap();
+  }
+});
+
 /** Account is always allowed - ranking is stashed, never blocked */
 function navigateToAccount(){
   setAllowLeave(true);
   try{
-    // Keep ranking in session for later, but never auto-bounce from Account
     if(typeof hasProgress === 'function' && hasProgress() && typeof stashDraftBeforeLogin === 'function'){
       stashDraftBeforeLogin({ needReturn: false });
     } else {
@@ -65,39 +96,35 @@ function navigateToAccount(){
 }
 window.navigateToAccount = navigateToAccount;
 
-function bindLeaveGuard(el, href){
-  if(!el || el.dataset.leaveBound) return;
-  el.dataset.leaveBound = '1';
-  el.addEventListener('click', (e)=>{
-    const target = href || el.getAttribute('href') || '';
-    if(!target || target === '#' || target.startsWith('javascript')) return;
-    // Account / login always free to open
-    if(/account\.html/i.test(target)){
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[href]');
+  if (!a) return;
+  if (a.target && a.target !== '_self') return;
+  if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+  var target = a.getAttribute('href') || '';
+  if (!target || target === '#' || target.indexOf('javascript:') === 0) return;
+  if (/account\.html/i.test(target)) {
+    e.preventDefault();
+    navigateToAccount();
+    return;
+  }
+  try {
+    var u = new URL(target, location.href);
+    if (u.pathname === location.pathname && u.search === location.search && !u.hash) {
       e.preventDefault();
-      navigateToAccount();
       return;
     }
-    try{
-      const u = new URL(target, location.href);
-      if(u.pathname === location.pathname && u.search === location.search && !u.hash){
-        e.preventDefault();
-        return;
-      }
-    }catch(_){}
-    if (!needsLeaveWarn()) return;
-    e.preventDefault();
-    e.stopPropagation();
-    pendingNav = target;
-    document.getElementById('leaveModal')?.classList.add('open');
-  }, true);
-}
-
-document.querySelectorAll('nav.main a, a.brand').forEach(a => bindLeaveGuard(a));
+  } catch (_) { return; }
+  if (!needsLeaveWarn()) return;
+  e.preventDefault();
+  e.stopPropagation();
+  openLeaveModal(target);
+}, true);
 
 const loginBtn = document.getElementById('loginBtn');
 if(loginBtn){
   loginBtn.dataset.navBound = '1';
-  loginBtn.dataset.accountNav = '1'; // prevent supabaseClient double-bind
+  loginBtn.dataset.accountNav = '1';
   loginBtn.addEventListener('click', (e)=>{
     e.preventDefault();
     e.stopImmediatePropagation();
@@ -111,5 +138,10 @@ document.getElementById('stayBtn')?.addEventListener('click', ()=>{
 document.getElementById('leaveBtn')?.addEventListener('click', ()=>{
   document.getElementById('leaveModal')?.classList.remove('open');
   setAllowLeave(true);
-  window.location.href = pendingNav;
+  rankingDirty = false;
+  if (pendingNav === '__back__') {
+    history.back();
+  } else {
+    window.location.href = pendingNav;
+  }
 });

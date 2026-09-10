@@ -76,22 +76,15 @@ function refreshOneByOne() {
   if (label) label.textContent = counts.placed + ' / ' + counts.total;
 
   var done = counts.left === 0;
-  if (doneEl && !oboLockCard) {
-    doneEl.hidden = !done;
-    if (done) doneEl.removeAttribute('hidden');
-    else doneEl.setAttribute('hidden', '');
-  }
+  if (doneEl && !oboLockCard) doneEl.hidden = !done;
   if (cardEl && !oboLockCard) {
     cardEl.className = 'obo-card';
     if (done) {
       cardEl.hidden = true;
-      cardEl.setAttribute('hidden', '');
       cardEl.innerHTML = '';
     } else {
-      var id = state.pool[0];
       cardEl.hidden = false;
-      cardEl.removeAttribute('hidden');
-      fillOboCard(cardEl, id);
+      fillOboCard(cardEl, state.pool[0]);
     }
   }
   if (bar) {
@@ -155,14 +148,6 @@ function initOneByOne() {
   if (!isPlayOne() || communityMode) return;
   document.body.classList.add('play-one');
   var wrap = document.getElementById('oneByOne');
-  if (wrap) {
-    wrap.hidden = false;
-    wrap.removeAttribute('hidden');
-  }
-  var glow = document.getElementById('oboGlow');
-  if (glow) {
-    glow.hidden = false;
-    glow.removeAttribute('hidden');
-  }
+  if (wrap) wrap.hidden = false;
   refreshOneByOne();
 }

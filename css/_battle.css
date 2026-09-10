@@ -647,7 +647,6 @@ button, .cta, .btn, .btn-mini, .pill-btn, .download-btn, .login-btn, a.btn, a.ct
   font-weight: 900;
   font-size: 1.15rem;
   letter-spacing: .3px;
-  margin-bottom: 6px;
   margin: 0 0 4px;
 }
 
@@ -655,7 +654,6 @@ button, .cta, .btn, .btn-mini, .pill-btn, .download-btn, .login-btn, a.btn, a.ct
   font-size: 0.8rem;
   font-weight: 700;
   color: #c9b4e8;
-  margin-bottom: 10px;
   margin: 0 0 8px;
 }
 

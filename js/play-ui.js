@@ -16,9 +16,8 @@
   var templateId = (params.get('t') || '').trim();
 
   try {
-    if (sessionStorage.getItem('rankme_remix_pending') !== '1') {
-      sessionStorage.removeItem('rankme_open_payload');
-    }
+    sessionStorage.removeItem('rankme_open_payload');
+    sessionStorage.removeItem('rankme_remix_pending');
   } catch (e) {}
 
   if (how) {
@@ -37,7 +36,7 @@
     return (
       '<div class="battle-mode-card' + (electric ? ' battle-mode-full' : '') + '" data-play="' + mode + '">' +
         (electric ? '<span class="bmc-electric" aria-hidden="true"></span>' : '') +
-        '<div class="bmc-icon"><img src="' + icon + '" alt="" width="56" height="56"></div>' +
+        '<div class="bmc-icon"><img src="' + icon + '" alt=""></div>' +
         '<div class="bmc-title">' + title + '</div>' +
         '<div class="bmc-desc">' + desc + '</div>' +
         '<div class="bmc-actions"><span class="bmc-resume" data-action="start">Start</span></div>' +

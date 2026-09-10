@@ -186,7 +186,6 @@
       case 'newest':
         arr.sort(function (a, b) { return new Date(b.createdAt) - new Date(a.createdAt); });
         break;
-      case 'items':
       case 'popular':
         arr.sort(function (a, b) {
           var ua = a.useCount || 0, ub = b.useCount || 0;

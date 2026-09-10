@@ -2266,7 +2266,7 @@ document.getElementById('leaveBtn')?.addEventListener('click', ()=>{
   }
 });
 
-/* RankMe editor · One by One intake (card + portals above the board) */
+/* RankMe editor · One by One intake (card + portals under the hero) */
 
 function isPlayOne() {
   try { return new URLSearchParams(location.search).get('play') === 'one'; }
@@ -2334,11 +2334,6 @@ function refreshOneByOne() {
   var cardEl = document.getElementById('oboCard');
   var doneEl = document.getElementById('oboComplete');
   var bar = document.getElementById('oboPortals');
-  var title = document.getElementById('oboTitle');
-  if (title) {
-    var h = document.getElementById('heroTitle');
-    title.textContent = (h && h.textContent.trim()) || TEMPLATE_TITLE || '';
-  }
   var pct = counts.total ? Math.round((counts.placed / counts.total) * 100) : 0;
   if (fill) fill.style.width = pct + '%';
   if (label) label.textContent = counts.placed + ' / ' + counts.total;

@@ -1735,9 +1735,9 @@ body.community-view .tier-label {
 .obo-glow {
   position: absolute;
   left: 50%;
-  top: 18%;
-  width: 140vw;
-  height: 70vh;
+  top: 8%;
+  width: 110vw;
+  height: 90%;
   transform: translateX(-50%);
   pointer-events: none;
   z-index: 0;
@@ -1753,7 +1753,7 @@ body.community-view .tier-label {
   position: relative;
   overflow: visible;
   text-align: center;
-  padding: 8px 16px 32px;
+  padding: 8px 16px 28px;
   max-width: 720px;
   margin: 0 auto;
 }
@@ -1761,16 +1761,8 @@ body.community-view .tier-label {
   position: relative;
   z-index: 1;
 }
-.obo-title {
-  font-size: clamp(1.15rem, 3.4vw, 1.55rem);
-  font-weight: 900;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  margin: 6px 0 16px;
-  line-height: 1.2;
-}
 .obo .battle-progress-wrap {
-  margin: 0 auto 18px;
+  margin: 0 auto 16px;
 }
 .obo-stage {
   min-height: 180px;
@@ -1781,7 +1773,7 @@ body.community-view .tier-label {
 }
 .obo-card {
   position: relative;
-  width: min(220px, 58vw);
+  width: min(256px, 58vw);
   aspect-ratio: 1 / var(--obo-aspect, 1.35);
   border-radius: 18px;
   overflow: hidden;

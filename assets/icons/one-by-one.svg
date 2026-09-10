@@ -6,13 +6,12 @@
    id="svg6"
    sodipodi:docname="one-by-one.svg"
    inkscape:version="1.4.4 (dcaf3e7, 2026-05-05)"
+   xml:space="preserve"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg">
-  <defs
-     id="defs6" />
-  <sodipodi:namedview
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+     id="defs6" /><sodipodi:namedview
      id="namedview6"
      pagecolor="#ffffff"
      bordercolor="#000000"
@@ -22,65 +21,51 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:zoom="14.154762"
-     inkscape:cx="16.037006"
-     inkscape:cy="-0.95374264"
+     inkscape:cx="3.6736753"
+     inkscape:cy="13.175778"
      inkscape:window-width="2560"
      inkscape:window-height="1369"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg6" />
-  <rect
-     x="12.547239"
-     y="1.1"
-     width="9.9055214"
-     height="13.936838"
-     rx="1.2669853"
-     fill="#584673"
-     id="rect1"
-     style="stroke-width:1.1518" />
-  <g
+     inkscape:current-layer="svg6" /><g
      id="g6"
-     transform="translate(0.65000045,2.2000003)">
-    <rect
+     transform="translate(0.65000045,2.2000003)"><rect
        x="1.2"
        y="15.4"
        width="5.6999998"
        height="3.4000001"
        rx="1.7"
        fill="#e2696a"
-       id="rect2" />
-    <rect
+       id="rect2" /><rect
        x="7.5999999"
        y="15.4"
        width="5.6999998"
        height="3.4000001"
        rx="1.7"
        fill="#e2a169"
-       id="rect3" />
-    <rect
+       id="rect3" /><rect
        x="14"
        y="15.4"
        width="5.6999998"
        height="3.4000001"
        rx="1.7"
        fill="#e1c969"
-       id="rect4" />
-    <rect
+       id="rect4" /><rect
        x="20.4"
        y="15.4"
        width="5.6999998"
        height="3.4000001"
        rx="1.7"
        fill="#68e091"
-       id="rect5" />
-    <rect
+       id="rect5" /><rect
        x="26.799999"
        y="15.4"
        width="5.6999998"
        height="3.4000001"
        rx="1.7"
        fill="#6890e1"
-       id="rect6" />
-  </g>
-</svg>
+       id="rect6" /></g><path
+     d="m 20.073161,0.46554317 h -5.146322 c -0.80053,0 -1.429542,0.62898633 -1.429542,1.42954223 V 12.75955 c 0,0.80053 0.629012,1.429517 1.429542,1.429517 h 5.146322 c 0.80053,0 1.429542,-0.628987 1.429542,-1.429541 V 1.8950854 c 0,-0.8005559 -0.629012,-1.42954223 -1.429542,-1.42954223 z M 17.5,13.045449 c -0.314506,0 -0.571823,-0.257317 -0.571823,-0.571822 0,-0.314506 0.257317,-0.571823 0.571823,-0.571823 0.314506,0 0.571823,0.257317 0.571823,0.571823 0,0.314505 -0.257317,0.571822 -0.571823,0.571822 z M 18.35772,2.1809836 H 16.64228 V 1.6091617 h 1.71544 z"
+     id="path1-4"
+     style="fill:#584673;fill-opacity:1;stroke-width:0.025227" /></svg>

@@ -1735,17 +1735,17 @@ body.community-view .tier-label {
 .obo-glow {
   position: absolute;
   left: 50%;
-  top: 42%;
-  width: min(520px, 70vw);
-  height: 58%;
-  transform: translate(-50%, -40%);
+  top: 0;
+  bottom: 0;
+  width: 140vw;
+  transform: translateX(-50%);
   pointer-events: none;
   z-index: 0;
   --obo-flash: rgba(141, 100, 255, 0.12);
   background: radial-gradient(
-    ellipse at 50% 46%,
+    ellipse at 50% 48%,
     var(--obo-flash) 0%,
-    transparent 68%
+    transparent 66%
   );
   transition: --obo-flash 0.35s ease;
 }

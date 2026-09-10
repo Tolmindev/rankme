@@ -143,8 +143,7 @@ var oboStarsBound = false;
 
 function oboStarsSync() {
   if (!window.RankMeStars) return;
-  var desk = window.matchMedia && window.matchMedia('(min-width: 721px)').matches;
-  if (desk && document.body.classList.contains('play-one')) window.RankMeStars.start();
+  if (document.body.classList.contains('play-one')) window.RankMeStars.start();
   else window.RankMeStars.stop();
 }
 

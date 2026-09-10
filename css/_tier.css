@@ -1902,9 +1902,6 @@ body.play-one #heroSection {
   .obo-card {
     width: min(240px, 58vw);
   }
-  #oboStars {
-    display: none;
-  }
 }
 @media (prefers-reduced-motion: reduce) {
   .obo-glow { transition: none; }

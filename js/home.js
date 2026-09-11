@@ -211,7 +211,7 @@
     var meta = state.categoryMeta[t.category] || { label: t.category || 'Other' };
     var catTag = t.category ? '<span class="tag tag-cat" data-cat="' + escapeHtml(t.category) + '">' + escapeHtml(meta.label || t.category) + '</span>' : '';
     var badges = catTag ? '<div class="badge-row">' + catTag + '</div>' : '';
-    var playHref = 'play.html?t=' + encodeURIComponent(t.id);
+    var playHref = 't/' + encodeURIComponent(t.id) + '.html';
     var epicClass = t.parallax ? ' epic' : '';
     var uses = t.useCount || 0;
     var metaLine = (t.itemCount ? t.itemCount + ' ' + (t.itemLabel || 'items') : '');

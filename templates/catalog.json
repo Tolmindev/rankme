@@ -5,7 +5,7 @@
       "title": "Street Fighter: Duel",
       "description": "Collect iconic Street Fighters, upgrade your team, and enter epic battles in this idle RPG twist on the Street Fighter universe.",
       "cover": "assets/brand/SF_Cover_1.webp",
-      "href": "tier.html?t=sf-duel",
+      "href": "t/sf-duel.html",
       "category": "games",
       "tags": [
         "games",
@@ -28,7 +28,7 @@
       "title": "Street Fighter: Duel EX-Move",
       "description": "Unlockable battle skills with base and exclusive stats.",
       "cover": "assets/brand/SFD_EX_Cover.webp",
-      "href": "tier.html?t=sf-duel-ex",
+      "href": "t/sf-duel-ex.html",
       "category": "games",
       "tags": [
         "games",
@@ -51,7 +51,7 @@
       "title": "League of Legends",
       "description": "Rank all League of Legends champions, from top lane to support.",
       "cover": "assets/brand/LoL_Cover.webp",
-      "href": "tier.html?t=lol",
+      "href": "t/lol.html",
       "category": "games",
       "tags": [
         "games",
@@ -73,7 +73,7 @@
       "title": "Street Fighter 6",
       "description": "Street Fighter 6 is a 2023 fighting game by Capcom with innovative mechanics, multiple modes, and a diverse roster.",
       "cover": "assets/brand/SF6_Cover.webp",
-      "href": "tier.html?t=sf6",
+      "href": "t/sf6.html",
       "category": "games",
       "tags": [
         "games",
@@ -95,7 +95,7 @@
       "title": "Dota 2",
       "description": "Dota is the deepest multi-player action RTS game ever made and there's always a new strategy or tactic to discover.",
       "cover": "assets/brand/Dota2_Cover.webp",
-      "href": "tier.html?t=dota2",
+      "href": "t/dota2.html",
       "category": "games",
       "tags": [
         "games",
@@ -117,7 +117,7 @@
       "title": "Skullgirls Mobile",
       "description": "2D Fighting RPG packed with characters to collect, upgrade and customize as you search for the mysterious SKULLGIRL!",
       "cover": "assets/brand/Skullgirls_Cover.webp",
-      "href": "tier.html?t=skullgirls",
+      "href": "t/skullgirls.html",
       "category": "games",
       "tags": [
         "games",
@@ -139,7 +139,7 @@
       "title": "MARVEL Tōkon: Fighting Souls",
       "description": "Experience the world of MARVEL Tōkon: Fighting Souls before stepping into the fight.",
       "cover": "assets/brand/Marvel_TOKON_Cover.webp",
-      "href": "tier.html?t=marvel-tokon",
+      "href": "t/marvel-tokon.html",
       "category": "games",
       "tags": [
         "games",
@@ -162,7 +162,7 @@
       "title": "World of Warcraft Expansions",
       "description": "Looking for a complete list of all of the World of Warcraft expansions?",
       "cover": "assets/brand/WoW_Expansions_Cover.webp",
-      "href": "tier.html?t=wow-expansions",
+      "href": "t/wow-expansions.html",
       "category": "games",
       "tags": [
         "games",

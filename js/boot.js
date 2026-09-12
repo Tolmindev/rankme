@@ -65,7 +65,7 @@
   try {
     const p = new URLSearchParams(location.search);
     const play = p.get('play');
-    let skipPick = play === 'one' || play === 'classic' || p.get('c') || p.get('battle') === '1';
+    let skipPick = play === 'one' || play === 'classic' || p.get('c') || p.get('s') || p.get('battle') === '1';
     if (!skipPick && location.hash && location.hash.length > 2) skipPick = true;
     if (!skipPick) {
       try { if (sessionStorage.getItem('rankme_open_payload')) skipPick = true; } catch (e) {}

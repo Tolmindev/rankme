@@ -51,7 +51,17 @@
       return;
     }
     if (!templateId) return;
-    location.href = 'tier.html?t=' + encodeURIComponent(templateId) + '&play=' + play;
+    var next = 'tier.html?t=' + encodeURIComponent(templateId) + '&play=' + play;
+    var s = params.get('s');
+    var c = params.get('c');
+    if (s) next += '&s=' + encodeURIComponent(s);
+    if (c) next += '&c=' + encodeURIComponent(c);
+    location.href = next + location.hash;
+  }
+
+  if (params.get('s') || params.get('c')) {
+    go('classic');
+    return;
   }
 
   function paint(title, countLabel) {

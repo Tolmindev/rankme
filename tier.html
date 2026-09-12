@@ -34,7 +34,7 @@
 (function () {
   try {
     var p = new URLSearchParams(location.search);
-    if (p.get('play') === 'one' || p.get('play') === 'classic' || p.get('c') || p.get('battle') === '1') return;
+    if (p.get('play') === 'one' || p.get('play') === 'classic' || p.get('c') || p.get('s') || p.get('battle') === '1') return;
     if (location.hash && location.hash.length > 2) return;
     if (sessionStorage.getItem('rankme_open_payload')) return;
     var t = (p.get('t') || '').trim();
@@ -234,6 +234,6 @@
 <canvas id="exportCanvas" style="display:none"></canvas>
 
 <script src="js/battle-stars.js?v=20260910t" defer></script>
-<script src="js/boot.js?v=20260910t"></script>
+<script src="js/boot.js?v=20260911a"></script>
 </body>
 </html>

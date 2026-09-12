@@ -23,13 +23,18 @@
   try { sessionStorage.setItem('rankme_t', id); } catch (e) {}
   var p = new URLSearchParams(location.search);
   p.set('t', id);
-  if (!p.get('play')) p.set('play', 'classic');
-  location.replace('../tier.html?' + p.toString() + location.hash);
+  var shared = p.get('s') || p.get('c') || (location.hash && location.hash.length > 2);
+  if (shared) {
+    if (!p.get('play')) p.set('play', 'classic');
+    location.replace('../tier.html?' + p.toString() + location.hash);
+  } else {
+    location.replace('../play.html?' + p.toString());
+  }
 })();
 </script>
 </head>
 <body style="margin:0;background:#0b0912;color:#a79fc4;font-family:system-ui,sans-serif;text-align:center;padding:48px">
 <p>Loading Street Fighter: Duel…</p>
-<p><a href="../tier.html?t=sf-duel&play=classic" style="color:#e6a9e8">Open on RankMe</a></p>
+<p><a href="../play.html?t=sf-duel" style="color:#e6a9e8">Open on RankMe</a></p>
 </body>
 </html>

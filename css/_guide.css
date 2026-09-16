@@ -361,7 +361,7 @@
   justify-content: center;
   font-weight: 900;
   font-size: .95rem;
-  color: #1a1020;
+  color: #fff;
   cursor: pointer;
 }
 
@@ -449,11 +449,17 @@
 }
 
 .guide-ach img {
-  width: 88px;
-  height: 88px;
-  object-fit: contain;
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
   display: block;
-  margin: 0 auto 10px;
+  margin: 0 auto 12px;
+  border-radius: 14px;
+  background: #0c0914;
+  border: 1px solid rgba(200, 170, 255, 0.38);
+  box-shadow:
+    0 0 0 1px rgba(200, 170, 255, 0.22),
+    0 8px 18px rgba(0, 0, 0, 0.4);
 }
 
 .guide-ach figcaption strong {

@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>How RankMe works</title>
+<meta name="description" content="A simple guide to RankMe: templates, Classic and One by One, Battle Mode, custom lists, saving, sharing, and achievements.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="RankMe">
+<meta property="og:url" content="https://rankme.lol/guide.html">
+<meta property="og:title" content="How RankMe works">
+<meta property="og:description" content="The whole site, without the boring manual.">
+<meta property="og:image" content="https://rankme.lol/assets/brand/Share_RankMe.webp">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/webp">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How RankMe works">
+<meta name="twitter:description" content="The whole site, without the boring manual.">
+<meta name="twitter:image" content="https://rankme.lol/assets/brand/Share_RankMe.webp">
+<link rel="canonical" href="https://rankme.lol/guide.html">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+<script src="js/supabaseClient.js?v=20260903i" defer></script>
+<link rel="icon" href="favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="48x48" href="assets/brand/favicon-48.png">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/brand/favicon-192.png">
+<link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/rankme.css?v=20260916h">
+</head>
+<body>
+<div class="aurora" aria-hidden="true"></div>
+<header class="site">
+  <a class="brand" href="index.html">
+    <img class="brand-full" src="assets/brand/RankMe_logo.svg?v=2" alt="RankMe">
+    <img class="brand-mark" src="assets/brand/favicon.svg?v=2" alt="RankMe">
+  </a>
+  <nav class="main">
+    <a href="index.html">Explore</a>
+    <a href="index.html#community">Community</a>
+    <a href="guide.html" class="active">FAQ</a>
+    <a class="login-btn" id="loginBtn" href="account.html">Account</a>
+  </nav>
+</header>
+
+<main class="guide-page">
+  <nav class="guide-nav" id="guideNav" aria-label="On this page">
+    <a href="#start">Start here</a>
+    <a href="#explore">Explore</a>
+    <a href="#modes">Modes</a>
+    <a href="#portals">Portals</a>
+    <a href="#create">Your list</a>
+    <a href="#board">The board</a>
+    <a href="#publish">Publish</a>
+    <a href="#share">Save & share</a>
+    <a href="#account">Account</a>
+    <a href="#community">Community</a>
+    <a href="#achievements">Achievements</a>
+    <a href="#faq">FAQ</a>
+  </nav>
+
+  <article class="guide-body">
+    <header class="guide-hero">
+      <h1>How RankMe works</h1>
+      <p>The whole site, without the boring manual. Rank what you love. Show it. That’s the pitch.</p>
+    </header>
+
+    <section class="guide-sec" id="start">
+      <span class="guide-kicker">Start</span>
+      <h2>Three doors. Pick one.</h2>
+      <p>You don’t need an account to play. Login is for saving, publishing, and looking cool in Community.</p>
+      <div class="guide-paths">
+        <a class="guide-path" href="index.html">
+          <strong>Open a template</strong>
+          <span>Ready-made rosters. You choose Classic or One by One, then rank.</span>
+        </a>
+        <a class="guide-path" href="index.html">
+          <strong>Battle Mode</strong>
+          <span>Two cards. Pick a winner. Repeat. We build the list for you.</span>
+        </a>
+        <a class="guide-path" href="create.html">
+          <strong>Start Ranking</strong>
+          <span>Your pictures, your title, your board. Straight into Classic.</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="guide-sec" id="explore">
+      <span class="guide-kicker">Home</span>
+      <h2>Find a list. Don’t get lost.</h2>
+      <p>The home page is a shelf. Tags on top filter the vibe. Search looks through titles and character names — type <em>Chun</em> and Street Fighter shows up.</p>
+      <p>The little hamburger in the search bar is sort: Popular or New. Open is the ranking. Battle Mode is the fight.</p>
+      <div class="guide-covers">
+        <a href="play.html?t=sf6" title="Street Fighter 6"><img src="assets/brand/SF6_Cover_thumb.webp" alt="Street Fighter 6"></a>
+        <a href="play.html?t=lol" title="League of Legends"><img src="assets/brand/LoL_Cover_thumb.webp" alt="League of Legends"></a>
+        <a href="play.html?t=skullgirls" title="Skullgirls"><img src="assets/brand/Skullgirls_Cover_thumb.webp" alt="Skullgirls"></a>
+        <a href="play.html?t=wow-expansions" title="WoW Expansions"><img src="assets/brand/WoW_Expansions_Cover_thumb.webp" alt="World of Warcraft Expansions"></a>
+        <a href="play.html?t=dota2" title="Dota 2"><img src="assets/brand/Dota2_Cover_thumb.webp" alt="Dota 2"></a>
+        <a href="play.html?t=marvel-tokon" title="MARVEL Tokon"><img src="assets/brand/Marvel_TOKON_Cover_thumb.webp" alt="MARVEL Tokon"></a>
+        <a href="play.html?t=sf-duel" title="Street Fighter Duel"><img src="assets/brand/SF_Cover_1_thumb.webp" alt="Street Fighter Duel"></a>
+        <a href="play.html?t=sf-duel-ex" title="EX Move"><img src="assets/brand/SFD_EX_Cover_thumb.webp" alt="Street Fighter Duel EX"></a>
+      </div>
+      <p class="guide-note">Tap a cover — you’ll get the mode picker. That’s Open. Same as the button on the card.</p>
+    </section>
+
+    <section class="guide-sec" id="modes">
+      <span class="guide-kicker">How you rank</span>
+      <h2>Classic, One by One, or Battle.</h2>
+      <p>Templates always ask first. A shared link never does — it opens the list you were sent, on Classic, already filled in.</p>
+
+      <h3>Classic Board</h3>
+      <p>Every card on screen. Drag them onto rows. Full control. Best when you already know the roster and want to nitpick.</p>
+
+      <h3>One by One</h3>
+      <p>One card. Portals under it — same capsules as Classic, always on. Tap a portal, the card leaves, the next one grows in. Made for phones. Scroll down anytime and drag on the board if you change your mind.</p>
+      <p>When the last card is placed: <strong>TIER LIST COMPLETE</strong>.</p>
+
+      <div class="guide-modes">
+        <div class="guide-mode is-hot">
+          <img class="ico" src="assets/icons/classic.svg" alt="">
+          <h3>Classic Board</h3>
+          <p>All cards at once. Full control.</p>
+        </div>
+        <div class="guide-mode">
+          <img class="ico" src="assets/icons/one-by-one.svg" alt="">
+          <h3>One by One</h3>
+          <p>One card at a time. Great for mobile.</p>
+        </div>
+      </div>
+
+      <h3>Battle Mode</h3>
+      <p>No dragging. Two fighters, you pick who wins. RankMe turns those picks into an order. Progress saves, so you can close the tab and continue later.</p>
+      <div class="guide-battle">
+        <div class="guide-mode">
+          <img class="ico" src="assets/icons/battle-quick.svg" alt="">
+          <h3>Quick</h3>
+          <p>A fast draft. Enough comparisons to see the shape, not a thesis.</p>
+        </div>
+        <div class="guide-mode is-hot">
+          <img class="ico" src="assets/icons/battle-full.svg" alt="">
+          <h3>Full Ranking</h3>
+          <p>More fights, tighter order. For when you actually care.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="guide-sec" id="portals">
+      <span class="guide-kicker">Uber move</span>
+      <h2>Portals. Classic too — not just One by One.</h2>
+      <p>Each portal is a row, in color. Drop a card on it and it teleports. No dragging across the whole board.</p>
+      <p>On <strong>Classic</strong> they start off. Hit <strong>TELEPORTATION</strong> in the pool header — the bar lights up under the filters. Same button turns them off. Add or recolor a row and the portals follow.</p>
+      <p>On <strong>One by One</strong> the bar is the whole game: one card, tap the portal, next card.</p>
+      <p class="guide-note">Try it on the tiny board below. Tap TELEPORTATION, pick a card, tap a capsule.</p>
+    </section>
+
+    <section class="guide-sec" id="create">
+      <span class="guide-kicker">Blank canvas</span>
+      <h2>Your pictures. Your rules.</h2>
+      <p><a href="create.html">Start Ranking</a> skips the mode picker and drops you on Classic. Title, optional cover, a tag, dump the images. Files stay on this device until you Save or publish — we’re not quietly uploading your folder.</p>
+      <ul>
+        <li>Title max 48 characters. Keep it punchy.</li>
+        <li>Cover likes 1200×630. Same shape as the cards on home.</li>
+        <li>Wrong pic? There’s a delete on each thumbnail before you hit Start.</li>
+      </ul>
+    </section>
+
+    <section class="guide-sec" id="board">
+      <span class="guide-kicker">The fun part</span>
+      <h2>Rows, pool, filters.</h2>
+      <p>Cards live in the pool until you place them. Drag onto a row. Drag between rows. On a phone, same thing — just don’t fight the scroll: grab the card, not the empty track.</p>
+      <p>Click a row’s cube to rename it or change the color. Add row if S–D isn’t your religion. Clear all sends everyone back to the pool. Size slider is under the board — bigger cards, fewer on a line.</p>
+      <p>Some templates have filters (Bronze / Gold, roles, factions). They hide cards you’re not ranking right now. They don’t delete anything.</p>
+
+      <p class="guide-note">Tap a card, then a row — or turn on portals and send it through a capsule.</p>
+      <div class="guide-mini" id="miniBoard">
+        <div class="guide-mini-bar">
+          <span>Tiny Classic — Street Fighter 6</span>
+          <div class="guide-mini-actions">
+            <button type="button" id="miniPortals">TELEPORTATION</button>
+            <button type="button" id="miniReset">Reset</button>
+          </div>
+        </div>
+        <div class="g-portals" id="miniPortalsBar" hidden>
+          <button type="button" class="g-portal" data-t="s" style="--g: #e85d6a">S</button>
+          <button type="button" class="g-portal" data-t="a" style="--g: #f0a05a">A</button>
+          <button type="button" class="g-portal" data-t="b" style="--g: #e8d56a">B</button>
+        </div>
+        <div class="g-row" data-t="s"><div class="g-lab" data-t="s">S</div><div class="g-cells"></div></div>
+        <div class="g-row" data-t="a"><div class="g-lab" data-t="a">A</div><div class="g-cells"></div></div>
+        <div class="g-row" data-t="b"><div class="g-lab" data-t="b">B</div><div class="g-cells"></div></div>
+        <div class="g-row" data-t="pool">
+          <div class="g-lab" data-t="pool">POOL</div>
+          <div class="g-cells">
+            <button class="g-card" type="button"><img src="assets/sf6/Ryu.webp" alt="Ryu"></button>
+            <button class="g-card" type="button"><img src="assets/sf6/Chun-Li.webp" alt="Chun-Li"></button>
+            <button class="g-card" type="button"><img src="assets/sf6/Cammy.webp" alt="Cammy"></button>
+            <button class="g-card" type="button"><img src="assets/sf6/Juri.webp" alt="Juri"></button>
+            <button class="g-card" type="button"><img src="assets/sf6/Ken.webp" alt="Ken"></button>
+            <button class="g-card" type="button"><img src="assets/sf6/Akuma.webp" alt="Akuma"></button>
+            <button class="g-card" type="button"><img src="assets/sf6/Luke.webp" alt="Luke"></button>
+            <button class="g-card" type="button"><img src="assets/sf6/Jamie.webp" alt="Jamie"></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="guide-sec" id="publish">
+      <span class="guide-kicker">Community</span>
+      <h2>How to publish. Step by step.</h2>
+      <p>Save is not publish. Save keeps the list in your account, private. Publish puts it on Community and on your public profile.</p>
+      <ol class="guide-steps">
+        <li><b>Login</b> — Discord, Google, or X. Account in the header.</li>
+        <li><b>Rank</b> — finish the board the way you want it.</li>
+        <li><b>Save</b> — toolbar. It lands in Account as <em>Unpublished</em>.</li>
+        <li><b>Open Account</b> — find the card.</li>
+        <li><b>Three dots</b> on that card → flip <em>Publish to Community</em>.</li>
+      </ol>
+      <p>The card says <strong>Published</strong>. It shows up under Community → New. Hearts and views start counting. Flip the switch off and it leaves the feed — still saved for you.</p>
+      <p>Share is a different door: a link for Discord / X / Telegram. A shared link does not put you on Community. Only that switch does.</p>
+    </section>
+
+    <section class="guide-sec" id="share">
+      <span class="guide-kicker">Show it</span>
+      <h2>Save, share, download.</h2>
+      <ul>
+        <li><strong>Save</strong> — account required. Private until you publish.</li>
+        <li><strong>Share</strong> — Discord, Telegram, X, or a raw link. Opens Classic with your ranking on it. Does not publish.</li>
+        <li><strong>Download PNG</strong> — a picture of the board, cropped to the content, RankMe footer. For posts.</li>
+        <li><strong>Remix</strong> — a public list becomes yours to rearrange. You don’t overwrite theirs.</li>
+      </ul>
+      <p>If a share preview has no image, wait a beat and try again — crawlers cache the first look.</p>
+    </section>
+
+    <section class="guide-sec" id="account">
+      <span class="guide-kicker">You</span>
+      <h2>Login, name, RankMe link.</h2>
+      <p>Discord, Google, or X. We take the avatar from there. Display name you can edit anytime.</p>
+      <p>Under the name sits your RankMe link — something like <strong>rankme.lol/u/you</strong>. That’s public. You can change the handle once every 30 days. Copy sits next to it, not a pencil.</p>
+      <div class="guide-badge-row">
+        <img src="assets/icons/expert-badge-off.svg" alt="Inactive expert badge">
+        <img src="assets/icons/expert-badge.svg" alt="Active expert badge">
+        <p style="margin:0">The gray badge is only on <em>your</em> account. Tap it to apply. Approved experts get the live one next to their name everywhere people can see it — and a seat in the Experts community filter.</p>
+      </div>
+      <p>Apply with a link to your creator page. YouTube, Twitch, whatever you actually post on — it just has to be a real URL. We read applications. Takes a few days. You can cancel and send again.</p>
+    </section>
+
+    <section class="guide-sec" id="community">
+      <span class="guide-kicker">Other people</span>
+      <h2>Hot, New, Experts.</h2>
+      <p>Public lists show up under Community on the home page. Hot is what’s getting love. New is fresh. Experts is the approved crowd — their new lists land there automatically.</p>
+      <p>Hearts and views are real. We don’t invent numbers. If a card has no count, it simply hasn’t been counted yet.</p>
+    </section>
+
+    <section class="guide-sec" id="achievements">
+      <span class="guide-kicker">Trophies</span>
+      <h2>They show up once.</h2>
+      <p>Unlock something, get a toast. If two land at once they wait in line. Same if you unlocked it while you were away — it still pops the next time you open RankMe.</p>
+      <div class="guide-ach">
+        <figure>
+          <img src="assets/achievements/achiev_1.webp" alt="">
+          <figcaption><strong>Not An Alien</strong><span>You logged in. Welcome. Make yourself at home.</span></figcaption>
+        </figure>
+        <figure>
+          <img src="assets/achievements/achiev_2.webp" alt="">
+          <figcaption><strong>Certified Sheep</strong><span>You published a list. You’re in the club.</span></figcaption>
+        </figure>
+        <figure>
+          <img src="assets/achievements/achiev_3.webp" alt="">
+          <figcaption><strong>Main Character</strong><span>Expert approved. The community listens, for some reason.</span></figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="guide-sec" id="faq">
+      <span class="guide-kicker">The rest</span>
+      <h2>Quick answers.</h2>
+      <div class="guide-faq">
+        <details>
+          <summary>How do I publish?</summary>
+          <p>Login → Save the board → Account → three dots on the card → Publish to Community. Share is just a link. It does not publish.</p>
+        </details>
+        <details>
+          <summary>Do I need an account?</summary>
+          <p>No. Rank and download freely. Save, publish, likes, and achievements need login.</p>
+        </details>
+        <details>
+          <summary>Where do my uploads go?</summary>
+          <p>Local builder: your browser only. Save or publish: stored so the list can load on another phone. Public means anyone with the link can see the pictures. Don’t publish what you don’t own.</p>
+        </details>
+        <details>
+          <summary>Why did a shared link skip Choose Mode?</summary>
+          <p>Because it’s already a ranking. Open from home still asks Classic vs One by One. A link with a save code should never dump you on an empty picker.</p>
+        </details>
+        <details>
+          <summary>Can I change my handle again?</summary>
+          <p>Every 30 days. If you tap it during the wait, you’ll see when it unlocks. Taken names get stopped before the confirm modal.</p>
+        </details>
+        <details>
+          <summary>What is Remix?</summary>
+          <p>A copy of a public board, in your hands. Rearrange, download, save as yours. The original stays put.</p>
+        </details>
+        <details>
+          <summary>Something looks wrong after an update</summary>
+          <p>Hard refresh. We version the CSS and JS; old cache loves to keep a ghost of yesterday.</p>
+        </details>
+      </div>
+    </section>
+  </article>
+</main>
+
+<footer id="site-footer" class="site"></footer>
+<script src="js/footer.js?v=20260903a" defer></script>
+<script src="js/guide.js?v=20260916h" defer></script>
+</body>
+</html>

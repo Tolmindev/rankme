@@ -66,25 +66,26 @@ header.site .brand > .brand-full { display: block; }
 nav.main {
   display: flex;
   align-items: center;
-  gap: 30px;
+  gap: 6px;
   flex: 0 0 auto;
   margin-left: auto;
 }
 
-nav.main a {
+nav.main a:not(.login-btn) {
   color: var(--text-dim);
   text-decoration: none;
-  font-weight: 700;
-  font-size: .92rem;
-  letter-spacing: .3px;
-  padding: 8px 14px;
+  font-weight: 400;
+  font-size: .7rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  padding: 8px 10px;
   border-radius: 999px;
   background: none;
   box-shadow: none;
   transition: color .15s, text-shadow .15s;
 }
 
-nav.main a:hover {
+nav.main a:not(.login-btn):hover {
   color: var(--text);
   background: none;
   text-shadow:
@@ -92,10 +93,11 @@ nav.main a:hover {
     0 0 22px rgba(180, 130, 255, 0.45);
 }
 
-nav.main a.active {
+nav.main a:not(.login-btn).active {
   color: #fff;
   background: none;
   box-shadow: none;
+  font-weight: 500;
   text-shadow:
     0 0 10px rgba(200, 160, 255, 0.55),
     0 0 20px rgba(180, 130, 255, 0.3);
@@ -826,12 +828,14 @@ html.rankme-dragging {
   }
 
   nav.main > a:not(.login-btn) {
-    font-size: .95rem;
-    font-weight: 800;
+    font-size: .62rem;
+    font-weight: 400;
+    letter-spacing: .1em;
+    text-transform: uppercase;
     white-space: nowrap;
     pointer-events: auto;
     color: var(--text-dim);
-    padding: 8px 14px;
+    padding: 8px 7px;
     border-radius: 999px;
     background: none;
     box-shadow: none;

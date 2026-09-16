@@ -65,6 +65,7 @@
   }
 
   function setHaze(src) {
+    if (window.matchMedia && !window.matchMedia('(min-width: 721px)').matches) return;
     var wrap = document.getElementById('playHaze');
     var img = document.getElementById('playHazeImg');
     if (!wrap || !img || !src) return;
@@ -120,7 +121,8 @@
         var label = 'cards';
         var meta = window.RankMeCatalog && RankMeCatalog.get(templateId);
         if (meta && meta.itemLabel) label = meta.itemLabel;
-        if (t.cover) setHaze(t.cover);
+        var haze = (meta && (meta.coverThumb || meta.cover)) || t.cover;
+        if (haze) setHaze(haze);
         paint(t.title || templateId, n + ' ' + label);
       }
       if (window.RankMeCatalog && RankMeCatalog.load) {

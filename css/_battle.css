@@ -904,6 +904,10 @@ body.has-play-haze .aurora {
 @media (prefers-reduced-motion: reduce) {
   .play-haze { transition: none; }
 }
+@media (max-width: 720px) {
+  .play-haze { display: none; }
+  body.has-play-haze .aurora { opacity: 1; }
+}
 
 .battle-result-list {
   list-style: none;

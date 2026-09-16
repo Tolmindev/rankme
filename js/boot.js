@@ -71,7 +71,9 @@
       try { if (sessionStorage.getItem('rankme_open_payload')) skipPick = true; } catch (e) {}
     }
     if (!skipPick) {
-      location.replace('play.html?t=' + encodeURIComponent(id) + (location.hash || ''));
+      const u = new URLSearchParams(location.search);
+      u.set('t', id);
+      location.replace('play.html?' + u.toString() + (location.hash || ''));
       return;
     }
   } catch (e) {}

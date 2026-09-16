@@ -121,8 +121,7 @@
         var label = 'cards';
         var meta = window.RankMeCatalog && RankMeCatalog.get(templateId);
         if (meta && meta.itemLabel) label = meta.itemLabel;
-        var haze = (meta && (meta.coverThumb || meta.cover)) || t.cover;
-        if (haze) setHaze(haze);
+        if (window.RankMeCatalog && RankMeCatalog.cover) setHaze(RankMeCatalog.cover(templateId));
         paint(t.title || templateId, n + ' ' + label);
       }
       if (window.RankMeCatalog && RankMeCatalog.load) {

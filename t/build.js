@@ -2,9 +2,9 @@
 /* Generate t/<id>.html from templates/*.json.
    New exclusive: add templates/<id>.json + assets, then: node t/build.js
 
-   These pages are the share URL. Twitter/Facebook bots do not run JS and
-   must see OG tags here — do not meta-refresh to tier.html (bots follow it).
-   og:image uses the existing cover, not a third copy. */
+   These pages are the share / search URL. Twitter/Facebook bots do not run JS
+   and must see OG tags here — do not meta-refresh to tier.html (bots follow it).
+   Humans and Googlebot JS go to Classic. Mode picker is only the Open button. */
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -51,19 +51,14 @@ function shell(id, title, description, cover) {
   try { sessionStorage.setItem('rankme_t', id); } catch (e) {}
   var p = new URLSearchParams(location.search);
   p.set('t', id);
-  var shared = p.get('s') || p.get('c') || (location.hash && location.hash.length > 2);
-  if (shared) {
-    if (!p.get('play')) p.set('play', 'classic');
-    location.replace('../tier.html?' + p.toString() + location.hash);
-  } else {
-    location.replace('../play.html?' + p.toString());
-  }
+  if (!p.get('play')) p.set('play', 'classic');
+  location.replace('../tier.html?' + p.toString() + location.hash);
 })();
 </script>
 </head>
 <body style="margin:0;background:#0b0912;color:#a79fc4;font-family:system-ui,sans-serif;text-align:center;padding:48px">
 <p>Loading ${name}…</p>
-<p><a href="../play.html?t=${id}" style="color:#e6a9e8">Open on RankMe</a></p>
+<p><a href="../tier.html?t=${id}&play=classic" style="color:#e6a9e8">Open on RankMe</a></p>
 </body>
 </html>
 `;
@@ -108,7 +103,6 @@ let sm = '<?xml version="1.0" encoding="UTF-8"?>\n';
 sm += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
 sm += url('https://rankme.lol/', weekly);
 sm += url('https://rankme.lol/create.html', weekly);
-sm += url('https://rankme.lol/battle.html', monthly);
 ids.sort().forEach(function (id) {
   sm += url('https://rankme.lol/t/' + id + '.html', weekly);
 });

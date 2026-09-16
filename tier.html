@@ -25,7 +25,7 @@
 <link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;500;600;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200..900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/rankme.css?v=20260916a">
 <style>
   .boot-error{max-width:420px;margin:48px auto;padding:24px;border-radius:14px;background:#1a1728;border:1px solid rgba(255,100,100,.35);color:#ffb3b3;font-weight:700;text-align:center}
@@ -39,7 +39,10 @@
     if (sessionStorage.getItem('rankme_open_payload')) return;
     var t = (p.get('t') || '').trim();
     if (!t) t = (sessionStorage.getItem('rankme_t') || '').trim();
-    if (t) location.replace('play.html?t=' + encodeURIComponent(t));
+    if (t) {
+      p.set('t', t);
+      location.replace('play.html?' + p.toString() + location.hash);
+    }
   } catch (e) {}
 })();
 </script>
@@ -234,6 +237,6 @@
 <canvas id="exportCanvas" style="display:none"></canvas>
 
 <script src="js/battle-stars.js?v=20260910t" defer></script>
-<script src="js/boot.js?v=20260911a"></script>
+<script src="js/boot.js?v=20260916c"></script>
 </body>
 </html>

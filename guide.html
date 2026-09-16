@@ -28,7 +28,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200..900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/rankme.css?v=20260916i">
+<link rel="stylesheet" href="css/rankme.css?v=20260916j">
 </head>
 <body>
 <div class="aurora" aria-hidden="true"></div>
@@ -173,34 +173,39 @@
       <p>Click a row’s cube to rename it or change the color. Add row if S-D isn’t your religion. Clear all sends everyone back to the pool. Size slider is under the board - bigger cards, fewer on a line.</p>
       <p>Some templates have filters (Bronze / Gold, roles, factions). They hide cards you’re not ranking right now. They don’t delete anything.</p>
 
-      <p class="guide-note">Tap a card, then a row - or turn on portals and send it through a capsule.</p>
-      <div class="guide-mini" id="miniBoard">
-        <div class="guide-mini-bar">
-          <span>Tiny Classic - Street Fighter 6</span>
-          <div class="guide-mini-actions">
-            <button type="button" id="miniPortals">TELEPORTATION</button>
-            <button type="button" id="miniReset">Reset</button>
+      <p class="guide-note">Drag a card onto a row. TELEPORTATION turns portals on - drop a card on a capsule to send it.</p>
+      <div class="guide-sim" id="guideSim">
+        <div class="board">
+          <div class="board-inner">
+            <div class="tier-row" data-tier-id="t1" style="--hue:0;--sat:70%;--light:62%">
+              <div class="tier-label-wrap"><div class="tier-label">S</div></div>
+              <div class="tier-cards"></div>
+            </div>
+            <div class="tier-row" data-tier-id="t2" style="--hue:28;--sat:65%;--light:58%">
+              <div class="tier-label-wrap"><div class="tier-label">A</div></div>
+              <div class="tier-cards"></div>
+            </div>
+            <div class="tier-row" data-tier-id="t3" style="--hue:48;--sat:55%;--light:55%">
+              <div class="tier-label-wrap"><div class="tier-label">B</div></div>
+              <div class="tier-cards"></div>
+            </div>
           </div>
         </div>
-        <div class="g-portals" id="miniPortalsBar" hidden>
-          <button type="button" class="g-portal" data-t="s" style="--g: #e85d6a">S</button>
-          <button type="button" class="g-portal" data-t="a" style="--g: #f0a05a">A</button>
-          <button type="button" class="g-portal" data-t="b" style="--g: #e8d56a">B</button>
-        </div>
-        <div class="g-row" data-t="s"><div class="g-lab" data-t="s">S</div><div class="g-cells"></div></div>
-        <div class="g-row" data-t="a"><div class="g-lab" data-t="a">A</div><div class="g-cells"></div></div>
-        <div class="g-row" data-t="b"><div class="g-lab" data-t="b">B</div><div class="g-cells"></div></div>
-        <div class="g-row" data-t="pool">
-          <div class="g-lab" data-t="pool">POOL</div>
-          <div class="g-cells">
-            <button class="g-card" type="button"><img src="assets/sf6/Ryu.webp" alt="Ryu"></button>
-            <button class="g-card" type="button"><img src="assets/sf6/Chun-Li.webp" alt="Chun-Li"></button>
-            <button class="g-card" type="button"><img src="assets/sf6/Cammy.webp" alt="Cammy"></button>
-            <button class="g-card" type="button"><img src="assets/sf6/Juri.webp" alt="Juri"></button>
-            <button class="g-card" type="button"><img src="assets/sf6/Ken.webp" alt="Ken"></button>
-            <button class="g-card" type="button"><img src="assets/sf6/Akuma.webp" alt="Akuma"></button>
-            <button class="g-card" type="button"><img src="assets/sf6/Luke.webp" alt="Luke"></button>
-            <button class="g-card" type="button"><img src="assets/sf6/Jamie.webp" alt="Jamie"></button>
+        <div class="pool-wrap">
+          <div class="pool-header">
+            <button type="button" class="guide-sim-reset" id="guideReset">Reset</button>
+            <button type="button" class="portal-btn" id="guidePortalBtn" title="Portals">TELEPORTATION</button>
+          </div>
+          <div class="portals-bar" id="guidePortalsBar" hidden></div>
+          <div class="pool" id="guidePool">
+            <div class="card" data-card-id="1"><img src="assets/sf6/Ryu.webp" alt=""></div>
+            <div class="card" data-card-id="2"><img src="assets/sf6/Chun-Li.webp" alt=""></div>
+            <div class="card" data-card-id="3"><img src="assets/sf6/Cammy.webp" alt=""></div>
+            <div class="card" data-card-id="4"><img src="assets/sf6/Juri.webp" alt=""></div>
+            <div class="card" data-card-id="5"><img src="assets/sf6/Ken.webp" alt=""></div>
+            <div class="card" data-card-id="6"><img src="assets/sf6/Akuma.webp" alt=""></div>
+            <div class="card" data-card-id="7"><img src="assets/sf6/Luke.webp" alt=""></div>
+            <div class="card" data-card-id="8"><img src="assets/sf6/Jamie.webp" alt=""></div>
           </div>
         </div>
       </div>
@@ -312,6 +317,6 @@
 
 <footer id="site-footer" class="site"></footer>
 <script src="js/footer.js?v=20260903a" defer></script>
-<script src="js/guide.js?v=20260916h" defer></script>
+<script src="js/guide.js?v=20260916j" defer></script>
 </body>
 </html>

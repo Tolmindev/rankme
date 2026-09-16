@@ -4900,6 +4900,43 @@ button, .cta, .btn, .btn-mini, .pill-btn, .download-btn, .login-btn, a.btn, a.ct
   margin-top: 0;
 }
 
+.play-haze {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity .55s ease;
+}
+.play-haze.is-on {
+  opacity: 1;
+}
+.play-haze img {
+  position: absolute;
+  inset: -20%;
+  width: 140%;
+  height: 140%;
+  object-fit: cover;
+  object-position: center 28%;
+  filter: blur(56px) saturate(.65) brightness(.38);
+  transform: translateZ(0);
+}
+.play-haze::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 75% 65% at 50% 38%, transparent 0%, rgba(11, 9, 18, .28) 52%, rgba(11, 9, 18, .78) 100%),
+    linear-gradient(180deg, rgba(11, 9, 18, .5) 0%, transparent 26%, transparent 58%, rgba(11, 9, 18, .72) 100%);
+}
+body.has-play-haze .aurora {
+  opacity: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .play-haze { transition: none; }
+}
+
 .battle-result-list {
   list-style: none;
   margin: 0 0 20px;

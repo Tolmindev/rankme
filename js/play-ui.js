@@ -12,8 +12,12 @@
   var how = document.getElementById('battleHow');
   var back = document.getElementById('battleBack');
   var params = new URLSearchParams(location.search);
-  var blank = params.get('blank') === '1';
   var templateId = (params.get('t') || '').trim();
+
+  if (params.get('blank') === '1') {
+    location.replace('builder.html?blank=1&play=classic');
+    return;
+  }
 
   try {
     sessionStorage.removeItem('rankme_open_payload');
@@ -28,7 +32,7 @@
   if (back) {
     back.onclick = function (e) {
       e.preventDefault();
-      location.href = blank ? 'create.html' : 'index.html';
+      location.href = 'index.html';
     };
   }
 
@@ -46,10 +50,6 @@
 
   function go(mode) {
     var play = mode === 'one' ? 'one' : 'classic';
-    if (blank) {
-      location.href = 'builder.html?blank=1&play=' + play;
-      return;
-    }
     if (!templateId) return;
     var next = 'tier.html?t=' + encodeURIComponent(templateId) + '&play=' + play;
     var s = params.get('s');
@@ -62,6 +62,18 @@
   if (params.get('s') || params.get('c')) {
     go('classic');
     return;
+  }
+
+  function setHaze(src) {
+    var wrap = document.getElementById('playHaze');
+    var img = document.getElementById('playHazeImg');
+    if (!wrap || !img || !src) return;
+    img.onload = function () {
+      wrap.hidden = false;
+      wrap.classList.add('is-on');
+      document.body.classList.add('has-play-haze');
+    };
+    img.src = src;
   }
 
   function paint(title, countLabel) {
@@ -87,18 +99,6 @@
     });
   }
 
-  if (blank) {
-    var n = 0;
-    var title = 'Your ranking';
-    try {
-      title = sessionStorage.getItem('rankme_blank_title') || title;
-      var raw = sessionStorage.getItem('rankme_blank_images');
-      if (raw) n = (JSON.parse(raw) || []).length;
-    } catch (e) {}
-    paint(title, n ? n + (n === 1 ? ' card' : ' cards') : '');
-    return;
-  }
-
   if (!templateId) {
     if (arena) {
       arena.innerHTML =
@@ -120,6 +120,7 @@
         var label = 'cards';
         var meta = window.RankMeCatalog && RankMeCatalog.get(templateId);
         if (meta && meta.itemLabel) label = meta.itemLabel;
+        if (t.cover) setHaze(t.cover);
         paint(t.title || templateId, n + ' ' + label);
       }
       if (window.RankMeCatalog && RankMeCatalog.load) {

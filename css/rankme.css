@@ -184,6 +184,8 @@ body > footer {
   margin: -12px -20px;
   overflow: visible;
   background: transparent;
+  position: relative;
+  z-index: 2;
 }
 
 .brand img {
@@ -204,11 +206,18 @@ header.site .brand > .brand-full { display: block; }
 }
 
 nav.main {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
-  flex: 0 0 auto;
-  margin-left: auto;
+  margin: 0;
+  pointer-events: none;
+  z-index: 1;
 }
 
 nav.main a:not(.login-btn) {
@@ -222,6 +231,7 @@ nav.main a:not(.login-btn) {
   border-radius: 999px;
   background: none;
   box-shadow: none;
+  pointer-events: auto;
   transition: color .15s, text-shadow .15s;
 }
 
@@ -245,6 +255,16 @@ nav.main a:not(.login-btn).active {
 
 nav.main a.exclusive {
   color: #e79ee0;
+}
+
+header.site nav.main a.login-btn {
+  position: absolute;
+  right: 40px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: auto;
+  z-index: 2;
+  margin: 0;
 }
 
 footer.site, #site-footer.site {
@@ -954,17 +974,7 @@ html.rankme-dragging {
   }
 
   nav.main {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     gap: 0;
-    pointer-events: none;
-    z-index: 1;
   }
 
   nav.main > a:not(.login-btn) {
@@ -994,13 +1004,8 @@ html.rankme-dragging {
   }
 
   /* Account: compact round control on the right */
-  nav.main a.login-btn {
-    position: absolute;
+  header.site nav.main a.login-btn {
     right: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    pointer-events: auto;
-    z-index: 2;
   }
   nav.main a.login-btn:not(.login-btn-avatar) {
     box-sizing: border-box;

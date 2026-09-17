@@ -13,9 +13,9 @@
 <link rel="icon" type="image/png" sizes="192x192" href="assets/brand/favicon-192.png">
 <link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200..900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/rankme.css?v=20260916h">
+<link rel="stylesheet" href="css/rankme.css?v=20260916l">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
-<script src="js/supabaseClient.js?v=20260903i" defer></script>
+<script src="js/supabaseClient.js?v=20260916k" defer></script>
 </head>
 <body class="page-account">
 <div class="aurora" aria-hidden="true"></div>
@@ -202,6 +202,11 @@ function savedCardHtml(r, opts){
   const likes = typeof formatCount === 'function' ? formatCount(r.like_count) : String(r.like_count || 0);
   const views = typeof formatCount === 'function' ? formatCount(r.view_count) : String(r.view_count || 0);
   const pub = !!r.is_public;
+  const firstDone = !!r.first_published_at;
+  const left = Number.isFinite(opts.publishesLeft) ? opts.publishesLeft : 3;
+  const consume = !isPublicView && !pub && !firstDone;
+  const hint = consume && typeof publishHintText === 'function' ? publishHintText(left) : '';
+  const lock = consume && left <= 0;
   const openHref = isPublicView
     ? 'tier.html?t=' + encodeURIComponent(tid) + '&c=' + encodeURIComponent(r.id)
     : 'tier.html?t=' + encodeURIComponent(tid);
@@ -216,10 +221,11 @@ function savedCardHtml(r, opts){
         <label class="sc-drop-pub">
           <span>Publish to Community</span>
           <span class="toggle-container">
-            <input class="toggle-checkbox" type="checkbox" data-pub="${r.id}" ${pub ? 'checked' : ''} aria-label="Publish to Community">
+            <input class="toggle-checkbox" type="checkbox" data-pub="${r.id}" ${pub ? 'checked' : ''}${lock ? ' disabled' : ''} aria-label="Publish to Community">
             <span class="toggle-track"><span class="toggle-thumb"></span></span>
           </span>
         </label>
+        ${hint ? `<p class="sc-pub-hint">${hint}</p>` : '<p class="sc-pub-hint"></p>'}
         <button type="button" class="sc-drop-item is-del" data-del="${r.id}" role="menuitem">Delete</button>
       </div>
     </div>`;
@@ -765,6 +771,23 @@ async function renderCabinet(user){
   }
 }
 
+function paintPubHints(box, rows){
+  if (!box) return;
+  const left = typeof publishesLeftToday === 'function' ? publishesLeftToday(rows) : 3;
+  const hintFn = typeof publishHintText === 'function' ? publishHintText : function(){ return ''; };
+  box.querySelectorAll('.saved-card').forEach(function(card){
+    const id = card.getAttribute('data-id');
+    const row = (rows || []).find(function(x){ return String(x.id) === String(id); });
+    const hintEl = card.querySelector('.sc-pub-hint');
+    const cb = card.querySelector('[data-pub]');
+    if (!row || !hintEl || !cb) return;
+    const consume = !row.is_public && !row.first_published_at;
+    const hint = consume ? hintFn(left) : '';
+    hintEl.textContent = hint;
+    cb.disabled = !!(consume && left <= 0);
+  });
+}
+
 function wireSavedActions(rows, user){
   const box = document.getElementById('listBox');
   if(!box) return;
@@ -849,6 +872,13 @@ function wireSavedActions(rows, user){
     cb.addEventListener('change', async ()=>{
       const id = cb.getAttribute('data-pub');
       const on = cb.checked;
+      const row = rows.find(x=>String(x.id)===String(id));
+      const first = !(row && row.first_published_at);
+      if (on && first && typeof publishesLeftToday === 'function' && publishesLeftToday(rows) <= 0) {
+        cb.checked = false;
+        paintPubHints(box, rows);
+        return;
+      }
       try{
         await setTierlistPublic(id, on);
         const card = cb.closest('.saved-card');
@@ -857,14 +887,19 @@ function wireSavedActions(rows, user){
           st.textContent = on ? 'Published' : 'Unpublished';
           st.classList.toggle('is-pub', on);
         }
-        const row = rows.find(x=>String(x.id)===String(id));
-        if(row) row.is_public = on;
+        if(row){
+          row.is_public = on;
+          if (on && first) row.first_published_at = new Date().toISOString();
+        }
+        paintPubHints(box, rows);
         if (on && window.RankMeAch) {
           await RankMeAch.onPublish(user, { toast: true });
           RankMeAch.paint(user);
         }
       }catch(e){
         cb.checked = !on;
+        paintPubHints(box, rows);
+        if (/PUBLISH_LIMIT/i.test((e && e.message) || '')) return;
         alert('Could not update. Try again in a moment.');
       }
     });
@@ -971,7 +1006,10 @@ function paintSavedList(rows, opts){
   let showAll = false;
   const paint = ()=>{
     const slice = (showAll || rows.length <= SAVED_VISIBLE) ? rows : rows.slice(0, SAVED_VISIBLE);
-    box.innerHTML = slice.map(r => savedCardHtml(r, { publicView: !opts.owner })).join('');
+    box.innerHTML = slice.map(r => savedCardHtml(r, {
+      publicView: !opts.owner,
+      publishesLeft: opts.owner && typeof publishesLeftToday === 'function' ? publishesLeftToday(rows) : 3
+    })).join('');
     if (window.RankMeCatalog && RankMeCatalog.revealCovers) RankMeCatalog.revealCovers(box);
     if (more) {
       if (rows.length > SAVED_VISIBLE) {

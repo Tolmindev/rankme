@@ -150,7 +150,7 @@ async function listMyTierlists() {
   const client = await initSupabase();
   const user = await getSessionUser();
   if (!client || !user) return [];
-  const selectFull = 'id, title, template_id, payload, created_at, updated_at, is_public, like_count, view_count, author_name, author_avatar';
+  const selectFull = 'id, title, template_id, payload, created_at, updated_at, is_public, like_count, view_count, author_name, author_avatar, first_published_at';
   const selectMin = 'id, title, template_id, payload, created_at, updated_at, is_public, like_count';
   async function query(sel) {
     return client.from('tierlists').select(sel).eq('user_id', user.id).order('updated_at', { ascending: false });
@@ -185,7 +185,48 @@ async function setTierlistPublic(id, isPublic) {
     .update(patch)
     .eq('id', id)
     .eq('user_id', user.id);
-  if (error) throw error;
+  if (error) {
+    if (/PUBLISH_LIMIT/i.test(error.message || '')) throw new Error('PUBLISH_LIMIT');
+    throw error;
+  }
+}
+
+var PUBLISH_DAILY_LIMIT = 3;
+
+function utcDayStartMs() {
+  var n = new Date();
+  return Date.UTC(n.getUTCFullYear(), n.getUTCMonth(), n.getUTCDate());
+}
+
+function publishesUsedToday(rows) {
+  var start = utcDayStartMs();
+  var n = 0;
+  (rows || []).forEach(function (r) {
+    if (!r || !r.first_published_at) return;
+    if (new Date(r.first_published_at).getTime() >= start) n += 1;
+  });
+  return n;
+}
+
+function publishesLeftToday(rows) {
+  return Math.max(0, PUBLISH_DAILY_LIMIT - publishesUsedToday(rows));
+}
+
+function publishResetEta() {
+  var ms = utcDayStartMs() + 86400000 - Date.now();
+  if (ms < 60000) return '1m';
+  var h = Math.floor(ms / 3600000);
+  var m = Math.floor((ms % 3600000) / 60000);
+  if (h <= 0) return m + 'm';
+  if (!m) return h + 'h';
+  return h + 'h ' + m + 'm';
+}
+
+function publishHintText(left) {
+  if (left >= PUBLISH_DAILY_LIMIT) return '';
+  if (left === 2) return '2 publishes left today';
+  if (left === 1) return '1 publish left today';
+  return 'You can publish again in ' + publishResetEta();
 }
 
 async function listPublicTierlists(limit) {

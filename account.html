@@ -13,9 +13,9 @@
 <link rel="icon" type="image/png" sizes="192x192" href="assets/brand/favicon-192.png">
 <link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200..900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/rankme.css?v=20260916n">
+<link rel="stylesheet" href="css/rankme.css?v=20260916o">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
-<script src="js/supabaseClient.js?v=20260916k" defer></script>
+<script src="js/supabaseClient.js?v=20260916o" defer></script>
 </head>
 <body class="page-account">
 <div class="aurora" aria-hidden="true"></div>
@@ -754,6 +754,13 @@ async function renderCabinet(user){
     if(!rows.length){
       box.innerHTML = emptySavedHtml('Nothing saved yet.');
     } else {
+      window.__rmPublishUnlimited = false;
+      if (typeof fetchApprovedExpertIds === 'function') {
+        try {
+          var ex = await fetchApprovedExpertIds();
+          window.__rmPublishUnlimited = !!(ex && user && ex.has(user.id));
+        } catch (err) {}
+      }
       paintSavedList(rows, { owner: true, user: user });
     }
     if (window.RankMeAch) {
@@ -878,7 +885,7 @@ function wireSavedActions(rows, user){
       const on = cb.checked;
       const row = rows.find(x=>String(x.id)===String(id));
       const first = !(row && row.first_published_at);
-      if (on && first && typeof publishesLeftToday === 'function' && publishesLeftToday(rows) <= 0) {
+      if (on && first && !window.__rmPublishUnlimited && typeof publishesLeftToday === 'function' && publishesLeftToday(rows) <= 0) {
         cb.checked = false;
         flashPubHint(cb.closest('.saved-card') && cb.closest('.saved-card').querySelector('.sc-pub-hint'),
           typeof publishHintText === 'function' ? publishHintText(0) : '');
@@ -898,7 +905,7 @@ function wireSavedActions(rows, user){
           if (on && first) row.first_published_at = new Date().toISOString();
         }
         paintPubHints(box, rows);
-        if (on && first) {
+        if (on && first && !window.__rmPublishUnlimited) {
           var leftNow = typeof publishesLeftToday === 'function' ? publishesLeftToday(rows) : 3;
           flashPubHint(card && card.querySelector('.sc-pub-hint'),
             typeof publishHintText === 'function' ? publishHintText(leftNow) : '');

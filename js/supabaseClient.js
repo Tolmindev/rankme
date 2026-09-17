@@ -209,6 +209,7 @@ function publishesUsedToday(rows) {
 }
 
 function publishesLeftToday(rows) {
+  if (window.__rmPublishUnlimited) return PUBLISH_DAILY_LIMIT;
   return Math.max(0, PUBLISH_DAILY_LIMIT - publishesUsedToday(rows));
 }
 

@@ -179,6 +179,29 @@
       "exclusive": true,
       "parallax": true,
       "coverThumb": "assets/brand/WoW_Expansions_Cover_thumb.webp"
+    },
+    {
+      "id": "deadlock",
+      "title": "Deadlock",
+      "description": "Deadlock is a third-person shooter and multiplayer online battle arena (MOBA) game, featuring two teams with six players each that battle each other.",
+      "cover": "assets/brand/Deadlock_Cover.webp",
+      "href": "t/deadlock.html",
+      "category": "games",
+      "tags": [
+        "games",
+        "moba",
+        "shooter",
+        "deadlock",
+        "valve"
+      ],
+      "itemCount": 44,
+      "itemLabel": "heroes",
+      "creator": "RankMe",
+      "createdAt": "2026-10-09",
+      "featured": true,
+      "exclusive": true,
+      "parallax": true,
+      "coverThumb": "assets/brand/Deadlock_Cover_thumb.webp"
     }
   ],
   "categoryMeta": {

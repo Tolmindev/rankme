@@ -1,0 +1,280 @@
+{
+  "id": "deadlock",
+  "title": "Deadlock",
+  "footerLabel": "Deadlock",
+  "exportName": "rankme-deadlock-tierlist.png",
+  "description": "Deadlock is a third-person shooter and multiplayer online battle arena (MOBA) game, featuring two teams with six players each that battle each other.",
+  "cover": "assets/brand/Deadlock_Cover.webp",
+  "parallax": true,
+  "cardShape": "portrait",
+  "cardPath": "assets/deadlock/",
+  "cardAspect": 1.6667,
+  "theme": null,
+  "noFactions": true,
+  "cards": [
+    {
+      "id": 1,
+      "file": "01_Abrams.webp",
+      "name": "Abrams",
+      "faction": "ALL"
+    },
+    {
+      "id": 2,
+      "file": "02_Apollo.webp",
+      "name": "Apollo",
+      "faction": "ALL"
+    },
+    {
+      "id": 3,
+      "file": "03_Baba.webp",
+      "name": "Baba",
+      "faction": "ALL"
+    },
+    {
+      "id": 4,
+      "file": "04_Bebop.webp",
+      "name": "Bebop",
+      "faction": "ALL"
+    },
+    {
+      "id": 5,
+      "file": "05_Billy.webp",
+      "name": "Billy",
+      "faction": "ALL"
+    },
+    {
+      "id": 6,
+      "file": "06_Calico.webp",
+      "name": "Calico",
+      "faction": "ALL"
+    },
+    {
+      "id": 7,
+      "file": "07_Celeste.webp",
+      "name": "Celeste",
+      "faction": "ALL"
+    },
+    {
+      "id": 8,
+      "file": "08_Deadman_Danny.webp",
+      "name": "Deadman Danny",
+      "faction": "ALL"
+    },
+    {
+      "id": 9,
+      "file": "09_Drifter.webp",
+      "name": "Drifter",
+      "faction": "ALL"
+    },
+    {
+      "id": 10,
+      "file": "10_Dynamo.webp",
+      "name": "Dynamo",
+      "faction": "ALL"
+    },
+    {
+      "id": 11,
+      "file": "11_Graves.webp",
+      "name": "Graves",
+      "faction": "ALL"
+    },
+    {
+      "id": 12,
+      "file": "12_Grey_Talon.webp",
+      "name": "Grey Talon",
+      "faction": "ALL"
+    },
+    {
+      "id": 13,
+      "file": "13_Haze.webp",
+      "name": "Haze",
+      "faction": "ALL"
+    },
+    {
+      "id": 14,
+      "file": "14_Holliday.webp",
+      "name": "Holliday",
+      "faction": "ALL"
+    },
+    {
+      "id": 15,
+      "file": "15_Infernus.webp",
+      "name": "Infernus",
+      "faction": "ALL"
+    },
+    {
+      "id": 16,
+      "file": "16_Ivy.webp",
+      "name": "Ivy",
+      "faction": "ALL"
+    },
+    {
+      "id": 17,
+      "file": "17_Kelvin.webp",
+      "name": "Kelvin",
+      "faction": "ALL"
+    },
+    {
+      "id": 18,
+      "file": "18_Lady_Geist.webp",
+      "name": "Lady Geist",
+      "faction": "ALL"
+    },
+    {
+      "id": 19,
+      "file": "19_Lash.webp",
+      "name": "Lash",
+      "faction": "ALL"
+    },
+    {
+      "id": 20,
+      "file": "20_McGinnis.webp",
+      "name": "McGinnis",
+      "faction": "ALL"
+    },
+    {
+      "id": 21,
+      "file": "21_Mina.webp",
+      "name": "Mina",
+      "faction": "ALL"
+    },
+    {
+      "id": 22,
+      "file": "22_Mirage.webp",
+      "name": "Mirage",
+      "faction": "ALL"
+    },
+    {
+      "id": 23,
+      "file": "23_Mo_and_Krill.webp",
+      "name": "Mo & Krill",
+      "faction": "ALL"
+    },
+    {
+      "id": 24,
+      "file": "24_Nurse_Harrow.webp",
+      "name": "Nurse Harrow",
+      "faction": "ALL"
+    },
+    {
+      "id": 25,
+      "file": "25_Paige.webp",
+      "name": "Paige",
+      "faction": "ALL"
+    },
+    {
+      "id": 26,
+      "file": "26_Paradox.webp",
+      "name": "Paradox",
+      "faction": "ALL"
+    },
+    {
+      "id": 27,
+      "file": "27_Pocket.webp",
+      "name": "Pocket",
+      "faction": "ALL"
+    },
+    {
+      "id": 28,
+      "file": "28_Rat_King.webp",
+      "name": "Rat King",
+      "faction": "ALL"
+    },
+    {
+      "id": 29,
+      "file": "29_Rem.webp",
+      "name": "Rem",
+      "faction": "ALL"
+    },
+    {
+      "id": 30,
+      "file": "30_Seven.webp",
+      "name": "Seven",
+      "faction": "ALL"
+    },
+    {
+      "id": 31,
+      "file": "31_Shiv.webp",
+      "name": "Shiv",
+      "faction": "ALL"
+    },
+    {
+      "id": 32,
+      "file": "32_Silver.webp",
+      "name": "Silver",
+      "faction": "ALL"
+    },
+    {
+      "id": 33,
+      "file": "33_Sinclair.webp",
+      "name": "Sinclair",
+      "faction": "ALL"
+    },
+    {
+      "id": 34,
+      "file": "34_Solomon.webp",
+      "name": "Solomon",
+      "faction": "ALL"
+    },
+    {
+      "id": 35,
+      "file": "35_The_Doorman.webp",
+      "name": "The Doorman",
+      "faction": "ALL"
+    },
+    {
+      "id": 36,
+      "file": "36_Venator.webp",
+      "name": "Venator",
+      "faction": "ALL"
+    },
+    {
+      "id": 37,
+      "file": "37_Victor.webp",
+      "name": "Victor",
+      "faction": "ALL"
+    },
+    {
+      "id": 38,
+      "file": "38_Vindicta.webp",
+      "name": "Vindicta",
+      "faction": "ALL"
+    },
+    {
+      "id": 39,
+      "file": "39_Violet.webp",
+      "name": "Violet",
+      "faction": "ALL"
+    },
+    {
+      "id": 40,
+      "file": "40_Viscous.webp",
+      "name": "Viscous",
+      "faction": "ALL"
+    },
+    {
+      "id": 41,
+      "file": "41_Vyper.webp",
+      "name": "Vyper",
+      "faction": "ALL"
+    },
+    {
+      "id": 42,
+      "file": "42_Warden.webp",
+      "name": "Warden",
+      "faction": "ALL"
+    },
+    {
+      "id": 43,
+      "file": "43_Wraith.webp",
+      "name": "Wraith",
+      "faction": "ALL"
+    },
+    {
+      "id": 44,
+      "file": "44_Yamato.webp",
+      "name": "Yamato",
+      "faction": "ALL"
+    }
+  ]
+}

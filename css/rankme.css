@@ -895,9 +895,19 @@ body.theme-gold {
 
 .section-head {
   display: flex;
-  align-items: baseline;
+  flex-direction: column;
+  align-items: flex-start;
   margin: 0 0 14px;
-  gap: 12px;
+  gap: 0;
+}
+
+.section-sub {
+  margin: 10px 0 0;
+  max-width: 36em;
+  color: var(--text-dim);
+  font-weight: 300;
+  font-size: 1rem;
+  line-height: 1.45;
 }
 
 .search-box input {
@@ -5616,11 +5626,15 @@ to { --elec-angle: 360deg; }
 /* Community — compact cards, no panel chrome */
 .community-head {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 12px;
   flex-wrap: nowrap;
   margin: 0 0 18px;
+}
+.section-lead {
+  min-width: 0;
+  flex: 1 1 auto;
 }
 .community-head .section-title {
   white-space: nowrap;

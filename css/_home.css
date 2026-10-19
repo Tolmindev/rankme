@@ -364,11 +364,15 @@
 /* Community — compact cards, no panel chrome */
 .community-head {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 12px;
   flex-wrap: nowrap;
   margin: 0 0 18px;
+}
+.section-lead {
+  min-width: 0;
+  flex: 1 1 auto;
 }
 .community-head .section-title {
   white-space: nowrap;

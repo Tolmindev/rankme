@@ -644,6 +644,33 @@ async function refreshExpertBadge(){
   else row.insertAdjacentHTML('beforeend', html);
 }
 
+function wantExpertApply(){
+  try {
+    if (new URLSearchParams(location.search).get('apply') === 'expert') return true;
+    return sessionStorage.getItem('rankme_expert_apply') === '1';
+  } catch (e) {
+    return false;
+  }
+}
+
+function clearExpertApply(){
+  try { sessionStorage.removeItem('rankme_expert_apply'); } catch (e) {}
+  if (!history.replaceState) return;
+  var params = new URLSearchParams(location.search);
+  if (params.get('apply') !== 'expert') return;
+  params.delete('apply');
+  var next = location.pathname + (params.toString() ? '?' + params.toString() : '') + location.hash;
+  history.replaceState(null, '', next);
+}
+
+async function openExpertFromApply(){
+  var mine = typeof getMyExpertRequest === 'function' ? await getMyExpertRequest() : null;
+  var status = (mine && mine.status) || '';
+  clearExpertApply();
+  if (status === 'approved') return;
+  openExpertModal(status === 'pending' ? 'pending' : 'none');
+}
+
 function wireExpertUi(){
   if (window.__rmExpertUiBound) return;
   window.__rmExpertUiBound = true;
@@ -1142,8 +1169,12 @@ async function bootAccount(){
       } catch (e) {}
       await renderCabinet(user);
     } else {
+      if (wantExpertApply()) {
+        try { sessionStorage.setItem('rankme_expert_apply', '1'); } catch (e) {}
+      }
       await renderLogin();
     }
+    if (user && wantExpertApply()) await openExpertFromApply();
   } catch (e) {
     console.error(e);
     panel.innerHTML = '<div class="empty">Something went wrong. <button type="button" class="btn-mini primary" onclick="location.reload()">Retry</button></div>';

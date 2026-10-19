@@ -111,8 +111,8 @@
       msg.classList.toggle('is-bad', !!bad && !!text);
     }
 
-    function flash(text) {
-      note(text, true);
+    function flash(text, bad) {
+      note(text, bad !== false);
       clearTimeout(msg._t);
       msg._t = setTimeout(function () {
         if (msg.textContent === text) note('', false);
@@ -161,18 +161,18 @@
       e.preventDefault();
       var id = youtubeId(input.value);
       if (!id) {
-        note('Paste a YouTube link.', true);
+        flash('Paste a YouTube link.');
         input.focus();
         return;
       }
       var user = await getSessionUser();
       if (!user) {
-        note('Log in first.', true);
+        flash('Log in first.');
         return;
       }
       var client = await initSupabase();
       if (!client) {
-        note('Could not reach server.', true);
+        flash('Could not reach server.');
         return;
       }
       note('', false);
@@ -200,14 +200,14 @@
           return;
         }
         if (res.error.code === '23505' || /duplicate/i.test(m)) {
-          note('Already sent.', true);
+          flash('Already sent.');
           return;
         }
-        note('Could not send. Try again.', true);
+        flash('Could not send. Try again.');
         return;
       }
       input.value = '';
-      note('Sent. We will look at it.', false);
+      flash('Sent. We will look at it.', false);
       mail(user, 'https://youtu.be/' + id);
     });
   }

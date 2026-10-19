@@ -1,5 +1,17 @@
 /* RankMe shared footer - single source of truth */
 (function () {
+  document.addEventListener('click', function (e) {
+    var open = document.querySelectorAll('details.nav-fold[open]');
+    for (var i = 0; i < open.length; i++) {
+      if (!open[i].contains(e.target)) open[i].removeAttribute('open');
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    var open = document.querySelectorAll('details.nav-fold[open]');
+    for (var i = 0; i < open.length; i++) open[i].removeAttribute('open');
+  });
+
   var root = document.getElementById('site-footer');
   if (!root) return;
 

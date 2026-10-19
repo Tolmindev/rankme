@@ -103,6 +103,7 @@ let sm = '<?xml version="1.0" encoding="UTF-8"?>\n';
 sm += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
 sm += url('https://rankme.lol/', weekly);
 sm += url('https://rankme.lol/create.html', weekly);
+sm += url('https://rankme.lol/guide.html', weekly);
 ids.sort().forEach(function (id) {
   sm += url('https://rankme.lol/t/' + id + '.html', weekly);
 });

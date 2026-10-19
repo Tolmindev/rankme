@@ -80,6 +80,14 @@ nav.main {
   z-index: 1;
 }
 
+.nav-links {
+  display: contents;
+}
+
+.nav-fold {
+  display: none;
+}
+
 nav.main a:not(.login-btn) {
   color: var(--text-dim);
   text-decoration: none;
@@ -524,13 +532,12 @@ body.theme-gold {
 }
 
 .section-title {
-  font-size: 1.05rem;
-  font-weight: 800;
-  letter-spacing: .4px;
-  margin: 0 0 18px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: #f2eaff;
 }
 
 .section-title .badge {
@@ -835,6 +842,66 @@ html.rankme-dragging {
 
   nav.main {
     gap: 0;
+  }
+
+  .section-title {
+    font-size: 1.1rem;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .nav-fold {
+    display: block;
+    position: relative;
+    pointer-events: auto;
+  }
+
+  .nav-fold-btn {
+    list-style: none;
+    cursor: pointer;
+    color: var(--text-dim);
+    font-weight: 400;
+    font-size: .62rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    padding: 8px 10px;
+    user-select: none;
+  }
+
+  .nav-fold-btn::-webkit-details-marker {
+    display: none;
+  }
+
+  .nav-fold[open] .nav-fold-btn {
+    color: #fff;
+    text-shadow: 0 0 12px rgba(200, 160, 255, 0.45);
+  }
+
+  .nav-fold-links {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 168px;
+    padding: 6px;
+    border-radius: 16px;
+    background: rgba(14, 12, 20, 0.98);
+    border: 1px solid rgba(176, 150, 230, 0.22);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+    z-index: 5;
+  }
+
+  .nav-fold[open] .nav-fold-links {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .nav-fold-links a {
+    text-align: center;
+    padding: 11px 14px;
   }
 
   nav.main > a:not(.login-btn) {

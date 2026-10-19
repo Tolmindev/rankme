@@ -1,0 +1,201 @@
+/* Creators: approved rows from Supabase. Send requires login. Ten per 24 hours. */
+(function () {
+  var list = document.getElementById('creatorsList');
+  var form = document.getElementById('creatorsAsk');
+  var DAY = 24 * 60 * 60 * 1000;
+
+  function esc(s) {
+    return String(s || '').replace(/[&<>"']/g, function (c) {
+      return { '&': '&', '<': '<', '>': '>', '"': '"', "'": '&#39;' }[c];
+    });
+  }
+
+  function safeHttps(url) {
+    try {
+      var u = new URL(url);
+      return u.protocol === 'https:' ? u.href : '';
+    } catch (e) { return ''; }
+  }
+
+  function safeTier(path) {
+    return /^t\/[a-z0-9-]+$/.test(path) ? path : '';
+  }
+
+  function cardHtml(row) {
+    var id = row.youtube_id;
+    var watch = 'https://youtu.be/' + id;
+    var authorUrl = safeHttps(row.author_url);
+    var tier = safeTier(row.tier_path);
+    var author = row.author_name
+      ? (authorUrl
+        ? '<a class="creators-by" href="' + esc(authorUrl) + '" target="_blank" rel="noopener noreferrer">' + esc(row.author_name) + '</a>'
+        : '<span class="creators-by">' + esc(row.author_name) + '</span>')
+      : '';
+    var tierHtml = tier && row.tier_label
+      ? '<a class="creators-tier" href="' + esc(tier) + '">' + esc(row.tier_label) + '</a>'
+      : '';
+    return '<article class="creators-card">' +
+      '<a class="creators-thumb" href="' + watch + '" target="_blank" rel="noopener noreferrer">' +
+        '<img src="https://i.ytimg.com/vi/' + esc(id) + '/hqdefault.jpg" alt="">' +
+        '<span class="creators-play" aria-hidden="true"></span>' +
+      '</a>' +
+      '<div class="creators-copy">' +
+        '<h2><a href="' + watch + '" target="_blank" rel="noopener noreferrer">' + esc(row.title) + '</a></h2>' +
+        author + tierHtml +
+      '</div>' +
+    '</article>';
+  }
+
+  function paint(rows) {
+    if (!list) return;
+    list.classList.toggle('is-multi', rows.length > 1);
+    list.innerHTML = rows.map(cardHtml).join('');
+  }
+
+  function youtubeId(raw) {
+    var s = String(raw || '').trim();
+    if (!s) return '';
+    if (!/^https?:\/\//i.test(s)) s = 'https://' + s;
+    var u;
+    try { u = new URL(s); } catch (e) { return ''; }
+    var host = u.hostname.replace(/^www\./, '').toLowerCase();
+    var id = '';
+    if (host === 'youtu.be') id = (u.pathname.split('/').filter(Boolean)[0] || '');
+    else if (host === 'youtube.com' || host === 'm.youtube.com') {
+      if (u.pathname === '/watch') id = u.searchParams.get('v') || '';
+      else {
+        var parts = u.pathname.split('/').filter(Boolean);
+        if (parts[0] === 'shorts' || parts[0] === 'embed' || parts[0] === 'live') id = parts[1] || '';
+      }
+    }
+    return /^[a-zA-Z0-9_-]{11}$/.test(id) ? id : '';
+  }
+
+  async function load() {
+    try {
+      var client = await initSupabase();
+      if (!client || !list) return;
+      var res = await client.from('creator_videos')
+        .select('youtube_id, title, author_name, author_url, tier_path, tier_label, created_at')
+        .eq('status', 'approved')
+        .order('created_at', { ascending: false });
+      if (res.error) return;
+      paint(res.data || []);
+    } catch (e) {}
+  }
+
+  function bind() {
+    if (!form) return;
+    var input = document.getElementById('creatorsUrl');
+    var msg = document.getElementById('creatorsMsg');
+    var btn = form.querySelector('button');
+
+    function note(text, bad) {
+      msg.textContent = text || '';
+      msg.classList.toggle('is-bad', !!bad && !!text);
+    }
+
+    function flash(text) {
+      note(text, true);
+      clearTimeout(msg._t);
+      msg._t = setTimeout(function () {
+        if (msg.textContent === text) note('', false);
+      }, 1800);
+    }
+
+    async function waitText(client, userId) {
+      var since = new Date(Date.now() - DAY).toISOString();
+      var res = await client.from('creator_videos')
+        .select('created_at')
+        .eq('user_id', userId)
+        .gte('created_at', since)
+        .order('created_at', { ascending: true })
+        .limit(1);
+      var oldest = res.data && res.data[0] && res.data[0].created_at;
+      var ms = oldest ? (new Date(oldest).getTime() + DAY - Date.now()) : DAY;
+      var hours = Math.max(1, Math.ceil(ms / 3600000));
+      return 'You can send another video in ' + (hours === 1 ? '1 hour.' : hours + ' hours.');
+    }
+
+    function mail(user, link) {
+      function send(profile) {
+        fetch('https://formsubmit.co/ajax/lolrankme@gmail.com', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({
+            _subject: 'RankMe Creators video',
+            _template: 'box',
+            youtube: link,
+            profile: profile
+          })
+        }).catch(function () {});
+      }
+      if (typeof getProfileByUserId !== 'function') {
+        send('https://rankme.lol/account.html?u=' + encodeURIComponent(user.id));
+        return;
+      }
+      getProfileByUserId(user.id).then(function (p) {
+        send((p && p.handle) ? ('https://rankme.lol/u/' + p.handle) : ('https://rankme.lol/account.html?u=' + encodeURIComponent(user.id)));
+      }).catch(function () {
+        send('https://rankme.lol/account.html?u=' + encodeURIComponent(user.id));
+      });
+    }
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      var id = youtubeId(input.value);
+      if (!id) {
+        note('Paste a YouTube link.', true);
+        input.focus();
+        return;
+      }
+      var user = await getSessionUser();
+      if (!user) {
+        note('Log in first.', true);
+        return;
+      }
+      var client = await initSupabase();
+      if (!client) {
+        note('Could not reach server.', true);
+        return;
+      }
+      note('', false);
+      btn.disabled = true;
+      var meta = { title: 'YouTube video', author_name: '', author_url: '' };
+      try {
+        var info = await fetch('https://noembed.com/embed?url=' + encodeURIComponent('https://youtu.be/' + id));
+        var data = await info.json();
+        if (data && data.title) meta.title = String(data.title).trim().slice(0, 140);
+        if (data && data.author_name) meta.author_name = String(data.author_name).trim().slice(0, 80);
+        if (data && data.author_url) meta.author_url = safeHttps(data.author_url).slice(0, 300);
+      } catch (err) {}
+      var res = await client.from('creator_videos').insert({
+        youtube_id: id,
+        title: meta.title || 'YouTube video',
+        author_name: meta.author_name,
+        author_url: meta.author_url,
+        status: 'pending'
+      });
+      btn.disabled = false;
+      if (res.error) {
+        var m = res.error.message || '';
+        if (m.indexOf('CREATOR_LIMIT') !== -1) {
+          flash(await waitText(client, user.id));
+          return;
+        }
+        if (res.error.code === '23505' || /duplicate/i.test(m)) {
+          note('Already sent.', true);
+          return;
+        }
+        note('Could not send. Try again.', true);
+        return;
+      }
+      input.value = '';
+      note('Sent. We will look at it.', false);
+      mail(user, 'https://youtu.be/' + id);
+    });
+  }
+
+  load();
+  bind();
+})();

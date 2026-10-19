@@ -13,7 +13,7 @@
 <link rel="icon" type="image/png" sizes="192x192" href="assets/brand/favicon-192.png">
 <link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200..900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/rankme.css?v=20260916o">
+<link rel="stylesheet" href="css/rankme.css?v=20261019g">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
 <script src="js/supabaseClient.js?v=20260916o" defer></script>
 </head>
@@ -25,9 +25,21 @@
     <img class="brand-mark" src="assets/brand/favicon.svg?v=2" alt="RankMe">
   </a>
   <nav class="main">
-    <a href="index.html">Explore</a>
-    <a href="index.html#community">Community</a>
-    <a href="guide.html">FAQ</a>
+    <div class="nav-links">
+      <a href="index.html">Explore</a>
+      <a href="index.html#community">Community</a>
+      <a href="index.html#creators">Creators</a>
+      <a href="guide.html">FAQ</a>
+    </div>
+    <details class="nav-fold">
+      <summary class="nav-fold-btn">Menu</summary>
+      <div class="nav-fold-links">
+        <a href="index.html">Explore</a>
+        <a href="index.html#community">Community</a>
+        <a href="index.html#creators">Creators</a>
+        <a href="guide.html">FAQ</a>
+      </div>
+    </details>
     <a class="login-btn" id="loginBtn" href="account.html">Account</a>
   </nav>
 </header>
@@ -131,7 +143,7 @@
 <div class="ach-stage" id="achStage" hidden></div>
 
 <footer id="site-footer" class="site"></footer>
-<script src="js/footer.js?v=20260903a" defer></script>
+<script src="js/footer.js?v=20261019a" defer></script>
 <script src="js/catalog.js?v=20260906b"></script>
 <script src="js/holo-card.js?v=20260903a"></script>
 <script src="js/achievements.js?v=20260903a"></script>

@@ -370,12 +370,7 @@
   flex-wrap: nowrap;
   margin: 0 0 18px;
 }
-.community-rankings-title {
-  font-size: 1.15rem;
-  font-weight: 800;
-  color: #f2eaff;
-  margin: 0;
-  letter-spacing: 0.2px;
+.community-head .section-title {
   white-space: nowrap;
   flex: 0 1 auto;
   min-width: 0;
@@ -703,10 +698,6 @@
   .community-head {
     gap: 10px;
     margin-bottom: 18px;
-  }
-  .community-rankings-title {
-    text-align: left;
-    margin: 0;
   }
 
   .home-wrap {

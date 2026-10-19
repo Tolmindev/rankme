@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
 <title>RankMe - Ranked by You</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
-<script src="js/supabaseClient.js?v=20260903i" defer></script>
+<script src="js/supabaseClient.js?v=20260916o" defer></script>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="RankMe">
 <meta property="og:url" content="https://rankme.lol/">
@@ -29,7 +29,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200..900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/rankme.css?v=20260916h">
+<link rel="stylesheet" href="css/rankme.css?v=20261019g">
 </head>
 <body>
 <div class="aurora" aria-hidden="true"></div>
@@ -40,9 +40,21 @@
     <img class="brand-mark" src="assets/brand/favicon.svg?v=2" alt="RankMe">
   </a>
   <nav class="main">
-    <a href="index.html" class="active">Explore</a>
-    <a href="index.html#community">Community</a>
-    <a href="guide.html">FAQ</a>
+    <div class="nav-links">
+      <a href="index.html" class="active">Explore</a>
+      <a href="index.html#community">Community</a>
+      <a href="index.html#creators">Creators</a>
+      <a href="guide.html">FAQ</a>
+    </div>
+    <details class="nav-fold">
+      <summary class="nav-fold-btn">Menu</summary>
+      <div class="nav-fold-links">
+        <a href="index.html" class="active">Explore</a>
+        <a href="index.html#community">Community</a>
+        <a href="index.html#creators">Creators</a>
+        <a href="guide.html">FAQ</a>
+      </div>
+    </details>
     <a class="login-btn" id="loginBtn" href="account.html">Account</a>
   </nav>
 </header>
@@ -167,7 +179,7 @@
     <section aria-label="Community" class="community-section" id="community">
       <div id="communityBody" aria-busy="true">
         <div class="community-head">
-          <h2 class="community-rankings-title">Community</h2>
+          <h2 class="section-title">Community</h2>
           <div class="community-pills" aria-hidden="true">
             <span class="skel skel-chip"></span>
             <span class="skel skel-chip"></span>
@@ -183,6 +195,40 @@
           <article class="cc-card skel-card" aria-hidden="true"><div class="cc-cover skel"></div><div class="cc-body"><div class="skel skel-line skel-line-title"></div><div class="skel skel-line skel-sm"></div><div class="skel skel-line skel-sm"></div></div></article>
         </div>
       </div>
+    </section>
+
+    <section class="creators-home" id="creators" aria-label="Creators">
+      <header class="creators-hero">
+        <h2 class="section-title">Creators</h2>
+        <p>Videos that used a RankMe list.</p>
+      </header>
+
+      <div class="creators-list" id="creatorsList">
+      <article class="creators-card">
+        <a class="creators-thumb" href="https://youtu.be/9pqfnwei2Y8" target="_blank" rel="noopener noreferrer">
+          <img src="https://i.ytimg.com/vi/9pqfnwei2Y8/hqdefault.jpg" alt="">
+          <span class="creators-play" aria-hidden="true"></span>
+        </a>
+        <div class="creators-copy">
+          <h2><a href="https://youtu.be/9pqfnwei2Y8" target="_blank" rel="noopener noreferrer">NEW EX-MOVE TIER LIST 2026! + Beginner Guide | Street Fighter Duel</a></h2>
+          <a class="creators-by" href="https://www.youtube.com/@ElDuD89" target="_blank" rel="noopener noreferrer">ElDuD</a>
+          <a class="creators-tier" href="t/sf-duel-ex">Street Fighter: Duel EX-Move</a>
+        </div>
+      </article>
+      </div>
+
+      <form class="creators-ask" id="creatorsAsk">
+        <div class="creators-ask-copy">
+          <h2>You a creator?</h2>
+          <p class="creators-lead">Share a video that used a RankMe list.</p>
+          <p class="creators-fine"><img src="assets/icons/expert-badge.svg?v=20260902f" alt="">The badge is separate. <a href="account.html">Apply from your account.</a></p>
+        </div>
+        <div class="creators-row">
+          <input id="creatorsUrl" type="text" inputmode="url" autocomplete="off" maxlength="240" placeholder="youtube.com/..." aria-label="YouTube link">
+          <button class="cta primary" type="submit">Send</button>
+        </div>
+        <p class="creators-msg" id="creatorsMsg"></p>
+      </form>
     </section>
 
   </div>
@@ -202,9 +248,10 @@
 </noscript>
 
 <footer id="site-footer" class="site"></footer>
-<script src="js/footer.js?v=20260903a" defer></script>
+<script src="js/footer.js?v=20261019a" defer></script>
 <script src="js/catalog.js?v=20260906b" defer></script>
 <script src="js/achievements.js?v=20260903a" defer></script>
-<script src="js/home.js?v=20260911b" defer></script>
+<script src="js/home.js?v=20261019d" defer></script>
+<script src="js/creators.js?v=20261019g" defer></script>
 </body>
 </html>

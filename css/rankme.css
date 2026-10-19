@@ -8630,12 +8630,14 @@ body.ach-focus-open { overflow: hidden; }
   border: 1px solid rgba(176, 150, 230, 0.22);
   background: rgba(255, 255, 255, 0.025);
   display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  gap: 14px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px 28px;
 }
 
 .creators-ask-copy {
+  flex: 1 1 240px;
   min-width: 0;
 }
 
@@ -8658,12 +8660,15 @@ body.ach-focus-open { overflow: hidden; }
   display: flex;
   align-items: center;
   gap: 8px;
-  width: 100%;
+  flex: 0 1 420px;
+  width: auto;
+  max-width: 100%;
 }
 
 .creators-row input {
-  flex: 1 1 0;
-  width: 100%;
+  flex: 1 1 200px;
+  width: 240px;
+  max-width: 280px;
   min-width: 0;
   height: 44px;
   margin: 0;
@@ -8689,10 +8694,11 @@ body.ach-focus-open { overflow: hidden; }
 }
 
 .creators-row .cta {
-  flex: 1 1 0;
-  width: 100%;
+  flex: 0 0 auto;
+  width: auto;
   height: 44px;
   min-height: 44px;
+  padding: 0 22px;
 }
 
 .creators-row .cta[disabled] {
@@ -8701,8 +8707,8 @@ body.ach-focus-open { overflow: hidden; }
 }
 
 .creators-msg {
+  flex: 1 0 100%;
   margin: 0;
-  min-height: 0;
   font-size: 0.75rem;
   font-weight: 200;
   line-height: 1.4;
@@ -8758,6 +8764,8 @@ body.ach-focus-open { overflow: hidden; }
   }
 
   .creators-ask {
+    flex-direction: column;
+    align-items: stretch;
     padding: 18px 16px;
   }
 
@@ -8765,6 +8773,7 @@ body.ach-focus-open { overflow: hidden; }
     flex-direction: column;
     align-items: stretch;
     width: 100%;
+    max-width: none;
   }
 
   .creators-row input,
@@ -8772,6 +8781,5 @@ body.ach-focus-open { overflow: hidden; }
     width: 100%;
     max-width: none;
     flex: none;
-    align-self: stretch;
   }
 }

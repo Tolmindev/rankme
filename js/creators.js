@@ -46,10 +46,24 @@
     '</article>';
   }
 
-  function paint(rows) {
+  var CAP = 6;
+  var all = [];
+  var open = false;
+
+  function paint() {
     if (!list) return;
+    var rows = open ? all : all.slice(0, CAP);
     list.classList.toggle('is-multi', rows.length > 1);
-    list.innerHTML = rows.map(cardHtml).join('');
+    var html = rows.map(cardHtml).join('');
+    if (!open && all.length > CAP) {
+      html += '<div class="show-all-wrap"><button type="button" class="show-all-btn" id="creatorsMore">Show more</button></div>';
+    }
+    list.innerHTML = html;
+    var more = document.getElementById('creatorsMore');
+    if (more) more.addEventListener('click', function () {
+      open = true;
+      paint();
+    });
   }
 
   function youtubeId(raw) {
@@ -80,7 +94,9 @@
         .eq('status', 'approved')
         .order('created_at', { ascending: false });
       if (res.error) return;
-      paint(res.data || []);
+      all = res.data || [];
+      open = false;
+      paint();
     } catch (e) {}
   }
 

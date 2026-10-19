@@ -175,18 +175,18 @@
       if (sending) return;
       var id = youtubeId(input.value);
       if (!id) {
-        flash('Paste a YouTube link.');
+        flash('That\'s not a YouTube link.');
         input.focus();
         return;
       }
       var user = await getSessionUser();
       if (!user) {
-        flash('Log in first.');
+        flash('Log in first. No anonymous fame.');
         return;
       }
       var client = await initSupabase();
       if (!client) {
-        flash('Could not reach server.');
+        flash('Server blinked. Try again.');
         return;
       }
       note('');
@@ -231,7 +231,7 @@
           return;
         }
         if (res.error.code === '23505' || /duplicate/i.test(m)) {
-          flash('Already sent.');
+          flash('We already have this one.');
           return;
         }
         flash('Could not send. Try again.');
@@ -243,7 +243,7 @@
         if (reduce) {
           input.value = '';
           finish();
-          flash('Sent', 'ok');
+          flash('Sent. We\'ll watch it.', 'ok');
           return;
         }
         field.classList.remove('is-loading');
@@ -251,7 +251,7 @@
         setTimeout(function () {
           input.value = '';
           finish();
-          flash('Sent', 'ok');
+          flash('Sent. We\'ll watch it.', 'ok');
         }, 260);
       }, wait);
     });

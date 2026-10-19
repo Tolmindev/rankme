@@ -116,7 +116,7 @@
       clearTimeout(msg._t);
       msg._t = setTimeout(function () {
         if (msg.textContent === text) note('');
-      }, 1800);
+      }, 4000);
     }
 
     async function waitText(client, userId) {
@@ -238,7 +238,7 @@
         return;
       }
       mail(user, 'https://youtu.be/' + id);
-      var wait = reduce ? 0 : Math.max(0, 520 - (Date.now() - started));
+      var wait = reduce ? 0 : Math.max(0, 1100 - (Date.now() - started));
       setTimeout(function () {
         if (reduce) {
           input.value = '';

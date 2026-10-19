@@ -8670,6 +8670,8 @@ body.ach-focus-open { overflow: hidden; }
   height: 44px;
   display: flex;
   align-items: center;
+  border-radius: 999px;
+  overflow: hidden;
 }
 
 .creators-row input {
@@ -8692,22 +8694,32 @@ body.ach-focus-open { overflow: hidden; }
 .creators-fill {
   position: absolute;
   z-index: 1;
-  left: 1px;
-  top: 1px;
-  bottom: 1px;
+  left: 0;
+  top: 0;
+  height: 100%;
   width: 0;
-  border-radius: 999px;
-  background: linear-gradient(90deg, rgba(183, 155, 240, 0.18), rgba(183, 155, 240, 0.72));
+  background-image: linear-gradient(100deg, #b79bf0, #f4c6ff, #8ec5ff, #e6a9e8, #d7c4ff, #8ec5ff, #b79bf0);
+  background-size: 240% 100%;
   pointer-events: none;
 }
 
 .creators-field.is-loading .creators-fill,
 .creators-field.is-done .creators-fill {
-  width: calc(100% - 2px);
+  width: 100%;
+}
+
+.creators-field.is-loading {
+  box-shadow: 0 0 18px rgba(190, 150, 255, 0.55);
 }
 
 .creators-field.is-loading .creators-fill {
-  transition: width .5s ease;
+  transition: width 1.05s cubic-bezier(.45, 0, .2, 1);
+  animation: creatorsShimmer 1.15s linear infinite;
+}
+
+@keyframes creatorsShimmer {
+  from { background-position: 0% 50%; }
+  to { background-position: 100% 50%; }
 }
 
 .creators-field.is-loading input,
@@ -8794,6 +8806,7 @@ body.ach-focus-open { overflow: hidden; }
 @media (prefers-reduced-motion: reduce) {
   .creators-fill {
     transition: none;
+    animation: none;
   }
 }
 

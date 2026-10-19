@@ -4,7 +4,7 @@
   "footerLabel": "Deadlock",
   "exportName": "rankme-deadlock-tierlist.png",
   "description": "Deadlock is a third-person shooter and multiplayer online battle arena (MOBA) game, featuring two teams with six players each that battle each other.",
-  "cover": "assets/brand/Deadlock_Cover.webp",
+  "cover": "assets/brand/Deadlock_Cover.webp?v=20261019p",
   "parallax": true,
   "cardShape": "portrait",
   "cardPath": "assets/deadlock/",

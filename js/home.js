@@ -137,11 +137,9 @@
 
   function communityHeadHtml() {
     return '<div class="community-head">' +
-      '<div class="section-lead">' +
-        '<h2 class="section-title">Community</h2>' +
-        '<p class="section-sub">Lists from the community we love, and the experts.</p>' +
-      '</div>' +
+      '<h2 class="section-title">Community</h2>' +
       communityPillsHtml() +
+      '<p class="section-sub">Lists from the community we love, and the experts.</p>' +
       '</div>';
   }
 

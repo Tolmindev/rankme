@@ -763,7 +763,6 @@ body.theme-gold {
 
 .section-sub {
   margin: 10px 0 0;
-  max-width: 36em;
   color: var(--text-dim);
   font-weight: 300;
   font-size: 1rem;

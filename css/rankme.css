@@ -903,7 +903,6 @@ body.theme-gold {
 
 .section-sub {
   margin: 10px 0 0;
-  max-width: 36em;
   color: var(--text-dim);
   font-weight: 300;
   font-size: 1rem;
@@ -5626,15 +5625,16 @@ to { --elec-angle: 360deg; }
 /* Community — compact cards, no panel chrome */
 .community-head {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  flex-wrap: nowrap;
+  gap: 10px 12px;
+  flex-wrap: wrap;
   margin: 0 0 18px;
 }
-.section-lead {
-  min-width: 0;
-  flex: 1 1 auto;
+.community-head .section-sub {
+  flex: 1 0 100%;
+  max-width: none;
+  margin-top: 0;
 }
 .community-head .section-title {
   white-space: nowrap;
@@ -8514,7 +8514,6 @@ body.ach-focus-open { overflow: hidden; }
 
 .creators-hero p {
   margin: 10px 0 0;
-  max-width: 28em;
   color: var(--text-dim);
   font-weight: 300;
   font-size: 1rem;

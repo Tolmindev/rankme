@@ -106,16 +106,17 @@
     var msg = document.getElementById('creatorsMsg');
     var btn = form.querySelector('button');
 
-    function note(text, bad) {
+    function note(text, kind) {
       msg.textContent = text || '';
-      msg.classList.toggle('is-bad', !!bad && !!text);
+      msg.classList.toggle('is-bad', kind === 'bad' && !!text);
+      msg.classList.toggle('is-ok', kind === 'ok' && !!text);
     }
 
-    function flash(text, bad) {
-      note(text, bad !== false);
+    function flash(text, kind) {
+      note(text, kind || 'bad');
       clearTimeout(msg._t);
       msg._t = setTimeout(function () {
-        if (msg.textContent === text) note('', false);
+        if (msg.textContent === text) note('');
       }, 1800);
     }
 
@@ -134,31 +135,45 @@
     }
 
     function mail(user, link) {
+      var sent = false;
+      var fallback = 'https://rankme.lol/account.html?u=' + encodeURIComponent(user.id);
+      var name = typeof rankmeDisplayName === 'function' ? rankmeDisplayName(user) : '';
       function send(profile) {
+        if (sent) return;
+        sent = true;
         fetch('https://formsubmit.co/ajax/lolrankme@gmail.com', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
           body: JSON.stringify({
             _subject: 'RankMe Creators video',
             _template: 'box',
+            _captcha: 'false',
+            name: name,
+            message: 'A creator sent a video.',
             youtube: link,
-            profile: profile
+            profile: profile,
+            user_id: user.id
           })
         }).catch(function () {});
       }
       if (typeof getProfileByUserId !== 'function') {
-        send('https://rankme.lol/account.html?u=' + encodeURIComponent(user.id));
+        send(fallback);
         return;
       }
+      var timer = setTimeout(function () { send(fallback); }, 1500);
       getProfileByUserId(user.id).then(function (p) {
-        send((p && p.handle) ? ('https://rankme.lol/u/' + p.handle) : ('https://rankme.lol/account.html?u=' + encodeURIComponent(user.id)));
+        clearTimeout(timer);
+        send((p && p.handle) ? ('https://rankme.lol/u/' + p.handle) : fallback);
       }).catch(function () {
-        send('https://rankme.lol/account.html?u=' + encodeURIComponent(user.id));
+        clearTimeout(timer);
+        send(fallback);
       });
     }
 
+    var sending = false;
     form.addEventListener('submit', async function (e) {
       e.preventDefault();
+      if (sending) return;
       var id = youtubeId(input.value);
       if (!id) {
         flash('Paste a YouTube link.');
@@ -175,8 +190,9 @@
         flash('Could not reach server.');
         return;
       }
-      note('', false);
-      btn.disabled = true;
+      note('');
+      sending = true;
+      btn.classList.add('is-sending');
       var meta = { title: 'YouTube video', author_name: '', author_url: '' };
       try {
         var info = await fetch('https://noembed.com/embed?url=' + encodeURIComponent('https://youtu.be/' + id));
@@ -185,14 +201,20 @@
         if (data && data.author_name) meta.author_name = String(data.author_name).trim().slice(0, 80);
         if (data && data.author_url) meta.author_url = safeHttps(data.author_url).slice(0, 300);
       } catch (err) {}
-      var res = await client.from('creator_videos').insert({
-        youtube_id: id,
-        title: meta.title || 'YouTube video',
-        author_name: meta.author_name,
-        author_url: meta.author_url,
-        status: 'pending'
-      });
-      btn.disabled = false;
+      var res;
+      try {
+        res = await client.from('creator_videos').insert({
+          youtube_id: id,
+          title: meta.title || 'YouTube video',
+          author_name: meta.author_name,
+          author_url: meta.author_url,
+          status: 'pending'
+        });
+      } catch (err) {
+        res = { error: { message: 'network' } };
+      }
+      sending = false;
+      btn.classList.remove('is-sending');
       if (res.error) {
         var m = res.error.message || '';
         if (m.indexOf('CREATOR_LIMIT') !== -1) {
@@ -207,7 +229,7 @@
         return;
       }
       input.value = '';
-      flash('Sent. We will look at it.', false);
+      flash('Sent', 'ok');
       mail(user, 'https://youtu.be/' + id);
     });
   }

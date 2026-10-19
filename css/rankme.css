@@ -8699,8 +8699,9 @@ body.ach-focus-open { overflow: hidden; }
   font-size: 0.8rem;
 }
 
-.creators-send[disabled] {
-  opacity: 0.6;
+.creators-send.is-sending {
+  background-size: 100% 100%, 240% 100%;
+  animation: ctaGlowShift 0.9s linear 1;
   pointer-events: none;
 }
 
@@ -8718,6 +8719,11 @@ body.ach-focus-open { overflow: hidden; }
 
 .creators-msg.is-bad {
   color: #e7b4c4;
+}
+
+.creators-msg.is-ok {
+  color: #8ee0b0;
+  font-weight: 700;
 }
 
 .creators-fine {
@@ -8744,6 +8750,12 @@ body.ach-focus-open { overflow: hidden; }
 
 .creators-fine a:hover {
   color: #fff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .creators-send.is-sending {
+    animation: none;
+  }
 }
 
 @media (max-width: 720px) {

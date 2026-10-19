@@ -104,7 +104,6 @@
     if (!form) return;
     var input = document.getElementById('creatorsUrl');
     var msg = document.getElementById('creatorsMsg');
-    var btn = form.querySelector('button');
 
     function note(text, kind) {
       msg.textContent = text || '';
@@ -192,15 +191,21 @@
       }
       note('');
       sending = true;
-      btn.classList.add('is-sending');
+      var field = input.parentNode;
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var started = Date.now();
+      if (!reduce) field.classList.add('is-loading');
       var meta = { title: 'YouTube video', author_name: '', author_url: '' };
+      var ctrl = typeof AbortController === 'function' ? new AbortController() : null;
+      var stop = setTimeout(function () { if (ctrl) ctrl.abort(); }, 350);
       try {
-        var info = await fetch('https://noembed.com/embed?url=' + encodeURIComponent('https://youtu.be/' + id));
+        var info = await fetch('https://noembed.com/embed?url=' + encodeURIComponent('https://youtu.be/' + id), ctrl ? { signal: ctrl.signal } : {});
         var data = await info.json();
         if (data && data.title) meta.title = String(data.title).trim().slice(0, 140);
         if (data && data.author_name) meta.author_name = String(data.author_name).trim().slice(0, 80);
         if (data && data.author_url) meta.author_url = safeHttps(data.author_url).slice(0, 300);
       } catch (err) {}
+      clearTimeout(stop);
       var res;
       try {
         res = await client.from('creator_videos').insert({
@@ -213,9 +218,13 @@
       } catch (err) {
         res = { error: { message: 'network' } };
       }
-      sending = false;
-      btn.classList.remove('is-sending');
+      function finish() {
+        field.classList.remove('is-loading');
+        field.classList.remove('is-done');
+        sending = false;
+      }
       if (res.error) {
+        finish();
         var m = res.error.message || '';
         if (m.indexOf('CREATOR_LIMIT') !== -1) {
           flash(await waitText(client, user.id));
@@ -228,9 +237,23 @@
         flash('Could not send. Try again.');
         return;
       }
-      input.value = '';
-      flash('Sent', 'ok');
       mail(user, 'https://youtu.be/' + id);
+      var wait = reduce ? 0 : Math.max(0, 520 - (Date.now() - started));
+      setTimeout(function () {
+        if (reduce) {
+          input.value = '';
+          finish();
+          flash('Sent', 'ok');
+          return;
+        }
+        field.classList.remove('is-loading');
+        field.classList.add('is-done');
+        setTimeout(function () {
+          input.value = '';
+          finish();
+          flash('Sent', 'ok');
+        }, 260);
+      }, wait);
     });
   }
 

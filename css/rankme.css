@@ -8663,8 +8663,16 @@ body.ach-focus-open { overflow: hidden; }
   width: 100%;
 }
 
-.creators-row input {
+.creators-field {
+  position: relative;
   flex: 1 1 0;
+  min-width: 0;
+  height: 44px;
+  display: flex;
+  align-items: center;
+}
+
+.creators-row input {
   width: 100%;
   min-width: 0;
   height: 44px;
@@ -8681,9 +8689,46 @@ body.ach-focus-open { overflow: hidden; }
   outline: none;
 }
 
+.creators-fill {
+  position: absolute;
+  z-index: 1;
+  left: 1px;
+  top: 1px;
+  bottom: 1px;
+  width: 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(183, 155, 240, 0.18), rgba(183, 155, 240, 0.72));
+  pointer-events: none;
+}
+
+.creators-field.is-loading .creators-fill,
+.creators-field.is-done .creators-fill {
+  width: calc(100% - 2px);
+}
+
+.creators-field.is-loading .creators-fill {
+  transition: width .5s ease;
+}
+
+.creators-field.is-loading input,
+.creators-field.is-done input {
+  color: transparent;
+  caret-color: transparent;
+}
+
+.creators-field.is-done .creators-fill {
+  opacity: 0;
+  transition: opacity .25s ease;
+}
+
 .creators-row input::placeholder {
   color: rgba(167, 159, 196, 0.55);
   font-weight: 300;
+}
+
+.creators-field.is-loading input::placeholder,
+.creators-field.is-done input::placeholder {
+  color: transparent;
 }
 
 .creators-row input:focus {
@@ -8697,12 +8742,6 @@ body.ach-focus-open { overflow: hidden; }
   min-height: 44px;
   padding: 0 18px;
   font-size: 0.8rem;
-}
-
-.creators-send.is-sending {
-  background-size: 100% 100%, 240% 100%;
-  animation: ctaGlowShift 0.9s linear 1;
-  pointer-events: none;
 }
 
 .creators-msg {
@@ -8753,8 +8792,8 @@ body.ach-focus-open { overflow: hidden; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .creators-send.is-sending {
-    animation: none;
+  .creators-fill {
+    transition: none;
   }
 }
 

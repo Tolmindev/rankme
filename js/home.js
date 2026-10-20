@@ -454,26 +454,36 @@
 
   async function loadCommunity() {
     if (!els.community) return;
+    var rows = null;
+    for (var attempt = 0; attempt < 2; attempt++) {
+      try {
+        if (typeof listPublicTierlists !== 'function') throw new Error('no api');
+        rows = await listPublicTierlists(48);
+        break;
+      } catch (e) {
+        rows = null;
+        if (attempt === 0) await new Promise(function (r) { setTimeout(r, 450); });
+      }
+    }
     try {
-      if (typeof listPublicTierlists !== 'function') throw new Error('no api');
-      if (typeof fetchApprovedExpertIds === 'function') {
-        await fetchApprovedExpertIds();
-      }
-      var rows = await listPublicTierlists(48);
-      if (!rows || !rows.length) throw new Error('empty');
-      if (typeof fetchProfileHandles === 'function') {
-        await fetchProfileHandles(rows.map(function (r) { return r.user_id; }));
-      }
-      state.communityRows = rows;
-      state.communityVisible = null;
-      paintCommunity();
-    } catch (e) {
+      if (typeof fetchApprovedExpertIds === 'function') await fetchApprovedExpertIds();
+    } catch (e) {}
+    if (!rows || !rows.length) {
       state.communityRows = null;
       els.community.innerHTML =
         communityHeadHtml() +
         '<div class="community-empty"><p>No public lists yet</p></div>';
       wireCommunityPills(els.community);
+      return;
     }
+    if (typeof fetchProfileHandles === 'function') {
+      try {
+        await fetchProfileHandles(rows.map(function (r) { return r.user_id; }));
+      } catch (e) {}
+    }
+    state.communityRows = rows;
+    state.communityVisible = null;
+    paintCommunity();
   }
 
 

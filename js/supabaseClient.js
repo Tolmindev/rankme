@@ -233,24 +233,24 @@ function publishHintText(left) {
 async function listPublicTierlists(limit) {
   const client = await initSupabase();
   if (!client) return [];
-  await getSessionUser();
-  const { data, error } = await client
+  try { await getSessionUser(); } catch (e) {}
+  const cols = 'id, title, template_id, updated_at, created_at, user_id, is_public, like_count, view_count, author_name, author_avatar';
+  const run = () => client
     .from('tierlists')
-    .select('id, title, template_id, updated_at, created_at, user_id, is_public, like_count, view_count, author_name, author_avatar, payload')
+    .select(cols)
     .eq('is_public', true)
     .order('updated_at', { ascending: false })
-    .limit(limit || 24);
-  if (error) {
-    console.warn('[RankMe] listPublicTierlists', error.message);
-    const { data: d2 } = await client
-      .from('tierlists')
-      .select('id, title, template_id, updated_at, user_id, is_public, like_count')
-      .eq('is_public', true)
-      .order('updated_at', { ascending: false })
-      .limit(limit || 24);
-    return d2 || [];
+    .limit(limit || 48);
+  let res = await run();
+  if (res.error && /jwt|token|session|auth/i.test(String(res.error.message || res.error.code || ''))) {
+    try { await client.auth.refreshSession(); } catch (e) {}
+    res = await run();
   }
-  return data || [];
+  if (res.error) {
+    console.warn('[RankMe] listPublicTierlists', res.error.message);
+    throw res.error;
+  }
+  return res.data || [];
 }
 
 /** Public profile: only is_public lists for a given user_id (works without login). */
@@ -640,7 +640,7 @@ async function fetchApprovedExpertIds() {
   if (window.__rmExpertIds instanceof Set) return window.__rmExpertIds;
   if (expertWait) return expertWait;
   expertWait = (async function () {
-    await getSessionUser();
+    try { await getSessionUser(); } catch (e) {}
     var client = await initSupabase();
     if (!client) return new Set();
     var res = await client.from('expert_requests').select('user_id').eq('status', 'approved');

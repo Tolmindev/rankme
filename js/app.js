@@ -1246,16 +1246,28 @@ document.getElementById('sizeResetBtn').addEventListener('click', ()=>{
   setCardSize(def);
 });
 
-function showConfirm(title, text, onConfirm){
+function showConfirm(title, text, onConfirm, opts){
+  opts = opts || {};
   const modal = document.getElementById('confirmModal');
   document.getElementById('confirmTitle').textContent = title;
   document.getElementById('confirmText').textContent = text;
   modal.classList.add('open');
   const ok = document.getElementById('confirmOk');
   const cancel = document.getElementById('confirmCancel');
-  const cleanup = ()=>{ modal.classList.remove('open'); ok.removeEventListener('click', onOk); cancel.removeEventListener('click', onCancel); };
-  const onOk = ()=>{ cleanup(); onConfirm(); };
-  const onCancel = ()=> cleanup();
+  const prevOk = ok.textContent;
+  const prevCancel = cancel.textContent;
+  if (opts.ok) ok.textContent = opts.ok;
+  if (opts.cancel) cancel.textContent = opts.cancel;
+  const finish = ()=>{
+    modal.classList.remove('open');
+    ok.removeEventListener('click', onOk);
+    cancel.removeEventListener('click', onCancel);
+    ok.textContent = prevOk;
+    cancel.textContent = prevCancel;
+    if (opts.node) opts.node.remove();
+  };
+  const onOk = ()=>{ finish(); onConfirm(); };
+  const onCancel = ()=> finish();
   ok.addEventListener('click', onOk);
   cancel.addEventListener('click', onCancel);
 }
@@ -3128,12 +3140,6 @@ function studioMount() {
     });
     document.getElementById('studioPublish').addEventListener('click', studioAskPublish);
   }
-  const portal = document.getElementById('portalBtn');
-  if (portal) portal.remove();
-  const portals = document.getElementById('portalsBar');
-  if (portals) portals.remove();
-  const board = document.querySelector('.board');
-  if (board) board.style.display = 'none';
   if (!document.getElementById('studioDrawer')) {
     document.body.insertAdjacentHTML('beforeend',
       '<aside class="studio-drawer" id="studioDrawer" hidden>' +
@@ -3170,24 +3176,10 @@ function studioAskPublish() {
   preview.appendChild(coverImg);
   preview.appendChild(row);
   document.getElementById('confirmText').after(preview);
-  const ok = document.getElementById('confirmOk');
-  const cancel = document.getElementById('confirmCancel');
-  const prevOk = ok.textContent;
-  const prevCancel = cancel.textContent;
-  ok.textContent = 'Publish';
-  cancel.textContent = 'Cancel';
-  const cleanup = () => {
-    preview.remove();
-    ok.textContent = prevOk;
-    cancel.textContent = prevCancel;
-  };
-  showConfirm('Publish ' + title + '?', 'It goes on the homepage.', () => {
-    cleanup();
-    studioSave('live');
-  });
-  cancel.addEventListener('click', function once() {
-    cleanup();
-    cancel.removeEventListener('click', once);
+  showConfirm('Publish ' + title + '?', 'It goes on the homepage.', () => studioSave('live'), {
+    ok: 'Publish',
+    cancel: 'Cancel',
+    node: preview
   });
 }
 
@@ -3282,10 +3274,26 @@ async function studioUpload(client, path, blob) {
   return client.storage.from('studio').getPublicUrl(path).data.publicUrl;
 }
 
-async function studioClearFiles(client, id) {
-  const listed = await client.storage.from('studio').list(id);
-  const paths = (listed.data || []).map((f) => id + '/' + f.name);
-  if (paths.length) await client.storage.from('studio').remove(paths);
+async function studioListFiles(client, id) {
+  const names = [];
+  let offset = 0;
+  for (;;) {
+    const listed = await client.storage.from('studio').list(id, { limit: 100, offset: offset });
+    if (listed.error) throw new Error(listed.error.message || 'Could not list files');
+    const batch = listed.data || [];
+    batch.forEach((f) => {
+      if (f && f.name && f.name.charAt(0) !== '.') names.push(f.name);
+    });
+    if (batch.length < 100) break;
+    offset += batch.length;
+  }
+  return names;
+}
+
+async function studioRemoveFiles(client, id, names) {
+  if (!names.length) return;
+  const res = await client.storage.from('studio').remove(names.map((name) => id + '/' + name));
+  if (res.error) throw new Error(res.error.message || 'Could not remove files');
 }
 
 async function studioFreshId(title) {
@@ -3328,7 +3336,6 @@ async function studioSave(status) {
     const client = await initSupabase();
     const id = studioEditId || await studioFreshId(title);
     showToast('Cover…');
-    await studioClearFiles(client, id);
     const coverUrl = await studioUpload(client, id + '/cover.webp', await studioBlob(cover, 1600));
     const thumbUrl = await studioUpload(client, id + '/cover_thumb.webp', await studioBlob(cover, 640));
     const cards = [];
@@ -3360,6 +3367,10 @@ async function studioSave(status) {
       : await client.from('studio_templates').insert(Object.assign({ id: id }, payload));
     if (res.error) throw new Error(res.error.message || 'Could not save');
     studioEditId = id;
+    const keep = { 'cover.webp': true, 'cover_thumb.webp': true };
+    cards.forEach((card) => { keep[card.file] = true; });
+    const stale = (await studioListFiles(client, id)).filter((name) => !keep[name]);
+    await studioRemoveFiles(client, id, stale);
     showToast(status === 'live' ? 'Live on the homepage' : 'Draft saved');
     if (!document.getElementById('studioDrawer').hidden) studioPaintDrawer();
   } catch (err) {
@@ -3404,8 +3415,6 @@ async function studioOpen(id) {
   state.customCards = {};
   state.assignment = {};
   state.tiers.forEach((t) => { state.assignment[t.id] = []; });
-  const first = state.tiers[0] && state.tiers[0].id;
-  state.assignment[first] = [];
   state.pool = [];
   (row.cards || []).forEach((card) => {
     const cid = customIdSeq++;
@@ -3418,27 +3427,19 @@ async function studioOpen(id) {
 }
 
 function studioAskDelete(id, name) {
-  const ok = document.getElementById('confirmOk');
-  const cancel = document.getElementById('confirmCancel');
-  const prevOk = ok.textContent;
-  const prevCancel = cancel.textContent;
-  ok.textContent = 'Delete';
-  cancel.textContent = 'Keep';
-  const restore = () => { ok.textContent = prevOk; cancel.textContent = prevCancel; };
   showConfirm('Delete ' + name + '?', 'This removes the list.', async () => {
-    restore();
     const client = await initSupabase();
-    try { await studioClearFiles(client, id); } catch (e) {}
-    const res = await client.from('studio_templates').delete().eq('id', id);
-    if (res.error) return showToast(res.error.message || 'Could not delete');
-    if (studioEditId === id) studioEditId = null;
-    showToast('Removed');
-    studioPaintDrawer();
-  });
-  cancel.addEventListener('click', function once() {
-    restore();
-    cancel.removeEventListener('click', once);
-  });
+    try {
+      await studioRemoveFiles(client, id, await studioListFiles(client, id));
+      const res = await client.from('studio_templates').delete().eq('id', id);
+      if (res.error) throw new Error(res.error.message || 'Could not delete');
+      if (studioEditId === id) studioEditId = null;
+      showToast('Removed');
+      studioPaintDrawer();
+    } catch (err) {
+      showToast(err.message || 'Could not delete');
+    }
+  }, { ok: 'Delete', cancel: 'Keep' });
 }
 
 async function studioPaintDrawer() {

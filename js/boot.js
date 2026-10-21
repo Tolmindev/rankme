@@ -171,7 +171,7 @@
       try { applyHero(t); } catch (e) { console.error(e); }
       showApp();
       const s = document.createElement('script');
-      s.src = 'js/app.js?v=20261021c';
+      s.src = 'js/app.js?v=20261021d';
       s.onerror = () => fail('Failed to load app.js');
       document.body.appendChild(s);
     })

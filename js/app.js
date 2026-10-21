@@ -1678,7 +1678,8 @@ document.getElementById('saveAccountBtn')?.addEventListener('click', async ()=>{
     showToast('Ranking Saved');
   }catch(e){
     console.error(e);
-    showToast('Could not save. Try again in a moment.');
+    var code = e && (e.code || '');
+    showToast(code ? ('Could not save (' + code + ')') : 'Could not save. Try again in a moment.');
   }
 });
 

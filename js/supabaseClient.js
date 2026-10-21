@@ -126,22 +126,14 @@ async function saveExclusiveTierlist({ title, templateId, payload, id }) {
     updated_at: now,
   };
   if (id) {
-    const upd = await client.from('tierlists').update(patch).eq('id', id).eq('user_id', user.id).select('id').limit(1);
+    const upd = await client.from('tierlists').update(patch, { count: 'exact' }).eq('id', id).eq('user_id', user.id);
     if (upd.error) throw upd.error;
-    if (upd.data && upd.data[0]) return upd.data[0];
+    if (upd.count > 0) return { id };
   }
   const newId = crypto.randomUUID();
-  let ins;
-  try {
-    ins = await client.from('tierlists').insert(Object.assign({ id: newId, created_at: now, is_public: false }, patch)).select('id').limit(1);
-  } catch (e) {
-    ins = { error: e, data: null };
-  }
-  if (!ins.error && ins.data && ins.data[0]) return ins.data[0];
-  const check = await client.from('tierlists').select('id').eq('id', newId).eq('user_id', user.id).limit(1);
-  if (!check.error && check.data && check.data[0]) return check.data[0];
+  const ins = await client.from('tierlists').insert(Object.assign({ id: newId, created_at: now, is_public: false }, patch));
   if (ins.error) throw ins.error;
-  throw new Error('Could not save');
+  return { id: newId };
 }
 
 async function listMyTierlists() {

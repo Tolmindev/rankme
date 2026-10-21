@@ -3053,7 +3053,17 @@ window.addEventListener('hashchange', ()=>{
 
 /* Owner-only homepage lists. Same builder. Hidden for everyone else. */
 
-const STUDIO_CATS = ['games', 'anime', 'movies', 'tv', 'sports', 'music', 'memes', 'technology', 'other'];
+const STUDIO_CATS = [
+  ['games', 'Games'],
+  ['anime', 'Anime'],
+  ['movies', 'Movies'],
+  ['tv', 'TV'],
+  ['sports', 'Sports'],
+  ['music', 'Music'],
+  ['memes', 'Memes'],
+  ['technology', 'Tech'],
+  ['other', 'Other']
+];
 let studioEditId = null;
 
 function studioBoot() {
@@ -3093,23 +3103,22 @@ function studioMount() {
   const hero = document.querySelector('section.hero');
   if (hero && !document.getElementById('studioCats')) {
     const pills = STUDIO_CATS.map((c, i) =>
-      '<button type="button" class="studio-cat' + (i === 0 ? ' is-on' : '') + '" data-cat="' + c + '">' +
-      c.charAt(0).toUpperCase() + c.slice(1) + '</button>'
+      '<button type="button" class="cat-chip' + (i === 0 ? ' active' : '') + '" data-cat="' + c[0] + '">' + c[1] + '</button>'
     ).join('');
     hero.insertAdjacentHTML('beforeend', '<div class="studio-cats" id="studioCats">' + pills + '</div>');
     document.getElementById('studioCats').addEventListener('click', (e) => {
       const btn = e.target.closest('[data-cat]');
       if (!btn) return;
-      document.querySelectorAll('#studioCats .studio-cat').forEach((b) => b.classList.remove('is-on'));
-      btn.classList.add('is-on');
+      document.querySelectorAll('#studioCats .cat-chip').forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
     });
   }
   const actions = document.querySelector('.toolbar-actions');
   if (actions && !document.getElementById('studioDraft')) {
     actions.insertAdjacentHTML('beforeend',
+      '<button class="pill-btn add" id="studioNew" type="button"><span class="tb-t">New</span></button>' +
       '<button class="pill-btn add" id="studioSaved" type="button"><span class="tb-t">Saved</span></button>' +
       '<button class="pill-btn add" id="studioDraft" type="button"><span class="tb-t">Draft</span></button>' +
-      '<button class="pill-btn add" id="studioNew" type="button"><span class="tb-t">New</span></button>' +
       '<button class="pill-btn fill" id="studioPublish" type="button"><span class="tb-t">Publish</span></button>');
     document.getElementById('studioSaved').addEventListener('click', studioToggleDrawer);
     document.getElementById('studioDraft').addEventListener('click', () => studioSave('draft'));
@@ -3200,13 +3209,13 @@ function studioToggleDrawer() {
 }
 
 function studioCat() {
-  const on = document.querySelector('#studioCats .studio-cat.is-on');
+  const on = document.querySelector('#studioCats .cat-chip.active');
   return on ? on.getAttribute('data-cat') : 'games';
 }
 
 function studioSetCat(cat) {
-  document.querySelectorAll('#studioCats .studio-cat').forEach((b) => {
-    b.classList.toggle('is-on', b.getAttribute('data-cat') === cat);
+  document.querySelectorAll('#studioCats .cat-chip').forEach((b) => {
+    b.classList.toggle('active', b.getAttribute('data-cat') === cat);
   });
 }
 

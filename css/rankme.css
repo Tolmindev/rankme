@@ -2178,14 +2178,14 @@ body.studio-owner .studio-label {
   pointer-events: auto;
   cursor: text;
 }
-body.studio-owner .board,
-body.studio-owner #addRowBtn,
-body.studio-owner #fillAllBtn,
-body.studio-owner #clearAllBtn,
-body.studio-owner .tb-row2,
-body.studio-owner .tb-share,
-body.studio-owner #portalBtn,
-body.studio-owner #portalsBar {
+html.studio-owner .board,
+html.studio-owner #addRowBtn,
+html.studio-owner #fillAllBtn,
+html.studio-owner #clearAllBtn,
+html.studio-owner .tb-row2,
+html.studio-owner .tb-share,
+html.studio-owner #portalBtn,
+html.studio-owner #portalsBar {
   display: none;
 }
 body.studio-owner .studio-cats {

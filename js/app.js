@@ -2565,7 +2565,6 @@ function applyBattleResult(){
   }
 }
 
-(async ()=>{
   if(CARD_SHAPE === 'square') document.body.classList.add('card-square');
   if(CARD_SHAPE === 'landscape') document.body.classList.add('card-landscape');
   if(CARD_FRAME === 'thin') document.body.classList.add('card-thin');
@@ -2925,6 +2924,7 @@ function setupCommunityUI() {
 }
 
   // Community (?c=)
+(async ()=>{
   if (typeof tryLoadCommunityFromQuery === 'function') {
     await tryLoadCommunityFromQuery();
   }

@@ -3148,6 +3148,7 @@ function studioMount() {
       '</aside>');
     document.getElementById('studioClose').addEventListener('click', studioCloseDrawer);
   }
+  studioPaintStorage();
 }
 
 function studioAskPublish() {
@@ -3362,6 +3363,7 @@ async function studioSave(status) {
     const stale = (await studioListFiles(client, id)).filter((name) => !keep[name]);
     await studioRemoveFiles(client, id, stale);
     showToast(status === 'live' ? 'Live on the homepage' : 'Draft saved');
+    studioPaintStorage();
     if (!document.getElementById('studioDrawer').hidden) studioPaintDrawer();
   } catch (err) {
     showToast(err.message || 'Could not save');
@@ -3425,6 +3427,7 @@ function studioAskDelete(id, name) {
       if (res.error) throw new Error(res.error.message || 'Could not delete');
       if (studioEditId === id) studioEditId = null;
       showToast('Removed');
+      studioPaintStorage();
       studioPaintDrawer();
     } catch (err) {
       showToast(err.message || 'Could not delete');
@@ -3470,6 +3473,28 @@ async function studioPaintDrawer() {
       studioAskDelete(id, (row && row.title) || 'this list');
     });
   });
+}
+
+function studioPaintStorage() {
+  const box = document.getElementById('studioStorage');
+  const fill = document.getElementById('studioStorageFill');
+  const text = document.getElementById('studioStorageText');
+  if (!box || !fill || !text) return;
+  const limit = 1024 * 1024 * 1024;
+  initSupabase().then((client) => client.rpc('studio_storage_used')).then((res) => {
+    const used = Number(res.data);
+    if (res.error || !Number.isFinite(used)) {
+      box.hidden = true;
+      return;
+    }
+    const safe = Math.max(0, used);
+    const free = Math.max(0, limit - safe);
+    const pct = Math.min(100, (safe / limit) * 100);
+    box.hidden = false;
+    box.classList.toggle('is-tight', pct >= 85);
+    fill.style.width = pct + '%';
+    text.textContent = Math.round(free / (1024 * 1024)) + ' MB free';
+  }).catch(() => { box.hidden = true; });
 }
 
 studioBoot();

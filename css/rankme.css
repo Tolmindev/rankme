@@ -2297,6 +2297,34 @@ body.studio-owner .studio-empty {
   font-weight: 300;
   color: rgba(226, 214, 244, 0.7);
 }
+.studio-storage {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.studio-storage[hidden] { display: none; }
+.studio-storage-track {
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+}
+.studio-storage-track span {
+  display: block;
+  height: 100%;
+  width: 0;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #6a5ac8, #b79bf0);
+}
+.studio-storage.is-tight span { background: var(--holo-warm); }
+.studio-storage p {
+  margin: 0;
+  font-weight: 300;
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.55);
+}
 .modal:has(.studio-pub-preview) {
   width: min(560px, 92vw);
 }

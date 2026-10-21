@@ -3112,8 +3112,14 @@ function studioMount() {
       '<button class="pill-btn fill" id="studioPublish" type="button"><span class="tb-t">Publish</span></button>');
     document.getElementById('studioSaved').addEventListener('click', studioToggleDrawer);
     document.getElementById('studioDraft').addEventListener('click', () => studioSave('draft'));
-    document.getElementById('studioPublish').addEventListener('click', () => studioSave('live'));
+    document.getElementById('studioPublish').addEventListener('click', studioAskPublish);
   }
+  const portal = document.getElementById('portalBtn');
+  if (portal) portal.remove();
+  const portals = document.getElementById('portalsBar');
+  if (portals) portals.remove();
+  const board = document.querySelector('.board');
+  if (board) board.style.display = 'none';
   if (!document.getElementById('studioDrawer')) {
     document.body.insertAdjacentHTML('beforeend',
       '<aside class="studio-drawer" id="studioDrawer" hidden>' +
@@ -3127,6 +3133,53 @@ function studioMount() {
       } else studioReset();
     });
   }
+}
+
+function studioAskPublish() {
+  const title = (document.getElementById('heroTitle').textContent || '').replace(/\s+/g, ' ').trim();
+  const cover = studioCoverSrc();
+  const ids = studioCardIds();
+  if (title.length < 2) return showToast('Title is too short');
+  if (!cover) return showToast('Add a cover');
+  if (!ids.length) return showToast('Add images');
+  document.querySelectorAll('.studio-pub-preview').forEach((n) => n.remove());
+  const preview = document.createElement('div');
+  preview.className = 'studio-pub-preview';
+  const coverImg = document.createElement('img');
+  coverImg.className = 'cover';
+  coverImg.alt = '';
+  coverImg.src = cover;
+  const row = document.createElement('div');
+  row.className = 'row';
+  ids.forEach((id) => {
+    const card = state.customCards[id];
+    const img = document.createElement('img');
+    img.alt = card.name || '';
+    img.src = card.src;
+    row.appendChild(img);
+  });
+  preview.appendChild(coverImg);
+  preview.appendChild(row);
+  document.getElementById('confirmText').after(preview);
+  const ok = document.getElementById('confirmOk');
+  const cancel = document.getElementById('confirmCancel');
+  const prevOk = ok.textContent;
+  const prevCancel = cancel.textContent;
+  ok.textContent = 'Publish';
+  cancel.textContent = 'Cancel';
+  const cleanup = () => {
+    preview.remove();
+    ok.textContent = prevOk;
+    cancel.textContent = prevCancel;
+  };
+  showConfirm('Publish ' + title + '?', 'It goes on the homepage.', () => {
+    cleanup();
+    studioSave('live');
+  });
+  cancel.addEventListener('click', function once() {
+    cleanup();
+    cancel.removeEventListener('click', once);
+  });
 }
 
 function studioHasCards() {

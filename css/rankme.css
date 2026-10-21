@@ -2276,6 +2276,36 @@ body.studio-owner .studio-empty {
   font-weight: 300;
   color: rgba(226, 214, 244, 0.7);
 }
+.modal:has(.studio-pub-preview) {
+  width: min(560px, 92vw);
+}
+.studio-pub-preview {
+  display: grid;
+  gap: 10px;
+  margin: 12px 0 2px;
+}
+.studio-pub-preview .cover {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 12px;
+  background: #100d18;
+}
+.studio-pub-preview .row {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.studio-pub-preview .row::-webkit-scrollbar { display: none; }
+.studio-pub-preview .row img {
+  width: 64px;
+  height: 86px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex: 0 0 64px;
+  background: #100d18;
+}
 
 /* Editable fields: same padding on title + desc (aligned), air around text */
 .hero > .hero-text > .hero-title,

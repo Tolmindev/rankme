@@ -89,6 +89,12 @@
       "file": "13_The_Last_Titan.webp",
       "name": "The Last Titan",
       "faction": "ALL"
+    },
+    {
+      "id": 14,
+      "file": "14_Forever.webp",
+      "name": "Forever",
+      "faction": "ALL"
     }
   ]
 }

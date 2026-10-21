@@ -2183,7 +2183,9 @@ body.studio-owner #addRowBtn,
 body.studio-owner #fillAllBtn,
 body.studio-owner #clearAllBtn,
 body.studio-owner .tb-row2,
-body.studio-owner .tb-share {
+body.studio-owner .tb-share,
+body.studio-owner #portalBtn,
+body.studio-owner #portalsBar {
   display: none;
 }
 body.studio-owner .studio-cats {

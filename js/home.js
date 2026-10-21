@@ -452,22 +452,27 @@
     }
   }
 
+  var communityFetch = null;
+
+  function fetchCommunityRows() {
+    if (communityFetch) return communityFetch;
+    communityFetch = (async function () {
+      for (var attempt = 0; attempt < 2; attempt++) {
+        try {
+          if (typeof listPublicTierlists !== 'function') throw new Error('no api');
+          return await listPublicTierlists(48);
+        } catch (e) {
+          if (attempt === 0) await new Promise(function (r) { setTimeout(r, 250); });
+        }
+      }
+      return null;
+    })();
+    return communityFetch;
+  }
+
   async function loadCommunity() {
     if (!els.community) return;
-    var rows = null;
-    for (var attempt = 0; attempt < 2; attempt++) {
-      try {
-        if (typeof listPublicTierlists !== 'function') throw new Error('no api');
-        rows = await listPublicTierlists(48);
-        break;
-      } catch (e) {
-        rows = null;
-        if (attempt === 0) await new Promise(function (r) { setTimeout(r, 450); });
-      }
-    }
-    try {
-      if (typeof fetchApprovedExpertIds === 'function') await fetchApprovedExpertIds();
-    } catch (e) {}
+    var rows = await fetchCommunityRows();
     if (!rows || !rows.length) {
       state.communityRows = null;
       els.community.innerHTML =
@@ -476,14 +481,17 @@
       wireCommunityPills(els.community);
       return;
     }
-    if (typeof fetchProfileHandles === 'function') {
-      try {
-        await fetchProfileHandles(rows.map(function (r) { return r.user_id; }));
-      } catch (e) {}
-    }
     state.communityRows = rows;
     state.communityVisible = null;
     paintCommunity();
+    var jobs = [];
+    if (typeof fetchApprovedExpertIds === 'function') jobs.push(fetchApprovedExpertIds().catch(function () {}));
+    if (typeof fetchProfileHandles === 'function') {
+      jobs.push(fetchProfileHandles(rows.map(function (r) { return r.user_id; })).catch(function () {}));
+    }
+    if (!jobs.length) return;
+    await Promise.all(jobs);
+    if (state.communityRows === rows) paintCommunity();
   }
 
 
@@ -622,21 +630,29 @@
     }));
   }
 
+  fetchCommunityRows();
+
   RankMeCatalog.load()
-    .then(async function (catalog) {
-      var stats = {};
-      try { if (typeof fetchTemplateStats === 'function') stats = await fetchTemplateStats(); } catch (e) {}
-      catalog = mergeUseCounts(catalog, stats);
-      await indexTemplateCards(catalog.templates || []);
+    .then(function (catalog) {
       init(catalog);
+      var statsP = (typeof fetchTemplateStats === 'function')
+        ? fetchTemplateStats().catch(function () { return {}; })
+        : Promise.resolve({});
+      statsP.then(function (stats) {
+        mergeUseCounts(catalog, stats);
+        if (state.sort === 'popular' && !state.query) renderGrid();
+      });
+      indexTemplateCards(catalog.templates || []).then(function () {
+        if (state.query) {
+          renderGrid();
+          paintCommunity();
+        }
+      });
       if (window.RankMeAch && typeof getSessionUser === 'function') {
-        try {
-          var u = await getSessionUser();
-          if (u) {
-            await RankMeAch.load();
-            await RankMeAch.sync(u);
-          }
-        } catch (e) {}
+        getSessionUser().then(function (u) {
+          if (!u) return;
+          return RankMeAch.load().then(function () { return RankMeAch.sync(u); });
+        }).catch(function () {});
       }
     })
     .catch(function (e) {

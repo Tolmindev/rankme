@@ -223,7 +223,6 @@ function publishHintText(left) {
 async function listPublicTierlists(limit) {
   const client = await initSupabase();
   if (!client) return [];
-  try { await getSessionUser(); } catch (e) {}
   const cols = 'id, title, template_id, updated_at, created_at, user_id, is_public, like_count, view_count, author_name, author_avatar';
   const run = () => client
     .from('tierlists')

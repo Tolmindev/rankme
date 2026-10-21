@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Studio - RankMe</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
-<script src="js/supabaseClient.js?v=20261021r" defer></script>
+<script src="js/supabaseClient.js?v=20261021s" defer></script>
 <link rel="icon" href="favicon.ico" sizes="48x48">
 <link rel="icon" type="image/png" sizes="48x48" href="assets/brand/favicon-48.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,24 +14,63 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200..900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/rankme.css?v=20261021q">
 <style>
-  .studio { max-width: 720px; margin: 28px auto 80px; padding: 0 16px; }
-  .studio h1 { margin: 0 0 6px; font-size: 1.6rem; font-weight: 800; }
-  .studio .lead { margin: 0 0 22px; font-weight: 300; color: rgba(255,255,255,.72); }
-  .studio form, .studio-list { display: grid; gap: 14px; }
-  .studio label { display: grid; gap: 6px; font-size: .78rem; font-weight: 600; color: #c9bddf; }
-  .studio input, .studio textarea, .studio select {
-    width: 100%; box-sizing: border-box; border-radius: 12px; border: 1px solid rgba(180,150,230,.35);
-    background: #14111c; color: #fff; font: inherit; font-weight: 500; padding: 10px 12px;
+  .studio { max-width: 880px; margin: 28px auto 88px; padding: 0 18px; }
+  .studio h1 { margin: 0; font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 800; letter-spacing: -0.03em; }
+  .studio .lead { margin: 6px 0 26px; font-weight: 300; color: rgba(226, 214, 244, 0.72); }
+  .studio h2 { margin: 28px 0 12px; font-size: 1rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: #cbb6ea; }
+  .studio-form, .studio-grid { display: grid; gap: 14px; }
+  .studio label, .studio-field { display: grid; gap: 7px; font-size: 0.74rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: #b7a6d4; }
+  .studio input, .studio textarea {
+    width: 100%; box-sizing: border-box; border-radius: 14px;
+    border: 1px solid rgba(183, 155, 240, 0.28);
+    background: rgba(255, 255, 255, 0.03); color: #fff;
+    font: inherit; font-weight: 500; font-size: 0.95rem; letter-spacing: 0; text-transform: none;
+    padding: 12px 14px; outline: none;
   }
-  .studio-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-  .studio .show-all-btn { justify-self: start; }
-  .studio-msg { min-height: 1.2em; margin: 12px 0 0; font-size: .78rem; font-weight: 200; color: #b7f0c8; }
+  .studio input:focus, .studio textarea:focus { border-color: rgba(214, 186, 255, 0.85); }
+  .studio-row { display: grid; grid-template-columns: 1.4fr 0.8fr; gap: 14px; }
+  .studio-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+  .studio-pills button {
+    border-radius: 999px; border: 1px solid rgba(183, 155, 240, 0.45);
+    background: transparent; color: #e6dcf6; font: inherit; font-size: 0.78rem; font-weight: 600;
+    padding: 7px 12px; cursor: pointer;
+  }
+  .studio-pills button.is-on { background: rgba(168, 120, 255, 0.22); border-color: #d2b4ff; color: #fff; }
+  .studio-file { display: flex; align-items: center; gap: 12px; min-height: 46px; }
+  .studio-file button, .studio-ghost, .studio-mini {
+    border-radius: 999px; border: 1px solid rgba(183, 155, 240, 0.5);
+    background: transparent; color: #fff; font: inherit; font-weight: 600; cursor: pointer;
+  }
+  .studio-file button, .studio-ghost { padding: 10px 16px; font-weight: 600; }
+  .studio-file span { font-weight: 300; font-size: 0.86rem; letter-spacing: 0; text-transform: none; color: rgba(226, 214, 244, 0.7); }
+  .studio-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .studio .show-all-btn { width: auto; margin: 0; }
+  .studio-msg { min-height: 1.2em; margin: 12px 0 0; font-size: 0.78rem; font-weight: 200; color: #b7f0c8; }
   .studio-msg.is-bad { color: #ffb4c4; }
-  .studio-list { list-style: none; margin: 28px 0 0; padding: 0; }
-  .studio-list li { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 0; border-top: 1px solid rgba(255,255,255,.08); }
-  .studio-list a { color: #fff; font-weight: 700; text-decoration: none; }
-  .studio-del { border: 0; background: none; color: #ffb4c4; font: inherit; font-weight: 600; cursor: pointer; }
-  @media (max-width: 640px) { .studio-row { grid-template-columns: 1fr; } }
+  .studio-preview { display: grid; gap: 12px; }
+  .studio-preview img.cover, .studio-look img.cover { width: min(100%, 420px); aspect-ratio: 16 / 9; object-fit: cover; border-radius: 16px; background: #100d18; }
+  .studio-cards, .studio-look-cards { display: flex; gap: 8px; overflow: auto; padding-bottom: 6px; }
+  .studio-cards figure, .studio-look-cards figure { margin: 0; width: 92px; flex: 0 0 92px; }
+  .studio-cards img, .studio-look-cards img { width: 92px; height: 124px; object-fit: cover; border-radius: 12px; background: #100d18; display: block; }
+  .studio-cards figcaption, .studio-look-cards figcaption { margin-top: 4px; font-size: 0.68rem; font-weight: 500; letter-spacing: 0; text-transform: none; color: #ddd2ef; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .studio-grid { grid-template-columns: 1fr; }
+  .studio-item {
+    display: grid; grid-template-columns: 92px 1fr; gap: 12px; align-items: center;
+    padding: 10px; border-radius: 16px; border: 1px solid rgba(183, 155, 240, 0.22); background: rgba(255,255,255,0.025);
+  }
+  .studio-item img { width: 92px; height: 58px; object-fit: cover; border-radius: 10px; background: #100d18; }
+  .studio-item strong { display: block; font-weight: 700; }
+  .studio-item em { font-style: normal; font-weight: 300; font-size: 0.78rem; color: rgba(226, 214, 244, 0.65); }
+  .studio-item-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+  .studio-mini { padding: 6px 11px; font-size: 0.75rem; font-weight: 600; text-decoration: none; }
+  .studio-mini.is-danger { border-color: rgba(255, 140, 170, 0.55); color: #ffc3d2; }
+  .studio-modal { position: fixed; inset: 0; z-index: 80; display: grid; place-items: center; padding: 20px; background: rgba(8, 6, 14, 0.72); }
+  .studio-modal[hidden] { display: none; }
+  .studio-modal-card { width: min(760px, 100%); max-height: min(86vh, 820px); overflow: auto; padding: 22px; border-radius: 18px; background: #161224; border: 1px solid rgba(210, 180, 255, 0.45); box-shadow: 0 24px 60px rgba(0,0,0,0.45); }
+  .studio-modal-card h2 { margin: 0 0 8px; text-transform: none; letter-spacing: -0.02em; font-size: 1.25rem; color: #fff; }
+  .studio-modal-card p { margin: 0 0 14px; font-weight: 300; color: rgba(226, 214, 244, 0.78); }
+  .studio-modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 16px; }
+  @media (max-width: 640px) { .studio-row, .studio-item { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -48,6 +87,13 @@
   <div id="studio"><p>Opening…</p></div>
   <p class="studio-msg" id="studioMsg"></p>
 </main>
-<script src="js/studio.js?v=20261021r" defer></script>
+<div class="studio-modal" id="studioModal" hidden>
+  <div class="studio-modal-card" role="dialog" aria-modal="true">
+    <h2 id="studioModalTitle"></h2>
+    <div id="studioModalBody"></div>
+    <div class="studio-modal-actions" id="studioModalActions"></div>
+  </div>
+</div>
+<script src="js/studio.js?v=20261021s" defer></script>
 </body>
 </html>

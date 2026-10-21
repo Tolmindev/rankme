@@ -973,6 +973,7 @@ async function listStudioCatalog() {
   if (!client) return [];
   var res = await client.from('studio_templates')
     .select('id,title,description,category,item_label,cover_url,cover_thumb_url,names,item_count,created_at')
+    .eq('status', 'live')
     .order('created_at', { ascending: false });
   if (res.error || !res.data) return [];
   return res.data.map(studioCatalogRow);

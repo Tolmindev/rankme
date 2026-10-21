@@ -3164,17 +3164,7 @@ function studioAskPublish() {
   coverImg.className = 'cover';
   coverImg.alt = '';
   coverImg.src = cover;
-  const row = document.createElement('div');
-  row.className = 'row';
-  ids.forEach((id) => {
-    const card = state.customCards[id];
-    const img = document.createElement('img');
-    img.alt = card.name || '';
-    img.src = card.src;
-    row.appendChild(img);
-  });
   preview.appendChild(coverImg);
-  preview.appendChild(row);
   document.getElementById('confirmText').after(preview);
   showConfirm('Publish ' + title + '?', 'It goes on the homepage.', () => studioSave('live'), {
     ok: 'Publish',

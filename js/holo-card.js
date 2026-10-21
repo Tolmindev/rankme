@@ -34,12 +34,10 @@
   function cardHtml(item) {
     var rare = '';
     if (item && (item.rarity === 'legendary' || item.rarity === 'mythic')) rare = ' is-' + item.rarity;
-    var stars = item && item.rarity === 'mythic' ? '<span class="ach-stars" aria-hidden="true"></span>' : '';
     return (
       '<button type="button" class="ach-card' + rare + '" data-ach="' + esc(item.id) + '" aria-label="' + esc(item.title) + '">' +
         '<span class="ach-card-face">' +
           '<img class="ach-art" src="' + item.img + '" alt="">' +
-          stars +
           '<span class="ach-foil" aria-hidden="true"></span>' +
           '<span class="ach-sheen" aria-hidden="true"></span>' +
           '<span class="ach-glare" aria-hidden="true"></span>' +

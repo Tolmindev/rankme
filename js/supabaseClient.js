@@ -126,13 +126,13 @@ async function saveExclusiveTierlist({ title, templateId, payload, id }) {
     updated_at: now,
   };
   if (id) {
-    const upd = await client.from('tierlists').update(patch, { count: 'exact' }).eq('id', id).eq('user_id', user.id);
-    if (upd.error) throw upd.error;
-    if (upd.count > 0) return { id };
+    const upd = await client.from('tierlists').update(patch).eq('id', id).eq('user_id', user.id);
+    if (upd.error && !(upd.status >= 200 && upd.status < 300)) throw upd.error;
+    return { id };
   }
   const newId = crypto.randomUUID();
   const ins = await client.from('tierlists').insert(Object.assign({ id: newId, created_at: now, is_public: false }, patch));
-  if (ins.error) throw ins.error;
+  if (ins.error && !(ins.status >= 200 && ins.status < 300)) throw ins.error;
   return { id: newId };
 }
 

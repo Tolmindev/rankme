@@ -1678,8 +1678,8 @@ document.getElementById('saveAccountBtn')?.addEventListener('click', async ()=>{
     showToast('Ranking Saved');
   }catch(e){
     console.error(e);
-    var code = e && (e.code || '');
-    showToast(code ? ('Could not save (' + code + ')') : 'Could not save. Try again in a moment.');
+    var msg = e && e.message ? String(e.message).trim() : '';
+    showToast(msg && msg.length < 140 && msg.charAt(0) !== '<' ? msg : 'Could not save. Try again in a moment.');
   }
 });
 

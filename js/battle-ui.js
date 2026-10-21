@@ -30,6 +30,13 @@
       .then(function (r) {
         if (!r.ok) throw new Error('Template not found');
         return r.json();
+      })
+      .catch(function () {
+        if (typeof getStudioTemplate !== 'function') throw new Error('Template not found');
+        return getStudioTemplate(templateId).then(function (t) {
+          if (!t) throw new Error('Template not found');
+          return t;
+        });
       });
     var selectReady = false;
     var starting = false;

@@ -10,11 +10,20 @@
     pending = fetch('templates/catalog.json', { cache: 'no-cache' })
       .then(function (r) { return r.ok ? r.json() : { templates: [] }; })
       .then(function (data) {
-        byId = {};
-        (data.templates || []).forEach(function (t) {
-          if (t && t.id) byId[t.id] = t;
+        data.templates = data.templates || [];
+        var extra = (typeof listStudioCatalog === 'function')
+          ? listStudioCatalog().catch(function () { return []; })
+          : Promise.resolve([]);
+        return extra.then(function (rows) {
+          rows.forEach(function (t) {
+            if (t && t.id && !data.templates.some(function (x) { return x.id === t.id; })) data.templates.push(t);
+          });
+          byId = {};
+          data.templates.forEach(function (t) {
+            if (t && t.id) byId[t.id] = t;
+          });
+          return data;
         });
-        return data;
       })
       .catch(function () {
         byId = {};

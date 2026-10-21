@@ -732,7 +732,7 @@ var HANDLE_RESERVED = {
   admin:1, api:1, css:1, js:1, account:1, battle:1, builder:1, create:1, dmca:1,
   index:1, privacy:1, terms:1, tier:1, t:1, assets:1, templates:1, u:1, login:1,
   logout:1, profile:1, profiles:1, expert:1, experts:1, support:1, help:1, www:1,
-  static:1, auth:1, settings:1, rankme:1, 'null':1, undefined:1
+  static:1, auth:1, settings:1, rankme:1, studio:1, 'null':1, undefined:1
 };
 window.__rmHandles = window.__rmHandles || {};
 window.__rmAvatars = window.__rmAvatars || {};
@@ -917,4 +917,71 @@ async function syncMyProfile(user, nameOverride) {
     var av = (user.user_metadata && (user.user_metadata.avatar_url || user.user_metadata.picture)) || '';
     await client.rpc('sync_my_profile', { p_name: name || null, p_avatar: av || null });
   } catch (e) {}
+}
+
+/* ---- Studio templates (official homepage lists, owner only writes) ---- */
+
+function studioCatalogRow(row) {
+  var names = String(row.names || '').split('\n').map(function (s) { return s.trim(); }).filter(Boolean);
+  return {
+    id: row.id,
+    title: row.title,
+    description: row.description || '',
+    cover: row.cover_url,
+    coverThumb: row.cover_thumb_url || row.cover_url,
+    href: 'play.html?t=' + encodeURIComponent(row.id),
+    category: row.category || 'other',
+    tags: [row.category || 'other'],
+    itemCount: row.item_count || 0,
+    itemLabel: row.item_label || 'items',
+    creator: 'RankMe',
+    createdAt: row.created_at ? String(row.created_at).slice(0, 10) : '',
+    featured: false,
+    exclusive: true,
+    parallax: false,
+    cardNames: names
+  };
+}
+
+function studioTemplateRow(row) {
+  return {
+    id: row.id,
+    title: row.title,
+    description: row.description || '',
+    footerLabel: row.title,
+    exportName: 'rankme-' + row.id + '-tierlist.png',
+    cardShape: 'portrait',
+    cardPath: row.card_path,
+    theme: 'default',
+    noFactions: true,
+    cover: row.cover_url,
+    itemLabel: row.item_label || 'items',
+    cards: Array.isArray(row.cards) ? row.cards : []
+  };
+}
+
+async function isStudioAdmin() {
+  var client = await initSupabase();
+  var user = await getSessionUser();
+  if (!client || !user) return false;
+  var res = await client.rpc('is_studio_admin');
+  return !res.error && res.data === true;
+}
+
+async function listStudioCatalog() {
+  var client = await initSupabase();
+  if (!client) return [];
+  var res = await client.from('studio_templates')
+    .select('id,title,description,category,item_label,cover_url,cover_thumb_url,names,item_count,created_at')
+    .order('created_at', { ascending: false });
+  if (res.error || !res.data) return [];
+  return res.data.map(studioCatalogRow);
+}
+
+async function getStudioTemplate(id) {
+  var client = await initSupabase();
+  if (!client || !id) return null;
+  var res = await client.from('studio_templates').select('*').eq('id', id).maybeSingle();
+  if (res.error || !res.data) return null;
+  return studioTemplateRow(res.data);
 }

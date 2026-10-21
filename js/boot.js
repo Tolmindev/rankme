@@ -162,11 +162,18 @@
 
   fetch('templates/' + id + '.json', { cache: 'no-cache' })
     .then((r) => {
-      if (!r.ok) throw new Error('Template not found: ' + id);
+      if (!r.ok) throw new Error('miss');
       return r.json();
     })
+    .catch(() => {
+      const load = () => (typeof getStudioTemplate === 'function' ? getStudioTemplate(id) : Promise.resolve(null));
+      if (typeof getStudioTemplate === 'function') return load();
+      return new Promise((resolve) => {
+        document.addEventListener('DOMContentLoaded', () => resolve(load()), { once: true });
+      });
+    })
     .then((t) => {
-      if (!t || !t.id) throw new Error('Bad template');
+      if (!t || !t.id) throw new Error('Template not found: ' + id);
       window.RANKME_TEMPLATE = t;
       try { applyHero(t); } catch (e) { console.error(e); }
       showApp();

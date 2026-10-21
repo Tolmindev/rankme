@@ -125,13 +125,23 @@
         paint(t.title || templateId, n + ' ' + label);
       })
       .catch(function () {
-        if (arena) {
-          arena.innerHTML =
-            '<div class="battle-panel" style="margin:0 auto;opacity:1;transform:none">' +
-            '<h2>Could not load</h2>' +
-            '<a class="cta primary" href="index.html">Back to RankMe</a></div>';
-        }
+        if (typeof getStudioTemplate !== 'function') return failLoad();
+        getStudioTemplate(templateId).then(function (t) {
+          if (!t) return failLoad();
+          var n = (t.cards || []).length;
+          if (t.cover) setHaze(t.cover);
+          paint(t.title || templateId, n + ' ' + (t.itemLabel || 'cards'));
+        }).catch(failLoad);
       });
+  }
+
+  function failLoad() {
+    if (arena) {
+      arena.innerHTML =
+        '<div class="battle-panel" style="margin:0 auto;opacity:1;transform:none">' +
+        '<h2>Could not load</h2>' +
+        '<a class="cta primary" href="index.html">Back to RankMe</a></div>';
+    }
   }
 
   function fromCatalog() {

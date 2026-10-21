@@ -605,6 +605,11 @@
 
   function indexTemplateCards(templates) {
     return Promise.all(templates.map(function (t) {
+      if (Array.isArray(t.cardNames)) {
+        t._hay = buildHay(t, t.cardNames);
+        state.hayById[t.id] = t._hay;
+        return Promise.resolve();
+      }
       return fetch('templates/' + encodeURIComponent(t.id) + '.json', { cache: 'force-cache' })
         .then(function (r) { return r.ok ? r.json() : null; })
         .then(function (data) {

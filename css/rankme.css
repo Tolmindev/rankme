@@ -7404,6 +7404,24 @@ body.ach-focus-open { overflow: hidden; }
 .ap-name-row .expert-badge.is-on {
   filter: drop-shadow(0 0 3px rgba(255, 90, 140, 0.4));
 }
+.ap-channel {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  margin-left: 6px;
+  color: rgba(214, 196, 244, 0.72);
+  flex: 0 0 18px;
+}
+.ap-channel svg {
+  width: 15px;
+  height: 15px;
+  display: block;
+}
+.ap-channel:hover {
+  color: #fff;
+}
 .ap-name.is-edit:focus + .expert-badge {
   margin-left: 10px;
 }

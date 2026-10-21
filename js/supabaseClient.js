@@ -802,6 +802,36 @@ function profileHrefFor(userId) {
   return 'account.html?u=' + encodeURIComponent(String(userId));
 }
 
+function expertChannel(url) {
+  try {
+    var u = new URL(String(url || ''));
+    if (u.protocol !== 'https:' && u.protocol !== 'http:') return null;
+    var host = u.hostname.replace(/^www\./, '').toLowerCase();
+    if (host === 'rankme.lol' || host.endsWith('.rankme.lol')) return null;
+    var kind = 'link';
+    if (host === 'youtube.com' || host === 'youtu.be' || host === 'm.youtube.com') kind = 'youtube';
+    else if (host === 'twitch.tv') kind = 'twitch';
+    else if (host === 'tiktok.com') kind = 'tiktok';
+    else if (host === 'x.com' || host === 'twitter.com') kind = 'x';
+    return { href: u.href, kind: kind };
+  } catch (e) {
+    return null;
+  }
+}
+
+async function fetchExpertSocialLink(userId) {
+  if (!userId) return '';
+  try {
+    var client = await initSupabase();
+    if (!client) return '';
+    var res = await client.from('expert_requests').select('social_link').eq('user_id', userId).eq('status', 'approved').maybeSingle();
+    if (res.error || !res.data) return '';
+    return res.data.social_link || '';
+  } catch (e) {
+    return '';
+  }
+}
+
 function profileAvatar(userId, fallback) {
   var live = userId && window.__rmAvatars && window.__rmAvatars[userId];
   return live || fallback || '';

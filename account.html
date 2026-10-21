@@ -13,9 +13,9 @@
 <link rel="icon" type="image/png" sizes="192x192" href="assets/brand/favicon-192.png">
 <link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200..900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/rankme.css?v=20261019g">
+<link rel="stylesheet" href="css/rankme.css?v=20261021a">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
-<script src="js/supabaseClient.js?v=20260916o" defer></script>
+<script src="js/supabaseClient.js?v=20261021a" defer></script>
 </head>
 <body class="page-account">
 <div class="aurora" aria-hidden="true"></div>
@@ -282,6 +282,29 @@ async function renderLogin(){
   });
 }
 
+
+function channelSvg(kind) {
+  if (kind === 'youtube') return '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M23 12.2s0-3.2-.4-4.6c-.2-.9-.9-1.6-1.8-1.8C19.2 5.4 12 5.4 12 5.4s-7.2 0-8.8.4c-.9.2-1.6.9-1.8 1.8C1 9 1 12.2 1 12.2s0 3.2.4 4.6c.2.9.9 1.6 1.8 1.8 1.6.4 8.8.4 8.8.4s7.2 0 8.8-.4c.9-.2 1.6-.9 1.8-1.8.4-1.4.4-4.6.4-4.6zM9.8 15.5v-6.6l6.2 3.3-6.2 3.3z"/></svg>';
+  if (kind === 'twitch') return '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 3h16v11l-4 4h-4l-2 2H8v-2H4V3zm2 2v11h3v2l2-2h4l3-3V5H6zm7 2h2v5h-2V7zm-4 0h2v5H9V7z"/></svg>';
+  if (kind === 'tiktok') return '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M14 3h2.2c.3 1.6 1.2 2.9 2.6 3.7 1 .5 1.8.7 2.7.7V10c-1.6 0-3.1-.5-4.4-1.4v6.2c0 3.4-2.7 6.2-6.2 6.2S4.7 18.2 4.7 14.8 7.4 8.6 10.9 8.6c.4 0 .8 0 1.2.1v2.4c-.4-.2-.8-.3-1.2-.3-2.1 0-3.8 1.7-3.8 3.9s1.7 3.9 3.8 3.9 3.8-1.7 3.8-3.9V3z"/></svg>';
+  if (kind === 'x') return '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M14.7 10.3 22.4 2h-1.8l-6.7 7.2L8.4 2H2l8.1 11.2L2 22h1.8l7.1-7.6L15.6 22H22l-7.3-11.7zm-2.5 2.7-.8-1.1L4.6 3.3h2.8l5.2 7.1.8 1.1 6.9 9.2h-2.8l-5.3-7.7z"/></svg>';
+  return '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M14 5h5v5M19 5l-9 9M10 6H6v12h12v-4"/></svg>';
+}
+
+function channelIconHtml(url) {
+  var info = typeof expertChannel === 'function' ? expertChannel(url) : null;
+  if (!info) return '';
+  var labels = { youtube: 'YouTube', twitch: 'Twitch', tiktok: 'TikTok', x: 'X', link: 'Channel' };
+  return '<a class="ap-channel" href="' + info.href.replace(/"/g, '"') + '" target="_blank" rel="noopener noreferrer" aria-label="' + labels[info.kind] + '">' + channelSvg(info.kind) + '</a>';
+}
+
+async function mountChannelIcon(userId) {
+  var row = document.querySelector('.ap-name-row');
+  if (!row || row.querySelector('.ap-channel') || typeof fetchExpertSocialLink !== 'function') return;
+  var link = await fetchExpertSocialLink(userId);
+  var html = channelIconHtml(link);
+  if (html && row.isConnected) row.insertAdjacentHTML('beforeend', html);
+}
 
 function profileBlock(name, avatarHtml, lists, battles, likes, editable, expertHtml, handleHtml){
   const safe = name.replace(/</g,'');
@@ -764,6 +787,8 @@ async function renderCabinet(user){
 
     <button class="login-btn ghost" id="logout">Log out</button>`;
 
+  mountChannelIcon(user.id);
+
   document.getElementById('logout').onclick = async ()=>{
     await rankmeSignOut();
     location.reload();
@@ -1024,6 +1049,8 @@ async function renderPublicProfile(userId, profile){
       </div>
       <div class="ach-grid" id="achGrid"></div>
     </section>`;
+
+  mountChannelIcon(userId);
 
   wireHandleEdit(profile || { handle: null });
 

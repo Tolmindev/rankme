@@ -2232,6 +2232,10 @@ document.addEventListener('click', function (e) {
   var target = a.getAttribute('href') || '';
   if (!target || target === '#' || target.indexOf('javascript:') === 0) return;
   if (/account\.html/i.test(target)) {
+    try {
+      var dest = new URL(target, location.href);
+      if (dest.search) return;
+    } catch (_) {}
     e.preventDefault();
     navigateToAccount();
     return;

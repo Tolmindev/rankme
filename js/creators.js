@@ -18,7 +18,21 @@
   }
 
   function safeTier(path) {
-    return /^t\/[a-z0-9-]+$/.test(path) ? path : '';
+    var raw = String(path || '').trim();
+    if (!raw) return '';
+    if (/^t\/[a-z0-9-]+(?:\.html)?$/i.test(raw)) return raw.replace(/\.html$/i, '');
+    var u;
+    try { u = new URL(raw, 'https://rankme.lol'); } catch (e) { return ''; }
+    var host = u.hostname.replace(/^www\./, '').toLowerCase();
+    if (host !== 'rankme.lol') return '';
+    var parts = u.pathname.split('/').filter(Boolean);
+    if (parts[0] === 't' && /^[a-z0-9-]+(?:\.html)?$/i.test(parts[1] || '')) {
+      return '/t/' + parts[1].replace(/\.html$/i, '') + u.search;
+    }
+    if (/^tier\.html$/i.test(parts[0] || '') && /^[a-z0-9-]+$/i.test(u.searchParams.get('t') || '')) {
+      return u.pathname + u.search;
+    }
+    return '';
   }
 
   function cardHtml(row) {

@@ -6998,11 +6998,11 @@ body > .toast {
 .ach-card-face::before {
   content: "";
   position: absolute;
-  inset: -1px;
+  inset: 0;
   z-index: 4;
   pointer-events: none;
   border-radius: inherit;
-  padding: 4px;
+  padding: 2px;
   background: rgba(188, 150, 236, 0.92);
   -webkit-mask:
     linear-gradient(#000 0 0) content-box,
@@ -7025,9 +7025,10 @@ body > .toast {
 
 .ach-art {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  inset: 1px;
+  width: auto;
+  height: auto;
+  border-radius: 15px;
   object-fit: cover;
   pointer-events: none;
 }
@@ -7097,11 +7098,13 @@ body > .toast {
     0 0 22px rgba(255, 90, 80, 0.28),
     0 10px 22px rgba(0, 0, 0, 0.4);
 }
-.ach-card.is-legendary .ach-card-face::before { background: #100c16; }
+.ach-card.is-legendary .ach-card-face::before,
+.ach-card.is-legendary:hover .ach-card-face::before,
+.ach-card.is-legendary.is-focus .ach-card-face::before { background: transparent; }
 .ach-card.is-legendary .ach-card-face::after {
   content: "";
   position: absolute;
-  inset: -1px;
+  inset: 0;
   border-radius: inherit;
   z-index: 5;
   pointer-events: none;
@@ -7113,7 +7116,7 @@ body > .toast {
     #ff4d8d 38%,
     transparent 55%
   );
-  padding: 4px;
+  padding: 2px;
   -webkit-mask:
     linear-gradient(#000 0 0) content-box,
     linear-gradient(#000 0 0);
@@ -7127,8 +7130,6 @@ body > .toast {
     0 0 34px rgba(255, 90, 80, 0.42),
     0 16px 36px rgba(0, 0, 0, 0.5);
 }
-.ach-card.is-legendary:hover .ach-card-face::before,
-.ach-card.is-legendary.is-focus .ach-card-face::before { background: #100c16; }
 .ach-focus-wrap .ach-card.is-legendary .ach-card-face {
   box-shadow:
     0 0 52px rgba(255, 90, 80, 0.45),
@@ -7140,11 +7141,13 @@ body > .toast {
     0 0 22px rgba(112, 161, 255, 0.28),
     0 10px 22px rgba(0, 0, 0, 0.4);
 }
-.ach-card.is-mythic .ach-card-face::before { background: #100c16; }
+.ach-card.is-mythic .ach-card-face::before,
+.ach-card.is-mythic:hover .ach-card-face::before,
+.ach-card.is-mythic.is-focus .ach-card-face::before { background: transparent; }
 .ach-card.is-mythic .ach-card-face::after {
   content: "";
   position: absolute;
-  inset: -1px;
+  inset: 0;
   border-radius: inherit;
   z-index: 5;
   pointer-events: none;
@@ -7157,7 +7160,7 @@ body > .toast {
     #70a1ff 46%,
     transparent 58%
   );
-  padding: 4px;
+  padding: 2px;
   -webkit-mask:
     linear-gradient(#000 0 0) content-box,
     linear-gradient(#000 0 0);
@@ -7171,8 +7174,6 @@ body > .toast {
     0 0 34px rgba(112, 161, 255, 0.42),
     0 16px 36px rgba(0, 0, 0, 0.5);
 }
-.ach-card.is-mythic:hover .ach-card-face::before,
-.ach-card.is-mythic.is-focus .ach-card-face::before { background: #100c16; }
 .ach-focus-wrap .ach-card.is-mythic .ach-card-face {
   box-shadow:
     0 0 52px rgba(112, 161, 255, 0.45),

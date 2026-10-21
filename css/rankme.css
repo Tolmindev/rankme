@@ -7025,10 +7025,9 @@ body > .toast {
 
 .ach-art {
   position: absolute;
-  inset: 1px;
-  width: auto;
-  height: auto;
-  border-radius: 15px;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   pointer-events: none;
 }

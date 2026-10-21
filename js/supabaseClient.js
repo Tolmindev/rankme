@@ -116,7 +116,7 @@ async function saveExclusiveTierlist({ title, templateId, payload, id }) {
   const authorName = rankmeDisplayName(user);
   const authorAvatar = (user.user_metadata || {}).avatar_url || (user.user_metadata || {}).picture || (user.user_metadata || {}).avatar || '';
   const now = new Date().toISOString();
-  const row = {
+  const patch = {
     user_id: user.id,
     title: title || 'Untitled',
     template_id: templateId || 'sf-duel',
@@ -125,25 +125,23 @@ async function saveExclusiveTierlist({ title, templateId, payload, id }) {
     author_avatar: authorAvatar,
     updated_at: now,
   };
-  // Overwrite own save when id is known (edit existing ranking)
   if (id) {
-    const { data, error } = await client
-      .from('tierlists')
-      .update(row)
-      .eq('id', id)
-      .eq('user_id', user.id)
-      .select('id')
-      .single();
-    if (!error && data) return data;
-    // fall through to insert if row missing
+    const upd = await client.from('tierlists').update(patch).eq('id', id).eq('user_id', user.id).select('id').limit(1);
+    if (upd.error) throw upd.error;
+    if (upd.data && upd.data[0]) return upd.data[0];
   }
-  const { data, error } = await client
-    .from('tierlists')
-    .insert(Object.assign({ created_at: now }, row))
-    .select('id')
-    .single();
-  if (error) throw error;
-  return data;
+  const newId = crypto.randomUUID();
+  let ins;
+  try {
+    ins = await client.from('tierlists').insert(Object.assign({ id: newId, created_at: now, is_public: false }, patch)).select('id').limit(1);
+  } catch (e) {
+    ins = { error: e, data: null };
+  }
+  if (!ins.error && ins.data && ins.data[0]) return ins.data[0];
+  const check = await client.from('tierlists').select('id').eq('id', newId).eq('user_id', user.id).limit(1);
+  if (!check.error && check.data && check.data[0]) return check.data[0];
+  if (ins.error) throw ins.error;
+  throw new Error('Could not save');
 }
 
 async function listMyTierlists() {

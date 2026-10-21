@@ -1662,7 +1662,7 @@ document.getElementById('saveAccountBtn')?.addEventListener('click', async ()=>{
       customCards: state.customCards || {},
       subtitle: heroD || null,
     };
-    const overwriteId = (!remixFlag && savedTierlistId) ? savedTierlistId : null;
+    const overwriteId = (!communityMode && !remixFlag && savedTierlistId) ? savedTierlistId : null;
     const row = await saveExclusiveTierlist({
       title,
       templateId: TEMPLATE_ID || 'sf-duel',

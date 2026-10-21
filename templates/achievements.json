@@ -21,6 +21,14 @@
       "img": "assets/achievements/achiev_3.webp",
       "unlock": "expert",
       "rarity": "legendary"
+    },
+    {
+      "id": "you-ranked-the-world",
+      "title": "You Ranked the World",
+      "desc": "Made a video with our tierlist. S-tier looks good on you.",
+      "img": "assets/achievements/achiev_4.webp",
+      "unlock": "creator",
+      "rarity": "mythic"
     }
   ]
 }

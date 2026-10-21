@@ -13,7 +13,7 @@
 <link rel="icon" type="image/png" sizes="192x192" href="assets/brand/favicon-192.png">
 <link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200..900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/rankme.css?v=20261021a">
+<link rel="stylesheet" href="css/rankme.css?v=20261021m">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
 <script src="js/supabaseClient.js?v=20261021j" defer></script>
 </head>
@@ -145,8 +145,8 @@
 <footer id="site-footer" class="site"></footer>
 <script src="js/footer.js?v=20261019a" defer></script>
 <script src="js/catalog.js?v=20260906b"></script>
-<script src="js/holo-card.js?v=20260903a"></script>
-<script src="js/achievements.js?v=20260903a"></script>
+<script src="js/holo-card.js?v=20261021m"></script>
+<script src="js/achievements.js?v=20261021m"></script>
 
 <script>
 const panel = document.getElementById('panel');
@@ -1084,13 +1084,21 @@ async function renderPublicProfile(userId, profile, rowsPromise){
   wireHandleEdit(profile || { handle: null });
 
   if (window.RankMeAch) {
-    if (own) RankMeAch.paint(viewer);
-    else {
+    if (own) {
+      if (RankMeAch.sync) await RankMeAch.sync(viewer);
+      RankMeAch.paint(viewer);
+    } else {
       var extra = rows.length ? ['certified-sheep'] : [];
       if (typeof fetchApprovedExpertIds === 'function') {
         try {
           var experts = await fetchApprovedExpertIds();
           if (experts && experts.has(userId)) extra.push('main-character');
+        } catch (e) {}
+      }
+      if (RankMeAch.publicIds) {
+        try {
+          var more = await RankMeAch.publicIds(userId);
+          (more || []).forEach(function (id) { if (extra.indexOf(id) < 0) extra.push(id); });
         } catch (e) {}
       }
       RankMeAch.paint(null, extra);

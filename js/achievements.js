@@ -25,6 +25,14 @@
       img: 'assets/achievements/achiev_3.webp',
       unlock: 'expert',
       rarity: 'legendary'
+    },
+    {
+      id: 'you-ranked-the-world',
+      title: 'You Ranked the World',
+      desc: 'Made a video with our tierlist. S-tier looks good on you.',
+      img: 'assets/achievements/achiev_4.webp',
+      unlock: 'creator',
+      rarity: 'mythic'
     }
   ];
 
@@ -76,6 +84,16 @@
 
   function expertIds() {
     return catalog.filter(function (c) { return c.unlock === 'expert'; }).map(function (c) { return c.id; });
+  }
+
+  function creatorIds() {
+    return catalog.filter(function (c) { return c.unlock === 'creator'; }).map(function (c) { return c.id; });
+  }
+
+  function rarityClass(item) {
+    var rarity = item && item.rarity;
+    if (rarity === 'legendary' || rarity === 'mythic') return ' is-' + rarity;
+    return '';
   }
 
   function storageKey(user) {
@@ -151,7 +169,7 @@
       el.setAttribute('role', 'status');
       document.body.appendChild(el);
     }
-    el.className = 'ach-toast' + (item.rarity === 'legendary' ? ' is-legendary' : '');
+    el.className = 'ach-toast' + rarityClass(item);
     el.innerHTML =
       '<img src="' + item.img + '" alt="">' +
       '<div class="ach-toast-copy">' +
@@ -201,16 +219,32 @@
     return grantMany(user, publishIds(), { toast: !!(opts && opts.toast) });
   }
 
+  async function hasApprovedVideo(userId) {
+    if (!userId || typeof initSupabase !== 'function') return false;
+    try {
+      var client = await initSupabase();
+      if (!client) return false;
+      var res = await client.from('creator_videos').select('id').eq('user_id', userId).eq('status', 'approved').limit(1);
+      return !!(res.data && res.data.length);
+    } catch (e) {
+      return false;
+    }
+  }
+
   async function sync(user) {
     if (!user) return;
     await onLogin(user);
-    if (typeof getMyExpertRequest !== 'function') return;
-    try {
-      var req = await getMyExpertRequest();
-      if (req && req.status === 'approved') {
-        await grantMany(user, expertIds(), { toast: true });
-      }
-    } catch (e) {}
+    if (typeof getMyExpertRequest === 'function') {
+      try {
+        var req = await getMyExpertRequest();
+        if (req && req.status === 'approved') {
+          await grantMany(user, expertIds(), { toast: true });
+        }
+      } catch (e) {}
+    }
+    if (await hasApprovedVideo(user.id)) {
+      await grantMany(user, creatorIds(), { toast: true });
+    }
   }
 
   function itemsFor(ids) {
@@ -240,6 +274,9 @@
     onPublish: onPublish,
     sync: sync,
     paint: paint,
-    toast: toast
+    toast: toast,
+    publicIds: function (userId) {
+      return hasApprovedVideo(userId).then(function (ok) { return ok ? creatorIds() : []; });
+    }
   };
 })(window);

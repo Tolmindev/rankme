@@ -7119,6 +7119,79 @@ body > .toast {
     0 28px 60px rgba(0, 0, 0, 0.55);
 }
 
+.ach-card.is-mythic .ach-card-face {
+  box-shadow:
+    0 0 0 1px rgba(160, 140, 255, 0.45),
+    0 0 22px rgba(112, 161, 255, 0.32),
+    0 10px 22px rgba(0, 0, 0, 0.4);
+}
+.ach-card.is-mythic .ach-card-face::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  z-index: 5;
+  pointer-events: none;
+  background: conic-gradient(
+    from var(--expert-angle),
+    #ff6b6b,
+    #f7c948,
+    #7bed9f,
+    #70a1ff,
+    #a29bfe,
+    #ff6b81,
+    #ff6b6b
+  );
+  padding: 2px;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: expertBorderSpin 8s linear infinite;
+}
+.ach-stars,
+.ach-stars::after {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle, #fff 0 1px, transparent 1.7px),
+    radial-gradient(circle, #fff 0 1.3px, transparent 2.1px),
+    radial-gradient(circle, #d7f6ff 0 1px, transparent 1.8px),
+    radial-gradient(circle, #ffe9a8 0 0.9px, transparent 1.6px);
+  background-repeat: repeat;
+  background-size: 46px 58px, 72px 66px, 54px 48px, 90px 74px;
+  background-position: 10% 16%, 68% 28%, 36% 70%, 80% 82%;
+  mix-blend-mode: color-dodge;
+  opacity: 0.45;
+  animation: achSparkle 6.5s ease-in-out infinite;
+}
+.ach-stars { z-index: 3; }
+.ach-stars::after {
+  content: "";
+  background-position: 24% 42%, 8% 74%, 76% 12%, 52% 88%;
+  animation-delay: -3.2s;
+}
+@keyframes achSparkle {
+  0%, 100% { opacity: 0.22; }
+  50% { opacity: 0.9; }
+}
+.ach-card.is-mythic:hover .ach-card-face,
+.ach-card.is-mythic.is-focus .ach-card-face {
+  box-shadow:
+    0 0 0 1px rgba(190, 170, 255, 0.7),
+    0 0 34px rgba(112, 161, 255, 0.45),
+    0 16px 36px rgba(0, 0, 0, 0.5);
+}
+.ach-focus-wrap .ach-card.is-mythic .ach-card-face {
+  box-shadow:
+    0 0 0 1px rgba(190, 170, 255, 0.75),
+    0 0 52px rgba(112, 161, 255, 0.48),
+    0 28px 60px rgba(0, 0, 0, 0.55);
+}
+
 .ach-stage {
   position: fixed;
   inset: 0;
@@ -7223,6 +7296,14 @@ body.ach-focus-open { overflow: hidden; }
     0 14px 36px rgba(0, 0, 0, 0.5),
     0 0 28px rgba(255, 90, 80, 0.32);
 }
+.ach-toast.is-mythic {
+  border: 1px solid transparent;
+  background:
+    linear-gradient(#161224, #161224) padding-box,
+    linear-gradient(90deg, #ff6b6b, #f7c948, #7bed9f, #70a1ff, #a29bfe, #ff6b6b) border-box;
+  background-size: 100% 100%, 220% 100%;
+  animation: exclusiveRgb 8s linear infinite alternate;
+}
 .ach-toast img {
   width: 52px;
   height: 52px;
@@ -7283,7 +7364,11 @@ body.ach-focus-open { overflow: hidden; }
   .expert-modal .expert-apply.cta,
   .expert-modal::before,
   .expert-modal::after,
-  .ach-card.is-legendary .ach-card-face::after {
+  .ach-card.is-legendary .ach-card-face::after,
+  .ach-card.is-mythic .ach-card-face::after,
+  .ach-stars,
+  .ach-stars::after,
+  .ach-toast.is-mythic {
     animation: none;
   }
   .ach-card:hover .ach-card-face,

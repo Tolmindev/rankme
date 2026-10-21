@@ -15,7 +15,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200..900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/rankme.css?v=20261021a">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
-<script src="js/supabaseClient.js?v=20261021a" defer></script>
+<script src="js/supabaseClient.js?v=20261021i" defer></script>
 </head>
 <body class="page-account">
 <div class="aurora" aria-hidden="true"></div>
@@ -1000,15 +1000,22 @@ if (!window.__rmSavedMenuBound) {
   });
 }
 
-async function renderPublicProfile(userId, profile){
+async function renderPublicProfile(userId, profile, rowsPromise){
   panel.removeAttribute('aria-busy');
   document.title = 'Profile - RankMe';
 
   let rows = [];
+  var viewer = null;
+  var badge = '';
   try {
-    rows = typeof listPublicTierlistsByUser === 'function'
-      ? await listPublicTierlistsByUser(userId)
-      : [];
+    var packed = await Promise.all([
+      (rowsPromise || (typeof listPublicTierlistsByUser === 'function' ? listPublicTierlistsByUser(userId) : Promise.resolve([]))),
+      (typeof getSessionUser === 'function' ? getSessionUser().catch(function () { return null; }) : Promise.resolve(null)),
+      expertHtmlFor(userId, false).catch(function () { return ''; }),
+    ]);
+    rows = packed[0] || [];
+    viewer = packed[1];
+    badge = packed[2] || '';
   } catch (e) {
     panel.innerHTML = '<div class="empty">Could not load profile. Try again in a moment.</div>';
     return;
@@ -1022,9 +1029,7 @@ async function renderPublicProfile(userId, profile){
   const av = avatar
     ? `<img class="ap-avatar" src="${String(avatar).replace(/"/g, '')}" alt="">`
     : `<div class="ap-avatar ap-fallback">${(name[0] || 'U').toUpperCase()}</div>`;
-  var viewer = typeof getSessionUser === 'function' ? await getSessionUser() : null;
   var own = !!(viewer && String(viewer.id) === String(userId));
-  const badge = await expertHtmlFor(userId, false);
   const handleHtml = handleRowHtml(profile || { handle: null }, { own: false });
 
   panel.innerHTML = `
@@ -1158,8 +1163,6 @@ async function bootAccount(){
     return;
   }
   try {
-    if (window.RankMeCatalog) await RankMeCatalog.load();
-    if (window.RankMeAch) await RankMeAch.load();
     await initSupabase();
     if (typeof updateNavAuth === 'function') updateNavAuth();
     wireExpertUi();
@@ -1168,15 +1171,21 @@ async function bootAccount(){
     const params = new URLSearchParams(location.search);
     const publicKey = params.get('u');
     if (publicKey) {
-      var me = typeof getSessionUser === 'function' ? await getSessionUser() : null;
-      if (me && typeof syncMyProfile === 'function') await syncMyProfile(me);
+      var side = [];
+      if (window.RankMeCatalog && RankMeCatalog.load) side.push(RankMeCatalog.load());
+      if (window.RankMeAch && RankMeAch.load) side.push(RankMeAch.load());
       var resolved = typeof resolveProfileKey === 'function' ? await resolveProfileKey(publicKey) : { userId: publicKey };
       if (!resolved || !resolved.userId) {
         panel.removeAttribute('aria-busy');
         panel.innerHTML = '<div class="empty">Profile not found.</div>';
         return;
       }
-      await renderPublicProfile(resolved.userId, resolved);
+      var rowsP = typeof listPublicTierlistsByUser === 'function' ? listPublicTierlistsByUser(resolved.userId) : Promise.resolve([]);
+      await Promise.all(side);
+      await renderPublicProfile(resolved.userId, resolved, rowsP);
+      if (typeof getSessionUser === 'function' && typeof syncMyProfile === 'function') {
+        getSessionUser().then(function (me) { if (me) syncMyProfile(me); }).catch(function () {});
+      }
       if (resolved.handle && history.replaceState) {
         var pretty = '/u/' + encodeURIComponent(resolved.handle);
         if (location.pathname !== pretty) history.replaceState(null, '', pretty + location.hash);
@@ -1184,7 +1193,11 @@ async function bootAccount(){
       return;
     }
 
-    const user = await getSessionUser();
+    var prep = [typeof getSessionUser === 'function' ? getSessionUser() : Promise.resolve(null)];
+    if (window.RankMeCatalog && RankMeCatalog.load) prep.push(RankMeCatalog.load());
+    if (window.RankMeAch && RankMeAch.load) prep.push(RankMeAch.load());
+    var ready = await Promise.all(prep);
+    const user = ready[0];
     if (user) {
       try {
         const ret = sessionStorage.getItem('rankme_login_return');

@@ -246,24 +246,17 @@ async function listPublicTierlists(limit) {
 async function listPublicTierlistsByUser(userId, limit) {
   const client = await initSupabase();
   if (!client || !userId) return [];
-  await getSessionUser();
+  const cols = 'id, title, template_id, updated_at, created_at, user_id, is_public, like_count, view_count, author_name, author_avatar';
   const { data, error } = await client
     .from('tierlists')
-    .select('id, title, template_id, updated_at, created_at, user_id, is_public, like_count, view_count, author_name, author_avatar, payload')
+    .select(cols)
     .eq('is_public', true)
     .eq('user_id', userId)
     .order('updated_at', { ascending: false })
     .limit(limit || 48);
   if (error) {
     console.warn('[RankMe] listPublicTierlistsByUser', error.message);
-    const { data: d2 } = await client
-      .from('tierlists')
-      .select('id, title, template_id, updated_at, user_id, is_public, like_count, author_name, author_avatar')
-      .eq('is_public', true)
-      .eq('user_id', userId)
-      .order('updated_at', { ascending: false })
-      .limit(limit || 48);
-    return d2 || [];
+    return [];
   }
   return data || [];
 }

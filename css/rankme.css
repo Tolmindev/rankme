@@ -2183,7 +2183,34 @@ html.studio-owner #addRowBtn,
 html.studio-owner #fillAllBtn,
 html.studio-owner #clearAllBtn,
 html.studio-owner .tb-row2,
-html.studio-owner .tb-share,
+html.studio-owner .tb-split,
+html.studio-owner .tb-share {
+  display: none;
+}
+@media (max-width: 720px) {
+  html.studio-owner .tb-icons {
+    display: block;
+    width: 100%;
+  }
+  html.studio-owner .toolbar-actions {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    width: 100%;
+    gap: 8px;
+  }
+  html.studio-owner .toolbar .toolbar-actions .pill-btn {
+    height: 40px;
+    flex-direction: row;
+    padding: 0 8px;
+    border-radius: 999px;
+  }
+  html.studio-owner .toolbar .toolbar-actions .tb-t {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: inherit;
+  }
+}
 html.studio-owner #portalBtn,
 html.studio-owner #portalsBar {
   display: none;

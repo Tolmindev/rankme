@@ -15,7 +15,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200..900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/rankme.css?v=20261021a">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
-<script src="js/supabaseClient.js?v=20261021i" defer></script>
+<script src="js/supabaseClient.js?v=20261021j" defer></script>
 </head>
 <body class="page-account">
 <div class="aurora" aria-hidden="true"></div>
@@ -760,10 +760,8 @@ async function renderCabinet(user){
     : `<div class="ap-avatar ap-fallback">${(name[0]||'U').toUpperCase()}</div>`;
 
   panel.removeAttribute('aria-busy');
-  const badge = await expertHtmlFor(user.id, true);
-  const mine = typeof getProfileByUserId === 'function' ? await getProfileByUserId(user.id) : null;
   panel.innerHTML = `
-    ${profileBlock(name, av, '0', '0', '0', true, badge, handleRowHtml(mine, { own: true }))}
+    ${profileBlock(name, av, '0', '0', '0', true, '', handleRowHtml(null, { own: true }))}
 
     <section class="account-section">
       <div class="as-head">
@@ -794,42 +792,56 @@ async function renderCabinet(user){
     location.reload();
   };
   wireNameEdit();
-  wireHandleEdit(mine);
+  wireHandleEdit(null);
+
+  var cabinetRows = [];
+  if (typeof expertHtmlFor === 'function') {
+    expertHtmlFor(user.id, true).then(function (badge) {
+      badge = badge || '';
+      window.__rmPublishUnlimited = badge.indexOf('is-on') !== -1;
+      var row = document.querySelector('.ap-name-row');
+      if (row) {
+        row.querySelectorAll('.expert-badge').forEach(function (n) { n.remove(); });
+        if (badge) row.insertAdjacentHTML('beforeend', badge);
+      }
+      var wrap = document.querySelector('.ap-avatar-wrap');
+      if (wrap) wrap.classList.toggle('is-expert', badge.indexOf('is-on') !== -1);
+      var box = document.getElementById('listBox');
+      if (box && box.querySelector('.saved-card')) paintPubHints(box, cabinetRows);
+    }).catch(function () {});
+  }
+  if (typeof getProfileByUserId === 'function') {
+    getProfileByUserId(user.id).then(function (mine) {
+      var handleRow = document.getElementById('apHandleRow');
+      if (!handleRow) return;
+      handleRow.outerHTML = handleRowHtml(mine, { own: true });
+      wireHandleEdit(mine);
+    }).catch(function () {});
+  }
 
   try{
     const rows = await listMyTierlists();
+    cabinetRows = rows || [];
     const box = document.getElementById('listBox');
-    const totalLikes = rows.reduce((s,r)=> s + (Number(r.like_count)||0), 0);
-    document.getElementById('statLists').textContent = String(rows.length);
+    const totalLikes = cabinetRows.reduce((s,r)=> s + (Number(r.like_count)||0), 0);
+    document.getElementById('statLists').textContent = String(cabinetRows.length);
     (async function () {
       var el = document.getElementById('statBattles');
       if (!el || typeof getUserBattleCount !== 'function') return;
       try {
-        var uid = (window.__rankmeUser && window.__rankmeUser.id) || null;
-        if (!uid && typeof initSupabase === 'function') {
-          var c = await initSupabase();
-          if (c) { var gu = await c.auth.getUser(); uid = gu.data && gu.data.user && gu.data.user.id; }
-        }
-        if (uid) el.textContent = String(await getUserBattleCount(uid));
+        el.textContent = String(await getUserBattleCount(user.id));
       } catch (e) {}
     })();
     document.getElementById('statLikes').textContent = typeof formatCount === 'function' ? formatCount(totalLikes) : String(totalLikes);
 
-    if(!rows.length){
+    if(!cabinetRows.length){
       box.innerHTML = emptySavedHtml('Nothing saved yet.');
     } else {
-      window.__rmPublishUnlimited = false;
-      if (typeof fetchApprovedExpertIds === 'function') {
-        try {
-          var ex = await fetchApprovedExpertIds();
-          window.__rmPublishUnlimited = !!(ex && user && ex.has(user.id));
-        } catch (err) {}
-      }
-      paintSavedList(rows, { owner: true, user: user });
+      paintSavedList(cabinetRows, { owner: true, user: user });
     }
     if (window.RankMeAch) {
       await RankMeAch.sync(user);
-      if (rows.some(function(r){ return r.is_public; })) {
+      if (cabinetRows.some(function(r){ return r.is_public; })) {
         await RankMeAch.onPublish(user, { toast: false });
       }
       RankMeAch.paint(user);
@@ -868,23 +880,30 @@ function wireSavedActions(rows, user){
   if(!box) return;
 
   box.querySelectorAll('[data-open]').forEach(a=>{
-    a.addEventListener('click', ()=>{
+    a.addEventListener('click', function (e) {
+      if ((a.getAttribute('href') || '').indexOf('c=') !== -1) return;
       const id = a.getAttribute('data-open');
+      const href = a.getAttribute('href');
       const row = rows.find(x=>String(x.id)===String(id));
-      if(row?.payload){
-        sessionStorage.setItem('rankme_open_payload', JSON.stringify(row.payload));
-        sessionStorage.setItem('rankme_saved_id', String(row.id));
-        try {
-          sessionStorage.removeItem('rankme_community_id');
-          sessionStorage.removeItem('rankme_community_row');
-          sessionStorage.setItem('rankme_open_title', row.title || '');
-          if (row.payload && row.payload.subtitle) {
-            sessionStorage.setItem('rankme_open_subtitle', String(row.payload.subtitle));
-          } else {
-            sessionStorage.removeItem('rankme_open_subtitle');
-          }
-        } catch (err) {}
+      function leave(full) {
+        var payload = (full && full.payload) || (row && row.payload);
+        if (payload) {
+          sessionStorage.setItem('rankme_open_payload', JSON.stringify(payload));
+          sessionStorage.setItem('rankme_saved_id', String(id));
+          try {
+            sessionStorage.removeItem('rankme_community_id');
+            sessionStorage.removeItem('rankme_community_row');
+            sessionStorage.setItem('rankme_open_title', (full && full.title) || (row && row.title) || '');
+            if (payload.subtitle) sessionStorage.setItem('rankme_open_subtitle', String(payload.subtitle));
+            else sessionStorage.removeItem('rankme_open_subtitle');
+          } catch (err) {}
+        }
+        location.href = href;
       }
+      if (row && row.payload) { leave(row); return; }
+      e.preventDefault();
+      if (typeof getTierlistById !== 'function') { location.href = href; return; }
+      getTierlistById(id).then(leave).catch(function () { location.href = href; });
     });
   });
 
@@ -927,10 +946,15 @@ function wireSavedActions(rows, user){
       try{
         const tid = encodeURIComponent(row.template_id || 'sf-duel');
         let url = location.origin + '/tier.html?t=' + tid;
+        var payload = row.payload;
+        if (!row.is_public && !payload && typeof getTierlistById === 'function') {
+          var full = await getTierlistById(row.id);
+          payload = full && full.payload;
+        }
         if(row.is_public){
           url = location.origin + '/tier.html?t=' + tid + '&c=' + encodeURIComponent(row.id);
-        } else if(row.payload && typeof createShortLink === 'function'){
-          const code = await createShortLink(row.payload);
+        } else if(payload && typeof createShortLink === 'function'){
+          const code = await createShortLink(payload);
           if(code) url = location.origin + '/tier.html?t=' + tid + '&s=' + code;
         }
         await navigator.clipboard.writeText(url);

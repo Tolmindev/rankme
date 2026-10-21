@@ -22,18 +22,40 @@
   };
 
   var templateId = B.resolveTemplateId();
+  var jsonP = null;
   if (!templateId) {
     showError('No template selected', 'Open Battle Mode from a template on the homepage.');
   } else {
-    fetch('templates/' + templateId + '.json', { cache: 'no-cache' })
+    jsonP = fetch('templates/' + templateId + '.json', { cache: 'no-cache' })
       .then(function (r) {
         if (!r.ok) throw new Error('Template not found');
         return r.json();
-      })
-      .then(showModeSelect)
-      .catch(function (e) {
-        showError('Could not load template', e.message || '');
       });
+    var selectReady = false;
+    var starting = false;
+    function reveal(t) {
+      if (starting) return;
+      if (selectReady && t && t._preview) return;
+      selectReady = true;
+      showModeSelect(t);
+    }
+    if (window.RankMeCatalog && RankMeCatalog.load) {
+      RankMeCatalog.load().then(function () {
+        if (selectReady) return;
+        var meta = RankMeCatalog.get(templateId);
+        if (!meta) return;
+        var n = meta.itemCount || 0;
+        var cards = [];
+        for (var i = 0; i < n; i++) cards.push({ id: String(i) });
+        reveal({ id: templateId, title: meta.title || templateId, cards: cards, _preview: true });
+      }).catch(function () {});
+    }
+    jsonP.then(function (t) {
+      selectReady = true;
+      showModeSelect(t);
+    }).catch(function (e) {
+      showError('Could not load template', e.message || '');
+    });
   }
 
   var tpl, items, itemById, cardPath, engine, target, completed, currentPair, mode, locked;
@@ -207,7 +229,20 @@
           if (act === 'new' && tpl) {
             /* Reset only: clear progress, stay on select screen */
             try { B.clearProgress(tpl.id, modeKey); } catch (err) {}
+            if (tpl._preview && jsonP) {
+              starting = true;
+              jsonP.then(function (real) { showModeSelect(real); });
+              return;
+            }
             showModeSelect(tpl);
+            return;
+          }
+          if (tpl && tpl._preview && jsonP) {
+            starting = true;
+            jsonP.then(function (real) {
+              showModeSelect(real);
+              startMode(modeKey, false);
+            });
             return;
           }
           startMode(modeKey, false);
@@ -215,6 +250,14 @@
       });
       card.addEventListener('click', function (e) {
         if (e.target.closest('[data-action]')) return;
+        if (tpl && tpl._preview && jsonP) {
+          starting = true;
+          jsonP.then(function (real) {
+            showModeSelect(real);
+            startMode(modeKey, false);
+          });
+          return;
+        }
         startMode(modeKey, false);
       });
     });

@@ -140,8 +140,8 @@ async function listMyTierlists() {
   const client = await initSupabase();
   const user = await getSessionUser();
   if (!client || !user) return [];
-  const selectFull = 'id, title, template_id, payload, created_at, updated_at, is_public, like_count, view_count, author_name, author_avatar, first_published_at';
-  const selectMin = 'id, title, template_id, payload, created_at, updated_at, is_public, like_count';
+  const selectFull = 'id, title, template_id, created_at, updated_at, is_public, like_count, view_count, author_name, author_avatar, first_published_at';
+  const selectMin = 'id, title, template_id, created_at, updated_at, is_public, like_count';
   async function query(sel) {
     return client.from('tierlists').select(sel).eq('user_id', user.id).order('updated_at', { ascending: false });
   }
@@ -264,27 +264,17 @@ async function listPublicTierlistsByUser(userId, limit) {
 async function getTierlistById(id) {
   const client = await initSupabase();
   if (!client || !id) return null;
-  // Wait for session restore so RLS sees auth.uid() when logged in
-  try { await client.auth.getSession(); } catch (e) {}
   const cols = 'id, title, template_id, payload, updated_at, created_at, user_id, is_public, like_count, view_count, author_name, author_avatar';
-  let { data, error } = await client
-    .from('tierlists')
-    .select(cols)
-    .eq('id', id)
-    .maybeSingle();
-  if (error) {
-    console.warn('[RankMe] getTierlistById', error.message);
-    data = null;
+  async function read() {
+    const first = await client.from('tierlists').select(cols).eq('id', id).maybeSingle();
+    if (!first.error && first.data) return first.data;
+    const res = await client.from('tierlists').select(cols).eq('id', id).limit(1);
+    return (res.data && res.data[0]) || null;
   }
-  if (data && data.payload) return data;
-  // Fallback without maybeSingle
-  const { data: rows, error: e2 } = await client
-    .from('tierlists')
-    .select(cols)
-    .eq('id', id)
-    .limit(1);
-  if (e2) console.warn('[RankMe] getTierlistById fallback', e2.message);
-  return (rows && rows[0]) || null;
+  let row = await read();
+  if (row && row.payload) return row;
+  try { await client.auth.getSession(); } catch (e) {}
+  return await read();
 }
 
 async function incrementTierlistView(id) {
@@ -502,7 +492,6 @@ async function trackTemplateUse(templateId, kind) {
 async function fetchTemplateStats() {
   const client = await initSupabase();
   if (!client) return {};
-  await getSessionUser();
   try {
     const { data, error } = await client
       .from('template_stats')

@@ -110,30 +110,45 @@
     return;
   }
 
-  fetch('templates/' + encodeURIComponent(templateId) + '.json', { cache: 'no-cache' })
-    .then(function (r) {
-      if (!r.ok) throw new Error('not found');
-      return r.json();
-    })
-    .then(function (t) {
-      var n = (t.cards || []).length;
-      function finish() {
+  function loadJson() {
+    fetch('templates/' + encodeURIComponent(templateId) + '.json', { cache: 'no-cache' })
+      .then(function (r) {
+        if (!r.ok) throw new Error('not found');
+        return r.json();
+      })
+      .then(function (t) {
+        var n = (t.cards || []).length;
         var label = 'cards';
         var meta = window.RankMeCatalog && RankMeCatalog.get(templateId);
         if (meta && meta.itemLabel) label = meta.itemLabel;
         if (window.RankMeCatalog && RankMeCatalog.cover) setHaze(RankMeCatalog.cover(templateId));
         paint(t.title || templateId, n + ' ' + label);
-      }
-      if (window.RankMeCatalog && RankMeCatalog.load) {
-        RankMeCatalog.load().then(finish).catch(finish);
-      } else finish();
-    })
-    .catch(function () {
-      if (arena) {
-        arena.innerHTML =
-          '<div class="battle-panel" style="margin:0 auto;opacity:1;transform:none">' +
-          '<h2>Could not load</h2>' +
-          '<a class="cta primary" href="index.html">Back to RankMe</a></div>';
-      }
-    });
+      })
+      .catch(function () {
+        if (arena) {
+          arena.innerHTML =
+            '<div class="battle-panel" style="margin:0 auto;opacity:1;transform:none">' +
+            '<h2>Could not load</h2>' +
+            '<a class="cta primary" href="index.html">Back to RankMe</a></div>';
+        }
+      });
+  }
+
+  function fromCatalog() {
+    var meta = window.RankMeCatalog && RankMeCatalog.get && RankMeCatalog.get(templateId);
+    if (!meta) return false;
+    var label = meta.itemLabel || 'cards';
+    var n = meta.itemCount || 0;
+    if (RankMeCatalog.cover) setHaze(RankMeCatalog.cover(templateId));
+    paint(meta.title || templateId, n ? (n + ' ' + label) : '');
+    return true;
+  }
+
+  if (window.RankMeCatalog && RankMeCatalog.load) {
+    RankMeCatalog.load().then(function () {
+      if (!fromCatalog()) loadJson();
+    }).catch(loadJson);
+  } else {
+    loadJson();
+  }
 })();

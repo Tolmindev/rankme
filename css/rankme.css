@@ -3917,9 +3917,12 @@ body.community-view .tb-split,
 body.community-view #remixUploadWrap,
 body.community-view #poolWrap,
 body.community-view #portalBtn,
-body.community-view #factionFilters,
-body.community-view .tier-side {
+body.community-view #factionFilters {
   display: none;
+}
+body.community-view .tier-side {
+  visibility: hidden;
+  pointer-events: none;
 }
 body.community-view .card {
   pointer-events: none;

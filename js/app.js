@@ -2801,6 +2801,8 @@ function enterCommunityView() {
 }
 
 function exitCommunityToEditor() {
+  var anchor = document.getElementById('board');
+  var y = anchor ? anchor.getBoundingClientRect().top : 0;
   communityMode = false;
   communityMeta = null;
   document.body.classList.remove('community-view');
@@ -2813,6 +2815,9 @@ function exitCommunityToEditor() {
     el.hidden = false;
     el.removeAttribute('hidden');
   });
+  if (!anchor) return;
+  var dy = anchor.getBoundingClientRect().top - y;
+  if (dy) window.scrollBy(0, dy);
 }
 
 function setupCommunityUI() {

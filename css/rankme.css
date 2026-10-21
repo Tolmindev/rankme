@@ -2238,15 +2238,22 @@ body.studio-owner .studio-drawer-head {
   margin-bottom: 14px;
 }
 body.studio-owner .studio-drawer-head strong { flex: 1; font-weight: 700; }
-body.studio-owner .studio-drawer-head button,
+body.studio-owner #studioClose,
 body.studio-owner .studio-row button {
   border: 0;
   background: none;
-  color: #e6dcf6;
+  color: rgba(226, 214, 244, 0.55);
   font: inherit;
-  font-weight: 600;
+  font-size: 0.68rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  min-height: 0;
+  padding: 0;
   cursor: pointer;
 }
+body.studio-owner #studioClose { margin-left: auto; }
+body.studio-owner .studio-row button { color: #ffc3d2; margin-top: 2px; }
 body.studio-owner .studio-row {
   display: grid;
   grid-template-columns: 92px 1fr;
@@ -2267,10 +2274,10 @@ body.studio-owner .studio-row strong { display: block; }
 body.studio-owner .studio-row em {
   font-style: normal;
   font-weight: 300;
-  font-size: 0.78rem;
+  font-size: 0.72rem;
   color: rgba(226, 214, 244, 0.7);
 }
-body.studio-owner .studio-row button { color: #ffc3d2; padding: 0; margin-top: 4px; }
+body.studio-owner .studio-row div { min-width: 0; }
 body.studio-owner .studio-empty {
   margin: 0;
   font-weight: 300;

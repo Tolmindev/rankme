@@ -3109,9 +3109,14 @@ function studioMount() {
     actions.insertAdjacentHTML('beforeend',
       '<button class="pill-btn add" id="studioSaved" type="button"><span class="tb-t">Saved</span></button>' +
       '<button class="pill-btn add" id="studioDraft" type="button"><span class="tb-t">Draft</span></button>' +
+      '<button class="pill-btn add" id="studioNew" type="button"><span class="tb-t">New</span></button>' +
       '<button class="pill-btn fill" id="studioPublish" type="button"><span class="tb-t">Publish</span></button>');
     document.getElementById('studioSaved').addEventListener('click', studioToggleDrawer);
     document.getElementById('studioDraft').addEventListener('click', () => studioSave('draft'));
+    document.getElementById('studioNew').addEventListener('click', () => {
+      if (studioHasCards()) showConfirm('Start a new list?', 'This screen will clear.', studioReset);
+      else studioReset();
+    });
     document.getElementById('studioPublish').addEventListener('click', studioAskPublish);
   }
   const portal = document.getElementById('portalBtn');
@@ -3123,15 +3128,10 @@ function studioMount() {
   if (!document.getElementById('studioDrawer')) {
     document.body.insertAdjacentHTML('beforeend',
       '<aside class="studio-drawer" id="studioDrawer" hidden>' +
-        '<div class="studio-drawer-head"><strong>Saved</strong><button type="button" id="studioNew">New</button><button type="button" id="studioClose" aria-label="Close">Close</button></div>' +
+        '<div class="studio-drawer-head"><strong>Saved</strong><button type="button" id="studioClose" aria-label="Close">Close</button></div>' +
         '<div id="studioDrawerBody"></div>' +
       '</aside>');
     document.getElementById('studioClose').addEventListener('click', studioCloseDrawer);
-    document.getElementById('studioNew').addEventListener('click', () => {
-      if (studioHasCards()) {
-        showConfirm('Start a new list?', 'This screen will clear.', studioReset);
-      } else studioReset();
-    });
   }
 }
 

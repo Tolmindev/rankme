@@ -2171,6 +2171,101 @@ body[data-editor="1"] #heroDesc {
   user-select: text;
 }
 
+body.studio-owner .studio-label {
+  font-weight: 300;
+  font-size: 0.92rem;
+  opacity: 0.78;
+  pointer-events: auto;
+  cursor: text;
+}
+body.studio-owner .studio-cats {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  margin: 8px 0 4px;
+  padding: 0 2px 2px;
+}
+body.studio-owner .studio-cats::-webkit-scrollbar { display: none; }
+body.studio-owner .studio-cat {
+  flex: 0 0 auto;
+  height: 32px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(183, 155, 240, 0.45);
+  background: transparent;
+  color: #f4eefc;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+body.studio-owner .studio-cat.is-on {
+  background: rgba(168, 120, 255, 0.22);
+  border-color: #d2b4ff;
+}
+body.studio-owner #studioListsBtn { margin-right: 8px; }
+body.studio-owner .studio-drawer {
+  position: fixed;
+  z-index: 70;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(360px, 100%);
+  overflow: auto;
+  background: #161224;
+  border-left: 1px solid rgba(183, 155, 240, 0.45);
+  padding: 18px 16px 28px;
+  box-shadow: -18px 0 40px rgba(0, 0, 0, 0.35);
+}
+body.studio-owner .studio-drawer[hidden] { display: none; }
+body.studio-owner .studio-drawer-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+body.studio-owner .studio-drawer-head strong { flex: 1; font-weight: 700; }
+body.studio-owner .studio-drawer-head button,
+body.studio-owner .studio-row button {
+  border: 0;
+  background: none;
+  color: #e6dcf6;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+body.studio-owner .studio-row {
+  display: grid;
+  grid-template-columns: 92px 1fr;
+  gap: 10px;
+  align-items: center;
+  padding: 8px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+}
+body.studio-owner .studio-row img {
+  width: 92px;
+  height: 58px;
+  object-fit: cover;
+  border-radius: 10px;
+  background: #100d18;
+}
+body.studio-owner .studio-row strong { display: block; }
+body.studio-owner .studio-row em {
+  font-style: normal;
+  font-weight: 300;
+  font-size: 0.78rem;
+  color: rgba(226, 214, 244, 0.7);
+}
+body.studio-owner .studio-row button { color: #ffc3d2; padding: 0; margin-top: 4px; }
+body.studio-owner .studio-empty {
+  margin: 0;
+  font-weight: 300;
+  color: rgba(226, 214, 244, 0.7);
+}
+
 /* Editable fields: same padding on title + desc (aligned), air around text */
 .hero > .hero-text > .hero-title,
 .hero > .hero-text > .desc {

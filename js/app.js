@@ -3051,4 +3051,377 @@ window.addEventListener('hashchange', ()=>{
   }
 });
 
+/* Owner-only homepage lists. Same builder. Hidden for everyone else. */
+
+const STUDIO_CATS = ['games', 'anime', 'movies', 'tv', 'sports', 'music', 'memes', 'technology', 'other'];
+let studioEditId = null;
+
+function studioBoot() {
+  if (!window.RANKME_STUDIO) return;
+  const start = async () => {
+    if (typeof isStudioAdmin !== 'function' || typeof getSessionUser !== 'function') return;
+    const user = await getSessionUser();
+    if (!user) {
+      location.replace('account.html');
+      return;
+    }
+    const ok = await isStudioAdmin().catch(() => false);
+    if (!ok) {
+      location.replace('index.html');
+      return;
+    }
+    studioMount();
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
+  else start();
+}
+
+function studioMount() {
+  document.body.classList.add('studio-owner');
+  const desc = document.getElementById('heroDesc');
+  if (desc && !document.getElementById('studioLabel')) {
+    desc.insertAdjacentHTML('afterend', '<p class="desc studio-label is-editable" id="studioLabel" contenteditable="true" spellcheck="false" tabindex="0">items</p>');
+    const label = document.getElementById('studioLabel');
+    label.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') { e.preventDefault(); label.blur(); }
+    });
+    label.addEventListener('blur', () => {
+      let t = label.textContent.replace(/\s+/g, ' ').trim().slice(0, 24);
+      label.textContent = t || 'items';
+    });
+  }
+  const hero = document.querySelector('section.hero');
+  if (hero && !document.getElementById('studioCats')) {
+    const pills = STUDIO_CATS.map((c, i) =>
+      '<button type="button" class="studio-cat' + (i === 0 ? ' is-on' : '') + '" data-cat="' + c + '">' +
+      c.charAt(0).toUpperCase() + c.slice(1) + '</button>'
+    ).join('');
+    hero.insertAdjacentHTML('afterend', '<div class="studio-cats" id="studioCats">' + pills + '</div>');
+    document.getElementById('studioCats').addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-cat]');
+      if (!btn) return;
+      document.querySelectorAll('#studioCats .studio-cat').forEach((b) => b.classList.remove('is-on'));
+      btn.classList.add('is-on');
+    });
+  }
+  const actions = document.querySelector('.toolbar-actions');
+  if (actions && !document.getElementById('studioDraft')) {
+    actions.insertAdjacentHTML('beforeend',
+      '<button class="pill-btn add" id="studioDraft" type="button"><span class="tb-t">Draft</span></button>' +
+      '<button class="pill-btn fill" id="studioPublish" type="button"><span class="tb-t">Publish</span></button>');
+    document.getElementById('studioDraft').addEventListener('click', () => studioSave('draft'));
+    document.getElementById('studioPublish').addEventListener('click', () => studioSave('live'));
+  }
+  const account = document.getElementById('loginBtn');
+  if (account && !document.getElementById('studioListsBtn')) {
+    account.insertAdjacentHTML('beforebegin', '<button class="login-btn" id="studioListsBtn" type="button">Lists</button>');
+    document.getElementById('studioListsBtn').addEventListener('click', studioToggleDrawer);
+  }
+  if (!document.getElementById('studioDrawer')) {
+    document.body.insertAdjacentHTML('beforeend',
+      '<aside class="studio-drawer" id="studioDrawer" hidden>' +
+        '<div class="studio-drawer-head"><strong>Your lists</strong><button type="button" id="studioNew">New</button><button type="button" id="studioClose" aria-label="Close">Close</button></div>' +
+        '<div id="studioDrawerBody"></div>' +
+      '</aside>');
+    document.getElementById('studioClose').addEventListener('click', studioCloseDrawer);
+    document.getElementById('studioNew').addEventListener('click', () => {
+      if (studioHasCards()) {
+        showConfirm('Start a new list?', 'This screen will clear.', studioReset);
+      } else studioReset();
+    });
+  }
+}
+
+function studioHasCards() {
+  return Object.keys(state.customCards || {}).length > 0;
+}
+
+function studioCloseDrawer() {
+  const el = document.getElementById('studioDrawer');
+  if (el) el.hidden = true;
+}
+
+function studioToggleDrawer() {
+  const el = document.getElementById('studioDrawer');
+  if (!el) return;
+  if (!el.hidden) { el.hidden = true; return; }
+  el.hidden = false;
+  studioPaintDrawer();
+}
+
+function studioCat() {
+  const on = document.querySelector('#studioCats .studio-cat.is-on');
+  return on ? on.getAttribute('data-cat') : 'games';
+}
+
+function studioSetCat(cat) {
+  document.querySelectorAll('#studioCats .studio-cat').forEach((b) => {
+    b.classList.toggle('is-on', b.getAttribute('data-cat') === cat);
+  });
+}
+
+function studioCoverSrc() {
+  const host = document.getElementById('blankCoverHost');
+  const img = document.getElementById('blankCoverImg');
+  if (!host || !img || host.classList.contains('is-placeholder')) return '';
+  return img.src || '';
+}
+
+function studioSetCover(src) {
+  const host = document.getElementById('blankCoverHost');
+  const img = document.getElementById('blankCoverImg');
+  if (!host || !img) return;
+  if (!src) {
+    host.classList.add('is-placeholder');
+    img.src = 'assets/brand/Footer_logo.svg';
+    return;
+  }
+  host.classList.remove('is-placeholder');
+  img.style.filter = 'none';
+  img.src = src;
+}
+
+function studioCardIds() {
+  const ids = [];
+  state.tiers.forEach((t) => {
+    (state.assignment[t.id] || []).forEach((id) => ids.push(id));
+  });
+  (state.pool || []).forEach((id) => { if (ids.indexOf(id) < 0) ids.push(id); });
+  return ids.filter((id) => state.customCards && state.customCards[id] && state.customCards[id].src);
+}
+
+function studioSlug(s) {
+  return String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 40);
+}
+
+function studioFileSlug(name) {
+  return String(name || '').toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '').slice(0, 40) || 'card';
+}
+
+function studioBlob(src, maxW) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = () => {
+      const scale = Math.min(1, maxW / (img.naturalWidth || maxW));
+      const w = Math.max(1, Math.round((img.naturalWidth || maxW) * scale));
+      const h = Math.max(1, Math.round((img.naturalHeight || maxW) * scale));
+      const canvas = document.createElement('canvas');
+      canvas.width = w;
+      canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      canvas.toBlob((b) => b ? resolve(b) : reject(new Error('Could not encode image')), 'image/webp', 0.82);
+    };
+    img.onerror = () => reject(new Error('Could not read image'));
+    img.src = src;
+  });
+}
+
+async function studioUpload(client, path, blob) {
+  const res = await client.storage.from('studio').upload(path, blob, { contentType: 'image/webp', upsert: true });
+  if (res.error) throw new Error(res.error.message || 'Upload failed');
+  return client.storage.from('studio').getPublicUrl(path).data.publicUrl;
+}
+
+async function studioClearFiles(client, id) {
+  const listed = await client.storage.from('studio').list(id);
+  const paths = (listed.data || []).map((f) => id + '/' + f.name);
+  if (paths.length) await client.storage.from('studio').remove(paths);
+}
+
+async function studioFreshId(title) {
+  const client = await initSupabase();
+  const res = await client.from('studio_templates').select('id');
+  const used = {};
+  (res.data || []).forEach((row) => { used[row.id] = true; });
+  try {
+    const r = await fetch('templates/catalog.json', { cache: 'no-cache' });
+    const data = r.ok ? await r.json() : { templates: [] };
+    (data.templates || []).forEach((t) => { if (t && t.id) used[t.id] = true; });
+  } catch (e) {}
+  let id = studioSlug(title);
+  if (!id) throw new Error('Title needs letters or numbers');
+  const base = id;
+  let n = 2;
+  while (used[id]) {
+    id = (base + '-' + n).slice(0, 40);
+    n += 1;
+  }
+  return id;
+}
+
+async function studioSave(status) {
+  const title = (document.getElementById('heroTitle').textContent || '').replace(/\s+/g, ' ').trim();
+  const description = (document.getElementById('heroDesc').textContent || '').replace(/\s+/g, ' ').trim();
+  const labelEl = document.getElementById('studioLabel');
+  const itemLabel = (labelEl ? labelEl.textContent : 'items').replace(/\s+/g, ' ').trim().slice(0, 24) || 'items';
+  const cover = studioCoverSrc();
+  const ids = studioCardIds();
+  if (title.length < 2) return showToast('Title is too short');
+  if (!cover) return showToast('Add a cover');
+  if (!ids.length) return showToast('Add images');
+  if (ids.length > 200) return showToast('200 cards max');
+  const draftBtn = document.getElementById('studioDraft');
+  const pubBtn = document.getElementById('studioPublish');
+  draftBtn.disabled = true;
+  pubBtn.disabled = true;
+  try {
+    const client = await initSupabase();
+    const id = studioEditId || await studioFreshId(title);
+    showToast('Cover…');
+    await studioClearFiles(client, id);
+    const coverUrl = await studioUpload(client, id + '/cover.webp', await studioBlob(cover, 1600));
+    const thumbUrl = await studioUpload(client, id + '/cover_thumb.webp', await studioBlob(cover, 640));
+    const cards = [];
+    const names = [];
+    for (let i = 0; i < ids.length; i++) {
+      showToast('Cards ' + (i + 1) + ' / ' + ids.length);
+      const card = state.customCards[ids[i]];
+      const fname = String(i + 1).padStart(2, '0') + '_' + studioFileSlug(card.name) + '.webp';
+      await studioUpload(client, id + '/' + fname, await studioBlob(card.src, 480));
+      const name = String(card.name || 'card').slice(0, 48);
+      cards.push({ id: i + 1, file: fname, name: name, faction: 'ALL' });
+      names.push(name);
+    }
+    const payload = {
+      title: title,
+      description: description.slice(0, 240),
+      category: studioCat(),
+      item_label: itemLabel,
+      cover_url: coverUrl,
+      cover_thumb_url: thumbUrl,
+      card_path: coverUrl.replace(/cover\.webp(\?.*)?$/, ''),
+      cards: cards,
+      names: names.join('\n'),
+      item_count: cards.length,
+      status: status
+    };
+    const res = studioEditId
+      ? await client.from('studio_templates').update(payload).eq('id', id)
+      : await client.from('studio_templates').insert(Object.assign({ id: id }, payload));
+    if (res.error) throw new Error(res.error.message || 'Could not save');
+    studioEditId = id;
+    showToast(status === 'live' ? 'Live on the homepage' : 'Draft saved');
+    if (!document.getElementById('studioDrawer').hidden) studioPaintDrawer();
+  } catch (err) {
+    showToast(err.message || 'Could not save');
+  }
+  draftBtn.disabled = false;
+  pubBtn.disabled = false;
+}
+
+function studioReset() {
+  studioEditId = null;
+  const title = document.getElementById('heroTitle');
+  const desc = document.getElementById('heroDesc');
+  const label = document.getElementById('studioLabel');
+  if (title) title.textContent = 'My Rank';
+  if (desc) desc.textContent = 'Upload, rank, export PNG.';
+  if (label) label.textContent = 'items';
+  studioSetCat('games');
+  studioSetCover('');
+  state.customCards = {};
+  state.assignment = {};
+  state.tiers.forEach((t) => { state.assignment[t.id] = []; });
+  state.pool = [];
+  render();
+  studioCloseDrawer();
+}
+
+async function studioOpen(id) {
+  const client = await initSupabase();
+  const res = await client.from('studio_templates').select('*').eq('id', id).maybeSingle();
+  if (res.error || !res.data) return showToast('Could not open');
+  const row = res.data;
+  studioEditId = row.id;
+  const title = document.getElementById('heroTitle');
+  const desc = document.getElementById('heroDesc');
+  const label = document.getElementById('studioLabel');
+  if (title) title.textContent = row.title || 'My Rank';
+  if (desc) desc.textContent = row.description || '';
+  if (label) label.textContent = row.item_label || 'items';
+  studioSetCat(row.category || 'games');
+  studioSetCover(row.cover_url || '');
+  state.customCards = {};
+  state.assignment = {};
+  state.tiers.forEach((t) => { state.assignment[t.id] = []; });
+  const first = state.tiers[0] && state.tiers[0].id;
+  state.assignment[first] = [];
+  state.pool = [];
+  (row.cards || []).forEach((card) => {
+    const cid = customIdSeq++;
+    state.customCards[cid] = { src: (row.card_path || '') + card.file, name: card.name || 'card' };
+    state.assignment[first].push(cid);
+  });
+  render();
+  if (typeof autoFitCardShape === 'function') autoFitCardShape();
+  studioCloseDrawer();
+}
+
+function studioAskDelete(id, name) {
+  const ok = document.getElementById('confirmOk');
+  const cancel = document.getElementById('confirmCancel');
+  const prevOk = ok.textContent;
+  const prevCancel = cancel.textContent;
+  ok.textContent = 'Delete';
+  cancel.textContent = 'Keep';
+  const restore = () => { ok.textContent = prevOk; cancel.textContent = prevCancel; };
+  showConfirm('Delete ' + name + '?', 'This removes the list.', async () => {
+    restore();
+    const client = await initSupabase();
+    try { await studioClearFiles(client, id); } catch (e) {}
+    const res = await client.from('studio_templates').delete().eq('id', id);
+    if (res.error) return showToast(res.error.message || 'Could not delete');
+    if (studioEditId === id) studioEditId = null;
+    showToast('Removed');
+    studioPaintDrawer();
+  });
+  cancel.addEventListener('click', function once() {
+    restore();
+    cancel.removeEventListener('click', once);
+  });
+}
+
+async function studioPaintDrawer() {
+  const body = document.getElementById('studioDrawerBody');
+  if (!body) return;
+  body.innerHTML = '';
+  const client = await initSupabase();
+  const res = await client.from('studio_templates').select('id,title,status,cover_thumb_url,cover_url,item_count,item_label').order('created_at', { ascending: false });
+  if (res.error) {
+    body.textContent = 'Lists are not ready yet.';
+    return;
+  }
+  const rows = res.data || [];
+  if (!rows.length) {
+    body.innerHTML = '<p class="studio-empty">Nothing here yet.</p>';
+    return;
+  }
+  body.innerHTML = rows.map((row) => {
+    const thumb = row.cover_thumb_url || row.cover_url || '';
+    const tag = row.status === 'draft' ? 'Draft' : 'Live';
+    return '<article class="studio-row" data-id="' + row.id + '">' +
+      (thumb ? '<img src="' + thumb + '" alt="">' : '<img alt="">') +
+      '<div><strong></strong><em>' + tag + ' · ' + (row.item_count || 0) + '</em>' +
+      '<button type="button" data-del="' + row.id + '">Delete</button></div></article>';
+  }).join('');
+  body.querySelectorAll('.studio-row').forEach((el, i) => {
+    el.querySelector('strong').textContent = rows[i].title || '';
+    el.addEventListener('click', (e) => {
+      if (e.target.closest('[data-del]')) return;
+      studioOpen(el.getAttribute('data-id'));
+    });
+  });
+  body.querySelectorAll('[data-del]').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const id = btn.getAttribute('data-del');
+      const row = rows.filter((r) => r.id === id)[0];
+      studioAskDelete(id, (row && row.title) || 'this list');
+    });
+  });
+}
+
+studioBoot();
+
 })();

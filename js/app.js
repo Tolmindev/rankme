@@ -1662,7 +1662,7 @@ document.getElementById('saveAccountBtn')?.addEventListener('click', async ()=>{
       customCards: state.customCards || {},
       subtitle: heroD || null,
     };
-    const overwriteId = (!communityMode && !remixFlag && savedTierlistId) ? savedTierlistId : null;
+    const overwriteId = (!remixFlag && savedTierlistId) ? savedTierlistId : null;
     const row = await saveExclusiveTierlist({
       title,
       templateId: TEMPLATE_ID || 'sf-duel',
@@ -1671,9 +1671,6 @@ document.getElementById('saveAccountBtn')?.addEventListener('click', async ()=>{
     });
     if (row && row.id) savedTierlistId = row.id;
     remixFlag = false;
-    if (document.body.classList.contains('community-view') || communityMode) {
-      exitCommunityToEditor();
-    }
     markClean();
     showToast('Ranking Saved');
   }catch(e){
@@ -2798,26 +2795,6 @@ function enterCommunityView() {
   var pb = document.getElementById('portalBtn');
   if (pb) pb.classList.remove('active');
   if (typeof renderPortals === 'function') renderPortals();
-}
-
-function exitCommunityToEditor() {
-  var anchor = document.getElementById('board');
-  var y = anchor ? anchor.getBoundingClientRect().top : 0;
-  communityMode = false;
-  communityMeta = null;
-  document.body.classList.remove('community-view');
-  setHeroEditable(true);
-  var bar = document.getElementById('communityBar');
-  if (bar) bar.hidden = true;
-  ['board', 'toolbar', 'poolWrap'].forEach(function (id) {
-    var el = document.getElementById(id);
-    if (!el) return;
-    el.hidden = false;
-    el.removeAttribute('hidden');
-  });
-  if (!anchor) return;
-  var dy = anchor.getBoundingClientRect().top - y;
-  if (dy) window.scrollBy(0, dy);
 }
 
 function setupCommunityUI() {

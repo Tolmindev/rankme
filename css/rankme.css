@@ -2178,14 +2178,24 @@ body.studio-owner .studio-label {
   pointer-events: auto;
   cursor: text;
 }
+body.studio-owner .board,
+body.studio-owner #addRowBtn,
+body.studio-owner #fillAllBtn,
+body.studio-owner #clearAllBtn,
+body.studio-owner .tb-row2,
+body.studio-owner .tb-share {
+  display: none;
+}
 body.studio-owner .studio-cats {
+  flex: 1 0 100%;
   display: flex;
+  align-items: center;
   flex-wrap: nowrap;
   gap: 8px;
+  margin: 6px 0 0;
+  padding: 0;
   overflow-x: auto;
   scrollbar-width: none;
-  margin: 8px 0 4px;
-  padding: 0 2px 2px;
 }
 body.studio-owner .studio-cats::-webkit-scrollbar { display: none; }
 body.studio-owner .studio-cat {
@@ -2205,7 +2215,6 @@ body.studio-owner .studio-cat.is-on {
   background: rgba(168, 120, 255, 0.22);
   border-color: #d2b4ff;
 }
-body.studio-owner #studioListsBtn { margin-right: 8px; }
 body.studio-owner .studio-drawer {
   position: fixed;
   z-index: 70;

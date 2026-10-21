@@ -401,6 +401,10 @@ function updateNavAuth() {
             loginBtn.textContent = 'Account';
           }
         }
+        mountStudioNav(false);
+        if (user && typeof isStudioAdmin === 'function') {
+          isStudioAdmin().then(function (ok) { mountStudioNav(!!ok); }).catch(function () {});
+        }
         if (user && typeof fetchApprovedExpertIds === 'function') {
           fetchApprovedExpertIds().then(function () {
             var on = typeof isApprovedExpert === 'function' && isApprovedExpert(user.id);
@@ -416,6 +420,25 @@ function updateNavAuth() {
   })();
 }
 
+
+function mountStudioNav(on) {
+  var here = /studio\.html$/.test(location.pathname);
+  document.querySelectorAll('.nav-links, .nav-fold-links').forEach(function (box) {
+    var link = box.querySelector('a.studio-nav');
+    if (!on) {
+      if (link) link.remove();
+      return;
+    }
+    if (!link) {
+      link = document.createElement('a');
+      link.className = 'studio-nav';
+      link.href = 'studio.html';
+      link.textContent = 'Studio';
+      box.appendChild(link);
+    }
+    link.classList.toggle('active', here);
+  });
+}
 
 /* ---- Account nav (all pages; app.js may override with draft-stash on tier) ---- */
 function bindAccountButton() {

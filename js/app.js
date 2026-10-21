@@ -3096,7 +3096,7 @@ function studioMount() {
       '<button type="button" class="studio-cat' + (i === 0 ? ' is-on' : '') + '" data-cat="' + c + '">' +
       c.charAt(0).toUpperCase() + c.slice(1) + '</button>'
     ).join('');
-    hero.insertAdjacentHTML('afterend', '<div class="studio-cats" id="studioCats">' + pills + '</div>');
+    hero.insertAdjacentHTML('beforeend', '<div class="studio-cats" id="studioCats">' + pills + '</div>');
     document.getElementById('studioCats').addEventListener('click', (e) => {
       const btn = e.target.closest('[data-cat]');
       if (!btn) return;
@@ -3107,20 +3107,17 @@ function studioMount() {
   const actions = document.querySelector('.toolbar-actions');
   if (actions && !document.getElementById('studioDraft')) {
     actions.insertAdjacentHTML('beforeend',
+      '<button class="pill-btn add" id="studioSaved" type="button"><span class="tb-t">Saved</span></button>' +
       '<button class="pill-btn add" id="studioDraft" type="button"><span class="tb-t">Draft</span></button>' +
       '<button class="pill-btn fill" id="studioPublish" type="button"><span class="tb-t">Publish</span></button>');
+    document.getElementById('studioSaved').addEventListener('click', studioToggleDrawer);
     document.getElementById('studioDraft').addEventListener('click', () => studioSave('draft'));
     document.getElementById('studioPublish').addEventListener('click', () => studioSave('live'));
-  }
-  const account = document.getElementById('loginBtn');
-  if (account && !document.getElementById('studioListsBtn')) {
-    account.insertAdjacentHTML('beforebegin', '<button class="login-btn" id="studioListsBtn" type="button">Lists</button>');
-    document.getElementById('studioListsBtn').addEventListener('click', studioToggleDrawer);
   }
   if (!document.getElementById('studioDrawer')) {
     document.body.insertAdjacentHTML('beforeend',
       '<aside class="studio-drawer" id="studioDrawer" hidden>' +
-        '<div class="studio-drawer-head"><strong>Your lists</strong><button type="button" id="studioNew">New</button><button type="button" id="studioClose" aria-label="Close">Close</button></div>' +
+        '<div class="studio-drawer-head"><strong>Saved</strong><button type="button" id="studioNew">New</button><button type="button" id="studioClose" aria-label="Close">Close</button></div>' +
         '<div id="studioDrawerBody"></div>' +
       '</aside>');
     document.getElementById('studioClose').addEventListener('click', studioCloseDrawer);
@@ -3351,7 +3348,7 @@ async function studioOpen(id) {
   (row.cards || []).forEach((card) => {
     const cid = customIdSeq++;
     state.customCards[cid] = { src: (row.card_path || '') + card.file, name: card.name || 'card' };
-    state.assignment[first].push(cid);
+    state.pool.push(cid);
   });
   render();
   if (typeof autoFitCardShape === 'function') autoFitCardShape();

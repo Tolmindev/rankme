@@ -6993,34 +6993,18 @@ body > .toast {
   transform: rotateX(var(--ry, 0deg)) rotateY(var(--rx, 0deg));
   transition: transform 0.22s ease, box-shadow 0.22s ease;
   background: #0c0914;
-  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.4);
-}
-.ach-card-face::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 4;
-  pointer-events: none;
-  border-radius: inherit;
-  padding: 2px;
-  background: rgba(188, 150, 236, 0.92);
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
+  box-shadow:
+    0 0 0 1px rgba(200, 170, 255, 0.32),
+    0 10px 22px rgba(0, 0, 0, 0.4);
 }
 
 .ach-card:hover .ach-card-face,
 .ach-card.is-focus .ach-card-face {
   transition: transform 0.08s ease-out;
   box-shadow:
+    0 0 0 1px rgba(230, 200, 255, 0.6),
     0 0 34px rgba(160, 90, 255, 0.4),
     0 16px 36px rgba(0, 0, 0, 0.5);
-}
-.ach-card:hover .ach-card-face::before,
-.ach-card.is-focus .ach-card-face::before {
-  background: rgba(220, 196, 255, 0.98);
 }
 
 .ach-art {
@@ -7094,18 +7078,16 @@ body > .toast {
 
 .ach-card.is-legendary .ach-card-face {
   box-shadow:
+    0 0 0 1px rgba(255, 140, 80, 0.42),
     0 0 22px rgba(255, 90, 80, 0.28),
     0 10px 22px rgba(0, 0, 0, 0.4);
 }
-.ach-card.is-legendary .ach-card-face::before,
-.ach-card.is-legendary:hover .ach-card-face::before,
-.ach-card.is-legendary.is-focus .ach-card-face::before { background: transparent; }
 .ach-card.is-legendary .ach-card-face::after {
   content: "";
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  z-index: 5;
+  z-index: 4;
   pointer-events: none;
   background: conic-gradient(
     from var(--expert-angle),
@@ -7126,38 +7108,37 @@ body > .toast {
 .ach-card.is-legendary:hover .ach-card-face,
 .ach-card.is-legendary.is-focus .ach-card-face {
   box-shadow:
+    0 0 0 1px rgba(255, 180, 90, 0.65),
     0 0 34px rgba(255, 90, 80, 0.42),
     0 16px 36px rgba(0, 0, 0, 0.5);
 }
 .ach-focus-wrap .ach-card.is-legendary .ach-card-face {
   box-shadow:
+    0 0 0 1px rgba(255, 180, 90, 0.7),
     0 0 52px rgba(255, 90, 80, 0.45),
     0 28px 60px rgba(0, 0, 0, 0.55);
 }
 
 .ach-card.is-mythic .ach-card-face {
   box-shadow:
+    0 0 0 1px rgba(112, 161, 255, 0.42),
     0 0 22px rgba(112, 161, 255, 0.28),
     0 10px 22px rgba(0, 0, 0, 0.4);
 }
-.ach-card.is-mythic .ach-card-face::before,
-.ach-card.is-mythic:hover .ach-card-face::before,
-.ach-card.is-mythic.is-focus .ach-card-face::before { background: transparent; }
 .ach-card.is-mythic .ach-card-face::after {
   content: "";
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  z-index: 5;
+  z-index: 4;
   pointer-events: none;
   background: conic-gradient(
     from var(--expert-angle),
     transparent 0%,
     #ff6b6b 10%,
-    #f7c948 22%,
-    #7bed9f 34%,
-    #70a1ff 46%,
-    transparent 58%
+    #f7c948 24%,
+    #70a1ff 38%,
+    transparent 55%
   );
   padding: 2px;
   -webkit-mask:
@@ -7170,11 +7151,13 @@ body > .toast {
 .ach-card.is-mythic:hover .ach-card-face,
 .ach-card.is-mythic.is-focus .ach-card-face {
   box-shadow:
+    0 0 0 1px rgba(160, 190, 255, 0.65),
     0 0 34px rgba(112, 161, 255, 0.42),
     0 16px 36px rgba(0, 0, 0, 0.5);
 }
 .ach-focus-wrap .ach-card.is-mythic .ach-card-face {
   box-shadow:
+    0 0 0 1px rgba(160, 190, 255, 0.7),
     0 0 52px rgba(112, 161, 255, 0.45),
     0 28px 60px rgba(0, 0, 0, 0.55);
 }

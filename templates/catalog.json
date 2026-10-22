@@ -202,6 +202,29 @@
       "exclusive": true,
       "parallax": true,
       "coverThumb": "assets/brand/Deadlock_Cover_thumb.webp?v=20261019p"
+    },
+    {
+      "id": "brown-dust-2",
+      "title": "Brown Dust 2",
+      "description": "Brown Dust 2 is the sequel to Brown Dust (also known as Brave Nine). It blends classic JRPG storytelling with modern gacha systems and high-end 2D visuals.",
+      "cover": "assets/brand/Brown_Dust_2_Cover.webp",
+      "href": "t/brown-dust-2.html",
+      "category": "games",
+      "tags": [
+        "games",
+        "rpg",
+        "gacha",
+        "brown dust",
+        "mobile"
+      ],
+      "itemCount": 87,
+      "itemLabel": "characters",
+      "creator": "RankMe",
+      "createdAt": "2026-10-23",
+      "featured": true,
+      "exclusive": true,
+      "parallax": true,
+      "coverThumb": "assets/brand/Brown_Dust_2_Cover_thumb.webp"
     }
   ],
   "categoryMeta": {

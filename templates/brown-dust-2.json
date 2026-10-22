@@ -1,0 +1,559 @@
+{
+  "id": "brown-dust-2",
+  "title": "Brown Dust 2",
+  "footerLabel": "Brown Dust 2",
+  "exportName": "rankme-brown-dust-2-tierlist.png",
+  "description": "Brown Dust 2 is the sequel to Brown Dust (also known as Brave Nine). It blends classic JRPG storytelling with modern gacha systems and high-end 2D visuals.",
+  "cover": "assets/brand/Brown_Dust_2_Cover.webp",
+  "parallax": true,
+  "cardShape": "portrait",
+  "cardAspect": 1.8,
+  "cardPath": "assets/brown-dust-2/",
+  "theme": "default",
+  "noFactions": false,
+  "factionOrder": [
+    "Water",
+    "Fire",
+    "Wind",
+    "Light",
+    "Dark"
+  ],
+  "factionIcons": {
+    "Water": "assets/factions/bd2Water.png",
+    "Fire": "assets/factions/bd2Fire.png",
+    "Wind": "assets/factions/bd2Wind.png",
+    "Light": "assets/factions/bd2Light.png",
+    "Dark": "assets/factions/bd2Dark.png"
+  },
+  "factionHues": {
+    "Water": 200,
+    "Fire": 12,
+    "Wind": 145,
+    "Light": 48,
+    "Dark": 275
+  },
+  "cards": [
+    {
+      "file": "Water_Carlson.webp",
+      "name": "Carlson",
+      "faction": "Water",
+      "id": 1
+    },
+    {
+      "file": "Water_Cynthia.webp",
+      "name": "Cynthia",
+      "faction": "Water",
+      "id": 2
+    },
+    {
+      "file": "Water_Darian.webp",
+      "name": "Darian",
+      "faction": "Water",
+      "id": 3
+    },
+    {
+      "file": "Water_Glacia.webp",
+      "name": "Glacia",
+      "faction": "Water",
+      "id": 4
+    },
+    {
+      "file": "Water_Granadair.webp",
+      "name": "Granadair",
+      "faction": "Water",
+      "id": 5
+    },
+    {
+      "file": "Water_Ingrid.webp",
+      "name": "Ingrid",
+      "faction": "Water",
+      "id": 6
+    },
+    {
+      "file": "Water_Lydia.webp",
+      "name": "Lydia",
+      "faction": "Water",
+      "id": 7
+    },
+    {
+      "file": "Water_Mamonir.webp",
+      "name": "Mamonir",
+      "faction": "Water",
+      "id": 8
+    },
+    {
+      "file": "Water_Morpeah.webp",
+      "name": "Morpeah",
+      "faction": "Water",
+      "id": 9
+    },
+    {
+      "file": "Water_Rafina.webp",
+      "name": "Rafina",
+      "faction": "Water",
+      "id": 10
+    },
+    {
+      "file": "Water_Remnunt.webp",
+      "name": "Remnunt",
+      "faction": "Water",
+      "id": 11
+    },
+    {
+      "file": "Water_Roxy.webp",
+      "name": "Roxy",
+      "faction": "Water",
+      "id": 12
+    },
+    {
+      "file": "Water_Scheherazade.webp",
+      "name": "Scheherazade",
+      "faction": "Water",
+      "id": 13
+    },
+    {
+      "file": "Water_Sylvia.webp",
+      "name": "Sylvia",
+      "faction": "Water",
+      "id": 14
+    },
+    {
+      "file": "Water_Teresse.webp",
+      "name": "Teresse",
+      "faction": "Water",
+      "id": 15
+    },
+    {
+      "file": "Water_Wilhelmina.webp",
+      "name": "Wilhelmina",
+      "faction": "Water",
+      "id": 16
+    },
+    {
+      "file": "Water_Yumi.webp",
+      "name": "Yumi",
+      "faction": "Water",
+      "id": 17
+    },
+    {
+      "file": "Fire_Alec.webp",
+      "name": "Alec",
+      "faction": "Fire",
+      "id": 18
+    },
+    {
+      "file": "Fire_Anastasia.webp",
+      "name": "Anastasia",
+      "faction": "Fire",
+      "id": 19
+    },
+    {
+      "file": "Fire_Andrew.webp",
+      "name": "Andrew",
+      "faction": "Fire",
+      "id": 20
+    },
+    {
+      "file": "Fire_Aquila.webp",
+      "name": "Aquila",
+      "faction": "Fire",
+      "id": 21
+    },
+    {
+      "file": "Fire_Beatrice.webp",
+      "name": "Beatrice",
+      "faction": "Fire",
+      "id": 22
+    },
+    {
+      "file": "Fire_Elise.webp",
+      "name": "Elise",
+      "faction": "Fire",
+      "id": 23
+    },
+    {
+      "file": "Fire_Eris.webp",
+      "name": "Eris",
+      "faction": "Fire",
+      "id": 24
+    },
+    {
+      "file": "Fire_Goblin Slayer.webp",
+      "name": "Goblin Slayer",
+      "faction": "Fire",
+      "id": 25
+    },
+    {
+      "file": "Fire_Ikaruga.webp",
+      "name": "Ikaruga",
+      "faction": "Fire",
+      "id": 26
+    },
+    {
+      "file": "Fire_Lathel.webp",
+      "name": "Lathel",
+      "faction": "Fire",
+      "id": 27
+    },
+    {
+      "file": "Fire_Levia.webp",
+      "name": "Levia",
+      "faction": "Fire",
+      "id": 28
+    },
+    {
+      "file": "Fire_Liatris.webp",
+      "name": "Liatris",
+      "faction": "Fire",
+      "id": 29
+    },
+    {
+      "file": "Fire_Liberta.webp",
+      "name": "Liberta",
+      "faction": "Fire",
+      "id": 30
+    },
+    {
+      "file": "Fire_Loen.webp",
+      "name": "Loen",
+      "faction": "Fire",
+      "id": 31
+    },
+    {
+      "file": "Fire_Rubia.webp",
+      "name": "Rubia",
+      "faction": "Fire",
+      "id": 32
+    },
+    {
+      "file": "Fire_Wiggle.webp",
+      "name": "Wiggle",
+      "faction": "Fire",
+      "id": 33
+    },
+    {
+      "file": "Wind_Bernie.webp",
+      "name": "Bernie",
+      "faction": "Wind",
+      "id": 34
+    },
+    {
+      "file": "Wind_Dalvi.webp",
+      "name": "Dalvi",
+      "faction": "Wind",
+      "id": 35
+    },
+    {
+      "file": "Wind_Diana.webp",
+      "name": "Diana",
+      "faction": "Wind",
+      "id": 36
+    },
+    {
+      "file": "Wind_Fred.webp",
+      "name": "Fred",
+      "faction": "Wind",
+      "id": 37
+    },
+    {
+      "file": "Wind_Gray.webp",
+      "name": "Gray",
+      "faction": "Wind",
+      "id": 38
+    },
+    {
+      "file": "Wind_Gynt.webp",
+      "name": "Gynt",
+      "faction": "Wind",
+      "id": 39
+    },
+    {
+      "file": "Wind_High Elf Archer.webp",
+      "name": "High Elf Archer",
+      "faction": "Wind",
+      "id": 40
+    },
+    {
+      "file": "Wind_Hikage.webp",
+      "name": "Hikage",
+      "faction": "Wind",
+      "id": 41
+    },
+    {
+      "file": "Wind_Julie.webp",
+      "name": "Julie",
+      "faction": "Wind",
+      "id": 42
+    },
+    {
+      "file": "Wind_Lecliss.webp",
+      "name": "Lecliss",
+      "faction": "Wind",
+      "id": 43
+    },
+    {
+      "file": "Wind_Lisianne.webp",
+      "name": "Lisianne",
+      "faction": "Wind",
+      "id": 44
+    },
+    {
+      "file": "Wind_Nebris.webp",
+      "name": "Nebris",
+      "faction": "Wind",
+      "id": 45
+    },
+    {
+      "file": "Wind_Nekyndalia.webp",
+      "name": "Nekyndalia",
+      "faction": "Wind",
+      "id": 46
+    },
+    {
+      "file": "Wind_Olstein.webp",
+      "name": "Olstein",
+      "faction": "Wind",
+      "id": 47
+    },
+    {
+      "file": "Wind_Rigenette.webp",
+      "name": "Rigenette",
+      "faction": "Wind",
+      "id": 48
+    },
+    {
+      "file": "Wind_Tyr.webp",
+      "name": "Tyr",
+      "faction": "Wind",
+      "id": 49
+    },
+    {
+      "file": "Wind_Venaka.webp",
+      "name": "Venaka",
+      "faction": "Wind",
+      "id": 50
+    },
+    {
+      "file": "Wind_Yomi.webp",
+      "name": "Yomi",
+      "faction": "Wind",
+      "id": 51
+    },
+    {
+      "file": "Wind_Yozakura.webp",
+      "name": "Yozakura",
+      "faction": "Wind",
+      "id": 52
+    },
+    {
+      "file": "Wind_Zenith.webp",
+      "name": "Zenith",
+      "faction": "Wind",
+      "id": 53
+    },
+    {
+      "file": "Light_Angelica.webp",
+      "name": "Angelica",
+      "faction": "Light",
+      "id": 54
+    },
+    {
+      "file": "Light_Arines.webp",
+      "name": "Arines",
+      "faction": "Light",
+      "id": 55
+    },
+    {
+      "file": "Light_Emma.webp",
+      "name": "Emma",
+      "faction": "Light",
+      "id": 56
+    },
+    {
+      "file": "Light_Granhildr.webp",
+      "name": "Granhildr",
+      "faction": "Light",
+      "id": 57
+    },
+    {
+      "file": "Light_Helena.webp",
+      "name": "Helena",
+      "faction": "Light",
+      "id": 58
+    },
+    {
+      "file": "Light_Jayden.webp",
+      "name": "Jayden",
+      "faction": "Light",
+      "id": 59
+    },
+    {
+      "file": "Light_Justia.webp",
+      "name": "Justia",
+      "faction": "Light",
+      "id": 60
+    },
+    {
+      "file": "Light_Kyouka Uzen.webp",
+      "name": "Kyouka Uzen",
+      "faction": "Light",
+      "id": 61
+    },
+    {
+      "file": "Light_Layla.webp",
+      "name": "Layla",
+      "faction": "Light",
+      "id": 62
+    },
+    {
+      "file": "Light_Michaela.webp",
+      "name": "Michaela",
+      "faction": "Light",
+      "id": 63
+    },
+    {
+      "file": "Light_Olivier.webp",
+      "name": "Olivier",
+      "faction": "Light",
+      "id": 64
+    },
+    {
+      "file": "Light_Priestess.webp",
+      "name": "Priestess",
+      "faction": "Light",
+      "id": 65
+    },
+    {
+      "file": "Light_Refithea.webp",
+      "name": "Refithea",
+      "faction": "Light",
+      "id": 66
+    },
+    {
+      "file": "Light_Ren Yamashiro.webp",
+      "name": "Ren Yamashiro",
+      "faction": "Light",
+      "id": 67
+    },
+    {
+      "file": "Light_Sacred Justia.webp",
+      "name": "Sacred Justia",
+      "faction": "Light",
+      "id": 68
+    },
+    {
+      "file": "Light_Sword Maiden.webp",
+      "name": "Sword Maiden",
+      "faction": "Light",
+      "id": 69
+    },
+    {
+      "file": "Light_Ventana.webp",
+      "name": "Ventana",
+      "faction": "Light",
+      "id": 70
+    },
+    {
+      "file": "Light_Yuri.webp",
+      "name": "Yuri",
+      "faction": "Light",
+      "id": 71
+    },
+    {
+      "file": "Dark_Blade.webp",
+      "name": "Blade",
+      "faction": "Dark",
+      "id": 72
+    },
+    {
+      "file": "Dark_Celia.webp",
+      "name": "Celia",
+      "faction": "Dark",
+      "id": 73
+    },
+    {
+      "file": "Dark_Eclipse.webp",
+      "name": "Eclipse",
+      "faction": "Dark",
+      "id": 74
+    },
+    {
+      "file": "Dark_Eleaneer.webp",
+      "name": "Eleaneer",
+      "faction": "Dark",
+      "id": 75
+    },
+    {
+      "file": "Dark_Elpis.webp",
+      "name": "Elpis",
+      "faction": "Dark",
+      "id": 76
+    },
+    {
+      "file": "Dark_Kry.webp",
+      "name": "Kry",
+      "faction": "Dark",
+      "id": 77
+    },
+    {
+      "file": "Dark_Lucrezia.webp",
+      "name": "Lucrezia",
+      "faction": "Dark",
+      "id": 78
+    },
+    {
+      "file": "Dark_Luvencia.webp",
+      "name": "Luvencia",
+      "faction": "Dark",
+      "id": 79
+    },
+    {
+      "file": "Dark_Maria.webp",
+      "name": "Maria",
+      "faction": "Dark",
+      "id": 80
+    },
+    {
+      "file": "Dark_Nartas.webp",
+      "name": "Nartas",
+      "faction": "Dark",
+      "id": 81
+    },
+    {
+      "file": "Dark_Palette.webp",
+      "name": "Palette",
+      "faction": "Dark",
+      "id": 82
+    },
+    {
+      "file": "Dark_Rou.webp",
+      "name": "Rou",
+      "faction": "Dark",
+      "id": 83
+    },
+    {
+      "file": "Dark_Samay.webp",
+      "name": "Samay",
+      "faction": "Dark",
+      "id": 84
+    },
+    {
+      "file": "Dark_Seir.webp",
+      "name": "Seir",
+      "faction": "Dark",
+      "id": 85
+    },
+    {
+      "file": "Dark_Sonya.webp",
+      "name": "Sonya",
+      "faction": "Dark",
+      "id": 86
+    },
+    {
+      "file": "Dark_Tenka Izumo.webp",
+      "name": "Tenka Izumo",
+      "faction": "Dark",
+      "id": 87
+    }
+  ]
+}

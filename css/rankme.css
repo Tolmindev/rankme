@@ -7356,49 +7356,6 @@ body > .toast {
     0 28px 60px rgba(0, 0, 0, 0.55);
 }
 
-.ach-card.is-mythic .ach-card-face {
-  box-shadow:
-    0 0 0 1px rgba(112, 161, 255, 0.42),
-    0 0 22px rgba(112, 161, 255, 0.28),
-    0 10px 22px rgba(0, 0, 0, 0.4);
-}
-.ach-card.is-mythic .ach-card-face::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  z-index: 4;
-  pointer-events: none;
-  background: conic-gradient(
-    from var(--expert-angle),
-    transparent 0%,
-    #ff6b6b 10%,
-    #f7c948 24%,
-    #70a1ff 38%,
-    transparent 55%
-  );
-  padding: 2px;
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  animation: expertBorderSpin 4s linear infinite;
-}
-.ach-card.is-mythic:hover .ach-card-face,
-.ach-card.is-mythic.is-focus .ach-card-face {
-  box-shadow:
-    0 0 0 1px rgba(160, 190, 255, 0.65),
-    0 0 34px rgba(112, 161, 255, 0.42),
-    0 16px 36px rgba(0, 0, 0, 0.5);
-}
-.ach-focus-wrap .ach-card.is-mythic .ach-card-face {
-  box-shadow:
-    0 0 0 1px rgba(160, 190, 255, 0.7),
-    0 0 52px rgba(112, 161, 255, 0.45),
-    0 28px 60px rgba(0, 0, 0, 0.55);
-}
-
 .ach-stage {
   position: fixed;
   inset: 0;
@@ -7503,14 +7460,6 @@ body.ach-focus-open { overflow: hidden; }
     0 14px 36px rgba(0, 0, 0, 0.5),
     0 0 28px rgba(255, 90, 80, 0.32);
 }
-.ach-toast.is-mythic {
-  border: 1px solid transparent;
-  background:
-    linear-gradient(#161224, #161224) padding-box,
-    linear-gradient(90deg, #ff6b6b, #f7c948, #7bed9f, #70a1ff, #a29bfe, #ff6b6b) border-box;
-  background-size: 100% 100%, 220% 100%;
-  animation: exclusiveRgb 8s linear infinite alternate;
-}
 .ach-toast img {
   width: 52px;
   height: 52px;
@@ -7571,9 +7520,7 @@ body.ach-focus-open { overflow: hidden; }
   .expert-modal .expert-apply.cta,
   .expert-modal::before,
   .expert-modal::after,
-  .ach-card.is-legendary .ach-card-face::after,
-  .ach-card.is-mythic .ach-card-face::after,
-  .ach-toast.is-mythic {
+  .ach-card.is-legendary .ach-card-face::after {
     animation: none;
   }
   .ach-card:hover .ach-card-face,

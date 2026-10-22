@@ -33,7 +33,7 @@
 
   function cardHtml(item) {
     var rare = '';
-    if (item && (item.rarity === 'legendary' || item.rarity === 'mythic')) rare = ' is-' + item.rarity;
+    if (item && item.rarity === 'legendary') rare = ' is-legendary';
     return (
       '<button type="button" class="ach-card' + rare + '" data-ach="' + esc(item.id) + '" aria-label="' + esc(item.title) + '">' +
         '<span class="ach-card-face">' +

@@ -32,7 +32,7 @@
       desc: 'Made a video with our tierlist. S-tier looks good on you.',
       img: 'assets/achievements/achiev_4.webp',
       unlock: 'creator',
-      rarity: 'mythic'
+      rarity: 'legendary'
     }
   ];
 
@@ -92,7 +92,7 @@
 
   function rarityClass(item) {
     var rarity = item && item.rarity;
-    if (rarity === 'legendary' || rarity === 'mythic') return ' is-' + rarity;
+    if (rarity === 'legendary') return ' is-legendary';
     return '';
   }
 

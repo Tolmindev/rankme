@@ -13,6 +13,7 @@
     category: 'all',
     query: '',
     sort: 'popular',
+    countsReady: false,
     tplVisible: null,
     communityVisible: null,
     communityRows: null,
@@ -236,6 +237,7 @@
   }
 
   function renderGrid() {
+    if (!state.countsReady || !els.grid) return;
     var q = state.query.trim().toLowerCase();
     var filtered = state.all.filter(function (t) {
       var inCat = state.category === 'all' || t.category === state.category;
@@ -591,7 +593,6 @@
     });
 
     renderCategoryChips();
-    renderGrid();
     loadCommunity();
   }
 
@@ -643,10 +644,16 @@
       var statsP = (typeof fetchTemplateStats === 'function')
         ? fetchTemplateStats().catch(function () { return {}; })
         : Promise.resolve({});
-      statsP.then(function (stats) {
-        mergeUseCounts(catalog, stats);
-        if (state.sort === 'popular' && !state.query) renderGrid();
-      });
+      var revealed = false;
+      function reveal(stats) {
+        if (revealed) return;
+        revealed = true;
+        if (stats) mergeUseCounts(catalog, stats);
+        state.countsReady = true;
+        renderGrid();
+      }
+      statsP.then(reveal);
+      setTimeout(function () { reveal(null); }, 2500);
       indexTemplateCards(catalog.templates || []).then(function () {
         if (state.query) {
           renderGrid();

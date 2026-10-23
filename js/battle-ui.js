@@ -395,9 +395,10 @@
     if (!c) c = {};
     var src = cardSrc(c);
     var name = c.name || '';
+    var box = sizeForRatio(templateRatio());
     return (
       '<div class="battle-side">' +
-        '<div class="battle-card" data-id="' + esc(c.id) + '" tabindex="0" role="button">' +
+        '<div class="battle-card is-measured" data-id="' + esc(c.id) + '" tabindex="0" role="button" style="width:' + box.w + 'px;height:' + box.h + 'px">' +
           '<div class="battle-card-frame">' +
             '<div class="battle-card-art">' +
               (src
@@ -474,7 +475,83 @@
     }
     bindPairEvents();
     bindMidControls();
+    fitBattleCards();
   }
+
+  function battleHome() {
+    var narrow = window.matchMedia('(max-width: 720px)').matches;
+    var homeW = narrow ? Math.min(window.innerWidth * 0.4, 168) : Math.min(280, window.innerWidth * 0.36);
+    var homeH = homeW * 4 / 3;
+    var rowW = els.vsRow && els.vsRow.clientWidth ? els.vsRow.clientWidth : window.innerWidth;
+    var maxW = narrow
+      ? Math.min(window.innerWidth * 0.46, 220)
+      : Math.min(420, Math.max(homeW, (rowW - 120) / 2));
+    var maxH = narrow
+      ? Math.min(window.innerHeight * 0.52, 460)
+      : Math.min(window.innerHeight * 0.62, 560);
+    return { homeW: homeW, homeH: homeH, maxW: maxW, maxH: maxH };
+  }
+
+  function templateRatio() {
+    if (tpl && tpl.cardShape === 'square') return 1;
+    var aspect = tpl && Number(tpl.cardAspect);
+    if (aspect > 0.2 && aspect < 4) return aspect;
+    if (tpl && tpl.cardShape === 'landscape') return 0.62;
+    return 4 / 3;
+  }
+
+  function sizeForRatio(ratio) {
+    var slot = battleHome();
+    var homeRatio = slot.homeH / slot.homeW;
+    var w;
+    var h;
+    if (ratio > homeRatio + 0.04) {
+      w = slot.homeW;
+      h = w * ratio;
+      if (h > slot.maxH) {
+        h = slot.maxH;
+        w = h / ratio;
+      }
+    } else if (ratio < homeRatio - 0.04) {
+      h = slot.homeH;
+      w = h / ratio;
+      if (w > slot.maxW) {
+        w = slot.maxW;
+        h = w * ratio;
+      }
+    } else {
+      w = slot.homeW;
+      h = slot.homeH;
+    }
+    return { w: Math.round(w), h: Math.round(h) };
+  }
+
+  function fitBattleCard(card) {
+    var img = card.querySelector('.battle-card-art img');
+    if (!img || !img.naturalWidth || !img.naturalHeight) return;
+    var ratio = img.naturalHeight / img.naturalWidth;
+    if (Math.abs(ratio - templateRatio()) < 0.08) return;
+    var box = sizeForRatio(ratio);
+    card.style.width = box.w + 'px';
+    card.style.height = box.h + 'px';
+    card.classList.add('is-measured');
+  }
+
+  function fitBattleCards() {
+    if (!els.vsRow) return;
+    els.vsRow.querySelectorAll('.battle-card').forEach(function (card) {
+      var img = card.querySelector('.battle-card-art img');
+      if (!img) return;
+      if (img.complete && img.naturalWidth) fitBattleCard(card);
+      else img.addEventListener('load', function () { fitBattleCard(card); }, { once: true });
+    });
+  }
+
+  var fitTimer = 0;
+  window.addEventListener('resize', function () {
+    clearTimeout(fitTimer);
+    fitTimer = setTimeout(fitBattleCards, 80);
+  });
 
   function renderNextPair(animateIn) {
     locked = false;

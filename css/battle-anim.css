@@ -2,9 +2,15 @@
    Loaded AFTER rankme.css. Single source of truth for .chosen / .rejected.
 */
 
+.battle-side{
+  width: auto;
+  max-width: none;
+  min-width: 0;
+  flex: 0 1 auto;
+}
 .battle-card{
   position: relative;
-  width: 100%;
+  width: min(280px, 36vw);
   aspect-ratio: 3 / 4;
   border-radius: 18px;
   overflow: hidden;
@@ -15,6 +21,9 @@
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   transform: translateZ(0);
+}
+.battle-card.is-measured{
+  aspect-ratio: auto;
 }
 
 .battle-card-frame{
@@ -30,9 +39,13 @@
     linear-gradient(160deg, #241d38, #150f22);
 }
 
+.battle-card-art{
+  position: absolute;
+  inset: 0;
+}
 .battle-card-frame img{
-  width: 92%;
-  height: 92%;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
   object-position: center;
   filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.45));
@@ -157,4 +170,16 @@
   25%{ opacity: 1; transform: translateZ(0) scale(1.04); }
   70%{ opacity: 1; transform: translateZ(0) scale(1); }
   100%{ opacity: 0; transform: translateZ(0) scale(1); }
+}
+
+@media (max-width: 720px){
+  .battle-side{
+    width: auto;
+    max-width: none;
+    min-width: 0;
+    flex: 0 1 auto;
+  }
+  .battle-card{
+    width: min(42vw, 180px);
+  }
 }

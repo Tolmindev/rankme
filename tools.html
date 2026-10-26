@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200..900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/rankme.css?v=20261027d">
+<link rel="stylesheet" href="css/rankme.css?v=20261027e">
 </head>
 <body>
 <div class="aurora" aria-hidden="true"></div>
@@ -74,6 +74,12 @@
           </div>
           <div class="tools-body">
             <div id="duelBlock">
+              <div class="rate-side">
+                <div class="tools-label">% Drop Rate</div>
+                <div class="tools-field">
+                  <input id="rateIn" type="number" inputmode="decimal" min="0" max="100" step="0.01" value="2" aria-label="Drop percent">
+                </div>
+              </div>
               <div class="tools-fighter">
                 <img id="fighterImg" src="assets/tools/poison.webp?v=8" alt="">
                 <div>
@@ -82,12 +88,6 @@
                     <em class="fighter-example">Example</em>
                   </div>
                   <span id="fighterLine">Special Summon · Wish List · 2% a pull</span>
-                </div>
-              </div>
-              <div class="rate-side">
-                <div class="tools-label">% Drop Rate</div>
-                <div class="tools-field">
-                  <input id="rateIn" type="number" inputmode="decimal" min="0" max="100" step="0.01" value="2" aria-label="Drop percent">
                 </div>
               </div>
             </div>
@@ -107,7 +107,9 @@
               <input id="pityIn" type="number" inputmode="numeric" min="0" max="500" step="1" value="0" aria-label="Pity">
             </div>
           </div>
-          <div class="tools-tail" aria-hidden="true"></div>
+          <div class="tools-tail">
+            <p>Copies is how many you want. Tickets is what you already hold. Pity stays at 0. This banner has none.</p>
+          </div>
           <button class="calc-btn" id="calcBtn" type="button">Calculate</button>
         </div>
 
@@ -121,7 +123,7 @@
             <div class="ticket-tray" id="ticketTray"></div>
             <div class="pull-row" id="pullRow" hidden></div>
           </div>
-          <p class="pull-tally" id="pullTally"></p>
+          <p class="pull-tally" id="pullTally">Look all you want. They are not yours yet.</p>
           <button class="tools-pull" id="pullBtn" type="button">Summon x10</button>
         </div>
 
@@ -167,6 +169,6 @@
 
 <footer id="site-footer" class="site"></footer>
 <script src="js/footer.js?v=20261019a" defer></script>
-<script src="js/tools.js?v=20261027d" defer></script>
+<script src="js/tools.js?v=20261027e" defer></script>
 </body>
 </html>

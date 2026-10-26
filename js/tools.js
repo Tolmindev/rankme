@@ -601,7 +601,7 @@
     pullRow.hidden = true;
     pullRow.innerHTML = '';
     pullRow.className = 'pull-row';
-    pullTally.textContent = '';
+    pullTally.textContent = 'Look all you want. They are not yours yet.';
     pullBtn.textContent = banner === 'divination' ? 'Divine x10' : 'Summon x10';
   }
 
@@ -720,12 +720,14 @@
       var t = Math.max(0, Math.min(1, hit / (rate * 4)));
       var width = Math.max(hit > 0 ? 3 : 0, Math.round(t * 100));
       var pct = (Math.round(hit * 1000) / 10).toString().replace(/\.0$/, '') + '%';
+      var mark = (Math.round(rate * 1000) / 10).toString().replace(/\.0$/, '') + '%';
       return '<div class="luck-row' + place + '"><b class="luck-medal">' + (index + 1) +
         '</b><div class="luck-who"><div class="luck-top"><span>' + esc(row.author_name) +
         '</span><em>' + fmt(row.copies) + (row.copies === 1 ? ' copy' : ' copies') +
         '</em><i>' + fmt(row.tickets) + (row.tickets === 1 ? ' ticket' : ' tickets') +
         '</i></div><div class="luck-meter"><div class="luck-track"><i style="width:' + width +
-        '%;background:' + tierColor(t) + '"></i></div><b>' + pct + '</b></div></div></div>';
+        '%;background:' + tierColor(t) + '"></i><span class="luck-mark">' + mark +
+        '</span></div><b>' + pct + '</b></div></div></div>';
     }).join('');
   }
 

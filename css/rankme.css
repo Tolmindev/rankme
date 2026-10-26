@@ -9219,14 +9219,14 @@ body.ach-focus-open { overflow: hidden; }
 
 #duelBlock {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 118px;
+  grid-template-columns: 118px minmax(0, 1fr);
   column-gap: 12px;
   align-items: center;
 }
 
-.rate-side .tools-label { margin-top: 0; text-align: right; }
+.rate-side .tools-label { margin-top: 0; text-align: left; }
 
-.rate-side input { text-align: center; }
+.rate-side input { text-align: left; }
 
 .tools-fighter {
   display: flex;
@@ -9319,6 +9319,14 @@ body.ach-focus-open { overflow: hidden; }
 }
 
 .tools-tail { display: none; }
+
+.tools-tail p {
+  margin: 0;
+  color: var(--text-dim);
+  font-weight: 300;
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
 
 .calc-btn {
   width: 100%;
@@ -9437,6 +9445,8 @@ body.ach-focus-open { overflow: hidden; }
 }
 
 .pull-card {
+  container-type: inline-size;
+  width: 100%;
   gap: 18px;
   padding: 16px;
   border: 1px solid var(--line);
@@ -9564,7 +9574,10 @@ body.ach-focus-open { overflow: hidden; }
   animation: ticket-out .3s ease forwards;
 }
 
-.pull-card .pull-tally { text-align: center; margin: 0; }
+.pull-card .pull-tally {
+  text-align: center;
+  margin: auto 0 0;
+}
 
 .tools-result b {
   display: block;
@@ -9795,6 +9808,7 @@ body.ach-focus-open { overflow: hidden; }
   gap: 10px;
   align-items: center;
   margin-top: 7px;
+  padding-bottom: 13px;
 }
 
 .luck-track {
@@ -9818,6 +9832,18 @@ body.ach-focus-open { overflow: hidden; }
   bottom: -3px;
   width: 1px;
   background: rgba(241, 238, 251, 0.7);
+}
+
+.luck-mark {
+  position: absolute;
+  left: 25%;
+  top: 10px;
+  transform: translateX(-50%);
+  color: #f4eefc;
+  font-size: 0.62rem;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0;
 }
 
 .luck-meter b {
@@ -9974,10 +10000,6 @@ body.ach-focus-open { overflow: hidden; }
   }
 }
 
-@media (min-width: 721px) and (max-width: 1099px) {
-  .tools:has(#toolCalc:not([hidden])) { max-width: none; }
-}
-
 @media (min-width: 900px) {
   .tools:has(#toolShelf:not([hidden])) { max-width: 760px; }
 }
@@ -10002,10 +10024,12 @@ body.ach-focus-open { overflow: hidden; }
   .calc-grid:not(:has(#lootBlock[hidden])) .tools-panel { grid-area: form; order: 0; }
   .calc-grid:not(:has(#lootBlock[hidden])) .pull-card { grid-area: summon; order: 0; }
   .calc-grid:not(:has(#lootBlock[hidden])) .result-card { grid-area: result; order: 0; }
-  .calc-grid:not(:has(#lootBlock[hidden])) .tools-body { margin-top: auto; }
+  .calc-grid:not(:has(#lootBlock[hidden])) .tools-body { margin-top: 0; }
   .calc-grid:not(:has(#lootBlock[hidden])) .tools-tail {
-    display: block;
-    min-height: calc(0.78rem * 1.45 * 3);
+    display: flex;
+    align-items: flex-end;
+    flex: 1 1 auto;
+    min-height: 4.35em;
     margin-top: 18px;
   }
 
@@ -10018,5 +10042,20 @@ body.ach-focus-open { overflow: hidden; }
   .luck-board {
     grid-template-columns: 1fr 1fr;
     align-items: stretch;
+  }
+}
+
+@container (max-width: 520px) {
+  .ticket-tray,
+  .pull-row {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+  .ticket-tray img,
+  .pull-row img {
+    flex: 0 0 calc((100% - 40px) / 5);
+    width: calc((100% - 40px) / 5);
+    max-width: 72px;
   }
 }

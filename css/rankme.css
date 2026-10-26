@@ -9284,6 +9284,13 @@ body.ach-focus-open { overflow: hidden; }
   border-color: rgba(210, 175, 255, .7);
 }
 
+.tools-field input::placeholder {
+  color: #c9b8ea;
+  -webkit-text-fill-color: #c9b8ea;
+  opacity: 1;
+  font-weight: 400;
+}
+
 .calc-btn {
   width: 100%;
   height: 46px;
@@ -9310,15 +9317,23 @@ body.ach-focus-open { overflow: hidden; }
   position: relative;
   display: block;
   width: 100%;
-  height: 200px;
+  aspect-ratio: 16 / 9;
+  height: auto;
   padding: 0;
-  border: 0;
+  border: 1px solid rgba(255,255,255,.1);
   border-radius: 22px;
   overflow: hidden;
   cursor: pointer;
   background: #1a1024;
   color: #fff;
   text-align: left;
+  transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+
+.gacha-banner:hover {
+  transform: translateY(-3px);
+  border-color: rgba(200, 160, 240, .6);
+  box-shadow: 0 16px 36px rgba(0,0,0,.35), 0 0 24px rgba(160, 110, 230, .28);
 }
 
 .gacha-banner img {
@@ -9327,9 +9342,12 @@ body.ach-focus-open { overflow: hidden; }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 68% center;
+  object-position: center 32%;
   border-radius: 0;
+  transition: transform .45s ease;
 }
+
+.gacha-banner:hover img { transform: scale(1.04); }
 
 .gacha-banner-copy {
   position: absolute;
@@ -9395,9 +9413,10 @@ body.ach-focus-open { overflow: hidden; }
 .rose-stage {
   border-radius: 14px;
   overflow: hidden;
-  height: 220px;
+  aspect-ratio: 16 / 9;
+  height: auto;
   flex: 0 0 auto;
-  background: #120e18 url('../assets/tools/rose-poster.webp') center 22% / cover no-repeat;
+  background: #120e18 url('../assets/tools/rose-poster.webp') center 32% / cover no-repeat;
 }
 
 .rose-stage video {
@@ -9405,7 +9424,7 @@ body.ach-focus-open { overflow: hidden; }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 22%;
+  object-position: center 32%;
 }
 
 .drop-capsule {
@@ -9415,8 +9434,8 @@ body.ach-focus-open { overflow: hidden; }
   margin: 14px 0 0;
   padding: 8px 10px;
   border-radius: 16px;
-  background: rgba(8, 6, 14, .82);
-  border: 1px solid rgba(255,255,255,.06);
+  background: rgba(255,255,255,0.045);
+  border: 1px solid var(--line);
 }
 
 .ticket-tray,
@@ -9487,6 +9506,11 @@ body.ach-focus-open { overflow: hidden; }
   font-weight: 300;
   font-size: 0.92rem;
   line-height: 1.45;
+}
+
+.tools-result p strong {
+  color: #fff;
+  font-weight: 600;
 }
 
 .tools-note {
@@ -9674,7 +9698,6 @@ body.ach-focus-open { overflow: hidden; }
     padding: 0 8px;
     font-size: 0.72rem;
   }
-  .gacha-banner { height: 168px; }
   .gacha-banner-copy { width: 62%; padding: 14px 16px; }
   .gacha-banner-copy strong { font-size: 1.05rem; }
   .drop-capsule { margin-left: 0; margin-right: 0; }

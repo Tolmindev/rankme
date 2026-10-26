@@ -560,6 +560,7 @@
     var p80 = pullsUntil(k, p, pity, 0.8, cdf);
     var p95 = pullsUntil(k, p, pity, 0.95, cdf);
     var head, unit, line;
+    function hi(s) { return '<strong>' + s + '</strong>'; }
     if (k === 0) {
       head = 'Done';
       unit = 'nothing left to pull';
@@ -568,9 +569,9 @@
     } else if (have == null || have < 0) {
       head = fmt(p50);
       unit = 'pulls for a 50% chance';
-      line = 'Luckiest 5% finish by ' + fmt(p05) + '. 20% by ' + fmt(p20) +
-        '. Average is ' + fmt(avg) + ', and that still leaves almost half short. ' +
-        '80% need ' + fmt(p80) + '. 95% need ' + fmt(p95) + '.';
+      line = 'Luckiest 5% finish by ' + hi(fmt(p05)) + '. 20% by ' + hi(fmt(p20)) +
+        '. Average is ' + hi(fmt(avg)) + ', and that still leaves almost half short. ' +
+        '80% need ' + hi(fmt(p80)) + '. 95% need ' + hi(fmt(p95)) + '.';
       dist.hidden = true;
       dist.innerHTML = '';
     } else {
@@ -580,11 +581,11 @@
       head = haul(expected);
       unit = 'copies from ' + fmt(n) + ' pulls';
       if (chance >= 0.5) {
-        line = k + ' or more happens ' + fmtPct(chance) + ' of the time. ' +
-          'The slow 20% still need ' + fmt(p80) + '. 95% need ' + fmt(p95) + '.';
+        line = k + ' or more happens ' + hi(fmtPct(chance)) + ' of the time. ' +
+          'The slow 20% still need ' + hi(fmt(p80)) + '. 95% need ' + hi(fmt(p95)) + '.';
       } else if (chance >= 0.005) {
-        line = k + ' or more from ' + fmt(n) + ' pulls happens ' + fmtPct(chance) +
-          ' of the time. About 1 in ' + fmt(oneIn(chance)) + '.';
+        line = k + ' or more from ' + fmt(n) + ' pulls happens ' + hi(fmtPct(chance)) +
+          ' of the time. About 1 in ' + hi(fmt(oneIn(chance))) + '.';
       } else {
         line = k + ' copies from ' + fmt(n) + ' pulls almost never happens.';
       }

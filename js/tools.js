@@ -21,9 +21,9 @@
 
   function frag(id, name) {
     return [
-      ['frag-' + id, name + ' ×1', 2.031],
-      ['frag-' + id, name + ' ×5', 0.41],
-      ['frag-' + id, name + ' ×15', 0.136]
+      ['frag-' + id + '-1', name + ' ×1', 2.031],
+      ['frag-' + id + '-5', name + ' ×5', 0.41],
+      ['frag-' + id + '-15', name + ' ×15', 0.136]
     ];
   }
 
@@ -92,9 +92,9 @@
           ['b-thunder', 'B-Grade Thunder Invitation', 3.157],
           ['b-wind', 'B-Grade Wind Invitation', 3.157],
           ['ticket', 'Challenge Ticket', 5.263],
-          ['rare-acc', 'Rare Accessory ×2', 1.578],
-          ['rare-acc', 'Rare Accessory ×1', 3.157],
-          ['sup-100', 'Superior Accessory ×150', 2.957],
+          ['rare-2', 'Rare Accessory ×2', 1.578],
+          ['rare-1', 'Rare Accessory ×1', 3.157],
+          ['sup-150', 'Superior Accessory ×150', 2.957],
           ['sup-100', 'Superior Accessory ×100', 2.957],
           ['sup-50', 'Superior Accessory ×50', 3.936],
           ['mound-cash', 'Mound of Cash', 4.736],
@@ -142,7 +142,7 @@
       el.classList.toggle('on', el === btn);
     });
     var b = current();
-    document.getElementById('fighterImg').src = 'assets/tools/' + b.file + '.webp?v=5';
+    document.getElementById('fighterImg').src = 'assets/tools/' + b.file + '.webp?v=7';
     document.getElementById('fighterName').textContent = b.name;
     document.getElementById('fighterLine').textContent = b.line;
     resetStage();
@@ -468,7 +468,7 @@
       var extra = '';
       if (n != null) extra = '<i>~' + haul(n * row[2] / 100) + '</i>';
       var cls = row[2] === 2 ? 'loot target' : 'loot';
-      return '<div class="' + cls + '"><img src="assets/tools/' + row[0] + '.webp?v=5" alt="">' +
+      return '<div class="' + cls + '"><img src="assets/tools/' + row[0] + '.webp?v=7" alt="">' +
         '<span>' + row[1] + '</span><em>' + showPct(row[2]) + '</em>' + extra + '</div>';
     }).join('');
   }
@@ -638,7 +638,7 @@
   function revealDrops(got, tally) {
     pullRow.className = 'pull-row';
     pullRow.innerHTML = got.map(function (row) {
-      return '<img src="assets/tools/' + row[0] + '.webp?v=5" alt="' + row[1] + '">';
+      return '<img src="assets/tools/' + row[0] + '.webp?v=7" alt="' + row[1] + '">';
     }).join('');
     pullRow.hidden = false;
     ticketTray.hidden = true;

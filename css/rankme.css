@@ -9317,8 +9317,8 @@ body.ach-focus-open { overflow: hidden; }
   position: relative;
   display: block;
   width: 100%;
-  aspect-ratio: 16 / 9;
-  height: auto;
+  height: 248px;
+  margin: 0 auto;
   padding: 0;
   border: 1px solid rgba(255,255,255,.1);
   border-radius: 22px;
@@ -9404,6 +9404,7 @@ body.ach-focus-open { overflow: hidden; }
 }
 
 .pull-card {
+  gap: 18px;
   padding: 16px;
   border: 1px solid var(--line);
   border-radius: 18px;
@@ -9430,9 +9431,9 @@ body.ach-focus-open { overflow: hidden; }
 .drop-capsule {
   display: flex;
   justify-content: center;
-  min-height: 58px;
-  margin: 14px 0 0;
-  padding: 8px 10px;
+  min-height: 72px;
+  margin: 0;
+  padding: 14px 12px;
   border-radius: 16px;
   background: rgba(255,255,255,0.045);
   border: 1px solid var(--line);
@@ -9442,9 +9443,9 @@ body.ach-focus-open { overflow: hidden; }
 .pull-card .pull-row {
   display: flex;
   flex-wrap: nowrap;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   width: 100%;
   margin: 0;
 }
@@ -9452,9 +9453,9 @@ body.ach-focus-open { overflow: hidden; }
 .ticket-tray img,
 .pull-card .pull-row img {
   flex: 1 1 0;
-  width: auto;
+  width: 100%;
   min-width: 0;
-  max-width: 44px;
+  max-width: none;
   height: auto;
   aspect-ratio: 1;
   margin: 0;
@@ -9480,7 +9481,7 @@ body.ach-focus-open { overflow: hidden; }
   to { opacity: 1; }
 }
 
-.pull-card .pull-tally { text-align: center; }
+.pull-card .pull-tally { text-align: center; margin: 0; }
 
 .tools-result b {
   display: block;
@@ -9523,11 +9524,11 @@ body.ach-focus-open { overflow: hidden; }
 .tools-panel > .tools-field:last-of-type { margin-bottom: 16px; }
 
 .ten-odds {
-  margin: 10px 0 16px;
+  margin: 0;
   color: var(--text-dim);
   font-weight: 300;
   font-size: 0.78rem;
-  line-height: 1.4;
+  line-height: 1.45;
   text-align: center;
 }
 
@@ -9650,7 +9651,7 @@ body.ach-focus-open { overflow: hidden; }
   display: block;
   width: 100%;
   height: 46px;
-  margin-top: auto;
+  margin-top: 0;
   padding: 0 16px;
   border-radius: 999px;
   border: 1.5px solid transparent;
@@ -9681,11 +9682,11 @@ body.ach-focus-open { overflow: hidden; }
 }
 
 .pull-tally {
-  margin: 8px 0 0;
+  margin: 0;
   color: var(--text-dim);
   font-weight: 300;
   font-size: 0.78rem;
-  line-height: 1.4;
+  line-height: 1.45;
 }
 
 @media (max-width: 720px) {
@@ -9698,15 +9699,14 @@ body.ach-focus-open { overflow: hidden; }
     padding: 0 8px;
     font-size: 0.72rem;
   }
+  .gacha-banner { height: 196px; }
   .gacha-banner-copy { width: 62%; padding: 14px 16px; }
   .gacha-banner-copy strong { font-size: 1.05rem; }
-  .drop-capsule { margin-left: 0; margin-right: 0; }
-  .ticket-tray img,
-  .pull-card .pull-row img { max-width: 30px; }
+  .drop-capsule { margin: 0; }
 }
 
 @media (min-width: 900px) {
-  .tools:has(#toolShelf:not([hidden])) { max-width: 980px; }
+  .tools:has(#toolShelf:not([hidden])) { max-width: 760px; }
 }
 
 @media (min-width: 1100px) {

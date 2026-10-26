@@ -9506,6 +9506,25 @@ body.ach-focus-open { overflow: hidden; }
   }
 }
 
+.pull-row img.jackpot {
+  z-index: 2;
+  box-shadow:
+    0 0 0 1.5px #fff,
+    0 0 12px rgba(186, 242, 255, 1),
+    0 0 22px rgba(255, 214, 120, .85);
+  animation: drop-in .82s cubic-bezier(.22, .7, .2, 1) both, jackpot-glow 1.35s ease-in-out .7s infinite;
+}
+
+@keyframes jackpot-glow {
+  50% {
+    box-shadow:
+      0 0 0 1.5px #fff,
+      0 0 16px rgba(220, 250, 255, 1),
+      0 0 28px rgba(120, 220, 255, .9),
+      0 0 36px rgba(255, 196, 80, .55);
+  }
+}
+
 .pull-row.out img {
   animation: ticket-out .3s ease forwards;
 }

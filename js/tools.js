@@ -619,8 +619,8 @@
   function revealDrops(got, tally) {
     pullRow.className = 'pull-row';
     pullRow.innerHTML = got.map(function (row) {
-      var hit = row[0] === current().file ? ' class="hit"' : '';
-      return '<img' + hit + ' src="assets/tools/' + row[0] + '.webp?v=7" alt="' + row[1] + '">';
+      var cls = row[0] === 'gems' ? 'jackpot' : (row[0] === current().file ? 'hit' : '');
+      return '<img' + (cls ? ' class="' + cls + '"' : '') + ' src="assets/tools/' + row[0] + '.webp?v=7" alt="' + row[1] + '">';
     }).join('');
     pullRow.hidden = false;
     ticketTray.hidden = true;

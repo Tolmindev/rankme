@@ -638,7 +638,8 @@
   function revealDrops(got, tally) {
     pullRow.className = 'pull-row';
     pullRow.innerHTML = got.map(function (row) {
-      return '<img src="assets/tools/' + row[0] + '.webp?v=7" alt="' + row[1] + '">';
+      var hit = row[0] === current().file ? ' class="hit"' : '';
+      return '<img' + hit + ' src="assets/tools/' + row[0] + '.webp?v=7" alt="' + row[1] + '">';
     }).join('');
     pullRow.hidden = false;
     ticketTray.hidden = true;
@@ -678,7 +679,7 @@
       setTimeout(function () {
         if (token !== flyToken) return;
         revealDrops(got, tally);
-      }, 280);
+      }, 320);
     } else {
       flyToken++;
       revealDrops(got, tally);

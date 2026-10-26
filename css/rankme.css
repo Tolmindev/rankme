@@ -9465,20 +9465,40 @@ body.ach-focus-open { overflow: hidden; }
 }
 
 .ticket-tray.fly img {
-  animation: ticket-out .35s ease forwards;
+  animation: ticket-out .32s ease forwards;
 }
 
 @keyframes ticket-out {
-  to { transform: translateY(-16px); opacity: 0; }
+  to { transform: scale(0.62); opacity: 0; }
 }
 
 .pull-row.in img {
-  animation: drop-in .28s ease both;
+  animation: drop-in .48s cubic-bezier(.2, .85, .2, 1) both;
 }
 
 @keyframes drop-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  0% { transform: scale(0.7); opacity: 0; }
+  62% { transform: scale(1.14); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.pull-row img.hit {
+  z-index: 1;
+  border-radius: 10px;
+  box-shadow:
+    0 0 0 1.5px rgba(255, 246, 214, .95),
+    0 0 10px rgba(255, 226, 140, .9),
+    0 0 20px rgba(255, 190, 64, .55);
+  animation: drop-in .48s cubic-bezier(.2, .85, .2, 1) both, hit-glow 1.6s ease-in-out .4s infinite;
+}
+
+@keyframes hit-glow {
+  50% {
+    box-shadow:
+      0 0 0 1.5px #fff6d4,
+      0 0 14px rgba(255, 236, 170, 1),
+      0 0 26px rgba(255, 204, 80, .75);
+  }
 }
 
 .pull-card .pull-tally { text-align: center; margin: 0; }
@@ -9702,7 +9722,18 @@ body.ach-focus-open { overflow: hidden; }
   .gacha-banner { height: 196px; }
   .gacha-banner-copy { width: 62%; padding: 14px 16px; }
   .gacha-banner-copy strong { font-size: 1.05rem; }
-  .drop-capsule { margin: 0; }
+  .ticket-tray,
+  .pull-card .pull-row {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+  .ticket-tray img,
+  .pull-card .pull-row img {
+    flex: 0 0 calc((100% - 40px) / 5);
+    width: calc((100% - 40px) / 5);
+    max-width: 72px;
+  }
 }
 
 @media (min-width: 900px) {

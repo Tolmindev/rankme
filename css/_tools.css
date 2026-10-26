@@ -74,7 +74,6 @@
   border: 1px solid var(--line);
   border-radius: 18px;
   background: rgba(255,255,255,0.025);
-  justify-content: flex-end;
 }
 
 #duelBlock {
@@ -83,8 +82,6 @@
   column-gap: 12px;
   align-items: center;
 }
-
-#bannerRow { grid-column: 1 / -1; }
 
 .tools-panel.is-custom #bannerRow,
 .tools-panel.is-custom .tools-fighter { display: none; }
@@ -173,6 +170,8 @@
   opacity: 1;
   font-weight: 400;
 }
+
+.tools-tail { display: none; }
 
 .calc-btn {
   width: 100%;
@@ -350,6 +349,15 @@
   margin: 0;
   object-fit: contain;
   background: transparent;
+  transition: scale .16s ease;
+}
+
+.ticket-tray img:hover,
+.pull-card .pull-row img:hover,
+.ticket-tray img:active,
+.pull-card .pull-row img:active {
+  scale: 1.08;
+  z-index: 3;
 }
 
 .ticket-tray.fly img {
@@ -450,8 +458,6 @@
   font-weight: 300;
   font-size: 0.75rem;
 }
-
-.tools-panel > .tools-field:last-of-type { margin-bottom: 16px; }
 
 .dist { margin-top: 14px; }
 
@@ -662,6 +668,12 @@
   .calc-grid:not(:has(#lootBlock[hidden])) .tools-panel { grid-area: form; order: 0; }
   .calc-grid:not(:has(#lootBlock[hidden])) .pull-card { grid-area: summon; order: 0; }
   .calc-grid:not(:has(#lootBlock[hidden])) .result-card { grid-area: result; order: 0; }
+  .calc-grid:not(:has(#lootBlock[hidden])) .tools-body { margin-top: auto; }
+  .calc-grid:not(:has(#lootBlock[hidden])) .tools-tail {
+    display: block;
+    min-height: calc(0.78rem * 1.45 * 3);
+    margin-top: 18px;
+  }
 
   #lootList {
     display: grid;

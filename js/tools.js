@@ -728,7 +728,7 @@
         '</span><em>' + fmt(row.copies) + (row.copies === 1 ? ' copy' : ' copies') +
         '</em><i>' + fmt(row.tickets) + (row.tickets === 1 ? ' ticket' : ' tickets') +
         '</i></div><div class="luck-meter"><div class="luck-track"><i style="width:' + width +
-        '%;background:' + tierColor(t) + '"></i></div><b>' + pct + '</b></div></div></div>';
+        '%;background:' + tierColor(t) + '"></i></div><b>drop rate <span class="luck-pct">' + pct + '</span></b></div></div></div>';
     }).join('');
   }
 

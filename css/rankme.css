@@ -9830,11 +9830,16 @@ body.ach-focus-open { overflow: hidden; }
 }
 
 .luck-meter b {
-  min-width: 36px;
   color: #f4eefc;
-  font-weight: 500;
-  font-size: 0.75rem;
+  font-weight: 400;
+  font-size: 0.72rem;
+  white-space: nowrap;
   text-align: right;
+}
+
+.luck-pct {
+  color: #b79bf0;
+  font-weight: 500;
 }
 
 .luck-medal {

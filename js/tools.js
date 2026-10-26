@@ -49,10 +49,10 @@
         ['original', 'Original Token', 8],
         ['mound-break', 'Mound of Breakstones', 4],
         ['abundant-exp', 'Abundant Fighter EXP', 4],
-        ['mound-cash', 'Mound of Cash', 4],
+        ['mound-cash-1', 'Mound of Cash ×1', 4],
         ['pile-break', 'Pile of Breakstones', 9],
         ['decent-exp', 'Decent Fighter EXP', 9],
-        ['pile-cash', 'Pile of Cash', 9]
+        ['pile-cash-2', 'Pile of Cash ×2', 9]
       ]
     },
     divination: {
@@ -97,10 +97,10 @@
           ['sup-150', 'Superior Accessory ×150', 2.957],
           ['sup-100', 'Superior Accessory ×100', 2.957],
           ['sup-50', 'Superior Accessory ×50', 3.936],
-          ['mound-cash', 'Mound of Cash', 4.736],
+          ['mound-cash-2', 'Mound of Cash ×2', 4.736],
           ['abundant-exp', 'Abundant Fighter EXP', 4.736],
           ['heap', 'Heap of Breakstones', 4.736],
-          ['pile-cash', 'Pile of Cash', 9.852],
+          ['pile-cash-5', 'Pile of Cash ×5', 9.852],
           ['decent-exp', 'Decent Fighter EXP', 9.852],
           ['sparse', 'Sparse Breakstones', 9.852]
         ]
@@ -142,7 +142,7 @@
       el.classList.toggle('on', el === btn);
     });
     var b = current();
-    document.getElementById('fighterImg').src = 'assets/tools/' + b.file + '.webp?v=7';
+    document.getElementById('fighterImg').src = 'assets/tools/' + b.file + '.webp?v=8';
     document.getElementById('fighterName').textContent = b.name;
     document.getElementById('fighterLine').textContent = b.line;
     resetStage();
@@ -468,7 +468,7 @@
       var extra = '';
       if (n != null) extra = '<i>~' + haul(n * row[2] / 100) + '</i>';
       var cls = row[2] === 2 ? 'loot target' : 'loot';
-      return '<div class="' + cls + '"><img src="assets/tools/' + row[0] + '.webp?v=7" alt="">' +
+      return '<div class="' + cls + '"><img src="assets/tools/' + row[0] + '.webp?v=8" alt="">' +
         '<span>' + row[1] + '</span><em>' + showPct(row[2]) + '</em>' + extra + '</div>';
     }).join('');
   }
@@ -620,7 +620,7 @@
     pullRow.className = 'pull-row';
     pullRow.innerHTML = got.map(function (row) {
       var cls = row[0] === 'gems' ? 'jackpot' : (row[0] === current().file ? 'hit' : '');
-      return '<img' + (cls ? ' class="' + cls + '"' : '') + ' src="assets/tools/' + row[0] + '.webp?v=7" alt="' + row[1] + '">';
+      return '<img' + (cls ? ' class="' + cls + '"' : '') + ' src="assets/tools/' + row[0] + '.webp?v=8" alt="' + row[1] + '">';
     }).join('');
     pullRow.hidden = false;
     ticketTray.hidden = true;

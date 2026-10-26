@@ -9227,9 +9227,22 @@ body.ach-focus-open { overflow: hidden; }
 }
 
 .tools-fighter strong {
-  display: block;
   font-weight: 650;
   letter-spacing: -0.02em;
+}
+
+.fighter-title {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  min-width: 0;
+}
+
+.fighter-example {
+  color: var(--text-dim);
+  font-style: normal;
+  font-weight: 300;
+  font-size: 0.72rem;
 }
 
 .tools-fighter span {

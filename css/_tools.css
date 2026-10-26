@@ -189,11 +189,17 @@
   background-origin: padding-box, border-box;
   background-clip: padding-box, border-box;
   box-shadow: var(--btn-glow), inset 0 1px 0 rgba(255,255,255,.08);
+  transition: transform .14s ease, filter .14s ease, box-shadow .14s ease;
 }
 
 .calc-btn:hover {
   filter: brightness(1.1);
   box-shadow: 0 0 22px rgba(190,140,255,.5), inset 0 1px 0 rgba(255,255,255,.12);
+}
+
+.calc-btn:active {
+  transform: scale(0.97);
+  filter: brightness(1.18);
 }
 
 .gacha-banner {
@@ -428,20 +434,6 @@
 
 .tools-panel > .tools-field:last-of-type { margin-bottom: 16px; }
 
-.ten-odds {
-  margin: 0;
-  color: var(--text-dim);
-  font-weight: 300;
-  font-size: 0.78rem;
-  line-height: 1.45;
-  text-align: center;
-}
-
-.ten-odds b {
-  color: #e7d6ff;
-  font-weight: 500;
-}
-
 .dist { margin-top: 14px; }
 
 .dist-label {
@@ -539,7 +531,7 @@
 
 .loot em {
   margin-left: auto;
-  color: #b7f0c8;
+  color: #d4c4ff;
 }
 
 .loot i {
@@ -574,6 +566,7 @@
     0 0 16px rgba(255, 80, 140, 0.4),
     0 0 28px rgba(255, 170, 50, 0.28),
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transition: transform .14s ease, filter .14s ease, box-shadow .14s ease;
 }
 
 .tools-pull:hover {
@@ -583,6 +576,11 @@
     0 0 22px rgba(255, 90, 150, 0.5),
     0 0 36px rgba(255, 190, 60, 0.35),
     inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.tools-pull:active {
+  transform: scale(0.97);
+  filter: brightness(1.18);
 }
 
 .pull-tally {

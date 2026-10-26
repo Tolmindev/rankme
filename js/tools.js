@@ -501,29 +501,12 @@
     dist.innerHTML = html;
   }
 
-  var tenOdds = document.getElementById('tenOdds');
+  var resultCard = document.getElementById('resultCard');
 
   function oneIn(prob) {
     if (!(prob > 0)) return 0;
     return Math.max(1, Math.round(1 / prob));
   }
-
-  function paintTen(p, pity) {
-    var twoP = pity ? barProbs(10, 2, 2, p, pity)[0][1] : pmf(10, 2, p);
-    var threeP = pity ? barProbs(10, 3, 3, p, pity)[0][1] : pmf(10, 3, p);
-    var two = oneIn(twoP);
-    var three = oneIn(threeP);
-    if (!two || !three || p >= 1) {
-      tenOdds.hidden = true;
-      tenOdds.innerHTML = '';
-      return;
-    }
-    tenOdds.hidden = false;
-    tenOdds.innerHTML = 'Two in one 10-pull: about <b>1 in ' + fmt(two) +
-      '</b>. Three: about <b>1 in ' + fmt(three) + '</b>.';
-  }
-
-  var resultCard = document.getElementById('resultCard');
 
   function paint(reveal) {
     var pity = pityNow();
@@ -536,7 +519,6 @@
       document.getElementById('fighterLine').textContent = kind + ' · Wish List · ' + rateLabel(p) + ' a pull';
     }
     if ((!(p > 0) && !pity) || p > 1 || k > 500) {
-      tenOdds.hidden = true;
       if (reveal) {
         resultCard.hidden = false;
         result.innerHTML = '<b>-</b><p>Rate needs to be above 0 and at most 100.</p>';
@@ -544,7 +526,6 @@
       }
       return;
     }
-    paintTen(p, pity);
     if (mode === 'duel') paintLoot(have != null && have >= 0 ? Math.floor(have) : null);
     if (!reveal) return;
     resultCard.hidden = false;

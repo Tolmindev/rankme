@@ -205,10 +205,12 @@
 
 .tools-tail p {
   margin: 0;
+  width: 100%;
   color: var(--text-dim);
   font-weight: 300;
   font-size: 0.78rem;
   line-height: 1.45;
+  text-align: center;
 }
 
 .calc-btn {
@@ -459,9 +461,11 @@
 
 .pull-card .pull-tally {
   display: flex;
-  align-items: flex-end;
-  text-align: left;
-  margin: auto 0 0;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 auto;
+  text-align: center;
+  margin: 0;
 }
 
 .tools-result b {
@@ -891,10 +895,12 @@
   .calc-grid:not(:has(#lootBlock[hidden])) .tools-body { margin-top: 0; }
   .calc-grid:not(:has(#lootBlock[hidden])) .tools-tail {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
+    justify-content: center;
     flex: 1 1 auto;
     min-height: 4.35em;
     margin-top: 18px;
+    text-align: center;
   }
 
   #lootList {

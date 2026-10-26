@@ -672,18 +672,21 @@
       got.push(pick);
       tally[pick[1]] = (tally[pick[1]] || 0) + 1;
     }
-    if (!hadPull) {
-      hadPull = true;
-      ticketTray.classList.add('fly');
-      var token = ++flyToken;
-      setTimeout(function () {
-        if (token !== flyToken) return;
-        revealDrops(got, tally);
-      }, 320);
+    if (!pullRow.hidden && pullRow.children.length) {
+      pullRow.classList.remove('in');
+      void pullRow.offsetWidth;
+      pullRow.classList.add('out');
     } else {
-      flyToken++;
-      revealDrops(got, tally);
+      ticketTray.classList.remove('fly');
+      void ticketTray.offsetWidth;
+      ticketTray.classList.add('fly');
     }
+    hadPull = true;
+    var token = ++flyToken;
+    setTimeout(function () {
+      if (token !== flyToken) return;
+      revealDrops(got, tally);
+    }, 280);
   }
 
   document.getElementById('pullBtn').addEventListener('click', testPulls);

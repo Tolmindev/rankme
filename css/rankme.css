@@ -9461,11 +9461,10 @@ body.ach-focus-open { overflow: hidden; }
   margin: 0;
   object-fit: contain;
   background: transparent;
-  border-radius: 8px;
 }
 
 .ticket-tray.fly img {
-  animation: ticket-out .32s ease forwards;
+  animation: ticket-out .3s ease forwards;
 }
 
 @keyframes ticket-out {
@@ -9473,23 +9472,22 @@ body.ach-focus-open { overflow: hidden; }
 }
 
 .pull-row.in img {
-  animation: drop-in .48s cubic-bezier(.2, .85, .2, 1) both;
+  animation: drop-in .82s cubic-bezier(.22, .7, .2, 1) both;
 }
 
 @keyframes drop-in {
-  0% { transform: scale(0.7); opacity: 0; }
-  62% { transform: scale(1.14); opacity: 1; }
+  0% { transform: scale(0.84); opacity: 0; }
+  52% { transform: scale(1.07); opacity: 1; }
   100% { transform: scale(1); opacity: 1; }
 }
 
 .pull-row img.hit {
   z-index: 1;
-  border-radius: 10px;
   box-shadow:
     0 0 0 1.5px rgba(255, 246, 214, .95),
     0 0 10px rgba(255, 226, 140, .9),
     0 0 20px rgba(255, 190, 64, .55);
-  animation: drop-in .48s cubic-bezier(.2, .85, .2, 1) both, hit-glow 1.6s ease-in-out .4s infinite;
+  animation: drop-in .82s cubic-bezier(.22, .7, .2, 1) both, hit-glow 1.6s ease-in-out .7s infinite;
 }
 
 @keyframes hit-glow {
@@ -9499,6 +9497,10 @@ body.ach-focus-open { overflow: hidden; }
       0 0 14px rgba(255, 236, 170, 1),
       0 0 26px rgba(255, 204, 80, .75);
   }
+}
+
+.pull-row.out img {
+  animation: ticket-out .3s ease forwards;
 }
 
 .pull-card .pull-tally { text-align: center; margin: 0; }
@@ -9639,9 +9641,8 @@ body.ach-focus-open { overflow: hidden; }
 .loot img {
   width: 36px;
   height: 36px;
-  border-radius: 8px;
-  object-fit: cover;
-  background: #120e1c;
+  object-fit: contain;
+  background: transparent;
 }
 
 .loot span { font-weight: 450; font-size: 0.88rem; }

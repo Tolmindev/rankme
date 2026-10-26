@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200..900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/rankme.css?v=20261027a">
+<link rel="stylesheet" href="css/rankme.css?v=20261027b">
 </head>
 <body>
 <div class="aurora" aria-hidden="true"></div>
@@ -137,34 +137,41 @@
         <div id="lootList"></div>
       </details>
 
-      <section class="luck-card" id="luckCard">
-        <h2>Share your luck</h2>
-        <form id="luckForm">
-          <div class="luck-fields">
-            <label>
-              <span class="tools-label">Tickets spent</span>
-              <span class="tools-field">
-                <input id="luckTickets" type="number" inputmode="numeric" min="1" max="1000000" step="1" placeholder="Tickets" aria-label="Tickets spent">
-              </span>
-            </label>
-            <label>
-              <span class="tools-label">Copies you got</span>
-              <span class="tools-field">
-                <input id="luckCopies" type="number" inputmode="numeric" min="0" max="100000" step="1" placeholder="Copies" aria-label="Copies you got">
-              </span>
-            </label>
-          </div>
-          <button class="calc-btn" type="submit">Share</button>
-          <p class="luck-note" id="luckNote" hidden></p>
-        </form>
-        <div class="luck-list" id="luckList"></div>
-      </section>
+      <div class="luck-board">
+        <section class="luck-card" id="luckCard">
+          <h2>Share your luck</h2>
+          <form id="luckForm">
+            <div class="luck-fields">
+              <label>
+                <span class="tools-label">Tickets spent</span>
+                <span class="tools-field">
+                  <input id="luckTickets" type="number" inputmode="numeric" min="1" max="1000000" step="1" placeholder="Tickets" aria-label="Tickets spent">
+                </span>
+              </label>
+              <label>
+                <span class="tools-label">Copies you got</span>
+                <span class="tools-field">
+                  <input id="luckCopies" type="number" inputmode="numeric" min="0" max="100000" step="1" placeholder="Copies" aria-label="Copies you got">
+                </span>
+              </label>
+            </div>
+            <button class="calc-btn" type="submit">Share</button>
+            <p class="luck-note" id="luckNote" hidden></p>
+          </form>
+          <div class="luck-list" id="luckList"></div>
+        </section>
+        <section class="luck-chart" id="luckChart">
+          <h2>Against the rate</h2>
+          <p class="luck-chart-note">Each line is copies per ticket. The mark is this banner's rate.</p>
+          <div id="luckBars"></div>
+        </section>
+      </div>
     </section>
   </div>
 </main>
 
 <footer id="site-footer" class="site"></footer>
 <script src="js/footer.js?v=20261019a" defer></script>
-<script src="js/tools.js?v=20261027a" defer></script>
+<script src="js/tools.js?v=20261027b" defer></script>
 </body>
 </html>

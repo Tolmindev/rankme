@@ -9165,9 +9165,9 @@ body.ach-focus-open { overflow: hidden; }
 }
 
 .tools-games .tools-chip {
-  flex: 1 1 auto;
-  width: auto;
-  max-width: 384px;
+  flex: 0 0 188px;
+  width: 188px;
+  max-width: 188px;
 }
 
 .tools-switch {
@@ -9721,15 +9721,22 @@ body.ach-focus-open { overflow: hidden; }
 
 .loot.target span { color: #fff; }
 
-.luck-card {
+.luck-board {
+  display: grid;
+  gap: 18px;
   margin-top: 28px;
+}
+
+.luck-card,
+.luck-chart {
   padding: 16px 16px 8px;
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: var(--tools-card);
 }
 
-.luck-card h2 {
+.luck-card h2,
+.luck-chart h2 {
   margin: 2px 0 14px;
   color: var(--text);
   font-size: 0.78rem;
@@ -9761,14 +9768,49 @@ body.ach-focus-open { overflow: hidden; }
 
 .luck-row {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto auto;
-  gap: 12px;
-  align-items: baseline;
+  grid-template-columns: 22px minmax(0, 1fr) auto auto;
+  gap: 10px;
+  align-items: center;
   padding: 7px 0;
   border-top: 1px solid var(--line);
   color: var(--text-dim);
   font-weight: 400;
   font-size: 0.78rem;
+}
+
+.luck-medal {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 0.68rem;
+  line-height: 1;
+  color: var(--text-dim);
+}
+
+.luck-row.place-1 .luck-medal {
+  color: #fff;
+  background: linear-gradient(145deg, #ffe9a8 0%, #ffc857 45%, #f0a030 100%);
+  box-shadow: 0 0 0 2px rgba(255, 210, 120, 0.45), 0 0 12px rgba(255, 190, 80, 0.7);
+  text-shadow: 0 1px 2px rgba(0,0,0,.35);
+}
+
+.luck-row.place-2 .luck-medal {
+  color: #fff;
+  background: linear-gradient(145deg, #f4f4fa 0%, #cfd0dc 50%, #a8a9b8 100%);
+  box-shadow: 0 0 0 2px rgba(220, 220, 235, 0.4), 0 0 12px rgba(180, 185, 210, 0.55);
+  text-shadow: 0 1px 2px rgba(0,0,0,.3);
+}
+
+.luck-row.place-3 .luck-medal {
+  color: #fff;
+  background: linear-gradient(145deg, #f0c090 0%, #d08a4a 50%, #a86228 100%);
+  box-shadow: 0 0 0 2px rgba(220, 150, 90, 0.4), 0 0 12px rgba(200, 120, 50, 0.55);
+  text-shadow: 0 1px 2px rgba(0,0,0,.35);
 }
 
 .luck-row span {
@@ -9794,6 +9836,62 @@ body.ach-focus-open { overflow: hidden; }
   color: var(--text-dim);
   font-weight: 300;
   font-size: 0.78rem;
+}
+
+.luck-chart-note {
+  margin: -6px 0 12px;
+  color: var(--text-dim);
+  font-weight: 300;
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+.luck-bar {
+  display: grid;
+  grid-template-columns: minmax(0, 88px) 1fr auto;
+  gap: 10px;
+  align-items: center;
+  margin: 0 0 10px;
+  color: var(--text-dim);
+  font-size: 0.75rem;
+  font-weight: 400;
+}
+
+.luck-bar span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.luck-track {
+  position: relative;
+  height: 7px;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.luck-track i {
+  display: block;
+  height: 100%;
+  border-radius: 99px;
+}
+
+.luck-track::after {
+  content: '';
+  position: absolute;
+  left: 25%;
+  top: -3px;
+  bottom: -3px;
+  width: 1px;
+  background: rgba(241, 238, 251, 0.7);
+}
+
+.luck-bar em {
+  min-width: 42px;
+  color: #f4eefc;
+  font-style: normal;
+  font-weight: 500;
+  text-align: right;
 }
 
 @media (max-width: 720px) {
@@ -9860,7 +9958,8 @@ body.ach-focus-open { overflow: hidden; }
     font-size: 0.72rem;
   }
   .tools-games .tools-chip {
-    flex: 1 1 auto;
+    flex: 0 0 calc((100% - 8px) / 2);
+    width: calc((100% - 8px) / 2);
     max-width: none;
   }
   .gacha-banner { height: 196px; }
@@ -9915,5 +10014,10 @@ body.ach-focus-open { overflow: hidden; }
     display: grid;
     grid-template-columns: 1fr 1fr;
     column-gap: 36px;
+  }
+
+  .luck-board {
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
   }
 }

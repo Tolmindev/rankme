@@ -684,12 +684,15 @@
   var luckForm = document.getElementById('luckForm');
   var luckNote = document.getElementById('luckNote');
   var luckList = document.getElementById('luckList');
+  var luckBars = document.getElementById('luckBars');
   var luckTimer = 0;
 
   function esc(s) {
-    return String(s).replace(/[&<>"]/g, function (c) {
-      return { '&': '&', '<': '<', '>': '>', '"': '"' }[c];
-    });
+    return String(s)
+      .replace(/&/g, '&' + 'amp;')
+      .replace(/</g, '&' + 'lt;')
+      .replace(/>/g, '&' + 'gt;')
+      .replace(/"/g, '&' + 'quot;');
   }
 
   function luckFlash(text, bad) {
@@ -701,14 +704,33 @@
   }
 
   function paintLuck(rows) {
-    if (!rows || !rows.length) {
+    var rate = current().rate || 0.02;
+    var ranked = (rows || []).slice().sort(function (a, b) {
+      var pa = a.copies > 0 ? chanceAtLeast(a.tickets, a.copies, rate) : 1;
+      var pb = b.copies > 0 ? chanceAtLeast(b.tickets, b.copies, rate) : 1;
+      if (pa !== pb) return pa - pb;
+      return b.copies - a.copies;
+    });
+    if (!ranked.length) {
       luckList.innerHTML = '<p class="luck-empty">No one has shared this banner yet.</p>';
+      luckBars.innerHTML = '<p class="luck-empty">The lines show up after the first share.</p>';
       return;
     }
-    luckList.innerHTML = rows.map(function (row) {
-      return '<div class="luck-row"><span>' + esc(row.author_name) + '</span><em>' +
-        fmt(row.copies) + (row.copies === 1 ? ' copy' : ' copies') + '</em><i>' +
-        fmt(row.tickets) + (row.tickets === 1 ? ' ticket' : ' tickets') + '</i></div>';
+    luckList.innerHTML = ranked.map(function (row, index) {
+      var place = index < 3 ? ' place-' + (index + 1) : '';
+      return '<div class="luck-row' + place + '"><b class="luck-medal">' + (index + 1) + '</b><span>' +
+        esc(row.author_name) + '</span><em>' + fmt(row.copies) +
+        (row.copies === 1 ? ' copy' : ' copies') + '</em><i>' + fmt(row.tickets) +
+        (row.tickets === 1 ? ' ticket' : ' tickets') + '</i></div>';
+    }).join('');
+    luckBars.innerHTML = ranked.map(function (row) {
+      var hit = row.tickets ? row.copies / row.tickets : 0;
+      var t = Math.max(0, Math.min(1, hit / (rate * 4)));
+      var width = Math.max(hit > 0 ? 3 : 0, Math.round(t * 100));
+      var label = (Math.round(hit * 1000) / 10).toString().replace(/\.0$/, '') + '%';
+      return '<div class="luck-bar"><span>' + esc(row.author_name) +
+        '</span><div class="luck-track"><i style="width:' + width + '%;background:' + tierColor(t) +
+        '"></i></div><em>' + label + '</em></div>';
     }).join('');
   }
 

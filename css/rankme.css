@@ -9374,7 +9374,8 @@ body.ach-focus-open { overflow: hidden; }
   gap: 8px;
   padding: 20px 22px;
   border-radius: 16px;
-  background: color-mix(in srgb, var(--panel) 92%, transparent);
+  background: rgba(8, 6, 14, 0.62);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .gacha-banner-copy strong {
@@ -9652,9 +9653,13 @@ body.ach-focus-open { overflow: hidden; }
 
 .pool-fold summary::-webkit-details-marker { display: none; }
 
-.pool-fold summary::after { content: ' +'; letter-spacing: 0; }
+.pool-fold summary::after {
+  content: ' show';
+  letter-spacing: 0;
+  text-transform: none;
+}
 .pool-fold[open] summary { margin-bottom: 8px; }
-.pool-fold[open] summary::after { content: ' −'; }
+.pool-fold[open] summary::after { content: ' hide'; }
 
 .loot {
   display: flex;
@@ -9682,13 +9687,13 @@ body.ach-focus-open { overflow: hidden; }
 
 .loot em {
   margin-left: auto;
-  color: var(--text);
+  color: #b79bf0;
 }
 
 .loot i {
   min-width: 42px;
   text-align: right;
-  color: var(--text);
+  color: #f4eefc;
   font-size: 0.78rem;
 }
 

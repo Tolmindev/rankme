@@ -174,11 +174,13 @@
     if (n < k) return 0;
     var sum = 0;
     var i;
-    for (i = 0; i < k; i++) {
-      sum += pmf(n, i, p);
-      if (sum >= 1) return 0;
-    }
-    return Math.max(0, Math.min(1, 1 - sum));
+    for (i = 0; i < k; i++) sum += pmf(n, i, p);
+    var tail = 1 - sum;
+    if (tail > 1e-18) return Math.min(1, tail);
+    var acc = 0;
+    var top = Math.min(n, k + 24);
+    for (i = k; i <= top; i++) acc += pmf(n, i, p);
+    return Math.min(1, acc);
   }
 
   function pullsFor(k, p, target) {
@@ -419,12 +421,22 @@
   }
 
   function fmtPct(x) {
+    if (!(x > 0)) return '0%';
     var p = x * 100;
-    if (p >= 99.95) return '99.9%';
-    if (p > 0 && p < 0.01) return '<0.01%';
-    if (p < 1) return p.toFixed(2).replace(/0+$/, '').replace(/\.$/, '') + '%';
-    if (p < 10) return (Math.round(p * 10) / 10).toString().replace(/\.0$/, '') + '%';
-    return Math.round(p) + '%';
+    if (p >= 99.95) return p >= 100 ? '100%' : '99.9%';
+    if (p >= 10) return Math.round(p) + '%';
+    if (p >= 1) return trimNum(p.toFixed(1)) + '%';
+    if (p < 0.0000001) return '<0.0000001%';
+    var digits = p >= 0.1 ? 2 : Math.min(8, Math.ceil(-Math.log10(p)) + 1);
+    return trimNum(p.toFixed(digits)) + '%';
+  }
+
+  function trimNum(s) {
+    return s.replace(/0+$/, '').replace(/\.$/, '');
+  }
+
+  function pullsWord(n) {
+    return fmt(n) + (n === 1 ? ' pull' : ' pulls');
   }
 
   function rateLabel(p) {
@@ -476,8 +488,10 @@
     });
     if (k > win.hi) {
       var cdf = exactPity(k, pity) ? buildPullCdf(k, p, pity) : null;
-      html += '<p class="dist-label">' + k + ' copies is outside this spread. Chance of ' + k + ' or more: ' +
-        fmtPct(reachChance(n, k, p, pity, cdf)) + '.</p>';
+      var outside = reachChance(n, k, p, pity, cdf);
+      html += '<p class="dist-label">' + (outside > 0
+        ? (k + ' copies is outside this spread. Chance of ' + k + ' or more: ' + fmtPct(outside) + '.')
+        : (k + ' copies need at least ' + k + ' pulls.')) + '</p>';
     }
     dist.hidden = false;
     dist.innerHTML = html;
@@ -540,15 +554,17 @@
       var expected = pity ? n / mom.mean : n * p;
       var chance = reachChance(n, k, p, pity, cdf);
       head = haul(expected);
-      unit = 'copies from ' + fmt(n) + ' pulls';
-      if (chance >= 0.5) {
+      unit = 'copies from ' + pullsWord(n);
+      if (n < k) {
+        line = k + ' copies need at least ' + k + ' pulls. One pull can give one copy.';
+      } else if (chance >= 0.5) {
         line = k + ' or more happens ' + hi(fmtPct(chance)) + ' of the time. ' +
           'The slow 20% still need ' + hi(fmt(p80)) + '. 95% need ' + hi(fmt(p95)) + '.';
-      } else if (chance >= 0.005) {
-        line = k + ' or more from ' + fmt(n) + ' pulls happens ' + hi(fmtPct(chance)) +
+      } else if (chance > 0) {
+        line = k + ' or more from ' + pullsWord(n) + ' happens ' + hi(fmtPct(chance)) +
           ' of the time. About 1 in ' + hi(fmt(oneIn(chance))) + '.';
       } else {
-        line = k + ' copies from ' + fmt(n) + ' pulls almost never happens.';
+        line = k + ' copies from ' + pullsWord(n) + ' cannot happen.';
       }
       paintDist(n, k, p, pity);
     }

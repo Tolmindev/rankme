@@ -598,7 +598,7 @@
     pullRow.hidden = true;
     pullRow.innerHTML = '';
     pullRow.className = 'pull-row';
-    pullTally.hidden = true;
+    pullTally.textContent = '';
     pullBtn.textContent = banner === 'divination' ? 'Divine x10' : 'Summon x10';
   }
 
@@ -626,7 +626,6 @@
     ticketTray.hidden = true;
     void pullRow.offsetWidth;
     pullRow.className = 'pull-row in';
-    pullTally.hidden = false;
     pullTally.textContent = Object.keys(tally).map(function (name) {
       return tally[name] + ' ' + name;
     }).join(' · ');

@@ -9191,6 +9191,7 @@ body.ach-focus-open { overflow: hidden; }
   border: 1px solid var(--line);
   border-radius: 18px;
   background: rgba(255,255,255,0.025);
+  justify-content: flex-end;
 }
 
 #duelBlock {
@@ -9294,7 +9295,7 @@ body.ach-focus-open { overflow: hidden; }
 .calc-btn {
   width: 100%;
   height: 46px;
-  margin-top: auto;
+  margin-top: 18px;
   border-radius: 999px;
   border: 1.5px solid transparent;
   color: #f8f2ff;
@@ -9367,7 +9368,7 @@ body.ach-focus-open { overflow: hidden; }
   gap: 8px;
   padding: 20px 22px;
   border-radius: 16px;
-  background: linear-gradient(165deg, rgba(96, 54, 140, .9), rgba(42, 22, 72, .88));
+  background: linear-gradient(165deg, rgba(22, 10, 36, .94), rgba(8, 6, 16, .92));
 }
 
 .gacha-banner-copy strong {
@@ -9702,6 +9703,7 @@ body.ach-focus-open { overflow: hidden; }
 
 .pull-tally {
   margin: 0;
+  min-height: 4.35em;
   color: var(--text-dim);
   font-weight: 300;
   font-size: 0.78rem;

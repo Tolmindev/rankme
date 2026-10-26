@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<meta name="robots" content="noindex">
+<title>Tools - RankMe</title>
+<link rel="icon" href="favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="48x48" href="assets/brand/favicon-48.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/rankme.css?v=20261026f">
+</head>
+<body>
+<div class="aurora" aria-hidden="true"></div>
+
+<header class="site">
+  <a class="brand" href="index.html">
+    <img class="brand-full" src="assets/brand/RankMe_logo.svg?v=2" alt="RankMe">
+    <img class="brand-mark" src="assets/brand/favicon.svg?v=2" alt="RankMe">
+  </a>
+  <nav class="main">
+    <div class="nav-links">
+      <a href="index.html">Explore</a>
+      <a href="index.html#community">Community</a>
+      <a href="index.html#creators">Creators</a>
+      <a href="guide.html">FAQ</a>
+      <a href="tools.html" class="active">Tools</a>
+    </div>
+    <details class="nav-fold">
+      <summary class="nav-fold-btn">Menu</summary>
+      <div class="nav-fold-links">
+        <a href="index.html">Explore</a>
+        <a href="index.html#community">Community</a>
+        <a href="index.html#creators">Creators</a>
+        <a href="guide.html">FAQ</a>
+        <a href="tools.html" class="active">Tools</a>
+      </div>
+    </details>
+    <a class="login-btn" href="account.html">Account</a>
+  </nav>
+</header>
+
+<main class="page">
+  <div class="tools">
+    <section id="toolShelf">
+      <h1>Tools</h1>
+      <p class="tools-lead">Small helpers for the games you rank.</p>
+      <button class="gacha-banner" id="openGacha" type="button">
+        <img src="assets/tools/rose-poster.webp" alt="">
+        <span class="gacha-banner-copy">
+          <strong>Gacha Calculator</strong>
+          <span>Will these tickets actually get you there?</span>
+        </span>
+      </button>
+    </section>
+
+    <section id="toolCalc" hidden>
+      <button class="tools-back" id="backTools" type="button">Tools</button>
+      <h1>Gacha Calculator</h1>
+      <p class="tools-lead">Pick a game, or type the rate yourself.</p>
+
+      <div class="tools-switch" id="gameRow">
+        <button class="tools-chip on" type="button" data-game="duel">Street Fighter: Duel</button>
+        <button class="tools-chip" type="button" data-game="custom">Custom</button>
+      </div>
+
+      <div class="calc-grid">
+        <div class="tools-panel">
+          <div id="duelBlock">
+            <div class="tools-switch" id="bannerRow">
+              <button class="tools-chip on" type="button" data-banner="summon">Special Summon</button>
+              <button class="tools-chip" type="button" data-banner="divination">Divination</button>
+            </div>
+            <div class="tools-fighter">
+              <img id="fighterImg" src="assets/tools/poison.webp?v=5" alt="">
+              <div>
+                <strong id="fighterName">Popstar Poison</strong>
+                <span id="fighterLine">Special Summon · Wish List · 2% a pull</span>
+              </div>
+            </div>
+            <div class="rate-side">
+              <div class="tools-label">% Drop Rate</div>
+              <div class="tools-field">
+                <input id="rateIn" type="number" inputmode="decimal" min="0" max="100" step="0.01" value="2" aria-label="Drop percent">
+              </div>
+            </div>
+          </div>
+
+          <div class="tools-label">Copies you need</div>
+          <div class="tools-field">
+            <input id="copiesIn" type="number" inputmode="numeric" min="1" max="500" step="1" value="16" aria-label="Copies you need">
+          </div>
+
+          <div class="tools-label">Tickets you have</div>
+          <div class="tools-field">
+            <input id="tickets" type="number" inputmode="numeric" min="0" step="1" placeholder="Optional" aria-label="Tickets you have">
+          </div>
+
+          <div class="tools-label">Pity</div>
+          <div class="tools-field">
+            <input id="pityIn" type="number" inputmode="numeric" min="1" max="500" step="1" placeholder="No Pity" aria-label="Pity">
+          </div>
+
+          <button class="calc-btn" id="calcBtn" type="button">Calculate</button>
+        </div>
+
+        <div class="pull-card" id="lootBlock">
+          <div class="rose-stage">
+            <video id="roseVid" poster="assets/tools/rose-poster.webp" playsinline preload="metadata" muted>
+              <source src="assets/tools/rose.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="drop-capsule">
+            <div class="ticket-tray" id="ticketTray"></div>
+            <div class="pull-row" id="pullRow" hidden></div>
+          </div>
+          <p class="pull-tally" id="pullTally" hidden></p>
+          <p class="ten-odds" id="tenOdds"></p>
+          <button class="tools-pull" id="pullBtn" type="button">Summon x10</button>
+        </div>
+
+        <div class="result-card" id="resultCard" hidden>
+          <div class="tools-result" id="calcResult" aria-live="polite"></div>
+          <div class="dist" id="dist" hidden></div>
+          <p class="tools-note" id="pityNote">No pity. Every pull is its own roll. The average is not a promise.</p>
+        </div>
+      </div>
+
+      <details class="pool-fold" id="poolFold" open>
+        <summary id="poolSummary">All prizes</summary>
+        <div id="lootList"></div>
+      </details>
+    </section>
+  </div>
+</main>
+
+<footer id="site-footer" class="site"></footer>
+<script src="js/footer.js?v=20261019a" defer></script>
+<script src="js/tools.js?v=20261026f" defer></script>
+</body>
+</html>

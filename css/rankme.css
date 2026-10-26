@@ -9225,7 +9225,6 @@ body.ach-focus-open { overflow: hidden; }
 .tools-fighter img {
   width: 64px;
   height: 64px;
-  border-radius: 10px;
   object-fit: contain;
   background: transparent;
 }
@@ -9442,8 +9441,8 @@ body.ach-focus-open { overflow: hidden; }
   margin: 0;
   padding: 14px 12px;
   border-radius: 16px;
-  background: rgba(255,255,255,0.045);
-  border: 1px solid var(--line);
+  background: #100e18;
+  border: 1px solid rgba(255,255,255,.12);
 }
 
 .ticket-tray,

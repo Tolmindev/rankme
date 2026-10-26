@@ -9219,7 +9219,7 @@ body.ach-focus-open { overflow: hidden; }
 
 #duelBlock {
   display: grid;
-  grid-template-columns: 118px minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) 118px;
   column-gap: 12px;
   align-items: center;
 }
@@ -9575,7 +9575,9 @@ body.ach-focus-open { overflow: hidden; }
 }
 
 .pull-card .pull-tally {
-  text-align: center;
+  display: flex;
+  align-items: flex-end;
+  text-align: left;
   margin: auto 0 0;
 }
 
@@ -9808,7 +9810,6 @@ body.ach-focus-open { overflow: hidden; }
   gap: 10px;
   align-items: center;
   margin-top: 7px;
-  padding-bottom: 13px;
 }
 
 .luck-track {
@@ -9822,28 +9823,6 @@ body.ach-focus-open { overflow: hidden; }
   display: block;
   height: 100%;
   border-radius: 99px;
-}
-
-.luck-track::after {
-  content: '';
-  position: absolute;
-  left: 25%;
-  top: -3px;
-  bottom: -3px;
-  width: 1px;
-  background: rgba(241, 238, 251, 0.7);
-}
-
-.luck-mark {
-  position: absolute;
-  left: 25%;
-  top: 10px;
-  transform: translateX(-50%);
-  color: #f4eefc;
-  font-size: 0.62rem;
-  font-weight: 500;
-  line-height: 1;
-  letter-spacing: 0;
 }
 
 .luck-meter b {
@@ -9969,6 +9948,8 @@ body.ach-focus-open { overflow: hidden; }
 
 @media (max-width: 720px) {
   .tools h1 { font-size: 1.7rem; }
+  #duelBlock { grid-template-columns: minmax(0, 1fr) 96px; }
+  .tools-fighter span { white-space: normal; }
   .tools-result b { font-size: 2.1rem; }
   .tools-chip {
     flex: 1 1 0;

@@ -27,7 +27,7 @@
     summon: {
       name: 'Popstar Poison',
       file: 'poison',
-      line: 'Special Summon · Wish List · 2% a pull',
+      line: 'The featured fighter. About 1 in 50 pulls.',
       rate: 0.02,
       pool: [
         ['poison', 'Popstar Poison', 2],
@@ -54,7 +54,7 @@
     divination: {
       name: 'Athlete Chun-Li',
       file: 'chun',
-      line: 'Divination · Wish List · 2% a pull',
+      line: 'The featured fighter. About 1 in 50 pulls.',
       rate: 0.02,
       pool: [
         ['chun', 'Athlete Chun-Li', 2],
@@ -511,8 +511,10 @@
     var asked = copies == null ? null : Math.max(0, Math.round(copies));
     var k = asked == null ? 16 : asked;
     var have = num(tickets);
-    var kind = banner === 'divination' ? 'Divination' : 'Special Summon';
-    document.getElementById('fighterLine').textContent = kind + ' · Wish List · ' + rateLabel(p) + ' a pull';
+    var kind = p > 0 ? Math.max(1, Math.round(1 / p)) : 0;
+    document.getElementById('fighterLine').textContent = kind
+      ? 'The featured fighter. About 1 in ' + kind + ' pulls.'
+      : 'The featured fighter.';
     if ((!(p > 0) && !pity) || p > 1 || k > 500) {
       if (reveal) {
         resultCard.hidden = false;
@@ -720,14 +722,12 @@
       var t = Math.max(0, Math.min(1, hit / (rate * 4)));
       var width = Math.max(hit > 0 ? 3 : 0, Math.round(t * 100));
       var pct = (Math.round(hit * 1000) / 10).toString().replace(/\.0$/, '') + '%';
-      var mark = (Math.round(rate * 1000) / 10).toString().replace(/\.0$/, '') + '%';
       return '<div class="luck-row' + place + '"><b class="luck-medal">' + (index + 1) +
         '</b><div class="luck-who"><div class="luck-top"><span>' + esc(row.author_name) +
         '</span><em>' + fmt(row.copies) + (row.copies === 1 ? ' copy' : ' copies') +
         '</em><i>' + fmt(row.tickets) + (row.tickets === 1 ? ' ticket' : ' tickets') +
         '</i></div><div class="luck-meter"><div class="luck-track"><i style="width:' + width +
-        '%;background:' + tierColor(t) + '"></i><span class="luck-mark">' + mark +
-        '</span></div><b>' + pct + '</b></div></div></div>';
+        '%;background:' + tierColor(t) + '"></i></div><b>' + pct + '</b></div></div></div>';
     }).join('');
   }
 

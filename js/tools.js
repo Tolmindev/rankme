@@ -522,10 +522,10 @@
         result.innerHTML = '<b>-</b><p>Rate needs to be above 0 and at most 100.</p>';
         dist.hidden = true;
       }
-      return;
+      return false;
     }
     paintLoot(have != null && have >= 0 ? Math.floor(have) : null);
-    if (!reveal) return;
+    if (!reveal) return false;
     resultCard.hidden = false;
     pityNote.textContent = pity
       ? 'Guaranteed by pull ' + fmt(pity) + ' if it has not dropped. The count starts over when it does.'
@@ -579,6 +579,7 @@
       paintDist(n, asked == null ? -1 : asked, p, pity);
     }
     result.innerHTML = '<b>' + head + '</b><span class="tools-unit">' + unit + '</span><p>' + line + '</p>';
+    return true;
   }
 
   var roseVid = document.getElementById('roseVid');
@@ -676,8 +677,12 @@
 
   document.getElementById('pullBtn').addEventListener('click', testPulls);
   document.getElementById('calcBtn').addEventListener('click', function () {
-    paint(true);
+    var ok = paint(true);
     resultCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    if (!ok || !window.RankMeAch || typeof getSessionUser !== 'function') return;
+    getSessionUser().then(function (user) {
+      if (user) RankMeAch.onGacha(user);
+    }).catch(function () {});
   });
 
   showTickets();

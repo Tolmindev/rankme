@@ -29,6 +29,13 @@
       "img": "assets/achievements/achiev_4.webp",
       "unlock": "creator",
       "rarity": "legendary"
+    },
+    {
+      "id": "gacha-einstein",
+      "title": "Gacha Einstein",
+      "desc": "Big brain moves. Questionable life choices.",
+      "img": "assets/achievements/achiev_5.webp",
+      "unlock": "gacha"
     }
   ]
 }

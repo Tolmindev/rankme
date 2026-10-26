@@ -33,6 +33,13 @@
       img: 'assets/achievements/achiev_4.webp',
       unlock: 'creator',
       rarity: 'legendary'
+    },
+    {
+      id: 'gacha-einstein',
+      title: 'Gacha Einstein',
+      desc: 'Big brain moves. Questionable life choices.',
+      img: 'assets/achievements/achiev_5.webp',
+      unlock: 'gacha'
     }
   ];
 
@@ -88,6 +95,10 @@
 
   function creatorIds() {
     return catalog.filter(function (c) { return c.unlock === 'creator'; }).map(function (c) { return c.id; });
+  }
+
+  function gachaIds() {
+    return catalog.filter(function (c) { return c.unlock === 'gacha'; }).map(function (c) { return c.id; });
   }
 
   function rarityClass(item) {
@@ -219,6 +230,12 @@
     return grantMany(user, publishIds(), { toast: !!(opts && opts.toast) });
   }
 
+  async function onGacha(user) {
+    if (!user) return false;
+    await load();
+    return grantMany(user, gachaIds(), { toast: true });
+  }
+
   async function hasApprovedVideo(userId) {
     if (!userId || typeof initSupabase !== 'function') return false;
     try {
@@ -272,6 +289,7 @@
     grant: grant,
     onLogin: onLogin,
     onPublish: onPublish,
+    onGacha: onGacha,
     sync: sync,
     paint: paint,
     toast: toast,

@@ -5,12 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
 <meta name="robots" content="noindex">
 <title>Tools - RankMe</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+<script src="js/supabaseClient.js?v=20261021x" defer></script>
 <link rel="icon" href="favicon.ico" sizes="48x48">
 <link rel="icon" type="image/png" sizes="48x48" href="assets/brand/favicon-48.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200..900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/rankme.css?v=20261026s">
+<link rel="stylesheet" href="css/rankme.css?v=20261026t">
 </head>
 <body>
 <div class="aurora" aria-hidden="true"></div>
@@ -38,7 +40,7 @@
         <a href="tools.html" class="active">Tools</a>
       </div>
     </details>
-    <a class="login-btn" href="account.html">Account</a>
+    <a class="login-btn" id="loginBtn" href="account.html">Account</a>
   </nav>
 </header>
 
@@ -59,12 +61,7 @@
     <section id="toolCalc" hidden>
       <button class="tools-back" id="backTools" type="button">Tools</button>
       <h1>Gacha Calculator</h1>
-      <p class="tools-lead">Pick a game, or type the rate yourself.</p>
-
-      <div class="tools-switch" id="gameRow">
-        <button class="tools-chip on" type="button" data-game="duel">Street Fighter: Duel</button>
-        <button class="tools-chip" type="button" data-game="custom">Custom</button>
-      </div>
+      <p class="tools-lead">Street Fighter: Duel. The rates are already in.</p>
 
       <div class="calc-grid">
         <div class="tools-panel">
@@ -142,6 +139,6 @@
 
 <footer id="site-footer" class="site"></footer>
 <script src="js/footer.js?v=20261019a" defer></script>
-<script src="js/tools.js?v=20261026n" defer></script>
+<script src="js/tools.js?v=20261026o" defer></script>
 </body>
 </html>

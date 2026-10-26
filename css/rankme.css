@@ -9190,7 +9190,7 @@ body.ach-focus-open { overflow: hidden; }
   padding: 16px;
   border: 1px solid var(--line);
   border-radius: 18px;
-  background: rgba(255,255,255,0.025);
+  background: var(--panel);
 }
 
 #duelBlock {
@@ -9199,13 +9199,6 @@ body.ach-focus-open { overflow: hidden; }
   column-gap: 12px;
   align-items: center;
 }
-
-.tools-panel.is-custom #bannerRow,
-.tools-panel.is-custom .tools-fighter { display: none; }
-
-.tools-panel.is-custom #duelBlock { display: block; }
-
-.tools-panel.is-custom .rate-side .tools-label { text-align: left; }
 
 .rate-side .tools-label { margin-top: 0; text-align: right; }
 
@@ -9402,7 +9395,7 @@ body.ach-focus-open { overflow: hidden; }
   padding: 16px 18px 8px;
   border: 1px solid var(--line);
   border-radius: 18px;
-  background: rgba(255,255,255,0.025);
+  background: var(--panel);
 }
 
 .calc-grid {
@@ -9426,7 +9419,7 @@ body.ach-focus-open { overflow: hidden; }
   padding: 16px;
   border: 1px solid var(--line);
   border-radius: 18px;
-  background: rgba(255, 255, 255, 0.025);
+  background: var(--panel);
 }
 
 .rose-stage {

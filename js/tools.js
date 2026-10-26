@@ -1,9 +1,6 @@
 (function () {
   var shelf = document.getElementById('toolShelf');
   var calc = document.getElementById('toolCalc');
-  var gameRow = document.getElementById('gameRow');
-  var duel = document.getElementById('duelBlock');
-  var panel = document.querySelector('.calc-grid .tools-panel');
   var tickets = document.getElementById('tickets');
   var rateIn = document.getElementById('rateIn');
   var copiesIn = document.getElementById('copiesIn');
@@ -16,7 +13,6 @@
   var list = document.getElementById('lootList');
   var pullRow = document.getElementById('pullRow');
   var pullTally = document.getElementById('pullTally');
-  var mode = 'duel';
   var banner = 'summon';
 
   function frag(id, name) {
@@ -118,20 +114,6 @@
   document.getElementById('backTools').addEventListener('click', function () {
     calc.hidden = true;
     shelf.hidden = false;
-  });
-
-  gameRow.addEventListener('click', function (e) {
-    var btn = e.target.closest('[data-game]');
-    if (!btn) return;
-    mode = btn.getAttribute('data-game');
-    gameRow.querySelectorAll('.tools-chip').forEach(function (el) {
-      el.classList.toggle('on', el === btn);
-    });
-    panel.classList.toggle('is-custom', mode === 'custom');
-    lootBlock.hidden = mode !== 'duel';
-    poolFold.hidden = mode !== 'duel';
-    resultCard.hidden = true;
-    paint(false);
   });
 
   document.getElementById('bannerRow').addEventListener('click', function (e) {
@@ -514,10 +496,8 @@
     var copies = num(copiesIn);
     var k = copies == null ? 16 : Math.max(0, Math.round(copies));
     var have = num(tickets);
-    if (mode === 'duel') {
-      var kind = banner === 'divination' ? 'Divination' : 'Special Summon';
-      document.getElementById('fighterLine').textContent = kind + ' · Wish List · ' + rateLabel(p) + ' a pull';
-    }
+    var kind = banner === 'divination' ? 'Divination' : 'Special Summon';
+    document.getElementById('fighterLine').textContent = kind + ' · Wish List · ' + rateLabel(p) + ' a pull';
     if ((!(p > 0) && !pity) || p > 1 || k > 500) {
       if (reveal) {
         resultCard.hidden = false;
@@ -526,7 +506,7 @@
       }
       return;
     }
-    if (mode === 'duel') paintLoot(have != null && have >= 0 ? Math.floor(have) : null);
+    paintLoot(have != null && have >= 0 ? Math.floor(have) : null);
     if (!reveal) return;
     resultCard.hidden = false;
     pityNote.textContent = pity
@@ -632,7 +612,6 @@
   }
 
   function testPulls() {
-    if (mode !== 'duel') return;
     playRose();
     var rows = current().pool;
     var weight = 0;

@@ -9190,7 +9190,7 @@ body.ach-focus-open { overflow: hidden; }
   padding: 16px;
   border: 1px solid var(--line);
   border-radius: 18px;
-  background: var(--panel);
+  background: #16102c;
 }
 
 #duelBlock {
@@ -9264,8 +9264,8 @@ body.ach-focus-open { overflow: hidden; }
   height: 46px;
   padding: 0 14px;
   border-radius: 12px;
-  border: 1px solid rgba(255,255,255,.12);
-  background: #100e18;
+  border: 1px solid rgba(176, 150, 230, 0.32);
+  background: rgba(255, 255, 255, 0.045);
   color: var(--text);
   font: inherit;
   font-size: 1.05rem;
@@ -9395,7 +9395,7 @@ body.ach-focus-open { overflow: hidden; }
   padding: 16px 18px 8px;
   border: 1px solid var(--line);
   border-radius: 18px;
-  background: var(--panel);
+  background: #16102c;
 }
 
 .calc-grid {
@@ -9419,7 +9419,7 @@ body.ach-focus-open { overflow: hidden; }
   padding: 16px;
   border: 1px solid var(--line);
   border-radius: 18px;
-  background: var(--panel);
+  background: #16102c;
 }
 
 .rose-stage {
@@ -9446,8 +9446,8 @@ body.ach-focus-open { overflow: hidden; }
   margin: 0;
   padding: 14px 12px;
   border-radius: 16px;
-  background: #100e18;
-  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(8, 6, 16, 0.35);
+  border: 1px solid rgba(176, 150, 230, 0.22);
 }
 
 .ticket-tray,
@@ -9550,6 +9550,7 @@ body.ach-focus-open { overflow: hidden; }
   font-weight: 650;
   letter-spacing: -0.04em;
   line-height: 1;
+  text-shadow: 0 0 16px rgba(183, 155, 240, 0.55);
 }
 
 .tools-unit {

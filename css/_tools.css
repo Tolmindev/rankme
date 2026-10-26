@@ -4,6 +4,8 @@
   width: 100%;
   max-width: 640px;
   margin: 0 auto;
+  --tools-card: #161224;
+  --tools-field: #1a162c;
 }
 
 .tools h1 {
@@ -53,8 +55,8 @@
   height: 36px;
   padding: 0 12px;
   border-radius: 999px;
-  border: 1px solid rgba(255,255,255,.14);
-  background: #14111f;
+  border: 1px solid var(--line);
+  background: var(--panel);
   color: var(--text-dim);
   font: inherit;
   font-size: 0.8rem;
@@ -72,8 +74,8 @@
 .tools-panel {
   padding: 16px;
   border: 1px solid var(--line);
-  border-radius: 18px;
-  background: #16102c;
+  border-radius: var(--radius);
+  background: var(--tools-card);
 }
 
 #duelBlock {
@@ -147,8 +149,8 @@
   height: 46px;
   padding: 0 14px;
   border-radius: 12px;
-  border: 1px solid rgba(176, 150, 230, 0.32);
-  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid var(--line);
+  background: var(--tools-field);
   color: var(--text);
   font: inherit;
   font-size: 1.05rem;
@@ -167,12 +169,12 @@
 
 .tools-field input:focus {
   outline: none;
-  border-color: rgba(210, 175, 255, .7);
+  border-color: var(--btn-line-hot);
 }
 
 .tools-field input::placeholder {
-  color: #c9b8ea;
-  -webkit-text-fill-color: #c9b8ea;
+  color: var(--text-dim);
+  -webkit-text-fill-color: var(--text-dim);
   opacity: 1;
   font-weight: 400;
 }
@@ -214,11 +216,11 @@
   height: 248px;
   margin: 0 auto;
   padding: 0;
-  border: 1px solid rgba(255,255,255,.1);
-  border-radius: 22px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
   overflow: hidden;
   cursor: pointer;
-  background: #1a1024;
+  background: var(--panel);
   color: #fff;
   text-align: left;
   transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
@@ -255,7 +257,7 @@
   gap: 8px;
   padding: 20px 22px;
   border-radius: 16px;
-  background: linear-gradient(165deg, rgba(22, 10, 36, .94), rgba(8, 6, 16, .92));
+  background: color-mix(in srgb, var(--panel) 92%, transparent);
 }
 
 .gacha-banner-copy strong {
@@ -267,7 +269,7 @@
 }
 
 .gacha-banner-copy span {
-  color: rgba(232, 220, 255, .78);
+  color: var(--text-dim);
   font-weight: 300;
   font-size: 0.92rem;
 }
@@ -277,8 +279,8 @@
   margin-top: 0;
   padding: 16px 18px 8px;
   border: 1px solid var(--line);
-  border-radius: 18px;
-  background: #16102c;
+  border-radius: var(--radius);
+  background: var(--tools-card);
 }
 
 .calc-grid {
@@ -301,8 +303,8 @@
   gap: 18px;
   padding: 16px;
   border: 1px solid var(--line);
-  border-radius: 18px;
-  background: #16102c;
+  border-radius: var(--radius);
+  background: var(--tools-card);
 }
 
 .rose-stage {
@@ -311,7 +313,7 @@
   aspect-ratio: 16 / 9;
   height: auto;
   flex: 0 0 auto;
-  background: #120e18 url('../assets/tools/rose-poster.webp') center 32% / cover no-repeat;
+  background: var(--bg-0) url('../assets/tools/rose-poster.webp') center 32% / cover no-repeat;
 }
 
 .rose-stage video {
@@ -329,8 +331,8 @@
   margin: 0;
   padding: 14px 12px;
   border-radius: 16px;
-  background: rgba(8, 6, 16, 0.35);
-  border: 1px solid rgba(176, 150, 230, 0.22);
+  background: var(--tools-field);
+  border: 1px solid var(--line);
 }
 
 .ticket-tray,
@@ -461,7 +463,7 @@
 
 .tools-note {
   margin: 14px 0 0;
-  color: rgba(167, 159, 196, .75);
+  color: var(--text-dim);
   font-weight: 300;
   font-size: 0.75rem;
 }
@@ -542,7 +544,7 @@
   align-items: center;
   gap: 10px;
   padding: 7px 0;
-  border-top: 1px solid rgba(255,255,255,.05);
+  border-top: 1px solid var(--line);
 }
 
 .loot img {
@@ -563,7 +565,7 @@
 
 .loot em {
   margin-left: auto;
-  color: #d4c4ff;
+  color: var(--text);
 }
 
 .loot i {

@@ -684,7 +684,6 @@
   var luckForm = document.getElementById('luckForm');
   var luckNote = document.getElementById('luckNote');
   var luckList = document.getElementById('luckList');
-  var luckBars = document.getElementById('luckBars');
   var luckTimer = 0;
 
   function esc(s) {
@@ -713,24 +712,20 @@
     });
     if (!ranked.length) {
       luckList.innerHTML = '<p class="luck-empty">No one has shared this banner yet.</p>';
-      luckBars.innerHTML = '<p class="luck-empty">The lines show up after the first share.</p>';
       return;
     }
     luckList.innerHTML = ranked.map(function (row, index) {
       var place = index < 3 ? ' place-' + (index + 1) : '';
-      return '<div class="luck-row' + place + '"><b class="luck-medal">' + (index + 1) + '</b><span>' +
-        esc(row.author_name) + '</span><em>' + fmt(row.copies) +
-        (row.copies === 1 ? ' copy' : ' copies') + '</em><i>' + fmt(row.tickets) +
-        (row.tickets === 1 ? ' ticket' : ' tickets') + '</i></div>';
-    }).join('');
-    luckBars.innerHTML = ranked.map(function (row) {
       var hit = row.tickets ? row.copies / row.tickets : 0;
       var t = Math.max(0, Math.min(1, hit / (rate * 4)));
       var width = Math.max(hit > 0 ? 3 : 0, Math.round(t * 100));
-      var label = (Math.round(hit * 1000) / 10).toString().replace(/\.0$/, '') + '%';
-      return '<div class="luck-bar"><span>' + esc(row.author_name) +
-        '</span><div class="luck-track"><i style="width:' + width + '%;background:' + tierColor(t) +
-        '"></i></div><em>' + label + '</em></div>';
+      var pct = (Math.round(hit * 1000) / 10).toString().replace(/\.0$/, '') + '%';
+      return '<div class="luck-row' + place + '"><b class="luck-medal">' + (index + 1) +
+        '</b><div class="luck-who"><div class="luck-top"><span>' + esc(row.author_name) +
+        '</span><em>' + fmt(row.copies) + (row.copies === 1 ? ' copy' : ' copies') +
+        '</em><i>' + fmt(row.tickets) + (row.tickets === 1 ? ' ticket' : ' tickets') +
+        '</i></div><div class="luck-meter"><div class="luck-track"><i style="width:' + width +
+        '%;background:' + tierColor(t) + '"></i></div><b>' + pct + '</b></div></div></div>';
     }).join('');
   }
 
@@ -744,7 +739,7 @@
       .select('author_name, tickets, copies')
       .eq('banner', banner)
       .order('updated_at', { ascending: false })
-      .limit(40);
+      .limit(80);
     paintLuck(res && res.data ? res.data : []);
   }
 
@@ -777,15 +772,18 @@
       return;
     }
     var name = rankmeDisplayName(user).slice(0, 48);
-    var res = await client.from('pull_reports').upsert({
+    var res = await client.from('pull_reports').insert({
       user_id: user.id,
       banner: banner,
       author_name: name,
       tickets: spent,
       copies: got
-    }, { onConflict: 'user_id,banner' });
+    });
     if (res.error) {
-      luckFlash('Could not send. Try again.', true);
+      var message = res.error.message || '';
+      luckFlash(message.indexOf('LUCK_LIMIT') !== -1
+        ? 'Five a day. Come back tomorrow.'
+        : 'Could not send. Try again.', true);
       return;
     }
     luckFlash('Shared.');

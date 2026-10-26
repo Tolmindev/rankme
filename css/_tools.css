@@ -287,9 +287,8 @@
 .gacha-banner-copy strong {
   font-size: 1.15rem;
   font-weight: 650;
-  letter-spacing: .08em;
+  letter-spacing: -0.02em;
   line-height: 1.1;
-  text-transform: uppercase;
 }
 
 .gacha-banner-copy span {
@@ -842,6 +841,15 @@
   .tools h1 { font-size: 1.7rem; }
   #duelBlock { grid-template-columns: minmax(0, 1fr) 96px; }
   .tools-fighter span { white-space: normal; }
+  .fighter-title {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1px;
+  }
+  .tools-fighter strong {
+    white-space: nowrap;
+    font-size: 0.92rem;
+  }
   .tools-result b { font-size: 2.1rem; }
   .tools-chip {
     flex: 1 1 0;

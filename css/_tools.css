@@ -527,7 +527,7 @@
 .pool-fold summary {
   cursor: pointer;
   list-style: none;
-  color: var(--text-dim);
+  color: var(--text);
   font-size: 0.78rem;
   font-weight: 500;
   letter-spacing: .12em;
@@ -581,6 +581,85 @@
 }
 
 .loot.target span { color: #fff; }
+
+.luck-card {
+  margin-top: 28px;
+  padding: 16px 16px 8px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--tools-card);
+}
+
+.luck-card h2 {
+  margin: 2px 0 14px;
+  color: var(--text);
+  font-size: 0.78rem;
+  font-weight: 650;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.luck-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.luck-fields .tools-label { margin-top: 0; }
+
+.luck-card .calc-btn { margin-top: 14px; }
+
+.luck-note {
+  margin: 10px 0 0;
+  color: #9ddeb6;
+  font-weight: 300;
+  font-size: 0.75rem;
+}
+
+.luck-note.is-bad { color: #e7b4c4; }
+
+.luck-list { margin-top: 8px; }
+
+.luck-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 12px;
+  align-items: baseline;
+  padding: 7px 0;
+  border-top: 1px solid var(--line);
+  color: var(--text-dim);
+  font-weight: 400;
+  font-size: 0.78rem;
+}
+
+.luck-row span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.luck-row em {
+  color: #b79bf0;
+  font-style: normal;
+  font-weight: 500;
+}
+
+.luck-row i {
+  color: #f4eefc;
+  font-style: normal;
+  font-weight: 500;
+}
+
+.luck-empty {
+  margin: 12px 0 8px;
+  color: var(--text-dim);
+  font-weight: 300;
+  font-size: 0.78rem;
+}
+
+@media (max-width: 720px) {
+  .luck-fields { grid-template-columns: 1fr; }
+}
 
 .tools-pull {
   display: block;

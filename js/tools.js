@@ -130,6 +130,7 @@
     resetStage();
     resultCard.hidden = true;
     paint(false);
+    loadLuck();
   });
 
   [tickets, rateIn, copiesIn, pityIn].forEach(function (el) {
@@ -489,9 +490,10 @@
     if (k > win.hi) {
       var cdf = exactPity(k, pity) ? buildPullCdf(k, p, pity) : null;
       var outside = reachChance(n, k, p, pity, cdf);
-      html += '<p class="dist-label">' + (outside > 0
-        ? (k + ' copies is outside this spread. Chance of ' + k + ' or more: ' + fmtPct(outside) + '.')
-        : (k + ' copies need at least ' + k + ' pulls.')) + '</p>';
+      if (outside > 0) {
+        html += '<p class="dist-label">' + k + ' copies is outside this spread. Chance of ' + k +
+          ' or more: ' + fmtPct(outside) + '.</p>';
+      }
     }
     dist.hidden = false;
     dist.innerHTML = html;
@@ -553,16 +555,17 @@
       var n = Math.min(1000000, Math.floor(have));
       var expected = pity ? n / mom.mean : n * p;
       var chance = reachChance(n, k, p, pity, cdf);
-      head = haul(expected);
-      unit = 'copies from ' + pullsWord(n);
+      head = chance > 0 ? fmtPct(chance) : '0%';
+      unit = 'chance of ' + k + ' or more';
       if (n < k) {
         line = k + ' copies need at least ' + k + ' pulls. One pull can give one copy.';
       } else if (chance >= 0.5) {
-        line = k + ' or more happens ' + hi(fmtPct(chance)) + ' of the time. ' +
+        line = 'From ' + pullsWord(n) + ', that happens ' + hi(fmtPct(chance)) + ' of the time. ' +
           'The slow 20% still need ' + hi(fmt(p80)) + '. 95% need ' + hi(fmt(p95)) + '.';
       } else if (chance > 0) {
-        line = k + ' or more from ' + pullsWord(n) + ' happens ' + hi(fmtPct(chance)) +
-          ' of the time. About 1 in ' + hi(fmt(oneIn(chance))) + '.';
+        line = 'From ' + pullsWord(n) + ', that happens ' + hi(fmtPct(chance)) +
+          ' of the time. About 1 in ' + hi(fmt(oneIn(chance))) + '. You\'d usually see about ' +
+          haul(expected) + ' copies.';
       } else {
         line = k + ' copies from ' + pullsWord(n) + ' cannot happen.';
       }
@@ -672,4 +675,94 @@
 
   showTickets();
   paintLoot(null);
+  loadLuck();
+
+  var luckForm = document.getElementById('luckForm');
+  var luckNote = document.getElementById('luckNote');
+  var luckList = document.getElementById('luckList');
+  var luckTimer = 0;
+
+  function esc(s) {
+    return String(s).replace(/[&<>"]/g, function (c) {
+      return { '&': '&', '<': '<', '>': '>', '"': '"' }[c];
+    });
+  }
+
+  function luckFlash(text, bad) {
+    clearTimeout(luckTimer);
+    luckNote.hidden = false;
+    luckNote.textContent = text;
+    luckNote.classList.toggle('is-bad', !!bad);
+    luckTimer = setTimeout(function () { luckNote.hidden = true; }, 4000);
+  }
+
+  function paintLuck(rows) {
+    if (!rows || !rows.length) {
+      luckList.innerHTML = '<p class="luck-empty">No one has shared this banner yet.</p>';
+      return;
+    }
+    luckList.innerHTML = rows.map(function (row) {
+      return '<div class="luck-row"><span>' + esc(row.author_name) + '</span><em>' +
+        fmt(row.copies) + (row.copies === 1 ? ' copy' : ' copies') + '</em><i>' +
+        fmt(row.tickets) + (row.tickets === 1 ? ' ticket' : ' tickets') + '</i></div>';
+    }).join('');
+  }
+
+  async function loadLuck() {
+    var client = await initSupabase();
+    if (!client) {
+      paintLuck([]);
+      return;
+    }
+    var res = await client.from('pull_reports')
+      .select('author_name, tickets, copies')
+      .eq('banner', banner)
+      .order('updated_at', { ascending: false })
+      .limit(40);
+    paintLuck(res && res.data ? res.data : []);
+  }
+
+  luckForm.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    var spent = num(document.getElementById('luckTickets'));
+    var got = num(document.getElementById('luckCopies'));
+    spent = spent == null ? null : Math.round(spent);
+    got = got == null ? null : Math.round(got);
+    if (spent == null || got == null) {
+      luckFlash('Type both numbers. The gray text is just an example.', true);
+      return;
+    }
+    if (spent < 1 || spent > 1000000 || got < 0 || got > spent) {
+      luckFlash('One pull gives one copy. That\'s more copies than tickets.', true);
+      return;
+    }
+    var user = await getSessionUser();
+    if (!user) {
+      luckFlash('Log in to share.', true);
+      return;
+    }
+    if (got > 0 && chanceAtLeast(spent, got, current().rate) < 0.00001) {
+      luckFlash('Sure those aren\'t swapped? That luck doesn\'t show up.', true);
+      return;
+    }
+    var client = await initSupabase();
+    if (!client) {
+      luckFlash('Server blinked. Try again.', true);
+      return;
+    }
+    var name = rankmeDisplayName(user).slice(0, 48);
+    var res = await client.from('pull_reports').upsert({
+      user_id: user.id,
+      banner: banner,
+      author_name: name,
+      tickets: spent,
+      copies: got
+    }, { onConflict: 'user_id,banner' });
+    if (res.error) {
+      luckFlash('Could not send. Try again.', true);
+      return;
+    }
+    luckFlash('Shared.');
+    loadLuck();
+  });
 })();

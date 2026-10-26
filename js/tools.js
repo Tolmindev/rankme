@@ -110,6 +110,7 @@
     shelf.hidden = true;
     calc.hidden = false;
     paint(false);
+    loadLuck();
   });
   document.getElementById('backTools').addEventListener('click', function () {
     calc.hidden = true;
@@ -731,18 +732,21 @@
     }).join('');
   }
 
+  var luckToken = 0;
+
   async function loadLuck() {
+    var token = ++luckToken;
+    var want = banner;
     var client = await initSupabase();
-    if (!client) {
-      paintLuck([]);
-      return;
-    }
+    if (token !== luckToken || !client) return;
     var res = await client.from('pull_reports')
-      .select('author_name, tickets, copies')
-      .eq('banner', banner)
-      .order('updated_at', { ascending: false })
+      .select('author_name, tickets, copies, created_at')
+      .eq('banner', want)
+      .order('created_at', { ascending: false })
       .limit(80);
-    paintLuck(res && res.data ? res.data : []);
+    if (token !== luckToken || want !== banner) return;
+    if (!res || res.error || !res.data) return;
+    paintLuck(res.data);
   }
 
   luckForm.addEventListener('submit', async function (e) {

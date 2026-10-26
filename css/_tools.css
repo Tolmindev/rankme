@@ -42,6 +42,17 @@
 
 .tools-back:hover { color: var(--text); }
 
+.tools-games {
+  display: flex;
+  margin: 0 0 8px;
+}
+
+.tools-games .tools-chip {
+  flex: 1 1 auto;
+  width: auto;
+  max-width: 384px;
+}
+
 .tools-switch {
   display: flex;
   flex-wrap: wrap;
@@ -65,8 +76,19 @@
   cursor: pointer;
 }
 
-.tools-chip.on {
-  color: #fff;
+.tools-chip.on { color: #fff; }
+
+.tools-chip[data-game].on {
+  border-color: rgba(183, 155, 240, 0.85);
+  box-shadow: 0 0 0 1px rgba(183, 155, 240, 0.28);
+}
+
+.tools-chip[data-banner="summon"].on {
+  border-color: rgba(255, 122, 64, 0.95);
+  box-shadow: 0 0 0 1px rgba(255, 90, 48, 0.35), 0 0 14px rgba(255, 70, 40, 0.28);
+}
+
+.tools-chip[data-banner="divination"].on {
   border-color: rgba(226, 186, 96, .9);
   box-shadow: 0 0 0 1px rgba(226, 186, 96, .28);
 }
@@ -719,6 +741,10 @@
     min-width: 0;
     padding: 0 8px;
     font-size: 0.72rem;
+  }
+  .tools-games .tools-chip {
+    flex: 1 1 auto;
+    max-width: none;
   }
   .gacha-banner { height: 196px; }
   .gacha-banner-copy { width: 62%; padding: 14px 16px; }

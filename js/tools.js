@@ -445,11 +445,14 @@
     return (n % 1 === 0 ? n.toFixed(0) : n.toFixed(1)) + '%';
   }
 
-  function haul(n) {
-    if (n >= 10) return String(Math.round(n));
-    if (n >= 1) return (Math.round(n * 10) / 10).toFixed(1).replace(/\.0$/, '');
-    if (n >= 0.05) return n.toFixed(1);
-    return '<0.1';
+  function copyCount(n) {
+    if (!(n >= 1)) return 0;
+    return Math.round(n);
+  }
+
+  function exactCopies(n, i, p) {
+    if (i < 0 || i > n) return 0;
+    return pmf(n, i, p);
   }
 
   function showPct(n) {
@@ -461,7 +464,7 @@
     document.getElementById('poolSummary').textContent = 'All prizes · ' + rows.length;
     list.innerHTML = rows.map(function (row) {
       var extra = '';
-      if (n != null) extra = '<i>~' + haul(n * row[2] / 100) + '</i>';
+      if (n != null) extra = '<i>~' + fmt(copyCount(n * row[2] / 100)) + '</i>';
       var cls = row[2] === 2 ? 'loot target' : 'loot';
       return '<div class="' + cls + '"><img src="assets/tools/' + row[0] + '.webp?v=8" alt="">' +
         '<span>' + row[1] + '</span><em>' + showPct(row[2]) + '</em>' + extra + '</div>';
@@ -501,16 +504,12 @@
 
   var resultCard = document.getElementById('resultCard');
 
-  function oneIn(prob) {
-    if (!(prob > 0)) return 0;
-    return Math.max(1, Math.round(1 / prob));
-  }
-
   function paint(reveal) {
     var pity = pityNow();
     var p = (num(rateIn) == null ? 2 : num(rateIn)) / 100;
     var copies = num(copiesIn);
-    var k = copies == null ? 16 : Math.max(0, Math.round(copies));
+    var asked = copies == null ? null : Math.max(0, Math.round(copies));
+    var k = asked == null ? 16 : asked;
     var have = num(tickets);
     var kind = banner === 'divination' ? 'Divination' : 'Special Summon';
     document.getElementById('fighterLine').textContent = kind + ' · Wish List · ' + rateLabel(p) + ' a pull';
@@ -554,22 +553,27 @@
     } else {
       var n = Math.min(1000000, Math.floor(have));
       var expected = pity ? n / mom.mean : n * p;
-      var chance = reachChance(n, k, p, pity, cdf);
-      head = chance > 0 ? fmtPct(chance) : '0%';
-      unit = 'chance of ' + k + ' or more';
-      if (n < k) {
-        line = k + ' copies need at least ' + k + ' pulls. One pull can give one copy.';
-      } else if (chance >= 0.5) {
-        line = 'From ' + pullsWord(n) + ', that happens ' + hi(fmtPct(chance)) + ' of the time. ' +
-          'The slow 20% still need ' + hi(fmt(p80)) + '. 95% need ' + hi(fmt(p95)) + '.';
-      } else if (chance > 0) {
-        line = 'From ' + pullsWord(n) + ', that happens ' + hi(fmtPct(chance)) +
-          ' of the time. About 1 in ' + hi(fmt(oneIn(chance))) + '. You\'d usually see about ' +
-          haul(expected) + ' copies.';
-      } else {
-        line = k + ' copies from ' + pullsWord(n) + ' cannot happen.';
+      var shown = copyCount(expected);
+      head = fmt(shown);
+      unit = shown === 1 ? 'copy from ' + pullsWord(n) : 'copies from ' + pullsWord(n);
+      function chanceOf(i) {
+        return exactCopies(n, i, p);
       }
-      paintDist(n, k, p, pity);
+      line = pity > 0
+        ? 'Pity is on. The bars below are the spread.'
+        : '1 copy ' + hi(fmtPct(chanceOf(1))) + '. 2 copies ' + hi(fmtPct(chanceOf(2))) +
+          '. 3 copies ' + hi(fmtPct(chanceOf(3))) + '.';
+      if (asked != null && asked > 0 && asked !== shown) {
+        if (n < asked) line += ' ' + asked + ' copies need at least ' + asked + ' pulls.';
+        else if (pity > 0) line += '';
+        else {
+          var goal = chanceAtLeast(n, asked, p);
+          line += goal < 0.00001
+            ? ' ' + asked + ' copies from ' + pullsWord(n) + ' doesn\'t happen.'
+            : ' ' + asked + ' or more: ' + hi(fmtPct(goal)) + '.';
+        }
+      }
+      paintDist(n, asked == null ? -1 : asked, p, pity);
     }
     result.innerHTML = '<b>' + head + '</b><span class="tools-unit">' + unit + '</span><p>' + line + '</p>';
   }

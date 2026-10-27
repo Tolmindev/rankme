@@ -181,6 +181,7 @@
   halfBox.addEventListener('change', function () {
     halfOff = halfBox.checked;
     paintGems();
+    if (pullBtn) pullBtn.textContent = pullLabel();
     if (resultCard && !resultCard.hidden) paint(true);
   });
 
@@ -637,6 +638,11 @@
     return banner === 'divination' ? 'assets/tools/ticket-divine.webp' : 'assets/tools/ticket-summon.webp';
   }
 
+  function pullLabel() {
+    if (banner !== 'divination') return 'Summon x10';
+    return halfOff ? 'Divine x5' : 'Divine x10';
+  }
+
   function showTickets() {
     hadPull = false;
     flyToken++;
@@ -651,7 +657,7 @@
     pullRow.innerHTML = '';
     pullRow.className = 'pull-row';
     pullTally.textContent = 'Look all you want. They are not yours yet.';
-    pullBtn.textContent = banner === 'divination' ? 'Divine x10' : 'Summon x10';
+    pullBtn.textContent = pullLabel();
   }
 
   function resetStage() {

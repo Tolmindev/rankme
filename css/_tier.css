@@ -1152,18 +1152,69 @@ body.theme-gold .card img {
 }
 .toolbar .upload-remix {
   cursor: pointer;
-  background: var(--btn-bg);
-  border: 1px solid rgba(160, 210, 190, 0.38);
-  color: #d4efe4;
-  box-shadow: none;
+  color: #fff8f2;
+  border: 1.5px solid transparent;
+  background:
+    linear-gradient(160deg, #2a2238 0%, #161022 50%, #1e1830 100%) padding-box,
+    var(--holo-warm) border-box;
+  background-origin: padding-box, border-box;
+  background-clip: padding-box, border-box;
+  box-shadow:
+    0 0 0 1px rgba(255, 120, 70, 0.25),
+    0 0 16px rgba(255, 80, 140, 0.4),
+    0 0 28px rgba(255, 170, 50, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 .toolbar .upload-remix:hover {
-  border-color: rgba(180, 230, 200, 0.7);
-  color: #fff;
-  box-shadow: 0 0 12px rgba(120, 200, 170, 0.22);
-  filter: none;
+  border-color: transparent;
+  color: #fff8f2;
+  filter: brightness(1.1);
+  box-shadow:
+    0 0 0 1px rgba(255, 150, 90, 0.4),
+    0 0 22px rgba(255, 90, 150, 0.5),
+    0 0 36px rgba(255, 190, 60, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 @media (min-width: 721px) {
+  .toolbar .pill-btn .ico { display: none; }
+  .toolbar .tb-g {
+    display: block;
+    width: 16px;
+    height: 16px;
+    flex: 0 0 16px;
+    background: currentColor;
+    -webkit-mask: center / contain no-repeat;
+    mask: center / contain no-repeat;
+  }
+  .toolbar .pill-btn.add .tb-g {
+    -webkit-mask-image: url("../assets/icons/tb-add.svg");
+    mask-image: url("../assets/icons/tb-add.svg");
+  }
+  .toolbar .pill-btn.fill .tb-g {
+    -webkit-mask-image: url("../assets/icons/tb-fill.svg");
+    mask-image: url("../assets/icons/tb-fill.svg");
+  }
+  .toolbar .pill-btn.danger .tb-g {
+    -webkit-mask-image: url("../assets/icons/tb-clear.svg?v=3");
+    mask-image: url("../assets/icons/tb-clear.svg?v=3");
+  }
+  .toolbar .pill-btn.remove .tb-g {
+    -webkit-mask-image: url("../assets/icons/tb-remove.svg");
+    mask-image: url("../assets/icons/tb-remove.svg");
+  }
+  .toolbar .remix-btn .tb-g {
+    -webkit-mask-image: url("../assets/icons/tb-remix.svg");
+    mask-image: url("../assets/icons/tb-remix.svg");
+  }
+  .toolbar .save-btn .tb-g {
+    -webkit-mask-image: url("../assets/icons/tb-save.svg?v=2");
+    mask-image: url("../assets/icons/tb-save.svg?v=2");
+  }
+  .toolbar .pill-btn.fill .tb-g {
+    width: 14px;
+    height: 14px;
+    flex-basis: 14px;
+  }
   .toolbar-actions { order: 1; }
   .size-ctrl { order: 2; }
   .remix-btn { order: 3; margin-left: auto; }
@@ -1288,8 +1339,8 @@ body.theme-gold .card img {
     mask-image: url("../assets/icons/tb-fill.svg");
   }
   .toolbar .pill-btn.danger .tb-g {
-    -webkit-mask-image: url("../assets/icons/tb-clear.svg");
-    mask-image: url("../assets/icons/tb-clear.svg");
+    -webkit-mask-image: url("../assets/icons/tb-clear.svg?v=3");
+    mask-image: url("../assets/icons/tb-clear.svg?v=3");
   }
   .toolbar .pill-btn.remove .tb-g {
     -webkit-mask-image: url("../assets/icons/tb-remove.svg");
@@ -1391,16 +1442,28 @@ body.theme-gold .card img {
     flex-direction: row;
     border-radius: 999px;
     font-size: 0.82rem;
-    background: var(--btn-bg);
-    border: 1px solid rgba(160, 210, 190, 0.38);
-    color: #d4efe4;
-    box-shadow: none;
+    color: #fff8f2;
+    border: 1.5px solid transparent;
+    background:
+      linear-gradient(160deg, #2a2238 0%, #161022 50%, #1e1830 100%) padding-box,
+      var(--holo-warm) border-box;
+    background-origin: padding-box, border-box;
+    background-clip: padding-box, border-box;
+    box-shadow:
+      0 0 0 1px rgba(255, 120, 70, 0.25),
+      0 0 16px rgba(255, 80, 140, 0.4),
+      0 0 28px rgba(255, 170, 50, 0.28),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
   }
   .toolbar .upload-remix:hover {
-    filter: none;
-    border-color: rgba(180, 230, 200, 0.7);
-    color: #fff;
-    box-shadow: 0 0 12px rgba(120, 200, 170, 0.22);
+    filter: brightness(1.1);
+    border-color: transparent;
+    color: #fff8f2;
+    box-shadow:
+      0 0 0 1px rgba(255, 150, 90, 0.4),
+      0 0 22px rgba(255, 90, 150, 0.5),
+      0 0 36px rgba(255, 190, 60, 0.35),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12);
   }
 
   body.community-view .toolbar {

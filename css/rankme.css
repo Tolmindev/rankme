@@ -3574,6 +3574,45 @@ body.theme-gold .card img {
     inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 @media (min-width: 721px) {
+  .toolbar .pill-btn .ico { display: none; }
+  .toolbar .tb-g {
+    display: block;
+    width: 16px;
+    height: 16px;
+    flex: 0 0 16px;
+    background: currentColor;
+    -webkit-mask: center / contain no-repeat;
+    mask: center / contain no-repeat;
+  }
+  .toolbar .pill-btn.add .tb-g {
+    -webkit-mask-image: url("../assets/icons/tb-add.svg");
+    mask-image: url("../assets/icons/tb-add.svg");
+  }
+  .toolbar .pill-btn.fill .tb-g {
+    -webkit-mask-image: url("../assets/icons/tb-fill.svg");
+    mask-image: url("../assets/icons/tb-fill.svg");
+  }
+  .toolbar .pill-btn.danger .tb-g {
+    -webkit-mask-image: url("../assets/icons/tb-clear.svg?v=3");
+    mask-image: url("../assets/icons/tb-clear.svg?v=3");
+  }
+  .toolbar .pill-btn.remove .tb-g {
+    -webkit-mask-image: url("../assets/icons/tb-remove.svg");
+    mask-image: url("../assets/icons/tb-remove.svg");
+  }
+  .toolbar .remix-btn .tb-g {
+    -webkit-mask-image: url("../assets/icons/tb-remix.svg");
+    mask-image: url("../assets/icons/tb-remix.svg");
+  }
+  .toolbar .save-btn .tb-g {
+    -webkit-mask-image: url("../assets/icons/tb-save.svg?v=2");
+    mask-image: url("../assets/icons/tb-save.svg?v=2");
+  }
+  .toolbar .pill-btn.fill .tb-g {
+    width: 14px;
+    height: 14px;
+    flex-basis: 14px;
+  }
   .toolbar-actions { order: 1; }
   .size-ctrl { order: 2; }
   .remix-btn { order: 3; margin-left: auto; }
@@ -3698,8 +3737,8 @@ body.theme-gold .card img {
     mask-image: url("../assets/icons/tb-fill.svg");
   }
   .toolbar .pill-btn.danger .tb-g {
-    -webkit-mask-image: url("../assets/icons/tb-clear.svg");
-    mask-image: url("../assets/icons/tb-clear.svg");
+    -webkit-mask-image: url("../assets/icons/tb-clear.svg?v=3");
+    mask-image: url("../assets/icons/tb-clear.svg?v=3");
   }
   .toolbar .pill-btn.remove .tb-g {
     -webkit-mask-image: url("../assets/icons/tb-remove.svg");

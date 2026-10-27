@@ -15,7 +15,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200..900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/rankme.css?v=20261025e">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
-<script src="js/supabaseClient.js?v=20261021x" defer></script>
+<script src="js/supabaseClient.js?v=20261027s" defer></script>
 </head>
 <body class="page-account">
 <div class="aurora" aria-hidden="true"></div>
@@ -42,7 +42,7 @@
         <a href="guide.html">FAQ</a>
       </div>
     </details>
-    <a class="login-btn" id="loginBtn" href="account.html">Account</a>
+    <a class="login-btn" id="loginBtn" href="account.html">Login</a>
   </nav>
 </header>
 
@@ -259,7 +259,7 @@ function savedCardHtml(r, opts){
 }
 
 async function renderLogin(){
-  navBtn.textContent = 'Account';
+  navBtn.textContent = 'Login';
   navBtn.classList.remove('login-btn-avatar', 'logged-in');
   panel.innerHTML = `
     <h1 class="account-h1">Login</h1>

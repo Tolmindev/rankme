@@ -374,7 +374,7 @@ function updateNavAuth() {
       document.querySelectorAll('[data-auth-account]').forEach(function (el) {
         el.hidden = !user;
       });
-      var displayName = user ? rankmeDisplayName(user) : 'Account';
+      var displayName = user ? rankmeDisplayName(user) : 'Login';
       document.querySelectorAll('[data-auth-name]').forEach(function (el) {
         el.textContent = displayName;
       });
@@ -398,12 +398,21 @@ function updateNavAuth() {
         } else {
           loginBtn.classList.remove('login-btn-avatar', 'is-expert');
           if (loginBtn.tagName === 'A' || loginBtn.tagName === 'BUTTON') {
-            loginBtn.textContent = 'Account';
+            loginBtn.textContent = 'Login';
           }
         }
         mountStudioNav(false);
+        studioNavGen += 1;
         if (user && typeof isStudioAdmin === 'function') {
-          isStudioAdmin().then(function (ok) { mountStudioNav(!!ok); }).catch(function () {});
+          var gen = studioNavGen;
+          var uid = user.id;
+          isStudioAdmin().then(function (ok) {
+            if (gen !== studioNavGen || !ok) return;
+            return getSessionUser().then(function (now) {
+              if (gen !== studioNavGen || !now || now.id !== uid) return;
+              mountStudioNav(true);
+            });
+          }).catch(function () {});
         }
         if (user && typeof fetchApprovedExpertIds === 'function') {
           fetchApprovedExpertIds().then(function () {
@@ -421,6 +430,7 @@ function updateNavAuth() {
 }
 
 
+var studioNavGen = 0;
 function mountStudioNav(on) {
   var here = /studio\.html$/.test(location.pathname);
   document.querySelectorAll('.nav-links, .nav-fold-links').forEach(function (box) {

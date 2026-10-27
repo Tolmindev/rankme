@@ -9300,6 +9300,35 @@ body.ach-focus-open { overflow: hidden; }
   appearance: textfield;
 }
 
+.gem-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  min-height: 28px;
+  margin-top: 8px;
+}
+
+.gem-line span {
+  color: #b79bf0;
+  font-size: 0.82rem;
+  font-weight: 500;
+}
+
+.gem-line[hidden] { display: none; }
+
+.gem-half {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  color: var(--text-dim);
+  font-size: 0.78rem;
+  font-weight: 400;
+  cursor: pointer;
+}
+
 .tools-field input::-webkit-outer-spin-button,
 .tools-field input::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -9430,7 +9459,8 @@ body.ach-focus-open { overflow: hidden; }
 }
 
 .tools-panel { order: 1; }
-.pull-card { order: 3; }
+.pull-card { order: 4; }
+.pool-fold { order: 3; margin-top: 0; }
 
 .tools-panel,
 .pull-card,
@@ -9674,10 +9704,6 @@ body.ach-focus-open { overflow: hidden; }
   text-shadow: 0 0 8px var(--glow, rgba(255, 96, 120, .8));
 }
 
-.pool-fold {
-  margin-top: 16px;
-}
-
 .pool-fold summary {
   cursor: pointer;
   list-style: none;
@@ -9694,6 +9720,9 @@ body.ach-focus-open { overflow: hidden; }
   content: ' show';
   letter-spacing: 0;
   text-transform: none;
+  color: #c4a6ff;
+  font-weight: 500;
+  text-shadow: 0 0 10px rgba(183, 155, 240, 0.85);
 }
 .pool-fold[open] summary { margin-bottom: 8px; }
 .pool-fold[open] summary::after { content: ' hide'; }
@@ -10014,7 +10043,8 @@ body.ach-focus-open { overflow: hidden; }
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     grid-template-areas:
       "form summon"
-      "result result";
+      "result result"
+      "pool pool";
     gap: 18px;
     align-items: stretch;
   }
@@ -10022,6 +10052,7 @@ body.ach-focus-open { overflow: hidden; }
   .calc-grid:not(:has(#lootBlock[hidden])) .tools-panel { grid-area: form; order: 0; }
   .calc-grid:not(:has(#lootBlock[hidden])) .pull-card { grid-area: summon; order: 0; }
   .calc-grid:not(:has(#lootBlock[hidden])) .result-card { grid-area: result; order: 0; }
+  .calc-grid:not(:has(#lootBlock[hidden])) .pool-fold { grid-area: pool; order: 0; }
   .calc-grid:not(:has(#lootBlock[hidden])) .tools-body { margin-top: 0; }
   .calc-grid:not(:has(#lootBlock[hidden])) .tools-tail {
     display: flex;

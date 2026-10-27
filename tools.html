@@ -24,7 +24,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200..900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/rankme.css?v=20261027k">
+<link rel="stylesheet" href="css/rankme.css?v=20261027r">
 </head>
 <body>
 <div class="aurora" aria-hidden="true"></div>
@@ -113,6 +113,16 @@
             <div class="tools-field">
               <input id="tickets" type="number" inputmode="numeric" min="0" step="1" placeholder="Optional" aria-label="Tickets you have">
             </div>
+            <div class="gem-line" id="gemLine" hidden>
+              <span id="gemCost"></span>
+              <label class="gem-half">
+                Half off
+                <span class="toggle-container">
+                  <input class="toggle-checkbox" id="halfOff" type="checkbox" aria-label="Half off">
+                  <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                </span>
+              </label>
+            </div>
 
             <div class="tools-label">Pity</div>
             <div class="tools-field">
@@ -144,12 +154,12 @@
           <div class="dist" id="dist" hidden></div>
           <p class="tools-note" id="pityNote">No pity. Every pull is its own roll. The average is not a promise.</p>
         </div>
-      </div>
 
-      <details class="pool-fold" id="poolFold">
-        <summary id="poolSummary">All prizes</summary>
-        <div id="lootList"></div>
-      </details>
+        <details class="pool-fold" id="poolFold">
+          <summary id="poolSummary">All prizes</summary>
+          <div id="lootList"></div>
+        </details>
+      </div>
 
       <div class="luck-board">
         <section class="luck-card" id="luckCard">
@@ -182,6 +192,6 @@
 <footer id="site-footer" class="site"></footer>
 <script src="js/footer.js?v=20261019a" defer></script>
 <script src="js/achievements.js?v=20261027m" defer></script>
-<script src="js/tools.js?v=20261027m" defer></script>
+<script src="js/tools.js?v=20261027p" defer></script>
 </body>
 </html>

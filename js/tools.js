@@ -131,6 +131,7 @@
     resetStage();
     resultCard.hidden = true;
     paint(false);
+    paintGems();
     loadLuck();
   });
 
@@ -138,7 +139,49 @@
     el.addEventListener('input', function () {
       resultCard.hidden = true;
       paint(false);
+      if (el === tickets) paintGems();
     });
+  });
+
+  var halfOff = false;
+
+  function spend(raw) {
+    var t = Math.floor(raw);
+    if (!(t >= 0)) return null;
+    if (banner !== 'divination' || !halfOff) return { pulls: t, gems: t * 500 };
+    var packs = Math.floor(t / 5);
+    var rest = t - packs * 5;
+    return { pulls: packs * 10 + rest, gems: t * 500 };
+  }
+
+  function paintGems() {
+    var line = document.getElementById('gemLine');
+    var el = document.getElementById('gemCost');
+    if (!line || !el) return;
+    if (banner !== 'divination') {
+      line.hidden = true;
+      return;
+    }
+    line.hidden = false;
+    var n = num(tickets);
+    if (n == null || n < 0) {
+      el.textContent = '';
+      return;
+    }
+    var s = spend(n);
+    el.textContent = halfOff
+      ? fmt(s.pulls) + (s.pulls === 1 ? ' pull · ' : ' pulls · ') + fmt(s.gems) + ' gems'
+      : fmt(s.gems) + ' gems';
+  }
+
+  var halfBox = document.getElementById('halfOff');
+  halfBox.addEventListener('click', function () {
+    halfBox.classList.add('toggled-once');
+  }, { once: true });
+  halfBox.addEventListener('change', function () {
+    halfOff = halfBox.checked;
+    paintGems();
+    if (resultCard && !resultCard.hidden) paint(true);
   });
 
   function num(el) {
@@ -512,6 +555,8 @@
     var asked = copies == null ? null : Math.max(0, Math.round(copies));
     var k = asked == null ? 16 : asked;
     var have = num(tickets);
+    var spent = have == null || have < 0 ? null : spend(have);
+    var pulls = spent ? spent.pulls : null;
     var kind = p > 0 ? Math.max(1, Math.round(1 / p)) : 0;
     document.getElementById('fighterLine').textContent = kind
       ? 'The featured fighter. About 1 in ' + kind + ' pulls.'
@@ -524,7 +569,7 @@
       }
       return false;
     }
-    paintLoot(have != null && have >= 0 ? Math.floor(have) : null);
+    paintLoot(pulls);
     if (!reveal) return false;
     resultCard.hidden = false;
     pityNote.textContent = pity
@@ -554,7 +599,7 @@
       dist.hidden = true;
       dist.innerHTML = '';
     } else {
-      var n = Math.min(1000000, Math.floor(have));
+      var n = Math.min(1000000, pulls);
       var expected = pity ? n / mom.mean : n * p;
       var shown = copyCount(expected);
       head = fmt(shown);
